@@ -18,39 +18,35 @@ require_once ABSPATH . WPINC . '/ms-functions.php';
 
 /**
  * Collection of blog-objects
- *
+ * 
+ * Implements the interface IMslsRegistryInstance because we are working with an
+ * single object of MslsBlogCollection all the time.
  * @package Msls
  */
 class MslsBlogCollection implements IMslsRegistryInstance {
 
     /**
-     * @access private
-     * @var int
+     * @var int ID of the current blog
      */
     private $current_blog_id;
 
     /**
-     * @access private
-     * @var bool
+     * @var bool True if the current blog should be in the output
      */
     private $current_blog_output;
 
     /**
-     * @access private
-     * @var array
+     * @var array Collection of MslsBlog-objects
      */
     private $objects = array();
 
     /**
-     * @access private
-     * @var string
+     * @var string Order output by language or description
      */
     private $objects_order;
 
     /**
      * Constructor
-     *
-     * @access public
      */
     public function __construct() {
         $options                   = MslsOptions::instance();
@@ -93,8 +89,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Get the id of the current blog
      *
-     * @access public
-     * @return int
+     * @return int ID of the current blog
      */
     public function get_current_blog_id() {
         return $this->current_blog_id;
@@ -103,8 +98,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Check if current blog is in the collection
      *
-     * @access public
-     * @return bool
+     * @return bool Is the current blog part of the output? 
      */
     public function has_current_blog() {
         return(
@@ -117,8 +111,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Get current blog as object
      *
-     * @access public
-     * @return mixed
+     * @return MslsBlog|null Current blog as MslsBlog-Object
      */
     public function get_current_blog() {
         return(
@@ -131,9 +124,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Get an array with blog-objects
      *
-     * @access public
-     * @param bool frontend
-     * @return array
+     * @param bool $frontend Are we in the frontend?
+     * @return array Collection of MslsBlog-objects
      */
     public function get( $frontend = false ) {
         $objects = apply_filters( 'msls_blog_collection_get', $this->objects );
@@ -146,7 +138,6 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Get or create a instance of MslsBlogCollection
      *
-     * @access public
      * @return MslsBlogCollection
      */
     public static function instance() {
@@ -170,28 +161,24 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 class MslsBlog {
 
     /**
-     * @access private
-     * @var StdClass
+     * @var StdClass WordPress generates such an object
      */
     private $obj;
 
     /**
-     * @access private
-     * @var string
+     * @var string Description eg. Deutsch
      */
     private $description;
 
     /**
-     * @access private
-     * @var string
+     * @var string Language-code eg. de_DE
      */
     private $language;
 
     /**
      * Constructor
      *
-     * @access public
-     * @param StdClass $obj
+     * @param StdClass $obj 
      * @param string description
      */
     public function __construct( StdClass $obj, $description ) {
@@ -213,9 +200,8 @@ class MslsBlog {
      *
      * The method return <em>null</em> if the requested member does not exists.
      * 
-     * @access public
      * @param string $key
-     * @return mixed
+     * @return mixed|null
      */
     final public function __get( $key ) {
         return(
@@ -293,13 +279,5 @@ class MslsBlog {
     }
 
 }
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
 
 ?>

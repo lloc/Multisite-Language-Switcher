@@ -21,28 +21,29 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
     }
 
     public function add() {
-        add_meta_box(
-            'msls',
-            __( 'Multisite Language Switcher', 'msls' ),
-            array( $this, 'render_post' ),
-            'post',
-            'side',
-            'high'
-        );
-        add_meta_box(
-            'msls',
-            __( 'Multisite Language Switcher', 'msls' ),
-            array( $this, 'render_page' ),
-            'page',
-            'side',
-            'high'
-        );
+        $args = array(
+            'public'   => true,
+            '_builtin' => false,
+        ); 
+        $post_types = get_post_types( $args, 'names', 'and' ); 
+        $post_types = array_merge( array( 'post', 'page' ), $post_types );
+        foreach ( $post_types as $pt ) {
+            add_meta_box(
+                'msls',
+                __( 'Multisite Language Switcher', 'msls' ),
+                array( $this, 'render' ),
+                $pt,
+                'side',
+                'high'
+            );
+        }
     }
 
-    protected function render( $type ) {
+    protected function render() {
         global $post;
         $blogs = $this->blogs->get();
         if ( $blogs ) {
+            $type   = get_post_type( $post );
             $temp   = $post;
             $mydata = new MslsPostOptions( $post->ID );
             wp_nonce_field( MSLS_PLUGIN_PATH, 'msls' . '_noncename' );
@@ -101,14 +102,6 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
         }
     }
 
-    public function render_post() {
-        $this->render( 'post' );
-    }
-
-    public function render_page() {
-        $this->render( 'page' );
-    }
-
     public function set( $post_id ) {
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
             return;
@@ -124,12 +117,4 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
 
 }
 
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
- 
 ?>
