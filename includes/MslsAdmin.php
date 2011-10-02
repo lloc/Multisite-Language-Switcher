@@ -7,14 +7,12 @@
  */
 
 /**
- * MslsMain.php is required because MslsAdmin extends MslsMain and implements
- * IMslsMain
+ * MslsAdmin extends MslsMain and implements IMslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
 /**
- * MslsLink.php is required because MslsAdmin uses 
- * MslsLink::get_types_description()
+ * MslsAdmin uses MslsLink::get_types_description()
  */
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
@@ -99,46 +97,97 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         );
     }
 
+    /**
+     * Show sort_by_description-field
+     * 
+     * You can decide that the ouput will be sorted by the description. If not
+     * the output will be sorted by the language-code.
+     */
     public function sort_by_description() {
         echo $this->render_checkbox( 'sort_by_description' );
     }
 
+    /**
+     * Exclude the current blog
+     * 
+     * You can exclude a blog explicitly. All your settings will be safe but the
+     * plugin will ignore this blog while this option is active.
+     */
     public function exclude_current_blog() {
         echo $this->render_checkbox( 'exclude_current_blog' );
     }
 
+    /**
+     * Show only a link  if a translation is available
+     * 
+     * Some user requested this feature. Shows only links to available 
+     * translations.
+     */
     public function only_with_translation() {
         echo $this->render_checkbox( 'only_with_translation' );
     }
 
+    /**
+     * Show a link to the current blog
+     * 
+     * Some user requested this feature. If active the plugin will place also a 
+     * link to the current blog.
+     */
     public function output_current_blog() {
         echo $this->render_checkbox( 'output_current_blog' );
     }
 
+    /**
+     * The description for the current blog
+     * 
+     * The language will be used ff there is no description.
+     */
     public function description() {
         echo $this->render_input( 'description', '40' );
     }
 
+    /**
+     * A String which will be placed before the output of the list
+     */ 
     public function before_output() {
         echo $this->render_input( 'before_output' );
     }
 
+    /**
+     * A String which will be placed after the output of the list
+     */ 
     public function after_output() {
         echo $this->render_input( 'after_output' );
     }
 
+    /**
+     * A String which will be placed before every item of the list
+     */ 
     public function before_item() {
         echo $this->render_input( 'before_item' );
     }
 
+    /**
+     * A String which will be placed after every item of the list
+     */ 
     public function after_item() {
         echo $this->render_input( 'after_item' );
     }
 
+    /**
+     * The output can be placed after the_content
+     */
     public function content_filter() {
         echo $this->render_checkbox( 'content_filter' );
     }
 
+    /**
+     * If the output in the_content is active you can set the priority too
+     * 
+     * Default is 10. But may be there are other plugins active and you run into
+     * trouble. So you can decide a higher (from 1) or a lower (to 100) priority
+     * for the output
+     */ 
     public function content_priority() {
         $arr      = array_merge( range( 1, 10 ), array ( 20, 50, 100 ) );
         $arr      = array_combine( $keys, $keys );
@@ -150,6 +199,11 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         echo $this->render_select( 'content_priority', $arr, $selected );
     }
 
+    /**
+     * Alternative image-url
+     * 
+     * @todo This is a value of a directory-url which should be more clear
+     */
     public function image_url() {
         echo $this->render_input( 'image_url' );
     }
@@ -157,7 +211,8 @@ class MslsAdmin extends MslsMain implements IMslsMain {
     /**
      * Render form-element (checkbox)
      * 
-     * @param string $key
+     * @param string $key Name and ID of the form-element
+     * @return string HTML-Code of the checkbox
      */
     public function render_checkbox( $key ) {
         return sprintf(
@@ -173,9 +228,9 @@ class MslsAdmin extends MslsMain implements IMslsMain {
     /**
      * Render form-element (text-input)
      *
-     * @param string $key
-     * @param string $size
-     * @return string
+     * @param string $key Name and ID of the form-element
+     * @param string $size Size-attribute of the input-field
+     * @return string HTML-code of the input-field
      */
     public function render_input( $key, $size = '30' ) {
         return sprintf(
@@ -191,10 +246,10 @@ class MslsAdmin extends MslsMain implements IMslsMain {
     /**
      * Render form-element (select)
      *
-     * @param string $key
-     * @param array $arr
-     * @param string $selected
-     * @return string
+     * @param string $key Name and ID of the form-element
+     * @param array $arr Options as associative array
+     * @param string $selected Values which should be selected
+     * @return string HTML-code of the select-input
      */
     public function render_select( $key, array $arr, $selected ) {
         $options = array();
@@ -219,8 +274,8 @@ class MslsAdmin extends MslsMain implements IMslsMain {
     /**
      * Validate input before saving it
      * 
-     * @param array $input
-     * @return array
+     * @param array $input Values of the submitted form
+     * @return array Validated input 
      */ 
     public function validate( array $input ) {
         if ( !is_numeric( $input['display'] ) ) $input['display'] = 0;
@@ -229,13 +284,5 @@ class MslsAdmin extends MslsMain implements IMslsMain {
     }
 
 }
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
 
 ?>
