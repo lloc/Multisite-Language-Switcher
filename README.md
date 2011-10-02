@@ -1,4 +1,4 @@
-# Multisite Language Switcher #
+# Multisite Language Switcher
 
 A simple but powerful WordPress plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation.
 
@@ -14,7 +14,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the _Multisite Language Switcher_. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
-## Installation ##
+## Installation
 
 *  download the plugin
 *  uncompress it with your preferred unzip programme

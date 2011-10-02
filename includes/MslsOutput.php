@@ -155,7 +155,7 @@ class MslsWidget extends WP_Widget {
 /**
  * Registers Widget
  * 
- * @uses MslsOptions::instance()
+ * @uses MslsOptions
  */
 function msls_widgets_init() {
     $options = MslsOptions::instance();
@@ -167,7 +167,7 @@ add_action( 'widgets_init', 'msls_widgets_init' );
 /**
  * Filter for the_content()
  * 
- * @uses MslsOptions::instance()
+ * @uses MslsOptions
  * @uses MslsOutput
  * @param string $content
  * @return string
