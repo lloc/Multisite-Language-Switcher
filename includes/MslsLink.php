@@ -124,23 +124,26 @@ class MslsAdminIcon {
     protected $src;
     protected $href;
     protected $blog_id;
-    protected $path = 'post-new.php';
+    protected $type;
+
+    protected $path = 'post-new.php?post_type=';
 
     static function create( $type ) {
-        if ( 'page' == $type ) {
-            return new MslsAdminIconPage;
+        switch ( $type ) {
+            case 'post':
+                return new MslsAdminIconPost;
+                break;
+            case 'category':
+            case 'post_tag':
+                return new MslsAdminIconTag( $type );
+                break;
         }
-        elseif ( 'category' == $type ) {
-            return new MslsAdminIconCategory;
-        }
-        elseif ( 'post_tag' == $type ) {
-            return new MslsAdminIconTag;
-        }
-        return new MslsAdminIcon;
+        return new MslsAdminIcon( $type );
     }
 
-    public function __construct() {
-        $this->blog_id = get_current_blog_id();
+    public function __construct( $type ) {
+        $this->type = esc_attr( $type );
+        $this->path .= $this->type;
     }
 
     public function set_language( $language ) {
@@ -191,43 +194,29 @@ class MslsAdminIcon {
     }
 
     protected function get_edit_new() {
-        return get_admin_url( $this->blog_id, $this->path );
+        return get_admin_url( get_current_blog_id(), $this->path );
     }
 
 }
 
-class MslsAdminIconPage extends MslsAdminIcon {
+class MslsAdminIconPost extends MslsAdminIcon {
 
-    protected $path = 'post-new.php?post_type=page';
+    protected $path = 'post-new.php';
+
+    public function __construct( $type ) {
+        // not implemented
+    }
 
 }
 
-class MslsAdminIconCategory extends MslsAdminIcon {
+class MslsAdminIconTaxonomy extends MslsAdminIcon {
 
-    protected $path = 'edit-tags.php?taxonomy=category';
+    protected $path = 'edit-tags.php?taxonomy=';
 
     public function set_href( $id ) {
-        $this->href = get_edit_term_link( $id, 'category' );
+        $this->href = get_edit_term_link( $id, $this->type );
     }
 
 }
-
-class MslsAdminIconTag extends MslsAdminIcon {
-
-    protected $path = 'edit-tags.php?taxonomy=post_tag';
-
-    public function set_href( $id ) {
-        $this->href = get_edit_term_link( $id, 'post_tag' );
-    }
-
-}
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
 
 ?>
