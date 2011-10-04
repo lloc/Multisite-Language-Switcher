@@ -16,10 +16,10 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj = new self();
-            add_filter( 'manage_pages_columns' , array( $obj, 'manage' ) );
-            add_filter( 'manage_posts_columns' , array( $obj, 'manage' ) );
-            add_filter( 'manage_edit-category_columns' , array( $obj, 'manage' ) );
-            add_filter( 'manage_edit-post_tag_columns' , array( $obj, 'manage' ) );
+            add_filter( 'manage_pages_columns' , array( $obj, 'pages_manage' ) );
+            add_filter( 'manage_posts_columns' , array( $obj, 'posts_manage' ) );
+            add_filter( 'manage_edit-category_columns' , array( $obj, 'category_manage' ) );
+            add_filter( 'manage_edit-post_tag_columns' , array( $obj, 'post_tag_manage' ) );
             add_action( 'manage_pages_custom_column' , array( $obj, 'pages_columns' ), 10, 2 );
             add_action( 'manage_posts_custom_column' , array( $obj, 'posts_columns' ), 10, 2 );
             add_action( 'manage_category_custom_column' , array( $obj, 'category_columns' ), 10, 3 );
