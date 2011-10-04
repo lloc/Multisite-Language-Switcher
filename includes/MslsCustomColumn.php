@@ -26,8 +26,8 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             else {
                 if ( isset( $_REQUEST['post_type'] ) ) 
                     $obj->post_type = esc_attr( $_REQUEST['post_type'] );
-                add_filter( 'manage_{$obj->post_type}_posts_columns' , array( $obj, 'manage' ) );
-                add_action( 'manage_{$obj->post_type}_custom_column' , array( $obj, 'pt_columns' ), 10, 2 );
+                add_filter( 'manage_{$obj->post_type}s_posts_columns' , array( $obj, 'manage' ) );
+                add_action( 'manage_{$obj->post_type}s_custom_column' , array( $obj, 'pt_columns' ), 10, 2 );
             }
         }
     }
