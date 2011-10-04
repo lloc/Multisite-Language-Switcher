@@ -131,11 +131,11 @@ class MslsAdminIcon {
     static function create( $type ) {
         switch ( $type ) {
             case 'post':
-                return new MslsAdminIconPost;
+                return new MslsAdminIconPost( $type );
                 break;
             case 'category':
             case 'post_tag':
-                return new MslsAdminIconTag( $type );
+                return new MslsAdminIconTaxonomy( $type );
                 break;
         }
         return new MslsAdminIcon( $type );
@@ -143,6 +143,10 @@ class MslsAdminIcon {
 
     public function __construct( $type ) {
         $this->type = esc_attr( $type );
+        $this->set_path();
+    }
+
+    protected function set_path() {
         $this->path .= $this->type;
     }
 
@@ -203,7 +207,7 @@ class MslsAdminIconPost extends MslsAdminIcon {
 
     protected $path = 'post-new.php';
 
-    public function __construct( $type ) {
+    protected function set_path() {
         // not implemented
     }
 
