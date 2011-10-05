@@ -21,7 +21,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             if ( isset( $_REQUEST['post_type'] ) ) 
                 $obj->set_type ( $_REQUEST['post_type'] );
             $post_type = $obj->get_type();
-            add_filter( 'manage_{$post_type}_posts_columns' , array( $obj, 'th' ) );
+            add_filter( 'manage_edit-{$post_type}_columns' , array( $obj, 'th' ) );
             add_action( 'manage_{$post_type}_posts_custom_column' , array( $obj, 'td' ), 10, 2 );
         }
     }
@@ -88,8 +88,8 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         if ( !$options->is_excluded() ) {
             $obj = new self();
             $taxonomy = $obj->set_type( $_REQUEST['taxonomy'] )->get_type();
-            add_filter( 'manage_{$taxonomy}_custom_column' , array( $obj, 'th' ) );
-            add_action( 'manage_edit-{$taxonomy}_columns' , array( $obj, 'td' ), 10, 3 );
+            add_filter( 'manage_edit-{$taxonomy}_columns' , array( $obj, 'th' ) );
+            add_action( 'manage_{$taxonomy}_custom_column' , array( $obj, 'td' ), 10, 3 );
         }
     }
 
