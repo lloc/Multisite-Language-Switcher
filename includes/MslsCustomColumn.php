@@ -17,11 +17,14 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj = new self();
-            if ( 'page' == $post_type ) 
-                add_filter( 'manage_pages_columns' , array( $obj, 'th' ) );
-            else 
-                add_filter( 'manage_posts_columns' , array( $obj, 'th' ) );
-            add_action( 'manage_{$post_type}_posts_custom_column' , array( $obj, 'td' ), 10, 2 );
+            if ( 'page' == $post_type ) {
+                add_filter( 'manage_pages_columns', array( $obj, 'th' ) );
+                add_action( 'manage_pages_custom_column', array( $obj, 'td' ), 10, 2 );
+            }
+            else { 
+                add_filter( 'manage_posts_columns', array( $obj, 'th' ) );
+                add_action( 'manage_posts_custom_column', array( $obj, 'td' ), 10, 2 );
+            }
         }
     }
 
