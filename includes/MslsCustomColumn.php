@@ -26,12 +26,13 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     public function th( $columns ) {
+        global $post;
         $blogs = $this->blogs->get();
         if ( $blogs ) {
             $arr = array();
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
-                $icon     = new MslsAdminIcon( $this->type );
+                $icon     = new MslsAdminIcon( $post->post_type );
                 $icon->set_language( $language );
                 $icon->set_src( $this->get_flag_url( $language, true ) );
                 $arr[] = $icon->get_img();
@@ -46,14 +47,15 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     protected function columns( $column_name, $item_id ) {
+        global $post;
         if ( 'mslscol' == $column_name ) {
             $blogs = $this->blogs->get();
             if ( $blogs ) {
-                $mydata = MslsOptionsFactory::create( $this->type, $item_id );
+                $mydata = MslsOptionsFactory::create( $post->post_type, $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
                     $language  = $blog->get_language();
-                    $edit_link = MslsAdminIcon::create( $this->type );
+                    $edit_link = MslsAdminIcon::create( $post->post_type );
                     $edit_link->set_language( $language );
                     if ( $mydata->has_value( $language ) ) {
                         $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
