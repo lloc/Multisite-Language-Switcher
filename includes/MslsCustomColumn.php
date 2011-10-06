@@ -28,7 +28,6 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     public function th( $columns ) {
-        global $post;
         $blogs = $this->blogs->get();
         if ( $blogs ) {
             $arr = array();
@@ -45,11 +44,10 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     public function td( $column_name, $item_id ) {
-        global $post;
         if ( 'mslscol' == $column_name ) {
             $blogs = $this->blogs->get();
             if ( $blogs ) {
-                $type = $this->get_type();
+                $type   = $this->get_type();
                 $mydata = MslsOptionsFactory::create( $type, $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );

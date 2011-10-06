@@ -40,9 +40,9 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
     }
 
     public function render() {
-        global $post;
         $blogs = $this->blogs->get();
         if ( $blogs ) {
+            global $post;
             $temp   = $post;
             $type   = get_post_type( $post );
             $mydata = new MslsPostOptions( $post->ID );
