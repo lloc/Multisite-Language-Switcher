@@ -12,30 +12,20 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
 
 class MslsCustomColumn extends MslsMain implements IMslsMain {
 
-    protected $type = 'post';
-
     static function init() {
+        global $post_type;
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj = new self();
-            if ( isset( $_REQUEST['post_type'] ) ) 
-                $obj->set_type ( $_REQUEST['post_type'] );
-            $post_type = $obj->get_type();
-            add_filter( 'manage_{$post_type}_post_columns' , array( $obj, 'th' ) );
+            if ( 'page' == $post_type ) 
+                add_filter( 'manage_pages_columns' , array( $obj, 'th' ) );
+            else 
+                add_filter( 'manage_posts_columns' , array( $obj, 'th' ) );
             add_action( 'manage_{$post_type}_posts_custom_column' , array( $obj, 'td' ), 10, 2 );
         }
     }
 
-    public function set_type( $type ) {
-        $this->type = esc_attr( $type );
-        return $this;
-    }
-
-    public function get_type() {
-        return $this->type;
-    }
-
-    function th( $columns ) {
+    public function th( $columns ) {
         $blogs = $this->blogs->get();
         if ( $blogs ) {
             $arr = array();
@@ -86,9 +76,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
-            $obj = new self();
-            $taxonomy = $obj->set_type( $_REQUEST['taxonomy'] )->get_type();
-            add_filter( 'manage_edit-{$taxonomy}_columns' , array( $obj, 'th' ) );
+            $obj    = new self();
+            $screen = get_current_screen();
+            add_filter( 'manage_{$screen->taxonomy}_custom_column' , array( $obj, 'th' ) );
             add_action( 'manage_{$taxonomy}_custom_column' , array( $obj, 'td' ), 10, 3 );
         }
     }
