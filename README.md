@@ -1,6 +1,6 @@
 # Multisite Language Switcher
 
-A simple but powerful WordPress plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation.
+A simple but powerful WordPress plugin that will help you to manage the relations of posts, pages, custom post types, categories and tags in your multisite-multilingual-installation.
 
 The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work.
 
@@ -21,6 +21,6 @@ If you have created your own language pack, or have an update of an existing one
 *  copy the entire directory in your plugin directory of your wordpress blog (/wp-content/plugins)
 *  activate the plugin in your plugin page
 *  set some configuration in Options -> Multisite Language Switcher
-*  set the relations of your pages and posts in Posts -> Edit or Page -> Edit
+*  set the relations of your pages and posts in Posts -> Edit or Page -> Edit and custom post types, categories and tags as well 
 *  now you can use the widget and/or the content_filter which displays a hint if a translation is available
 *  optionally you can use a line like `<?php if (function_exists("the_msls")) the_msls(); ?>` directly in your theme-files
