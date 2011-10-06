@@ -28,8 +28,8 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     }
 
     public function get_type() {
-        global $post;
-        return $post->post_type;
+        $screen = get_current_screen();
+        return $screen->post_type;
     }
 
     public function th( $columns ) {
