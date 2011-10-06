@@ -28,6 +28,11 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         }
     }
 
+    protected function get_type() {
+        global $post;
+        return $post->post_type;
+    }
+
     public function th( $columns ) {
         global $post;
         $blogs = $this->blogs->get();
@@ -35,7 +40,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             $arr = array();
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
-                $icon     = new MslsAdminIcon( $post->post_type );
+                $icon     = new MslsAdminIcon( null );
                 $icon->set_language( $language );
                 $icon->set_src( $this->get_flag_url( $language, true ) );
                 $arr[] = $icon->get_img();
@@ -54,11 +59,12 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         if ( 'mslscol' == $column_name ) {
             $blogs = $this->blogs->get();
             if ( $blogs ) {
-                $mydata = MslsOptionsFactory::create( $post->post_type, $item_id );
+                $type = $this->get_type();
+                $mydata = MslsOptionsFactory::create( $type, $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
                     $language  = $blog->get_language();
-                    $edit_link = MslsAdminIcon::create( $post->post_type );
+                    $edit_link = MslsAdminIcon::create( $type );
                     $edit_link->set_language( $language );
                     if ( $mydata->has_value( $language ) ) {
                         $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
@@ -83,9 +89,14 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         if ( !$options->is_excluded() ) {
             $obj    = new self();
             $screen = get_current_screen();
-            add_filter( 'manage_{$screen->taxonomy}_custom_column' , array( $obj, 'th' ) );
-            add_action( 'manage_{$taxonomy}_custom_column' , array( $obj, 'td' ), 10, 3 );
+            add_filter( 'manage_{$screen->id}_custom_column' , array( $obj, 'th' ) );
+            add_action( 'manage_{$taxonomy}_custom_column' , array( $obj, 'td' ), 10, 2 );
         }
+    }
+
+    protected function get_type() {
+        $screen = get_current_screen();
+        return $screen->taxonomy;
     }
 
     public function td( $deprecated, $column_name, $term_id ) {
