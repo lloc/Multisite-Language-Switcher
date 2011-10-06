@@ -15,15 +15,10 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
-            $obj = new self();
-            if ( is_post_type_hierarchical( $obj->get_type() ) ) {
-                add_filter( 'manage_pages_columns', array( $obj, 'th' ) );
-                add_action( 'manage_pages_custom_column', array( $obj, 'td' ), 10, 2 );
-            }
-            else { 
-                add_filter( 'manage_posts_columns', array( $obj, 'th' ) );
-                add_action( 'manage_posts_custom_column', array( $obj, 'td' ), 10, 2 );
-            }
+            $obj       = new self();
+            $post_type = $obj->get_type();
+            add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
+            add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
         }
     }
 
@@ -82,16 +77,20 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
-            $obj    = new self();
-            $screen = get_current_screen();
-            add_filter( 'manage_{$screen->id}_columns' , array( $obj, 'th' ) );
-            add_action( 'manage_{$screen->taxonomy}_custom_column' , array( $obj, 'td' ), 10, 2 );
+            $obj      = new self();
+            $taxonomy = $obj->get_type();
+            add_filter( "manage_{$screen->id}_columns" , array( $obj, 'th' ) );
+            add_action( "manage_{$screen->taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
         }
     }
 
     public function get_type() {
         $screen = get_current_screen();
         return $screen->taxonomy;
+    }
+
+    public function td( $deprecated, $column_name, $item_id ) {
+        parent::td( $column_name, $item_id );
     }
 
 }
