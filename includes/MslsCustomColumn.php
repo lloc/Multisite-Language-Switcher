@@ -13,17 +13,18 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
 class MslsCustomColumn extends MslsMain implements IMslsMain {
 
     static function init() {
-        global $post_type;
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj = new self();
-            if ( 'page' == $post_type ) {
+            
+            global $post_type;
+            if ( is_post_type_hierarchical( $post_type ) ) {
                 add_filter( 'manage_pages_columns', array( $obj, 'th' ) );
-                add_action( 'manage_pages_custom_column', array( $obj, 'td' ), 10, 2 );
+                add_action( 'manage_page_custom_column', array( $obj, 'td' ), 10, 2 );
             }
             else { 
                 add_filter( 'manage_posts_columns', array( $obj, 'th' ) );
-                add_action( 'manage_posts_custom_column', array( $obj, 'td' ), 10, 2 );
+                add_action( 'manage_post_custom_column', array( $obj, 'td' ), 10, 2 );
             }
         }
     }
