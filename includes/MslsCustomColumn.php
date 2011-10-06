@@ -20,13 +20,19 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
             $obj = new self();
             if ( isset( $_REQUEST['post_type'] ) ) 
                 $obj->set_type ( $_REQUEST['post_type'] );
-            add_filter( 'manage_{$obj->post_type}_posts_columns' , array( $obj, 'th' ) );
-            add_action( 'manage_{$obj->post_type}_posts_custom_column' , array( $obj, 'td' ), 10, 2 );
+            $post_type = $obj->get_type();
+            add_filter( 'manage_{$post_type}_posts_columns' , array( $obj, 'th' ) );
+            add_action( 'manage_{$post_type}_posts_custom_column' , array( $obj, 'td' ), 10, 2 );
         }
     }
 
     public function set_type( $type ) {
         $this->type = esc_attr( $type );
+        return $this;
+    }
+
+    public function get_type() {
+        return $this->type;
     }
 
     function th( $columns ) {
@@ -81,9 +87,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj = new self();
-            $obj->type = esc_attr( $_REQUEST['taxonomy'] );
-            add_filter( 'manage_{$obj->taxonomy}_custom_column' , array( $obj, 'th' ) );
-            add_action( 'manage_edit-{$obj->taxonomy}_columns' , array( $obj, 'td' ), 10, 3 );
+            $taxonomy = $obj->set_type( $_REQUEST['taxonomy'] )->get_type();
+            add_filter( 'manage_{$taxonomy}_custom_column' , array( $obj, 'th' ) );
+            add_action( 'manage_edit-{$taxonomy}_columns' , array( $obj, 'td' ), 10, 3 );
         }
     }
 
