@@ -49,11 +49,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         return $columns;
     }
 
-    public function td( $column_name, $post_id ) {
-        $this->columns( $column_name, $post_id );
-    }
-
-    protected function columns( $column_name, $item_id ) {
+    public function td( $column_name, $item_id ) {
         global $post;
         if ( 'mslscol' == $column_name ) {
             $blogs = $this->blogs->get();
@@ -86,20 +82,16 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
-            $obj      = new self();
-            $taxonomy = $obj->get_type();
-            add_filter( 'manage_edit-{$taxonomy}_columns' , array( $obj, 'th' ) );
-            add_action( 'manage_{$taxonomy}_custom_column' , array( $obj, 'td' ), 10, 3 );
+            $obj    = new self();
+            $screen = get_current_screen();
+            add_filter( 'manage_{$screen->id}_columns' , array( $obj, 'th' ) );
+            add_action( 'manage_{$screen->taxonomy}_custom_column' , array( $obj, 'td' ), 10, 2 );
         }
     }
 
     public function get_type() {
         $screen = get_current_screen();
         return $screen->taxonomy;
-    }
-
-    public function td( $deprecated, $column_name, $term_id ) {
-        $this->columns( $column_name, $term_id );
     }
 
 }
