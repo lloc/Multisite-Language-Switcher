@@ -86,10 +86,10 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
-            $obj    = new self();
-            $screen = get_current_screen();
-            add_filter( 'manage_{$screen->id}_custom_column' , array( $obj, 'th' ) );
-            add_action( 'manage_{$taxonomy}_custom_column' , array( $obj, 'td' ), 10, 2 );
+            $obj      = new self();
+            $taxonomy = $obj->get_type();
+            add_filter( 'manage_edit-{$taxonomy}_columns' , array( $obj, 'th' ) );
+            add_action( 'manage_{$taxonomy}_custom_column' , array( $obj, 'td' ), 10, 3 );
         }
     }
 
