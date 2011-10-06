@@ -27,13 +27,29 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         }
     }
 
-    function manage( $columns ) {
+    public function pages_manage( $columns ) {
+        $this->manage( 'page', $columns );
+    }
+
+    public function posts_manage( $columns ) {
+        $this->manage( 'post', $columns );
+    }
+
+    public function category_manage( $columns ) {
+        $this->manage( 'category', $columns );
+    }
+
+    public function post_tag_manage( $columns ) {
+        $this->manage( 'post_tag', $columns );
+    }
+    
+    function manage( $type, $columns ) {
         $blogs = $this->blogs->get();
         if ( $blogs ) {
             $arr = array();
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
-                $icon     = new MslsAdminIcon();
+                $icon     = new MslsAdminIcon( $type );
                 $icon->set_language( $language );
                 $icon->set_src( $this->get_flag_url( $language, true ) );
                 $arr[] = $icon->get_img();
