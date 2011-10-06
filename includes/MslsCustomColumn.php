@@ -16,9 +16,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj = new self();
-            
-            global $post_type;
-            if ( is_post_type_hierarchical( $post_type ) ) {
+            if ( is_post_type_hierarchical( $obj->get_type() ) ) {
                 add_filter( 'manage_pages_columns', array( $obj, 'th' ) );
                 add_action( 'manage_pages_custom_column', array( $obj, 'td' ), 10, 2 );
             }
@@ -29,7 +27,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         }
     }
 
-    protected function get_type() {
+    public function get_type() {
         global $post;
         return $post->post_type;
     }
@@ -95,7 +93,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         }
     }
 
-    protected function get_type() {
+    public function get_type() {
         $screen = get_current_screen();
         return $screen->taxonomy;
     }
