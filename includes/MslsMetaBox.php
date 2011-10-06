@@ -43,8 +43,8 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
         global $post;
         $blogs = $this->blogs->get();
         if ( $blogs ) {
-            $type   = get_post_type( $post );
             $temp   = $post;
+            $type   = get_post_type( $post );
             $mydata = new MslsPostOptions( $post->ID );
             wp_nonce_field( MSLS_PLUGIN_PATH, 'msls' . '_noncename' );
             echo '<ul>';
@@ -57,9 +57,9 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
                     'order' => 'ASC',
                     'posts_per_page' => (-1),
                 );
+                $my_query  = new WP_Query( $args );
                 $language  = $blog->get_language();
                 $options   = '';
-                $my_query  = new WP_Query( $args );
                 $edit_link = MslsAdminIcon::create( $type );
                 $edit_link->set_language( $language );
                 $edit_link->set_src( $this->get_flag_url( $language ) );
