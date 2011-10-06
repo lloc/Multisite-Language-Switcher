@@ -79,8 +79,8 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         if ( !$options->is_excluded() ) {
             $obj      = new self();
             $taxonomy = $obj->get_type();
-            add_filter( "manage_{$screen->id}_columns" , array( $obj, 'th' ) );
-            add_action( "manage_{$screen->taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
+            add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
+            add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
         }
     }
 
