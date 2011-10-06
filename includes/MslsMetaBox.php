@@ -39,7 +39,7 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
         }
     }
 
-    protected function render() {
+    public function render() {
         global $post;
         $blogs = $this->blogs->get();
         if ( $blogs ) {
