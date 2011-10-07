@@ -256,7 +256,7 @@ class MslsAdmin extends MslsMain implements IMslsMain {
         foreach ( $arr as $value => $description ) {
             $options[] = sprintf(
                 '<option value="%s"%s>%s</option>',
-                $value
+                $value,
                 ( $value == $selected ? ' selected="selected"' : '' ), 
                 $description
             );
