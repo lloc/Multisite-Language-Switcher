@@ -7,11 +7,11 @@ Requires at least: 3.0
 Tested up to:  3.3
 Stable tag: 0.9.1
 
-A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
+A simple but powerful plugin that will help you to manage the translations of your contents in your multisite-multilingual-installation.
 
 == Description ==
 
-A simple but powerful plugin that will help you to manage the relations of posts, pages, categories and tags in your multisite-multilingual-installation.
+A simple but powerful plugin that will help you to manage the relations of posts, pages, categories, tags and custom post types in your multisite-multilingual-installation.
 
 The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work.
 
