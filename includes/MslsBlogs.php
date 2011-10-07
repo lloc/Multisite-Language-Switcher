@@ -255,7 +255,6 @@ class MslsBlog {
         return( $a < $b ? (-1) : 1 );
     }
 
-    
     /**
      * Sort objects by language
      * 
