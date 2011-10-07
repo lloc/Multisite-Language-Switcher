@@ -10,14 +10,12 @@
 class MslsRegistry {
 
     /**
-     * @access private
-     * @var array $objects
+     * @var array
      */
     private static $objects = array();
 
     /**
-     * @access private
-     * @var mixed $instance
+     * @var mixed
      */
     private static $instance;
 

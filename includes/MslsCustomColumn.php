@@ -6,12 +6,31 @@
  * @package Msls
  */
 
+/**
+ * MslsCustomColumn extends MslsMain and implements IMslsMain
+ */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
+
+/**
+ * MslsCustomColumn::init() uses MslsOptions for a check
+ */ 
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
+
+/**
+ * MslsAdminIcon is used
+ */
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
+/**
+ * MslsCustomColumn
+ * 
+ * @package Msls
+ */
 class MslsCustomColumn extends MslsMain implements IMslsMain {
 
+    /**
+     * Init
+     */
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
@@ -22,11 +41,22 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         }
     }
 
+    /**
+     * Get type of post
+     * 
+     * @return string
+     */
     public function get_type() {
         $screen = get_current_screen();
         return $screen->post_type;
     }
 
+    /**
+     * Table header
+     * 
+     * @param array $columns
+     * @return array
+     */
     public function th( $columns ) {
         $blogs = $this->blogs->get();
         if ( $blogs ) {
@@ -43,12 +73,18 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
         return $columns;
     }
 
+    /**
+     * Table body
+     * 
+     * @param string $column_name
+     * @param int $item_id
+     */
     public function td( $column_name, $item_id ) {
         if ( 'mslscol' == $column_name ) {
             $blogs = $this->blogs->get();
             if ( $blogs ) {
                 $type   = $this->get_type();
-                $mydata = MslsOptionsFactory::create( $type, $item_id );
+                $mydata = MslsOptions::create( $type, $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
                     $language  = $blog->get_language();
@@ -70,8 +106,16 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
 
 }
 
+/**
+ * MslsCustomColumnTaxonomy
+ * 
+ * @package Msls
+ */
 class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
+    /**
+     * Init
+     */
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
@@ -82,11 +126,23 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         }
     }
 
+    /**
+     * Get type of taxonomy
+     * 
+     * @return string
+     */
     public function get_type() {
         $screen = get_current_screen();
         return $screen->taxonomy;
     }
 
+    /**
+     * Table body
+     * 
+     * @param string $deprecated
+     * @param string $column_name
+     * @param int $item_id
+     */
     public function td( $deprecated, $column_name, $item_id ) {
         parent::td( $column_name, $item_id );
     }

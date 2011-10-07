@@ -6,11 +6,26 @@
  * @package Msls
  */
 
+/**
+ * MslsMetaBox extends MslsMain and implements IMslsMain
+ */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
+
+/**
+ * MslsAdminIcon is used
+ */
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
+/**
+ * MslsMetaBox
+ * 
+ * @package Msls
+ */
 class MslsMetaBox extends MslsMain implements IMslsMain {
 
+    /**
+     * Init
+     */
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
@@ -20,6 +35,9 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
         }
     }
 
+    /**
+     * Add
+     */
     public function add() {
         $args = array(
             'public'   => true,
@@ -39,6 +57,9 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
         }
     }
 
+    /**
+     * Render
+     */
     public function render() {
         $blogs = $this->blogs->get();
         if ( $blogs ) {
@@ -102,6 +123,11 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
         }
     }
 
+    /**
+     * Set
+     * 
+     * @param int $post_id
+     */
     public function set( $post_id ) {
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
             return;

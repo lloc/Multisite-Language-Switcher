@@ -27,14 +27,12 @@ class MslsOutput extends MslsMain implements IMslsMain {
      * Init
      * 
      * Just a placeholder
-     * @access public
      */
     public static function init() { }
 
     /**
      * Get the output as array
      * 
-     * @access public
      * @param string $display
      * @param bool $exists
      * @return array
@@ -43,7 +41,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
         $arr   = array();
         $blogs = $this->blogs->get( (false == $exists ? true : false) );
         if ( $blogs ) {
-            $mydata = MslsOptionsFactory::create();
+            $mydata = MslsOptions::create();
             $link   = MslsLink::create( $display );
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
@@ -107,8 +105,6 @@ class MslsWidget extends WP_Widget {
 
     /**
      * Constructor
-     * 
-     * @access public
      */
     public function __construct() {
         parent::__construct( false, $name = __( 'Multisite Language Switcher', 'msls' ) );
@@ -132,12 +128,24 @@ class MslsWidget extends WP_Widget {
         echo $after_widget;
     }
 
+    /**
+     * Update the widget in the backend
+     * 
+     * @param array $new_instance
+     * @param array $old_instance
+     * @return array
+     */
     public function update( $new_instance, $old_instance ) {
         $instance          = $old_instance;
         $instance['title'] = strip_tags( $new_instance['title'] );
         return $instance;
     }
 
+    /**
+     * Display a form in the backend
+     * 
+     * @param array $instance
+     */
     public function form( $instance ) {
         $title = esc_attr( $instance['title'] );
         printf(
@@ -155,6 +163,7 @@ class MslsWidget extends WP_Widget {
 /**
  * Registers Widget
  * 
+ * @package Msls
  * @uses MslsOptions
  */
 function msls_widgets_init() {
@@ -167,6 +176,7 @@ add_action( 'widgets_init', 'msls_widgets_init' );
 /**
  * Filter for the_content()
  * 
+ * @package Msls
  * @uses MslsOptions
  * @uses MslsOutput
  * @param string $content
@@ -204,6 +214,7 @@ add_filter( 'the_content', 'msls_content_filter' );
  * Get the output for using the links to the translations in your code
  * 
  * @return string
+ * @package Msls
  * @see the_msls()
  */
 function get_the_msls() {
@@ -214,6 +225,7 @@ function get_the_msls() {
 /**
  * Output the links to the translations in your template
  * 
+ * @package Msls
  * @uses get_the_msls()
  */
 function the_msls() {

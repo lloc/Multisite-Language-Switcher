@@ -25,8 +25,6 @@ interface IMslsMain {
 
     /**
      * A class which implements IMslsMain must define such a init-method
-     *
-     * @access public
      */
     public static function init();
 
@@ -40,21 +38,17 @@ interface IMslsMain {
 class MslsMain {
 
     /**
-     * @access protected
-     * @var MslsOptions $options
+     * @var MslsOptions
      */
     protected $options;
 
     /**
-     * @access protected
-     * @var MslsBlogCollection $blogs
+     * @var MslsBlogCollection
      */
     protected $blogs;
 
     /**
      * Constructor
-     *
-     * @access public
      */
     public function __construct() {
         load_plugin_textdomain(
@@ -66,6 +60,12 @@ class MslsMain {
         $this->blogs   = MslsBlogCollection::instance();
     }
 
+    /**
+     * Get url
+     * 
+     * @param string $dir
+     * @return string
+     */
     public function get_url( $dir ) {
         $url = sprintf(
             '%s/%s/%s',
@@ -76,6 +76,13 @@ class MslsMain {
         return esc_url( $url );
     }
 
+    /**
+     * Get flag url
+     * 
+     * @param string $language
+     * @param bool $plugin
+     * @return string
+     */
     public function get_flag_url( $language, $plugin = false ) {
         if ( !$plugin && !empty( $this->options->image_url ) ) {
             $url = $this->options->image_url;
@@ -92,6 +99,12 @@ class MslsMain {
         );
     }
 
+    /**
+     * Save
+     * 
+     * @param integer $id
+     * @param string $class
+     */
     protected function save( $id, $class ) {
         if ( isset( $_POST['msls'] ) ) {
             $mydata  = $_POST['msls'];
@@ -122,6 +135,9 @@ class MslsMain {
  */
 class MslsPlugin {
 
+    /**
+     * Activate plugin
+     */
     public static function activate() {
         if ( function_exists( 'is_multisite' ) && is_multisite() ) 
             return; 
@@ -131,6 +147,11 @@ class MslsPlugin {
         );
     }
 
+    /**
+     * Deactivate plugin
+     * 
+     * @todo Write the deactivate-method
+     */
     public static function deactivate() { }
 
 }
@@ -149,7 +170,6 @@ class MslsPlugin {
 class MslsGetSet {
 
     /**
-     * @access protected
      * @var array
      */
     protected $arr = array();
@@ -157,7 +177,6 @@ class MslsGetSet {
     /**
      * "Magic" set arg
      *
-     * @access public
      * @param mixed $key
      * @param mixed $value
      */
@@ -170,7 +189,6 @@ class MslsGetSet {
     /**
      * "Magic" get arg
      *
-     * @access public
      * @param mixed $key
      * @return mixed
      */
@@ -181,7 +199,6 @@ class MslsGetSet {
     /**
      * "Magic" isset
      *
-     * @access public
      * @param mixed $key
      * @return bool
      */
@@ -189,6 +206,12 @@ class MslsGetSet {
         return isset( $this->arr[$key] );
     }
 
+    /**
+     * Check if the array has an non emty item
+     * 
+     * @param string $key
+     * @return bool
+     */ 
     final public function has_value( $key ) {
         return !empty( $this->arr[$key] ) ? true : false;
     }
@@ -196,7 +219,6 @@ class MslsGetSet {
     /**
      * Get args-array
      *
-     * @access protected
      * @return array
      */
     final protected function getArr() {
@@ -204,13 +226,5 @@ class MslsGetSet {
     }
 
 }
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
 
 ?>

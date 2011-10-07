@@ -6,14 +6,32 @@
  * @package Msls
  */
 
+/**
+ * MslsPostTag extends MslsMain and implements IMslsMain
+ */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
+
+/**
+ * MslsAdminIcon is used
+ */
 require_once dirname( __FILE__ ) . '/MslsLink.php';
 
+/**
+ * MslsPostTag
+ * 
+ * @package Msls
+ */
 class MslsPostTag extends MslsMain implements IMslsMain {
 
+    /**
+     * @var string
+     */
     public $taxonomy;
 
-    static function init() {
+    /**
+     * Init
+     */
+    public static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
             $obj = new self();
@@ -26,6 +44,11 @@ class MslsPostTag extends MslsMain implements IMslsMain {
         }
     }
 
+    /**
+     * Add
+     * 
+     * @param StdClass
+     */
     public function add( $tag ) {
         $term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
         $blogs   = $this->blogs->get();
@@ -72,19 +95,16 @@ class MslsPostTag extends MslsMain implements IMslsMain {
         }
     }
 
+    /**
+     * Set
+     * 
+     * @param int $term_id
+     */
     public function set( $term_id ) {
         if ( !current_user_can( 'manage_categories' ) ) return;
         $this->save( $term_id, 'MslsTermOptions' );
     }
 
 }
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * c-hanging-comment-ender-p: nil
- * End:
- */
 
 ?>
