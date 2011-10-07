@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.0
 Tested up to:  3.3
-Stable tag: 0.9
+Stable tag: 0.9.1
 
 A simple but powerful plugin that will help you to manage the relations of posts/pages/categories/... in your multisite-multilingual-installation.
 
@@ -38,6 +38,9 @@ If you have created your own language pack, or have an update of an existing one
 * optionally you can use a line like `<?php if ( function_exists( 'the_msls' )) the_msls(); ?>` directly in your theme-files
 
 == Changelog ==
+
+= 0.9.1 =
+* bugfix: broken methods in MslsAdmin
 
 = 0.9 =
 * new: support for custom post types 
