@@ -189,7 +189,8 @@ class MslsAdmin extends MslsMain implements IMslsMain {
      * for the output
      */ 
     public function content_priority() {
-        $arr      = array_combine( array_merge( range( 1, 10 ), array ( 20, 50, 100 ) ) );
+        $temp     = array_merge( range( 1, 10 ), array ( 20, 50, 100 ) );
+        $arr      = array_combine( $temp, $temp );
         $selected = (
             !empty ($this->options->content_priority) ? 
             $this->options->content_priority :
