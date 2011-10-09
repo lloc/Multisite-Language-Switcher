@@ -39,6 +39,9 @@ If you have created your own language pack, or have an update of an existing one
 
 == Changelog ==
 
+= 0.9.2 =
+* index.php in all directories redirects to HTTP_HOST
+
 = 0.9.1 =
 * bugfix: broken methods in MslsAdmin
 

@@ -56,6 +56,30 @@ class MslsAdmin extends MslsMain {
     }
 
     /**
+     * Create a submenu which contains links to all blogs of the current user
+     */
+    protected function subsubsub() {
+        $arr = array();
+        foreach ( $this->blogs->get() as $blog ) {
+            $arr[] = sprintf(
+                '<a href="%s"%s>%s / %s%s</a>',
+                '', // href
+                '', // class="current"
+                $blog->get_description(),
+                $blog->get_language(),
+                '' // <span class="count">Deactivated</span> 
+        }
+        return( 
+            !empty( $arr ) ?
+            sprintf( 
+                '<ul class="subsubsub"><li>%s</li></ul>', 
+                implode( ' |</li><li>', $arr )
+            ) :
+            ''
+        ); 
+    }
+
+    /**
      * Register the form-elements
      */
     public function register() {
