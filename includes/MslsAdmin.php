@@ -67,7 +67,8 @@ class MslsAdmin extends MslsMain {
                 '', // class="current"
                 $blog->get_description(),
                 $blog->get_language(),
-                '' // <span class="count">Deactivated</span> 
+                '' // <span class="count">Deactivated</span>
+            );
         }
         return( 
             !empty( $arr ) ?
