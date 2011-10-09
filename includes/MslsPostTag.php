@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsPostTag extends MslsMain and implements IMslsMain
+ * MslsPostTag extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -21,7 +21,7 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  * 
  * @package Msls
  */
-class MslsPostTag extends MslsMain implements IMslsMain {
+class MslsPostTag extends MslsMain {
 
     /**
      * @var string
@@ -65,7 +65,7 @@ class MslsPostTag extends MslsMain implements IMslsMain {
                 $terms     = get_terms( $this->taxonomy );
                 $edit_link = MslsAdminIcon::create( $this->taxonomy );
                 $edit_link->set_language( $language );
-                $edit_link->set_src( $this->get_flag_url( $language ) );
+                $edit_link->set_src( $this->options->get_flag_url( $language ) );
                 if ( !empty( $terms ) ) {
                     foreach ( $terms as $term ) {
                         $selected = '';

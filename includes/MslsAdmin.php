@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsAdmin extends MslsMain and implements IMslsMain
+ * MslsAdmin extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -21,7 +21,7 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  *
  * @package Msls
  */
-class MslsAdmin extends MslsMain implements IMslsMain {
+class MslsAdmin extends MslsMain {
 
     /**
      * Init

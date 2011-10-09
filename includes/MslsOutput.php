@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsOutput extends MslsMain and implements IMslsMain
+ * MslsOutput extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -21,7 +21,7 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  *
  * @package Msls
  */
-class MslsOutput extends MslsMain implements IMslsMain {
+class MslsOutput extends MslsMain {
 
     /**
      * Init
@@ -56,7 +56,7 @@ class MslsOutput extends MslsMain implements IMslsMain {
                     $url = $mydata->get_current_link();
                 }
                 $link->txt = $blog->get_description();
-                $link->src = $this->get_flag_url( $language );
+                $link->src = $this->options->get_flag_url( $language );
                 $link->alt = $language;
                 $arr[]     = sprintf(
                     '<a href="%s" title="%s">%s</a>',

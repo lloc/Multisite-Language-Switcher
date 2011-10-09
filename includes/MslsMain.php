@@ -7,35 +7,21 @@
  */
 
 /**
- * MslsMain requests a instance of MslsOptions in his constructor
+ * MslsMain requests a instance of MslsOptions
  */
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
 
 /**
- * MslsMain requests a instance of MslsBlogCollection in his constructor
+ * MslsMain requests a instance of MslsBlogCollection
  */
 require_once dirname( __FILE__ ) . '/MslsBlogs.php';
 
 /**
- * Interface for hook classes
+ * Abstraction for the hook classes
  *
  * @package Msls
  */
-interface IMslsMain {
-
-    /**
-     * A class which implements IMslsMain must define such a init-method
-     */
-    public static function init();
-
-}
-
-/**
- * Generic hook class
- *
- * @package Msls
- */
-class MslsMain {
+abstract class MslsMain {
 
     /**
      * @var MslsOptions
@@ -48,6 +34,11 @@ class MslsMain {
     protected $blogs;
 
     /**
+     * Every child of MslsMain has to define a init-method
+     */
+    abstract public static function init();
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -58,45 +49,6 @@ class MslsMain {
         );
         $this->options = MslsOptions::instance();
         $this->blogs   = MslsBlogCollection::instance();
-    }
-
-    /**
-     * Get url
-     * 
-     * @param string $dir
-     * @return string
-     */
-    public function get_url( $dir ) {
-        $url = sprintf(
-            '%s/%s/%s',
-            WP_PLUGIN_URL, 
-            dirname( MSLS_PLUGIN_PATH ),
-            $dir
-        );
-        return esc_url( $url );
-    }
-
-    /**
-     * Get flag url
-     * 
-     * @param string $language
-     * @param bool $plugin
-     * @return string
-     */
-    public function get_flag_url( $language, $plugin = false ) {
-        if ( !$plugin && !empty( $this->options->image_url ) ) {
-            $url = $this->options->image_url;
-        }
-        else {
-            $url = $this->get_url( 'flags' );
-        }
-        if ( 5 == strlen( $language ) )
-            $language = strtolower( substr( $language, -2 ) );
-        return sprintf(
-            '%s/%s.png',
-            $url,
-            $language
-        );
     }
 
     /**

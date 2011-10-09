@@ -36,12 +36,12 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     /**
      * @var bool
      */
-    protected $exists   = false;
+    protected $exists = false;
 
     /**
      * @var string
      */
-    protected $sep      = '';
+    protected $sep = '';
 
     /**
      * @var string
@@ -200,6 +200,45 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     }
 
     /**
+     * Get url
+     * 
+     * @param string $dir
+     * @return string
+     */
+    public function get_url( $dir ) {
+        $url = sprintf(
+            '%s/%s/%s',
+            WP_PLUGIN_URL, 
+            dirname( MSLS_PLUGIN_PATH ),
+            $dir
+        );
+        return esc_url( $url );
+    }
+
+    /**
+     * Get flag url
+     * 
+     * @param string $language
+     * @param bool $plugin
+     * @return string
+     */
+    public function get_flag_url( $language, $plugin = false ) {
+        if ( !$plugin && $this->has_value( 'image_url' ) ) {
+            $url = $this->__get( 'image_url' );
+        }
+        else {
+            $url = $this->get_url( 'flags' );
+        }
+        if ( 5 == strlen( $language ) )
+            $language = strtolower( substr( $language, -2 ) );
+        return sprintf(
+            '%s/%s.png',
+            $url,
+            $language
+        );
+    }
+
+    /**
      * Instance
      * 
      * @return MslsOptions
@@ -227,7 +266,7 @@ class MslsPostOptions extends MslsOptions {
     /**
      * @var string
      */
-    protected $sep      = '_';
+    protected $sep = '_';
 
     /**
      * @var string
@@ -269,17 +308,17 @@ class MslsTermOptions extends MslsOptions {
     /**
      * @var string
      */
-    protected $sep          = '_term_';
+    protected $sep = '_term_';
 
     /**
      * @var string
      */
-    protected $autoload     = 'no';
+    protected $autoload = 'no';
 
     /**
      * @var string
      */
-    protected $base_option  = 'tag_base';
+    protected $base_option = 'tag_base';
 
     /**
      * @var string
@@ -289,7 +328,7 @@ class MslsTermOptions extends MslsOptions {
     /**
      * @var string
      */
-    protected $taxonomy     = 'post_tag';
+    protected $taxonomy = 'post_tag';
 
     /**
      * Get base
@@ -352,7 +391,7 @@ class MslsCategoryOptions extends MslsTermOptions {
     /**
      * @var string
      */
-    protected $base_option  = 'category_base';
+    protected $base_option = 'category_base';
 
     /**
      * @var string
@@ -362,7 +401,7 @@ class MslsCategoryOptions extends MslsTermOptions {
     /**
      * @var string
      */
-    protected $taxonomy     = 'category';
+    protected $taxonomy = 'category';
 
     /**
      * Get current link

@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsMetaBox extends MslsMain and implements IMslsMain
+ * MslsMetaBox extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -21,7 +21,7 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  * 
  * @package Msls
  */
-class MslsMetaBox extends MslsMain implements IMslsMain {
+class MslsMetaBox extends MslsMain {
 
     /**
      * Init
@@ -83,7 +83,7 @@ class MslsMetaBox extends MslsMain implements IMslsMain {
                 $options   = '';
                 $edit_link = MslsAdminIcon::create( $type );
                 $edit_link->set_language( $language );
-                $edit_link->set_src( $this->get_flag_url( $language ) );
+                $edit_link->set_src( $this->options->get_flag_url( $language ) );
                 while ( $my_query->have_posts() ) {
                     $my_query->the_post();
                     $my_id    = get_the_ID();

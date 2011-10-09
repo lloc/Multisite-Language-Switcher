@@ -19,8 +19,8 @@ require_once ABSPATH . WPINC . '/ms-functions.php';
 /**
  * Collection of blog-objects
  * 
- * Implements the interface IMslsRegistryInstance because we are working with an
- * single object of MslsBlogCollection all the time.
+ * Implements the interface IMslsRegistryInstance because we want to work with 
+ * a singleton instance of MslsBlogCollection all the time.
  * @package Msls
  */
 class MslsBlogCollection implements IMslsRegistryInstance {

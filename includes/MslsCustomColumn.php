@@ -7,7 +7,7 @@
  */
 
 /**
- * MslsCustomColumn extends MslsMain and implements IMslsMain
+ * MslsCustomColumn extends MslsMain
  */
 require_once dirname( __FILE__ ) . '/MslsMain.php';
 
@@ -26,7 +26,7 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  * 
  * @package Msls
  */
-class MslsCustomColumn extends MslsMain implements IMslsMain {
+class MslsCustomColumn extends MslsMain {
 
     /**
      * Init
@@ -65,7 +65,7 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
                 $language = $blog->get_language();
                 $icon     = new MslsAdminIcon( null );
                 $icon->set_language( $language );
-                $icon->set_src( $this->get_flag_url( $language, true ) );
+                $icon->set_src( $this->options->get_flag_url( $language, true ) );
                 $arr[] = $icon->get_img();
             }
             $columns['mslscol'] = implode( '&nbsp;', $arr );
@@ -91,11 +91,11 @@ class MslsCustomColumn extends MslsMain implements IMslsMain {
                     $edit_link = MslsAdminIcon::create( $type );
                     $edit_link->set_language( $language );
                     if ( $mydata->has_value( $language ) ) {
-                        $edit_link->set_src( $this->get_url( 'images' ) . '/link_edit.png' );
+                        $edit_link->set_src( $this->options->get_url( 'images' ) . '/link_edit.png' );
                         $edit_link->set_href( $mydata->$language );
                     }
                     else {
-                        $edit_link->set_src( $this->get_url( 'images' ) . '/link_add.png' );
+                        $edit_link->set_src( $this->options->get_url( 'images' ) . '/link_add.png' );
                     }
                     echo $edit_link;
                     restore_current_blog();
