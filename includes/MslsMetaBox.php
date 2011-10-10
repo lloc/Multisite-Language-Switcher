@@ -90,7 +90,7 @@ class MslsMetaBox extends MslsMain {
                     $selected = '';
                     if ( $my_id == $mydata->$language ) {
                         $selected = 'selected="selected"';
-                        $edit_link->set_href( get_edit_post_link( $mydata->$language ) );
+                        $edit_link->set_href( $mydata->$language );
                     }
                     $options .= sprintf(
                         '<option value="%s"%s>%s</option>',
