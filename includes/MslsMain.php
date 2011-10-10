@@ -52,6 +52,26 @@ abstract class MslsMain {
     }
 
     /**
+     * Get type of taxonomy
+     * 
+     * @return string
+     */
+    public function get_taxonomy() {
+        $screen = get_current_screen();
+        $args   = array(
+            'public' => true,
+            '_builtin' => false
+        ); 
+        $taxonomies = get_taxonomies( $args, 'names', 'and' ); 
+        $taxonomies = array_merge( $taxonomies, array( 'category', 'post_tag' ) );
+        return( 
+            in_array( $screen->taxonomy, $taxonomies ) ?
+            $screen->taxonomy :
+            ''
+        );
+    }
+
+    /**
      * Save
      * 
      * @param integer $id

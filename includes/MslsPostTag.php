@@ -24,25 +24,21 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
 class MslsPostTag extends MslsMain {
 
     /**
-     * @var string
-     */
-    public $taxonomy;
-
-    /**
      * Init
      */
     public static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
             $obj = new self();
-            $obj->taxonomy = $_REQUEST['taxonomy'];
-            if ( in_array( $obj->taxonomy, array( 'category', 'post_tag' ) ) ) {
-                add_action( "{$obj->taxonomy}_edit_form_fields", array( $obj, 'add' ) );
-                add_action( "{$obj->taxonomy}_add_form_fields", array( $obj, 'add' ) );
-                add_action( "edited_{$obj->taxonomy}", array( $obj, 'set' ) );
+            $taxonomy = $obj->get_type();
+            if (!empty( $taxonomy ) ) {
+                add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
+                add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
+                add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
             }
         }
     }
+
 
     /**
      * Add
@@ -62,8 +58,8 @@ class MslsPostTag extends MslsMain {
                 switch_to_blog( $blog->userblog_id );
                 $language  = $blog->get_language();
                 $options   = '';
-                $terms     = get_terms( $this->taxonomy );
-                $edit_link = MslsAdminIcon::create( $this->taxonomy );
+                $terms     = get_terms( $this->get_taxonomy() );
+                $edit_link = MslsAdminIcon::create( $this->get_taxonomy() );
                 $edit_link->set_language( $language );
                 $edit_link->set_src( $this->options->get_flag_url( $language ) );
                 if ( !empty( $terms ) ) {

@@ -121,8 +121,10 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         if ( !$options->is_excluded() ) {
             $obj      = new self();
             $taxonomy = $obj->get_type();
-            add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
-            add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
+            if (!empty( $taxonomy ) ) {
+                add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
+                add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
+            }
         }
     }
 
@@ -132,8 +134,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
      * @return string
      */
     public function get_type() {
-        $screen = get_current_screen();
-        return $screen->taxonomy;
+        return $this->get_taxonomy();
     }
 
     /**

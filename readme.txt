@@ -40,9 +40,10 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.9.2 =
-* feature-request: The link of the current language is marked with `class="current_language"`
+* new: The link of the current language is marked with `class="current_language"`
+* new: index.php in all directories redirects to HTTP_HOST
 * bugfix: admin metabox and the link to a _new_ page
-* index.php in all directories redirects to HTTP_HOST
+* deleted: msls_blog_collection_get-filter
 
 = 0.9.1 =
 * bugfix: broken methods in MslsAdmin
