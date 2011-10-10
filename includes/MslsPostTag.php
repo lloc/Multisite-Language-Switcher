@@ -30,7 +30,7 @@ class MslsPostTag extends MslsMain {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
             $obj = new self();
-            $taxonomy = $obj->get_type();
+            $taxonomy = $obj->get_taxonomy();
             if (!empty( $taxonomy ) ) {
                 add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
                 add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
