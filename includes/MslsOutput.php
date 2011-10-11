@@ -189,7 +189,7 @@ function msls_content_filter( $content ) {
     $options = MslsOptions::instance();
     if ( $options->is_content_filter() ) {
         $obj   = new MslsOutput();
-        $links = $obj->get( 1, true, true );
+        $links = $obj->get( 1, false, true );
         if ( !empty( $links ) ) {
             if ( count( $links ) > 1 ) {
                 $last  = array_pop( $links );
