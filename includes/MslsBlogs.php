@@ -124,12 +124,12 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Get an array with blog-objects
      *
-     * @param bool $frontend_filter
+     * @param bool $frontend
      * @return array Collection of MslsBlog-objects
      */
-    public function get( $frontend_filter = false ) {
+    public function get( $frontend = false ) {
         $objects = $this->objects;
-        if ( $this->has_current_blog() && ( !$frontend_filter || !$this->current_blog_output ) )
+        if ( $this->has_current_blog() && ( !$frontend || !$this->current_blog_output ) )
             unset( $objects[$this->current_blog_id] );
         usort( $objects, array( 'MslsBlog', $this->objects_order ) );
         return $objects;

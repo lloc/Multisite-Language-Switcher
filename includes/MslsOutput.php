@@ -34,18 +34,19 @@ class MslsOutput extends MslsMain {
      * Get the output as array
      * 
      * @param string $display
+     * @param bool frontend
      * @param bool $exists
      * @return array
      */
-    public function get( $display, $exists = false ) {
+    public function get( $display, $frontend = true, $exists = false ) {
         $arr   = array();
-        $blogs = $this->blogs->get( (false == $exists ? true : false) );
+        $blogs = $this->blogs->get( $frontend );
         if ( $blogs ) {
             $mydata = MslsOptions::create();
             $link   = MslsLink::create( $display );
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
-                if ( true == $exists && !$mydata->has_value( $language ) )
+                if ( $exists && !$mydata->has_value( $language ) )
                     continue;
                 if ( $blog->userblog_id != $this->blogs->get_current_blog_id() ) {
                     switch_to_blog( $blog->userblog_id );
@@ -79,6 +80,7 @@ class MslsOutput extends MslsMain {
     public function __toString() {
         $arr = $this->get(
             (int) $this->options->display,
+            true,
             (bool) $this->options->only_with_translation
         );
         $str = '';
@@ -187,7 +189,7 @@ function msls_content_filter( $content ) {
     $options = MslsOptions::instance();
     if ( $options->is_content_filter() ) {
         $obj   = new MslsOutput();
-        $links = $obj->get( 1, true );
+        $links = $obj->get( 1, true, true );
         if ( !empty( $links ) ) {
             if ( count( $links ) > 1 ) {
                 $last  = array_pop( $links );
