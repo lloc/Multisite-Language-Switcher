@@ -12,6 +12,11 @@
 require_once dirname( __FILE__ ) . '/MslsRegistry.php';
 
 /**
+ * MslsMain requests a instance of MslsOptions
+ */
+require_once dirname( __FILE__ ) . '/MslsOptions.php';
+
+/**
  * MslsBlogCollection uses get_user_id_from_string()
  */
 require_once ABSPATH . WPINC . '/ms-functions.php';
@@ -129,7 +134,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
      */
     public function get( $frontend = false ) {
         $objects = $this->objects;
-        if ( $this->has_current_blog() && ( !$frontend || !$this->current_blog_output ) )
+        if ( $frontend )
+            $frontend = $this->current_blog_output;
+        if ( $this->has_current_blog() && !$frontend )
             unset( $objects[$this->current_blog_id] );
         usort( $objects, array( 'MslsBlog', $this->objects_order ) );
         return $objects;
