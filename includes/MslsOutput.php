@@ -77,10 +77,7 @@ class MslsOutput extends MslsMain {
      * @return string
      */ 
     public function __toString() {
-        $arr = $this->get(
-            (int) $this->options->display,
-            (bool) $this->options->only_with_translation
-        );
+        $arr = $this->get( (int) $this->options->display );
         $str = '';
         if ( !empty( $arr ) ) {
             $str = $this->options->before_output .
