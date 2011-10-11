@@ -42,7 +42,9 @@ If you have created your own language pack, or have an update of an existing one
 = 0.9.2 =
 * new: The link of the current language is marked with `class="current_language"`
 * new: index.php in all directories redirects to HTTP_HOST
+* bugfix: link was not correct anymore when is_home() and is_front_page 
 * bugfix: admin metabox and the link to a _new_ page
+* bugfix: "Display link to the current language" was ignored when option "Show only links with a translation" is checked as well
 * deleted: msls_blog_collection_get-filter
 
 = 0.9.1 =
