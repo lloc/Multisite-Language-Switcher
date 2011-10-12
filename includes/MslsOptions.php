@@ -76,17 +76,16 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
         }
         else {
             global $wp_query;
-            $qo = $wp_query->get_queried_object();
             if ( is_home() || is_front_page() ) {
                 return new MslsOptions();
             } 
             elseif ( is_category() ) {
-                return new MslsCategoryOptions( $qo->queried_object_id );
+                return new MslsCategoryOptions( $wp_query->get_queried_object_id() );
             } 
             elseif ( is_tax() ) {
-                return new MslsTermOptions( $qo->queried_object_id );
+                return new MslsTermOptions( $wp_query->get_queried_object_id() );
             }
-            return new MslsPostOptions( $qo->queried_object_id );
+            return new MslsPostOptions( $wp_query->get_queried_object_id() );
         }
         return null;
     }
