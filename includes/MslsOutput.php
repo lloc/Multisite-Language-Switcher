@@ -47,7 +47,7 @@ class MslsOutput extends MslsMain {
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
                 if ( $blog->userblog_id != $this->blogs->get_current_blog_id() ) {
-                    if ( $exists && !$mydata->has_value( $language ) )
+                    if ( $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() )
                         continue;
                     switch_to_blog( $blog->userblog_id );
                     $url = $mydata->get_permalink( $language );
