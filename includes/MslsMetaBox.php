@@ -76,7 +76,7 @@ class MslsMetaBox extends MslsMain {
                 $my_query  = new WP_Query( $args );
                 $language  = $blog->get_language();
                 $options   = '';
-                $edit_link = MslsAdminIcon::create( $type );
+                $edit_link = MslsAdminIcon::create();
                 $edit_link->set_language( $language );
                 $edit_link->set_src( $this->options->get_flag_url( $language ) );
                 while ( $my_query->have_posts() ) {

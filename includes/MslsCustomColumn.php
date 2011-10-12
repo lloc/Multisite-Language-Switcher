@@ -79,7 +79,7 @@ class MslsCustomColumn extends MslsMain {
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
                     $language  = $blog->get_language();
-                    $edit_link = MslsAdminIcon::create( MslsContentTypes::create()->get_request() );
+                    $edit_link = MslsAdminIcon::create();
                     $edit_link->set_language( $language );
                     if ( $mydata->has_value( $language ) ) {
                         $edit_link->set_src( $this->options->get_url( 'images' ) . '/link_edit.png' );

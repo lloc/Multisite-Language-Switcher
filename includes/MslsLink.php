@@ -207,17 +207,18 @@ class MslsAdminIcon {
      * @param string $type
      * @return MslsAdminIcon
      */
-    public static function create( $type ) {
-        switch ( $type ) {
-            case 'post':
-                return new MslsAdminIconPost( $type );
-                break;
-            case 'category':
-            case 'post_tag':
-                return new MslsAdminIconTaxonomy( $type );
-                break;
+    public static function create() {
+        $obj  = MslsContentTypes::create();
+        $type = $obj->get_request();
+        if ( $obj->is_taxonomy() ) {
+            return new MslsAdminIconTaxonomy( $type );
         }
-        return new MslsAdminIcon( $type );
+        else {
+            if ( 'post' == $type ) {
+                return new MslsAdminIconPost( $type );
+            }
+            return new MslsAdminIcon( $type );
+        }
     }
 
     /**
