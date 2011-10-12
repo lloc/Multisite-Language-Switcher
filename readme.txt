@@ -44,13 +44,14 @@ If you have created your own language pack, or have an update of an existing one
 * new: index.php in all directories redirects to HTTP_HOST
 * bugfix: admin metabox and the link to a _new_ page
 * bugfix: "Display link to the current language" was ignored when option "Show only links with a translation" is checked as well
+* bugfix: msls_content_filter should work with pages and posts only
 * deleted: msls_blog_collection_get-filter
 
 = 0.9.1 =
 * bugfix: broken methods in MslsAdmin
 
 = 0.9 =
-* new: support for custom post types 
+* new: support for custom post types
 * new: apply_filters( 'msls_blog_collection_construct', $arr ); in MslsBlogCollection::__construct();
 * bugfix: msls_blog_collection_get
 * language files for fr_FR and es_ES updated

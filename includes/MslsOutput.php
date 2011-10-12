@@ -186,27 +186,29 @@ add_action( 'widgets_init', 'msls_widgets_init' );
  * @return string
  */ 
 function msls_content_filter( $content ) {
-    $options = MslsOptions::instance();
-    if ( $options->is_content_filter() ) {
-        $obj   = new MslsOutput();
-        $links = $obj->get( 1, false, true );
-        if ( !empty( $links ) ) {
-            if ( count( $links ) > 1 ) {
-                $last  = array_pop( $links );
-                $links = sprintf(
-                    __( '%s and %s', 'msls' ),
-                    implode( ', ', $links ),
-                    $last
-                );
-            } else {
-                $links = $links[0];
+    if ( is_single () || is_page() ) {
+        $options = MslsOptions::instance();
+        if ( $options->is_content_filter() ) {
+            $obj   = new MslsOutput();
+            $links = $obj->get( 1, false, true );
+            if ( !empty( $links ) ) {
+                if ( count( $links ) > 1 ) {
+                    $last  = array_pop( $links );
+                    $links = sprintf(
+                        __( '%s and %s', 'msls' ),
+                        implode( ', ', $links ),
+                        $last
+                    );
+                } else {
+                    $links = $links[0];
+                }
+                $content .= '<p id="msls">' .
+                    sprintf(
+                        __( 'This post is also available in %s.', 'msls' ),
+                        $links
+                    ) .
+                    '</p>';
             }
-            $content .= '<p id="msls">' .
-                sprintf(
-                    __( 'This post is also available in %s.', 'msls' ),
-                    $links
-                ) .
-                '</p>';
         }
     }
     return $content;
