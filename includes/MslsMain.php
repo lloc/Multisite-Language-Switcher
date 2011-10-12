@@ -7,6 +7,11 @@
  */
 
 /**
+ * MslsContentTypes implements IMslsRegistryInstance
+ */
+require_once dirname( __FILE__ ) . '/MslsRegistry.php';
+
+/**
  * MslsMain requests a instance of MslsOptions
  */
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
@@ -52,20 +57,31 @@ abstract class MslsMain {
     }
 
     /**
+     * Get type of post
+     * 
+     * @return string
+     */
+    public function get_post_type() {
+        $obj = MslsPostType::instance();
+        $screen = get_current_screen();
+        return(
+            in_array( $screen->post_type, $obj->get() ) ?
+            $screen->post_type :
+            ''
+        );
+    }
+
+
+    /**
      * Get type of taxonomy
      * 
      * @return string
      */
     public function get_taxonomy() {
+        $obj = MslsTaxonomy::instance();
         $screen = get_current_screen();
-        $args   = array(
-            'public' => true,
-            '_builtin' => false
-        ); 
-        $taxonomies = get_taxonomies( $args, 'names', 'and' ); 
-        $taxonomies = array_merge( $taxonomies, array( 'category', 'post_tag' ) );
-        return( 
-            in_array( $screen->taxonomy, $taxonomies ) ?
+        return(
+            in_array( $screen->taxonomy, $obj->get() ) ?
             $screen->taxonomy :
             ''
         );
@@ -195,6 +211,100 @@ class MslsGetSet {
      */
     final protected function getArr() {
         return $this->arr;
+    }
+
+}
+
+/**
+ * Supported content types
+ *
+ * @package Msls
+ */
+class MslsContentTypes {
+
+    /**
+     * @var array
+     */
+    protected $types = array();
+
+    /**
+     * Getter
+     * 
+     * @return array
+     */
+    public function get() {
+        return $this->types;
+    }
+
+}
+
+/**
+ * Supported post types
+ *
+ * @package Msls
+ */
+class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
+
+    public function __construct() {
+        $args = array(
+            'public'   => true,
+            '_builtin' => false,
+        ); 
+        $post_types = get_post_types( $args, 'names', 'and' ); 
+        $this->types = array_merge( array( 'post', 'page' ), $post_types );
+    }
+
+    /**
+     * Get or create a instance of MslsPostType
+     *
+     * @return MslsPostType
+     */
+    public static function instance() {
+        $registry = MslsRegistry::singleton();
+        $cls      = __CLASS__;
+        $obj      = $registry->get_object( $cls );
+        if ( is_null( $obj ) ) {
+            $obj = new $cls;
+            $registry->set_object( $cls, $obj );
+        }
+        return $obj;
+    }
+
+}
+
+/**
+ * Supported taxonomies
+ *
+ * @package Msls
+ */
+class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $args   = array(
+            'public' => true,
+            '_builtin' => false
+        ); 
+        $taxonomies = get_taxonomies( $args, 'names', 'and' ); 
+        $this->types = array_merge( array( 'category', 'post_tag' ), $taxonomies );
+    }
+
+    /**
+     * Get or create a instance of MslsTaxonomy
+     *
+     * @return MslsBlogCollection
+     */
+    public static function instance() {
+        $registry = MslsRegistry::singleton();
+        $cls      = __CLASS__;
+        $obj      = $registry->get_object( $cls );
+        if ( is_null( $obj ) ) {
+            $obj = new $cls;
+            $registry->set_object( $cls, $obj );
+        }
+        return $obj;
     }
 
 }

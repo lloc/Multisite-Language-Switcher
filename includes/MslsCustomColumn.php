@@ -47,8 +47,7 @@ class MslsCustomColumn extends MslsMain {
      * @return string
      */
     public function get_type() {
-        $screen = get_current_screen();
-        return $screen->post_type;
+        return $this->get_post_type();
     }
 
     /**

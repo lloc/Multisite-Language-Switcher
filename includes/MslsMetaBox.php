@@ -39,13 +39,8 @@ class MslsMetaBox extends MslsMain {
      * Add
      */
     public function add() {
-        $args = array(
-            'public'   => true,
-            '_builtin' => false,
-        ); 
-        $post_types = get_post_types( $args, 'names', 'and' ); 
-        $post_types = array_merge( array( 'post', 'page' ), $post_types );
-        foreach ( $post_types as $pt ) {
+        $obj = MslsPostType::instance();
+        foreach ( $obj->get() as $pt ) {
             add_meta_box(
                 'msls',
                 __( 'Multisite Language Switcher', 'msls' ),
