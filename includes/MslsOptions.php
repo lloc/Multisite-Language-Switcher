@@ -62,7 +62,9 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      */
     static function create( $type = '', $id = 0 ) {
         if ( '' == $type ) {
-            if ( is_category() ) {
+            if ( is_home() || is_front_page() ) {
+                return new MslsOptions();
+            } elseif ( is_category() ) {
                 return new MslsCategoryOptions( get_query_var( 'cat' ) );
             } elseif ( is_tag() ) {
                 return new MslsTermOptions( get_query_var( 'tag_id' ) );
