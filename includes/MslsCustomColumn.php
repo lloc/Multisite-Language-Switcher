@@ -112,7 +112,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         if ( !$options->is_excluded() ) {
             $obj      = new self();
             $taxonomy = MslsTaxonomy::instance()->get_request();
-            if (!empty( $taxonomy ) ) {
+            if ( !empty( $taxonomy ) ) {
                 add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
                 add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
             }

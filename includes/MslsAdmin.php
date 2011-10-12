@@ -70,9 +70,9 @@ class MslsAdmin extends MslsMain {
                 '' // <span class="count">Deactivated</span>
             );
         }
-        return( 
+        return(
             !empty( $arr ) ?
-            sprintf( 
+            sprintf(
                 '<ul class="subsubsub"><li>%s</li></ul>', 
                 implode( ' |</li><li>', $arr )
             ) :
@@ -214,7 +214,7 @@ class MslsAdmin extends MslsMain {
      * for the output
      */ 
     public function content_priority() {
-        $temp     = array_merge( range( 1, 10 ), array ( 20, 50, 100 ) );
+        $temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
         $arr      = array_combine( $temp, $temp );
         $selected = (
             !empty ($this->options->content_priority) ? 

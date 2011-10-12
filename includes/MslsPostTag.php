@@ -31,7 +31,7 @@ class MslsPostTag extends MslsMain {
         if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
             $obj = new self();
             $taxonomy = MslsContentTypes::create()->get_request();
-            if (!empty( $taxonomy ) ) {
+            if ( !empty( $taxonomy ) ) {
                 add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
                 add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
                 add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
@@ -59,7 +59,7 @@ class MslsPostTag extends MslsMain {
                 switch_to_blog( $blog->userblog_id );
                 $language  = $blog->get_language();
                 $options   = '';
-                $terms     = get_terms( $type);
+                $terms     = get_terms( $type );
                 $edit_link = MslsAdminIcon::create();
                 $edit_link->set_language( $language );
                 $edit_link->set_src( $this->options->get_flag_url( $language ) );
