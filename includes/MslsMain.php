@@ -219,8 +219,8 @@ class MslsContentTypes {
      */
     protected $types = array();
 
-    public function __construct() {
-        if ( isset( $_REQUEST['taxonomy'] ) ) {
+    public static function create() {
+        if ( isset( $_REQUEST['taxonomy'] ) )
             return MslsTaxonomy::instance();
         return MslsPostType::instance();
     }
