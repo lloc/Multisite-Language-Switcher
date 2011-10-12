@@ -3,7 +3,7 @@
 Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
-Requires at least: 3.1
+Requires at least: 3.2
 Tested up to:  3.3
 Stable tag: 0.9.1
 
@@ -42,7 +42,6 @@ If you have created your own language pack, or have an update of an existing one
 = 0.9.2 =
 * new: The link of the current language is marked with `class="current_language"`
 * new: index.php in all directories redirects to HTTP_HOST
-* new: use of get_current_screen requires WP 3.1
 * bugfix: admin metabox and the link to a _new_ page
 * bugfix: "Display link to the current language" was ignored when option "Show only links with a translation" is checked as well
 * deleted: msls_blog_collection_get-filter

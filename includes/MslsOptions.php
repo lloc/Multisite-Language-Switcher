@@ -63,16 +63,14 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     static function create( $id = 0 ) {
         if ( is_admin() ) {
             $id = (int) $id;
-            $screen = get_current_screen();
-            if ( !empty( $screen->taxonomy ) ) {
-                if ( 'category' == $screen->taxonomy ) {
+            $obj = MslsContentTypes::instance();
+            if ( !empty( $obj->is_taxonomy() ) ) {
+                if ( 'category' == $obj->get_request() ) {
                     return new MslsCategoryOptions( $id );
                 }
                 return new MslsTermOptions( $id );
             }
-            if ( !empty( $screen->post_type ) ) {
-                return new MslsPostOptions( $id );
-            }
+            return new MslsPostOptions( $id );
         }
         else {
             global $wp_query;

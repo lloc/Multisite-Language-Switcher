@@ -62,15 +62,8 @@ abstract class MslsMain {
      * @return string
      */
     public function get_post_type() {
-        $obj = MslsPostType::instance();
-        $screen = get_current_screen();
-        return(
-            in_array( $screen->post_type, $obj->get() ) ?
-            $screen->post_type :
-            ''
-        );
+        return MslsPostType::instance()->get_request();
     }
-
 
     /**
      * Get type of taxonomy
@@ -78,13 +71,7 @@ abstract class MslsMain {
      * @return string
      */
     public function get_taxonomy() {
-        $obj = MslsTaxonomy::instance();
-        $screen = get_current_screen();
-        return(
-            in_array( $screen->taxonomy, $obj->get() ) ?
-            $screen->taxonomy :
-            ''
-        );
+        return MslsTaxonomy::instance()->get_request();
     }
 
     /**
@@ -223,9 +210,20 @@ class MslsGetSet {
 class MslsContentTypes {
 
     /**
+     * @var string
+     */
+    protected $request;
+
+    /**
      * @var array
      */
     protected $types = array();
+
+    public function __construct() {
+        if ( isset( $_REQUEST['taxonomy'] ) ) {
+            return MslsTaxonomy::instance();
+        return MslsPostType::instance();
+    }
 
     /**
      * Getter
@@ -234,6 +232,37 @@ class MslsContentTypes {
      */
     public function get() {
         return $this->types;
+    }
+
+    /**
+     * Gets the request if it is an allowed content type
+     * 
+     * @return string
+     */
+    public function get_request() {
+        return(
+            in_array( $this->request, $this->types ) ?
+            $this->request :
+            ''
+        );
+    }
+
+    /**
+     * Check for post_type
+     * 
+     * @return bool
+     */
+    public function is_post_type() {
+        return false;
+    }
+
+    /**
+     * Check for taxonomy
+     * 
+     * @return bool
+     */
+    public function is_taxonomy() {
+        return false;
     }
 
 }
@@ -246,12 +275,22 @@ class MslsContentTypes {
 class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 
     public function __construct() {
-        $args = array(
+        $this->request = esc_attr( $_REQUEST['post_type'] );
+        $args          = array(
             'public'   => true,
             '_builtin' => false,
         ); 
-        $post_types = get_post_types( $args, 'names', 'and' ); 
-        $this->types = array_merge( array( 'post', 'page' ), $post_types );
+        $post_types    = get_post_types( $args, 'names', 'and' ); 
+        $this->types   = array_merge( array( 'post', 'page' ), $post_types );
+    }
+
+    /**
+     * Check for post_type
+     * 
+     * @return bool
+     */
+    function is_post_type() {
+        return true;
     }
 
     /**
@@ -283,12 +322,22 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
      * Constructor
      */
     public function __construct() {
-        $args   = array(
-            'public' => true,
+        $request     = esc_attr( $_REQUEST['taxonomy'] );
+        $args        = array(
+            'public'   => true,
             '_builtin' => false
         ); 
-        $taxonomies = get_taxonomies( $args, 'names', 'and' ); 
+        $taxonomies  = get_taxonomies( $args, 'names', 'and' ); 
         $this->types = array_merge( array( 'category', 'post_tag' ), $taxonomies );
+    }
+
+    /**
+     * Check for taxonomy
+     * 
+     * @return bool
+     */
+    public function is_taxonomy() {
+        return true;
     }
 
     /**
