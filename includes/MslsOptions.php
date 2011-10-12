@@ -64,7 +64,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
         if ( is_admin() ) {
             $id = (int) $id;
             $obj = MslsContentTypes::instance();
-            if ( !empty( $obj->is_taxonomy() ) ) {
+            if ( $obj->is_taxonomy() ) {
                 if ( 'category' == $obj->get_request() ) {
                     return new MslsCategoryOptions( $id );
                 }
