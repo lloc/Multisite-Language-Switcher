@@ -82,7 +82,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             elseif ( is_category() ) {
                 return new MslsCategoryOptions( $wp_query->get_queried_object_id() );
             } 
-            elseif ( is_tag || is_tax() ) {
+            elseif ( is_tag() || is_tax() ) {
                 return new MslsTermOptions( $wp_query->get_queried_object_id() );
             }
             return new MslsPostOptions( $wp_query->get_queried_object_id() );
