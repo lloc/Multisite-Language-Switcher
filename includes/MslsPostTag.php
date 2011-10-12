@@ -30,7 +30,7 @@ class MslsPostTag extends MslsMain {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
             $obj = new self();
-            $taxonomy = $obj->get_taxonomy();
+            $taxonomy = MslsContentTypes::create()->get_request();
             if (!empty( $taxonomy ) ) {
                 add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
                 add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
@@ -54,12 +54,13 @@ class MslsPostTag extends MslsMain {
                 __( 'Multisite Language Switcher', 'msls' )
             );
             $mydata = new MslsTermOptions( $term_id );
+            $type   = MslsContentTypes::create()->get_request();
             foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
                 $language  = $blog->get_language();
                 $options   = '';
-                $terms     = get_terms( $this->get_taxonomy() );
-                $edit_link = MslsAdminIcon::create( $this->get_taxonomy() );
+                $terms     = get_terms( $type);
+                $edit_link = MslsAdminIcon::create( $type );
                 $edit_link->set_language( $language );
                 $edit_link->set_src( $this->options->get_flag_url( $language ) );
                 if ( !empty( $terms ) ) {

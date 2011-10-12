@@ -35,19 +35,12 @@ class MslsCustomColumn extends MslsMain {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj       = new self();
-            $post_type = $obj->get_type();
-            add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
-            add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
+            $post_type = MslsPostType::instance()->get_request();
+            if ( !empty( $post_type ) ) {
+                add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
+                add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
+            }
         }
-    }
-
-    /**
-     * Get type of post
-     * 
-     * @return string
-     */
-    public function get_type() {
-        return $this->get_post_type();
     }
 
     /**
@@ -82,12 +75,11 @@ class MslsCustomColumn extends MslsMain {
         if ( 'mslscol' == $column_name ) {
             $blogs = $this->blogs->get();
             if ( $blogs ) {
-                $type   = $this->get_type();
                 $mydata = MslsOptions::create( $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
                     $language  = $blog->get_language();
-                    $edit_link = MslsAdminIcon::create( $type );
+                    $edit_link = MslsAdminIcon::create( MslsContentTypes::create()->get_request() );
                     $edit_link->set_language( $language );
                     if ( $mydata->has_value( $language ) ) {
                         $edit_link->set_src( $this->options->get_url( 'images' ) . '/link_edit.png' );
@@ -119,21 +111,12 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj      = new self();
-            $taxonomy = $obj->get_type();
+            $taxonomy = MslsTaxonomy::instance()->get_request();
             if (!empty( $taxonomy ) ) {
                 add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
                 add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
             }
         }
-    }
-
-    /**
-     * Get type of taxonomy
-     * 
-     * @return string
-     */
-    public function get_type() {
-        return $this->get_taxonomy();
     }
 
     /**

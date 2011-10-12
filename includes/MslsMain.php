@@ -57,24 +57,6 @@ abstract class MslsMain {
     }
 
     /**
-     * Get type of post
-     * 
-     * @return string
-     */
-    public function get_post_type() {
-        return MslsPostType::instance()->get_request();
-    }
-
-    /**
-     * Get type of taxonomy
-     * 
-     * @return string
-     */
-    public function get_taxonomy() {
-        return MslsTaxonomy::instance()->get_request();
-    }
-
-    /**
      * Save
      * 
      * @param integer $id
@@ -326,13 +308,13 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
      * Constructor
      */
     public function __construct() {
-        $args        = array(
+        $args          = array(
             'public'   => true,
             '_builtin' => false,
         ); 
-        $request     = esc_attr( $_REQUEST['taxonomy'] );
-        $taxonomies  = get_taxonomies( $args, 'names', 'and' ); 
-        $this->types = array_merge( array( 'category', 'post_tag' ), $taxonomies );
+        $taxonomies    = get_taxonomies( $args, 'names', 'and' ); 
+        $this->types   = array_merge( array( 'category', 'post_tag' ), $taxonomies );
+        $this->request = esc_attr( $_REQUEST['taxonomy'] );
     }
 
     /**
