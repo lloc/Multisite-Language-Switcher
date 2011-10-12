@@ -60,31 +60,33 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * @param int $id
      * @return MslsOptions
      */
-    static function create( $type = '', $id = 0 ) {
-        if ( '' == $type ) {
-            if ( is_home() || is_front_page() ) {
-                return new MslsOptions();
-            } elseif ( is_category() ) {
-                return new MslsCategoryOptions( get_query_var( 'cat' ) );
-            } elseif ( is_tag() ) {
-                return new MslsTermOptions( get_query_var( 'tag_id' ) );
+    static function create( $id = 0 ) {
+        if ( is_admin() ) {
+            $id = (int) $id;
+            $screen = get_current_screen();
+            if ( !empty( $screen->taxonomy ) ) {
+                if ( 'category' == $screen->taxonomy ) {
+                    return new MslsCategoryOptions( $id );
+                }
+                return new MslsTermOptions( $id );
             }
-            global $post;
-            return new MslsPostOptions( $post->ID );
+            if ( !empty( $screen->post_type ) ) {
+                return new MslsPostOptions( $id );
+            }
         }
         else {
-            $id = (int) $id;
-            switch ( $type ) {
-                case 'category':
-                    return new MslsCategoryOptions( $id );
-                    break;
-                case 'post_tag':
-                    return new MslsTermOptions( $id );
-                    break;
-                default:
-                    return new MslsPostOptions( $id );
-                    break;
+            global $wp_query;
+            $qo = $wp_query->get_queried_object();
+            if ( is_home() || is_front_page() ) {
+                return new MslsOptions();
+            } 
+            elseif ( is_category() ) {
+                return new MslsCategoryOptions( $qo->queried_object_id );
+            } 
+            elseif ( is_tax() ) {
+                return new MslsTermOptions( $qo->queried_object_id );
             }
+            return new MslsPostOptions( $qo->queried_object_id );
         }
         return null;
     }

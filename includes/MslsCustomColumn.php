@@ -83,7 +83,7 @@ class MslsCustomColumn extends MslsMain {
             $blogs = $this->blogs->get();
             if ( $blogs ) {
                 $type   = $this->get_type();
-                $mydata = MslsOptions::create( $type, $item_id );
+                $mydata = MslsOptions::create( $item_id );
                 foreach ( $blogs as $blog ) {
                     switch_to_blog( $blog->userblog_id );
                     $language  = $blog->get_language();
