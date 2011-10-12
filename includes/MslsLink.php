@@ -83,12 +83,12 @@ class MslsLink extends MslsGetSet {
      */
     public function __toString() {
         $temp = array();
-        foreach ( array_keys( $this->getArr() ) as $key ) {
+        foreach ( array_keys( $this->get_arr() ) as $key ) {
             $temp[] = '{' . $key . '}';
         }
         return str_replace(
             $temp,
-            $this->getArr(),
+            $this->get_arr(),
             $this->format_string
         );
     }

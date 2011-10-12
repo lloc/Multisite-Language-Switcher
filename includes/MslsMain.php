@@ -196,7 +196,7 @@ class MslsGetSet {
      *
      * @return array
      */
-    final protected function getArr() {
+    final protected function get_arr() {
         return $this->arr;
     }
 
@@ -275,13 +275,17 @@ class MslsContentTypes {
 class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 
     public function __construct() {
-        $this->request = esc_attr( $_REQUEST['post_type'] );
         $args          = array(
             'public'   => true,
             '_builtin' => false,
         ); 
         $post_types    = get_post_types( $args, 'names', 'and' ); 
         $this->types   = array_merge( array( 'post', 'page' ), $post_types );
+        $this->request = (
+            isset( $_REQUEST['post_type'] ) ? 
+            esc_attr( $_REQUEST['post_type'] ) :
+            'post'
+        );
     }
 
     /**
@@ -322,11 +326,11 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
      * Constructor
      */
     public function __construct() {
-        $request     = esc_attr( $_REQUEST['taxonomy'] );
         $args        = array(
             'public'   => true,
-            '_builtin' => false
+            '_builtin' => false,
         ); 
+        $request     = esc_attr( $_REQUEST['taxonomy'] );
         $taxonomies  = get_taxonomies( $args, 'names', 'and' ); 
         $this->types = array_merge( array( 'category', 'post_tag' ), $taxonomies );
     }
