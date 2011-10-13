@@ -56,7 +56,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     /**
      * Factory method
      * 
-     * @param string $type
      * @param int $id
      * @return MslsOptions
      */

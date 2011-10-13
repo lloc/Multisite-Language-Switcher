@@ -201,6 +201,11 @@ class MslsContentTypes {
      */
     protected $types = array();
 
+    /**
+     * Factory method
+     * 
+     * @return MslsContentTypes
+     */
     public static function create() {
         if ( isset( $_REQUEST['taxonomy'] ) )
             return MslsTaxonomy::instance();
@@ -256,6 +261,9 @@ class MslsContentTypes {
  */
 class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 
+    /**
+     * Constructor
+     */
     public function __construct() {
         $args          = array(
             'public'   => true,
@@ -263,11 +271,13 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
         ); 
         $post_types    = get_post_types( $args, 'names', 'and' ); 
         $this->types   = array_merge( array( 'post', 'page' ), $post_types );
-        $this->request = (
-            !empty( $_REQUEST['post_type'] ) ? 
-            esc_attr( $_REQUEST['post_type'] ) :
-            'post'
-        );
+        if ( !empty( $_REQUEST['post_type'] ) ) {
+            $this->request = esc_attr( $_REQUEST['post_type'] );
+        }
+        else {
+            global $post;
+            $this->request = get_post_type( $post );
+        }
     }
 
     /**

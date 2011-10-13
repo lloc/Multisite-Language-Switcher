@@ -204,7 +204,6 @@ class MslsAdminIcon {
     /**
      * Factory method
      * 
-     * @param string $type
      * @return MslsAdminIcon
      */
     public static function create() {
