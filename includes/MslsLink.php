@@ -199,7 +199,7 @@ class MslsAdminIcon {
     /**
      * @var string
      */
-    protected $path = 'post-new.php?post_type=';
+    protected $path = 'post-new.php';
 
     /**
      * Factory method
@@ -213,9 +213,6 @@ class MslsAdminIcon {
             return new MslsAdminIconTaxonomy( $type );
         }
         else {
-            if ( 'post' == $type ) {
-                return new MslsAdminIconPost( $type );
-            }
             return new MslsAdminIcon( $type );
         }
     }
@@ -234,7 +231,10 @@ class MslsAdminIcon {
      * Set the path by type
      */
     protected function set_path() {
-        $this->path .= $this->type;
+        if ( 'post' != $this->type ) {
+            $args       = array( 'post_type' => $this->type );
+            $this->path = add_query_arg( $args, $this->path );
+        }
     }
 
     /**
@@ -326,27 +326,6 @@ class MslsAdminIcon {
 }
 
 /**
- * MslsAdminIconPost
- * 
- * @package Msls
- */
-class MslsAdminIconPost extends MslsAdminIcon {
-
-    /**
-     * @var string
-     */
-    protected $path = 'post-new.php';
-
-    /**
-     * Set path
-     */
-    protected function set_path() {
-        // not implemented
-    }
-
-}
-
-/**
  * MslsAdminIconTaxonomy
  * 
  * @package Msls
@@ -356,7 +335,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
     /**
      * @var string
      */
-    protected $path = 'edit-tags.php?taxonomy=';
+    protected $path = 'edit-tags.php';
 
     /**
      * Set href
@@ -369,6 +348,17 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
             $this->type,
             MslsTaxonomy::instance()->get_post_type()
         );
+    }
+
+    /**
+     * Set the path by type
+     */
+    protected function set_path() {
+        $args = array( 'taxonomy' => $this->type );
+        $post_type  = MslsTaxonomy::instance()->get_post_type();
+        if ( !empty( $post_type ) )
+            $args['post_type'] = $post_type;
+        $this->path = add_query_arg( $args, $this->path );
     }
 
 }
