@@ -364,7 +364,11 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
      * @param int $id
      */
     public function set_href( $id ) {
-        $this->href = get_edit_term_link( $id, $this->type );
+        $this->href = get_edit_term_link(
+            $id,
+            $this->type,
+            MslsTaxonomy::instance()->get_post_type()
+        );
     }
 
 }

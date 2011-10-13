@@ -235,6 +235,15 @@ class MslsContentTypes {
     }
 
     /**
+     * Get the requested taxonomy without a check
+     * 
+     * @return string
+     */
+    public function get_taxonomy() {
+        return $this->taxonomy;
+    }
+    
+    /**
      * Check for post_type
      * 
      * @return bool
@@ -265,12 +274,12 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
      * Constructor
      */
     public function __construct() {
-        $args          = array(
+        $args = array(
             'public'   => true,
             '_builtin' => false,
         ); 
-        $this->types   = array_merge(
-            array( 'post', 'page' ), 
+        $this->types = array_merge(
+            array( 'post', 'page' ),
             get_post_types( $args, 'names', 'and' )
         );
         if ( !empty( $_REQUEST['post_type'] ) ) {
@@ -317,10 +326,15 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 
     /**
+     * @var string
+     */
+    protected $post_type = '';
+
+    /**
      * Constructor
      */
     public function __construct() {
-        $args          = array(
+        $args = array(
             'public'   => true,
             '_builtin' => false,
         ); 
@@ -328,7 +342,19 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
             array( 'category', 'post_tag' ),
             get_taxonomies( $args, 'names', 'and' )
         );
-        $this->request = esc_attr( $_REQUEST['taxonomy'] );
+        $this->request = $this->taxonomy = esc_attr( $_REQUEST['taxonomy'] );
+        if ( !empty( $_REQUEST['post_type'] ) ) {
+            $this->post_type = esc_attr( $_REQUEST['post_type'] );
+        }
+    }
+
+    /**
+     * Get the requested post_type of the taxonomy
+     * 
+     * @return string
+     */
+    public function get_post_type() {
+        return $this->post_type;
     }
 
     /**
