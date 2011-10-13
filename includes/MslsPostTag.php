@@ -59,7 +59,7 @@ class MslsPostTag extends MslsMain {
                 switch_to_blog( $blog->userblog_id );
                 $language  = $blog->get_language();
                 $options   = '';
-                $terms     = get_terms( $type );
+                $terms     = get_terms( $type, array( 'hide_empty' => 0 ) );
                 $edit_link = MslsAdminIcon::create();
                 $edit_link->set_language( $language );
                 $edit_link->set_src( $this->options->get_flag_url( $language ) );

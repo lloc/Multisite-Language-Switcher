@@ -269,8 +269,10 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
             'public'   => true,
             '_builtin' => false,
         ); 
-        $post_types    = get_post_types( $args, 'names', 'and' ); 
-        $this->types   = array_merge( array( 'post', 'page' ), $post_types );
+        $this->types   = array_merge(
+            array( 'post', 'page' ), 
+            get_post_types( $args, 'names', 'and' )
+        );
         if ( !empty( $_REQUEST['post_type'] ) ) {
             $this->request = esc_attr( $_REQUEST['post_type'] );
         }
@@ -322,8 +324,10 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
             'public'   => true,
             '_builtin' => false,
         ); 
-        $taxonomies    = get_taxonomies( $args, 'names', 'and' ); 
-        $this->types   = array_merge( array( 'category', 'post_tag' ), $taxonomies );
+        $this->types   = array_merge(
+            array( 'category', 'post_tag' ),
+            get_taxonomies( $args, 'names', 'and' )
+        );
         $this->request = esc_attr( $_REQUEST['taxonomy'] );
     }
 
