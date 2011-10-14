@@ -99,18 +99,7 @@ class MslsPostTag extends MslsMain {
      */
     public function set( $term_id ) {
         if ( !current_user_can( 'manage_categories' ) ) return;
-        $taxonomy = MslsTaxonomy::instance()->get_taxonomy();
-        $class    = '';
-        switch ( $taxonomy ) {
-            case 'category':
-                $class = 'MslsCategoryOptions';
-                break;
-            case 'post_tag':
-                $class = 'MslsTermOptions';
-            default:
-                $class = 'MslsTaxOptions';
-        }
-        $this->save( $term_id, $class );
+        $this->save( $term_id, 'MslsTaxOptions' );
     }
 
 }
