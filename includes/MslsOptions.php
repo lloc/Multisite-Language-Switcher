@@ -59,15 +59,12 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * @param int $id
      * @return MslsOptions
      */
-    static function create( $id = 0 ) {
+    public static function create( $id = 0 ) {
         if ( is_admin() ) {
             $id  = (int) $id;
             $obj = MslsContentTypes::create();
             if ( $obj->is_taxonomy() ) {
-                if ( 'category' == $obj->get_request() ) {
-                    return new MslsCategoryOptions( $id );
-                }
-                return new MslsTermOptions( $id );
+                return MslsTaxOptions::create( $id );
             }
             return new MslsPostOptions( $id );
         }
@@ -76,11 +73,8 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             if ( is_home() || is_front_page() ) {
                 return new MslsOptions();
             } 
-            elseif ( is_category() ) {
-                return new MslsCategoryOptions( $wp_query->get_queried_object_id() );
-            } 
-            elseif ( is_tag() || is_tax() ) {
-                return new MslsTermOptions( $wp_query->get_queried_object_id() );
+            elseif ( is_category() || is_tag() || is_tax() ) {
+                return MslsTaxOptions::create();
             }
             return new MslsPostOptions( $wp_query->get_queried_object_id() );
         }
@@ -303,7 +297,7 @@ class MslsPostOptions extends MslsOptions {
  * 
  * @package Msls
  */
-class MslsTermOptions extends MslsOptions {
+class MslsTaxOptions extends MslsOptions {
 
     /**
      * @var string
@@ -314,6 +308,66 @@ class MslsTermOptions extends MslsOptions {
      * @var string
      */
     protected $autoload = 'no';
+
+    /**
+     * Factory method
+     * 
+     * @param int $id
+     * @return MslsTaxOptions
+     */
+    public static function create( $id = 0 ) {
+        if ( is_admin() ) {
+            $id  = (int) $id;
+            $obj = MslsContentTypes::create();
+            if ( $obj->is_taxonomy() ) {
+                switch ( $obj->get_request() ) {
+                    case 'category':
+                        return new MslsCategoryOptions( $id );
+                        break;
+                    case 'post_tag':
+                        return new MslsTermOptions( $id );
+                        break;
+                    default:
+                        return new MslsTaxOptions( $id );
+                }
+            }
+        }
+        else {
+            global $wp_query;
+            print_r( $wp_query );
+            if ( is_category() ) {
+                return new MslsCategoryOptions( $wp_query->get_queried_object_id() );
+            } 
+            elseif ( is_tag() ) {
+                return new MslsTermOptions( $wp_query->get_queried_object_id() );
+            }
+            elseif ( is_tax() ) {
+                return new MslsTaxOptions( $wp_query->get_queried_object_id() );
+            }
+        }
+        return $options;
+    }
+
+    /**
+     * Get current link
+     * 
+     * @return string
+     */
+    public function get_current_link() {
+        return get_term_link(
+            (int) $this->args[0],
+            MslsContentTypes::create()->get_request()
+        );
+    }
+
+}
+
+/**
+ * MslsTermOptions
+ * 
+ * @package Msls
+ */
+class MslsTermOptions extends MslsTaxOptions {
 
     /**
      * @var string

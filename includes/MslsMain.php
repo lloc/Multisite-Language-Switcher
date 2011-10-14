@@ -342,7 +342,9 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
             array( 'category', 'post_tag' ),
             get_taxonomies( $args, 'names', 'and' )
         );
-        $this->request = $this->taxonomy = esc_attr( $_REQUEST['taxonomy'] );
+        $this->request = esc_attr( $_REQUEST['taxonomy'] );
+        if ( empty( $this->request ) )
+            $this->request = get_query_var( 'taxonomy' );
         if ( !empty( $_REQUEST['post_type'] ) ) {
             $this->post_type = esc_attr( $_REQUEST['post_type'] );
         }

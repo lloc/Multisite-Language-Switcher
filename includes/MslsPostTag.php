@@ -53,7 +53,7 @@ class MslsPostTag extends MslsMain {
                 '<tr><th colspan="2"><strong>%s</strong></th></tr>',
                 __( 'Multisite Language Switcher', 'msls' )
             );
-            $mydata = new MslsTermOptions( $term_id );
+            $mydata = new MslsTaxOptions::create( $term_id );
             $type   = MslsContentTypes::create()->get_request();
             foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
@@ -99,7 +99,18 @@ class MslsPostTag extends MslsMain {
      */
     public function set( $term_id ) {
         if ( !current_user_can( 'manage_categories' ) ) return;
-        $this->save( $term_id, 'MslsTermOptions' );
+        $taxonomy = MslsTaxonomy::instance()->get_taxonomy();
+        $class    = '';
+        switch ( $taxonomy ) {
+            case 'category':
+                $class = 'MslsCategoryOptions';
+                break;
+            case 'post_tag':
+                $class = 'MslsTermOptions';
+            default:
+                $class = 'MslsTaxOptions';
+        }
+        $this->save( $term_id, $class );
     }
 
 }
