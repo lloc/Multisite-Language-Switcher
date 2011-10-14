@@ -416,7 +416,7 @@ class MslsTermOptions extends MslsTaxOptions {
         if ( empty( $url ) || !is_string( $url ) )
             return null;
         $base = get_option( $this->base_option );
-        if ( empty( $base ) ) {
+        if ( empty( $base ) )
             $base = $this->base_defined;
         if ( $this->base_defined != $base ) {
             $search  = '/' . $this->base_defined . '/';
