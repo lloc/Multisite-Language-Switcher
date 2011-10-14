@@ -334,7 +334,6 @@ class MslsTaxOptions extends MslsOptions {
         }
         else {
             global $wp_query;
-            print_r( $wp_query );
             if ( is_category() ) {
                 return new MslsCategoryOptions( $wp_query->get_queried_object_id() );
             } 
