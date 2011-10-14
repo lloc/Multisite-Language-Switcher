@@ -207,8 +207,6 @@ class MslsContentTypes {
      * @return MslsContentTypes
      */
     public static function create() {
-        global $wp_query;
-        print_r( $wp_query );
         if ( isset( $_REQUEST['taxonomy'] ) )
             return MslsTaxonomy::instance();
         return MslsPostType::instance();

@@ -344,7 +344,34 @@ class MslsTaxOptions extends MslsOptions {
                 return new MslsTaxOptions( $wp_query->get_queried_object_id() );
             }
         }
-        return $options;
+        return null;
+    }
+
+    /**
+     * Check and correct URL
+     * 
+     * @return string
+     */
+    protected function check_url( $url ) {
+        return $url;
+    }
+
+    /**
+     * Get postlink
+     * 
+     * @param string $language
+     * @return string|null
+     */
+    public function get_postlink( $language ) {
+        global $wp_query;
+        print_r( $wp_query );
+        if ( $this->has_value( $language ) ) {
+            $url = get_term_link(
+                (int) $this->__get( $language ), 
+                ''
+            );
+        }
+        return null;
     }
 
     /**
@@ -353,9 +380,11 @@ class MslsTaxOptions extends MslsOptions {
      * @return string
      */
     public function get_current_link() {
+        global $wp_query;
+        print_r( $wp_query );
         return get_term_link(
             (int) $this->args[0],
-            MslsContentTypes::create()->get_request()
+            ''
         );
     }
 
@@ -379,57 +408,23 @@ class MslsTermOptions extends MslsTaxOptions {
     protected $base_defined = 'tag';
 
     /**
-     * @var string
-     */
-    protected $taxonomy = 'post_tag';
-
-    /**
-     * Get base
+     * Check and correct URL
      * 
      * @return string
      */
-    protected function get_base() {
+    protected function check_url( $url ) {
+        if ( empty( $url ) || !is_string( $url ) )
+            return null;
         $base = get_option( $this->base_option );
-        return(
-            !empty ($base) ?
-            $base :
-            $this->base_defined
-        );
-    }
-
-    /**
-     * Get postlink
-     * 
-     * @param string $language
-     * @return string|null
-     */
-    public function get_postlink( $language ) {
-        if ( $this->has_value( $language ) ) {
-            $url = get_term_link(
-                (int) $this->__get( $language ), 
-                $this->taxonomy
-            );
-            if ( empty( $url ) || !is_string( $url ) )
-                return null;
-            $base = $this->get_base();
-            if ( $this->base != $base ) {
-                $search  = '/' . $this->base . '/';
-                $replace = '/' . $base . '/';
-                $count   = 1;
-                $url     = str_replace( $search, $replace, $url, $count );
-            }
-            return $url;
+        if ( empty( $base ) ) {
+            $base = $this->base_defined;
+        if ( $this->base_defined != $base ) {
+            $search  = '/' . $this->base_defined . '/';
+            $replace = '/' . $base . '/';
+            $count   = 1;
+            $url     = str_replace( $search, $replace, $url, $count );
         }
-        return null;
-    }
-
-    /**
-     * Get current link
-     * 
-     * @return string
-     */
-    public function get_current_link() {
-        return get_tag_link( (int) $this->args[0] );
+        return $url;
     }
 
 }
@@ -450,20 +445,6 @@ class MslsCategoryOptions extends MslsTermOptions {
      * @var string
      */
     protected $base_defined = 'category';
-
-    /**
-     * @var string
-     */
-    protected $taxonomy = 'category';
-
-    /**
-     * Get current link
-     * 
-     * @return string
-     */
-    public function get_current_link() {
-        return get_category_link( (int) $this->args[0] );
-    }
 
 }
 
