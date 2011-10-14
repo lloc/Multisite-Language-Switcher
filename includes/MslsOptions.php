@@ -353,23 +353,32 @@ class MslsTaxOptions extends MslsOptions {
      * @return string
      */
     protected function check_url( $url ) {
-        return $url;
+        return(
+            empty( $url ) || !is_string( $url ) ?
+            null :
+            $url
+        );
+    }
+
+    protected function get_tax_query() {
+        global $wp_query;
+        return $wp_query->tax_query->queries[0]['taxonomy'];
     }
 
     /**
      * Get postlink
-     * 
+     *
      * @param string $language
      * @return string|null
      */
     public function get_postlink( $language ) {
-        global $wp_query;
-        print_r( $wp_query );
         if ( $this->has_value( $language ) ) {
+            $taxonomy = $this->get_tax_query();
             $url = get_term_link(
-                (int) $this->__get( $language ), 
-                ''
+                (int) $this->__get( $language ),
+                $taxonomy
             );
+            return $this->check_url( $url );
         }
         return null;
     }
@@ -380,11 +389,11 @@ class MslsTaxOptions extends MslsOptions {
      * @return string
      */
     public function get_current_link() {
-        global $wp_query;
-        print_r( $wp_query );
-        return get_term_link(
-            (int) $this->args[0],
-            ''
+        $taxonomy = $this->get_tax_query();
+        return(
+            !empty( $taxonomy ) ?
+            get_term_link( (int) $this->args[0], $taxonomy ) :
+            null
         );
     }
 
