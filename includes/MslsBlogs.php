@@ -155,9 +155,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
      * @return array Collection of MslsBlog-objects
      */
     public function get_filtered( $filter = false ) {
-        if ( $filter || !$this->current_blog_output )  
-            return $this->get();
-        return $this->get_objects;
+        if ( !$filter && $this->current_blog_output )  
+            return $this->get_objects;
+        return $this->get();
     }
 
     /**
