@@ -59,13 +59,24 @@ class MslsOutput extends MslsMain {
                 $link->txt = $blog->get_description();
                 $link->src = $this->options->get_flag_url( $language );
                 $link->alt = $language;
-                $arr[]     = sprintf(
-                    '<a href="%s" title="%s"%s>%s</a>',
-                    $url,
-                    $link->txt,
-                    ( $blog->userblog_id == $this->blogs->get_current_blog_id() ? ' class="current_language"' : '' ),
-                    $link
-                );
+                $current   = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
+                if ( has_filter( 'msls_output_get' ) ) {
+                    $arr[] = apply_filters(
+                        'msls_output_get',
+                        $url,
+                        $link,
+                        $current
+                    );
+                }
+                else {
+                    $arr[] = sprintf(
+                        '<a href="%s" title="%s"%s>%s</a>',
+                        $url,
+                        $link->txt,
+                        ( $current ? ' class="current_language"' : '' ),
+                        $link
+                    );
+                }
             }
         }
         return $arr;

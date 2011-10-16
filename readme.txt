@@ -40,12 +40,13 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.9.2 =
-* new: The link of the current language is marked with `class="current_language"`
+* new: _msls_output_get_-filter for customizing the output
+* new: link of the current language is marked with `class="current_language"`
 * new: index.php in all directories redirects to HTTP_HOST
 * bugfix: admin metabox and the link to a _new_ page
 * bugfix: "Display link to the current language" was ignored when option "Show only links with a translation" is checked as well
-* bugfix: msls_content_filter should work with pages and posts only
-* deleted: msls_blog_collection_get-filter
+* bugfix: _msls_content_filter_ should work only when display a post_type
+* _msls_blog_collection_get_-filter deleted
 
 = 0.9.1 =
 * bugfix: broken methods in MslsAdmin
