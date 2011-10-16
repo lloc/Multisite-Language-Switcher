@@ -61,21 +61,23 @@ class MslsAdmin extends MslsMain {
      */
     protected function subsubsub() {
         $arr = array();
-        foreach ( $this->blogs->get() as $blog ) {
+        foreach ( $this->blogs->get() as $id => $blog ) {
+            $current = '';
+            if ( $blog->userblog_id == $this->blog->get_current_blog_id )
+                $current = ' class="current"';
             $arr[] = sprintf(
-                '<a href="%s"%s>%s / %s%s</a>',
+                '<a href="%s"%s>%s / %s</a>',
                 '', // href
-                '', // class="current"
-                $blog->get_description(),
-                $blog->get_language(),
-                '' // <span class="count">Deactivated</span>
+                $current,
+                $blog->blogname,
+                $blog->get_description()
             );
         }
         return(
             !empty( $arr ) ?
             sprintf(
                 '<ul class="subsubsub"><li>%s</li></ul>', 
-                implode( ' |</li><li>', $arr )
+                implode( ' | </li><li>', $arr )
             ) :
             ''
         ); 
