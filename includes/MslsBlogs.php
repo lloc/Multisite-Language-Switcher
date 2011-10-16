@@ -128,7 +128,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     }
 
     /**
-     * Get an array with blog-objects
+     * Get an array with all blog-objects
      *
      * @return array Collection of MslsBlog-objects
      */
@@ -137,18 +137,27 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     }
 
     /**
-     * Get an array with filtered blog-objects
-     *
-     * @param bool $frontend
-     * @return array Collection of MslsBlog-objects
+     * Get an arry of blog-objects without the current blog
+     * 
+     * @return array
      */
-    public function get( $frontend = false ) {
+    public function get() {
         $objects = $this->get_objects();
-        if ( $frontend )
-            $frontend = $this->current_blog_output;
-        if ( $this->has_current_blog() && !$frontend )
+        if ( $this->has_current_blog() )
             unset( $objects[$this->current_blog_id] );
         return $objects;
+    }
+
+    /**
+     * Get an array with filtered blog-objects
+     *
+     * @param bool $filter
+     * @return array Collection of MslsBlog-objects
+     */
+    public function get_filtered( $filter = false ) {
+        if ( $filter || !$this->current_blog_output )  
+            return $this->get();
+        return $this->get_objects;
     }
 
     /**

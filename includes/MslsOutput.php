@@ -38,9 +38,9 @@ class MslsOutput extends MslsMain {
      * @param bool $exists
      * @return array
      */
-    public function get( $display, $frontend = true, $exists = false ) {
+    public function get( $display, $filter = false, $exists = false ) {
         $arr   = array();
-        $blogs = $this->blogs->get( $frontend );
+        $blogs = $this->blogs->get_filtered( $filter );
         if ( $blogs ) {
             $mydata = MslsOptions::create();
             $link   = MslsLink::create( $display );
@@ -91,8 +91,8 @@ class MslsOutput extends MslsMain {
     public function __toString() {
         $arr = $this->get(
             (int) $this->options->display,
-            true,
-            (bool) $this->options->only_with_translation
+            false,
+            $this->options->has_value( 'only_with_translation' )
         );
         $str = '';
         if ( !empty( $arr ) ) {
@@ -201,7 +201,7 @@ function msls_content_filter( $content ) {
         $options = MslsOptions::instance();
         if ( $options->is_content_filter() ) {
             $obj   = new MslsOutput();
-            $links = $obj->get( 1, false, true );
+            $links = $obj->get( 1, true, true );
             if ( !empty( $links ) ) {
                 if ( count( $links ) > 1 ) {
                     $last  = array_pop( $links );
