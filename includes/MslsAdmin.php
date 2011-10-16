@@ -46,7 +46,7 @@ class MslsAdmin extends MslsMain {
             '<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2><p>%s</p>%s<form action="options.php" method="post">',
             __( 'Multisite Language Switcher Options', 'msls' ),
             __( 'To achieve maximum flexibility, you have to configure each blog separately.', 'msls' ),
-             subsubsub()
+            $this->subsubsub()
         );
         settings_fields( 'msls' );
         do_settings_sections( __CLASS__ );
