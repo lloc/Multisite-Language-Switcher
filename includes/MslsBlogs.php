@@ -88,6 +88,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                     );
                 }
             }
+            usort( $this->objects, array( 'MslsBlog', $this->objects_order ) );
         }
     }
 
@@ -129,16 +130,24 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Get an array with blog-objects
      *
+     * @return array Collection of MslsBlog-objects
+     */
+    public function get_objects() {
+        return $this->objects;
+    }
+
+    /**
+     * Get an array with filtered blog-objects
+     *
      * @param bool $frontend
      * @return array Collection of MslsBlog-objects
      */
     public function get( $frontend = false ) {
-        $objects = $this->objects;
+        $objects = $this->get_objects();
         if ( $frontend )
             $frontend = $this->current_blog_output;
         if ( $this->has_current_blog() && !$frontend )
             unset( $objects[$this->current_blog_id] );
-        usort( $objects, array( 'MslsBlog', $this->objects_order ) );
         return $objects;
     }
 

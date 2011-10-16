@@ -61,9 +61,7 @@ class MslsAdmin extends MslsMain {
      */
     protected function subsubsub() {
         $arr   = array();
-        $blogs = $this->blogs->get();
-        array_unshift( $blogs, $this->blogs->get_current_blog() );
-        foreach ( $blogs as $id => $blog ) {
+        foreach ( $this->blogs->get_objects() as $id => $blog ) {
             $current = '';
             if ( $blog->userblog_id == $this->blogs->get_current_blog_id() )
                 $current = ' class="current"';
