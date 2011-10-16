@@ -24,33 +24,18 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
 class MslsAdmin extends MslsMain {
     
     /**
-     * @var string
-     */
-    protected $options_page;
-
-    /**
      * Init
      */
     public static function init() {
         $obj = new self();
-        $options_page = add_options_page(
+        add_options_page(
             __( 'Multisite Language Switcher', 'msls' ),
             __( 'Multisite Language Switcher', 'msls' ),
             'manage_options',
             __CLASS__,
             array( $obj, 'render' )
         );
-        $obj->set_options_page( $options_page );
         add_action( 'admin_init', array( $obj, 'register' ) );
-    }
-
-    /**
-     * Set the location of the options page
-     *
-     * @param string $op
-     */
-    public function set_options_page( $op ) {
-        $this->options_page = esc_attr( $op );
     }
 
     /**
@@ -75,8 +60,6 @@ class MslsAdmin extends MslsMain {
      * Create a submenu which contains links to all blogs of the current user
      */
     protected function subsubsub() {
-        global $submenu;
-        print_r($submenu);
         $arr   = array();
         $blogs = $this->blogs->get();
         array_unshift( $blogs, $this->blogs->get_current_blog() );
@@ -86,7 +69,7 @@ class MslsAdmin extends MslsMain {
                 $current = ' class="current"';
             $arr[] = sprintf(
                 '<a href="%s"%s>%s / %s</a>',
-                get_admin_url( $blog->userblog_id, $this->options_page ),
+                get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
                 $current,
                 $blog->blogname,
                 $blog->get_description()
