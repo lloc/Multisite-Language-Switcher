@@ -33,14 +33,24 @@ class MslsAdmin extends MslsMain {
      */
     public static function init() {
         $obj = new self();
-        $this->options_page = add_options_page(
+        $options_page = add_options_page(
             __( 'Multisite Language Switcher', 'msls' ),
             __( 'Multisite Language Switcher', 'msls' ),
             'manage_options',
             __CLASS__,
             array( $obj, 'render' )
         );
+        $obj->set_options_page( $options_page );
         add_action( 'admin_init', array( $obj, 'register' ) );
+    }
+
+    /**
+     * Set the location of the options page
+     *
+     * @param string $op
+     */
+    public function set_options_page( $op ) {
+        $this->options_page = esc_attr( $op );
     }
 
     /**
