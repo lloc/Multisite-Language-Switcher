@@ -34,9 +34,9 @@ class MslsCustomColumn extends MslsMain {
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
-            $obj       = new self();
             $post_type = MslsPostType::instance()->get_request();
             if ( !empty( $post_type ) ) {
+                $obj = new self();
                 add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
                 add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
             }
@@ -110,9 +110,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
     static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
-            $obj      = new self();
             $taxonomy = MslsTaxonomy::instance()->get_request();
             if ( !empty( $taxonomy ) ) {
+                $obj = new self();
                 add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
                 add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
             }
