@@ -137,7 +137,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     public function get_permalink( $language ) {
         $postlink = $this->get_postlink( $language );
         return(
-            $postlink ?
+            '' != $postlink ?
             $postlink :
             site_url()
         );
@@ -147,10 +147,10 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * Get postlink
      * 
      * @param string $language
-     * @return null
+     * @return string
      */
     public function get_postlink( $language ) {
-        return null;
+        return '';
     }
 
     /**
@@ -277,7 +277,7 @@ class MslsPostOptions extends MslsOptions {
         return(
             $this->has_value( $language ) ? 
             get_permalink( (int) $this->__get( $language ) ) :
-            null
+            ''
         );
     }
 
@@ -369,18 +369,19 @@ class MslsTaxOptions extends MslsOptions {
      * Get postlink
      *
      * @param string $language
-     * @return string|null
+     * @return string
      */
     public function get_postlink( $language ) {
+        $url = '';
         if ( $this->has_value( $language ) ) {
             $taxonomy = $this->get_tax_query();
             $url = get_term_link(
                 (int) $this->__get( $language ),
                 $taxonomy
             );
-            return $this->check_url( $url );
+            $url = $this->check_url( $url );
         }
-        return null;
+        return $url;
     }
 
     /**
