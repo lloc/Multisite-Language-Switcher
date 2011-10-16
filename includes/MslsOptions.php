@@ -69,7 +69,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             return new MslsPostOptions( $id );
         }
         else {
-            global $wp_query;
             if ( is_home() || is_front_page() ) {
                 return new MslsOptions();
             } 
