@@ -75,6 +75,8 @@ class MslsAdmin extends MslsMain {
      * Create a submenu which contains links to all blogs of the current user
      */
     protected function subsubsub() {
+        global $submenu;
+        print_r($submenu);
         $arr   = array();
         $blogs = $this->blogs->get();
         array_unshift( $blogs, $this->blogs->get_current_blog() );
