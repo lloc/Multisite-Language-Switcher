@@ -63,7 +63,7 @@ class MslsAdmin extends MslsMain {
         $arr = array();
         foreach ( $this->blogs->get() as $id => $blog ) {
             $current = '';
-            if ( $blog->userblog_id == $this->blog->get_current_blog_id() )
+            if ( $blog->userblog_id == $this->blogs->get_current_blog_id() )
                 $current = ' class="current"';
             $arr[] = sprintf(
                 '<a href="%s"%s>%s / %s</a>',
