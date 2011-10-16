@@ -350,19 +350,27 @@ class MslsTaxOptions extends MslsOptions {
     /**
      * Check and correct URL
      * 
+     * @param string $url
      * @return string
      */
     protected function check_url( $url ) {
         return(
             empty( $url ) || !is_string( $url ) ?
-            null :
+            '' :
             $url
         );
     }
 
+    /**
+     * Get the queried taxonomy
+     */
     protected function get_tax_query() {
         global $wp_query;
-        return $wp_query->tax_query->queries[0]['taxonomy'];
+        return(
+            isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ?
+            $wp_query->tax_query->queries[0]['taxonomy'] :
+            ''
+        );
     }
 
     /**
@@ -420,11 +428,12 @@ class MslsTermOptions extends MslsTaxOptions {
     /**
      * Check and correct URL
      * 
+     * @param string $url
      * @return string
      */
     protected function check_url( $url ) {
         if ( empty( $url ) || !is_string( $url ) )
-            return null;
+            return '';
         $base = get_option( $this->base_option );
         if ( empty( $base ) )
             $base = $this->base_defined;
