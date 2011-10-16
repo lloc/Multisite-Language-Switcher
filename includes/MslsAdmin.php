@@ -22,13 +22,18 @@ require_once dirname( __FILE__ ) . '/MslsLink.php';
  * @package Msls
  */
 class MslsAdmin extends MslsMain {
+    
+    /**
+     * @var string
+     */
+    protected $options_page;
 
     /**
      * Init
      */
     public static function init() {
         $obj = new self();
-        add_options_page(
+        $this->options_page = add_options_page(
             __( 'Multisite Language Switcher', 'msls' ),
             __( 'Multisite Language Switcher', 'msls' ),
             'manage_options',
@@ -69,7 +74,7 @@ class MslsAdmin extends MslsMain {
                 $current = ' class="current"';
             $arr[] = sprintf(
                 '<a href="%s"%s>%s / %s</a>',
-                get_admin_url( $blog->userblog_id ),
+                get_admin_url( $blog->userblog_id, $this->options_page ),
                 $current,
                 $blog->blogname,
                 $blog->get_description()
