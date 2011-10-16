@@ -43,7 +43,7 @@ class MslsAdmin extends MslsMain {
      */
     public function render() {
         printf(
-            '<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2><div>%s</div><p class="clear">%s</p><form action="options.php" method="post">',
+            '<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2>%s<form class="clear" action="options.php" method="post"><p>%s</p>',
             __( 'Multisite Language Switcher Options', 'msls' ),
             $this->subsubsub(),
             __( 'To achieve maximum flexibility, you have to configure each blog separately.', 'msls' )
