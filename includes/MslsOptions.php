@@ -75,7 +75,8 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             elseif ( is_category() || is_tag() || is_tax() ) {
                 return MslsTaxOptions::create();
             }
-            return new MslsPostOptions( $wp_query->get_queried_object_id() );
+            global $post;
+            return new MslsPostOptions( $post->ID );
         }
         return null;
     }
