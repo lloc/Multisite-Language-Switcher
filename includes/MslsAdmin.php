@@ -43,7 +43,7 @@ class MslsAdmin extends MslsMain {
      */
     public function render() {
         printf(
-            '<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2><p>%s</p>%s<form action="options.php" method="post">',
+            '<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2><p>%s</p><p>%s</p><form action="options.php" method="post">',
             __( 'Multisite Language Switcher Options', 'msls' ),
             __( 'To achieve maximum flexibility, you have to configure each blog separately.', 'msls' ),
             $this->subsubsub()
@@ -63,7 +63,7 @@ class MslsAdmin extends MslsMain {
         $arr   = array();
         $blogs = $this->blogs->get();
         array_unshift( $blogs, $this->blogs->get_current_blog() );
-        foreach ( $this->blogs->get() as $id => $blog ) {
+        foreach ( $blogs as $id => $blog ) {
             $current = '';
             if ( $blog->userblog_id == $this->blogs->get_current_blog_id() )
                 $current = ' class="current"';
