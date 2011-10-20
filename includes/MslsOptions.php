@@ -418,8 +418,7 @@ class MslsTermOptions extends MslsTaxOptions {
      */
     protected function check_url( $url ) {
         if ( empty( $url ) || !is_string( $url ) ) return '';
-        $base = get_option( $this->base_option );
-        if ( empty( $base ) ) $base = $this->base_defined;
+        $base = $this->get_base();
         if ( $this->base != $base ) {
             $search  = '/' . $this->base . '/';
             $replace = '/' . $base . '/';
@@ -432,10 +431,15 @@ class MslsTermOptions extends MslsTaxOptions {
     /**
      * Get base
      * 
-     * @return null
+     * @return string
      */
     protected function get_base() {
-        return get_option( $this->base_option );
+        $base = get_option( $this->base_option );
+        return(
+            !empty( $base ) ?
+            $base:
+            $this->base_defined
+        );
     }
 
 }
