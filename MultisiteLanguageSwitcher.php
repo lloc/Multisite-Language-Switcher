@@ -48,6 +48,8 @@ if ( !class_exists( 'Msls' ) ) {
         require_once dirname( __FILE__ ) . '/includes/MslsCustomColumn.php';
         add_action( 'load-edit.php', 'MslsCustomColumn::init' );
         add_action( 'load-edit-tags.php', 'MslsCustomColumnTaxonomy::init' );
+
+        print_r( $_POST );
     }
 }
 
