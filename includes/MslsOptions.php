@@ -432,11 +432,10 @@ class MslsTermOptions extends MslsTaxOptions {
      * @return string
      */
     protected function check_url( $url ) {
-        if ( empty( $url ) || !is_string( $url ) )
-            return '';
+        if ( empty( $url ) || !is_string( $url ) ) return '';
         $base = get_option( $this->base_option );
-        if ( empty( $base ) )
-            $base = $this->base_defined;
+        if ( empty( $base ) ) $base = $this->base_defined;
+        print_r( $base );
         if ( $this->base_defined != $base ) {
             $search  = '/' . $this->base_defined . '/';
             $replace = '/' . $base . '/';
