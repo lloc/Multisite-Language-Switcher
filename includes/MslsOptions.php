@@ -360,6 +360,20 @@ class MslsTaxOptions extends MslsOptions {
     }
 
     /**
+     * Check and correct URL
+     * 
+     * @param string $url
+     * @return string
+     */
+    protected function check_url( $url ) {
+        return( 
+            empty( $url ) || !is_string( $url ) ?
+            '' :
+            $url
+        );
+    }
+        
+    /**
      * Get postlink
      *
      * @param string $language
@@ -373,8 +387,9 @@ class MslsTaxOptions extends MslsOptions {
                 (int) $this->__get( $language ),
                 $taxonomy
             );
+            $url = $this->check_url( $url );
         }
-        return (string) $url;
+        return $url;
     }
 
     /**
