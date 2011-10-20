@@ -35,7 +35,7 @@ class MslsPostTag extends MslsMain {
                 add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
                 add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
                 add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
-                add_action( "created_{$taxonomy}", array( $obj, 'set' ) );
+                add_action( "create_{$taxonomy}", array( $obj, 'set' ) );
             }
         }
     }
