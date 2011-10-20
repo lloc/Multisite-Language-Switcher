@@ -420,8 +420,8 @@ class MslsTermOptions extends MslsTaxOptions {
         if ( empty( $url ) || !is_string( $url ) ) return '';
         $base = get_option( $this->base_option );
         if ( empty( $base ) ) $base = $this->base_defined;
-        if ( $this->base_defined != $base ) {
-            $search  = '/' . $this->base_defined . '/';
+        if ( $this->base != $base ) {
+            $search  = '/' . $this->base . '/';
             $replace = '/' . $base . '/';
             $count   = 1;
             $url     = str_replace( $search, $replace, $url, $count );
@@ -430,17 +430,12 @@ class MslsTermOptions extends MslsTaxOptions {
     }
 
     /**
-     * Get postlink
-     *
-     * @param string $language
-     * @return string
+     * Get base
+     * 
+     * @return null
      */
-    public function get_postlink( $language ) {
-        $url = '';
-        if ( $this->has_value( $language ) ) {
-            $url = get_tag_link( (int) $this->__get( $language ) );
-        }
-        return $this->check_url( $url );
+    protected function get_base() {
+        return get_option( $this->base_option );
     }
 
 }
@@ -461,20 +456,6 @@ class MslsCategoryOptions extends MslsTermOptions {
      * @var string
      */
     protected $base_defined = 'category';
-
-    /**
-     * Get postlink
-     *
-     * @param string $language
-     * @return string
-     */
-    public function get_postlink( $language ) {
-        $url = '';
-        if ( $this->has_value( $language ) ) {
-            $url = get_category_link( (int) $this->__get( $language ) );
-        }
-        return $this->check_url( $url );
-    }
 
 }
 
