@@ -348,20 +348,6 @@ class MslsTaxOptions extends MslsOptions {
     }
 
     /**
-     * Check and correct URL
-     * 
-     * @param string $url
-     * @return string
-     */
-    protected function check_url( $url ) {
-        return(
-            empty( $url ) || !is_string( $url ) ?
-            '' :
-            $url
-        );
-    }
-
-    /**
      * Get the queried taxonomy
      */
     protected function get_tax_query() {
@@ -387,9 +373,8 @@ class MslsTaxOptions extends MslsOptions {
                 (int) $this->__get( $language ),
                 $taxonomy
             );
-            $url = $this->check_url( $url );
         }
-        return $url;
+        return (string) $url;
     }
 
     /**
@@ -445,6 +430,20 @@ class MslsTermOptions extends MslsTaxOptions {
         return $url;
     }
 
+    /**
+     * Get postlink
+     *
+     * @param string $language
+     * @return string
+     */
+    public function get_postlink( $language ) {
+        $url = '';
+        if ( $this->has_value( $language ) ) {
+            $url = get_tag_link( (int) $this->__get( $language ) );
+        }
+        return $this->check_url( $url );
+    }
+
 }
 
 /**
@@ -463,6 +462,20 @@ class MslsCategoryOptions extends MslsTermOptions {
      * @var string
      */
     protected $base_defined = 'category';
+
+    /**
+     * Get postlink
+     *
+     * @param string $language
+     * @return string
+     */
+    public function get_postlink( $language ) {
+        $url = '';
+        if ( $this->has_value( $language ) ) {
+            $url = get_category_link( (int) $this->__get( $language ) );
+        }
+        return $this->check_url( $url );
+    }
 
 }
 
