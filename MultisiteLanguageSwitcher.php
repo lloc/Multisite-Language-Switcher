@@ -44,12 +44,12 @@ if ( !class_exists( 'Msls' ) ) {
 
         require_once dirname( __FILE__ ) . '/includes/MslsPostTag.php';
         add_action( 'load-edit-tags.php', 'MslsPostTag::init' );
+        add_action( 'wp_ajax_add-tag', 'MslsCustomColumnTaxonomy::init' );
 
         require_once dirname( __FILE__ ) . '/includes/MslsCustomColumn.php';
         add_action( 'load-edit.php', 'MslsCustomColumn::init' );
         add_action( 'load-edit-tags.php', 'MslsCustomColumnTaxonomy::init' );
-
-        print_r( $_POST );
+        add_action( 'wp_ajax_add-tag', 'MslsCustomColumnTaxonomy::init' );
     }
 }
 
