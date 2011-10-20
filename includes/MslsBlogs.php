@@ -139,7 +139,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Get an arry of blog-objects without the current blog
      * 
-     * @return array
+     * @return array Collection of MslsBlog-objects
      */
     public function get() {
         $objects = $this->get_objects();
