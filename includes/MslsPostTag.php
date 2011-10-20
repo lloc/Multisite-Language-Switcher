@@ -34,8 +34,8 @@ class MslsPostTag extends MslsMain {
                 $obj = new self();
                 add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
                 add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
-                add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 1 );
-                add_action( "create_{$taxonomy}", array( $obj, 'create' ), 10, 2 );
+                add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+                add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
             }
         }
     }
@@ -93,22 +93,11 @@ class MslsPostTag extends MslsMain {
     }
 
     /**
-     * Create
-     * 
-     * @param int $term_id
-     * @param int $tt_id
-     */
-    public function create( $term_id, $tt_id ) {
-        if ( !current_user_can( 'manage_categories' ) ) return;
-        $this->save( $tt_id, 'MslsTaxOptions' );
-    }
-
-    /**
      * Set
      * 
      * @param int $term_id
      */
-    public function set( $term_id ) {
+    public function set( $term_id, $tt_id ) {
         if ( !current_user_can( 'manage_categories' ) ) return;
         $this->save( $term_id, 'MslsTaxOptions' );
     }
