@@ -99,6 +99,7 @@ class MslsPostTag extends MslsMain {
      * @param int $tt_id
      */
     public function create( $term_id, $tt_id ) {
+        print_r($_POST);
         if ( !current_user_can( 'manage_categories' ) ) return;
         $this->save( $tt_id, 'MslsTaxOptions' );
     }
