@@ -191,14 +191,14 @@ class MslsBlog {
     private $obj;
 
     /**
-     * @var string Description eg. Deutsch
-     */
-    private $description;
-
-    /**
      * @var string Language-code eg. de_DE
      */
     private $language;
+
+    /**
+     * @var string Description eg. Deutsch
+     */
+    private $description;
 
     /**
      * Constructor
@@ -206,18 +206,20 @@ class MslsBlog {
      * @param StdClass $obj 
      * @param string description
      */
-    public function __construct( StdClass $obj, $description ) {
-        /*
-         * get_user_id_from_string returns objects with userblog_id-members 
-         * instead of a blog_id ... so we need just some correction ;)
-         *
-         */
-        if ( !isset( $obj->userblog_id ) ) {
-            $obj->userblog_id = $obj->blog_id;
+    public function __construct( $obj, $description ) {
+        if ( is_object( $obj ) ) {
+            /*
+             * get_user_id_from_string returns objects with userblog_id-members 
+             * instead of a blog_id ... so we need just some correction ;)
+             *
+             */
+            if ( !isset( $obj->userblog_id ) ) {
+                $obj->userblog_id = $obj->blog_id;
+            }
+            $this->obj         = $obj;
+            $this->language    = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
         }
-        $this->obj         = $obj;
         $this->description = (string) $description;
-        $this->language    = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
     }
 
     /**

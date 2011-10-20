@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to:  3.3
-Stable tag: 0.9.1
+Stable tag: 0.9.2
 
 A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
 
