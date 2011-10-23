@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if ( !class_exists( 'Msls' ) ) {
+if ( !class_exists( 'MslsPlugin' ) ) {
     if ( !defined( 'MSLS_PLUGIN_PATH' ) )  
         define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 
