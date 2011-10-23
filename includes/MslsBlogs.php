@@ -72,6 +72,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 $blogs_collection = get_blogs_of_user( $user_id );
             }
             foreach ( (array) $blogs_collection as $blog ) {
+                /*
+                 * get_user_id_from_string returns objects with userblog_id-members 
+                 * instead of a blog_id ... so we need just some correction ;)
+                 *
+                 */
+                if ( !isset( $blog->userblog_id ) && isset( $blog->blog_id) ) {
+                    $blog->userblog_id = $obj->blog_id;
+                }
                 if ( $blog->userblog_id != $this->current_blog_id ) {
                     $temp = get_blog_option( $blog->userblog_id, 'msls' );
                     if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
@@ -208,14 +216,6 @@ class MslsBlog {
      */
     public function __construct( $obj, $description ) {
         if ( is_object( $obj ) ) {
-            /*
-             * get_user_id_from_string returns objects with userblog_id-members 
-             * instead of a blog_id ... so we need just some correction ;)
-             *
-             */
-            if ( !isset( $obj->userblog_id ) ) {
-                $obj->userblog_id = $obj->blog_id;
-            }
             $this->obj         = $obj;
             $this->language    = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
         }
