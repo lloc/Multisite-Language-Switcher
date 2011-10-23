@@ -78,7 +78,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                  *
                  */
                 if ( !isset( $blog->userblog_id ) && isset( $blog->blog_id) ) {
-                    $blog->userblog_id = $obj->blog_id;
+                    $blog->userblog_id = $blog->blog_id;
                 }
                 if ( $blog->userblog_id != $this->current_blog_id ) {
                     $temp = get_blog_option( $blog->userblog_id, 'msls' );
