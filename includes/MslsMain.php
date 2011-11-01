@@ -111,6 +111,13 @@ class MslsPlugin {
      */
     public static function deactivate() { }
 
+    /**
+     * Uninstall plugin
+     * 
+     * @todo Write the uninstall-method
+     */
+    public static function uninstall() { }
+
 }
 
 /**
