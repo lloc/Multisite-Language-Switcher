@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Registry
  * 
@@ -12,43 +10,54 @@ class MslsRegistry {
     /**
      * @var array
      */
-    private static $objects = array();
+    private static $arr = array();
 
     /**
-     * @var mixed
+     * @var MslsRegistry
      */
     private static $instance;
 
     /**
      * Constructor
+     * 
+     * Don't call me directly!
      */
     final private function __construct() { }
 
     /**
      * Clone
+     * 
+     * Don't call me directly!
      */
     final private function __clone() { }
 
     /**
+     * Get an object by key
+     * 
      * @param mixed $key
      * @return mixed
      */
     private function get( $key ) {
-        if ( isset( $this->objects[$key] ) ) {
-            return $this->objects[$key];
-        }
-        return null;
+        return( 
+            isset( $this->arr[$key] ) ?
+            $this->arr[$key] :
+            null
+        );
     }
 
     /**
+     * Set an object
+     * 
      * @param mixed $key
      * @param mixed $instance
      */
     private function set( $key, $instance ) {
-        $this->objects[$key] = $instance;
+        $this->arr[$key] = $instance;
     }
 
     /**
+     * Registry is a singleton
+     * 
      * @return mixed
      */
     public static function singleton() {
@@ -59,7 +68,8 @@ class MslsRegistry {
     }
 
     /**
-    /**
+     * Static get_object calls get
+     * 
      * @param mixed $key
      * @return mixed
      */
@@ -68,6 +78,8 @@ class MslsRegistry {
     }
 
     /**
+     * Satic set_object calls set
+     * 
      * @param mixed $key
      * @param mixed $instance
      */
