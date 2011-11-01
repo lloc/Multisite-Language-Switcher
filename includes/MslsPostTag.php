@@ -96,6 +96,7 @@ class MslsPostTag extends MslsMain {
      * Set
      * 
      * @param int $term_id
+     * @param int $tt_id
      */
     public function set( $term_id, $tt_id ) {
         if ( !current_user_can( 'manage_categories' ) ) return;
