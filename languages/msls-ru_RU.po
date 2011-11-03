@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-11-03 10:48+0200\n"
+"PO-Revision-Date: 2011-11-03 10:59+0200\n"
 "Last-Translator: andreyv <jujav4ik@gmail.com>\n"
 "Language-Team: \n"
 
@@ -104,19 +104,19 @@ msgstr "Описание"
 
 #: includes/MslsAdmin.php:51
 msgid "Text/HTML before the list"
-msgstr ""
+msgstr "Текст/HTML перед элементом списка"
 
 #: includes/MslsAdmin.php:52
 msgid "Text/HTML after the list"
-msgstr ""
+msgstr "Текст/HTML после элемента списка"
 
 #: includes/MslsAdmin.php:53
 msgid "Text/HTML before each item"
-msgstr ""
+msgstr "Текст/HTML перед элементом"
 
 #: includes/MslsAdmin.php:54
 msgid "Text/HTML after each item"
-msgstr ""
+msgstr "Текст/HTML после элемента"
 
 #: includes/MslsAdmin.php:55
 msgid "Add hint for available translations"
