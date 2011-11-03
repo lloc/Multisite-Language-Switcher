@@ -1,0 +1,132 @@
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2011-09-13 14:40:09+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2011-11-03 10:59+0200\n"
+"Last-Translator: andreyv <jujav4ik@gmail.com>\n"
+"Language-Team: \n"
+
+#: includes/MslsMetaBox.php:22
+#: includes/MslsMetaBox.php:30
+#: includes/MslsPostTag.php:31
+#: includes/MslsOutput.php:68
+#: includes/MslsAdmin.php:13
+#: includes/MslsAdmin.php:14
+msgid "Multisite Language Switcher"
+msgstr ""
+
+#: includes/MslsMetaBox.php:89
+#: includes/MslsAdmin.php:33
+msgid "Update"
+msgstr "Обновить"
+
+#: includes/MslsMetaBox.php:95
+msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
+msgstr "Вам необходимо добавить минимум один блог на другом языке, чтобы активировать plugin!"
+
+#: includes/MslsOutput.php:93
+msgid "Title"
+msgstr "Заголовок"
+
+#: includes/MslsOutput.php:121
+msgid "%s and %s"
+msgstr "%s и %s"
+
+#: includes/MslsOutput.php:130
+msgid "This post is also available in %s."
+msgstr "Эта статья также доступна на %s"
+
+#: includes/MslsLink.php:22
+msgid "Flag and description"
+msgstr "Флаг и название"
+
+#: includes/MslsLink.php:72
+msgid "Description only"
+msgstr "Только название"
+
+#: includes/MslsLink.php:82
+msgid "Flag only"
+msgstr "Только флаг"
+
+#: includes/MslsLink.php:92
+msgid "Description and flag"
+msgstr "Название и флаг"
+
+#: includes/MslsLink.php:150
+msgid "Edit the translation in the %s-blog"
+msgstr "Редактировать перевод в %s-блоге"
+
+#: includes/MslsLink.php:157
+msgid "Create a new translation in the %s-blog"
+msgstr "Добавить перевод в %s-блог"
+
+#: includes/MslsAdmin.php:26
+msgid "Multisite Language Switcher Options"
+msgstr "Multisite Language Switcher Настройки"
+
+#: includes/MslsAdmin.php:27
+msgid "To achieve maximum flexibility, you have to configure each blog separately."
+msgstr ""
+
+#: includes/MslsAdmin.php:41
+msgid "Main Settings"
+msgstr "Главные настройки"
+
+#: includes/MslsAdmin.php:45
+msgid "Display"
+msgstr "Показать"
+
+#: includes/MslsAdmin.php:46
+msgid "Sort output by description"
+msgstr "Отсортировать по названию"
+
+#: includes/MslsAdmin.php:47
+msgid "Exclude this blog from output"
+msgstr "Исключить блог из меню"
+
+#: includes/MslsAdmin.php:48
+msgid "Show only links with a translation"
+msgstr "Показывать ссылки с переводом"
+
+#: includes/MslsAdmin.php:49
+msgid "Display link to the current language"
+msgstr "Показать ссылку на данный язык"
+
+#: includes/MslsAdmin.php:50
+msgid "Description"
+msgstr "Описание"
+
+#: includes/MslsAdmin.php:51
+msgid "Text/HTML before the list"
+msgstr "Текст/HTML перед элементом списка"
+
+#: includes/MslsAdmin.php:52
+msgid "Text/HTML after the list"
+msgstr "Текст/HTML после элемента списка"
+
+#: includes/MslsAdmin.php:53
+msgid "Text/HTML before each item"
+msgstr "Текст/HTML перед элементом"
+
+#: includes/MslsAdmin.php:54
+msgid "Text/HTML after each item"
+msgstr "Текст/HTML после элемента"
+
+#: includes/MslsAdmin.php:55
+msgid "Add hint for available translations"
+msgstr "Добавить подсказку для имеющихся переводов"
+
+#: includes/MslsAdmin.php:56
+msgid "Hint priority"
+msgstr "Приоритет подсказок"
+
+#: includes/MslsAdmin.php:57
+msgid "Custom URL for flag-images"
+msgstr "Собственная ссылка на флаг-иконку"
+
