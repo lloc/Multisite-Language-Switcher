@@ -19,7 +19,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
 * Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/it/)
 * Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/)
-* Brazillian Portuguese (pt_BR) - [Victor](http://www.coolweb.com.br/)
+* Brazillian Portuguese (pt_BR) - [Coolweb](http://www.coolweb.com.br/)
 * Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/)
 * French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 * Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)

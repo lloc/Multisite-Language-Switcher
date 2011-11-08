@@ -31,7 +31,7 @@ class MslsCustomColumn extends MslsMain {
     /**
      * Init
      */
-    static function init() {
+    public static function init() {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $post_type = MslsPostType::instance()->get_request();

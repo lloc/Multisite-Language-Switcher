@@ -300,7 +300,7 @@ class MslsAdmin extends MslsMain {
     }
 
     /**
-     * Validate input before saving it
+     * Validates input before saving it
      * 
      * @param array $input Values of the submitted form
      * @return array Validated input 
