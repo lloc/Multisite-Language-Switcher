@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to:  3.3
-Stable tag: 0.9.3
+Stable tag: 0.9.4
 
 A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
 
@@ -40,6 +40,9 @@ If you have created your own language pack, or have an update of an existing one
 * optionally you can use a line like `<?php if ( function_exists( 'the_msls' )) the_msls(); ?>` directly in your theme-files
 
 == Changelog ==
+
+= 0.9.4 =
+language files for uk_UK added
 
 = 0.9.3 =
 language files for ru_RU added
