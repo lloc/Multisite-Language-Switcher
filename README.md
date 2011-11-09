@@ -13,6 +13,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 *  Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/) 
 *  French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 *  Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)
+*  Ukrainian (uk_UK) - [Victor Melnichenko](http://worm.org.ua/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the _Multisite Language Switcher_. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 

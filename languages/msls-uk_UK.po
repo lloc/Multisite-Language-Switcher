@@ -8,9 +8,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-11-09 13:53+0100\n"
+"PO-Revision-Date: 2011-11-09 13:52+0100\n"
 "Last-Translator: Dennis Ploetner <re@lloc.de>\n"
-"Language-Team: \n"
+"Language-Team: Victor Melnichenko <victor.melnichenko@gmail.com>\n"
+"X-Poedit-Language: Ukrainian\n"
+"X-Poedit-Country: UKRAINE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: includes/MslsMetaBox.php:22
 #: includes/MslsMetaBox.php:30
@@ -19,16 +22,16 @@ msgstr ""
 #: includes/MslsAdmin.php:13
 #: includes/MslsAdmin.php:14
 msgid "Multisite Language Switcher"
-msgstr ""
+msgstr "Multisite Language Switcher"
 
 #: includes/MslsMetaBox.php:89
 #: includes/MslsAdmin.php:33
 msgid "Update"
-msgstr "Обновить"
+msgstr "Поновити"
 
 #: includes/MslsMetaBox.php:95
 msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
-msgstr "Вам необходимо добавить минимум один блог на другом языке, чтобы активировать plugin!"
+msgstr "Вам необхідно додати мінімум один блог на іншій мові, щоб активувати дане доповнення!"
 
 #: includes/MslsOutput.php:93
 msgid "Title"
@@ -36,97 +39,97 @@ msgstr "Заголовок"
 
 #: includes/MslsOutput.php:121
 msgid "%s and %s"
-msgstr "%s и %s"
+msgstr "%s та %s"
 
 #: includes/MslsOutput.php:130
 msgid "This post is also available in %s."
-msgstr "Эта статья также доступна на %s"
+msgstr "Даний запис також доступний на %s"
 
 #: includes/MslsLink.php:22
 msgid "Flag and description"
-msgstr "Флаг и название"
+msgstr "Прапор та назва"
 
 #: includes/MslsLink.php:72
 msgid "Description only"
-msgstr "Только название"
+msgstr "Тільки назва"
 
 #: includes/MslsLink.php:82
 msgid "Flag only"
-msgstr "Только флаг"
+msgstr "Тільки прапор"
 
 #: includes/MslsLink.php:92
 msgid "Description and flag"
-msgstr "Название и флаг"
+msgstr "Назва та прапор"
 
 #: includes/MslsLink.php:150
 msgid "Edit the translation in the %s-blog"
-msgstr "Редактировать перевод в %s-блоге"
+msgstr "Редагувати переклад в %s-блозі"
 
 #: includes/MslsLink.php:157
 msgid "Create a new translation in the %s-blog"
-msgstr "Добавить перевод в %s-блог"
+msgstr "Додати новий переклад до %s-блогу"
 
 #: includes/MslsAdmin.php:26
 msgid "Multisite Language Switcher Options"
-msgstr "Multisite Language Switcher Настройки"
+msgstr "Multisite Language Switcher Options"
 
 #: includes/MslsAdmin.php:27
 msgid "To achieve maximum flexibility, you have to configure each blog separately."
-msgstr ""
+msgstr "Для досягнення максимальної гнучкості, Вам доведеться налаштувати кожний блог окремо."
 
 #: includes/MslsAdmin.php:41
 msgid "Main Settings"
-msgstr "Главные настройки"
+msgstr "Основні установки"
 
 #: includes/MslsAdmin.php:45
 msgid "Display"
-msgstr "Показать"
+msgstr "Дисплей"
 
 #: includes/MslsAdmin.php:46
 msgid "Sort output by description"
-msgstr "Отсортировать по названию"
+msgstr "Сортувати вивід за описом"
 
 #: includes/MslsAdmin.php:47
 msgid "Exclude this blog from output"
-msgstr "Исключить блог из меню"
+msgstr "Виключити цей блог з вивіду"
 
 #: includes/MslsAdmin.php:48
 msgid "Show only links with a translation"
-msgstr "Показывать ссылки с переводом"
+msgstr "Показати тільки посилання з перекладом"
 
 #: includes/MslsAdmin.php:49
 msgid "Display link to the current language"
-msgstr "Показать ссылку на данный язык"
+msgstr "Показати посилання на поточній мові"
 
 #: includes/MslsAdmin.php:50
 msgid "Description"
-msgstr "Описание"
+msgstr "Опис"
 
 #: includes/MslsAdmin.php:51
 msgid "Text/HTML before the list"
-msgstr "Текст/HTML перед элементом списка"
+msgstr "Text/HTML до списку"
 
 #: includes/MslsAdmin.php:52
 msgid "Text/HTML after the list"
-msgstr "Текст/HTML после элемента списка"
+msgstr "Text/HTML після списку"
 
 #: includes/MslsAdmin.php:53
 msgid "Text/HTML before each item"
-msgstr "Текст/HTML перед элементом"
+msgstr "Text/HTML до кожного пункту"
 
 #: includes/MslsAdmin.php:54
 msgid "Text/HTML after each item"
-msgstr "Текст/HTML после элемента"
+msgstr "Text/HTML після кожного пункту"
 
 #: includes/MslsAdmin.php:55
 msgid "Add hint for available translations"
-msgstr "Добавить подсказку для имеющихся переводов"
+msgstr "Додати підказку для доступних перекладів"
 
 #: includes/MslsAdmin.php:56
 msgid "Hint priority"
-msgstr "Приоритет подсказок"
+msgstr "Високий пріорітет"
 
 #: includes/MslsAdmin.php:57
 msgid "Custom URL for flag-images"
-msgstr "Собственная ссылка на флаг-иконку"
+msgstr "URL користувача для зображень прапора"
 
