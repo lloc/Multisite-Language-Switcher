@@ -71,9 +71,12 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
         else {
             if ( is_home() || is_front_page() || is_404() ) {
                 return new MslsOptions();
-            } 
+            }
             elseif ( is_category() || is_tag() || is_tax() ) {
                 return MslsTaxOptions::create();
+            }
+            elseif ( is_date() || is_author() ) {
+                return MslsQueryOptios::create();
             }
             global $post;
             return new MslsPostOptions( $post->ID );
@@ -477,5 +480,89 @@ class MslsCategoryOptions extends MslsTermOptions {
     protected $base_defined = 'category';
 
 }
+
+/**
+ * MslsQueryOptions
+ * 
+ * @package Msls
+ */
+class MslsQueryOptions extends MslsOptions {
+
+    /**
+     * Factory method
+     * 
+     * @return MslsQueryOptions
+     */
+    public static function create() {
+        global $wp_query;
+        if ( is_day() ) {
+            return new MslsDayOptions();
+        } 
+        elseif ( is_month() ) {
+            return new MslsMonthOptions();
+        }
+        elseif ( is_year() ) {
+            return new MslsYearOptions();
+        }
+        elseif ( is_author() ) {
+            return new MslsAuthorOptions();
+        }
+        return null;
+    }
+
+    /**
+     * Get postlink
+     * 
+     * @param string $language
+     * @return string
+     */
+    public function get_postlink( $language ) {
+        return '';
+    }
+
+    /**
+     * Get current link
+     * 
+     * @return string
+     */
+    public function get_current_link() {
+        return site_url();
+    }
+
+}
+
+class MslsDayOptions extends MslsQueryOptions {}
+class MslsMonthOptions extends MslsQueryOptions {}
+class MslsYearOptions extends MslsQueryOptions {}
+
+/**
+ * MslsAuthorOptions
+ * 
+ * @package Msls
+ */
+class MslsAuthorOptions extends MslsQueryOptions {
+
+    /**
+     * Get postlink
+     * 
+     * @param string $language
+     * @return string
+     */
+    public function get_postlink( $language ) {
+        return $this->get_current_link();
+    }
+
+    /**
+     * Get current link
+     * 
+     * @return string
+     */
+    public function get_current_link() {
+        global $wp_query;
+        return get_author_posts_url( $wp_query->get_queried_object_id() );
+    }
+
+}
+
 
 ?>
