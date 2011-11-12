@@ -69,7 +69,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             return new MslsPostOptions( $id );
         }
         else {
-            if ( is_home() || is_front_page() ) {
+            if ( is_home() || is_front_page() || is_404() ) {
                 return new MslsOptions();
             } 
             elseif ( is_category() || is_tag() || is_tax() ) {
