@@ -505,7 +505,7 @@ class MslsQueryOptions extends MslsOptions {
             return new MslsYearOptions();
         }
         elseif ( is_author() ) {
-            return new MslsAuthorOptions();
+            return new MslsAuthorOptions( $wp_query->get_queried_object_id() );
         }
         return null;
     }
@@ -549,7 +549,18 @@ class MslsAuthorOptions extends MslsQueryOptions {
      * @return string
      */
     public function get_postlink( $language ) {
-        return $this->get_current_link();
+        global $wpdb;
+        $numposts = $wpdb->get_var(
+            sprintf(
+                "SELECT count(ID) FROM wp_posts WHERE post_author = %d AND post_status = 'publish'",
+                (int) $this->args[0]
+            )
+        );
+        return(
+            $numposts > 0 ?
+            $this->get_current_link() :
+            ''
+        );
     }
 
     /**
@@ -558,8 +569,7 @@ class MslsAuthorOptions extends MslsQueryOptions {
      * @return string
      */
     public function get_current_link() {
-        global $wp_query;
-        return get_author_posts_url( $wp_query->get_queried_object_id() );
+        return get_author_posts_url( $this->args[0] );
     }
 
 }
