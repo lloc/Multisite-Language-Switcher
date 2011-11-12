@@ -76,7 +76,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
                 return MslsTaxOptions::create();
             }
             elseif ( is_date() || is_author() ) {
-                return MslsQueryOptios::create();
+                return MslsQueryOptions::create();
             }
             global $post;
             return new MslsPostOptions( $post->ID );
