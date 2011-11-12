@@ -176,7 +176,7 @@ class MslsGetSet {
      * @param string $key
      * @return bool
      */ 
-    final public function has_value( $key ) {
+    public function has_value( $key ) {
         return !empty( $this->arr[$key] ) ? true : false;
     }
 

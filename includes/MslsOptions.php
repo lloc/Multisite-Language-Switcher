@@ -489,6 +489,11 @@ class MslsCategoryOptions extends MslsTermOptions {
 class MslsQueryOptions extends MslsOptions {
 
     /**
+     * @var int
+     */
+    protected $has_posts = null;
+
+    /**
      * Factory method
      * 
      * @return MslsQueryOptions
@@ -510,6 +515,7 @@ class MslsQueryOptions extends MslsOptions {
         return null;
     }
 
+
     /**
      * Get postlink
      * 
@@ -517,16 +523,11 @@ class MslsQueryOptions extends MslsOptions {
      * @return string
      */
     public function get_postlink( $language ) {
-        return '';
-    }
-
-    /**
-     * Get current link
-     * 
-     * @return string
-     */
-    public function get_current_link() {
-        return site_url();
+        return(
+            $this->has_value( $language ) ?
+            $this->get_current_link() :
+            ''
+        );
     }
 
 }
@@ -543,24 +544,23 @@ class MslsYearOptions extends MslsQueryOptions {}
 class MslsAuthorOptions extends MslsQueryOptions {
 
     /**
-     * Get postlink
+     * Check if the array has an non emty item
      * 
-     * @param string $language
-     * @return string
-     */
-    public function get_postlink( $language ) {
-        global $wpdb;
-        $numposts = $wpdb->get_var(
-            sprintf(
-                "SELECT count(ID) FROM {$wpdb->posts} WHERE post_author = %d AND post_status = 'publish'",
-                (int) $this->args[0]
-            )
-        );
-        return(
-            $numposts > 0 ?
-            $this->get_current_link() :
-            ''
-        );
+     * @param string $key
+     * @return bool
+     */ 
+    public function has_value( $language ) {
+        if ( is_null( $this->has_posts ) ) {
+            global $wpdb;
+            $num_posts = $wpdb->get_var(
+                sprintf(
+                    "SELECT count(ID) FROM {$wpdb->posts} WHERE post_author = %d AND post_status = 'publish'",
+                    (int) $this->args[0]
+                )
+            );
+            $this->has_posts = (bool) $num_posts;
+        }
+        return $this->has_posts;
     }
 
     /**
