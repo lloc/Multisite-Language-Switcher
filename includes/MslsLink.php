@@ -295,14 +295,14 @@ class MslsAdminIcon {
         if ( !empty( $this->href ) ) {
             $href  = $this->href;
             $title = sprintf(
-                __( 'Edit the translation in the %s-blog' ),
+                __( 'Edit the translation in the %s-blog', 'msls' ),
                 $this->language
             );
         }
         else {
             $href  = $this->get_edit_new();
             $title = sprintf(
-                __( 'Create a new translation in the %s-blog' ),
+                __( 'Create a new translation in the %s-blog', 'msls' ),
                 $this->language
             );
         }
