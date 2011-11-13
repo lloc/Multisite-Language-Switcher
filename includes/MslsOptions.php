@@ -552,9 +552,9 @@ class MslsAuthorOptions extends MslsQueryOptions {
                     (int) $this->args[0]
                 )
             );
+            print_r( $num_posts );
             $this->arr[$language] = (bool) $num_posts;
         }
-        print_r( $this->arr );
         return $this->arr[$language];
     }
 
