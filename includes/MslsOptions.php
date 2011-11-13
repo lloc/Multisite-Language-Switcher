@@ -489,11 +489,6 @@ class MslsCategoryOptions extends MslsTermOptions {
 class MslsQueryOptions extends MslsOptions {
 
     /**
-     * @var int
-     */
-    protected $has_posts = null;
-
-    /**
      * Factory method
      * 
      * @return MslsQueryOptions
@@ -514,7 +509,6 @@ class MslsQueryOptions extends MslsOptions {
         }
         return null;
     }
-
 
     /**
      * Get postlink
@@ -550,7 +544,7 @@ class MslsAuthorOptions extends MslsQueryOptions {
      * @return bool
      */ 
     public function has_value( $language ) {
-        if ( is_null( $this->has_posts ) ) {
+        if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
             $num_posts = $wpdb->get_var(
                 sprintf(
@@ -558,9 +552,9 @@ class MslsAuthorOptions extends MslsQueryOptions {
                     (int) $this->args[0]
                 )
             );
-            $this->has_posts = (bool) $num_posts;
+            $this->arr[$language] = (bool) $num_posts;
         }
-        return $this->has_posts;
+        return $this->arr[$language];
     }
 
     /**
