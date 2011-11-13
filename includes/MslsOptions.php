@@ -550,11 +550,9 @@ class MslsAuthorOptions extends MslsQueryOptions {
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE post_author = %d AND post_status = 'publish'",
                 (int) $this->args[0]
             );
-            $num_posts = $wpdb->get_var( $sql );
-            print_r( $sql );
-            $this->arr[$language] = (bool) $num_posts;
+            $this->arr[$language] = $wpdb->get_var( $sql );
         }
-        return $this->arr[$language];
+        return (bool) $this->arr[$language];
     }
 
     /**
