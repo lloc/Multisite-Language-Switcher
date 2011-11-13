@@ -548,6 +548,7 @@ class MslsDayOptions extends MslsQueryOptions {
                 (int) $this->args[1],
                 (int) $this->args[2]
             );
+            echo $sql;
             $this->arr[$language] = $wpdb->get_var( $sql );
         }
         return (bool) $this->arr[$language];
