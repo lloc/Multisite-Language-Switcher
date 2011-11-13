@@ -543,12 +543,11 @@ class MslsDayOptions extends MslsQueryOptions {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
             $sql= sprintf(
-                "SELECT count(ID) FROM {$wpdb->posts} WHERE post_date = '%d-%02d-%02d' AND post_status = 'publish'",
+                "SELECT count(ID) FROM {$wpdb->posts} WHERE DATE(post_date) = '%d-%02d-%02d' AND post_status = 'publish'",
                 (int) $this->args[0],
                 (int) $this->args[1],
                 (int) $this->args[2]
             );
-            echo $sql;
             $this->arr[$language] = $wpdb->get_var( $sql );
         }
         return (bool) $this->arr[$language];
