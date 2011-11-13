@@ -41,11 +41,14 @@ If you have created your own language pack, or have an update of an existing one
 
 == Changelog ==
 
+= 0.9.5 =
+* new: Support for author- and date-archives
+
 = 0.9.4 =
-language files for uk_UK added
+* language files for uk_UK added
 
 = 0.9.3 =
-language files for ru_RU added
+* language files for ru_RU added
 
 = 0.9.2 =
 * new: _msls_output_get_-filter for customizing the output
