@@ -203,13 +203,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * @return string
      */
     public function get_url( $dir ) {
-        $url = sprintf(
-            '%s/%s/%s',
-            WP_PLUGIN_URL, 
-            dirname( MSLS_PLUGIN_PATH ),
-            $dir
-        );
-        return esc_url( $url );
+        return esc_url( plugins_url( $dir, MSLS_PLUGIN__FILE__ ) );
     }
 
     /**
