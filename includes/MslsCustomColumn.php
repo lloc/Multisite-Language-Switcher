@@ -82,11 +82,11 @@ class MslsCustomColumn extends MslsMain {
                     $edit_link = MslsAdminIcon::create();
                     $edit_link->set_language( $language );
                     if ( $mydata->has_value( $language ) ) {
-                        $edit_link->set_src( $this->options->get_url( 'images' ) . '/link_edit.png' );
+                        $edit_link->set_src( $this->options->get_url( 'images/link_edit.png' ) );
                         $edit_link->set_href( $mydata->$language );
                     }
                     else {
-                        $edit_link->set_src( $this->options->get_url( 'images' ) . '/link_add.png' );
+                        $edit_link->set_src( $this->options->get_url( 'images/link_add.png' ) );
                     }
                     echo $edit_link;
                     restore_current_blog();
