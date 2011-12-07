@@ -38,12 +38,13 @@ if ( !class_exists( 'MslsPlugin' ) ) {
     register_uninstall_hook( __FILE__, 'MslsPlugin::uninstall' );
 
     if ( is_admin() ) {
+        require_once dirname( __FILE__ ) . '/includes/MslsAdmin.php';
+        add_action( 'init', 'MslsAdmin::init_i18n_support' );
+        add_action( 'admin_menu', 'MslsAdmin::init' );
+
         require_once dirname( __FILE__ ) . '/includes/MslsMetaBox.php';
         add_action( 'load-post.php', 'MslsMetaBox::init' );
         add_action( 'load-post-new.php', 'MslsMetaBox::init' );
-
-        require_once dirname( __FILE__ ) . '/includes/MslsAdmin.php';
-        add_action( 'admin_menu', 'MslsAdmin::init' );
 
         require_once dirname( __FILE__ ) . '/includes/MslsPostTag.php';
         add_action( 'load-edit-tags.php', 'MslsPostTag::init' );
