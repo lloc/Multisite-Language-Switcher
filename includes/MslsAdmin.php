@@ -39,6 +39,17 @@ class MslsAdmin extends MslsMain {
     }
 
     /**
+     * Load textdomain
+     */
+    public static function init_i18n_support() {
+        load_plugin_textdomain(
+            'msls',
+            false,
+            dirname( MSLS_PLUGIN_PATH ) . '/languages/'
+        );
+    }
+
+    /**
      * Render the options-page
      */
     public function render() {

@@ -47,11 +47,6 @@ abstract class MslsMain {
      * Constructor
      */
     public function __construct() {
-        load_plugin_textdomain(
-            'msls',
-            false,
-            dirname( MSLS_PLUGIN_PATH ) . '/languages/'
-        );
         $this->options = MslsOptions::instance();
         $this->blogs   = MslsBlogCollection::instance();
     }
