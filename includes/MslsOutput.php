@@ -222,7 +222,7 @@ function msls_content_filter( $content ) {
                     ) .
                     '</p>';
             }
-        }
+        } 
     }
     return $content;
 }

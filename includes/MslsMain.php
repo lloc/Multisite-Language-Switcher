@@ -88,6 +88,17 @@ abstract class MslsMain {
 class MslsPlugin {
 
     /**
+     * Load textdomain
+     */
+    public static function init_i18n_support() {
+        load_plugin_textdomain(
+            'msls',
+            false,
+            dirname( MSLS_PLUGIN_PATH ) . '/languages/'
+        );
+    }
+
+    /**
      * Activate plugin
      */
     public static function activate() {

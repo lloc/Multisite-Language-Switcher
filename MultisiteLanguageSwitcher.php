@@ -36,10 +36,10 @@ if ( !class_exists( 'MslsPlugin' ) ) {
     register_activation_hook( __FILE__, 'MslsPlugin::activate' );
     register_deactivation_hook( __FILE__, 'MslsPlugin::deactivate' );
     register_uninstall_hook( __FILE__, 'MslsPlugin::uninstall' );
+    add_action( 'init', 'MslsPlugin::init_i18n_support' );
 
     if ( is_admin() ) {
         require_once dirname( __FILE__ ) . '/includes/MslsAdmin.php';
-        add_action( 'init', 'MslsAdmin::init_i18n_support' );
         add_action( 'admin_menu', 'MslsAdmin::init' );
 
         require_once dirname( __FILE__ ) . '/includes/MslsMetaBox.php';
