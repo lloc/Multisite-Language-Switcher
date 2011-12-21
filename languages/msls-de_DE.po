@@ -2,170 +2,162 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Multisite Language Switcher 0.7\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2011-09-01 14:36:18+00:00\n"
-"PO-Revision-Date: 2011-09-01 17:56+0100\n"
+"POT-Creation-Date: 2011-11-13 17:29:39+00:00\n"
+"PO-Revision-Date: 2011-12-21 10:39+0100\n"
 "Last-Translator: Dennis Ploetner <re@lloc.de>\n"
 "Language-Team: German\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: \n"
-"X-Poedit-Country: \n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
-"X-Poedit-Basepath: \n"
-"X-Poedit-Bookmarks: \n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Textdomain-Support: yes"
 
-#: includes/MslsLink.php:22
-#@ msls
-msgid "Flag and description"
-msgstr "Flagge und Beschreibung"
-
-#: includes/MslsLink.php:72
-#@ msls
-msgid "Description only"
-msgstr "Nur Beschreibung"
-
-#: includes/MslsLink.php:82
-#@ msls
-msgid "Flag only"
-msgstr "Nur Flagge"
-
-#: includes/MslsLink.php:92
-#@ msls
-msgid "Description and flag"
-msgstr "Beschreibung und Flagge"
-
-#: includes/MslsAdmin.php:13
-#: includes/MslsAdmin.php:14
-#: includes/MslsMetaBox.php:22
-#: includes/MslsMetaBox.php:30
-#: includes/MslsOutput.php:68
-#: includes/MslsPostTag.php:31
-#@ msls
+# @ msls
+#: includes/MslsMetaBox.php:46
+#: includes/MslsAdmin.php:32
+#: includes/MslsAdmin.php:33
+#: includes/MslsPostTag.php:54
+#: includes/MslsOutput.php:126
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: includes/MslsAdmin.php:26
-#@ msls
-msgid "Multisite Language Switcher Options"
-msgstr "Multisite Language Switcher"
-
-#: includes/MslsAdmin.php:27
-#@ msls
-msgid "To achieve maximum flexibility, you have to configure each blog separately."
-msgstr "Um eine ausreichende Flexibilität gewährleisten zu können, muss das Plugin für jedes Blog einzeln konfiguriert werden."
-
-#: includes/MslsAdmin.php:33
-#: includes/MslsMetaBox.php:89
-#@ msls
+# @ msls
+#: includes/MslsMetaBox.php:110
+#: includes/MslsAdmin.php:55
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: includes/MslsAdmin.php:41
-#@ msls
-msgid "Main Settings"
-msgstr "Einstellungen"
-
-#: includes/MslsAdmin.php:45
-#@ msls
-msgid "Display"
-msgstr "Anzeige"
-
-#: includes/MslsAdmin.php:47
-#@ msls
-msgid "Exclude this blog from output"
-msgstr "Dieses Blog bei der Ausgabe ausschließen"
-
-#: includes/MslsAdmin.php:49
-#@ msls
-msgid "Display link to the current language"
-msgstr "Link zur aktuellen Sprache anzeigen"
-
-#: includes/MslsAdmin.php:50
-#@ msls
-msgid "Description"
-msgstr "Beschreibung"
-
-#: includes/MslsAdmin.php:51
-#@ msls
-msgid "Text/HTML before the list"
-msgstr "Text/HTML vor der Liste"
-
-#: includes/MslsAdmin.php:52
-#@ msls
-msgid "Text/HTML after the list"
-msgstr "Text/HTML nach der Liste"
-
-#: includes/MslsAdmin.php:53
-#@ msls
-msgid "Text/HTML before each item"
-msgstr "Text/HTML vor jedem Element"
-
-#: includes/MslsAdmin.php:54
-#@ msls
-msgid "Text/HTML after each item"
-msgstr "Text/HTML nach jedem Element"
-
-#: includes/MslsAdmin.php:55
-#@ msls
-msgid "Add hint for available translations"
-msgstr "Hinweis unter Post anzeigen, wenn Übersetzung verfügbar"
-
-#: includes/MslsAdmin.php:56
-#@ msls
-msgid "Hint priority"
-msgstr "Priorität des Hinweises"
-
-#: includes/MslsMetaBox.php:95
-#@ msls
+# @ msls
+#: includes/MslsMetaBox.php:116
 msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
 msgstr "Du solltest wenigstens ein weiteres Blog in einer anderen Sprache anlegen, um einen Mehrwert durch das Plugin zu erhalten!"
 
-#: includes/MslsOutput.php:93
-#@ msls
-msgid "Title"
-msgstr "Titel"
+# @ msls
+#: includes/MslsAdmin.php:47
+msgid "Multisite Language Switcher Options"
+msgstr "Multisite Language Switcher"
 
-#: includes/MslsOutput.php:121
-#, php-format
-#@ msls
-msgid "%s and %s"
-msgstr "%s und %s"
+# @ msls
+#: includes/MslsAdmin.php:49
+msgid "To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "Um eine ausreichende Flexibilität gewährleisten zu können, muss das Plugin für jedes Blog einzeln konfiguriert werden."
 
-#: includes/MslsOutput.php:130
-#, php-format
-#@ msls
-msgid "This post is also available in %s."
-msgstr "Der Artikel ist auch in %s verfügbar."
+# @ msls
+#: includes/MslsAdmin.php:93
+msgid "Main Settings"
+msgstr "Einstellungen"
 
-#: includes/MslsAdmin.php:46
-#@ msls
+# @ msls
+#: includes/MslsAdmin.php:97
+msgid "Display"
+msgstr "Anzeige"
+
+# @ msls
+#: includes/MslsAdmin.php:98
 msgid "Sort output by description"
 msgstr "Ausgabe nach Beschreibung sortieren"
 
-#: includes/MslsAdmin.php:48
-#@ msls
+# @ msls
+#: includes/MslsAdmin.php:99
+msgid "Exclude this blog from output"
+msgstr "Dieses Blog bei der Ausgabe ausschließen"
+
+# @ msls
+#: includes/MslsAdmin.php:100
 msgid "Show only links with a translation"
 msgstr "Nur Links mit Übersetzung anzeigen"
 
-#: includes/MslsAdmin.php:57
-#@ msls
+# @ msls
+#: includes/MslsAdmin.php:101
+msgid "Display link to the current language"
+msgstr "Link zur aktuellen Sprache anzeigen"
+
+# @ msls
+#: includes/MslsAdmin.php:102
+msgid "Description"
+msgstr "Beschreibung"
+
+# @ msls
+#: includes/MslsAdmin.php:103
+msgid "Text/HTML before the list"
+msgstr "Text/HTML vor der Liste"
+
+# @ msls
+#: includes/MslsAdmin.php:104
+msgid "Text/HTML after the list"
+msgstr "Text/HTML nach der Liste"
+
+# @ msls
+#: includes/MslsAdmin.php:105
+msgid "Text/HTML before each item"
+msgstr "Text/HTML vor jedem Element"
+
+# @ msls
+#: includes/MslsAdmin.php:106
+msgid "Text/HTML after each item"
+msgstr "Text/HTML nach jedem Element"
+
+# @ msls
+#: includes/MslsAdmin.php:107
+msgid "Add hint for available translations"
+msgstr "Hinweis unter Post anzeigen, wenn Übersetzung verfügbar"
+
+# @ msls
+#: includes/MslsAdmin.php:108
+msgid "Hint priority"
+msgstr "Priorität des Hinweises"
+
+# @ msls
+#: includes/MslsAdmin.php:109
 msgid "Custom URL for flag-images"
 msgstr "Alternativer URL der Flaggen"
 
-#: includes/MslsLink.php:150
-#, php-format
-#@ default
-msgid "Edit the translation in the %s-blog"
-msgstr ""
+# @ msls
+#: includes/MslsLink.php:51
+msgid "Flag and description"
+msgstr "Flagge und Beschreibung"
 
-#: includes/MslsLink.php:157
-#, php-format
-#@ default
+# @ msls
+#: includes/MslsLink.php:116
+msgid "Description only"
+msgstr "Nur Beschreibung"
+
+# @ msls
+#: includes/MslsLink.php:139
+msgid "Flag only"
+msgstr "Nur Flagge"
+
+# @ msls
+#: includes/MslsLink.php:162
+msgid "Description and flag"
+msgstr "Beschreibung und Flagge"
+
+# @ default
+#: includes/MslsLink.php:298
+msgid "Edit the translation in the %s-blog"
+msgstr "Übersetzung im %s-Blog bearbeiten"
+
+# @ default
+#: includes/MslsLink.php:305
 msgid "Create a new translation in the %s-blog"
-msgstr ""
+msgstr "Neue Übersetzung im %s-Blog anlegen"
+
+# @ msls
+#: includes/MslsOutput.php:170
+msgid "Title"
+msgstr "Titel"
+
+# @ msls
+#: includes/MslsOutput.php:211
+msgid "%s and %s"
+msgstr "%s und %s"
+
+# @ msls
+#: includes/MslsOutput.php:220
+msgid "This post is also available in %s."
+msgstr "Der Artikel ist auch in %s verfügbar."
 

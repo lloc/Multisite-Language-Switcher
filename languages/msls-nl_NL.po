@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Multisite Language Switcher 0.7\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2011-09-01 14:36:18+00:00\n"
-"PO-Revision-Date: 2011-09-13 19:10+0100\n"
+"POT-Creation-Date: 2011-11-13 17:29:39+00:00\n"
+"PO-Revision-Date: 2011-12-21 10:41+0100\n"
 "Last-Translator: Dennis Ploetner <re@lloc.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,153 +16,148 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#@ msls
-#: includes/MslsLink.php:22
-msgid "Flag and description"
-msgstr "Vlag en beschrijving"
-
-#@ msls
-#: includes/MslsLink.php:72
-msgid "Description only"
-msgstr "Alleen beschrijving"
-
-#@ msls
-#: includes/MslsLink.php:82
-msgid "Flag only"
-msgstr "Alleen vlag"
-
-#@ msls
-#: includes/MslsLink.php:92
-msgid "Description and flag"
-msgstr "Beschrijving en vlag"
-
-#@ msls
-#: includes/MslsAdmin.php:13
-#: includes/MslsAdmin.php:14
-#: includes/MslsMetaBox.php:22
-#: includes/MslsMetaBox.php:30
-#: includes/MslsOutput.php:68
-#: includes/MslsPostTag.php:31
+# @ msls
+#: includes/MslsMetaBox.php:46
+#: includes/MslsAdmin.php:32
+#: includes/MslsAdmin.php:33
+#: includes/MslsPostTag.php:54
+#: includes/MslsOutput.php:126
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#@ msls
-#: includes/MslsAdmin.php:26
-msgid "Multisite Language Switcher Options"
-msgstr "Multisite Language Switcher Opties"
-
-#@ msls
-#: includes/MslsAdmin.php:27
-msgid "To achieve maximum flexibility, you have to configure each blog separately."
-msgstr "Voor maximale flexibiliteit verdient het aanbeveling elk blog apart te configureren."
-
-#@ msls
-#: includes/MslsAdmin.php:33
-#: includes/MslsMetaBox.php:89
+# @ msls
+#: includes/MslsMetaBox.php:110
+#: includes/MslsAdmin.php:55
 msgid "Update"
 msgstr "Actualiseren"
 
-#@ msls
-#: includes/MslsAdmin.php:41
-msgid "Main Settings"
-msgstr "Instellingen"
-
-#@ msls
-#: includes/MslsAdmin.php:45
-msgid "Display"
-msgstr "Weergave"
-
-#@ msls
-#: includes/MslsAdmin.php:47
-msgid "Exclude this blog from output"
-msgstr "Dit blog niet meenemen in de output"
-
-#@ msls
-#: includes/MslsAdmin.php:49
-msgid "Display link to the current language"
-msgstr "Link naar de actueel ingestelde taal tonen"
-
-#@ msls
-#: includes/MslsAdmin.php:50
-msgid "Description"
-msgstr "Beschrijving"
-
-#@ msls
-#: includes/MslsAdmin.php:51
-msgid "Text/HTML before the list"
-msgstr "Tekst/HTML voor de lijst"
-
-#@ msls
-#: includes/MslsAdmin.php:52
-msgid "Text/HTML after the list"
-msgstr "Tekst/HTML na de lijst"
-
-#@ msls
-#: includes/MslsAdmin.php:53
-msgid "Text/HTML before each item"
-msgstr "Tekst/HTML voor elk item"
-
-#@ msls
-#: includes/MslsAdmin.php:54
-msgid "Text/HTML after each item"
-msgstr "Tekst/HTML na elk item"
-
-#@ msls
-#: includes/MslsAdmin.php:55
-msgid "Add hint for available translations"
-msgstr "Hint tonen onder blogpost als er een vertaling beschikbaar is"
-
-#@ msls
-#: includes/MslsAdmin.php:56
-msgid "Hint priority"
-msgstr "Hint-prioriteit"
-
-#@ msls
-#: includes/MslsMetaBox.php:95
+# @ msls
+#: includes/MslsMetaBox.php:116
 msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
 msgstr "Definieer minstens één ander blog in een andere taal om werkelijk voordeel te hebben van deze plugin."
 
-#@ msls
-#: includes/MslsOutput.php:93
-msgid "Title"
-msgstr "Titel"
+# @ msls
+#: includes/MslsAdmin.php:47
+msgid "Multisite Language Switcher Options"
+msgstr "Multisite Language Switcher Opties"
 
-#@ msls
-#: includes/MslsOutput.php:121
-#, php-format
-msgid "%s and %s"
-msgstr "%s en %s"
+# @ msls
+#: includes/MslsAdmin.php:49
+msgid "To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "Voor maximale flexibiliteit verdient het aanbeveling elk blog apart te configureren."
 
-#@ msls
-#: includes/MslsOutput.php:130
-#, php-format
-msgid "This post is also available in %s."
-msgstr "Deze blogpost is ook beschikbaar in het %s."
+# @ msls
+#: includes/MslsAdmin.php:93
+msgid "Main Settings"
+msgstr "Instellingen"
 
-#@ msls
-#: includes/MslsAdmin.php:46
+# @ msls
+#: includes/MslsAdmin.php:97
+msgid "Display"
+msgstr "Weergave"
+
+# @ msls
+#: includes/MslsAdmin.php:98
 msgid "Sort output by description"
 msgstr "Uitvoer sorteren op beschrijving"
 
-#@ msls
-#: includes/MslsAdmin.php:48
+# @ msls
+#: includes/MslsAdmin.php:99
+msgid "Exclude this blog from output"
+msgstr "Dit blog niet meenemen in de output"
+
+# @ msls
+#: includes/MslsAdmin.php:100
 msgid "Show only links with a translation"
 msgstr "Alleen links met een vertaling tonen"
 
-#@ msls
-#: includes/MslsAdmin.php:57
+# @ msls
+#: includes/MslsAdmin.php:101
+msgid "Display link to the current language"
+msgstr "Link naar de actueel ingestelde taal tonen"
+
+# @ msls
+#: includes/MslsAdmin.php:102
+msgid "Description"
+msgstr "Beschrijving"
+
+# @ msls
+#: includes/MslsAdmin.php:103
+msgid "Text/HTML before the list"
+msgstr "Tekst/HTML voor de lijst"
+
+# @ msls
+#: includes/MslsAdmin.php:104
+msgid "Text/HTML after the list"
+msgstr "Tekst/HTML na de lijst"
+
+# @ msls
+#: includes/MslsAdmin.php:105
+msgid "Text/HTML before each item"
+msgstr "Tekst/HTML voor elk item"
+
+# @ msls
+#: includes/MslsAdmin.php:106
+msgid "Text/HTML after each item"
+msgstr "Tekst/HTML na elk item"
+
+# @ msls
+#: includes/MslsAdmin.php:107
+msgid "Add hint for available translations"
+msgstr "Hint tonen onder blogpost als er een vertaling beschikbaar is"
+
+# @ msls
+#: includes/MslsAdmin.php:108
+msgid "Hint priority"
+msgstr "Hint-prioriteit"
+
+# @ msls
+#: includes/MslsAdmin.php:109
 msgid "Custom URL for flag-images"
 msgstr "Alternatieve URL voor vlag-afbeeldingen"
 
-#@ default
-#: includes/MslsLink.php:150
-#, php-format
+# @ msls
+#: includes/MslsLink.php:51
+msgid "Flag and description"
+msgstr "Vlag en beschrijving"
+
+# @ msls
+#: includes/MslsLink.php:116
+msgid "Description only"
+msgstr "Alleen beschrijving"
+
+# @ msls
+#: includes/MslsLink.php:139
+msgid "Flag only"
+msgstr "Alleen vlag"
+
+# @ msls
+#: includes/MslsLink.php:162
+msgid "Description and flag"
+msgstr "Beschrijving en vlag"
+
+# @ default
+#: includes/MslsLink.php:298
 msgid "Edit the translation in the %s-blog"
 msgstr "Vertaling in blog %s bewerken"
 
-#@ default
-#: includes/MslsLink.php:157
-#, php-format
+# @ default
+#: includes/MslsLink.php:305
 msgid "Create a new translation in the %s-blog"
 msgstr "Nieuwe vertaling in blog %s aanmaken"
+
+# @ msls
+#: includes/MslsOutput.php:170
+msgid "Title"
+msgstr "Titel"
+
+# @ msls
+#: includes/MslsOutput.php:211
+msgid "%s and %s"
+msgstr "%s en %s"
+
+# @ msls
+#: includes/MslsOutput.php:220
+msgid "This post is also available in %s."
+msgstr "Deze blogpost is ook beschikbaar in het %s."
 
