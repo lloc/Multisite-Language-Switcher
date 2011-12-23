@@ -530,7 +530,7 @@ class MslsDayOptions extends MslsQueryOptions {
     /**
      * Check if the array has an non emty item
      * 
-     * @param string $key
+     * @param string $language
      * @return bool
      */ 
     public function has_value( $language ) {
@@ -568,7 +568,7 @@ class MslsMonthOptions extends MslsQueryOptions {
     /**
      * Check if the array has an non emty item
      * 
-     * @param string $key
+     * @param string $language
      * @return bool
      */ 
     public function has_value( $language ) {
@@ -605,7 +605,7 @@ class MslsYearOptions extends MslsQueryOptions {
     /**
      * Check if the array has an non emty item
      * 
-     * @param string $key
+     * @param string $language
      * @return bool
      */ 
     public function has_value( $language ) {
@@ -641,7 +641,7 @@ class MslsAuthorOptions extends MslsQueryOptions {
     /**
      * Check if the array has an non emty item
      * 
-     * @param string $key
+     * @param string $language
      * @return bool
      */ 
     public function has_value( $language ) {
