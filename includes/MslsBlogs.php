@@ -69,7 +69,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 $blogs_collection = array();
                 $blog_users       = get_users( $args );
                 if ( !empty ( $blog_users ) ) {
-                    $blogs_collection = get_blogs_of_user( $blog_user[0] );
+                    $blogs_collection = get_blogs_of_user( $blog_users[0] );
                 }
             }
             foreach ( (array) $blogs_collection as $blog ) {
