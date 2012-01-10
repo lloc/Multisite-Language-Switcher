@@ -61,7 +61,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 );
             }
             else {
-                $user_id = get_user_id_from_string(
+                $user_id = get_user_by(
+                    'email',
                     get_blog_option( $this->current_blog_id, 'admin_email' )
                 );
                 $blogs_collection = get_blogs_of_user( $user_id );
