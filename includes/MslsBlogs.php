@@ -61,11 +61,17 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 );
             }
             else {
-                $user_id = get_user_by(
-                    'email',
-                    get_blog_option( $this->current_blog_id, 'admin_email' )
+                $args = array(
+                    'blog_id' => $this->current_blog_id,
+                    'orderby' => 'registered',
+                    'fields' => 'ID',
                 );
-                $blogs_collection = get_blogs_of_user( $user_id );
+                $blogs_collection = array();
+                $blog_users       = get_users( $args );
+                if ( !empty ( $blog_users ) ) {
+                    $blog_user        = current( $blog_users );
+                    $blogs_collection = get_blogs_of_user( $blog_user->ID );
+                }
             }
             foreach ( (array) $blogs_collection as $blog ) {
                 /*

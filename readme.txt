@@ -42,6 +42,9 @@ If you have created your own language pack, or have an update of an existing one
 
 == Changelog ==
 
+= 0.9.6 =
+* behaviour - how the plugin collects the blogs - changed
+
 = 0.9.5 =
 * new: Support for author- and date-archives
 * language files for hr_HR added
