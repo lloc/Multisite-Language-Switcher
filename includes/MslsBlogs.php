@@ -17,11 +17,6 @@ require_once dirname( __FILE__ ) . '/MslsRegistry.php';
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
 
 /**
- * MslsBlogCollection uses get_user_id_from_string()
- */
-require_once ABSPATH . WPINC . '/ms-functions.php';
-
-/**
  * Collection of blog-objects
  * 
  * Implements the interface IMslsRegistryInstance because we want to work with 
