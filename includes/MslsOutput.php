@@ -72,10 +72,11 @@ class MslsOutput extends MslsMain {
                 }
                 else {
                     $arr[] = sprintf(
-                        '<a href="%s" title="%s"%s>%s</a>',
+                        '<a href="%s" title="%s" class="%s%s">%s</a>',
                         $url,
                         $link->txt,
-                        ( $current ? ' class="current_language"' : '' ),
+    					$language,
+                        ( $current ? ' current_language' : '' ),
                         $link
                     );
                 }
@@ -243,18 +244,11 @@ function get_the_msls() {
 /**
  * Output the links to the translations in your template
  * 
- * You can call of this function directly like 
- * <code>if ( function_exists ( 'the_msls' ) ) the_msls();</code>
- * or just place a
- * <code>do_action( 'msls_render_output' );</code>
- * where you want to have the output. 
- * 
  * @package Msls
  * @uses get_the_msls()
  */
 function the_msls() {
     echo get_the_msls();
 }
-add_action( 'msls_render_output', the_msls() );
 
 ?>
