@@ -53,7 +53,7 @@ msgstr "Options de Multisite Language Switcher"
 #@ msls
 #: includes/MslsAdmin.php:27
 msgid "To achieve maximum flexibility, you have to configure each blog separately."
-msgstr "Pour atteindre un maximum de flexibilité, vous devez configurer chaque blog séparément."
+msgstr "Pour un maximum de flexibilité, vous devez configurer chaque blog séparément."
 
 #@ msls
 #: includes/MslsAdmin.php:33
