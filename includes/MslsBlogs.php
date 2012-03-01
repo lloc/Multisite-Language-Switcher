@@ -17,6 +17,11 @@ require_once dirname( __FILE__ ) . '/MslsRegistry.php';
 require_once dirname( __FILE__ ) . '/MslsOptions.php';
 
 /**
+ * MslsBlogCollection uses get_user_id_from_string()
+ */
+require_once ABSPATH . WPINC . '/ms-functions.php';
+
+/**
  * Collection of blog-objects
  * 
  * Implements the interface IMslsRegistryInstance because we want to work with 
@@ -61,16 +66,10 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 );
             }
             else {
-                $args = array(
-                    'blog_id' => $this->current_blog_id,
-                    'orderby' => 'registered',
-                    'fields' => 'ID',
+                $user_id = get_user_id_from_string(
+                    get_blog_option( $this->current_blog_id, 'admin_email' )
                 );
-                $blogs_collection = array();
-                $blog_users       = get_users( $args );
-                if ( !empty ( $blog_users ) ) {
-                    $blogs_collection = get_blogs_of_user( $blog_users[0] );
-                }
+                $blogs_collection = get_blogs_of_user( $user_id );
             }
             foreach ( (array) $blogs_collection as $blog ) {
                 /*
@@ -265,7 +264,7 @@ class MslsBlog {
         return(
             !empty( $this->language ) ?
             $this->language :
-            'us'
+            'en_US'
         );
     }
 
