@@ -15,6 +15,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 *  Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)
 *  Ukrainian (uk_UK) - [Victor Melnichenko](http://worm.org.ua/)
 *  Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69)
+*  Romanian (ro_RO) - [Armand K](http://aveatlector.eu/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the _Multisite Language Switcher_. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
@@ -27,4 +28,4 @@ If you have created your own language pack, or have an update of an existing one
 *  set some configuration in Options -> Multisite Language Switcher
 *  set the relations of your pages and posts in Posts -> Edit or Page -> Edit and custom post types, categories and tags as well 
 *  now you can use the widget and/or the content_filter which displays a hint if a translation is available
-*  optionally you can use a line like `<?php if (function_exists("the_msls")) the_msls(); ?>` directly in your theme-files
+*  optionally you can use a line like `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme-files
