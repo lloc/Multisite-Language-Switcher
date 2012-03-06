@@ -1,0 +1,134 @@
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Multisite Language Switcher\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2011-11-13 17:29:39+00:00\n"
+"PO-Revision-Date: 2012-03-06 14:55+0100\n"
+"Last-Translator: Dennis Ploetner <re@lloc.de>\n"
+"Language-Team: inVARIANT <invariant@invariant.eu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: ROMANIA\n"
+
+#: includes/MslsMetaBox.php:46
+#: includes/MslsAdmin.php:32
+#: includes/MslsAdmin.php:33
+#: includes/MslsPostTag.php:54
+#: includes/MslsOutput.php:126
+msgid "Multisite Language Switcher"
+msgstr "Multisite Language Switcher"
+
+#: includes/MslsMetaBox.php:110
+#: includes/MslsAdmin.php:55
+msgid "Update"
+msgstr "Actualizare"
+
+#: includes/MslsMetaBox.php:116
+msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
+msgstr "Trebuie să definești cel puțin un blog într-o altă limbă pentru a folosi acest plugin!"
+
+#: includes/MslsAdmin.php:47
+msgid "Multisite Language Switcher Options"
+msgstr "Opțiuni Multisite Language Switcher"
+
+#: includes/MslsAdmin.php:49
+msgid "To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "Pentru un maxim de flexibilitate fiecare blog trebuie configurat separat."
+
+#: includes/MslsAdmin.php:93
+msgid "Main Settings"
+msgstr "Setări principale"
+
+#: includes/MslsAdmin.php:97
+msgid "Display"
+msgstr "Display"
+
+#: includes/MslsAdmin.php:98
+msgid "Sort output by description"
+msgstr "Sortare output după descriere"
+
+#: includes/MslsAdmin.php:99
+msgid "Exclude this blog from output"
+msgstr "Exclude acest articol din output"
+
+#: includes/MslsAdmin.php:100
+msgid "Show only links with a translation"
+msgstr "Afișează doar linkurile care au traducere"
+
+#: includes/MslsAdmin.php:101
+msgid "Display link to the current language"
+msgstr "Afișează link la limba curentă"
+
+#: includes/MslsAdmin.php:102
+msgid "Description"
+msgstr "Descriere"
+
+#: includes/MslsAdmin.php:103
+msgid "Text/HTML before the list"
+msgstr "Text/HTML înaintea listei"
+
+#: includes/MslsAdmin.php:104
+msgid "Text/HTML after the list"
+msgstr "Text/HTML după listă"
+
+#: includes/MslsAdmin.php:105
+msgid "Text/HTML before each item"
+msgstr "Text/HTML înaintea fiecărui element"
+
+#: includes/MslsAdmin.php:106
+msgid "Text/HTML after each item"
+msgstr "Text/HTML după fiecare element"
+
+#: includes/MslsAdmin.php:107
+msgid "Add hint for available translations"
+msgstr "Adaugă hint pentru traducerile disponibile"
+
+#: includes/MslsAdmin.php:108
+msgid "Hint priority"
+msgstr "Prioritate hint"
+
+#: includes/MslsAdmin.php:109
+msgid "Custom URL for flag-images"
+msgstr "URL personalizat pentru imagini de steaguri"
+
+#: includes/MslsLink.php:51
+msgid "Flag and description"
+msgstr "Steag și descriere"
+
+#: includes/MslsLink.php:116
+msgid "Description only"
+msgstr "Doar descrierea"
+
+#: includes/MslsLink.php:139
+msgid "Flag only"
+msgstr "Doar steagul"
+
+#: includes/MslsLink.php:162
+msgid "Description and flag"
+msgstr "Descriere și steag"
+
+#: includes/MslsLink.php:298
+msgid "Edit the translation in the %s-blog"
+msgstr "Editează traducerea în blogul %s"
+
+#: includes/MslsLink.php:305
+msgid "Create a new translation in the %s-blog"
+msgstr "Creează o traducere nouă în blogul %s"
+
+#: includes/MslsOutput.php:170
+msgid "Title"
+msgstr "Titlu"
+
+#: includes/MslsOutput.php:211
+msgid "%s and %s"
+msgstr "%s și %s"
+
+#: includes/MslsOutput.php:220
+msgid "This post is also available in %s."
+msgstr "Articolul este disponibil și în %s."
+
