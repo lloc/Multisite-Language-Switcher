@@ -63,8 +63,18 @@ class MslsAdmin extends MslsMain {
         $arr = array();
         foreach ( $this->blogs->get_objects() as $id => $blog ) {
             $current = '';
-            if ( $blog->userblog_id == $this->blogs->get_current_blog_id() )
+            if ( $blog->userblog_id == $this->blogs->get_current_blog_id() ) {
                 $current = ' class="current"';
+            }
+            else {
+                /**
+                 * Check if blog has activated this plugin
+                 */
+                switch_to_blog( $id );
+                $out = ( in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) true : false );
+                restore_current_blog();
+                if ( $out ) continue;
+            }
             $arr[] = sprintf(
                 '<a href="%s"%s>%s / %s</a>',
                 get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
