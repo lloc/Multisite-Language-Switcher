@@ -3,6 +3,7 @@
 /**
  * Link
  *
+ * AdminIcons and Frontend-Links
  * @package Msls
  */
 
@@ -212,9 +213,7 @@ class MslsAdminIcon {
         if ( $obj->is_taxonomy() ) {
             return new MslsAdminIconTaxonomy( $type );
         }
-        else {
-            return new MslsAdminIcon( $type );
-        }
+        return new MslsAdminIcon( $type );
     }
 
     /**
@@ -240,19 +239,19 @@ class MslsAdminIcon {
     /**
      * Set language
      * 
-     * @param string $language
+     * @param string $str language
      */
-    public function set_language( $language ) {
-        $this->language = $language;
+    public function set_language( $str ) {
+        $this->language = $str;
     }
 
     /**
      * Set src
      * 
-     * @param string $src
+     * @param string $str src
      */
-    public function set_src( $src ) {
-        $this->src = $src;
+    public function set_src( $str ) {
+        $this->src = $str;
     }
 
     /**
