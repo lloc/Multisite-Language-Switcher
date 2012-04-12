@@ -684,9 +684,8 @@ class MslsPostTypeOptions extends MslsQueryOptions {
      * @return bool
      */ 
     public function has_value( $language ) {
-        print_r( $this->args[0] );
         if ( !isset( $this->arr[$language] ) ) {
-            //$this->arr[$language] = null;
+            $this->arr[$language] = get_post_type_object( $this->args[0] );
         }
         return (bool) $this->arr[$language];
     }
@@ -697,7 +696,7 @@ class MslsPostTypeOptions extends MslsQueryOptions {
      * @return string
      */
     public function get_current_link() {
-        return get_author_posts_url( $this->args[0] );
+        return get_post_type_archive_link( $this->args[0] );
     }
 
 }
