@@ -684,8 +684,7 @@ class MslsPostTypeOptions extends MslsQueryOptions {
      * @return bool
      */ 
     public function has_value( $language ) {
-        global $wp_query;
-        print_r( $wp_query );
+        print_r( $this->args[0] );
         if ( !isset( $this->arr[$language] ) ) {
             //$this->arr[$language] = null;
         }
@@ -698,7 +697,6 @@ class MslsPostTypeOptions extends MslsQueryOptions {
      * @return string
      */
     public function get_current_link() {
-        //print_r( $this->args[0] );
         return get_author_posts_url( $this->args[0] );
     }
 
