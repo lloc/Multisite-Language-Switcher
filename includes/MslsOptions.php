@@ -488,21 +488,21 @@ class MslsQueryOptions extends MslsOptions {
      * @return MslsQueryOptions
      */
     public static function create() {
-        global $wp_query;
         if ( is_day() ) {
-            return new MslsDayOptions( get_query_var('year'), get_query_var('monthnum'), get_query_var('day') );
+            return new MslsDayOptions( get_query_var( 'year' ), get_query_var( 'monthnum' ), get_query_var( 'day' ) );
         } 
         elseif ( is_month() ) {
-            return new MslsMonthOptions( get_query_var('year'), get_query_var('monthnum') );
+            return new MslsMonthOptions( get_query_var( 'year' ), get_query_var( 'monthnum' ) );
         }
         elseif ( is_year() ) {
-            return new MslsYearOptions( get_query_var('year') );
+            return new MslsYearOptions( get_query_var( 'year' ) );
         }
         elseif ( is_author() ) {
+            global $wp_query;
             return new MslsAuthorOptions( $wp_query->get_queried_object_id() );
         }
         elseif ( is_post_type_archive() ) {
-            return new MslsPostTypeOptions( $wp_query->get_queried_object_id() );
+            return new MslsPostTypeOptions( get_query_var( 'post_type' ) );
         }
         return null;
     }
