@@ -69,13 +69,13 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             return new MslsPostOptions( $id );
         }
         else {
-            if ( is_home() || is_front_page() || is_search() || is_404() || is_post_type_archive() ) {
+            if ( is_home() || is_front_page() || is_search() || is_404() ) {
                 return new MslsOptions();
             }
             elseif ( is_category() || is_tag() || is_tax() ) {
                 return MslsTaxOptions::create();
             }
-            elseif ( is_date() || is_author() ) {
+            elseif ( is_date() || is_author() || is_post_type_archive() ) {
                 return MslsQueryOptions::create();
             }
             global $post;
@@ -488,6 +488,7 @@ class MslsQueryOptions extends MslsOptions {
      * @return MslsQueryOptions
      */
     public static function create() {
+        global $wp_query;
         if ( is_day() ) {
             return new MslsDayOptions( get_query_var('year'), get_query_var('monthnum'), get_query_var('day') );
         } 
@@ -498,8 +499,10 @@ class MslsQueryOptions extends MslsOptions {
             return new MslsYearOptions( get_query_var('year') );
         }
         elseif ( is_author() ) {
-            global $wp_query;
             return new MslsAuthorOptions( $wp_query->get_queried_object_id() );
+        }
+        elseif ( is_post_type_archive() ) {
+            return new MslsPostTypeOptions( $wp_query->get_queried_object_id() );
         }
         return null;
     }
@@ -528,7 +531,7 @@ class MslsQueryOptions extends MslsOptions {
 class MslsDayOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non emty item
+     * Check if the array has an non empty item
      * 
      * @param string $language
      * @return bool
@@ -566,7 +569,7 @@ class MslsDayOptions extends MslsQueryOptions {
 class MslsMonthOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non emty item
+     * Check if the array has an non empty item
      * 
      * @param string $language
      * @return bool
@@ -603,7 +606,7 @@ class MslsMonthOptions extends MslsQueryOptions {
 class MslsYearOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non emty item
+     * Check if the array has an non empty item
      * 
      * @param string $language
      * @return bool
@@ -639,7 +642,7 @@ class MslsYearOptions extends MslsQueryOptions {
 class MslsAuthorOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non emty item
+     * Check if the array has an non empty item
      * 
      * @param string $language
      * @return bool
@@ -667,5 +670,38 @@ class MslsAuthorOptions extends MslsQueryOptions {
 
 }
 
+/**
+ * MslsPostTypeOptions
+ * 
+ * @package Msls
+ */
+class MslsPostTypeOptions extends MslsQueryOptions {
+
+    /**
+     * Check if the array has an non empty item
+     * 
+     * @param string $language
+     * @return bool
+     */ 
+    public function has_value( $language ) {
+        global $wp_query;
+        print_r( $wp_query );
+        if ( !isset( $this->arr[$language] ) ) {
+            //$this->arr[$language] = null;
+        }
+        return (bool) $this->arr[$language];
+    }
+
+    /**
+     * Get current link
+     * 
+     * @return string
+     */
+    public function get_current_link() {
+        //print_r( $this->args[0] );
+        return get_author_posts_url( $this->args[0] );
+    }
+
+}
 
 ?>
