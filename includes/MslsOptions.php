@@ -539,7 +539,7 @@ class MslsDayOptions extends MslsQueryOptions {
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
-            $sql= sprintf(
+            $sql = sprintf(
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE DATE(post_date) = '%d-%02d-%02d' AND post_status = 'publish'",
                 (int) $this->args[0],
                 (int) $this->args[1],
@@ -573,11 +573,11 @@ class MslsMonthOptions extends MslsQueryOptions {
      * 
      * @param string $language
      * @return bool
-     */ 
+     */
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
-            $sql= sprintf(
+            $sql = sprintf(
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND MONTH(post_date) = %d AND post_status = 'publish'",
                 (int) $this->args[0],
                 (int) $this->args[1]
@@ -610,11 +610,11 @@ class MslsYearOptions extends MslsQueryOptions {
      * 
      * @param string $language
      * @return bool
-     */ 
+     */
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
-            $sql= sprintf(
+            $sql = sprintf(
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND post_status = 'publish'",
                 (int) $this->args[0]
             );
@@ -646,11 +646,11 @@ class MslsAuthorOptions extends MslsQueryOptions {
      * 
      * @param string $language
      * @return bool
-     */ 
+     */
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
-            $sql= sprintf(
+            $sql = sprintf(
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE post_author = %d AND post_status = 'publish'",
                 (int) $this->args[0]
             );
@@ -682,7 +682,7 @@ class MslsPostTypeOptions extends MslsQueryOptions {
      * 
      * @param string $language
      * @return bool
-     */ 
+     */
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             $this->arr[$language] = get_post_type_object( $this->args[0] );
