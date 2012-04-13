@@ -531,7 +531,7 @@ class MslsQueryOptions extends MslsOptions {
 class MslsDayOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non empty item
+     * Check if the array has an non empty item which has $language as a key
      * 
      * @param string $language
      * @return bool
@@ -569,7 +569,7 @@ class MslsDayOptions extends MslsQueryOptions {
 class MslsMonthOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non empty item
+     * Check if the array has an non empty item which has $language as a key
      * 
      * @param string $language
      * @return bool
@@ -606,7 +606,7 @@ class MslsMonthOptions extends MslsQueryOptions {
 class MslsYearOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non empty item
+     * Check if the array has an non empty item which has $language as a key
      * 
      * @param string $language
      * @return bool
@@ -642,7 +642,7 @@ class MslsYearOptions extends MslsQueryOptions {
 class MslsAuthorOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non empty item
+     * Check if the array has an non empty item which has $language as a key
      * 
      * @param string $language
      * @return bool
@@ -678,7 +678,7 @@ class MslsAuthorOptions extends MslsQueryOptions {
 class MslsPostTypeOptions extends MslsQueryOptions {
 
     /**
-     * Check if the array has an non empty item
+     * Check if the array has an non empty item which has $language as a key
      * 
      * @param string $language
      * @return bool
