@@ -90,6 +90,7 @@ class MslsMetaBox extends MslsMain {
                         'selected' => $mydata->$language,
                         'name' => 'msls[' . $language . ']',
                         'sort_column' => 'menu_order, post_title',
+                        'echo' => 0,
                     );
                     $selects .= wp_dropdown_pages( $args );
                 } else {
