@@ -272,7 +272,8 @@ class MslsPostOptions extends MslsOptions {
      */
     public function get_postlink( $language ) {
         if ( $this->has_value( $language ) ) {
-            $post = get_post( (int) $this->__get( $language ) );
+            $id   = (int) $this->__get( $language );
+            $post = get_post( $id );
             if ( !is_null( $post ) && 'publish' == $post->post_status ) 
                 return get_permalink( $post );
         }
