@@ -54,6 +54,11 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     protected $base;
 
     /**
+     * @var bool
+     */
+    protected $published = true;
+
+    /**
      * Factory method
      * 
      * @param int $id
@@ -184,6 +189,15 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     }
 
     /**
+     * Is publish
+     * 
+     * @return bool
+     */
+    public function is_published() {
+        return $this->published;
+    }
+
+    /**
      * Get order
      * 
      * @return string
@@ -274,9 +288,10 @@ class MslsPostOptions extends MslsOptions {
         if ( $this->has_value( $language ) ) {
             $id   = (int) $this->__get( $language );
             $post = get_post( $id );
-            if ( !is_null( $post ) && 'publish' == $post->post_status ) 
-                return get_permalink( $post );
+            if ( !is_null( $post ) && 'publish' == $post->post_status )
+               return get_permalink( $post );
         }
+        $this->published = false;
         return '';
     }
 

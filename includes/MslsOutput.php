@@ -46,14 +46,19 @@ class MslsOutput extends MslsMain {
             $link   = MslsLink::create( $display );
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
-                if ( $blog->userblog_id != $this->blogs->get_current_blog_id() ) {
+                $current  = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
+                if ( !$current ) {
                     switch_to_blog( $blog->userblog_id );
+                    $continue = false;
                     if ( $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() ) {
-                        restore_current_blog();
-                        continue;
+                        $continue = true;
                     }
-                    $url = $mydata->get_permalink( $language );
+                    else {
+                        $url = $mydata->get_permalink( $language );
+                    }
                     restore_current_blog();
+                    if ( $continue || !$mydata->is_published() )
+                        continue;
                 }
                 else {
                     $url = $mydata->get_current_link();
@@ -61,7 +66,6 @@ class MslsOutput extends MslsMain {
                 $link->txt = $blog->get_description();
                 $link->src = $this->options->get_flag_url( $language );
                 $link->alt = $language;
-                $current   = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
                 if ( has_filter( 'msls_output_get' ) ) {
                     $arr[] = apply_filters(
                         'msls_output_get',
