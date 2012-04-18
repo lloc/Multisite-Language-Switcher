@@ -1,1 +1,1 @@
-div#msls.postbox select{ width:180px; }
+div#msls.postbox select{ width:100%; max-width:240px; }
