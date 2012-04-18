@@ -63,7 +63,8 @@ class MslsMetaBox extends MslsMain {
         $icon = MslsAdminIcon::create();
         $icon->set_language( $language );
         $icon->set_src( $this->options->get_flag_url( $language ) );
-        $icon->set_href( $href );
+        if ( !empty( $href ) )
+            $icon->set_href( $href );
         return $icon;
     }
 
@@ -111,7 +112,7 @@ class MslsMetaBox extends MslsMain {
                         $options .= sprintf(
                             '<option value="%s"%s>%s</option>',
                             $my_id,
-                            ( $my_id == $mydata->$language ? 'selected="selected"' : '' ),
+                            ( $mydata->$language == $my_id ? 'selected="selected"' : '' ),
                             get_the_title()
                         );
                     }
