@@ -1,134 +1,170 @@
-# Copyright (C) 2010 
-# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: Multisite Language Switcher\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
 "POT-Creation-Date: 2011-09-13 14:40:09+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2011-11-15 14:04+0100\n"
 "Last-Translator: Branimir Hering <brankec69@gmai.com>\n"
 "Language-Team: Branimir Hering <brankec69@gmail.com> <brankec69@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-Language: Croatian\n"
 "X-Poedit-Country: CROATIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
 
-#: includes/MslsMetaBox.php:22
-#: includes/MslsMetaBox.php:30
-#: includes/MslsPostTag.php:31
-#: includes/MslsOutput.php:68
-#: includes/MslsAdmin.php:13
-#: includes/MslsAdmin.php:14
+#: includes/MslsAdmin.php:32
+#: includes/MslsAdmin.php:33
+#: includes/MslsMetaBox.php:46
+#: includes/MslsOutput.php:130
+#: includes/MslsPostTag.php:54
+#@ msls
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: includes/MslsMetaBox.php:89
-#: includes/MslsAdmin.php:33
+#: includes/MslsAdmin.php:55
+#: includes/MslsMetaBox.php:136
+#@ msls
 msgid "Update"
-msgstr "Ažuriranje"
+msgstr "AÂžuriranje"
 
-#: includes/MslsMetaBox.php:95
+#: includes/MslsMetaBox.php:142
+#@ msls
 msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
 msgstr "Trebali bi definirati barem jedan blog u drugom jeziku da bi ste imali korist od ovog dodatka!"
 
-#: includes/MslsOutput.php:93
+#: includes/MslsOutput.php:174
+#@ msls
 msgid "Title"
 msgstr "Naslov"
 
-#: includes/MslsOutput.php:121
+#: includes/MslsOutput.php:215
+#, php-format
+#@ msls
 msgid "%s and %s"
 msgstr "%s i %s"
 
-#: includes/MslsOutput.php:130
+#: includes/MslsOutput.php:224
+#, php-format
+#@ msls
 msgid "This post is also available in %s."
-msgstr "Ovaj post je takoðer dostupan u %s"
+msgstr "Ovaj post je takoÃ°er dostupan u %s"
 
-#: includes/MslsLink.php:22
+#: includes/MslsLink.php:52
+#@ msls
 msgid "Flag and description"
 msgstr "Zastava i opis"
 
-#: includes/MslsLink.php:72
+#: includes/MslsLink.php:117
+#@ msls
 msgid "Description only"
 msgstr "Opis samo"
 
-#: includes/MslsLink.php:82
+#: includes/MslsLink.php:140
+#@ msls
 msgid "Flag only"
 msgstr "Zastava samo"
 
-#: includes/MslsLink.php:92
+#: includes/MslsLink.php:163
+#@ msls
 msgid "Description and flag"
 msgstr "Opis i zastava"
 
-#: includes/MslsLink.php:150
+#: includes/MslsLink.php:297
+#, php-format
+#@ msls
 msgid "Edit the translation in the %s-blog"
 msgstr "Uredi prijevod u %s-blog"
 
-#: includes/MslsLink.php:157
+#: includes/MslsLink.php:304
+#, php-format
+#@ msls
 msgid "Create a new translation in the %s-blog"
 msgstr "Napravi novi prijevod u"
 
-#: includes/MslsAdmin.php:26
+#: includes/MslsAdmin.php:47
+#@ msls
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher Opcije"
 
-#: includes/MslsAdmin.php:27
+#: includes/MslsAdmin.php:49
+#@ msls
 msgid "To achieve maximum flexibility, you have to configure each blog separately."
-msgstr "Da bi ste postigli najveæu fleksibilnost, trebate podesit svaki blog zasebno."
+msgstr "Da bi ste postigli najveÃ¦u fleksibilnost, trebate podesit svaki blog zasebno."
 
-#: includes/MslsAdmin.php:41
+#: includes/MslsAdmin.php:103
+#@ msls
 msgid "Main Settings"
 msgstr "Glavne Postavke"
 
-#: includes/MslsAdmin.php:45
+#: includes/MslsAdmin.php:107
+#@ msls
 msgid "Display"
-msgstr "Prikaži"
+msgstr "PrikaÂži"
 
-#: includes/MslsAdmin.php:46
+#: includes/MslsAdmin.php:108
+#@ msls
 msgid "Sort output by description"
 msgstr "Sortiraj izlaz po opisu"
 
-#: includes/MslsAdmin.php:47
+#: includes/MslsAdmin.php:109
+#@ msls
 msgid "Exclude this blog from output"
-msgstr "Iskljuèite ovaj blog od izlaza"
+msgstr "IskljuÃ¨ite ovaj blog od izlaza"
 
-#: includes/MslsAdmin.php:48
+#: includes/MslsAdmin.php:110
+#@ msls
 msgid "Show only links with a translation"
-msgstr "Prikaži samo veze s prijevodom"
+msgstr "PrikaÂži samo veze s prijevodom"
 
-#: includes/MslsAdmin.php:49
+#: includes/MslsAdmin.php:111
+#@ msls
 msgid "Display link to the current language"
-msgstr "Prikaži link na trenutni jezik"
+msgstr "PrikaÂži link na trenutni jezik"
 
-#: includes/MslsAdmin.php:50
+#: includes/MslsAdmin.php:112
+#@ msls
 msgid "Description"
 msgstr "Opis"
 
-#: includes/MslsAdmin.php:51
+#: includes/MslsAdmin.php:113
+#@ msls
 msgid "Text/HTML before the list"
 msgstr "Text/HTML prije liste"
 
-#: includes/MslsAdmin.php:52
+#: includes/MslsAdmin.php:114
+#@ msls
 msgid "Text/HTML after the list"
 msgstr "Text/HTML poslje liste"
 
-#: includes/MslsAdmin.php:53
+#: includes/MslsAdmin.php:115
+#@ msls
 msgid "Text/HTML before each item"
 msgstr "Text/HTML prije svake stavke"
 
-#: includes/MslsAdmin.php:54
+#: includes/MslsAdmin.php:116
+#@ msls
 msgid "Text/HTML after each item"
 msgstr "Text/HTML poslje svake stavke"
 
-#: includes/MslsAdmin.php:55
+#: includes/MslsAdmin.php:117
+#@ msls
 msgid "Add hint for available translations"
 msgstr "Dodajte savjet za dostupne prijevode"
 
-#: includes/MslsAdmin.php:56
+#: includes/MslsAdmin.php:118
+#@ msls
 msgid "Hint priority"
 msgstr "Prioritet savjeta"
 
-#: includes/MslsAdmin.php:57
+#: includes/MslsAdmin.php:119
+#@ msls
 msgid "Custom URL for flag-images"
 msgstr "Posebni URL za slike-zastava"
 
