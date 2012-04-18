@@ -1,2 +1,2 @@
-div#msls.postbox label{ max-width:16px; margin-right:8px; }
-div#msls.postbox select{ max-width:230px; }
+div#msls.postbox label{ width:16px; margin-right:8px; }
+div#msls.postbox select{ width:230px; }
