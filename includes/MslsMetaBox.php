@@ -89,7 +89,7 @@ class MslsMetaBox extends MslsMain {
                         'post_type' => $type,
                         'selected' => $mydata->$language,
                         'name' => 'msls[' . $language . ']',
-                        'show_option_none' => '', 
+                        'show_option_none' => ' ', 
                         'sort_column' => 'menu_order, post_title',
                         'echo' => 0,
                     );
