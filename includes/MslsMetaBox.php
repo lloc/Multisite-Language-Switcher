@@ -74,7 +74,7 @@ class MslsMetaBox extends MslsMain {
         $blogs = $this->blogs->get();
         if ( $blogs ) {
             global $post;
-            $type   = get_post_type( $post );
+            $type   = get_post_type( $post->ID );
             $mydata = new MslsPostOptions( $post->ID );
             $temp   = $post;
             $lis    = '';
@@ -84,7 +84,8 @@ class MslsMetaBox extends MslsMain {
                 $language = $blog->get_language();
                 $icon     = $this->get_icon( $language, $mydata->$language );
                 $selects  = '';
-                if ( is_post_type_hierarchical( $type ) ) {
+                $pto      = get_post_type_object( $type );
+                if ( $pto->hierarchical ) {
                     $args = array(
                         'post_type' => $type,
                         'selected' => $mydata->$language,
