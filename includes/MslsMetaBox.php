@@ -99,7 +99,7 @@ class MslsMetaBox extends MslsMain {
                 } else {
                     $args     = array(
                         'post_type' => $type,
-                        'post_status' => 'publish',
+                        'post_status' => 'any',
                         'orderby' => 'title',
                         'order' => 'ASC',
                         'posts_per_page' => (-1),
