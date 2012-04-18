@@ -79,11 +79,9 @@ class MslsPostTag extends MslsMain {
                     }
                 }
                 printf(
-                    '<tr class="form-field"><th scope="row" valign="top"><label for="%s[%s]">%s </label></th><td><select style="width:25em;" name="%s[%s]"><option value=""></option>%s</select></td>',
-                    'msls',
+                    '<tr class="form-field"><th scope="row" valign="top"><label for="msls[%s]">%s </label></th><td><select class="postform" name="msls[%s]"><option value=""></option>%s</select></td>',
                     $language,
                     $edit_link,
-                    'msls',
                     $language,
                     $options
                 );

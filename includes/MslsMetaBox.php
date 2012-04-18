@@ -131,7 +131,7 @@ class MslsMetaBox extends MslsMain {
                 restore_current_blog();
             }
             printf(
-                '<ul>%s</ul><input style="align:right" type="submit" class="button-secondary" value="%s"/>',
+                '<ul>%s</ul><input type="submit" class="button-secondary" value="%s"/>',
                 $lis,
                 __( 'Update', 'msls' )
             );
