@@ -90,7 +90,6 @@ class MslsMetaBox extends MslsMain {
                         'selected' => $mydata->$language,
                         'name' => 'msls[' . $language . ']',
                         'sort_column' => 'menu_order, post_title',
-                        'echo' => 1,
                     );
                     $selects .= wp_dropdown_pages( $args );
                 } else {
@@ -120,10 +119,10 @@ class MslsMetaBox extends MslsMain {
                     );
                 }
                 $lis .= sprintf(
-                        '<li><label for="msls[%s]">%s </label>%s</li>',
-                        $language,
-                        $icon,
-                        $selects
+                    '<li><label for="msls[%s]">%s </label>%s</li>',
+                    $language,
+                    $icon,
+                    $selects
                 );
                 restore_current_blog();
             }
