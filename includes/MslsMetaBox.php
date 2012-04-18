@@ -123,7 +123,7 @@ class MslsMetaBox extends MslsMain {
                     );
                 }
                 $lis .= sprintf(
-                    '<li><label for="msls[%s]">%s </label>%s</li>',
+                    '<li><label for="msls[%s]">%s</label>%s</li>',
                     $language,
                     $icon,
                     $selects
