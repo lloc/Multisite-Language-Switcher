@@ -53,73 +53,83 @@ class MslsMetaBox extends MslsMain {
     }
 
     /**
+     * Get AdminIcon-object
+     * 
+     * @param string $language
+     * @param int $href
+     * @return MslsAdminIcon
+     */
+    public function get_icon( $language, $href ) {
+        $icon = MslsAdminIcon::create();
+        $icon->set_language( $language );
+        $icon->set_src( $this->options->get_flag_url( $language ) );
+        $icon->set_href( $href );
+        return $icon;
+    }
+
+    /**
      * Render
      */
     public function render() {
         $blogs = $this->blogs->get();
         if ( $blogs ) {
             global $post;
-            $temp   = $post;
             $type   = get_post_type( $post );
             $mydata = new MslsPostOptions( $post->ID );
+            $temp   = $post;
+            $lis    = '';
             wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
-            echo '<ul>';
             foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
-                $args = array(
-                    'post_type' => $type,
-                    'post_status' => 'publish',
-                    'orderby' => 'title',
-                    'order' => 'ASC',
-                    'posts_per_page' => (-1),
-                );
-                $language  = $blog->get_language();
-                $options   = '';
-                $edit_link = MslsAdminIcon::create();
-                $edit_link->set_language( $language );
-                $edit_link->set_src( $this->options->get_flag_url( $language ) );
-                $post_type_object = get_post_type_object( $type );
-                if ( $post_type_object->hierarchical ) {
-                    $dropdown_args = array(
+                $language = $blog->get_language();
+                $icon     = $this->get_icon( $language, $mydata->$language );
+                $selects  = '';
+                if ( is_post_type_hierarchical( $type ) ) {
+                    $args = array(
                         'post_type' => $type,
                         'selected' => $mydata->$language,
                         'name' => 'msls[' . $language . ']',
-                        'show_option_none' => __( '(no translation)' ),
                         'sort_column' => 'menu_order, post_title',
                         'echo' => 1,
                     );
-                    wp_dropdown_pages( $dropdown_args );
+                    $selects .= wp_dropdown_pages( $args );
                 } else {
-                    $my_query  = new WP_Query( $args );
+                    $args     = array(
+                        'post_type' => $type,
+                        'post_status' => 'publish',
+                        'orderby' => 'title',
+                        'order' => 'ASC',
+                        'posts_per_page' => (-1),
+                    );
+                    $options  = '';
+                    $my_query = new WP_Query( $args );
                     while ( $my_query->have_posts() ) {
                         $my_query->the_post();
                         $my_id    = get_the_ID();
-                        $selected = '';
-                        if ( $my_id == $mydata->$language ) {
-                            $selected = 'selected="selected"';
-                            $edit_link->set_href( $mydata->$language );
-                        }
                         $options .= sprintf(
                             '<option value="%s"%s>%s</option>',
                             $my_id,
-                            $selected,
+                            ( $my_id == $mydata->$language ? 'selected="selected"' : '' ),
                             get_the_title()
                         );
                     }
-                    printf(
-                        '<li><label for="%s[%s]">%s </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',
-                        'msls',
-                        $language,
-                        $edit_link,
-                        'msls',
+                    $selects .= sprintf(
+                        '<select name="msls[%s]"><option value=""></option>%s</select>',
                         $language,
                         $options
                     );
                 }
+                $lis .= sprintf(
+                        '<li><label for="msls[%s]">%s </label>%s</li>',
+                        $language,
+                        $icon,
+                        $selects
+                );
                 restore_current_blog();
             }
             printf(
-                '</ul><input style="align:right" type="submit" class="button-secondary" value="%s"/>',
+                '<ul>%s</ul><input style="align:right" type="submit" class="button-secondary" value="%s"/>',
+                $lis,
                 __( 'Update', 'msls' )
             );
             $post = $temp;
