@@ -62,7 +62,7 @@ class MslsMetaBox extends MslsMain {
             $temp   = $post;
             $type   = get_post_type( $post );
             $mydata = new MslsPostOptions( $post->ID );
-            wp_nonce_field( MSLS_PLUGIN_PATH, 'msls' . '_noncename' );
+            wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
             echo '<ul>';
             foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
@@ -73,36 +73,49 @@ class MslsMetaBox extends MslsMain {
                     'order' => 'ASC',
                     'posts_per_page' => (-1),
                 );
-                $my_query  = new WP_Query( $args );
                 $language  = $blog->get_language();
                 $options   = '';
                 $edit_link = MslsAdminIcon::create();
                 $edit_link->set_language( $language );
                 $edit_link->set_src( $this->options->get_flag_url( $language ) );
-                while ( $my_query->have_posts() ) {
-                    $my_query->the_post();
-                    $my_id    = get_the_ID();
-                    $selected = '';
-                    if ( $my_id == $mydata->$language ) {
-                        $selected = 'selected="selected"';
-                        $edit_link->set_href( $mydata->$language );
+                $post_type_object = get_post_type_object( $type );
+                if ( $post_type_object->hierarchical ) {
+                    $dropdown_args = array(
+                        'post_type' => $type,
+                        'selected' => $mydata->$language,
+                        'name' => 'msls[' . $language . ']',
+                        'show_option_none' => __( '(no translation)' ),
+                        'sort_column' => 'menu_order, post_title',
+                        'echo' => 1,
+                    );
+                    wp_dropdown_pages( $dropdown_args );
+                } else {
+                    $my_query  = new WP_Query( $args );
+                    while ( $my_query->have_posts() ) {
+                        $my_query->the_post();
+                        $my_id    = get_the_ID();
+                        $selected = '';
+                        if ( $my_id == $mydata->$language ) {
+                            $selected = 'selected="selected"';
+                            $edit_link->set_href( $mydata->$language );
+                        }
+                        $options .= sprintf(
+                            '<option value="%s"%s>%s</option>',
+                            $my_id,
+                            $selected,
+                            get_the_title()
+                        );
                     }
-                    $options .= sprintf(
-                        '<option value="%s"%s>%s</option>',
-                        $my_id,
-                        $selected,
-                        get_the_title()
+                    printf(
+                        '<li><label for="%s[%s]">%s </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',
+                        'msls',
+                        $language,
+                        $edit_link,
+                        'msls',
+                        $language,
+                        $options
                     );
                 }
-                printf(
-                    '<li><label for="%s[%s]">%s </label><select style="width:90%%" name="%s[%s]" class="postform"><option value=""></option>%s</select></li>',
-                    'msls',
-                    $language,
-                    $edit_link,
-                    'msls',
-                    $language,
-                    $options
-                );
                 restore_current_blog();
             }
             printf(
@@ -126,7 +139,7 @@ class MslsMetaBox extends MslsMain {
     public function set( $post_id ) {
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
             return;
-        if ( !isset( $_POST['msls' . '_noncename'] ) || !wp_verify_nonce( $_POST['msls' . '_noncename'], MSLS_PLUGIN_PATH ) )
+        if ( !isset( $_POST['msls_noncename'] ) || !wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) )
             return;
         if ( 'page' == $_POST['post_type'] ) {
             if ( !current_user_can( 'edit_page' ) ) return;

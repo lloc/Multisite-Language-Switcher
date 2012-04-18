@@ -44,6 +44,8 @@ If you have created your own language pack, or have an update of an existing one
 == Changelog ==
 
 = 0.9.6 =
+* a lot of bugfixes and enhancements
+* some modifications how the meta box handles hierarchical post types by [Joost de Keijzer](http://dekeijzer.org/)
 * behaviour - how the plugin collects the blogs - changed
 
 = 0.9.5 =
