@@ -49,15 +49,13 @@ class MslsOutput extends MslsMain {
                 $current  = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
                 if ( !$current ) {
                     switch_to_blog( $blog->userblog_id );
-                    $continue = false;
-                    if ( $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() ) {
-                        $continue = true;
-                    }
-                    else {
-                        $url = $mydata->get_permalink( $language );
-                    }
+                    $url = ( 
+                        $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() ?
+                        null :
+                        $mydata->get_permalink( $language )
+                    );
                     restore_current_blog();
-                    if ( $continue || !$mydata->is_published() )
+                    if ( is_null( $url ) || !$mydata->is_published() )
                         continue;
                 }
                 else {
