@@ -227,20 +227,15 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * @param bool $plugin
      * @return string
      */
-    public function get_flag_url( $language, $plugin = false ) {
-        if ( !$plugin && $this->has_value( 'image_url' ) ) {
-            $url = $this->__get( 'image_url' );
-        }
-        else {
-            $url = $this->get_url( 'flags' );
-        }
+    public function get_flag_url( $language ) {
+        $url = ( 
+            !is_admin() && $this->has_value( 'image_url' ) ?
+            $this->__get( 'image_url' ) :
+            $this->get_url( 'flags' )
+        );
         if ( 5 == strlen( $language ) )
             $language = strtolower( substr( $language, -2 ) );
-        return sprintf(
-            '%s/%s.png',
-            $url,
-            $language
-        );
+        return sprintf( '%s/%s.png', $url, $language );
     }
 
     /**

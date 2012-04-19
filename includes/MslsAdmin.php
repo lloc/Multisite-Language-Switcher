@@ -256,8 +256,7 @@ class MslsAdmin extends MslsMain {
      */
     public function render_checkbox( $key ) {
         return sprintf(
-            '<input type="checkbox" id="%s" name="msls[%s]" value="1"%s/>',
-            $key,
+            '<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1"%2$s/>',
             $key,
             ( $this->options->$key == 1 ? ' checked="checked"' : '' )
         );
@@ -273,8 +272,7 @@ class MslsAdmin extends MslsMain {
      */
     public function render_input( $key, $size = '30' ) {
         return sprintf(
-            '<input id="%s" name="msls[%s]" value="%s" size="%s"/>',
-            $key,
+            '<input id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"/>',
             $key,
             esc_attr( $this->options->$key ),
             $size
@@ -300,8 +298,7 @@ class MslsAdmin extends MslsMain {
             );
         }
         return sprintf(
-            '<select id="%s" name="msls[%s]">%s</select>',
-            $key,
+            '<select id="%1$s" name="msls[%1$s]">%2$s</select>',
             $key,
             implode( '', $options )
         );

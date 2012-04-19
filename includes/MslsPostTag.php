@@ -58,9 +58,13 @@ class MslsPostTag extends MslsMain {
             foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
                 $language = $blog->get_language();
-                $icon     = $this->get_icon( $language, $mydata->$language );
+                $icon     = MslsAdminIcon::create();
                 $options  = '';
                 $terms    = get_terms( $type, array( 'hide_empty' => 0 ) );
+                $icon->set_language( $language );
+                $icon->set_src( $this->options->get_flag_url( $language ) );
+                if ( $mydata->has_value( $language ) )
+                    $icon->set_href( $mydata->$language );
                 if ( !empty( $terms ) ) {
                     foreach ( $terms as $term ) {
                         $options .= sprintf(

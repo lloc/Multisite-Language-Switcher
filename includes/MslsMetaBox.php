@@ -67,9 +67,13 @@ class MslsMetaBox extends MslsMain {
             foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
                 $language = $blog->get_language();
-                $icon     = $this->get_icon( $language, $mydata->$language );
+                $icon     = MslsAdminIcon::create();
                 $selects  = '';
                 $pto      = get_post_type_object( $type );
+                $icon->set_language( $language );
+                $icon->set_src( $this->options->get_flag_url( $language ) );
+                if ( $mydata->has_value( $language ) )
+                    $icon->set_href( $mydata->$language );
                 if ( $pto->hierarchical ) {
                     $args = array(
                         'post_type' => $type,
