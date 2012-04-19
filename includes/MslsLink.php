@@ -260,7 +260,7 @@ class MslsAdminIcon {
      * @param int $id
      */
     public function set_href( $id ) {
-        $this->href = get_edit_post_link( $id );
+        $this->href = get_edit_post_link( (int) $id );
     }
 
     /**

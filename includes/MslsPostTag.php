@@ -57,23 +57,16 @@ class MslsPostTag extends MslsMain {
             $type   = MslsContentTypes::create()->get_request();
             foreach ( $blogs as $blog ) {
                 switch_to_blog( $blog->userblog_id );
-                $language  = $blog->get_language();
-                $options   = '';
-                $terms     = get_terms( $type, array( 'hide_empty' => 0 ) );
-                $edit_link = MslsAdminIcon::create();
-                $edit_link->set_language( $language );
-                $edit_link->set_src( $this->options->get_flag_url( $language ) );
+                $language = $blog->get_language();
+                $icon     = $this->get_icon( $language, $mydata->$language );
+                $options  = '';
+                $terms    = get_terms( $type, array( 'hide_empty' => 0 ) );
                 if ( !empty( $terms ) ) {
                     foreach ( $terms as $term ) {
-                        $selected = '';
-                        if ( $term->term_id == $mydata->$language ) {
-                            $selected = 'selected="selected"';
-                            $edit_link->set_href( $mydata->$language );
-                        }
                         $options .= sprintf(
                             '<option value="%s"%s>%s</option>',
                             $term->term_id,
-                            $selected,
+                            ( $term->term_id == $mydata->$language ? ' selected="selected"' : '' ),
                             $term->name
                         );
                     }
@@ -81,7 +74,7 @@ class MslsPostTag extends MslsMain {
                 printf(
                     '<tr class="form-field"><th scope="row" valign="top"><label for="msls[%s]">%s </label></th><td><select class="msls-translations" name="msls[%s]"><option value=""></option>%s</select></td>',
                     $language,
-                    $edit_link,
+                    $icon,
                     $language,
                     $options
                 );

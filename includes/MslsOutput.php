@@ -219,7 +219,6 @@ function msls_content_filter( $content ) {
                 }
                 $content .= '<p id="msls">' .
                     sprintf(
-                        
                         __( 'This post is also available in %s.', 'msls' ),
                         $links
                     ) .

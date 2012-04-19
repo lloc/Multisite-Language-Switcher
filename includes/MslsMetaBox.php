@@ -53,22 +53,6 @@ class MslsMetaBox extends MslsMain {
     }
 
     /**
-     * Get AdminIcon-object
-     * 
-     * @param string $language
-     * @param int $href
-     * @return MslsAdminIcon
-     */
-    public function get_icon( $language, $href ) {
-        $icon = MslsAdminIcon::create();
-        $icon->set_language( $language );
-        $icon->set_src( $this->options->get_flag_url( $language ) );
-        if ( !empty( $href ) )
-            $icon->set_href( $href );
-        return $icon;
-    }
-
-    /**
      * Render
      */
     public function render() {

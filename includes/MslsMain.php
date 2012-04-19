@@ -52,6 +52,24 @@ abstract class MslsMain {
     }
 
     /**
+     * Get AdminIcon-object
+     * 
+     * @param string $language
+     * @param int $id
+     * @return MslsAdminIcon
+     */
+    public function get_icon( $language, $id, $src = null ) {
+        $icon = MslsAdminIcon::create();
+        $icon->set_language( $language );
+        if ( is_null( $src ) )
+            $src = $this->options->get_flag_url( $language );
+        $icon->set_src( $src );
+        if ( !empty( $id ) )
+            $icon->set_href( $id );
+        return $icon;
+    }
+
+    /**
      * Save
      * 
      * @param integer $id
