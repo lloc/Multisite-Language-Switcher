@@ -97,8 +97,9 @@ class MslsPostTag extends MslsMain {
      * @param int $tt_id
      */
     public function set( $term_id, $tt_id ) {
-        if ( !current_user_can( 'manage_categories' ) ) return;
-        $this->save( $term_id, 'MslsTaxOptions' );
+        $tax = get_taxonomy( $_REQUEST['taxonomy'] );
+        if ( $tax && current_user_can( $tax->cap->manage_terms ) )
+            $this->save( $term_id, 'MslsTaxOptions' );
     }
 
 }
