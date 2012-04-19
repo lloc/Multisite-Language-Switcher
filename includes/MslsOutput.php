@@ -165,14 +165,12 @@ class MslsWidget extends WP_Widget {
      * @param array $instance
      */
     public function form( $instance ) {
-        $title = ( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' );
         printf(
-            '<p><label for="%s">%s:</label> <input class="widefat" id="%s" name="%s" type="text" value="%s" /></p>',
+            '<p><label for="%1$s">%2$s:</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p>',
             $this->get_field_id( 'title' ),
             __( 'Title', 'msls' ),
-            $this->get_field_id( 'title' ),
             $this->get_field_name( 'title' ),
-            $title
+            ( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' )
         );
     }
 
