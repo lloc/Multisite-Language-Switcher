@@ -4,7 +4,7 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
-Tested up to:  3.3
+Tested up to:  3.4
 Stable tag: 0.9.5
 
 A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
@@ -45,7 +45,7 @@ If you have created your own language pack, or have an update of an existing one
 
 = 0.9.6 =
 * a lot of bugfixes and enhancements
-* some modifications how the meta box handles hierarchical post types by [Joost de Keijzer](http://dekeijzer.org/)
+* some modifications - how the meta box handles hierarchical post types - by [Joost de Keijzer](http://dekeijzer.org/)
 * behaviour - how the plugin collects the blogs - changed
 
 = 0.9.5 =
