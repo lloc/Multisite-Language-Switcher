@@ -150,6 +150,13 @@ class MslsMetaBox extends MslsMain {
         $this->save( $post_id, 'MslsPostOptions' );
     }
 
+    public function delete( $post_id ) {
+        $post = get_post($post_id);
+        if ($post->post_type == 'my-custom-post-type') {
+            //My function
+        }
+    }
+
 }
 
 ?>

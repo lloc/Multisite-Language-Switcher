@@ -45,6 +45,7 @@ if ( !class_exists( 'MslsPlugin' ) ) {
         require_once dirname( __FILE__ ) . '/includes/MslsMetaBox.php';
         add_action( 'load-post.php', 'MslsMetaBox::init' );
         add_action( 'load-post-new.php', 'MslsMetaBox::init' );
+        add_action( 'delete_post', 'MslsMetaBox::delete');
 
         require_once dirname( __FILE__ ) . '/includes/MslsPostTag.php';
         add_action( 'load-edit-tags.php', 'MslsPostTag::init' );
