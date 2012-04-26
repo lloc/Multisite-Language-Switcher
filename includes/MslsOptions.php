@@ -74,7 +74,8 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             return new MslsPostOptions( $id );
         }
         else {
-            if ( is_home() || is_front_page() || is_search() || is_404() ) {
+            global $wp_query;
+            if ( !$wp_query->is_posts_page && ( is_home() || is_front_page() || is_search() || is_404() ) ) {
                 return new MslsOptions();
             }
             elseif ( is_category() || is_tag() || is_tax() ) {
@@ -83,8 +84,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
             elseif ( is_date() || is_author() || is_post_type_archive() ) {
                 return MslsQueryOptions::create();
             }
-            global $post;
-            return new MslsPostOptions( $post->ID );
+            return new MslsPostOptions( $wp_query->get_queried_object_id() );
         }
         return null;
     }
