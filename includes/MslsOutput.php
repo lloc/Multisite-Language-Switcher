@@ -47,19 +47,20 @@ class MslsOutput extends MslsMain {
             foreach ( $blogs as $blog ) {
                 $language = $blog->get_language();
                 $current  = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
-                if ( !$current ) {
+                if ( $current ) {
+                    $url = $mydata->get_current_link();
+                }
+                else {
                     switch_to_blog( $blog->userblog_id );
                     $url = ( 
                         $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() ?
                         null :
                         $mydata->get_permalink( $language )
                     );
+                    echo '!!!' . $url . '!!!<br/>';
                     restore_current_blog();
                     if ( is_null( $url ) || !$mydata->is_published() )
                         continue;
-                }
-                else {
-                    $url = $mydata->get_current_link();
                 }
                 $link->txt = $blog->get_description();
                 $link->src = $this->options->get_flag_url( $language );
