@@ -52,7 +52,7 @@ class MslsOutput extends MslsMain {
                 }
                 else {
                     switch_to_blog( $blog->userblog_id );
-                    if ( $exists && !$mydata->has_value( $language ) && !is_front_page() ) {
+                    if ( 'MslsOptions' != get_class( $mydata ) && $exists && !$mydata->has_value( $language ) ) {
                         restore_current_blog();
                         continue;
                     }
