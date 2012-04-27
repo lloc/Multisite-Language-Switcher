@@ -46,6 +46,11 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     private $objects_order;
 
     /**
+     * @var array Active plugins in the whole network
+     */
+    private $active_plugins;
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -53,6 +58,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
         $this->current_blog_id     = get_current_blog_id();
         $this->current_blog_output = $options->has_value( 'output_current_blog' );
         $this->objects_order       = $options->get_order();
+        $net            = is_plugin_active_for_network( MSLS_PLUGIN__FILE__ );
         if ( !$options->is_excluded() ) {
             if ( has_filter( 'msls_blog_collection_construct' ) ) {
                 $blogs_collection = apply_filters(
@@ -83,7 +89,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 }
                 if ( $blog->userblog_id != $this->current_blog_id ) {
                     $temp = get_blog_option( $blog->userblog_id, 'msls' );
-                    if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
+                    if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) && $this->is_plugin_active( $blog->userblog_id ) ) {
                         $this->objects[$blog->userblog_id] = new MslsBlog(
                             $blog,
                             $temp['description']
@@ -144,6 +150,20 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     public function get_objects() {
         return $this->objects;
     }
+
+    /**
+     * Is plugin active in blog x
+     * 
+     * @return bool
+     */
+    function is_plugin_active( $blog_id ) {
+        if ( !is_array( $this->active_plugins ) )
+            $this->active_plugins = get_site_option( 'active_sitewide_plugins', array() );
+        if ( isset( $this->active_plugins[MSLS_PLUGIN__FILE__] ) )
+            return true;
+        $plugins = array_merge( $this->activeget_blog_option( $blog_id, 'active_plugins', array() );
+        return( isset( $plugins[MSLS_PLUGIN__FILE__] ) );
+	}
 
     /**
      * Get an arry of blog-objects without the current blog
