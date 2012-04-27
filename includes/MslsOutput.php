@@ -57,9 +57,8 @@ class MslsOutput extends MslsMain {
                         null :
                         $mydata->get_permalink( $language )
                     );
-                    echo '!!!' . $url . '!!!<br/>';
                     restore_current_blog();
-                    if ( is_null( $url ) || !$mydata->is_published() )
+                    if ( is_null( $url ) )
                         continue;
                 }
                 $link->txt = $blog->get_description();
