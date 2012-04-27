@@ -161,7 +161,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
             $this->active_plugins = get_site_option( 'active_sitewide_plugins', array() );
         if ( isset( $this->active_plugins[MSLS_PLUGIN__FILE__] ) )
             return true;
-        $plugins = array_merge( $this->activeget_blog_option( $blog_id, 'active_plugins', array() );
+        $plugins = get_blog_option( $blog_id, 'active_plugins', array() );
         return( isset( $plugins[MSLS_PLUGIN__FILE__] ) );
 	}
 
