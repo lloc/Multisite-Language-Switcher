@@ -197,7 +197,7 @@ add_action( 'widgets_init', 'msls_widgets_init' );
  * @return string
  */ 
 function msls_content_filter( $content ) {
-    if ( is_singular() ) {
+    if ( !is_front_page() && is_singular() ) {
         $options = MslsOptions::instance();
         if ( $options->is_content_filter() ) {
             $obj   = new MslsOutput();
