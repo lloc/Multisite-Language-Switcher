@@ -158,10 +158,10 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     function is_plugin_active( $blog_id ) {
         if ( !is_array( $this->active_plugins ) )
             $this->active_plugins = get_site_option( 'active_sitewide_plugins', array() );
-        if ( isset( $this->active_plugins[MSLS_PLUGIN__FILE__] ) )
+        if ( isset( $this->active_plugins[MSLS_PLUGIN_PATH] ) )
             return true;
         $plugins = get_blog_option( $blog_id, 'active_plugins', array() );
-        return( isset( $plugins[MSLS_PLUGIN__FILE__] ) );
+        return( isset( $plugins[MSLS_PLUGIN_PATH] ) );
 	}
 
     /**
