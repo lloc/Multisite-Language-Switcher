@@ -70,7 +70,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
         }
         else {
             global $wp_query;
-            if ( !$wp_query->is_posts_page && ( is_home() || is_front_page() || is_search() || is_404() ) ) {
+            if ( ( !$wp_query->is_posts_page && is_home() ) || is_front_page() || is_search() || is_404() ) {
                 return new MslsOptions();
             }
             elseif ( is_category() || is_tag() || is_tax() ) {
