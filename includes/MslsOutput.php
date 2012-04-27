@@ -53,7 +53,7 @@ class MslsOutput extends MslsMain {
                 else {
                     switch_to_blog( $blog->userblog_id );
                     $url = ( 
-                        $exists && !$mydata->has_value( $language ) && !is_home() && !is_front_page() ?
+                        $exists && !$mydata->has_value( $language ) && !is_front_page() ?
                         null :
                         $mydata->get_permalink( $language )
                     );
