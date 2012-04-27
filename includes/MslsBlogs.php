@@ -58,7 +58,6 @@ class MslsBlogCollection implements IMslsRegistryInstance {
         $this->current_blog_id     = get_current_blog_id();
         $this->current_blog_output = $options->has_value( 'output_current_blog' );
         $this->objects_order       = $options->get_order();
-        $net            = is_plugin_active_for_network( MSLS_PLUGIN__FILE__ );
         if ( !$options->is_excluded() ) {
             if ( has_filter( 'msls_blog_collection_construct' ) ) {
                 $blogs_collection = apply_filters(
