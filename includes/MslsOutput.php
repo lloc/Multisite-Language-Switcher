@@ -52,14 +52,12 @@ class MslsOutput extends MslsMain {
                 }
                 else {
                     switch_to_blog( $blog->userblog_id );
-                    $url = ( 
-                        $exists && !$mydata->has_value( $language ) && !is_front_page() ?
-                        null :
-                        $mydata->get_permalink( $language )
-                    );
-                    restore_current_blog();
-                    if ( is_null( $url ) )
+                    if ( $exists && !$mydata->has_value( $language ) && !is_front_page() ) {
+                        restore_current_blog();
                         continue;
+                    }
+                    $url = $mydata->get_permalink( $language );
+                    restore_current_blog();
                 }
                 $link->txt = $blog->get_description();
                 $link->src = $this->options->get_flag_url( $language );
