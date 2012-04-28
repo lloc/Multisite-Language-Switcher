@@ -83,7 +83,7 @@ abstract class MslsMain {
      * 
      * @param int $post_id
      */
-    protected function delete( $post_id ) {
+    public function delete( $post_id ) {
         $options  = new MslsPostOptions( $post_id );
         $slang    = $this->blogs->get_current_blog()->get_language();
         foreach ( $this->blogs->get() as $blog ) {
