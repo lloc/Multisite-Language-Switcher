@@ -177,13 +177,32 @@ class MslsGetSet {
     }
 
     /**
-     * Check if the array has an non emty item
+     * "Magic" unset
+     *
+     * @param mixed $key
+     */
+    final public function __unset( $key ) {
+        if ( isset( $this->arr[$key] ) )
+            unset( $this->arr[$key] );
+    }
+
+    /**
+     * Check if the array has an non empty item with the specified key
      * 
      * @param string $key
      * @return bool
      */ 
     public function has_value( $key ) {
-        return !empty( $this->arr[$key] ) ? true : false;
+        return( !empty( $this->arr[$key] ) );
+    }
+
+    /**
+     * Check if the array is not empty
+     * 
+     * @return bool
+     */ 
+    public function is_empty() {
+        return( !empty( $this->arr ) );
     }
 
     /**
@@ -300,7 +319,8 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
         }
         else {
             $this->request = get_post_type();
-            if ( !$this->request ) $this->request = 'post'; 
+            if ( !$this->request )
+                $this->request = 'post'; 
         }
     }
 
