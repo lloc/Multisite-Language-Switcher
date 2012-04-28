@@ -32,6 +32,7 @@ class MslsMetaBox extends MslsMain {
             $obj = new self();
             add_action( 'add_meta_boxes', array( $obj, 'add' ) );
             add_action( 'save_post', array( $obj, 'set' ) );
+            add_action( 'trashed_post', array( $obj, 'delete' ) );
         }
     }
 
@@ -148,28 +149,6 @@ class MslsMetaBox extends MslsMain {
             if ( !current_user_can( 'edit_post' ) ) return;
         }
         $this->save( $post_id, 'MslsPostOptions' );
-    }
-
-    /**
-     * Delete
-     * 
-     * @param int $post_id
-     */
-    public function delete( $post_id ) {
-        $options  = new MslsPostOptions( $post_id );
-        $slang    = $this->blogs->get_current_blog()->get_language();
-        foreach ( $this->blogs->get() as $blog ) {
-            switch_to_blog( $blog->userblog_id );
-            $tlang = $blog->get_language();
-            $tmp = new MslsPostOptions( $options->$tlang );
-            unset( $tmp->$slang );
-            if ( $tmp->is_empty() )
-                $tmp->delete();
-            else
-                $tmp->save( $temp );
-            restore_current_blog();
-        }
-        $options->delete();
     }
 
 }

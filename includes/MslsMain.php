@@ -78,6 +78,28 @@ abstract class MslsMain {
         }
     }
 
+    /**
+     * Delete
+     * 
+     * @param int $post_id
+     */
+    protected function delete( $post_id ) {
+        $options  = new MslsPostOptions( $post_id );
+        $slang    = $this->blogs->get_current_blog()->get_language();
+        foreach ( $this->blogs->get() as $blog ) {
+            switch_to_blog( $blog->userblog_id );
+            $tlang = $blog->get_language();
+            $tmp = new MslsPostOptions( $options->$tlang );
+            unset( $tmp->$slang );
+            if ( $tmp->is_empty() )
+                $tmp->delete();
+            else
+                $tmp->save( $temp );
+            restore_current_blog();
+        }
+        $options->delete();
+    }
+
 }
 
 /**
