@@ -6,6 +6,8 @@ Tags: multilingual, multisite, language, switcher, international, localization, 
 Requires at least: 3.2
 Tested up to: 3.4
 Stable tag: 0.9.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
 

@@ -59,18 +59,19 @@ abstract class MslsMain {
      */
     protected function save( $id, $class ) {
         if ( isset( $_POST['msls'] ) ) {
-            $mydata  = $_POST['msls'];
-            $options = new $class( $id );
-            $options->save( $mydata );
+            $new_larr = new MslsLanguageArray( $_POST['msls'] );
+            $new_larr->set( $language, $id );
+            $options  = new $class( $id );
+            $old_larr = $options->get_arr();
             $language = $this->blogs->get_current_blog()->get_language();
-            $mydata[$language] = $id;
+            $options->save( $new_larr->get( $language ) );
             foreach ( $this->blogs->get() as $blog ) {
                 $language = $blog->get_language();
-                if ( !empty( $mydata[$language] ) ) {
+                if ( !empty( $new_larr[$language] ) ) {
                     switch_to_blog( $blog->userblog_id );
-                    $temp    = $mydata;
-                    $options = new $class( $temp[$language] );
-                    unset( $temp[$language] );
+                    $temp    = $new_larr;
+                    $options = new $class( $temp->$language );
+                    unset( $temp->$language );
                     $options->save( $temp );
                     restore_current_blog();
                 }
@@ -79,22 +80,22 @@ abstract class MslsMain {
     }
 
     /**
-     * Delete
+     * Delete the connections of a post
      * 
      * @param int $post_id
      */
-    public function delete( $post_id ) {
+    public static function delete( $post_id ) {
         $options  = new MslsPostOptions( $post_id );
         $slang    = $this->blogs->get_current_blog()->get_language();
         foreach ( $this->blogs->get() as $blog ) {
             switch_to_blog( $blog->userblog_id );
             $tlang = $blog->get_language();
-            $tmp = new MslsPostOptions( $options->$tlang );
-            unset( $tmp->$slang );
-            if ( $tmp->is_empty() )
-                $tmp->delete();
+            $temp  = new MslsPostOptions( $options->$tlang );
+            unset( $temp->$slang );
+            if ( $temp->is_empty() )
+                $temp->delete();
             else
-                $tmp->save( $temp );
+                $temp->save( $tmp );
             restore_current_blog();
         }
         $options->delete();
@@ -224,7 +225,7 @@ class MslsGetSet {
      * @return bool
      */ 
     public function is_empty() {
-        return( !empty( $this->arr ) );
+        return( empty( $this->arr ) );
     }
 
     /**
@@ -232,7 +233,7 @@ class MslsGetSet {
      *
      * @return array
      */
-    final protected function get_arr() {
+    final public function get_arr() {
         return $this->arr;
     }
 
@@ -437,6 +438,52 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
             $registry->set_object( $cls, $obj );
         }
         return $obj;
+    }
+
+}
+
+/**
+ * Stores the language input from post
+ *
+ * @package Msls
+ */
+class MslsLanguageArray {
+
+    /**
+     * @var array $arr
+     */
+    protected $arr;
+
+    /**
+     * Constructor
+     * 
+     * @param array $arr
+     */
+    public function __construct( Array $arr = array() ) {
+        $this->arr = $arr;
+    }
+
+    /**
+     * Sets a key-value-pair
+     * 
+     * @param string $key
+     * @param mixed $value
+     */
+    public function set( $key, $value ) {
+        $this->arr[$key] = $value;
+    }
+
+    /**
+     * Gets the filtered array without the specified element
+     * 
+     * @param string $key
+     * @return array
+     */
+    public function get( $key = '' ) {
+        $arr = array_filter( $this->arr );
+        if ( isset( $arr[$key] ) )
+            unset( $arr[$key] );
+        return $arr;
     }
 
 }
