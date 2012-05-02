@@ -7,16 +7,6 @@
  */
 
 /**
- * MslsBlogCollection implements IMslsRegistryInstance
- */
-require_once dirname( __FILE__ ) . '/MslsRegistry.php';
-
-/**
- * MslsMain requests a instance of MslsOptions
- */
-require_once dirname( __FILE__ ) . '/MslsOptions.php';
-
-/**
  * Collection of blog-objects
  * 
  * Implements the interface IMslsRegistryInstance because we want to work with 

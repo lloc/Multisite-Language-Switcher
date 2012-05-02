@@ -7,16 +7,6 @@
  */
 
 /**
- * MslsOutput extends MslsMain
- */
-require_once dirname( __FILE__ ) . '/MslsMain.php';
-
-/**
- * MslsOutput::get() uses MslsLink::create()
- */
-require_once dirname( __FILE__ ) . '/MslsLink.php';
-
-/**
  * Output in the frontend
  *
  * @package Msls

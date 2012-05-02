@@ -8,11 +8,6 @@
  */
 
 /**
- * MslsLink extends MslsGetSet
- */
-require_once dirname( __FILE__ ) . '/MslsMain.php';
-
-/**
  * MslsLink
  * 
  * @package Msls

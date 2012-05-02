@@ -7,21 +7,6 @@
  */
 
 /**
- * MslsContentTypes implements IMslsRegistryInstance
- */
-require_once dirname( __FILE__ ) . '/MslsRegistry.php';
-
-/**
- * MslsMain requests a instance of MslsOptions
- */
-require_once dirname( __FILE__ ) . '/MslsOptions.php';
-
-/**
- * MslsMain requests a instance of MslsBlogCollection
- */
-require_once dirname( __FILE__ ) . '/MslsBlogs.php';
-
-/**
  * Abstraction for the hook classes
  *
  * @package Msls

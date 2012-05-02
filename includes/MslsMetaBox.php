@@ -7,16 +7,6 @@
  */
 
 /**
- * MslsMetaBox extends MslsMain
- */
-require_once dirname( __FILE__ ) . '/MslsMain.php';
-
-/**
- * MslsAdminIcon is used
- */
-require_once dirname( __FILE__ ) . '/MslsLink.php';
-
-/**
  * MslsMetaBox
  * 
  * @package Msls

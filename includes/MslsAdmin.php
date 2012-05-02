@@ -7,16 +7,6 @@
  */
 
 /**
- * MslsAdmin extends MslsMain
- */
-require_once dirname( __FILE__ ) . '/MslsMain.php';
-
-/**
- * MslsAdmin uses MslsLink::get_types_description()
- */
-require_once dirname( __FILE__ ) . '/MslsLink.php';
-
-/**
  * Administration of the options
  *
  * @package Msls

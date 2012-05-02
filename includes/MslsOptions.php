@@ -7,16 +7,6 @@
  */
 
 /**
- * MslsOptions extends MslsGetSet
- */
-require_once dirname( __FILE__ ) . '/MslsMain.php';
-
-/**
- * MslsOptions implements IMslsRegistryInstance
- */
-require_once dirname( __FILE__ ) . '/MslsRegistry.php';
-
-/**
  * MslsOptions
  * 
  * @package Msls

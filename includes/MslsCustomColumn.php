@@ -7,21 +7,6 @@
  */
 
 /**
- * MslsCustomColumn extends MslsMain
- */
-require_once dirname( __FILE__ ) . '/MslsMain.php';
-
-/**
- * MslsCustomColumn::init() uses MslsOptions for a check
- */ 
-require_once dirname( __FILE__ ) . '/MslsOptions.php';
-
-/**
- * MslsAdminIcon is used
- */
-require_once dirname( __FILE__ ) . '/MslsLink.php';
-
-/**
  * MslsCustomColumn
  * 
  * @package Msls
