@@ -1,12 +1,6 @@
 <?php
 
 /**
- * Main
- *
- * @package Msls
- */
-
-/**
  * Abstraction for the hook classes
  *
  * @package Msls
@@ -75,12 +69,12 @@ abstract class MslsMain {
      * @param int $post_id
      */
     public static function delete( $post_id ) {
-        $options = new MslsPostOptions( $post_id );
+        $options = new MslsOptionsPost( $post_id );
         $slang   = $this->blogs->get_current_blog()->get_language();
         foreach ( $this->blogs->get() as $blog ) {
             switch_to_blog( $blog->userblog_id );
             $tlang = $blog->get_language();
-            $temp  = new MslsPostOptions( $options->$tlang );
+            $temp  = new MslsOptionsPost( $options->$tlang );
             unset( $temp->$slang );
             if ( $temp->is_empty() )
                 $temp->delete();

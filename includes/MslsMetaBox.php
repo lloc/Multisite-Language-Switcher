@@ -51,7 +51,7 @@ class MslsMetaBox extends MslsMain {
         if ( $blogs ) {
             global $post;
             $type   = get_post_type( $post->ID );
-            $mydata = new MslsPostOptions( $post->ID );
+            $mydata = new MslsOptionsPost( $post->ID );
             $temp   = $post;
             $lis    = '';
             wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
@@ -138,7 +138,7 @@ class MslsMetaBox extends MslsMain {
         } else {
             if ( !current_user_can( 'edit_post' ) ) return;
         }
-        $this->save( $post_id, 'MslsPostOptions', $_POST['msls'] );
+        $this->save( $post_id, 'MslsOptionsPost', $_POST['msls'] );
     }
 
 }
