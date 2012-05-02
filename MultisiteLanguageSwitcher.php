@@ -46,6 +46,7 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
             if ( 'Msls' == substr( $cls, 0, 4 ) ) 
                 require_once dirname( __FILE__ ) . '/includes/' . $cls . '.php';
         }
+
     }
 
     /**

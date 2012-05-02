@@ -1,6 +1,21 @@
 <?php
 
 /**
+ * Interface for classes which are to register in the MslsRegistry-instance
+ *
+ * get_called_class is just avalable in php >= 5.3 so I defined an interface here
+ * @package Msls
+ */
+interface IMslsRegistryInstance {
+
+    /**
+     * @return object
+     */
+    public static function instance();
+
+}
+
+/**
  * Registry
  * 
  * @package Msls
@@ -86,21 +101,6 @@ class MslsRegistry {
     public static function set_object( $key, $instance ) {
         self::singleton()->set( $key, $instance );
     }
-
-}
-
-/**
- * Interface for classes which are to register in the MslsRegistry-instance
- *
- * get_called_class is just avalable in php >= 5.3 so I defined an interface here
- * @package Msls
- */
-interface IMslsRegistryInstance {
-
-    /**
-     * @return object
-     */
-    public static function instance();
 
 }
 
