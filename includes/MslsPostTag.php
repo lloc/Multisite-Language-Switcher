@@ -95,7 +95,7 @@ class MslsPostTag extends MslsMain {
     public function set( $term_id, $tt_id ) {
         $tax = get_taxonomy( $_REQUEST['taxonomy'] );
         if ( $tax && current_user_can( $tax->cap->manage_terms ) )
-            $this->save( $term_id, 'MslsTaxOptions' );
+            $this->save( $term_id, 'MslsTaxOptions', $_POST['msls'] );
     }
 
 }

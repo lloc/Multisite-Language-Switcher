@@ -85,7 +85,7 @@ class MslsOutput extends MslsMain {
     }
 
     /**
-     * Returns a string when the object will treated like a string
+     * Returns a string when the object will be treated like a string
      * 
      * @see get_the_msls()
      * @return string

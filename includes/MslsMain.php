@@ -54,28 +54,33 @@ abstract class MslsMain {
     /**
      * Save
      * 
-     * @param integer $id
+     * @param int $id
      * @param string $class
+     * @param array $input
      */
-    protected function save( $id, $class ) {
-        if ( isset( $_POST['msls'] ) ) {
-            $new_larr = new MslsLanguageArray( $_POST['msls'] );
-            $new_larr->set( $language, $id );
-            $options  = new $class( $id );
-            $old_larr = $options->get_arr();
-            $language = $this->blogs->get_current_blog()->get_language();
-            $options->save( $new_larr->get( $language ) );
-            foreach ( $this->blogs->get() as $blog ) {
-                $language = $blog->get_language();
-                if ( !empty( $new_larr[$language] ) ) {
-                    switch_to_blog( $blog->userblog_id );
-                    $temp    = $new_larr;
-                    $options = new $class( $temp->$language );
-                    unset( $temp->$language );
-                    $options->save( $temp );
-                    restore_current_blog();
-                }
+    protected function save( $post_id, $class, array $input ) {
+        $msla     = new MslsLanguageArray( $input );
+        $language = $this->blogs->get_current_blog()->get_language();
+        $msla->set( $language, $post_id );
+        $options  = new $class( $post_id );
+        $obsolete = $msla->obsolete( $options->get_arr() );
+        if ( in_array( $language, $obsolete ) ) {
+            $options->delete();
+        }
+        else {
+            $options->save( $msla->get( $language ) );
+        }
+        foreach ( $this->blogs->get() as $blog ) {
+            switch_to_blog( $blog->userblog_id );
+            $language = $blog->get_language();
+            $options  = new $class( $temp->$language );
+            if ( in_array( $language, $obsolete ) ) {
+                $options->delete();
             }
+            else {
+                $options->save( $msla->get( $language ) );
+            }
+            restore_current_blog();
         }
     }
 
@@ -459,18 +464,22 @@ class MslsLanguageArray {
      * 
      * @param array $arr
      */
-    public function __construct( Array $arr = array() ) {
-        $this->arr = $arr;
+    public function __construct( array $arr = array() ) {
+        $this->arr = array_filter( $arr );
     }
 
     /**
      * Sets a key-value-pair
+     * - $key must be a string of length >= 2
+     * - $value must be an integer > 0  
      * 
      * @param string $key
      * @param mixed $value
      */
     public function set( $key, $value ) {
-        $this->arr[$key] = $value;
+        $value = intval( $value ); 
+        if ( strlen( $key ) >= 2 && $value > 0 )
+            $this->arr[$key] = intval( $value );
     }
 
     /**
@@ -479,11 +488,30 @@ class MslsLanguageArray {
      * @param string $key
      * @return array
      */
-    public function get( $key = '' ) {
-        $arr = array_filter( $this->arr );
+    public function filter( $key ) {
+        $arr = $this->arr;
         if ( isset( $arr[$key] ) )
             unset( $arr[$key] );
         return $arr;
+    }
+
+    /**
+     * Gets the specified element of the array
+     * 
+     * @param string $key
+     * @return int
+     */
+    public function get( $key ) {
+        return( isset( $this->arr[$key] ) ? $this->arr[$key] : 0 );
+    }
+
+    /**
+     * Gets the entries which are obsolete now
+     * 
+     * @param array $arr
+     */
+    public function obsolete( array $arr ) {
+        return array_keys( array_diff_key( $this->arr, $arr ) );
     }
 
 }

@@ -148,7 +148,7 @@ class MslsMetaBox extends MslsMain {
         } else {
             if ( !current_user_can( 'edit_post' ) ) return;
         }
-        $this->save( $post_id, 'MslsPostOptions' );
+        $this->save( $post_id, 'MslsPostOptions', $_POST['msls'] );
     }
 
 }
