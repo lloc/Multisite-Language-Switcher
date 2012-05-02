@@ -21,7 +21,7 @@ class MslsOptionsTax extends MslsOptions {
      * Factory method
      * 
      * @param int $id
-     * @return MslsTaxOptions
+     * @return MslsOptionsTax
      */
     public static function create( $id = 0 ) {
         if ( is_admin() ) {
