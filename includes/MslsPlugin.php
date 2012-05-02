@@ -8,6 +8,15 @@
 class MslsPlugin {
 
     /**
+     * Registers widget
+     */
+    function init_widget() {
+        $options = MslsOptions::instance();
+        if ( !$options->is_excluded() )
+            register_widget( 'MslsWidget' );
+    }
+
+    /**
      * Load textdomain
      */
     public static function init_i18n_support() {

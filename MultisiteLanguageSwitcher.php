@@ -61,6 +61,8 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
     register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
 
     add_action( 'init', array( 'MslsPlugin', 'init_i18n_support' ) );
+    add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
+
     if ( is_admin() ) {
         add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
         add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
@@ -73,6 +75,7 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
             add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
         }
     }
+
 }
 
 ?>
