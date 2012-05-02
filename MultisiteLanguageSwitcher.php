@@ -50,6 +50,21 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
     }
 
     /**
+     * Interface for classes which are to register in the MslsRegistry-instance
+     *
+     * get_called_class is just avalable in php >= 5.3 so I defined an interface here
+     * @package Msls
+     */
+    interface IMslsRegistryInstance {
+
+        /**
+         * @return object
+         */
+        public static function instance();
+
+    }
+
+    /**
      * The autoload-stack could be inactive so the function will return false
      */
     if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
@@ -75,7 +90,6 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
             add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
         }
     }
-
 }
 
 ?>
