@@ -43,7 +43,7 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
          * @param $class_name
          */
         public static function load( $class_name ) {
-            require_once dirname( __FILE__ ) . '/includes/' . $class_name . '.php'
+            require_once dirname( __FILE__ ) . '/includes/' . $class_name . '.php';
         }
     }
     spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
