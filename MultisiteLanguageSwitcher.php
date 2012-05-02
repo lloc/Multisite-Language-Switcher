@@ -46,6 +46,9 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
             require_once dirname( __FILE__ ) . '/includes/' . $class_name . '.php';
         }
     }
+    if ( function_exists( '__autoload' ) ) {
+        spl_autoload_register( '__autoload' );
+    }
     spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
 
     register_activation_hook( __FILE__, array( 'MslsPlugin', 'activate' ) );
