@@ -40,12 +40,17 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 
         /**
          * Static loader method
-         * @param $class_name
+         * @param string $cls
          */
-        public static function load( $class_name ) {
-            require_once dirname( __FILE__ ) . '/includes/' . $class_name . '.php';
+        public static function load( $cls ) {
+            if ( 'Msls' == substr( $cls, 0, 4 ) ) 
+                require_once dirname( __FILE__ ) . '/includes/' . $cls . '.php';
         }
     }
+
+    /**
+     * The autoload-stack could be inactive so the function will return false
+     */
     if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
         spl_autoload_register( '__autoload' );
     spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
