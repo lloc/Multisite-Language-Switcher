@@ -48,25 +48,25 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
     }
     spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
 
-    register_activation_hook( __FILE__, 'MslsPlugin::activate' );
-    register_deactivation_hook( __FILE__, 'MslsPlugin::deactivate' );
-    register_uninstall_hook( __FILE__, 'MslsPlugin::uninstall' );
-    add_action( 'init', 'MslsPlugin::init_i18n_support' );
+    register_activation_hook( __FILE__, array( 'MslsPlugin', 'activate' ) );
+    register_deactivation_hook( __FILE__, array( 'MslsPlugin', 'deactivate' ) );
+    register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
+    add_action( 'init', array( 'MslsPlugin', 'init_i18n_support' ) );
 
     if ( is_admin() ) {
-        add_action( 'admin_menu', 'MslsAdmin::init' );
+        add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
 
-        add_action( 'load-post.php', 'MslsMetaBox::init' );
-        add_action( 'load-post-new.php', 'MslsMetaBox::init' );
+        add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
+        add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );
 
-        add_action( 'load-edit-tags.php', 'MslsPostTag::init' );
+        add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
 
-        add_action( 'load-edit.php', 'MslsCustomColumn::init' );
-        add_action( 'load-edit-tags.php', 'MslsCustomColumnTaxonomy::init' );
+        add_action( 'load-edit.php', array( 'MslsCustomColumn', 'init' ) );
+        add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
 
         if ( isset( $_POST['action'] ) && $_POST['action'] == 'add-tag' ) {
-            add_action( 'admin_init', 'MslsPostTag::init' );
-            add_action( 'admin_init', 'MslsCustomColumnTaxonomy::init' );
+            add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
+            add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
         }
     }
 }
