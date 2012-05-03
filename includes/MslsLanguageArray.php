@@ -31,9 +31,9 @@ class MslsLanguageArray {
      * @param mixed $value
      */
     public function set( $key, $value ) {
-        $value = intval( $value ); 
-        if ( strlen( $key ) >= 2 && $value > 0 )
-            $this->arr[$key] = intval( $value );
+        $this->arr[$key] = intval( $value );
+        if ( 0 >= $this->arr[$key] )
+            unset( $this->arr[$key] );
     }
 
     /**
