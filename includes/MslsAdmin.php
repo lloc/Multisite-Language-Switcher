@@ -60,6 +60,7 @@ class MslsAdmin extends MslsMain {
                 switch_to_blog( $id );
                 $out = ( !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) ? true : false );
                 restore_current_blog();
+                print_r( get_option( 'active_plugins' ) );
                 //if ( $out ) continue;
             }
             $arr[] = sprintf(
