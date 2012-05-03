@@ -48,7 +48,7 @@ class MslsAdmin extends MslsMain {
         do_settings_sections( __CLASS__ );
         printf(
             '<p class="submit"><input name="Submit" type="submit" class="button-primary" value="%s" /></p></form></div>',
-            __( 'Update', 'msls' )
+            ( $this->options->is_empty() ? __( 'Configure', 'msls' ) : __( 'Update', 'msls' ) )
         );
     }
 
