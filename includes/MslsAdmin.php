@@ -23,7 +23,7 @@ class MslsAdmin extends MslsMain {
             array( $obj, 'render' )
         );
         add_action( 'admin_init', array( $obj, 'register' ) );
-		add_action( 'admin_notices', array( $obj, 'warning' );
+		add_action( 'admin_notices', array( $obj, 'warning' ) );
     }
 
     public function warning() {
