@@ -44,11 +44,12 @@ abstract class MslsMain {
         $msla->set( $language, $post_id );
         $options  = new $class( $post_id );
         $obsolete = $msla->obsolete( $options->get_arr() );
+        print_r( $msla->filter( $language ) );
+
         if ( in_array( $language, $obsolete ) ) {
             $options->delete();
         }
         else {
-            print_r( $msla->filter( $language ) );
             $options->save( $msla->filter( $language ) );
         }
         foreach ( $this->blogs->get() as $blog ) {
