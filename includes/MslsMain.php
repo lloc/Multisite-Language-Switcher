@@ -4,6 +4,7 @@
  * Abstraction for the hook classes
  *
  * @package Msls
+ * @subpackage Main
  */
 abstract class MslsMain {
 
@@ -33,7 +34,7 @@ abstract class MslsMain {
     /**
      * Save
      * 
-     * @param int $id
+     * @param int $post_id
      * @param string $class
      * @param array $input
      */

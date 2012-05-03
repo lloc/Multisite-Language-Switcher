@@ -3,7 +3,8 @@
 /**
  * MslsOptions
  * 
- * @package MslsOptions
+ * @package Msls
+ * @subpackage Options
  */
 class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 

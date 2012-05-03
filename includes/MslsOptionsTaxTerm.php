@@ -3,7 +3,8 @@
 /**
  * MslsOptionsTaxTerm
  * 
- * @package MslsOptions
+ * @package Msls
+ * @subpackage Options
  */
 class MslsOptionsTaxTerm extends MslsOptionsTax {
 

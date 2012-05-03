@@ -4,6 +4,7 @@
  * Supported taxonomies
  *
  * @package Msls
+ * @subpackage Main
  */
 class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 

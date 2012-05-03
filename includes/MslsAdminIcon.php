@@ -4,6 +4,7 @@
  * MslsAdminIcon
  * 
  * @package Msls
+ * @subpackage Link
  */
 class MslsAdminIcon {
 

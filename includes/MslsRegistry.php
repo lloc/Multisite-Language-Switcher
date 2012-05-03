@@ -4,6 +4,7 @@
  * Registry
  * 
  * @package Msls
+ * @subpackage Main
  */
 class MslsRegistry {
 

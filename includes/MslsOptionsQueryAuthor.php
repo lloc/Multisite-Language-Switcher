@@ -3,7 +3,8 @@
 /**
  * MslsOptionsQueryAuthor
  * 
- * @package MslsOptions
+ * @package Msls
+ * @subpackage Options
  */
 class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 

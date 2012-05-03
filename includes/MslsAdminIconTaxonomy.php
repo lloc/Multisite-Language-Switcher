@@ -4,6 +4,7 @@
  * MslsAdminIconTaxonomy
  * 
  * @package Msls
+ * @subpackage Link
  */
 class MslsAdminIconTaxonomy extends MslsAdminIcon {
 

@@ -1,15 +1,10 @@
 <?php
 
 /**
- * Custom Column
- *
- * @package Msls
- */
-
-/**
  * MslsCustomColumn
  * 
  * @package Msls
+ * @subpackage Main
  */
 class MslsCustomColumn extends MslsMain {
 

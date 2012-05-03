@@ -3,7 +3,8 @@
 /**
  * MslsOptionsPost
  * 
- * @package MslsOptions
+ * @package Msls
+ * @subpackage Options
  */
 class MslsOptionsPost extends MslsOptions {
 

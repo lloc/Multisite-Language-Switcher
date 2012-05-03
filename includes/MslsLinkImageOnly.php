@@ -4,6 +4,7 @@
  * MslsLinkImageOnly
  * 
  * @package Msls
+ * @subpackage Link
  */
 class MslsLinkImageOnly extends MslsLink {
 

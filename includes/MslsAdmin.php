@@ -1,15 +1,10 @@
 <?php
 
 /**
- * Admin
- *
- * @package Msls
- */
-
-/**
  * Administration of the options
  *
  * @package Msls
+ * @subpackage Main
  */
 class MslsAdmin extends MslsMain {
     
@@ -65,7 +60,7 @@ class MslsAdmin extends MslsMain {
                 switch_to_blog( $id );
                 $out = ( !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) ? true : false );
                 restore_current_blog();
-                if ( $out ) continue;
+                //if ( $out ) continue;
             }
             $arr[] = sprintf(
                 '<a href="%s"%s>%s / %s</a>',

@@ -4,12 +4,7 @@
  * Meta Box
  *
  * @package Msls
- */
-
-/**
- * MslsMetaBox
- * 
- * @package Msls
+ * @subpackage Main
  */
 class MslsMetaBox extends MslsMain {
 

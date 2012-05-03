@@ -1,16 +1,10 @@
 <?php
 
 /**
- * Link
- *
- * AdminIcons and Frontend-Links
- * @package Msls
- */
-
-/**
  * MslsLink
  * 
  * @package Msls
+ * @subpackage Link
  */
 class MslsLink extends MslsGetSet {
 

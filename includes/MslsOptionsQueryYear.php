@@ -3,7 +3,8 @@
 /**
  * MslsOptionsQueryYear
  * 
- * @package MslsOptions
+ * @package Msls
+ * @subpackage Options
  */
 class MslsOptionsQueryYear extends MslsOptionsQuery {
 

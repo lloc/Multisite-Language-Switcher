@@ -10,6 +10,7 @@
  * </code>
  * 
  * @package Msls
+ * @subpackage Main
  */
 class MslsGetSet {
 

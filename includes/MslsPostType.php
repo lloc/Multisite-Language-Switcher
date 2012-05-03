@@ -4,6 +4,7 @@
  * Supported post types
  *
  * @package Msls
+ * @subpackage Main
  */
 class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 

@@ -4,6 +4,7 @@
  * Output in the frontend
  *
  * @package Msls
+ * @subpackage Output
  */
 class MslsWidget extends WP_Widget {
 

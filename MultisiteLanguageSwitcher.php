@@ -90,6 +90,70 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
             add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
         }
     }
+
+    /**
+     * Filter for the_content()
+     * 
+     * @package Msls
+     * @uses MslsOptions
+     * @uses MslsOutput
+     * @param string $content
+     * @return string
+     */ 
+    function msls_content_filter( $content ) {
+        if ( !is_front_page() && is_singular() ) {
+            $options = MslsOptions::instance();
+            if ( $options->is_content_filter() ) {
+                $obj   = new MslsOutput();
+                $links = $obj->get( 1, true, true );
+                if ( !empty( $links ) ) {
+                    if ( count( $links ) > 1 ) {
+                        $last  = array_pop( $links );
+                        $links = sprintf(
+                            __( '%s and %s', 'msls' ),
+                            implode( ', ', $links ),
+                            $last
+                        );
+                    } else {
+                        $links = $links[0];
+                    }
+                    $content .= '<p id="msls">' .
+                        sprintf(
+                            __( 'This post is also available in %s.', 'msls' ),
+                            $links
+                        ) .
+                        '</p>';
+                }
+            }
+        }
+        return $content;
+    }
+    add_filter( 'the_content', 'msls_content_filter' );
+
+    /**
+     * Get the output for using the links to the translations in your code
+     * 
+     * @return string
+     * @package Msls
+     * @see the_msls()
+     */
+    function get_the_msls() {
+        $obj = new MslsOutput();
+        return( sprintf( '%s', $obj ) );
+    }
+
+    /**
+     * Output the links to the translations in your template
+     * 
+     * You can call of this function directly like that
+     * <code>if ( function_exists ( 'the_msls' ) ) the_msls();</code>
+     * 
+     * @package Msls
+     * @uses get_the_msls()
+     */
+    function the_msls() {
+        echo get_the_msls();
+    }
 }
 
 ?>

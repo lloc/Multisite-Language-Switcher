@@ -6,6 +6,7 @@
  * Implements the interface IMslsRegistryInstance because we want to work with 
  * a singleton instance of MslsBlogCollection all the time.
  * @package Msls
+ * @subpackage Main
  */
 class MslsBlogCollection implements IMslsRegistryInstance {
 
@@ -137,6 +138,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Is plugin active in blog x
      * 
+     * @param int $blog_id
      * @return bool
      */
     function is_plugin_active( $blog_id ) {

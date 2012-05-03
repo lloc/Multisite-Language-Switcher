@@ -1,15 +1,10 @@
 <?php
 
 /**
- * Post Tag
- *
- * @package Msls
- */
-
-/**
  * MslsPostTag
  * 
  * @package Msls
+ * @subpackage Main
  */
 class MslsPostTag extends MslsMain {
 

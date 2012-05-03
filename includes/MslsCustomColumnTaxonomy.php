@@ -4,6 +4,7 @@
  * MslsCustomColumnTaxonomy
  * 
  * @package Msls
+ * @subpackage Main
  */
 class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
