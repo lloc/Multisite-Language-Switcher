@@ -58,7 +58,7 @@ class MslsAdmin extends MslsMain {
     protected function subsubsub() {
         $arr            = array();
         foreach ( $this->blogs->get_objects() as $id => $blog ) {
-            if ( !$this->blogs->is_plugin_active() )
+            if ( !$this->blogs->is_plugin_active( $blog->userblog_id ) )
                 continue;
             $current = '';
             if ( $blog->userblog_id == $this->blogs->get_current_blog_id() ) {
