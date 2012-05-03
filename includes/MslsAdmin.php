@@ -47,7 +47,8 @@ class MslsAdmin extends MslsMain {
      * Create a submenu which contains links to all blogs of the current user
      */
     protected function subsubsub() {
-        $arr = array();
+        $arr            = array();
+        $network_active = ( !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) ); 
         foreach ( $this->blogs->get_objects() as $id => $blog ) {
             $current = '';
             if ( $blog->userblog_id == $this->blogs->get_current_blog_id() ) {
@@ -58,10 +59,10 @@ class MslsAdmin extends MslsMain {
                  * Check if blog has activated this plugin
                  */
                 switch_to_blog( $id );
-                $out = ( !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) ? true : false );
+                $out = ( !$network_active && !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) );
                 restore_current_blog();
-                print_r( get_option( 'active_plugins' ) );
-                //if ( $out ) continue;
+                if ( $out )
+                    continue;
             }
             $arr[] = sprintf(
                 '<a href="%s"%s>%s / %s</a>',
