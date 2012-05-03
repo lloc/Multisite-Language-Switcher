@@ -48,7 +48,7 @@ abstract class MslsMain {
             $options->delete();
         }
         else {
-            $options->save( $msla->get( $language ) );
+            $options->save( $msla->filter( $language ) );
         }
         foreach ( $this->blogs->get() as $blog ) {
             switch_to_blog( $blog->userblog_id );
@@ -58,7 +58,7 @@ abstract class MslsMain {
                 $options->delete();
             }
             else {
-                $options->save( $msla->get( $language ) );
+                $options->save( $msla->filter( $language ) );
             }
             restore_current_blog();
         }
