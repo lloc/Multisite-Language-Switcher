@@ -59,7 +59,7 @@ class MslsAdmin extends MslsMain {
                  * Check if blog has activated this plugin
                  */
                 switch_to_blog( $id );
-                $out = ( !$network_active && !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) );
+                $out = ( !$network_active && !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) );
                 restore_current_blog();
                 if ( $out )
                     continue;
