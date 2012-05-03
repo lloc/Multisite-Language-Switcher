@@ -71,8 +71,9 @@ abstract class MslsMain {
      */
     public static function delete( $post_id ) {
         $options = new MslsOptionsPost( $post_id );
-        $slang   = $this->blogs->get_current_blog()->get_language();
-        foreach ( $this->blogs->get() as $blog ) {
+        $blogs   = MslsBlogCollection::instance();
+        $slang   = $blogs->get_current_blog()->get_language();
+        foreach ( $blogs->get() as $blog ) {
             switch_to_blog( $blog->userblog_id );
             $tlang = $blog->get_language();
             $temp  = new MslsOptionsPost( $options->$tlang );
