@@ -65,7 +65,7 @@ class MslsLanguageArray {
      * @param array $arr
      */
     public function obsolete( array $arr ) {
-        return array_keys( array_diff_key( $this->arr, $arr ) );
+        return array_keys( array_diff_key( $arr, $this->arr ) );
     }
 
 }
