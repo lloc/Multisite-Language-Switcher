@@ -27,11 +27,11 @@ class MslsAdmin extends MslsMain {
     }
 
     public function warning() {
-        echo '<div id="msls-warning" class="updated fade"><p><strong>' .
-            __( 'Multisite Language Switcher is almost ready. ' ) .
-            '</strong>' .
-            sprintf( __('You must <a href="%1$s">complete the configuration process</a>.'), 'options-general.php?page=MslsAdmin' ) .
-            '</p></div>';
+        if ( $this->options->is_empty() ) {
+            echo '<div id="msls-warning" class="updated fade"><p>' .
+                sprintf( __('Multisite Language Switcher is almost ready. You must <a href="%1$s">complete the configuration process</a>.'), 'options-general.php?page=MslsAdmin' ) .
+                '</p></div>';
+        }
     }
 
     /**
@@ -57,21 +57,12 @@ class MslsAdmin extends MslsMain {
      */
     protected function subsubsub() {
         $arr            = array();
-        $network_active = ( !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) ); 
         foreach ( $this->blogs->get_objects() as $id => $blog ) {
+            if ( !$this->blogs->is_plugin_active() )
+                continue;
             $current = '';
             if ( $blog->userblog_id == $this->blogs->get_current_blog_id() ) {
                 $current = ' class="current"';
-            }
-            else {
-                /**
-                 * Check if blog has activated this plugin
-                 */
-                switch_to_blog( $id );
-                $out = ( !$network_active && !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) );
-                restore_current_blog();
-                if ( $out )
-                    continue;
             }
             $arr[] = sprintf(
                 '<a href="%s"%s>%s / %s</a>',
@@ -228,7 +219,7 @@ class MslsAdmin extends MslsMain {
         $temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
         $arr      = array_combine( $temp, $temp );
         $selected = (
-            !empty ($this->options->content_priority) ? 
+            !empty( $this->options->content_priority ) ? 
             $this->options->content_priority :
             10
         );
