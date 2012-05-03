@@ -23,6 +23,15 @@ class MslsAdmin extends MslsMain {
             array( $obj, 'render' )
         );
         add_action( 'admin_init', array( $obj, 'register' ) );
+		add_action( 'admin_notices', array( $obj, 'warning' );
+    }
+
+    public function warning() {
+        echo '<div id="msls-warning" class="updated fade"><p><strong>' .
+            __( 'Multisite Language Switcher is almost ready. ' ) .
+            '</strong>' .
+            sprintf( __('You must <a href="%1$s">complete the configuration process</a>.'), 'options-general.php?page=MslsAdmin' ) .
+            '</p></div>';
     }
 
     /**
@@ -59,7 +68,10 @@ class MslsAdmin extends MslsMain {
                  * Check if blog has activated this plugin
                  */
                 switch_to_blog( $id );
-                $out = ( !$network_active && !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) );
+                $out    = ( !$network_active && !in_array( MSLS_PLUGIN_PATH, get_option( 'active_plugins' ) ) );
+                $config = ( !$out ? );
+                    
+                }
                 restore_current_blog();
                 if ( $out )
                     continue;
