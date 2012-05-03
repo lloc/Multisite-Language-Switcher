@@ -32,7 +32,7 @@ class MslsLanguageArray {
      */
     public function set( $key, $value ) {
         $this->arr[$key] = intval( $value );
-        if ( 0 >= $this->arr[$key] )
+        if ( 0 == $this->arr[$key] )
             unset( $this->arr[$key] );
     }
 
