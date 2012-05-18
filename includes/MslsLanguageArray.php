@@ -43,31 +43,11 @@ class MslsLanguageArray {
      * @param string $key
      * @return array
      */
-    public function filter( $key ) {
+    public function get( $key ) {
         $arr = $this->arr;
         if ( isset( $arr[$key] ) )
             unset( $arr[$key] );
         return $arr;
-    }
-
-    /**
-     * Gets the specified element of the array
-     * 
-     * @param string $key
-     * @return int
-     */
-    public function get( $key ) {
-        return( isset( $this->arr[$key] ) ? $this->arr[$key] : 0 );
-    }
-
-    /**
-     * Returns true if the key is known
-     * 
-     * @param string $key
-     * @return bool
-     */
-    public function is_known( $key ) {
-        return( isset( $this->arr[$key] ) );
     }
 
 }

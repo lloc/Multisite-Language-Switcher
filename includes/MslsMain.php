@@ -43,7 +43,7 @@ abstract class MslsMain {
         $language = $this->blogs->get_current_blog()->get_language();
         $msla->set( $language, $post_id );
         $options  = new $class( $post_id );
-        $input    = $msla->filter( $language );
+        $input    = $msla->get( $language );
         if ( !empty( $input ) )
             $options->save( $input );
         else
@@ -52,10 +52,11 @@ abstract class MslsMain {
             switch_to_blog( $blog->userblog_id );
             $language = $blog->get_language();
             $options  = new $class( $temp->$language );
-            if ( !$msla->is_known( $language ) )
-                $options->delete();
+            $input    = $msla->get( $language );
+            if ( !empty( $input ) )
+                $options->save( $input );
             else
-                $options->save( $msla->filter( $language ) );
+                $options->delete();
             restore_current_blog();
         }
     }
