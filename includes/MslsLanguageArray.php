@@ -19,7 +19,8 @@ class MslsLanguageArray {
      * @param array $arr
      */
     public function __construct( array $arr = array() ) {
-        $this->arr = array_filter( $arr );
+        foreach ( $arr as $key => $value ) 
+            $this->set( $key, $value );
     }
 
     /**
@@ -31,9 +32,9 @@ class MslsLanguageArray {
      * @param mixed $value
      */
     public function set( $key, $value ) {
-        $this->arr[$key] = intval( $value );
-        if ( 0 == $this->arr[$key] )
-            unset( $this->arr[$key] );
+        $value = intval( $value );
+        if ( strlen( $key ) >= 2 && $value > 0 )
+            $this->arr[$key] = $value;
     }
 
     /**
@@ -60,12 +61,12 @@ class MslsLanguageArray {
     }
 
     /**
-     * Gets the entries which are obsolete now
+     * Gets the languages (these are keys in the array)
      * 
-     * @param array $arr
+     * @return array
      */
-    public function obsolete( array $arr ) {
-        return array_keys( array_diff_key( $arr, $this->arr ) );
+    public languages() {
+        return array_keys( $this->arr );
     }
 
 }
