@@ -34,15 +34,15 @@ abstract class MslsMain {
     /**
      * Save
      * 
-     * @param int $post_id
+     * @param int $object_id
      * @param string $class
      * @param array $input
      */
-    protected function save( $post_id, $class, array $input ) {
+    protected function save( $object_id, $class, array $input ) {
         $msla     = new MslsLanguageArray( $input );
         $language = $this->blogs->get_current_blog()->get_language();
-        $msla->set( $language, $post_id );
-        $options  = new $class( $post_id );
+        $msla->set( $language, $object_id );
+        $options  = new $class( $object_id );
         $temp     = $options->get_arr();
         $input    = $msla->get_arr( $language );
         if ( !empty( $input ) )
@@ -51,10 +51,10 @@ abstract class MslsMain {
             $options->delete();
         foreach ( $this->blogs->get() as $blog ) {
             switch_to_blog( $blog->userblog_id );
-            $language = $blog->get_language();
-            $post_id  = $msla->get_val( $language );
-            if ( 0 != $post_id ) { 
-                $options  = new $class( $post_id );
+            $language  = $blog->get_language();
+            $object_id = $msla->get_val( $language );
+            if ( 0 != $object_id ) { 
+                $options = new $class( $object_id );
                 $options->save( $msla->get_arr( $language ) );
             }
             else {
@@ -68,26 +68,12 @@ abstract class MslsMain {
     }
 
     /**
-     * Delete the connections of a post
+     * Delete
      * 
      * @param int $post_id
      */
-    public static function delete( $post_id ) {
-        $options = new MslsOptionsPost( $post_id );
-        $blogs   = MslsBlogCollection::instance();
-        $slang   = $blogs->get_current_blog()->get_language();
-        foreach ( $blogs->get() as $blog ) {
-            switch_to_blog( $blog->userblog_id );
-            $tlang = $blog->get_language();
-            $temp  = new MslsOptionsPost( $options->$tlang );
-            unset( $temp->$slang );
-            if ( $temp->is_empty() )
-                $temp->delete();
-            else
-                $temp->save( $tmp );
-            restore_current_blog();
-        }
-        $options->delete();
+    public function delete( $post_id ) {
+        $this->save( $post_id, 'MslsOptionsPost', array() );
     }
 
 }

@@ -83,4 +83,13 @@ class MslsPostTag extends MslsMain {
             $this->save( $term_id, 'MslsOptionsTax', $_POST['msls'] );
     }
 
+    /**
+     * Delete
+     * 
+     * @param int $term_id
+     */
+    public function delete( $term_id ) {
+        $this->save( $term_id, 'MslsOptionsTax', array() );
+    }
+
 }

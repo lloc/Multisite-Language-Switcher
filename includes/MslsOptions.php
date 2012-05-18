@@ -85,9 +85,8 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * @param mixed $arr
      */
     public function save( $arr ) {
-        $this->init();
+        $this->delete();
         if ( $this->set( $arr ) ) {
-            $this->delete();
             $arr = $this->get_arr();
             if ( !empty( $arr ) )
                 add_option( $this->name, $arr, '', $this->autoload );
@@ -98,6 +97,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * Delete
      */
     public function delete() {
+        $this->init();
         if ( $this->exists )
             delete_option( $this->name );
     }
