@@ -56,5 +56,3 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
     }
 
 }
-
-?>

@@ -29,7 +29,7 @@ class MslsAdmin extends MslsMain {
     public function warning() {
         if ( $this->options->is_empty() ) {
             echo '<div id="msls-warning" class="updated fade"><p>' .
-                sprintf( __('Multisite Language Switcher is almost ready. You must <a href="%1$s">complete the configuration process</a>.'), 'options-general.php?page=MslsAdmin' ) .
+                sprintf( __('Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.'), 'options-general.php?page=MslsAdmin' ) .
                 '</p></div>';
         }
     }
@@ -305,5 +305,3 @@ class MslsAdmin extends MslsMain {
     }
 
 }
-
-?>

@@ -116,5 +116,3 @@ class MslsOptionsTax extends MslsOptions {
     }
 
 }
-
-?>

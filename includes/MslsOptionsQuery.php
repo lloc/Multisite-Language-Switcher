@@ -48,5 +48,3 @@ class MslsOptionsQuery extends MslsOptions {
     }
 
 }
-
-?>

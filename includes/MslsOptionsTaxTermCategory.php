@@ -19,5 +19,3 @@ class MslsOptionsTaxTermCategory extends MslsOptionsTaxTerm {
     protected $base_defined = 'category';
 
 }
-
-?>

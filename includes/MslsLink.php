@@ -84,5 +84,3 @@ class MslsLink extends MslsGetSet {
     }
 
 }
-
-?>

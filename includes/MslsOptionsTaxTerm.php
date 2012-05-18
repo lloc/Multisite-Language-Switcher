@@ -51,5 +51,3 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
     }
 
 }
-
-?>

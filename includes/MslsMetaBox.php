@@ -137,5 +137,3 @@ class MslsMetaBox extends MslsMain {
     }
 
 }
-
-?>

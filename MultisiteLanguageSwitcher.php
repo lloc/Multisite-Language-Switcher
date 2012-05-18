@@ -155,5 +155,3 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
         echo get_the_msls();
     }
 }
-
-?>

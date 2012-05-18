@@ -96,5 +96,3 @@ class MslsOutput extends MslsMain {
     }
 
 }
-
-?>

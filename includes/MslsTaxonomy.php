@@ -68,5 +68,3 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
     }
 
 }
-
-?>

@@ -191,5 +191,3 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     }
 
 }
-
-?>

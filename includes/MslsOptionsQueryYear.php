@@ -36,5 +36,3 @@ class MslsOptionsQueryYear extends MslsOptionsQuery {
     }
 
 }
-
-?>

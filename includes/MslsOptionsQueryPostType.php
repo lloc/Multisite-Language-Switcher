@@ -31,5 +31,3 @@ class MslsOptionsQueryPostType extends MslsOptionsQuery {
     }
 
 }
-
-?>

@@ -36,5 +36,3 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
     }
 
 }
-
-?>

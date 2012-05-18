@@ -55,5 +55,3 @@ class MslsPlugin {
     public static function uninstall() { }
 
 }
-
-?>

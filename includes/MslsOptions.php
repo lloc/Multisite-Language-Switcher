@@ -242,5 +242,3 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
     }
 
 }
-
-?>

@@ -23,5 +23,3 @@ class MslsLinkImageOnly extends MslsLink {
     }
 
 }
-
-?>

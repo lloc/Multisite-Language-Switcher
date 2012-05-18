@@ -38,5 +38,3 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
     }
 
 }
-
-?>

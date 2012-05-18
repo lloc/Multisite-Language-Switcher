@@ -45,5 +45,3 @@ class MslsOptionsPost extends MslsOptions {
     }
 
 }
-
-?>

@@ -62,5 +62,3 @@ class MslsWidget extends WP_Widget {
     }
 
 }
-
-?>
