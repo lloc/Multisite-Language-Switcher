@@ -17,7 +17,7 @@ class MslsMetaBox extends MslsMain {
             $obj = new self();
             add_action( 'add_meta_boxes', array( $obj, 'add' ) );
             add_action( 'save_post', array( $obj, 'set' ) );
-            add_action( 'trashed_post', array( $obj, 'remove' ) );
+            add_action( 'trashed_post', array( $obj, 'delete' ) );
         }
     }
 
