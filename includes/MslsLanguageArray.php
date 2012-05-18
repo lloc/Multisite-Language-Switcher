@@ -43,7 +43,7 @@ class MslsLanguageArray {
      * @param string $key
      * @return array
      */
-    public function get_array( $key = '' ) {
+    public function get_arr( $key = '' ) {
         $arr = $this->arr;
         if ( isset( $arr[$key] ) )
             unset( $arr[$key] );
@@ -56,7 +56,7 @@ class MslsLanguageArray {
      * @param string $key
      * @return int
      */
-    public function get_value( $key ) {
+    public function get_val( $key ) {
         return( isset( $this->arr[$key] ) ? $this->arr[$key] : 0 );
     }
 
