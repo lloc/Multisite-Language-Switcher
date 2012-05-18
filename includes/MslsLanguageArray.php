@@ -43,11 +43,21 @@ class MslsLanguageArray {
      * @param string $key
      * @return array
      */
-    public function get( $key ) {
+    public function get_array( $key = '' ) {
         $arr = $this->arr;
         if ( isset( $arr[$key] ) )
             unset( $arr[$key] );
         return $arr;
+    }
+
+    /**
+     * Gets the value of the requested item
+     * 
+     * @param string $key
+     * @return int
+     */
+    public function get_value( $key ) {
+        return( isset( $this->arr[$key] ) ? $this->arr[$key] : 0 );
     }
 
 }
