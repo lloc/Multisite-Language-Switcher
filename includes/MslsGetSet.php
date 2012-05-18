@@ -20,6 +20,13 @@ class MslsGetSet {
     protected $arr = array();
 
     /**
+     * Reset all
+     */
+    protected function init() {
+        $this->arr = array();
+    }
+
+    /**
      * "Magic" set arg
      *
      * @param mixed $key
