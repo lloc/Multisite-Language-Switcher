@@ -16,11 +16,15 @@ class MslsPostTag extends MslsMain {
         if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
             $taxonomy = MslsContentTypes::create()->get_request();
             if ( !empty( $taxonomy ) ) {
-                $obj = new self();
-                add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
-                add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
-                add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
-                add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+                $tax = get_taxonomy( $taxonomy );
+                if ( $tax && current_user_can( $tax->cap->manage_terms ) ) {
+                    $obj = new self();
+                    add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
+                    add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
+                    add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+                    add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+                    add_action( "delete_{$taxonomy}", array( $obj, 'delete' ), 10, 2 );
+                }
             }
         }
     }
@@ -78,17 +82,16 @@ class MslsPostTag extends MslsMain {
      * @param int $tt_id
      */
     public function set( $term_id, $tt_id ) {
-        $tax = get_taxonomy( $_REQUEST['taxonomy'] );
-        if ( $tax && current_user_can( $tax->cap->manage_terms ) )
-            $this->save( $term_id, 'MslsOptionsTax', $_POST['msls'] );
+        $this->save( $term_id, 'MslsOptionsTax', $_POST['msls'] );
     }
 
     /**
      * Delete
      * 
      * @param int $term_id
+     * @param int $tt_id
      */
-    public function delete( $term_id ) {
+    public function delete( $term_id, $tt_id ) {
         $this->save( $term_id, 'MslsOptionsTax', array() );
     }
 
