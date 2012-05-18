@@ -58,8 +58,10 @@ abstract class MslsMain {
                 $options->save( $msla->get_arr( $language ) );
             }
             else {
-                print_r( $temp );
-                //$options->delete();
+                if ( isset( $temp[$language] ) ) {
+                    $options = new $class( $temp[$language] );
+                    $options->delete();
+                }
             }
             restore_current_blog();
         }
