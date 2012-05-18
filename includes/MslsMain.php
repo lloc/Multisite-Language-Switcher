@@ -52,12 +52,10 @@ abstract class MslsMain {
             switch_to_blog( $blog->userblog_id );
             $language = $blog->get_language();
             $options  = new $class( $temp->$language );
-            if ( !in_array( $language, $msla->languages() ) ) {
+            if ( !$msla->is_known( $language ) )
                 $options->delete();
-            }
-            else {
+            else
                 $options->save( $msla->filter( $language ) );
-            }
             restore_current_blog();
         }
     }

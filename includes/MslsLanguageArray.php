@@ -61,12 +61,13 @@ class MslsLanguageArray {
     }
 
     /**
-     * Gets the languages (these are keys in the array)
+     * Returns true if the key is known
      * 
-     * @return array
+     * @param string $key
+     * @return bool
      */
-    public languages() {
-        return array_keys( $this->arr );
+    public function is_known( $key ) {
+        return( isset( $this->arr[$key] ) );
     }
 
 }
