@@ -39,11 +39,7 @@ class MslsRegistry {
      * @return mixed
      */
     private function get( $key ) {
-        return( 
-            isset( $this->arr[$key] ) ?
-            $this->arr[$key] :
-            null
-        );
+        return( isset( $this->arr[$key] ) ? $this->arr[$key] : null );
     }
 
     /**
@@ -62,9 +58,8 @@ class MslsRegistry {
      * @return mixed
      */
     public static function singleton() {
-        if ( !isset( self::$instance ) ) {
+        if ( !isset( self::$instance ) )
             self::$instance = new self();
-        }
         return self::$instance;
     }
 
