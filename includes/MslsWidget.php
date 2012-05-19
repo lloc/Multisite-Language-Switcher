@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Output in the frontend
+ * Widget
  *
  * @package Msls
  * @subpackage Output
@@ -12,7 +12,10 @@ class MslsWidget extends WP_Widget {
      * Constructor
      */
     public function __construct() {
-        parent::__construct( false, $name = __( 'Multisite Language Switcher', 'msls' ) );
+        parent::__construct(
+            false,
+            $name = __( 'Multisite Language Switcher', 'msls' )
+        );
     }
 
     /**
@@ -24,8 +27,8 @@ class MslsWidget extends WP_Widget {
      */
     public function widget( $args, $instance ) {
         extract( $args );
-        $title = apply_filters( 'widget_title', $instance['title'] );
         echo $before_widget;
+        $title = apply_filters( 'widget_title', $instance['title'] );
         if ( $title )
             echo $before_title . $title . $after_title;
         $obj = new MslsOutput();
@@ -34,7 +37,7 @@ class MslsWidget extends WP_Widget {
     }
 
     /**
-     * Update the widget in the backend
+     * Update widget in the backend
      * 
      * @param array $new_instance
      * @param array $old_instance
@@ -47,7 +50,7 @@ class MslsWidget extends WP_Widget {
     }
 
     /**
-     * Display a form in the backend
+     * Display an input-form in the backend
      * 
      * @param array $instance
      */
