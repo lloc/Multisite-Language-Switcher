@@ -139,7 +139,10 @@ class MslsMetaBox extends MslsMain {
             !isset( $_POST['msls_noncename'] ) || 
             !wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) )
             return;
-        $this->save( $post_id, 'MslsOptionsPost', $_POST['msls'] );
+        $arr       = $_POST['msls'];
+        $key       = $this->blogs->get_current_blog()->get_language();
+        $arr[$key] = $post_id;
+        $this->save( $post_id, 'MslsOptionsPost', $arr );
     }
 
 }
