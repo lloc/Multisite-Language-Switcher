@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsOptionsQueryDay
+ * OptionsQueryDay
  * 
  * @package Msls
  * @subpackage Options

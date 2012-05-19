@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsOptionsTaxTerm
+ * OptionsTaxTerm
  * 
  * @package Msls
  * @subpackage Options
@@ -25,7 +25,8 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
      * @return string
      */
     protected function check_url( $url ) {
-        if ( empty( $url ) || !is_string( $url ) ) return '';
+        if ( empty( $url ) || !is_string( $url ) )
+            return '';
         $base = $this->get_base();
         if ( $this->base != $base ) {
             $search  = '/' . $this->base . '/';
@@ -43,11 +44,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
      */
     protected function get_base() {
         $base = get_option( $this->base_option );
-        return(
-            !empty( $base ) ?
-            $base:
-            $this->base_defined
-        );
+        return( !empty( $base ) ? $base: $this->base_defined );
     }
 
 }

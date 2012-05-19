@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsOptionsTax
+ * OptionsTax
  * 
  * @package Msls
  * @subpackage Options
@@ -43,15 +43,12 @@ class MslsOptionsTax extends MslsOptions {
         }
         else {
             global $wp_query;
-            if ( is_category() ) {
+            if ( is_category() )
                 return new MslsOptionsTaxTermCategory( $wp_query->get_queried_object_id() );
-            } 
-            elseif ( is_tag() ) {
+            elseif ( is_tag() )
                 return new MslsOptionsTaxTerm( $wp_query->get_queried_object_id() );
-            }
-            elseif ( is_tax() ) {
+            elseif ( is_tax() )
                 return new MslsOptionsTax( $wp_query->get_queried_object_id() );
-            }
         }
         return null;
     }
@@ -75,13 +72,9 @@ class MslsOptionsTax extends MslsOptions {
      * @return string
      */
     protected function check_url( $url ) {
-        return( 
-            empty( $url ) || !is_string( $url ) ?
-            '' :
-            $url
-        );
+        return( empty( $url ) || !is_string( $url ) ? '' : $url );
     }
-        
+
     /**
      * Get postlink
      *
@@ -92,11 +85,9 @@ class MslsOptionsTax extends MslsOptions {
         $url = '';
         if ( $this->has_value( $language ) ) {
             $taxonomy = $this->get_tax_query();
-            $url = get_term_link(
-                (int) $this->__get( $language ),
-                $taxonomy
+            $url      = $this->check_url(
+                get_term_link( (int) $this->__get( $language ), $taxonomy )
             );
-            $url = $this->check_url( $url );
         }
         return $url;
     }

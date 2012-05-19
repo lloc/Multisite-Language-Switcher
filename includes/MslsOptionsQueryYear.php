@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsOptionsQueryYear
+ * OptionsQueryYear
  * 
  * @package Msls
  * @subpackage Options
@@ -17,7 +17,7 @@ class MslsOptionsQueryYear extends MslsOptionsQuery {
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
-            $sql = sprintf(
+            $sql                  = sprintf(
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND post_status = 'publish'",
                 (int) $this->args[0]
             );

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsOptionsQueryAuthor
+ * OptionsQueryAuthor
  * 
  * @package Msls
  * @subpackage Options
@@ -17,7 +17,7 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
-            $sql = sprintf(
+            $sql                  = sprintf(
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE post_author = %d AND post_status = 'publish'",
                 (int) $this->args[0]
             );

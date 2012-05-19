@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsPostTag
+ * PostTag
  * 
  * @package Msls
  * @subpackage Main

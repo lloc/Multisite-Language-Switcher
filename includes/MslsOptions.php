@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsOptions
+ * Options
  * 
  * @package Msls
  * @subpackage Options
@@ -48,21 +48,17 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
         if ( is_admin() ) {
             $id  = (int) $id;
             $obj = MslsContentTypes::create();
-            if ( $obj->is_taxonomy() ) {
+            if ( $obj->is_taxonomy() )
                 return MslsOptionsTax::create( $id );
-            }
             return new MslsOptionsPost( $id );
         }
         else {
-            if ( is_front_page() || is_search() || is_404() ) {
+            if ( is_front_page() || is_search() || is_404() )
                 return new MslsOptions();
-            }
-            elseif ( is_category() || is_tag() || is_tax() ) {
+            elseif ( is_category() || is_tag() || is_tax() )
                 return MslsOptionsTax::create();
-            }
-            elseif ( is_date() || is_author() || is_post_type_archive() ) {
+            elseif ( is_date() || is_author() || is_post_type_archive() )
                 return MslsOptionsQuery::create();
-            }
             global $wp_query;
             return new MslsOptionsPost( $wp_query->get_queried_object_id() );
         }
@@ -110,9 +106,8 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      */
     public function set( $arr ) {
         if ( is_array( $arr ) ) {
-            foreach ( $arr as $key => $value ) {
+            foreach ( $arr as $key => $value )
                 $this->__set( $key, $value );
-            }
             return true;
         }
         return false;
@@ -142,11 +137,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
                 $language
             );
         }
-        return(
-            '' != $postlink ?
-            $postlink :
-            site_url()
-        );
+        return( '' != $postlink ? $postlink : site_url() );
     }
 
     /**

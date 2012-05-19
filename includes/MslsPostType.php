@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Supported post types
+ * PostType
  *
  * @package Msls
  * @subpackage Main

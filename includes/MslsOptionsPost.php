@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsOptionsPost
+ * OptionsPost
  * 
  * @package Msls
  * @subpackage Options
@@ -28,9 +28,8 @@ class MslsOptionsPost extends MslsOptions {
         if ( $this->has_value( $language ) ) {
             $id   = (int) $this->__get( $language );
             $post = get_post( $id );
-            if ( !is_null( $post ) && 'publish' == $post->post_status ) {
+            if ( !is_null( $post ) && 'publish' == $post->post_status )
                 return get_permalink( $post );
-            }
         }
         return '';
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsOptionsTaxTermCategory
+ * OptionsTaxTermCategory
  * 
  * @package Msls
  * @subpackage Options

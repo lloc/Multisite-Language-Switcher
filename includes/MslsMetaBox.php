@@ -15,11 +15,12 @@ class MslsMetaBox extends MslsMain {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj = new self();
-            if ( 'page' == $_POST['post_type'] ) {
-                if ( !current_user_can( 'edit_page' ) ) return;
-            } else {
-                if ( !current_user_can( 'edit_post' ) ) return;
-            }
+            if ( 'page' == $_POST['post_type'] )
+                if ( !current_user_can( 'edit_page' ) )
+                    return;
+            else
+                if ( !current_user_can( 'edit_post' ) )
+                    return;
             add_action( 'add_meta_boxes', array( $obj, 'add' ) );
             add_action( 'save_post', array( $obj, 'set' ) );
             add_action( 'trashed_post', array( $obj, 'delete' ) );
@@ -66,25 +67,28 @@ class MslsMetaBox extends MslsMain {
                 if ( $mydata->has_value( $language ) )
                     $icon->set_href( $mydata->$language );
                 if ( $pto->hierarchical ) {
-                    $args = array(
-                        'post_type' => $type,
-                        'selected' => $mydata->$language,
-                        'name' => 'msls[' . $language . ']',
-                        'show_option_none' => ' ', 
-                        'sort_column' => 'menu_order, post_title',
-                        'echo' => 0,
+                    $selects .= wp_dropdown_pages(
+                        array(
+                            'post_type' => $type,
+                            'selected' => $mydata->$language,
+                            'name' => 'msls[' . $language . ']',
+                            'show_option_none' => ' ', 
+                            'sort_column' => 'menu_order, post_title',
+                            'echo' => 0,
+                        )
                     );
-                    $selects .= wp_dropdown_pages( $args );
-                } else {
-                    $args     = array(
-                        'post_type' => $type,
-                        'post_status' => 'any',
-                        'orderby' => 'title',
-                        'order' => 'ASC',
-                        'posts_per_page' => (-1),
-                    );
+                }
+                else {
                     $options  = '';
-                    $my_query = new WP_Query( $args );
+                    $my_query = new WP_Query(
+                        array(
+                            'post_type' => $type,
+                            'post_status' => 'any',
+                            'orderby' => 'title',
+                            'order' => 'ASC',
+                            'posts_per_page' => (-1),
+                        )
+                    );
                     while ( $my_query->have_posts() ) {
                         $my_query->the_post();
                         $my_id    = get_the_ID();
@@ -115,7 +119,8 @@ class MslsMetaBox extends MslsMain {
                 __( 'Update', 'msls' )
             );
             $post = $temp;
-        } else {
+        }
+        else {
             printf(
                 '<p>%s</p>',
                 __( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'msls' )
@@ -129,12 +134,10 @@ class MslsMetaBox extends MslsMain {
      * @param int $post_id
      */
     public function set( $post_id ) {
-        if ( 
-            ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ||
+        if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ||
             wp_is_post_revision( $post_id ) ||
             !isset( $_POST['msls_noncename'] ) || 
-            !wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH )
-        )
+            !wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) )
             return;
         $this->save( $post_id, 'MslsOptionsPost', $_POST['msls'] );
     }
