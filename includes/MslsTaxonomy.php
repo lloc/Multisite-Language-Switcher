@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Supported taxonomies
+ * Taxonomy
  *
  * @package Msls
  * @subpackage Main
@@ -28,9 +28,8 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
         $this->request = esc_attr( $_REQUEST['taxonomy'] );
         if ( empty( $this->request ) )
             $this->request = get_query_var( 'taxonomy' );
-        if ( !empty( $_REQUEST['post_type'] ) ) {
+        if ( !empty( $_REQUEST['post_type'] ) )
             $this->post_type = esc_attr( $_REQUEST['post_type'] );
-        }
     }
 
     /**
