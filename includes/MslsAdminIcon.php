@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsAdminIcon
+ * AdminIcon
  * 
  * @package Msls
  * @subpackage Link
@@ -46,9 +46,8 @@ class MslsAdminIcon {
     public static function create() {
         $obj  = MslsContentTypes::create();
         $type = $obj->get_request();
-        if ( $obj->is_taxonomy() ) {
+        if ( $obj->is_taxonomy() )
             return new MslsAdminIconTaxonomy( $type );
-        }
         return new MslsAdminIcon( $type );
     }
 
@@ -66,10 +65,11 @@ class MslsAdminIcon {
      * Set the path by type
      */
     protected function set_path() {
-        if ( 'post' != $this->type ) {
-            $args       = array( 'post_type' => $this->type );
-            $this->path = add_query_arg( $args, $this->path );
-        }
+        if ( 'post' != $this->type )
+            $this->path = add_query_arg( 
+                array( 'post_type' => $this->type ),
+                $this->path
+            );
     }
 
     /**

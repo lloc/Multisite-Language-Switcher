@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsLinkImageOnly
+ * LinkImageOnly
  * 
  * @package Msls
  * @subpackage Link

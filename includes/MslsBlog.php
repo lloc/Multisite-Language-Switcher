@@ -32,7 +32,9 @@ class MslsBlog {
     public function __construct( $obj, $description ) {
         if ( is_object( $obj ) ) {
             $this->obj      = $obj;
-            $this->language = (string) get_blog_option( $this->obj->userblog_id, 'WPLANG' );
+            $this->language = (string) get_blog_option( 
+                $this->obj->userblog_id, 'WPLANG'
+            );
         }
         $this->description = (string) $description;
     }
@@ -46,11 +48,7 @@ class MslsBlog {
      * @return mixed|null
      */
     final public function __get( $key ) {
-        return(
-            isset( $this->obj->$key ) ?
-            $this->obj->$key :
-            null
-        );
+        return( isset( $this->obj->$key ) ? $this->obj->$key : null );
     }
 
     /**
@@ -76,11 +74,7 @@ class MslsBlog {
      * @return string
      */
     public function get_language() {
-        return(
-            !empty( $this->language ) ?
-            $this->language :
-            'us'
-        );
+        return( !empty( $this->language ) ? $this->language : 'us' );
     }
 
     /**
@@ -91,9 +85,8 @@ class MslsBlog {
      * return int
      */
     public static function _cmp( $a, $b ) {
-        if ( $a == $b ) {
+        if ( $a == $b )
             return 0;
-        }
         return( $a < $b ? (-1) : 1 );
     }
 

@@ -27,11 +27,10 @@ class MslsAdmin extends MslsMain {
     }
 
     public function warning() {
-        if ( $this->options->is_empty() ) {
+        if ( $this->options->is_empty() )
             echo '<div id="msls-warning" class="updated fade"><p>' .
                 sprintf( __('Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.'), 'options-general.php?page=MslsAdmin' ) .
                 '</p></div>';
-        }
     }
 
     /**
@@ -61,9 +60,8 @@ class MslsAdmin extends MslsMain {
             if ( !$this->blogs->is_plugin_active( $blog->userblog_id ) )
                 continue;
             $current = '';
-            if ( $blog->userblog_id == $this->blogs->get_current_blog_id() ) {
+            if ( $blog->userblog_id == $this->blogs->get_current_blog_id() )
                 $current = ' class="current"';
-            }
             $arr[] = sprintf(
                 '<a href="%s"%s>%s / %s</a>',
                 get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
@@ -79,7 +77,7 @@ class MslsAdmin extends MslsMain {
                 implode( ' | </li><li>', $arr )
             ) :
             ''
-        ); 
+        );
     }
 
     /**
@@ -299,7 +297,8 @@ class MslsAdmin extends MslsMain {
      * @return array Validated input 
      */ 
     public function validate( array $input ) {
-        if ( !is_numeric( $input['display'] ) ) $input['display'] = 0;
+        if ( !is_numeric( $input['display'] ) )
+            $input['display'] = 0;
         $input['image_url'] = esc_url( rtrim( $input['image_url'], '/' ) );
         return $input;
     }

@@ -58,9 +58,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                 );
                 $blogs_collection = array();
                 $blog_users       = get_users( $args );
-                if ( !empty ( $blog_users ) ) {
+                if ( !empty ( $blog_users ) )
                     $blogs_collection = get_blogs_of_user( $blog_users[0] );
-                }
             }
             foreach ( (array) $blogs_collection as $blog ) {
                 /*
@@ -68,17 +67,15 @@ class MslsBlogCollection implements IMslsRegistryInstance {
                  * instead of a blog_id ... so we need just some correction ;)
                  *
                  */
-                if ( !isset( $blog->userblog_id ) && isset( $blog->blog_id) ) {
+                if ( !isset( $blog->userblog_id ) && isset( $blog->blog_id) )
                     $blog->userblog_id = $blog->blog_id;
-                }
                 if ( $blog->userblog_id != $this->current_blog_id ) {
                     $temp = get_blog_option( $blog->userblog_id, 'msls' );
-                    if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) && $this->is_plugin_active( $blog->userblog_id ) ) {
+                    if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) && $this->is_plugin_active( $blog->userblog_id ) )
                         $this->objects[$blog->userblog_id] = new MslsBlog(
                             $blog,
                             $temp['description']
                         );
-                    }
                 }
                 else {
                     $this->objects[$this->current_blog_id] = new MslsBlog(
@@ -106,11 +103,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
      * @return bool Is the current blog part of the output? 
      */
     public function has_current_blog() {
-        return(
-            isset( $this->objects[$this->current_blog_id] ) ?
-            true :
-            false
-        );
+        return( isset( $this->objects[$this->current_blog_id] ) );
     }
 
     /**

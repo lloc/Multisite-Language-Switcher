@@ -17,13 +17,13 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
      * Constructor
      */
     public function __construct() {
-        $args = array(
-            'public'   => true,
-            '_builtin' => false,
-        ); 
         $this->types   = array_merge(
             array( 'category', 'post_tag' ),
-            get_taxonomies( $args, 'names', 'and' )
+            get_taxonomies(
+                array( 'public'   => true, '_builtin' => false ),
+                'names',
+                'and'
+            )
         );
         $this->request = esc_attr( $_REQUEST['taxonomy'] );
         if ( empty( $this->request ) )

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsCustomColumn
+ * CustomColumn
  * 
  * @package Msls
  * @subpackage Main

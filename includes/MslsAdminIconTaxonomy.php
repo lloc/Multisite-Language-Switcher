@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsAdminIconTaxonomy
+ * AdminIconTaxonomy
  * 
  * @package Msls
  * @subpackage Link

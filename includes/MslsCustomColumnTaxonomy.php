@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MslsCustomColumnTaxonomy
+ * CustomColumnTaxonomy
  * 
  * @package Msls
  * @subpackage Main
