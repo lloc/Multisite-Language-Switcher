@@ -39,14 +39,13 @@ abstract class MslsMain {
      * @param array $input
      */
     protected function save( $object_id, $class, array $input ) {
-        $msla     = new MslsLanguageArray( $input );
-        $language = $this->blogs->get_current_blog()->get_language();
-        $msla->set( $object_id, $language );
-        $options = new $class( $object_id );
-        $temp    = $options->get_arr();
-        $input   = $msla->get_arr( $language );
-        if ( !empty( $input ) )
-            $options->save( $input );
+        $msla      = new MslsLanguageArray( $input );
+        $options   = new $class( $object_id );
+        $language  = $this->blogs->get_current_blog()->get_language();
+        $temp      = $options->get_arr();
+        $object_id = $msla->get_val( $language );
+        if ( 0 != $object_id ) 
+            $options->save( $msla->get_arr( $language ) );
         else
             $options->delete();
         foreach ( $this->blogs->get() as $blog ) {
@@ -73,7 +72,8 @@ abstract class MslsMain {
      * @param int $post_id
      */
     public function delete( $post_id ) {
-        $this->save( $post_id, 'MslsOptionsPost', array() );
+        $options = new MslsOptionsPost( $post_id );
+        $this->save( $post_id, 'MslsOptionsPost', $options->get_arr() );
     }
 
 }

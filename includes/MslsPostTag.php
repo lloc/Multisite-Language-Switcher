@@ -82,7 +82,9 @@ class MslsPostTag extends MslsMain {
      * @param int $tt_id
      */
     public function set( $term_id, $tt_id ) {
-        $this->save( $term_id, 'MslsOptionsTax', $_POST['msls'] );
+        $arr                                                   = $_POST['msls'];
+        $arr[$this->blogs->get_current_blog()->get_language()] = $term_id;
+        $this->save( $term_id, 'MslsOptionsTax', $arr );
     }
 
     /**
@@ -92,7 +94,8 @@ class MslsPostTag extends MslsMain {
      * @param int $tt_id
      */
     public function delete( $term_id, $tt_id ) {
-        $this->save( $term_id, 'MslsOptionsTax', array() );
+        $options = new MslsOptionsTax( $term_id );
+        $this->save( $term_id, 'MslsOptionsTax', $options->get_arr() );
     }
 
 }
