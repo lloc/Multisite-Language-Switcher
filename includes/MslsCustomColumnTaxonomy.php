@@ -19,6 +19,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
                 $obj = new self();
                 add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
                 add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
+                add_action( "delete_{$taxonomy}", array( $obj, 'delete' ), 10, 2 );
             }
         }
     }
@@ -31,7 +32,21 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
      * @param int $item_id
      */
     public function td( $deprecated, $column_name, $item_id ) {
-        parent::td( $column_name, $item_id );
+        if ( '' == $deprecated && 0 < $item_id ) // WP <= 3.2
+            parent::td( $column_name, $item_id );
+        else
+            parent::td( $deprecated, $column_name );
+    }
+
+    /**
+     * Delete
+     * 
+     * @param int $term_id
+     * @param int $tt_id
+     */
+    public function delete( $term_id, $tt_id ) {
+        $options = new MslsOptionsTax( $term_id );
+        $this->save( $term_id, 'MslsOptionsTax', $options->get_arr() );
     }
 
 }

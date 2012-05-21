@@ -23,7 +23,6 @@ class MslsPostTag extends MslsMain {
                     add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
                     add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
                     add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
-                    add_action( "delete_{$taxonomy}", array( $obj, 'delete' ), 10, 2 );
                 }
             }
         }
@@ -85,17 +84,6 @@ class MslsPostTag extends MslsMain {
         $arr                                                   = $_POST['msls'];
         $arr[$this->blogs->get_current_blog()->get_language()] = $term_id;
         $this->save( $term_id, 'MslsOptionsTax', $arr );
-    }
-
-    /**
-     * Delete
-     * 
-     * @param int $term_id
-     * @param int $tt_id
-     */
-    public function delete( $term_id, $tt_id ) {
-        $options = new MslsOptionsTax( $term_id );
-        $this->save( $term_id, 'MslsOptionsTax', $options->get_arr() );
     }
 
 }
