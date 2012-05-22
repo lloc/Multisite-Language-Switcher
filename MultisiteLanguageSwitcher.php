@@ -85,7 +85,7 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
         add_action( 'load-edit.php', array( 'MslsCustomColumn', 'init' ) );
         add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
         add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
-        if ( isset( $_POST['action'] ) ) {
+        if ( ! empty( $_GET['action'] ) && in_array( $_GET['action'], $core_actions_get ) ) {
             add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
             add_action( 'admin_init', array( 'MslsCustomColumn', 'init' ) );
             add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
