@@ -32,7 +32,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
      * @param int $item_id
      */
     public function td( $deprecated, $column_name, $item_id ) {
-        parent::td( $deprecated, $column_name );
+        parent::td( $column_name, $item_id );
     }
 
     /**
