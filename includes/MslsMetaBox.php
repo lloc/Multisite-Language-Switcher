@@ -15,12 +15,6 @@ class MslsMetaBox extends MslsMain {
         $options = MslsOptions::instance();
         if ( !$options->is_excluded() ) {
             $obj = new self();
-            if ( 'page' == $_POST['post_type'] )
-                if ( !current_user_can( 'edit_page' ) )
-                    return;
-            else
-                if ( !current_user_can( 'edit_post' ) )
-                    return;
             add_action( 'add_meta_boxes', array( $obj, 'add' ) );
             add_action( 'save_post', array( $obj, 'set' ) );
             add_action( 'trashed_post', array( $obj, 'delete' ) );
@@ -139,7 +133,13 @@ class MslsMetaBox extends MslsMain {
             !isset( $_POST['msls_noncename'] ) || 
             !wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) )
             return;
-        $arr                                                   = $_POST['msls'];
+        if ( 'page' == $_POST['post_type'] )
+            if ( !current_user_can( 'edit_page' ) )
+                return;
+        else
+            if ( !current_user_can( 'edit_post' ) )
+                return;
+        $arr = $_POST['msls'];
         $arr[$this->blogs->get_current_blog()->get_language()] = $post_id;
         $this->save( $post_id, 'MslsOptionsPost', $arr );
     }
