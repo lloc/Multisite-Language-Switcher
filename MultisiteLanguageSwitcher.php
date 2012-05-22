@@ -83,8 +83,10 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
         add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
         add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );
         add_action( 'load-edit.php', array( 'MslsCustomColumn', 'init' ) );
+        add_action( 'wp_ajax_inline_save', array( 'MslsCustomColumn', 'init' ) );
         add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
         add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
+        add_action( 'wp_ajax_inline_save_tax', array( 'MslsCustomColumnTaxonomy', 'init' ) );
         if ( isset( $_POST['action'] ) && 'add-tag' == $_POST['action'] ) {
             add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
             add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );

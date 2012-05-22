@@ -19,6 +19,7 @@ class MslsCustomColumn extends MslsMain {
                 $obj = new self();
                 add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
                 add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
+add_filter( 'manage_edit-post_sortable_columns', 'price_column_register_sortable' );
                 add_action( 'trashed_post', array( $obj, 'delete' ) );
             }
         }
@@ -74,6 +75,17 @@ class MslsCustomColumn extends MslsMain {
                 }
             }
         }
+    }
+
+    /**
+     * Register the custom column as sortable
+     * 
+     * @param array $column
+     * @return array
+     */
+    function column_register_sortable( $columns ) {
+        $columns['mslscol'] = 'mslscol';
+        return $columns;
     }
 
 }
