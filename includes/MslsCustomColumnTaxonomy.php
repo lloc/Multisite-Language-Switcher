@@ -32,11 +32,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
      * @param int $item_id
      */
     public function td( $deprecated, $column_name, $item_id ) {
-        global $wp_version;
-        if ( version_compare( $wp_version, '3.2', '<=' ) )
-            parent::td( $column_name, $item_id );
-        else
-            parent::td( $deprecated, $column_name );
+        parent::td( $deprecated, $column_name );
     }
 
     /**
