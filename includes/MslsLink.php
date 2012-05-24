@@ -63,6 +63,9 @@ class MslsLink extends MslsGetSet {
      * @return MslsLink
      */
     public static function create( $display ) {
+        if ( has_filter( 'msls_link_create' ) ) {
+            return apply_filters( 'msls_link_create', $display );
+        }
         $types = self::get_types();
         if ( !in_array( $display, array_keys( $types ), true ) ) $display = 0;
         return new $types[$display];
