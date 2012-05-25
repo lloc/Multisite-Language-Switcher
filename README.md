@@ -13,7 +13,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 *  Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/) 
 *  French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 *  Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)
-*  Ukrainian (uk_UK) - [Victor Melnichenko](http://worm.org.ua/)
+*  Ukrainian (uk) - [Victor Melnichenko](http://worm.org.ua/)
 *  Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69)
 *  Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
 

@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to: 3.4
-Stable tag: 0.9.5
+Stable tag: 0.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/)
 * French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 * Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)
-* Ukrainian (uk_UK) - [Victor Melnichenko](http://worm.org.ua/)
+* Ukrainian (uk) - [Victor Melnichenko](http://worm.org.ua/)
 * Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69) 
 * Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
 
@@ -53,6 +53,7 @@ Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Mu
 * a lot of bugfixes and enhancements
 * some modifications - how the meta box handles hierarchical post types - by [Joost de Keijzer](http://dekeijzer.org/)
 * behaviour - how the plugin collects the blogs - changed
+* language files for ro_RO added
 
 = 0.9.5 =
 * new: Support for author- and date-archives
@@ -60,7 +61,7 @@ Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Mu
 * some modifications of the image path handling by [Tobias Bäthge](http://tobias.baethge.com/)
 
 = 0.9.4 =
-* language files for uk_UK added
+* language files for uk added
 
 = 0.9.3 =
 * language files for ru_RU added
