@@ -49,6 +49,9 @@ Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Mu
 
 == Changelog ==
 
+= 0.9.7 =
+* further bugfixes and enhancements
+
 = 0.9.6 =
 * a lot of bugfixes and enhancements
 * some modifications - how the meta box handles hierarchical post types - by [Joost de Keijzer](http://dekeijzer.org/)
