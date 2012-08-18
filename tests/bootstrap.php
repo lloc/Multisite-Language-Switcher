@@ -12,7 +12,7 @@
  */
  
 $GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( 'Multisite-Language-Switcher/MultisiteLanguageSwitcher.php' ),
+	'active_plugins' => array( 'multisite-language-switcher/MultisiteLanguageSwitcher.php' ),
 );
 
 require dirname( __FILE__ ) . '/wordpress-tests/bootstrap.php';
