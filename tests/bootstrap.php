@@ -15,4 +15,4 @@ $GLOBALS['wp_tests_options'] = array(
 	'active_plugins' => array( 'Multisite-Language-Switcher/MultisiteLanguageSwitcher.php' ),
 );
 
-require dirname( __FILE__ ) . '/wordpress-tests/init.php';
+require dirname( __FILE__ ) . '/wordpress-tests/bootstrap.php';
