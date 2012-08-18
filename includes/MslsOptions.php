@@ -93,7 +93,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * Delete
      */
     public function delete() {
-        $this->init();
+        $this->reset();
         if ( $this->exists )
             delete_option( $this->name );
     }

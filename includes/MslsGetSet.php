@@ -22,7 +22,7 @@ class MslsGetSet {
     /**
      * Reset all
      */
-    protected function init() {
+    protected function reset() {
         $this->arr = array();
     }
 
