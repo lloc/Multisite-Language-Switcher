@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to: 3.4
-Stable tag: 0.9.6
+Stable tag: 0.9.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
