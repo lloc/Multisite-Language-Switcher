@@ -24,12 +24,10 @@ class WP_Test_MslsGetSet extends WP_UnitTestCase {
     }
 
     /**
-     * Verify the reset method
+     * Verify the get_arr-method
      */
-    function test_reset_method() {
-        $obj      = new MslsGetSet();
-        $obj->str = 'This is a string.';
-        $obj->reset();
+    function test_get_arr_method() {
+        $obj = new MslsGetSet();
         $this->assertEquals( array(), $obj->get_arr(), 'An empty array was expected' );
     }
 
