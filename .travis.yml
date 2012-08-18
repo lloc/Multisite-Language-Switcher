@@ -5,14 +5,9 @@ php:
   - 5.4
   
 env:
- - WP_VERSION=master WP_MULTISITE=0
- - WP_VERSION=3.4.1 WP_MULTISITE=0
- - WP_VERSION=3.3.2 WP_MULTISITE=0
- - WP_VERSION=3.2.1 WP_MULTISITE=0 
+ - WP_VERSION=master WP_MULTISITE=0 
  - WP_VERSION=master WP_MULTISITE=1
  - WP_VERSION=3.4.1 WP_MULTISITE=1
- - WP_VERSION=3.3.2 WP_MULTISITE=1 
- - WP_VERSION=3.2.1 WP_MULTISITE=1
 
 before_script:
   - wget https://raw.github.com/benbalter/wordpress-plugin-tests/setup/setup.sh
