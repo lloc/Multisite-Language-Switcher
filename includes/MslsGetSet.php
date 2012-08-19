@@ -20,13 +20,6 @@ class MslsGetSet {
     protected $arr = array();
 
     /**
-     * Reset all
-     */
-    protected function reset() {
-        $this->arr = array();
-    }
-
-    /**
      * "Magic" set arg
      *
      * @param mixed $key
@@ -66,6 +59,13 @@ class MslsGetSet {
     final public function __unset( $key ) {
         if ( isset( $this->arr[$key] ) )
             unset( $this->arr[$key] );
+    }
+
+    /**
+     * Reset all
+     */
+    public function reset() {
+        $this->arr = array();
     }
 
     /**
