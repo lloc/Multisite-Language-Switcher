@@ -12,8 +12,8 @@ class MslsAdmin extends MslsMain {
      * Init
      */
     public static function init() {
-        wp_register_style( 'msls-styles', plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ) );
-        wp_enqueue_style( 'msls-styles' );
+        wp_register_style( 'msls-styles', plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ), array(), MSLS_PLUGIN_VERSION );
+        wp_enqueue_style ( 'msls-styles' );
         $obj = new self();
         add_options_page(
             __( 'Multisite Language Switcher', 'msls' ),
