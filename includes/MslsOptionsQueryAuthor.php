@@ -17,11 +17,10 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
-            $sql                  = sprintf(
+            $this->arr[$language] = $wpdb->get_var( $wpdb->prepare(
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE post_author = %d AND post_status = 'publish'",
                 (int) $this->args[0]
-            );
-            $this->arr[$language] = $wpdb->get_var( $sql );
+            ) );
         }
         return (bool) $this->arr[$language];
     }

@@ -17,12 +17,11 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
     public function has_value( $language ) {
         if ( !isset( $this->arr[$language] ) ) {
             global $wpdb;
-            $sql                  = sprintf(
+            $this->arr[$language] = $wpdb->get_var( $wpdb->prepare(
                 "SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND MONTH(post_date) = %d AND post_status = 'publish'",
                 (int) $this->args[0],
                 (int) $this->args[1]
-            );
-            $this->arr[$language] = $wpdb->get_var( $sql );
+            ) );
         }
         return (bool) $this->arr[$language];
     }
