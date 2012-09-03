@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2
 Tested up to: 3.4
-Stable tag: 0.9.7
+Stable tag: 0.9.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,10 @@ Now you can
 Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki) for more information.
 
 == Changelog ==
+
+= 0.9.8 =
+* Fix of the "MslsOptionsQueryDay.php"-bug
+* language files for es_ES updated by [José Luis Pajares](http://gelo.tv/)
 
 = 0.9.7 =
 * further bugfixes and enhancements
@@ -96,62 +100,7 @@ Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Mu
 * added empty index.php-files to all subdirectories
 * source code meets now the [WordPress PHP formatting standards](http://urbangiraffe.com/articles/wordpress-codesniffer-standard/)
 
-= 0.7.1 =
-* language files for pt_BR updated
-
-= 0.7 =
-* new: you can now choose if you want to show only links with a translation
-* new: flags in edit_posts are clickable now, link to edit the translation
-* new: function get_the_msls for complete the_msls
-* new: option to choose if a link to the current blog should be displayed too
-* new: option to exclude a blog from output
-* language files for fr_FR added
-
-= 0.6.8 =
-* bugfix: str_replace problem with 4th parameter
-
-= 0.6.7 =
-* bugfix: get_term_link seems to fail if there is a custom category_base or tag_base defined
-* bugfix: get_term_link expects term_id as integer
-* bugfix: do not include blogs without configuration
-* bugfix: fatal error if there is no configuration
-
-= 0.6.6 =
-* language files for es_ES added
-
-= 0.6.5 =
-* language files for pt_BR added
-
-= 0.6.4 =
-* bugfix: strange behaviour of the sidebar-widget corrected
-
-= 0.6.3 =
-* bugfix: there was a problem with restore_current_blog() and more then 2 languages
-* bugfix: problem under some circumstancess with the content_filter 
-
-= 0.6.2 =
-* bugfix: sometimes no flag was shown because WPLANG could be empty for en_US-Blogs in the network
-
-= 0.6.1 =
-* bugfix: notice when MslsLink::$txt was requested for output of the link-title
-
-= 0.6 =
-* new: relations between categories and tags in different languages
-
-= 0.5 =
-* language files for nl_NL added
-
-= 0.4 =
-* widget added
-* hint for available translations as filter of the_content added
-* bugfix: $this->options->before_output, $this->options->after_output
-
-= 0.3 =
-* new display-option added
-* optimization/refactoring
-
-= 0.2 =
-* bugfix: showstopper in MslsMain::__construct()
+[...]
 
 = 0.1 =
 * first version
