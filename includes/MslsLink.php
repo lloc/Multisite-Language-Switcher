@@ -20,7 +20,6 @@ class MslsLink extends MslsGetSet {
 
     /**
      * Get link types
-     *
      * @return array
      */
     public static function get_types() {
@@ -34,7 +33,6 @@ class MslsLink extends MslsGetSet {
 
     /**
      * Get link description
-     *
      * @return string
      */
     public static function get_description() {
@@ -43,12 +41,12 @@ class MslsLink extends MslsGetSet {
 
     /**
      * Get array with all link descriptions
-     *
      * @return array
      */
     public static function get_types_description() {
-        $temp = array();
-        foreach ( self::get_types() as $key => $class ) {
+        $temp  = array();
+        $types = self::get_types();
+        foreach ( $types as $key => $class ) {
             $temp[$key] = call_user_func(
                 array( $class, 'get_description' )
             );
@@ -78,10 +76,11 @@ class MslsLink extends MslsGetSet {
      * Handles the request to print the object
      */
     public function __toString() {
-        $temp = array();
-        foreach ( array_keys( $this->get_arr() ) as $key ) {
-            $temp[] = '{' . $key . '}';
-        }
+        $temp = array_keys( $this->get_arr() );
+        array_walk(
+            $temp,
+            create_function( '$x', 'return "{" . $x . "}";' )
+        );
         return str_replace(
             $temp,
             $this->get_arr(),

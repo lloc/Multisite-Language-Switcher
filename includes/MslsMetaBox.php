@@ -25,13 +25,13 @@ class MslsMetaBox extends MslsMain {
      * Add
      */
     public function add() {
-        $obj = MslsPostType::instance();
-        foreach ( $obj->get() as $pt ) {
+        $pt_arr = MslsPostType::instance()->get();
+        foreach ( $pt_arr as $post_type ) {
             add_meta_box(
                 'msls',
                 __( 'Multisite Language Switcher', 'msls' ),
                 array( $this, 'render' ),
-                $pt,
+                $post_type,
                 'side',
                 'high'
             );
