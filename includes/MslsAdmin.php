@@ -12,8 +12,13 @@ class MslsAdmin extends MslsMain {
      * Init
      */
     public static function init() {
-        wp_register_style( 'msls-styles', plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ), array(), MSLS_PLUGIN_VERSION );
-        wp_enqueue_style ( 'msls-styles' );
+        wp_register_style(
+            'msls-styles',
+            plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ),
+            array(),
+            MSLS_PLUGIN_VERSION
+        );
+        wp_enqueue_style( 'msls-styles' );
         $obj = new self();
         add_options_page(
             __( 'Multisite Language Switcher', 'msls' ),
@@ -26,11 +31,23 @@ class MslsAdmin extends MslsMain {
 		add_action( 'admin_notices', array( $obj, 'warning' ) );
     }
 
+    /**
+     * There is something wrong? Here comes the message ...
+     */
     public function warning() {
-        if ( $this->options->is_empty() )
-            echo '<div id="msls-warning" class="updated fade"><p>' .
-                sprintf( __('Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.'), 'options-general.php?page=MslsAdmin' ) .
-                '</p></div>';
+        $message = '';
+        if ( $this->options->is_empty() ) {
+            $message = sprintf(
+                __( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
+                admin_url( '/options-general.php?page=MslsAdmin' )
+            );
+        }
+        if ( '' != $message ) {
+            printf(
+                '<div id="msls-warning" class="updated fade"><p>%s</p></div>',
+                $message
+            );
+        }
     }
 
     /**
@@ -55,22 +72,20 @@ class MslsAdmin extends MslsMain {
      * Create a submenu which contains links to all blogs of the current user
      */
     protected function subsubsub() {
-        $arr            = array();
-        foreach ( $this->blogs->get_objects() as $id => $blog ) {
-            if ( !$this->blogs->is_plugin_active( $blog->userblog_id ) )
-                continue;
-            $current = '';
-            if ( $blog->userblog_id == $this->blogs->get_current_blog_id() )
-                $current = ' class="current"';
-            $arr[] = sprintf(
-                '<a href="%s"%s>%s / %s</a>',
-                get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
-                $current,
-                $blog->blogname,
-                $blog->get_description()
-            );
+        $arr           = array();
+        $blogs_objects = $this->blogs->get_objects();
+        foreach ( $blogs_objects as $id => $blog ) {
+            if ( $this->blogs->is_plugin_active( $blog->userblog_id ) ) {
+                $arr[] = sprintf(
+                    '<a href="%s"%s>%s / %s</a>',
+                    get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
+                    ( $blog->userblog_id == $this->blogs->get_current_blog_id() ? ' class="current"' : '' ),
+                    $blog->blogname,
+                    $blog->get_description()
+                );
+            }
         }
-        return(
+        return( 
             !empty( $arr ) ?
             sprintf(
                 '<ul class="subsubsub"><li>%s</li></ul>', 
@@ -107,7 +122,7 @@ class MslsAdmin extends MslsMain {
     }
 
     /**
-     * Section is just a placeholder
+     * Section is just a placeholder for now
      */
     public function section() {}
 
@@ -245,7 +260,6 @@ class MslsAdmin extends MslsMain {
             $key,
             ( $this->options->$key == 1 ? ' checked="checked"' : '' )
         );
-
     }
 
     /**
@@ -287,7 +301,6 @@ class MslsAdmin extends MslsMain {
             $key,
             implode( '', $options )
         );
-        
     }
 
     /**
@@ -297,8 +310,11 @@ class MslsAdmin extends MslsMain {
      * @return array Validated input 
      */ 
     public function validate( array $input ) {
-        if ( !is_numeric( $input['display'] ) )
-            $input['display'] = 0;
+        $input['display']   = (
+            !isset( $input['display'] ) ?
+            0 :
+            (int) $input['display']
+        );
         $input['image_url'] = esc_url( rtrim( $input['image_url'], '/' ) );
         return $input;
     }
