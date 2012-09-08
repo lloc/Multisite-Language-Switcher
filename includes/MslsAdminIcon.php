@@ -155,7 +155,10 @@ class MslsAdminIcon {
      * @return string
      */
     protected function get_edit_new() {
-        return get_admin_url( get_current_blog_id(), $this->path );
+        $path = $this->path;
+        if ( has_filter( 'msls_admin_icon_get_edit_new' ) )
+            $path = apply_filters( 'msls_admin_icon_get_edit_new', $path );
+        return get_admin_url( get_current_blog_id(), $path );
     }
 
 }
