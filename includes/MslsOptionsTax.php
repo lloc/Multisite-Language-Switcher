@@ -43,12 +43,21 @@ class MslsOptionsTax extends MslsOptions {
         }
         else {
             global $wp_query;
-            if ( is_category() )
-                return new MslsOptionsTaxTermCategory( $wp_query->get_queried_object_id() );
-            elseif ( is_tag() )
-                return new MslsOptionsTaxTerm( $wp_query->get_queried_object_id() );
-            elseif ( is_tax() )
-                return new MslsOptionsTax( $wp_query->get_queried_object_id() );
+            if ( is_category() ) {
+                return new MslsOptionsTaxTermCategory(
+                    $wp_query->get_queried_object_id()
+                );
+            }
+            elseif ( is_tag() ) {
+                return new MslsOptionsTaxTerm(
+                    $wp_query->get_queried_object_id()
+                );
+            }
+            elseif ( is_tax() ) {
+                return new MslsOptionsTax(
+                    $wp_query->get_queried_object_id()
+                );
+            }
         }
         return null;
     }
