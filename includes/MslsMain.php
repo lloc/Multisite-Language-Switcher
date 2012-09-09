@@ -24,7 +24,8 @@ abstract class MslsMain {
     abstract public static function init();
 
     /**
-     * Constructor
+     * We'll use the constructor for creating a representation of options and
+     * blogs
      */
     public function __construct() {
         $this->options = MslsOptions::instance();
@@ -48,7 +49,8 @@ abstract class MslsMain {
             $options->save( $msla->get_arr( $language ) );
         else
             $options->delete();
-        foreach ( $this->blogs->get() as $blog ) {
+        $blogs = $this->blogs->get();
+        foreach ( $blogs as $blog ) {
             switch_to_blog( $blog->userblog_id );
             $language  = $blog->get_language();
             $object_id = $msla->get_val( $language );
