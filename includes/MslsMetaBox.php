@@ -133,12 +133,14 @@ class MslsMetaBox extends MslsMain {
             !isset( $_POST['msls_noncename'] ) || 
             !wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) )
             return;
-        if ( 'page' == $_POST['post_type'] )
+        if ( 'page' == $_POST['post_type'] ) {
             if ( !current_user_can( 'edit_page' ) )
                 return;
-        else
+        }
+        else {
             if ( !current_user_can( 'edit_post' ) )
                 return;
+        }
         $arr = $_POST['msls'];
         $arr[$this->blogs->get_current_blog()->get_language()] = $post_id;
         $this->save( $post_id, 'MslsOptionsPost', $arr );
