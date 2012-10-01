@@ -28,6 +28,7 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * Ukrainian (uk) - [Victor Melnichenko](http://worm.org.ua/)
 * Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69) 
 * Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
+* Polish (pl_PL) - [Kamil Frejlich](http://www.mojito-networks.com/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
