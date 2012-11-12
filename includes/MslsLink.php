@@ -79,7 +79,7 @@ class MslsLink extends MslsGetSet {
         $temp = array_keys( $this->get_arr() );
         array_walk(
             $temp,
-            create_function( '$x', 'return "{" . $x . "}";' )
+            create_function( '$x', '$x = "{" . $x . "}";' )
         );
         return str_replace(
             $temp,
