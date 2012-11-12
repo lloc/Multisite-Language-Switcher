@@ -29,7 +29,7 @@ class WP_Test_MslsGetSet extends WP_UnitTestCase {
     function test_get_arr_method() {
         $obj = new MslsGetSet();
         $obj->temp = 'test';
-        $this->assertEquals( array( 'temp' => 'test' ), $obj->get_arr() , 'Another content of the result was expected' );
+        $this->assertEquals( array( 'temp' => 'test' ), $obj->get_arr() , 'Unexpected result' );
         $obj->reset();
         $this->assertEmpty( $obj->get_arr() , 'An empty array was expected' );
     }
