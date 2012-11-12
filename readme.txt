@@ -50,6 +50,9 @@ Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Mu
 
 == Changelog ==
 
+= 0.9.9 =
+* you can use now the function msls_filter_string() if you'ld like to print the "hint"-string anywhere in your templates
+
 = 0.9.8 =
 * Fix of the "MslsOptionsQueryDay.php"-bug
 * language files for es_ES updated by [José Luis Pajares](http://gelo.tv/)
