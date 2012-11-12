@@ -76,14 +76,13 @@ class MslsLink extends MslsGetSet {
      * Handles the request to print the object
      */
     public function __toString() {
-        $temp = array_keys( $this->get_arr() );
-        array_walk(
-            $temp,
-            create_function( '$x', '$x = "{" . $x . "}";' )
-        );
+        $temp = $this->get_arr();
         return str_replace(
+			array_map(
+				create_function( '$x', 'return "{" . $x . "}";' ),
+				array_keys( $temp )
+			),
             $temp,
-            $this->get_arr(),
             $this->format_string
         );
     }
