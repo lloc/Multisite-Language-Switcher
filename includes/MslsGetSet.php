@@ -15,7 +15,7 @@
 class MslsGetSet {
 
     /**
-     * @var array
+     * @var array $arr
      */
     protected $arr = array();
 
@@ -79,7 +79,7 @@ class MslsGetSet {
     }
 
     /**
-     * Check if the array is not empty
+     * Check if the array is empty
      * 
      * @return bool
      */ 
