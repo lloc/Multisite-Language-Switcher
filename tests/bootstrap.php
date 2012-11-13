@@ -15,4 +15,4 @@ $GLOBALS['wp_tests_options'] = array(
 	'active_plugins' => array( 'multisite-language-switcher/MultisiteLanguageSwitcher.php' ),
 );
 
-require getenv( 'WP_TESTS_DIR' ) . '/bootstrap.php';
+require getenv( 'WP_TESTS_DIR' ) . '/includes/bootstrap.php';
