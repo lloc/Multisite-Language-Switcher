@@ -1,46 +1,55 @@
 <?php
+/**
+ * MslsOptions
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * Options
- * 
+ * General options class
  * @package Msls
  * @subpackage Options
  */
 class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
+     * Args
      * @var array
      */
     protected $args;
 
     /**
+     * Name
      * @var string
      */
     protected $name;
 
     /**
+     * Exists
      * @var bool
      */
     protected $exists = false;
 
     /**
+     * Separator
      * @var string
      */
     protected $sep = '';
 
     /**
+     * Autoload
      * @var string
      */
     protected $autoload = 'yes';
 
     /**
+     * Base
      * @var string
      */
     protected $base;
 
     /**
      * Factory method
-     * 
      * @param int $id
      * @return MslsOptions
      */
@@ -77,7 +86,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Save
-     * 
      * @param mixed $arr
      */
     public function save( $arr ) {
@@ -100,7 +108,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Set
-     * 
      * @param mixed $arr
      * @return bool
      */
@@ -115,7 +122,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Get base
-     * 
      * @return null
      */
     protected function get_base() {
@@ -124,7 +130,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Get permalink
-     * 
      * @param string $language
      * @return string
      */
@@ -142,7 +147,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Get postlink
-     * 
      * @param string $language
      * @return string
      */
@@ -152,7 +156,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Get current link
-     * 
      * @return string
      */
     public function get_current_link() {
@@ -161,7 +164,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Is excluded
-     * 
      * @return bool
      */
     public function is_excluded() {
@@ -170,7 +172,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Is content
-     * 
      * @return bool
      */
     public function is_content_filter() {
@@ -179,7 +180,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Get order
-     * 
      * @return string
      */
     public function get_order() {
@@ -192,7 +192,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Get url
-     * 
      * @param string $dir
      * @return string
      */
@@ -202,9 +201,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Get flag url
-     * 
      * @param string $language
-     * @param bool $plugin
      * @return string
      */
     public function get_flag_url( $language ) {
@@ -220,7 +217,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
     /**
      * Instance
-     * 
      * @return MslsOptions
      */
     public static function instance() {

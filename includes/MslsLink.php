@@ -1,7 +1,13 @@
 <?php
+/**
+ * MslsLink
+ *
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * Link
+ * Link type: Image and text
  * 
  * @package Msls
  * @subpackage Link
@@ -9,11 +15,13 @@
 class MslsLink extends MslsGetSet {
 
     /**
-     * @var array
+     * Arguments
+     * @var array $args
      */
     protected $args = array();
 
     /**
+     * Output format
      * @var string
      */
     protected $format_string = '<img src="{src}" alt="{alt}"/> {txt}';
@@ -56,7 +64,6 @@ class MslsLink extends MslsGetSet {
     
     /**
      * Factory: Create a specific instance of MslsLink
-     *
      * @param int $display
      * @return MslsLink
      */

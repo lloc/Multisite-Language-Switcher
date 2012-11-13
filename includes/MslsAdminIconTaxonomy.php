@@ -1,22 +1,27 @@
 <?php
+/**
+ * MslsBlog
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * AdminIconTaxonomy
- * 
+ * Handles backend icons for taxonomies
  * @package Msls
  * @subpackage Link
  */
 class MslsAdminIconTaxonomy extends MslsAdminIcon {
 
     /**
+     * Path
      * @var string
      */
     protected $path = 'edit-tags.php';
 
     /**
      * Set href
-     * 
      * @param int $id
+     * @return MslsAdminIconTaxonomy
      */
     public function set_href( $id ) {
         $this->href = get_edit_term_link(
@@ -24,10 +29,12 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
             $this->type,
             MslsTaxonomy::instance()->get_post_type()
         );
+        return $this;
     }
 
     /**
      * Set the path by type
+     * @return MslsAdminIconTaxonomy
      */
     protected function set_path() {
         $args      = array( 'taxonomy' => $this->type );
@@ -35,6 +42,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
         if ( !empty( $post_type ) )
             $args['post_type'] = $post_type;
         $this->path = add_query_arg( $args, $this->path );
+        return $this;
     }
 
 }

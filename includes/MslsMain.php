@@ -1,19 +1,25 @@
 <?php
+/**
+ * MslsMain
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
  * Abstraction for the hook classes
- *
  * @package Msls
  * @subpackage Main
  */
 abstract class MslsMain {
 
     /**
+     * Options
      * @var MslsOptions
      */
     protected $options;
 
     /**
+     * Blogs
      * @var MslsBlogCollection
      */
     protected $blogs;
@@ -24,8 +30,7 @@ abstract class MslsMain {
     abstract public static function init();
 
     /**
-     * We'll use the constructor for creating a representation of options and
-     * blogs
+     * Constructor
      */
     public function __construct() {
         $this->options = MslsOptions::instance();
@@ -34,7 +39,6 @@ abstract class MslsMain {
 
     /**
      * Save
-     * 
      * @param int $object_id
      * @param string $class
      * @param array $input
@@ -70,7 +74,6 @@ abstract class MslsMain {
 
     /**
      * Delete
-     * 
      * @param int $post_id
      */
     public function delete( $post_id ) {

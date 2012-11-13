@@ -1,37 +1,47 @@
 <?php
+/**
+ * MslsBlogCollection
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
  * Collection of blog-objects
  * 
- * Implements the interface IMslsRegistryInstance because we want to work with 
- * a singleton instance of MslsBlogCollection all the time.
+ * Implements the interface IMslsRegistryInstance because we want to 
+ * work with a singleton instance of MslsBlogCollection all the time.
  * @package Msls
  * @subpackage Main
  */
 class MslsBlogCollection implements IMslsRegistryInstance {
 
     /**
-     * @var int ID of the current blog
+     * ID of the current blog
+     * @var int
      */
     private $current_blog_id;
 
     /**
-     * @var bool True if the current blog should be in the output
+     * True if the current blog should be in the output
+     * @var bool
      */
     private $current_blog_output;
 
     /**
-     * @var array Collection of MslsBlog-objects
+     * Collection of MslsBlog-objects
+     * @var array
      */
     private $objects = array();
 
     /**
-     * @var string Order output by language or description
+     * Order output by language or description
+     * @var string
      */
     private $objects_order;
 
     /**
-     * @var array Active plugins in the whole network
+     * Active plugins in the whole network
+     * @var array
      */
     private $active_plugins;
 
@@ -90,8 +100,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
     /**
      * Get the id of the current blog
-     *
-     * @return int ID of the current blog
+     * @return int
      */
     public function get_current_blog_id() {
         return $this->current_blog_id;
@@ -100,7 +109,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     /**
      * Check if current blog is in the collection
      *
-     * @return bool Is the current blog part of the output? 
+     * @return bool
      */
     public function has_current_blog() {
         return( isset( $this->objects[$this->current_blog_id] ) );
@@ -108,8 +117,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
     /**
      * Get current blog as object
-     *
-     * @return MslsBlog|null Current blog as MslsBlog-Object
+     * @return MslsBlog|null
      */
     public function get_current_blog() {
         return(
@@ -121,16 +129,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
     /**
      * Get an array with all blog-objects
-     *
-     * @return array Collection of MslsBlog-objects
+     * @return array
      */
     public function get_objects() {
         return $this->objects;
     }
 
     /**
-     * Is plugin active in blog x
-     * 
+     * Is plugin active in the blog with that blog_id 
      * @param int $blog_id
      * @return bool
      */
@@ -144,9 +150,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
     /**
-     * Get an arry of blog-objects without the current blog
-     * 
-     * @return array Collection of MslsBlog-objects
+     * Get an arry of blog-objects but not the current blog
+     * @return array
      */
     public function get() {
         $objects = $this->get_objects();
@@ -157,9 +162,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
     /**
      * Get an array with filtered blog-objects
-     *
      * @param bool $filter
-     * @return array Collection of MslsBlog-objects
+     * @return array
      */
     public function get_filtered( $filter = false ) {
         if ( !$filter && $this->current_blog_output )  
@@ -169,7 +173,6 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
     /**
      * Get or create a instance of MslsBlogCollection
-     *
      * @return MslsBlogCollection
      */
     public static function instance() {

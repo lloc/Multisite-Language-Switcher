@@ -1,26 +1,31 @@
 <?php
+/**
+ * MslsContentTypes
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
  * Supported content types
- *
  * @package Msls
  * @subpackage Main
  */
 class MslsContentTypes {
 
     /**
+     * Request
      * @var string
      */
     protected $request;
 
     /**
+     * Types
      * @var array
      */
     protected $types = array();
 
     /**
      * Factory method
-     * 
      * @return MslsContentTypes
      */
     public static function create() {
@@ -31,7 +36,6 @@ class MslsContentTypes {
 
     /**
      * Getter
-     * 
      * @return array
      */
     public function get() {
@@ -40,7 +44,6 @@ class MslsContentTypes {
 
     /**
      * Gets the request if it is an allowed content type
-     * 
      * @return string
      */
     public function get_request() {
@@ -53,7 +56,6 @@ class MslsContentTypes {
 
     /**
      * Get the requested taxonomy without a check
-     * 
      * @return string
      */
     public function get_taxonomy() {
@@ -62,7 +64,6 @@ class MslsContentTypes {
     
     /**
      * Check for post_type
-     * 
      * @return bool
      */
     public function is_post_type() {
@@ -71,7 +72,6 @@ class MslsContentTypes {
 
     /**
      * Check for taxonomy
-     * 
      * @return bool
      */
     public function is_taxonomy() {

@@ -1,21 +1,25 @@
 <?php
+/**
+ * MslsLinkTextOnly
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * LinkTextOnly
- * 
+ * Link type: Text only
  * @package Msls
  * @subpackage Link
  */
 class MslsLinkTextOnly extends MslsLink {
 
     /**
+     * Output format
      * @var string
      */
     protected $format_string = '{txt}';
 
     /**
      * Get the description
-     * 
      * @return string
      */
     public static function get_description() {

@@ -1,8 +1,12 @@
 <?php
+/**
+ * MslsetaBox
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * Meta Box
- *
+ * Meta box for the edit mode of the (custom) post types 
  * @package Msls
  * @subpackage Main
  */
@@ -124,7 +128,6 @@ class MslsMetaBox extends MslsMain {
 
     /**
      * Set
-     * 
      * @param int $post_id
      */
     public function set( $post_id ) {

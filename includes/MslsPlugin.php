@@ -1,8 +1,12 @@
 <?php
+/**
+ * MslsPlugin
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
  * Provides functionalities for activation an deactivation
- *
  * @package Msls
  * @subpackage Main
  */
@@ -42,14 +46,12 @@ class MslsPlugin {
 
     /**
      * Deactivate plugin
-     * 
      * @todo Write the deactivate-method
      */
     public static function deactivate() { }
 
     /**
      * Uninstall plugin
-     * 
      * @todo Write the uninstall-method
      */
     public static function uninstall() { }

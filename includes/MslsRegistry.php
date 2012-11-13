@@ -1,19 +1,25 @@
 <?php
+/**
+ * MslsRegistry
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * Registry
- * 
+ * Registry instead of singletons
  * @package Msls
  * @subpackage Main
  */
 class MslsRegistry {
 
     /**
+     * Generic container
      * @var array
      */
     private static $arr = array();
 
     /**
+     * Instance
      * @var MslsRegistry
      */
     private static $instance;
@@ -34,7 +40,6 @@ class MslsRegistry {
 
     /**
      * Get an object by key
-     * 
      * @param mixed $key
      * @return mixed
      */
@@ -44,7 +49,6 @@ class MslsRegistry {
 
     /**
      * Set an object
-     * 
      * @param mixed $key
      * @param mixed $instance
      */
@@ -54,7 +58,6 @@ class MslsRegistry {
 
     /**
      * Registry is a singleton
-     * 
      * @return mixed
      */
     public static function singleton() {
@@ -64,8 +67,7 @@ class MslsRegistry {
     }
 
     /**
-     * Static get_object calls get
-     * 
+     * Static get_object calls getW
      * @param mixed $key
      * @return mixed
      */
@@ -74,8 +76,7 @@ class MslsRegistry {
     }
 
     /**
-     * Satic set_object calls set
-     * 
+     * Static set_object calls set
      * @param mixed $key
      * @param mixed $instance
      */

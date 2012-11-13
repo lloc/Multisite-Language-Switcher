@@ -1,8 +1,13 @@
 <?php
+/**
+ * MslsCustomColumnTaxonomy
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * CustomColumnTaxonomy
- * 
+ * Handling of existing/not existing translations in the backend 
+ * listings of various taxonomies
  * @package Msls
  * @subpackage Main
  */
@@ -26,7 +31,6 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
     /**
      * Table body
-     * 
      * @param string $deprecated
      * @param string $column_name
      * @param int $item_id
@@ -37,7 +41,6 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
     /**
      * Delete
-     * 
      * @param int $term_id
      * @param int $tt_id
      */

@@ -1,4 +1,10 @@
 <?php
+/**
+ * MslsAdmin
+ * 
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
  * Administration of the options

@@ -1,8 +1,12 @@
 <?php
+/**
+ * MslsPostType
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * PostType
- *
+ * Content types: Post types (Pages, Posts, ...)
  * @package Msls
  * @subpackage Main
  */
@@ -32,7 +36,6 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 
     /**
      * Check for post_type
-     * 
      * @return bool
      */
     function is_post_type() {
@@ -41,7 +44,6 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 
     /**
      * Get or create a instance of MslsPostType
-     *
      * @return MslsPostType
      */
     public static function instance() {

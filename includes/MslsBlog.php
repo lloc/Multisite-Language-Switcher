@@ -1,31 +1,37 @@
 <?php
+/**
+ * MslsBlog
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
  * Internal representation of a blog
- *
  * @package Msls
  * @subpackage Main
  */
 class MslsBlog {
 
     /**
-     * @var StdClass WordPress generates such an object
+     * WordPress generates such an object
+     * @var StdClass
      */
     private $obj;
 
     /**
-     * @var string Language-code eg. de_DE
+     * Language-code eg. de_DE
+     * @var string
      */
     private $language;
 
     /**
-     * @var string Description eg. Deutsch
+     * Description eg. Deutsch
+     * @var string
      */
     private $description;
 
     /**
      * Constructor
-     *
      * @param StdClass $obj 
      * @param string description
      */
@@ -43,7 +49,6 @@ class MslsBlog {
      * Get a member of the StdClass-object by name
      *
      * The method return <em>null</em> if the requested member does not exists.
-     * 
      * @param string $key
      * @return mixed|null
      */
@@ -55,7 +60,6 @@ class MslsBlog {
      * Get the description stored in this object
      * 
      * The method returns the stored language if the description is empty.
-     * 
      * @return string
      */
     public function get_description() {
@@ -70,7 +74,6 @@ class MslsBlog {
      * Get the language stored in this object
      * 
      * The method returns the string 'us' if there is an empty value in language.  
-     * 
      * @return string
      */
     public function get_language() {
@@ -79,7 +82,6 @@ class MslsBlog {
 
     /**
      * Sort objects helper
-     * 
      * @param mixed $a
      * @param mixed $b
      * return int
@@ -92,7 +94,6 @@ class MslsBlog {
 
     /**
      * Sort objects by language
-     * 
      * @param mixed $a
      * @param mixed $b
      * return int
@@ -103,7 +104,6 @@ class MslsBlog {
 
     /**
      * Sort objects by description
-     * 
      * @param mixed $a
      * @param mixed $b
      * return int

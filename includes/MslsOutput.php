@@ -1,8 +1,12 @@
 <?php
+/**
+ * MslsOutput
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * Output
- *
+ * Output in the frontend
  * @package Msls
  * @subpackage Output
  */
@@ -17,7 +21,6 @@ class MslsOutput extends MslsMain {
 
     /**
      * Get the output as array
-     * 
      * @param string $display
      * @param bool frontend
      * @param bool $exists
@@ -71,7 +74,6 @@ class MslsOutput extends MslsMain {
 
     /**
      * Returns a string when the object will be treated like a string
-     * 
      * @see get_the_msls()
      * @return string
      */ 

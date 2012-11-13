@@ -1,14 +1,19 @@
 <?php
+/**
+ * MslsTaxonomy
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * Taxonomy
- *
+ * Content types: Taxonomies (Tags, Categories, ...)
  * @package Msls
  * @subpackage Main
  */
 class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 
     /**
+     * Post type
      * @var string
      */
     protected $post_type = '';
@@ -34,7 +39,6 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 
     /**
      * Get the requested post_type of the taxonomy
-     * 
      * @return string
      */
     public function get_post_type() {
@@ -43,7 +47,6 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 
     /**
      * Check for taxonomy
-     * 
      * @return bool
      */
     public function is_taxonomy() {
@@ -52,7 +55,6 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 
     /**
      * Get or create a instance of MslsTaxonomy
-     *
      * @return MslsBlogCollection
      */
     public static function instance() {

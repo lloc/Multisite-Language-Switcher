@@ -1,8 +1,12 @@
 <?php
+/**
+ * MslsWidget
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * Widget
- *
+ * Multisite Language Switcher Widget
  * @package Msls
  * @subpackage Output
  */
@@ -20,9 +24,8 @@ class MslsWidget extends WP_Widget {
 
     /**
      * Output of the widget in the frontend
-     * 
      * @param array $args
-     * @param array instance
+     * @param array $instance
      * @uses MslsOutput
      */
     public function widget( $args, $instance ) {
@@ -38,7 +41,6 @@ class MslsWidget extends WP_Widget {
 
     /**
      * Update widget in the backend
-     * 
      * @param array $new_instance
      * @param array $old_instance
      * @return array
@@ -51,16 +53,19 @@ class MslsWidget extends WP_Widget {
 
     /**
      * Display an input-form in the backend
-     * 
      * @param array $instance
      */
-    public function form( $inst ) {
+    public function form( $instance ) {
         printf(
             '<p><label for="%1$s">%2$s:</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p>',
             $this->get_field_id( 'title' ),
             __( 'Title', 'msls' ),
             $this->get_field_name( 'title' ),
-            ( isset( $inst['title'] ) ? esc_attr( $inst['title'] ) : '' )
+            ( 
+                isset( $instance['title'] ) ? 
+                esc_attr( $instance['title'] ) :
+                ''
+            )
         );
     }
 

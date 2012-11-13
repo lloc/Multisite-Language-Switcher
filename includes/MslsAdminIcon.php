@@ -1,46 +1,55 @@
 <?php
+/**
+ * MslsAdminIcon
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * AdminIcon
- * 
+ * Handles backend icons
  * @package Msls
  * @subpackage Link
  */
 class MslsAdminIcon {
 
     /**
+     * Language
      * @var string
      */
     protected $language;
 
     /**
+     * Source
      * @var string
      */
     protected $src;
 
     /**
+     * URL
      * @var string
      */
     protected $href;
 
     /**
+     * Blod id
      * @var int
      */
     protected $blog_id;
 
     /**
+     * Type
      * @var string
      */
     protected $type;
 
     /**
+     * Path
      * @var string
      */
     protected $path = 'post-new.php';
 
     /**
      * Factory method
-     * 
      * @return MslsAdminIcon
      */
     public static function create() {
@@ -53,7 +62,6 @@ class MslsAdminIcon {
 
     /**
      * Constructor
-     * 
      * @param string $type
      */
     public function __construct( $type ) {
@@ -63,45 +71,50 @@ class MslsAdminIcon {
 
     /**
      * Set the path by type
+     * @return MslsAdminIcon
      */
     protected function set_path() {
-        if ( 'post' != $this->type )
+        if ( 'post' != $this->type ) {
             $this->path = add_query_arg( 
                 array( 'post_type' => $this->type ),
                 $this->path
             );
+        }
+        return $this;
     }
 
     /**
      * Set language
-     * 
-     * @param string $str language
+     * @param string $language
+     * @return MslsAdminIcon
      */
-    public function set_language( $str ) {
-        $this->language = $str;
+    public function set_language( $language ) {
+        $this->language = $language;
+        return $this;
     }
 
     /**
      * Set src
-     * 
-     * @param string $str src
+     * @param string $src
+     * @return MslsAdminIcon
      */
-    public function set_src( $str ) {
-        $this->src = $str;
+    public function set_src( $src ) {
+        $this->src = $src;
+        return $this;
     }
 
     /**
      * Set href
-     * 
      * @param int $id
+     * @return MslsAdminIcon
      */
     public function set_href( $id ) {
         $this->href = get_edit_post_link( (int) $id );
+        return $this;
     }
 
     /**
      * Handles the output when object is treated like a string
-     * 
      * @return string
      */
     public function __toString() {
@@ -110,7 +123,6 @@ class MslsAdminIcon {
 
     /**
      * Get image as html-tag
-     * 
      * @return string
      */
     public function get_img() {
@@ -123,7 +135,6 @@ class MslsAdminIcon {
 
     /**
      * Get link as html-tag
-     * 
      * @return string
      */
     protected function get_a() {
@@ -151,7 +162,6 @@ class MslsAdminIcon {
 
     /**
      * Get create new link
-     * 
      * @return string
      */
     protected function get_edit_new() {

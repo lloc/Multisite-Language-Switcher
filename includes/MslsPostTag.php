@@ -1,8 +1,12 @@
 <?php
+/**
+ * MslsPostTag
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * PostTag
- * 
+ * Post Tag
  * @package Msls
  * @subpackage Main
  */
@@ -10,6 +14,7 @@ class MslsPostTag extends MslsMain {
 
     /**
      * Init
+     * @return MslsPostTag
      */
     public static function init() {
         $options = MslsOptions::instance();
@@ -26,12 +31,13 @@ class MslsPostTag extends MslsMain {
                 }
             }
         }
+        return $this;
     }
 
     /**
      * Add
-     * 
      * @param StdClass
+     * @return MslsPostTag
      */
     public function add( $tag ) {
         $term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
@@ -72,18 +78,20 @@ class MslsPostTag extends MslsMain {
                 restore_current_blog();
             }
         }
+        return $this;
     }
 
     /**
      * Set
-     * 
      * @param int $term_id
      * @param int $tt_id
+     * @return MslsPostTag
      */
     public function set( $term_id, $tt_id ) {
         $arr                                                   = $_POST['msls'];
         $arr[$this->blogs->get_current_blog()->get_language()] = $term_id;
         $this->save( $term_id, 'MslsOptionsTax', $arr );
+        return $this;
     }
 
 }

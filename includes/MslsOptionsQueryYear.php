@@ -1,4 +1,9 @@
 <?php
+/**
+ * MslsOptionsQueryYear
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
  * OptionsQueryYear

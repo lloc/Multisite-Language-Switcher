@@ -1,26 +1,31 @@
 <?php
+/**
+ * MslsOptionsTax
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * OptionsTax
- * 
+ * Taxonomy options
  * @package Msls
  * @subpackage Options
  */
 class MslsOptionsTax extends MslsOptions {
 
     /**
+     * Separator
      * @var string
      */
     protected $sep = '_term_';
 
     /**
+     * Autoload
      * @var string
      */
     protected $autoload = 'no';
 
     /**
      * Factory method
-     * 
      * @param int $id
      * @return MslsOptionsTax
      */
@@ -64,6 +69,7 @@ class MslsOptionsTax extends MslsOptions {
 
     /**
      * Get the queried taxonomy
+     * @return string
      */
     protected function get_tax_query() {
         global $wp_query;
@@ -76,7 +82,6 @@ class MslsOptionsTax extends MslsOptions {
 
     /**
      * Check and correct URL
-     * 
      * @param string $url
      * @return string
      */
@@ -86,7 +91,6 @@ class MslsOptionsTax extends MslsOptions {
 
     /**
      * Get postlink
-     *
      * @param string $language
      * @return string
      */
@@ -103,7 +107,6 @@ class MslsOptionsTax extends MslsOptions {
 
     /**
      * Get current link
-     * 
      * @return string
      */
     public function get_current_link() {

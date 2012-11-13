@@ -1,4 +1,9 @@
 <?php
+/**
+ * MslsGetSet
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
  * Generic class for overloading properties
@@ -15,13 +20,13 @@
 class MslsGetSet {
 
     /**
+     * An array as a generic container
      * @var array $arr
      */
     protected $arr = array();
 
     /**
      * "Magic" set arg
-     *
      * @param mixed $key
      * @param mixed $value
      */
@@ -33,7 +38,6 @@ class MslsGetSet {
 
     /**
      * "Magic" get arg
-     *
      * @param mixed $key
      * @return mixed
      */
@@ -43,7 +47,6 @@ class MslsGetSet {
 
     /**
      * "Magic" isset
-     *
      * @param mixed $key
      * @return bool
      */
@@ -53,7 +56,6 @@ class MslsGetSet {
 
     /**
      * "Magic" unset
-     *
      * @param mixed $key
      */
     final public function __unset( $key ) {
@@ -70,7 +72,6 @@ class MslsGetSet {
 
     /**
      * Check if the array has an non empty item with the specified key
-     * 
      * @param string $key
      * @return bool
      */ 
@@ -80,7 +81,6 @@ class MslsGetSet {
 
     /**
      * Check if the array is empty
-     * 
      * @return bool
      */ 
     public function is_empty() {
@@ -89,7 +89,6 @@ class MslsGetSet {
 
     /**
      * Get args-array
-     *
      * @return array
      */
     final public function get_arr() {

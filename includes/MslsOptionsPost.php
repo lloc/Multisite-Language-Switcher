@@ -1,26 +1,31 @@
 <?php
+/**
+ * MslsOptions
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * OptionsPost
- * 
+ * Post options
  * @package Msls
  * @subpackage Options
  */
 class MslsOptionsPost extends MslsOptions {
 
     /**
+     * Separator
      * @var string
      */
     protected $sep = '_';
 
     /**
+     * Autoload
      * @var string
      */
     protected $autoload = 'no';
 
     /**
      * Get postlink
-     * 
      * @param string $language
      * @return string
      */
@@ -36,7 +41,6 @@ class MslsOptionsPost extends MslsOptions {
 
     /**
      * Get current link
-     * 
      * @return string
      */
     public function get_current_link() {

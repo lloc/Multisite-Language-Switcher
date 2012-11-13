@@ -1,8 +1,13 @@
 <?php
+/**
+ * MslsCustomColumn
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 0.9.8
+ */
 
 /**
- * CustomColumn
- * 
+ * Handling of existing/not existing translations in the backend 
+ * listings of various post types
  * @package Msls
  * @subpackage Main
  */
@@ -26,7 +31,6 @@ class MslsCustomColumn extends MslsMain {
 
     /**
      * Table header
-     * 
      * @param array $columns
      * @return array
      */
@@ -48,7 +52,6 @@ class MslsCustomColumn extends MslsMain {
 
     /**
      * Table body
-     * 
      * @param string $column_name
      * @param int $item_id
      */
