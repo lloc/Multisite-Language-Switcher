@@ -20,7 +20,7 @@
 class MslsGetSet {
 
     /**
-     * An array as a generic container
+     * An array as a generic container for all vars
      * @var array $arr
      */
     protected $arr = array();
@@ -65,13 +65,29 @@ class MslsGetSet {
 
     /**
      * Reset all
+     * 
+     * <code>
+     * $obj = new MslsGetSet;
+     * $obj->temp = 'test';
+     * $obj->reset();
+     * $val = $obj->get_arr(); // array() == $val
+     * </code>
+     * @return MslsGetSet
      */
     public function reset() {
         $this->arr = array();
+        return $this;
     }
 
     /**
      * Check if the array has an non empty item with the specified key
+     * 
+     * <code>
+     * $obj = new MslsGetSet;
+     * $val = $obj->has_value( 'temp' ); // false == $val
+     * $obj->temp = 'test';
+     * $val = $obj->has_value( 'temp' ); // true == $val
+     * </code>
      * @param string $key
      * @return bool
      */ 
@@ -81,6 +97,13 @@ class MslsGetSet {
 
     /**
      * Check if the array is empty
+     * 
+     * <code>
+     * $obj = new MslsGetSet;
+     * $val = $obj->is_empty(); // true == $val
+     * $obj->temp = 'test';
+     * $val = $obj->is_empty(); // false == $val
+     * </code>
      * @return bool
      */ 
     public function is_empty() {
@@ -89,6 +112,12 @@ class MslsGetSet {
 
     /**
      * Get args-array
+     * 
+     * <code>
+     * $obj = new MslsGetSet;
+     * $obj->temp = 'test';
+     * $val = $obj->get_arr(); // array( 'temp' => 'test' ) == $val
+     * </code>
      * @return array
      */
     final public function get_arr() {
