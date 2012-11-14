@@ -29,7 +29,7 @@ class WP_Test_MslsGetSet extends WP_UnitTestCase {
     /**
      * Verify the reset-method
      */
-    function test_has_value_method() {
+    function test_reset_method() {
         $this->my_obj->temp = 'test';
         $this->my_obj->reset();
         $this->assertEquals( array(), $this->my_obj->get_arr() );
