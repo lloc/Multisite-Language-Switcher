@@ -40,9 +40,9 @@ class WP_Test_MslsGetSet extends WP_UnitTestCase {
      */
     function test_has_value_method() {
         $this->my_obj->reset();
-        $this->assertTrue( $this->my_obj->has_value( 'temp' ) );
-        $this->my_obj->temp = 'test';
         $this->assertFalse( $this->my_obj->has_value( 'temp' ) );
+        $this->my_obj->temp = 'test';
+        $this->assertTrue( $this->my_obj->has_value( 'temp' ) );
     }
 
     /**
