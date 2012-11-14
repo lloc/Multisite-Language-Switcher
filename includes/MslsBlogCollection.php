@@ -51,7 +51,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
     public function __construct() {
         $options                   = MslsOptions::instance();
         $this->current_blog_id     = get_current_blog_id();
-        $this->current_blog_output = $options->has_value( 'output_current_blog' );
+        $this->current_blog_output = isset( $options->output_current_blog );
         $this->objects_order       = $options->get_order();
         if ( !$options->is_excluded() ) {
             if ( has_filter( 'msls_blog_collection_construct' ) ) {

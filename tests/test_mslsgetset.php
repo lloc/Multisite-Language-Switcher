@@ -1,10 +1,13 @@
 <?php
-
 /**
- * Tests MslsGetSet
+ * Tests for MslsGetSet
  *
  * @author Dennis Ploetner <re@lloc.de>
  * @package WP_Document_Revisions
+ */
+
+/**
+ * WP_Test_MslsGetSet
  */
 class WP_Test_MslsGetSet extends WP_UnitTestCase {
 

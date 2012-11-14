@@ -167,7 +167,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * @return bool
      */
     public function is_excluded() {
-        return $this->has_value( 'exclude_current_blog' );
+        return isset( $this->exclude_current_blog );
     }
 
     /**
@@ -175,7 +175,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      * @return bool
      */
     public function is_content_filter() {
-        return $this->has_value( 'content_filter' );
+        return isset( $this->content_filter );
     }
 
     /**
@@ -184,7 +184,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      */
     public function get_order() {
         return ( 
-            $this->has_value( 'sort_by_description' ) ?
+            isset( $this->sort_by_description ) ?
             'description' :
             'language'
         );
@@ -206,7 +206,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
      */
     public function get_flag_url( $language ) {
         $url = ( 
-            !is_admin() && $this->has_value( 'image_url' ) ?
+            !is_admin() && isset( $this->image_url ) ?
             $this->__get( 'image_url' ) :
             $this->get_url( 'flags' )
         );

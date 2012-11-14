@@ -13,20 +13,19 @@
  * $obj->test = 'This is just a test';
  * echo $obj->test;
  * </code>
- * 
  * @package Msls
  * @subpackage Main
  */
 class MslsGetSet {
 
     /**
-     * An array as a generic container for all vars
+     * A generic container for all properties of an instance
      * @var array $arr
      */
     protected $arr = array();
 
     /**
-     * "Magic" set arg
+     * set (overloaded) 
      * @param mixed $key
      * @param mixed $value
      */
@@ -37,7 +36,7 @@ class MslsGetSet {
     }
 
     /**
-     * "Magic" get arg
+     * get (overloaded)
      * @param mixed $key
      * @return mixed
      */
@@ -46,7 +45,7 @@ class MslsGetSet {
     }
 
     /**
-     * "Magic" isset
+     * isset (overloaded)
      * @param mixed $key
      * @return bool
      */
@@ -55,7 +54,7 @@ class MslsGetSet {
     }
 
     /**
-     * "Magic" unset
+     * unset (overloaded)
      * @param mixed $key
      */
     final public function __unset( $key ) {
@@ -64,8 +63,9 @@ class MslsGetSet {
     }
 
     /**
-     * Reset all
+     * reset
      * 
+     * Reset the whole properties-container
      * <code>
      * $obj = new MslsGetSet;
      * $obj->temp = 'test';
@@ -80,8 +80,13 @@ class MslsGetSet {
     }
 
     /**
-     * Check if the array has an non empty item with the specified key
+     * has_value
      * 
+     * Check if the array has an non empty item with the specified key.
+     * This is method is similar to the overloaded __isset-method since
+     * __set cleans empty properties but I use for example 
+     * $obj->has_value( $temp ) and not isset( $obj->$temp ) which is
+     * the same but a little bit ugly.
      * <code>
      * $obj = new MslsGetSet;
      * $val = $obj->has_value( 'temp' ); // false == $val
@@ -96,8 +101,9 @@ class MslsGetSet {
     }
 
     /**
-     * Check if the array is empty
+     * is_empty
      * 
+     * Check if the properties-container is empty
      * <code>
      * $obj = new MslsGetSet;
      * $val = $obj->is_empty(); // true == $val
@@ -111,8 +117,9 @@ class MslsGetSet {
     }
 
     /**
-     * Get args-array
+     * get_arr
      * 
+     * Get the complete properties-container as an array
      * <code>
      * $obj = new MslsGetSet;
      * $obj->temp = 'test';

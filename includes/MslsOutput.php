@@ -81,7 +81,7 @@ class MslsOutput extends MslsMain {
         $arr = $this->get(
             (int) $this->options->display,
             false,
-            $this->options->has_value( 'only_with_translation' )
+            isset( $this->options->only_with_translation )
         );
         $str = '';
         if ( !empty( $arr ) ) {
