@@ -15,12 +15,6 @@
 class MslsLink extends MslsGetSet {
 
     /**
-     * Arguments
-     * @var array $args
-     */
-    protected $args = array();
-
-    /**
      * Output format
      * @var string
      */
@@ -53,8 +47,7 @@ class MslsLink extends MslsGetSet {
      */
     public static function get_types_description() {
         $temp  = array();
-        $types = self::get_types();
-        foreach ( $types as $key => $class ) {
+        foreach ( self::get_types() as $key => $class ) {
             $temp[$key] = call_user_func(
                 array( $class, 'get_description' )
             );

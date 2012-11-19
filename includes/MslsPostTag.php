@@ -31,7 +31,6 @@ class MslsPostTag extends MslsMain {
                 }
             }
         }
-        return $this;
     }
 
     /**
@@ -78,20 +77,17 @@ class MslsPostTag extends MslsMain {
                 restore_current_blog();
             }
         }
-        return $this;
     }
 
     /**
      * Set
      * @param int $term_id
      * @param int $tt_id
-     * @return MslsPostTag
      */
     public function set( $term_id, $tt_id ) {
         $arr                                                   = $_POST['msls'];
         $arr[$this->blogs->get_current_blog()->get_language()] = $term_id;
         $this->save( $term_id, 'MslsOptionsTax', $arr );
-        return $this;
     }
 
 }

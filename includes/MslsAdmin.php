@@ -18,6 +18,11 @@ class MslsAdmin extends MslsMain {
      * Init
      */
     public static function init() {
+        wp_enqueue_script(
+            'msls-autocomplete',
+            plugins_url( 'script.js', MSLS_PLUGIN__FILE__ ),
+            array( 'jquery-ui-autocomplete' )
+        );
         wp_register_style(
             'msls-styles',
             plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ),
