@@ -1,6 +1,6 @@
 <?php
 /**
- * MslsetaBox
+ * MslsMetaBox
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
@@ -12,28 +12,33 @@
  */
 class MslsMetaBox extends MslsMain {
 
+    /**
+     * Suggest
+     * 
+     * Echo a JSON-ified array of posts of the given post-type and
+     * the requested search-term and then die silently
+     */
     static function suggest() {
-        switch_to_blog( (int) $_REQUEST['blog_id'] );
-        $my_query = new WP_Query(
-            array(
-                'post_type' => $_REQUEST['post_type'],
-                'post_status' => 'any',
-                'orderby' => 'title',
-                'order' => 'ASC',
-                'posts_per_page' => 10,
-                's' => $_REQUEST['term'],
-            )
-        );
         $result = array();
-        while ( $my_query->have_posts() ) {
-            $my_query->the_post();
-            $result[] = array(
-                'value' => get_the_ID(),
-                'label' => get_the_title()
+        if ( isset( $_REQUEST['blog_id'] ) ) {
+            switch_to_blog( (int) $_REQUEST['blog_id'] );
+            $args = array(
+                'post_status' => 'any',
+                'posts_per_page' => 10,
             );
+            if ( isset( $_REQUEST['post_type'] ) )
+                $args['post_type'] = $_REQUEST['post_type'];
+            if ( isset( $_REQUEST['term'] ) )
+                $args['s'] = $_REQUEST['term'];
+            $my_query = new WP_Query( $args );
+            $json_obj = new MslsJson;
+            while ( $my_query->have_posts() ) {
+                $my_query->the_post();
+                $json_obj->add( get_the_ID(), get_the_title() );
+            }
+            restore_current_blog();
         }
-        echo json_encode( $result );
-        restore_current_blog();
+        echo $json_obj;
         die();
     }
 

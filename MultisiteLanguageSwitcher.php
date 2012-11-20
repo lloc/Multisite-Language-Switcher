@@ -91,12 +91,17 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 
 	if ( is_admin() ) {
 		add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
+
         add_action( 'wp_ajax_suggest_posts', array( 'MslsMetaBox', 'suggest' ) );
+
 		add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
 		add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );
+
 		add_action( 'load-edit.php', array( 'MslsCustomColumn', 'init' ) );
-		add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
+
 		add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
+		add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
+
 		if ( !empty( $_POST['action'] ) ) {
 			if ( 'add-tag' == $_POST['action'] )
                 add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
