@@ -12,18 +12,18 @@
  */
 class MslsLinkImageOnly extends MslsLink {
 
-    /**
-     * Output format
-     * @var string
-     */
-    protected $format_string = '<img src="{src}" alt="{alt}"/>';
+	/**
+	 * Output format
+	 * @var string
+	 */
+	protected $format_string = '<img src="{src}" alt="{alt}"/>';
 
-    /**
-     * Get the description
-     * @return string
-     */
-    static function get_description() {
-        return __( 'Flag only', 'msls' );
-    }
+	/**
+	 * Get the description
+	 * @return string
+	 */
+	static function get_description() {
+		return __( 'Flag only', 'msls' );
+	}
 
 }

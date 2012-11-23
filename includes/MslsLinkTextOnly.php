@@ -12,18 +12,18 @@
  */
 class MslsLinkTextOnly extends MslsLink {
 
-    /**
-     * Output format
-     * @var string
-     */
-    protected $format_string = '{txt}';
+	/**
+	 * Output format
+	 * @var string
+	 */
+	protected $format_string = '{txt}';
 
-    /**
-     * Get the description
-     * @return string
-     */
-    public static function get_description() {
-        return __( 'Description only', 'msls' );
-    }
+	/**
+	 * Get the description
+	 * @return string
+	 */
+	public static function get_description() {
+		return __( 'Description only', 'msls' );
+	}
 
 }

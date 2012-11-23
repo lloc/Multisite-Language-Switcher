@@ -43,56 +43,56 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	/**
 	 * The Autoloader does all the magic when it comes to include a file
 	 * @package Msls
-     * @subpackage Start
+	 * @subpackage Start
 	 */
 	class MslsAutoloader {
 
-        /**
-         * Static loader method
-         * @param string $cls
-         */
+		/**
+		 * Static loader method
+		 * @param string $cls
+		 */
 		public static function load( $cls ) {
 			if ( 'Msls' == substr( $cls, 0, 4 ) ) 
 				require_once dirname( __FILE__ ) . '/includes/' . $cls . '.php';
 		}
 
-    }
+	}
 
 	/**
 	 * Interface for classes which are to register in the MslsRegistry-instance
 	 *
 	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
 	 * @package Msls
-     * @subpackage Start
+	 * @subpackage Start
 	 */
 	interface IMslsRegistryInstance {
 
 		/**
-         * Instance
+		 * Instance
 		 * @return object
 		 */
 		public static function instance();
 
-    }
+	}
 
-    /**
-     * The autoload-stack could be inactive so the function will return false
-     */
-    if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
-        spl_autoload_register( '__autoload' );
-    spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
+	/**
+	 * The autoload-stack could be inactive so the function will return false
+	 */
+	if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
+		spl_autoload_register( '__autoload' );
+	spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
 
-    register_activation_hook( __FILE__, array( 'MslsPlugin', 'activate' ) );
-    register_deactivation_hook( __FILE__, array( 'MslsPlugin', 'deactivate' ) );
-    register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
+	register_activation_hook( __FILE__, array( 'MslsPlugin', 'activate' ) );
+	register_deactivation_hook( __FILE__, array( 'MslsPlugin', 'deactivate' ) );
+	register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
 
-    add_action( 'init', array( 'MslsPlugin', 'init_i18n_support' ) );
-    add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
+	add_action( 'init', array( 'MslsPlugin', 'init_i18n_support' ) );
+	add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
 
 	if ( is_admin() ) {
 		add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
 
-        add_action( 'wp_ajax_suggest_posts', array( 'MslsMetaBox', 'suggest' ) );
+		add_action( 'wp_ajax_suggest_posts', array( 'MslsMetaBox', 'suggest' ) );
 
 		add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
 		add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );
@@ -104,18 +104,18 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 
 		if ( !empty( $_POST['action'] ) ) {
 			if ( 'add-tag' == $_POST['action'] )
-                add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
-            elseif ( 'inline-save' == $_POST['action'] )
-                add_action( 'admin_init', array( 'MslsCustomColumn', 'init' ) );
-            elseif ( 'inline-save-tax' == $_POST['action'] )
-                add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
-        }
-    }
+				add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
+			elseif ( 'inline-save' == $_POST['action'] )
+				add_action( 'admin_init', array( 'MslsCustomColumn', 'init' ) );
+			elseif ( 'inline-save-tax' == $_POST['action'] )
+				add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
+		}
+	}
 
 	/**
 	 * Filter for the_content()
 	 * @package Msls
-     * @subpackage Start
+	 * @subpackage Start
 	 * @uses MslsOptions
 	 * @param string $content
 	 * @return string
@@ -125,21 +125,21 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 			$options = MslsOptions::instance();
 			if ( $options->is_content_filter() ) {
 				$content .= msls_filter_string();
-            }
-        }
-        return $content;
+			}
+		}
+		return $content;
 	}
-    add_filter( 'the_content', 'msls_content_filter' );
+	add_filter( 'the_content', 'msls_content_filter' );
 
-    /**
-     * Create filterstring for msls_content_filter()
-     * @package Msls
-     * @subpackage Start
-     * @uses MslsOutput
-     * @param string $pref
-     * @param string $post
-     * @return string
-     */ 
+	/**
+	 * Create filterstring for msls_content_filter()
+	 * @package Msls
+	 * @subpackage Start
+	 * @uses MslsOutput
+	 * @param string $pref
+	 * @param string $post
+	 * @return string
+	 */ 
 	function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
 		$obj   = new MslsOutput();
 		$links = $obj->get( 1, true, true );
@@ -169,13 +169,13 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 * Get the output for using the links to the translations in your code
 	 * @return string
 	 * @package Msls
-     * @subpackage Start
+	 * @subpackage Start
 	 * @see the_msls()
 	 */
 	function get_the_msls() {
-        $obj = new MslsOutput();
-        return( sprintf( '%s', $obj ) );
-    }
+		$obj = new MslsOutput();
+		return( sprintf( '%s', $obj ) );
+	}
 
 	/**
 	 * Output the links to the translations in your template
@@ -183,11 +183,11 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 * You can call of this function directly like that
 	 * <code>if ( function_exists ( 'the_msls' ) ) the_msls();</code>
 	 * @package Msls
-     * @subpackage Start
+	 * @subpackage Start
 	 * @uses get_the_msls()
 	 */
 	function the_msls() {
-        echo get_the_msls();
-    }
+		echo get_the_msls();
+	}
 
 }
