@@ -93,6 +93,7 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 		add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
 
 		add_action( 'wp_ajax_suggest_posts', array( 'MslsMetaBox', 'suggest' ) );
+		add_action( 'wp_ajax_suggest_terms', array( 'MslsPostTag', 'suggest' ) );
 
 		add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
 		add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );

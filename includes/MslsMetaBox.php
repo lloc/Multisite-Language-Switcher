@@ -92,22 +92,23 @@ class MslsMetaBox extends MslsMain {
 				$icon     = MslsAdminIcon::create();
 				$icon->set_language( $language );
 				$icon->set_src( $this->options->get_flag_url( $language ) );
-				$value = '';
+				$value = $title = '';
 				if ( $mydata->has_value( $language ) ) {
-					$value = $mydata->$language;
 					$icon->set_href( $mydata->$language );
+					$value = $mydata->$language;
+					$title = get_the_title( $value );
 				}
 				$items .= sprintf(
 					'<li>
 					<label for="msls_title_%1$s">%2$s</label>
 					<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-					<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" value="%5$s"/>
+					<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
 					</li>',
 					$blog->userblog_id,
 					$icon,
 					$language,
 					$value,
-					get_the_title( $value )
+					$title
 				);
 				restore_current_blog();
 			}
