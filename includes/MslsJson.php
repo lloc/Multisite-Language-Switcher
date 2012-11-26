@@ -31,6 +31,9 @@ class MslsJson {
 
 	/**
 	 * compare
+	 * 
+	 * Compare the item with the key "label" of the array $a and the
+	 * array $b
 	 * @param array $a
 	 * @param array $b
 	 * @return int
@@ -40,15 +43,26 @@ class MslsJson {
 	}
 
 	/**
+	 * get
+	 * 
+	 * Get the array container sorted by label
+	 * @return array
+	 */ 
+	public function get() {
+		$arr = $this->arr;
+		usort( $arr, array( __CLASS__, 'compare' ) );
+		return $arr;
+	}
+
+	/**
 	 * __toString
 	 * 
-	 * Sort the array container by labele and convert it to a JSON-ified
+	 * Sort the array container by label and convert it to a JSON-ified
 	 * string
 	 * @return string
 	 */ 
 	public function __toString() {
-		usort( $this->arr, array( __CLASS__, 'compare' ) );
-		return json_encode( $this->arr );
+		return json_encode( $this->get() );
 	}
 
 }
