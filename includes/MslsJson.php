@@ -57,8 +57,8 @@ class MslsJson {
 	/**
 	 * __toString
 	 * 
-	 * Sort the array container by label and convert it to a JSON-ified
-	 * string
+	 * Return the array container as a JSON string when the object will
+	 * be converted to a string
 	 * @return string
 	 */ 
 	public function __toString() {
