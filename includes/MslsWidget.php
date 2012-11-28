@@ -6,7 +6,7 @@
  */
 
 /**
- * Multisite Language Switcher Widget
+ * The standard widget of the Multisite Language Switcher
  * @package Msls
  * @subpackage Output
  */
@@ -61,11 +61,7 @@ class MslsWidget extends WP_Widget {
 			$this->get_field_id( 'title' ),
 			__( 'Title', 'msls' ),
 			$this->get_field_name( 'title' ),
-			( 
-				isset( $instance['title'] ) ? 
-				esc_attr( $instance['title'] ) :
-				''
-			)
+			( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' )
 		);
 	}
 

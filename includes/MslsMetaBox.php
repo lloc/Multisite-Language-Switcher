@@ -88,14 +88,14 @@ class MslsMetaBox extends MslsMain {
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
-				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create();
-				$icon->set_language( $language );
-				$icon->set_src( $this->options->get_flag_url( $language ) );
+				$lang = $blog->get_language();
+				$icon = MslsAdminIcon::create()
+					->set_language( $lang )
+					->set_src( $this->options->get_flag_url( $lang ) );
 				$value = $title = '';
-				if ( $mydata->has_value( $language ) ) {
-					$icon->set_href( $mydata->$language );
-					$value = $mydata->$language;
+				if ( $mydata->has_value( $lang ) ) {
+					$icon->set_href( $mydata->$lang );
+					$value = $mydata->$lang;
 					$title = get_the_title( $value );
 				}
 				$items .= sprintf(
@@ -106,7 +106,7 @@ class MslsMetaBox extends MslsMain {
 					</li>',
 					$blog->userblog_id,
 					$icon,
-					$language,
+					$lang,
 					$value,
 					$title
 				);

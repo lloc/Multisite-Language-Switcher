@@ -41,7 +41,7 @@ class MslsGetSet {
 	 * @return mixed
 	 */
 	final public function __get( $key ) {
-		return isset( $this->arr[$key] ) ? $this->arr[$key] : null;
+		return( isset( $this->arr[$key] ) ? $this->arr[$key] : null );
 	}
 
 	/**

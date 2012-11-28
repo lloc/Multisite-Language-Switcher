@@ -25,7 +25,10 @@ class MslsJson {
 	 * @return MslsJson
 	 */
 	public function add( $value, $label ) {
-		$this->arr[] = array( 'value' => (int) $value, 'label' => (string) $label );
+		$this->arr[] = array(
+			'value' => (int) $value,
+			'label' => (string) $label,
+		);
 		return $this;
 	}
 

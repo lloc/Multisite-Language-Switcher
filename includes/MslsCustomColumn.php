@@ -39,10 +39,9 @@ class MslsCustomColumn extends MslsMain {
 		if ( $blogs ) {
 			$arr = array();
 			foreach ( $blogs as $blog ) {
-				$language = $blog->get_language();
+				$lang = $blog->get_language();
 				$icon     = new MslsAdminIcon( null );
-				$icon->set_language( $language );
-				$icon->set_src( $this->options->get_flag_url( $language ) );
+				$icon->set_language( $lang )->set_src( $this->options->get_flag_url( $lang ) );
 				$arr[] = $icon->get_img();
 			}
 			$columns['mslscol'] = implode( '&nbsp;', $arr );
@@ -62,16 +61,13 @@ class MslsCustomColumn extends MslsMain {
 				$mydata = MslsOptions::create( $item_id );
 				foreach ( $blogs as $blog ) {
 					switch_to_blog( $blog->userblog_id );
-					$language = $blog->get_language();
-					$icon     = MslsAdminIcon::create();
-					$icon->set_language( $language );
-					if ( $mydata->has_value( $language ) ) {
-						$icon->set_href( $mydata->$language );
-						$icon->set_src( $this->options->get_url( 'images/link_edit.png' ) );
-					}
-					else {
+					$lang = $blog->get_language();
+					$icon = MslsAdminIcon::create();
+					$icon->set_language( $lang );
+					if ( $mydata->has_value( $lang ) )
+						$icon->set_href( $mydata->$lang )->set_src( $this->options->get_url( 'images/link_edit.png' ) );
+					else
 						$icon->set_src( $this->options->get_url( 'images/link_add.png' ) );
-					}
 					echo $icon;
 					restore_current_blog();
 				}

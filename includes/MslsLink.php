@@ -54,7 +54,7 @@ class MslsLink extends MslsGetSet {
 		}
 		return $temp;
 	}
-	
+
 	/**
 	 * Factory: Create a specific instance of MslsLink
 	 * @param int $display

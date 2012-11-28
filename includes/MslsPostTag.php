@@ -86,16 +86,14 @@ class MslsPostTag extends MslsMain {
 			);
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
-				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create();
-				$icon->set_language( $language );
-				$icon->set_src( $this->options->get_flag_url( $language ) );
+				$lang = $blog->get_language();
+				$icon = MslsAdminIcon::create()->set_language( $lang )->set_src( $this->options->get_flag_url( $lang ) );
 				$value = $title = '';
-				if ( $mydata->has_value( $language ) ) {
-					$term = get_term( $mydata->$language, $type ); 
+				if ( $mydata->has_value( $lang ) ) {
+					$term = get_term( $mydata->$lang, $type ); 
 					if ( is_object( $term ) ) { 
-						$icon->set_href( $mydata->$language );
-						$value = $mydata->$language;
+						$icon->set_href( $mydata->$lang );
+						$value = $mydata->$lang;
 						$title = $term->name;
 					}
 				}
@@ -106,11 +104,11 @@ class MslsPostTag extends MslsMain {
 					</th>
 					<td>
 					<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-					<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" value="%5$s"/>
+					<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
 					</td>',
 					$blog->userblog_id,
 					$icon,
-					$language,
+					$lang,
 					$value,
 					$title
 				);
@@ -124,10 +122,15 @@ class MslsPostTag extends MslsMain {
 	 * @param int $term_id
 	 * @param int $tt_id
 	 */
-	public function set( $term_id, $tt_id ) {
-		$arr                                                   = $_POST['msls'];
-		$arr[$this->blogs->get_current_blog()->get_language()] = $term_id;
-		$this->save( $term_id, 'MslsOptionsTax', $arr );
+	public function set( $term_id, $tt_id ) {;
+		$this->save(
+			$term_id,
+			'MslsOptionsTax',
+			array_merge( 
+				$_POST['msls'],
+				array( $this->blogs->get_current_blog()->get_language() => $term_id )
+			) 
+		);
 	}
 
 }
