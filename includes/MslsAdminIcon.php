@@ -6,7 +6,7 @@
  */
 
 /**
- * Handles backend icons
+ * Handles the icon links in the backend
  * @package Msls
  * @subpackage Link
  */
@@ -31,7 +31,7 @@ class MslsAdminIcon {
 	protected $href;
 
 	/**
-	 * Blod id
+	 * Blog id
 	 * @var int
 	 */
 	protected $blog_id;

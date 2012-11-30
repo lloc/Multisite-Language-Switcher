@@ -10,8 +10,16 @@
  *
  * <code>
  * $obj = new MslsGetSet;
- * $obj->test = 'This is just a test';
- * echo $obj->test;
+ * $obj->tmp = 'test';
+ * $val = $obj->get_arr();          // array( 'tmp' => 'test' ) == $val
+ * $val = $obj->has_value( 'tmp' ); // true == $val
+ * $val = $obj->is_empty();         // false == $val
+ * echo $obj->tmp;                  // echos 'test'
+ * $obj->reset();
+ * $val = $obj->get_arr();          // array() == $val
+ * $val = $obj->has_value( 'tmp' ); // false == $val
+ * $val = $obj->is_empty();         // true == $val
+ * echo $obj->tmp;                  // echos null
  * </code>
  * @package Msls
  * @subpackage Main
@@ -25,7 +33,7 @@ class MslsGetSet {
 	protected $arr = array();
 
 	/**
-	 * set (overloaded) 
+	 * Overloaded set-method 
 	 * @param mixed $key
 	 * @param mixed $value
 	 */
@@ -36,7 +44,7 @@ class MslsGetSet {
 	}
 
 	/**
-	 * get (overloaded)
+	 * Overloaded get-method
 	 * @param mixed $key
 	 * @return mixed
 	 */
@@ -45,7 +53,7 @@ class MslsGetSet {
 	}
 
 	/**
-	 * isset (overloaded)
+	 * Overloaded isset-method
 	 * @param mixed $key
 	 * @return bool
 	 */
@@ -54,7 +62,7 @@ class MslsGetSet {
 	}
 
 	/**
-	 * unset (overloaded)
+	 * Overloaded unset-method
 	 * @param mixed $key
 	 */
 	final public function __unset( $key ) {
@@ -63,15 +71,7 @@ class MslsGetSet {
 	}
 
 	/**
-	 * reset
-	 * 
-	 * Reset the whole properties-container
-	 * <code>
-	 * $obj = new MslsGetSet;
-	 * $obj->temp = 'test';
-	 * $obj->reset();
-	 * $val = $obj->get_arr(); // array() == $val
-	 * </code>
+	 * Reset the properties-container to an empty array
 	 * @return MslsGetSet
 	 */
 	public function reset() {
@@ -80,19 +80,12 @@ class MslsGetSet {
 	}
 
 	/**
-	 * has_value
+	 * Check if the array has an non empty item with the specified key
 	 * 
-	 * Check if the array has an non empty item with the specified key.
 	 * This is method is similar to the overloaded __isset-method since
 	 * __set cleans empty properties but I use for example 
 	 * $obj->has_value( $temp ) and not isset( $obj->$temp ) which is
 	 * the same but a little bit ugly.
-	 * <code>
-	 * $obj = new MslsGetSet;
-	 * $val = $obj->has_value( 'temp' ); // false == $val
-	 * $obj->temp = 'test';
-	 * $val = $obj->has_value( 'temp' ); // true == $val
-	 * </code>
 	 * @param string $key
 	 * @return bool
 	 */ 
@@ -101,15 +94,7 @@ class MslsGetSet {
 	}
 
 	/**
-	 * is_empty
-	 * 
 	 * Check if the properties-container is empty
-	 * <code>
-	 * $obj = new MslsGetSet;
-	 * $val = $obj->is_empty(); // true == $val
-	 * $obj->temp = 'test';
-	 * $val = $obj->is_empty(); // false == $val
-	 * </code>
 	 * @return bool
 	 */ 
 	public function is_empty() {
@@ -117,14 +102,7 @@ class MslsGetSet {
 	}
 
 	/**
-	 * get_arr
-	 * 
 	 * Get the complete properties-container as an array
-	 * <code>
-	 * $obj = new MslsGetSet;
-	 * $obj->temp = 'test';
-	 * $val = $obj->get_arr(); // array( 'temp' => 'test' ) == $val
-	 * </code>
 	 * @return array
 	 */
 	final public function get_arr() {
