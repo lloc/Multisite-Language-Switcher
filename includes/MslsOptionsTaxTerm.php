@@ -8,7 +8,6 @@
 /**
  * Tag options
  * @package Msls
- * @subpackage Options
  */
 class MslsOptionsTaxTerm extends MslsOptionsTax {
 

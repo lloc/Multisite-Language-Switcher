@@ -8,7 +8,6 @@
 /**
  * Post Tag
  * @package Msls
- * @subpackage Main
  */
 class MslsPostTag extends MslsMain {
 

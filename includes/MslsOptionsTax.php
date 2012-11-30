@@ -8,7 +8,6 @@
 /**
  * Taxonomy options
  * @package Msls
- * @subpackage Options
  */
 class MslsOptionsTax extends MslsOptions {
 

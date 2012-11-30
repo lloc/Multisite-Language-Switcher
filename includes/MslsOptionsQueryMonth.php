@@ -9,7 +9,6 @@
  * OptionsQueryMonth
  * 
  * @package Msls
- * @subpackage Options
  */
 class MslsOptionsQueryMonth extends MslsOptionsQuery {
 

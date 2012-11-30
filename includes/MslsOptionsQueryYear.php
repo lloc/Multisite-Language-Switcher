@@ -9,7 +9,6 @@
  * OptionsQueryYear
  * 
  * @package Msls
- * @subpackage Options
  */
 class MslsOptionsQueryYear extends MslsOptionsQuery {
 

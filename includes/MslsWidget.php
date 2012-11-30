@@ -8,7 +8,6 @@
 /**
  * The standard widget of the Multisite Language Switcher
  * @package Msls
- * @subpackage Output
  */
 class MslsWidget extends WP_Widget {
 

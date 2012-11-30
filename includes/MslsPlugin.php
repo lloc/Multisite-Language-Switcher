@@ -8,7 +8,6 @@
 /**
  * Provides functionalities for activation an deactivation
  * @package Msls
- * @subpackage Main
  */
 class MslsPlugin {
 

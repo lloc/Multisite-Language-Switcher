@@ -8,7 +8,6 @@
 /**
  * Handles backend icons for taxonomies
  * @package Msls
- * @subpackage Link
  */
 class MslsAdminIconTaxonomy extends MslsAdminIcon {
 

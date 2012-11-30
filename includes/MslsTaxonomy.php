@@ -8,7 +8,6 @@
 /**
  * Content types: Taxonomies (Tags, Categories, ...)
  * @package Msls
- * @subpackage Main
  */
 class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 

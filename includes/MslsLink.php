@@ -10,7 +10,6 @@
  * Link type: Image and text
  * 
  * @package Msls
- * @subpackage Link
  */
 class MslsLink extends MslsGetSet {
 

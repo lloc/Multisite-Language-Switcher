@@ -9,7 +9,6 @@
  * OptionsQuery
  * 
  * @package Msls
- * @subpackage Options
  */
 class MslsOptionsQuery extends MslsOptions {
 

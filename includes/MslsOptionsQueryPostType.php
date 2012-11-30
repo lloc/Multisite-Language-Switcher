@@ -9,7 +9,6 @@
  * OptionsQueryPostType
  * 
  * @package Msls
- * @subpackage Options
  */
 class MslsOptionsQueryPostType extends MslsOptionsQuery {
 

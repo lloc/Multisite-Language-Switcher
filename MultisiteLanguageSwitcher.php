@@ -43,7 +43,6 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	/**
 	 * The Autoloader does all the magic when it comes to include a file
 	 * @package Msls
-	 * @subpackage Start
 	 */
 	class MslsAutoloader {
 
@@ -63,7 +62,6 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 *
 	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
 	 * @package Msls
-	 * @subpackage Start
 	 */
 	interface IMslsRegistryInstance {
 
@@ -116,7 +114,6 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	/**
 	 * Filter for the_content()
 	 * @package Msls
-	 * @subpackage Start
 	 * @uses MslsOptions
 	 * @param string $content
 	 * @return string
@@ -135,7 +132,6 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	/**
 	 * Create filterstring for msls_content_filter()
 	 * @package Msls
-	 * @subpackage Start
 	 * @uses MslsOutput
 	 * @param string $pref
 	 * @param string $post
@@ -170,7 +166,6 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 * Get the output for using the links to the translations in your code
 	 * @return string
 	 * @package Msls
-	 * @subpackage Start
 	 * @see the_msls()
 	 */
 	function get_the_msls() {
@@ -184,7 +179,6 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 * You can call of this function directly like that
 	 * <code>if ( function_exists ( 'the_msls' ) ) the_msls();</code>
 	 * @package Msls
-	 * @subpackage Start
 	 * @uses get_the_msls()
 	 */
 	function the_msls() {

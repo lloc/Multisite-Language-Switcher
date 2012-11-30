@@ -8,7 +8,6 @@
 /**
  * Supported content types
  * @package Msls
- * @subpackage Main
  */
 class MslsContentTypes {
 

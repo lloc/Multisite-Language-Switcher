@@ -9,7 +9,6 @@
  * Administration of the options
  *
  * @package Msls
- * @subpackage Main
  */
 class MslsAdmin extends MslsMain {
 	

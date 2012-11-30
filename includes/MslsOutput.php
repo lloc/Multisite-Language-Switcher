@@ -8,7 +8,6 @@
 /**
  * Output in the frontend
  * @package Msls
- * @subpackage Output
  */
 class MslsOutput extends MslsMain {
 

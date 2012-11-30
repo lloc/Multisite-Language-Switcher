@@ -8,7 +8,6 @@
 /**
  * Link type: Image only
  * @package Msls
- * @subpackage Link
  */
 class MslsLinkImageOnly extends MslsLink {
 

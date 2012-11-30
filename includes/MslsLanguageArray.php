@@ -8,7 +8,6 @@
 /**
  * Stores the language input from post
  * @package Msls
- * @subpackage Main
  */
 class MslsLanguageArray {
 

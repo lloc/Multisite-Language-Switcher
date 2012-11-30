@@ -8,7 +8,6 @@
 /**
  * Content types: Post types (Pages, Posts, ...)
  * @package Msls
- * @subpackage Main
  */
 class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 

@@ -8,7 +8,6 @@
 /**
  * Registry instead of singletons
  * @package Msls
- * @subpackage Main
  */
 class MslsRegistry {
 

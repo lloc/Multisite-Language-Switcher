@@ -8,7 +8,6 @@
 /**
  * Link type: Text and image
  * @package Msls
- * @subpackage Link
  */
 class MslsLinkTextImage extends MslsLink {
 

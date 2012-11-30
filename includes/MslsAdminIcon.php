@@ -8,7 +8,6 @@
 /**
  * Handles the icon links in the backend
  * @package Msls
- * @subpackage Link
  */
 class MslsAdminIcon {
 

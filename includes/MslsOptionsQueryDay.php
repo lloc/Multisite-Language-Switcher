@@ -9,7 +9,6 @@
  * OptionsQueryDay
  * 
  * @package Msls
- * @subpackage Options
  */
 class MslsOptionsQueryDay extends MslsOptionsQuery {
 

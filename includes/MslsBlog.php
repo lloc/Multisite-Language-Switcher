@@ -8,7 +8,6 @@
 /**
  * Internal representation of a blog
  * @package Msls
- * @subpackage Main
  */
 class MslsBlog {
 

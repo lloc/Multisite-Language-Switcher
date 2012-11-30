@@ -11,7 +11,6 @@
  * Implements the interface IMslsRegistryInstance because we want to 
  * work with a singleton instance of MslsBlogCollection all the time.
  * @package Msls
- * @subpackage Main
  */
 class MslsBlogCollection implements IMslsRegistryInstance {
 

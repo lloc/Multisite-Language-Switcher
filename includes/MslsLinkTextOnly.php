@@ -8,7 +8,6 @@
 /**
  * Link type: Text only
  * @package Msls
- * @subpackage Link
  */
 class MslsLinkTextOnly extends MslsLink {
 

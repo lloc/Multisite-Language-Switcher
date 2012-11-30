@@ -9,7 +9,6 @@
  * Handling of existing/not existing translations in the backend 
  * listings of various taxonomies
  * @package Msls
- * @subpackage Main
  */
 class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 

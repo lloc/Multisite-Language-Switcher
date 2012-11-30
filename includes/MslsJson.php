@@ -8,7 +8,6 @@
 /**
  * Container for an array which will used in JavaScript as JSON object
  * @package Msls
- * @subpackage Main
  */
 class MslsJson {
 

@@ -8,7 +8,6 @@
 /**
  * Meta box for the edit mode of the (custom) post types 
  * @package Msls
- * @subpackage Main
  */
 class MslsMetaBox extends MslsMain {
 

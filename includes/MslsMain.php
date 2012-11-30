@@ -8,7 +8,6 @@
 /**
  * Abstraction for the hook classes
  * @package Msls
- * @subpackage Main
  */
 abstract class MslsMain {
 
