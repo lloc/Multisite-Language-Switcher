@@ -121,7 +121,10 @@ class MslsPostTag extends MslsMain {
 	 * @param int $term_id
 	 * @param int $tt_id
 	 */
-	public function set( $term_id, $tt_id ) {;
+	public function set( $term_id, $tt_id ) {
+		$tax = get_taxonomy( $taxonomy );
+		if ( !current_user_can( $tax->cap->manage_terms ) )
+			return;
 		$this->save( $term_id, 'MslsOptionsTax' );
 	}
 

@@ -141,11 +141,11 @@ class MslsMetaBox extends MslsMain {
 			!wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) )
 			return;
 		if ( 'page' == $_POST['post_type'] ) {
-			if ( !current_user_can( 'edit_page' ) )
+			if ( !current_user_can( 'edit_page', $post_id ) )
 				return;
 		}
 		else {
-			if ( !current_user_can( 'edit_post' ) )
+			if ( !current_user_can( 'edit_post', $post_id ) )
 				return;
 		}
 		$this->save( $post_id, 'MslsOptionsPost' );
