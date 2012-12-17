@@ -45,20 +45,32 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsPostTag
 	 */
 	public static function init() {
+		$taxonomy = MslsPostTag::check();
+		if ( $taxonomy ) {
+			$obj = new self();
+			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
+			add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
+			add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+			add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * Check for taxonomy
+	 * @return string
+	 */
+	public static function check() {
 		$options = MslsOptions::instance();
-		if ( !$options->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
-			$taxonomy = MslsContentTypes::create()->get_request();
-			if ( !empty( $taxonomy ) ) {
-				$tax = get_taxonomy( $taxonomy );
+		if ( $options->is_excluded() || !isset( $_REQUEST['taxonomy'] ) ) {
+			$type = MslsContentTypes::create()->get_request();
+			if ( !empty( $type ) ) {
+				$tax = get_taxonomy( $type );
 				if ( $tax && current_user_can( $tax->cap->manage_terms ) ) {
-					$obj = new self();
-					add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add' ) );
-					add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add' ) );
-					add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
-					add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+					return $type;
 				}
 			}
 		}
+		return '';
 	}
 
 	/**
@@ -122,10 +134,8 @@ class MslsPostTag extends MslsMain {
 	 * @param int $tt_id
 	 */
 	public function set( $term_id, $tt_id ) {
-		$tax = get_taxonomy( $taxonomy );
-		if ( !current_user_can( $tax->cap->manage_terms ) )
-			return;
-		$this->save( $term_id, 'MslsOptionsTax' );
+		if ( MslsPostTag::check() )
+			$this->save( $term_id, 'MslsOptionsTax' );
 	}
 
 }
