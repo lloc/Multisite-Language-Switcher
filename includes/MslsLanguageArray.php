@@ -7,6 +7,17 @@
 
 /**
  * Stores the language input from post
+ * <code>
+ * $arr = array(
+ *     'it'    => 1,
+ *     'de_DE' => 2,
+ * );
+ * $obj = new MslsLanguageArray( $arr );
+ * $val = $obj->get_val( 'it' );         // 1 == $val
+ * $val = $obj->get_val( 'fr_FR' );      // 0 == $val 
+ * $val = $obj->get_arr();               // array( 'it' => 1, 'de_DE' => 2 ) == $val
+ * $val = $obj->get_arr( 'de_DE' ) );    // array( 'it' => 1 ) == $val
+ * </code>
  * @package Msls
  */
 class MslsLanguageArray {
@@ -27,9 +38,7 @@ class MslsLanguageArray {
 	}
 
 	/**
-	 * set
-	 * 
-	 * Sets a key-value-pair
+	 * Set a key-value-pair
 	 * - $key must be a string of length >= 2
 	 * - $value must be an integer > 0  
 	 * @param string $key
@@ -45,9 +54,7 @@ class MslsLanguageArray {
 
 
 	/**
-	 * get_arr
-	 * 
-	 * Gets the value of the requested item
+	 * Get the value of the element with the specified key
 	 * @param string $key
 	 * @return int
 	 */
@@ -56,9 +63,7 @@ class MslsLanguageArray {
 	}
 
 	/**
-	 * get_val
-	 * 
-	 * Gets the filtered array without the specified element
+	 * Get the filtered array without the specified element
 	 * @param string $key
 	 * @return array
 	 */

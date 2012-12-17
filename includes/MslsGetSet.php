@@ -7,32 +7,34 @@
 
 /**
  * Generic class for overloading properties
- *
  * <code>
  * $obj = new MslsGetSet;
  * $obj->tmp = 'test';
+ * 
  * $val = $obj->get_arr();          // array( 'tmp' => 'test' ) == $val
  * $val = $obj->has_value( 'tmp' ); // true == $val
  * $val = $obj->is_empty();         // false == $val
- * echo $obj->tmp;                  // prints 'test'
+ * echo $obj->tmp;                  // Output: test
+ * 
  * $obj->reset();
+ * 
  * $val = $obj->get_arr();          // array() == $val
  * $val = $obj->has_value( 'tmp' ); // false == $val
  * $val = $obj->is_empty();         // true == $val
- * echo $obj->tmp;                  // prints null
+ * echo $obj->tmp;                  // Output:
  * </code>
  * @package Msls
  */
 class MslsGetSet {
 
 	/**
-	 * A generic container for all properties of an instance
+	 * Generic container for all properties of an instance
 	 * @var array $arr
 	 */
 	protected $arr = array();
 
 	/**
-	 * Overloaded set-method 
+	 * Overloaded set-method
 	 * @param mixed $key
 	 * @param mixed $value
 	 */
