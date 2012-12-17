@@ -42,7 +42,15 @@ abstract class MslsMain {
 	 * @param string $class
 	 * @param array $input
 	 */
-	protected function save( $object_id, $class, array $input ) {
+	protected function save( $object_id, $class ) {
+		$input = array(
+			$this->blogs->get_current_blog()->get_language() => (int) $object_id,
+		);
+		foreach ( $_POST as $key => $value ) {
+			if ( false !== strpos( $key, 'msls_input_' ) && !empty( $value ) ) {
+				$input[substr( $key, 11 )] = (int) $value;
+			}
+		}
 		$msla      = new MslsLanguageArray( $input );
 		$options   = new $class( $object_id );
 		$language  = $this->blogs->get_current_blog()->get_language();

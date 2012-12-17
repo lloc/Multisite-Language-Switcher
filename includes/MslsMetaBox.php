@@ -148,14 +148,7 @@ class MslsMetaBox extends MslsMain {
 			if ( !current_user_can( 'edit_post' ) )
 				return;
 		}
-		$arr = array();
-		foreach ( $_POST as $key => $value ) {
-			if ( false !== strpos( $key, 'msls_input_' ) && !empty( $value ) ) {
-				$arr[substr( $key, 11 )] = (int) $value;
-			}
-		}
-		$arr[$this->blogs->get_current_blog()->get_language()] = $post_id;
-		$this->save( $post_id, 'MslsOptionsPost', $arr );
+		$this->save( $post_id, 'MslsOptionsPost' );
 	}
 
 }

@@ -122,14 +122,7 @@ class MslsPostTag extends MslsMain {
 	 * @param int $tt_id
 	 */
 	public function set( $term_id, $tt_id ) {;
-		$this->save(
-			$term_id,
-			'MslsOptionsTax',
-			array_merge( 
-				$_POST['msls'],
-				array( $this->blogs->get_current_blog()->get_language() => $term_id )
-			) 
-		);
+		$this->save( $term_id, 'MslsOptionsTax' );
 	}
 
 }
