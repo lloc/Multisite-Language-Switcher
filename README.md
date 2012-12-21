@@ -2,9 +2,23 @@
 
 [![Build Status](https://api.travis-ci.org/lloc/Multisite-Language-Switcher.png)](https://api.travis-ci.org/lloc/Multisite-Language-Switcher)
 
-A simple but powerful plugin that will help you to manage the relations of posts, pages, custom post types, categories, tags and custom taxonomies in your multilingual multisite-installation.
+A simple, powerful and easy to use plugin that will add 
+multilingual support to a WordPress 
+[multisite](http://codex.wordpress.org/Create_A_Network) 
+installation, i.e. multiple subdomains or folders (if you need to 
+set up multiple sites across multiple domains, you'll also want to 
+use the
+[WordPress MU Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/)
+plugin as well - as long as the domains are all hosted on the 
+same server.).
 
-The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition, I would like to thank [Jürgen Mayer](http://designetage.com/) for making the banner of this plugin.
+The Multisite Language Switcher enables you to manage translations of 
+posts, pages, custom post types, categories, tags and custom taxonomies.
+
+The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). 
+Thanks to Mark James for his great work. In addition I would like to 
+thank [Jürgen Mayer](http://designetage.com/) for creating the plugin's 
+banner.
 
 ## Translators
 
@@ -20,15 +34,27 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 *  Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
 *  Polish (pl_PL) - [Kamil Frejlich](http://www.mojito-networks.com/)
 
-If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the _Multisite Language Switcher_. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
+If you have created your own language pack, or have an update of an 
+existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
+and MO so that I can bundle it into the Multisite Language Switcher. 
+You can download the latest POT file
+[from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
 ## Installation
 
-*  download the plugin
-*  uncompress it with your preferred unzip programme
-*  copy the entire directory in your plugin directory of your wordpress blog (/wp-content/plugins)
-*  activate the plugin in your plugin page
-*  set some configuration in Options -> Multisite Language Switcher
-*  set the relations of your pages and posts in Posts -> Edit or Page -> Edit and custom post types, categories and tags as well 
-*  now you can use the widget and/or the content_filter which displays a hint if a translation is available
-*  optionally you can use a line like `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme-files
+*  Download the plugin and uncompress it with your preferred unzip programme
+*  Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins)
+*  Activate the plugin in your plugin administration page
+*  Set the configuration in Options -> Multisite Language Switcher
+
+Now you can: 
+
+*  connect your translated pages and posts in Posts -> Edit or Page -> Edit
+*  connect your translated categories and tags in Posts -> Categories or Post -> Tags
+*  connect your Custom Post Types and Custom Taxonomies across languages
+*  use a widget and/or a content_filter which displays a hint to the user if a translation is available
+*  optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
+
+Review the
+[Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki)
+for more information.

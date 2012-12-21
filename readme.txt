@@ -4,18 +4,33 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2.1
-Tested up to: 3.5
+Tested up to: 3.6-alpha
 Stable tag: 0.9.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple, powerful and easy to use plugin that will help you to manage your contents in a multilingual multisite-installation.
+A simple, powerful and easy to use plugin that will help you to 
+manage multilingual content in a multisite WordPress installation.
 
 == Description ==
 
-A simple, powerful and easy to use plugin that will help you to manage the relations of posts, pages, custom post types, categories, tags and custom taxonomies in your multilingual multisite-installation.
+A simple, powerful and easy to use plugin that will add 
+multilingual support to a WordPress 
+[multisite](http://codex.wordpress.org/Create_A_Network) 
+installation, i.e. multiple subdomains or folders (if you need to 
+set up multiple sites across multiple domains, you'll also want to 
+use the
+[WordPress MU Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/)
+plugin as well - as long as the domains are all hosted on the 
+same server.).
 
-The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition, I would like to thank [Jürgen Mayer](http://designetage.com/) for making the banner of this plugin.
+The Multisite Language Switcher enables you to manage translations of 
+posts, pages, custom post types, categories, tags and custom taxonomies.
+
+The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). 
+Thanks to Mark James for his great work. In addition I would like to 
+thank [Jürgen Mayer](http://designetage.com/) for creating the plugin's 
+banner. 
 
 = Translators =
 * German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
@@ -30,28 +45,60 @@ The plugin is using the flag-icons from [FamFamFam](http://famfamfam.com). Thank
 * Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
 * Polish (pl_PL) - [Kamil Frejlich](http://www.mojito-networks.com/)
 
-If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can bundle it into the Multisite Language Switcher. You can download the latest POT file [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
+If you have created your own language pack, or have an update of an 
+existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
+and MO so that I can bundle it into the Multisite Language Switcher. 
+You can download the latest POT file
+[from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
 == Installation ==
 
-* download the plugin and uncompress it with your preferred unzip programme
-* copy the entire directory in your plugin directory of your wordpress blog (/wp-content/plugins)
-* activate the plugin in your plugin page
-* set some configuration in Options -> Multisite Language Switcher
+* Download the plugin and uncompress it with your preferred unzip programme 
+* Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins) 
+* Activate the plugin in your plugin administration page 
+* Set the configuration in Options -> Multisite Language Switcher 
 
-Now you can
+Now you can: 
 
-* set the relations of your pages and posts in Posts -> Edit or Page -> Edit
-* set the relations of your categories and tags in Posts -> Categories or Post -> Tags
-* use a widget and/or a content_filter which displays a hint if a translation is available
-* optionally you can use a line like `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme-files
+* connect your translated pages and posts in Posts -> Edit or Page -> Edit 
+* connect your translated categories and tags in Posts -> Categories or Post -> Tags
+* connect your Custom Post Types and Custom Taxonomies across languages
+* use a widget and/or a content_filter which displays a hint to the user if a translation is available 
+* optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files 
 
-Have a look at the [Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki) for more information.
+Review the
+[Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki)
+for more information.
+
+== Frequently Asked Questions ==
+
+= Is there a function I can call to get the language of the page the user is currently viewing? =
+
+Yes, you can get the language like that
+
+`$blog     = MslsBlogCollection::instance()->get_current_blog();
+$language = $blog->get_language();`
+
+= I have no language options in the General settings. =
+
+You might read first [WordPress in your language](http://codex.wordpress.org/WordPress_in_Your_Language).
+
+= But I'd like the interface to stay in English. =
+
+You could check out the plugin [Native Dashboard](http://wordpress.org/extend/plugins/wp-native-dashboard/).
+
+== Screenshots ==
+
+1. Plugin configuration
+2. Posts list
+3. Edit post
+4. Widget
 
 == Changelog ==
 
 = 0.9.9 =
-* you can use now the function msls_filter_string() if you'ld like to print the "hint"-string anywhere in your templates
+* Dropdowns for choosing the connections are now text-inputs with jquery-ui autocomplete
+* now you can use `<?php if ( function_exists( 'msls_filter_string' ) ) msls_filter_string(); ?>` if you'ld like to print the "hint"-string anywhere in your templates
 
 = 0.9.8 =
 * Fix of the "MslsOptionsQueryDay.php"-bug
