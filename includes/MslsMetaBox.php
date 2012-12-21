@@ -47,8 +47,7 @@ class MslsMetaBox extends MslsMain {
 	 * Init
 	 */
 	static function init() {
-		$options = MslsOptions::instance();
-		if ( !$options->is_excluded() ) {
+		if ( !MslsOptions::instance()->is_excluded() ) {
 			$obj = new self();
 			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
 			add_action( 'save_post', array( $obj, 'set' ) );
@@ -60,8 +59,7 @@ class MslsMetaBox extends MslsMain {
 	 * Add
 	 */
 	public function add() {
-		$pt_arr = MslsPostType::instance()->get();
-		foreach ( $pt_arr as $post_type ) {
+		foreach ( MslsPostType::instance()->get() as $post_type ) {
 			add_meta_box(
 				'msls',
 				__( 'Multisite Language Switcher', 'msls' ),
@@ -81,20 +79,20 @@ class MslsMetaBox extends MslsMain {
 		if ( $blogs ) {
 			global $post;
 			$post_type = get_post_type( $post->ID );
-			$mydata    = new MslsOptionsPost( $post->ID );
+			$my_data   = new MslsOptionsPost( $post->ID );
 			$temp      = $post;
 			$items     = '';
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
-				$lang = $blog->get_language();
-				$icon = MslsAdminIcon::create()
+				$lang  = $blog->get_language();
+				$icon  = MslsAdminIcon::create()
 					->set_language( $lang )
 					->set_src( $this->options->get_flag_url( $lang ) );
 				$value = $title = '';
-				if ( $mydata->has_value( $lang ) ) {
-					$icon->set_href( $mydata->$lang );
-					$value = $mydata->$lang;
+				if ( $my_data->has_value( $lang ) ) {
+					$icon->set_href( $my_data->$lang );
+					$value = $my_data->$lang;
 					$title = get_the_title( $value );
 				}
 				$items .= sprintf(

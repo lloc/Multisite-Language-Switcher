@@ -56,18 +56,16 @@ class MslsPostTag extends MslsMain {
 	}
 
 	/**
-	 * Check for taxonomy
+	 * Check the taxonomy
 	 * @return string
 	 */
 	public static function check() {
-		$options = MslsOptions::instance();
-		if ( $options->is_excluded() || !isset( $_REQUEST['taxonomy'] ) ) {
+		if ( MslsOptions::instance()->is_excluded() || !isset( $_REQUEST['taxonomy'] ) ) {
 			$type = MslsContentTypes::create()->get_request();
 			if ( !empty( $type ) ) {
 				$tax = get_taxonomy( $type );
-				if ( $tax && current_user_can( $tax->cap->manage_terms ) ) {
+				if ( $tax && current_user_can( $tax->cap->manage_terms ) )
 					return $type;
-				}
 			}
 		}
 		return '';
@@ -82,8 +80,8 @@ class MslsPostTag extends MslsMain {
 		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
 		$blogs   = $this->blogs->get();
 		if ( $blogs ) {
-			$mydata = MslsOptionsTax::create( $term_id );
-			$type   = MslsContentTypes::create()->get_request();
+			$my_data = MslsOptionsTax::create( $term_id );
+			$type    = MslsContentTypes::create()->get_request();
 			printf(
 				'<tr>
 				<th colspan="2">
@@ -97,14 +95,16 @@ class MslsPostTag extends MslsMain {
 			);
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
-				$lang = $blog->get_language();
-				$icon = MslsAdminIcon::create()->set_language( $lang )->set_src( $this->options->get_flag_url( $lang ) );
+				$lang  = $blog->get_language();
+				$icon  = MslsAdminIcon::create()
+					->set_language( $lang )
+					->set_src( $this->options->get_flag_url( $lang ) );
 				$value = $title = '';
-				if ( $mydata->has_value( $lang ) ) {
-					$term = get_term( $mydata->$lang, $type ); 
+				if ( $my_data->has_value( $lang ) ) {
+					$term = get_term( $my_data->$lang, $type ); 
 					if ( is_object( $term ) ) { 
-						$icon->set_href( $mydata->$lang );
-						$value = $mydata->$lang;
+						$icon->set_href( $my_data->$lang );
+						$value = $my_data->$lang;
 						$title = $term->name;
 					}
 				}
