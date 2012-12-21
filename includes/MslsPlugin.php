@@ -53,6 +53,33 @@ class MslsPlugin {
 	 * Uninstall plugin
 	 * @todo Write the uninstall-method
 	 */
-	public static function uninstall() { }
+	public static function uninstall( $network_wide ) {
+		global $wpdb;
+		if ( $network_wide ) {
+			$blogs = $wpdb->get_results( "SELECT blog_id FROM {$wpdb->blogs} WHERE blog_id != {$wpdb->blogid} AND site_id = '{$wpdb->siteid}' AND spam = '0' AND deleted = '0' AND archived = '0'", ARRAY_A ); 
+			foreach ( $blogs as $blog ) {
+				switch_to_blog( $blog['blog_id'] );
+				self::cleanup();
+				restore_current_blog();
+			}
+		}
+		self::cleanup();
+	}
+
+	/**
+	 * Cleanup the options
+	 * 
+	 * Cleanup (remove) all values of the current blogs which are stored
+	 * in the options-table and return the boolean true if it was 
+	 * successful.
+	 * @return bool
+	 */
+	public static function cleanup() {
+		if ( delete_option( 'msls' ) ) {
+			if ( $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'msls_%'" ) !== false )
+				return true;
+		}
+		return false;
+	}
 
 }
