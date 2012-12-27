@@ -14,7 +14,8 @@ class MslsPlugin {
 	/**
 	 * Register widget
 	 * 
-	 * If the current blog isn't excluded the widget will be registered  
+	 * The widget will only be registered if the current blog is not 
+	 * excluded in the configuration of the plugin.
 	 */
 	function init_widget() {
 		if ( !MslsOptions::instance()->is_excluded() )
@@ -23,6 +24,9 @@ class MslsPlugin {
 
 	/**
 	 * Load textdomain
+	 * 
+	 * The method will be executed allways on init because we have some
+	 * translatable string in the frontend too.
 	 */
 	public static function init_i18n_support() {
 		load_plugin_textdomain(
@@ -34,11 +38,15 @@ class MslsPlugin {
 
 	/**
 	 * Activate plugin
+	 * 
+	 * There is a check if the multisite feature is active on the 
+	 * activation of the plugin. If it fails the plugin will be
+	 * deactivated and the execution will be terminated immediately.
 	 */
 	public static function activate() {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) 
 			return; 
-		deactivate_plugins( __FILE__ );
+		deactivate_plugins( MSLS_PLUGIN__FILE__ );
 		die(
 			"This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick='window.open(this.href); return false;' href='http://codex.wordpress.org/Create_A_Network'>this post</a> if you don't know the meaning.\n"
 		);
@@ -52,6 +60,9 @@ class MslsPlugin {
 
 	/**
 	 * Uninstall plugin
+	 * 
+	 * The plugin data in all blogs of the current network will be 
+	 * deleted after the uninstall procedure. 
 	 * @return bool
 	 */
 	public static function uninstall() {
