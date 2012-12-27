@@ -90,9 +90,8 @@ class MslsPlugin {
 	/**
 	 * Cleanup the options
 	 * 
-	 * Cleanup (remove) all values of the current blogs which are stored
-	 * in the options-table and return the boolean true if it was 
-	 * successful.
+	 * Removes all values of the current blogs which are stored in the 
+	 * options-table and returns true if it was successful.
 	 * @return bool
 	 */
 	public static function cleanup() {
