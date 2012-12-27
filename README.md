@@ -42,7 +42,9 @@ If you have created your own language pack, or have an update of an
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
 and MO so that I can bundle it into the Multisite Language Switcher. 
 You can download the latest POT file
-[from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
+[from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot)
+or contribute translations at 
+[https://translate.foe-services.de/projects/msls](https://translate.foe-services.de/projects/msls).
 
 ## Installation
 

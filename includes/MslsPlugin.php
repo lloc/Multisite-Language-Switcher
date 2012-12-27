@@ -12,7 +12,9 @@
 class MslsPlugin {
 
 	/**
-	 * Registers widget
+	 * Register widget
+	 * 
+	 * If the current blog isn't excluded the widget will be registered  
 	 */
 	function init_widget() {
 		if ( !MslsOptions::instance()->is_excluded() )
