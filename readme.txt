@@ -4,7 +4,7 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2.1
-Tested up to: 3.6-alpha
+Tested up to: 3.6
 Stable tag: 0.9.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,6 +98,7 @@ You could check out the plugin [Native Dashboard](http://wordpress.org/extend/pl
 
 = 0.9.9 =
 * Dropdowns for choosing the connections are now text-inputs with jquery-ui autocomplete
+* Plugin nown cleans up the option-tables when uninstalled
 * now you can use `<?php if ( function_exists( 'msls_filter_string' ) ) msls_filter_string(); ?>` if you'ld like to print the "hint"-string anywhere in your templates
 
 = 0.9.8 =

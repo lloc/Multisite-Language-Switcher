@@ -15,8 +15,7 @@ class MslsPlugin {
 	 * Registers widget
 	 */
 	function init_widget() {
-		$options = MslsOptions::instance();
-		if ( !$options->is_excluded() )
+		if ( !MslsOptions::instance()->is_excluded() )
 			register_widget( 'MslsWidget' );
 	}
 
@@ -51,19 +50,28 @@ class MslsPlugin {
 
 	/**
 	 * Uninstall plugin
-	 * @todo Write the uninstall-method
+	 * @return bool
 	 */
-	public static function uninstall( $network_wide ) {
-		global $wpdb;
-		if ( $network_wide ) {
-			$blogs = $wpdb->get_results( "SELECT blog_id FROM {$wpdb->blogs} WHERE blog_id != {$wpdb->blogid} AND site_id = '{$wpdb->siteid}' AND spam = '0' AND deleted = '0' AND archived = '0'", ARRAY_A ); 
-			foreach ( $blogs as $blog ) {
+	public static function uninstall() {
+		/**
+		 * I want to be sure that the user has not deactivated the 
+		 * multisite because I'd like to use switch_to_blog and 
+		 * restore_current_blog
+		 */
+		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
+			global $wpdb;
+			$sql = $wpdb->prepare(
+				"SELECT blog_id FROM {$wpdb->blogs} WHERE blog_id != %d AND site_id = %d",
+				$wpdb->blogid,
+				$wpdb->siteid
+			);
+			foreach ( $wpdb->get_results( $sql, ARRAY_A ) as $blog ) {
 				switch_to_blog( $blog['blog_id'] );
 				self::cleanup();
 				restore_current_blog();
 			}
 		}
-		self::cleanup();
+		return self::cleanup();
 	}
 
 	/**
@@ -76,8 +84,8 @@ class MslsPlugin {
 	 */
 	public static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
-			if ( $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'msls_%'" ) !== false )
-				return true;
+			global $wpdb;
+			return (bool) $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'msls_%'" );
 		}
 		return false;
 	}
