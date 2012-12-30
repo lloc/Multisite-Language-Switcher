@@ -48,7 +48,11 @@ class MslsPlugin {
 			return; 
 		deactivate_plugins( MSLS_PLUGIN__FILE__ );
 		die(
-			"This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick='window.open(this.href); return false;' href='http://codex.wordpress.org/Create_A_Network'>this post</a> if you don't know the meaning.\n"
+			"This plugin needs the activation of the 
+			multisite-feature for working properly. Please read <a 
+			onclick='window.open(this.href); return false;' 
+			href='http://codex.wordpress.org/Create_A_Network'>this 
+			post</a> if you don't know the meaning.\n"
 		);
 	}
 
@@ -97,7 +101,11 @@ class MslsPlugin {
 	public static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
 			global $wpdb;
-			return (bool) $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'msls_%'" );
+			$sql = $wpdb->prepare(
+				"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+				'msls_%'
+			);
+			return (bool) $wpdb->query( $sql );
 		}
 		return false;
 	}
