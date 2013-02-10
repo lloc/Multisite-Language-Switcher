@@ -10,7 +10,7 @@ Author URI: http://lloc.de/
 */
 
 /*
-Copyright 2011  Dennis Ploetner  (email : re@lloc.de)
+Copyright 2013  Dennis Ploetner  (email : re@lloc.de)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as 

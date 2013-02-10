@@ -37,6 +37,7 @@ banner.
 *  Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69)
 *  Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
 *  Polish (pl_PL) - [Kamil Frejlich](http://www.mojito-networks.com/)
+*  Lithuanian (lt_LT) - Ovidijus Pukys
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 

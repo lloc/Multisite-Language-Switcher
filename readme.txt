@@ -44,6 +44,8 @@ banner.
 * Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69) 
 * Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
 * Polish (pl_PL) - [Kamil Frejlich](http://www.mojito-networks.com/)
+* Lithuanian (lt_LT) - Ovidijus Pukys
+
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
@@ -98,7 +100,7 @@ You could check out the plugin [Native Dashboard](http://wordpress.org/extend/pl
 
 = 0.9.9 =
 * Dropdowns for choosing the connections are now text-inputs with jquery-ui autocomplete
-* Plugin nown cleans up the option-tables when uninstalled
+* Plugin cleans up the option-tables now when uninstalled
 * now you can use `<?php if ( function_exists( 'msls_filter_string' ) ) msls_filter_string(); ?>` if you'ld like to print the "hint"-string anywhere in your templates
 
 = 0.9.8 =
