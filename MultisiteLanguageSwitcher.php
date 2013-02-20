@@ -166,10 +166,13 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 * Get the output for using the links to the translations in your code
 	 * @return string
 	 * @package Msls
+	 * @param array $arr
 	 * @see the_msls()
 	 */
-	function get_the_msls() {
+	function get_the_msls( array $arr = array() ) {
 		$obj = new MslsOutput();
+		if ( $arr )
+			$obj->set_tags( $arr );
 		return( sprintf( '%s', $obj ) );
 	}
 
@@ -179,10 +182,11 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 * You can call of this function directly like that
 	 * <code>if ( function_exists ( 'the_msls' ) ) the_msls();</code>
 	 * @package Msls
+	 * @param array $arr
 	 * @uses get_the_msls()
 	 */
-	function the_msls() {
-		echo get_the_msls();
+	function the_msls( array $arr = array() ) {
+		echo get_the_msls( $arr );
 	}
 
 }

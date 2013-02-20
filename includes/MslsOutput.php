@@ -11,12 +11,19 @@
  */
 class MslsOutput extends MslsMain {
 
+	protected $tags;
+
 	/**
 	 * Init
-	 * 
-	 * Just a placeholder
 	 */
-	public static function init() { }
+	public static function init() {
+		$this->tags = array(
+			'before_item'   => $this->options->before_item,
+			'after_item'    => $this->options->after_item,
+			'before_output' => $this->options->before_output,
+			'after_output'  => $this->options->after_output,
+		);
+	}
 
 	/**
 	 * Get the output as array
@@ -75,7 +82,7 @@ class MslsOutput extends MslsMain {
 	 * Returns a string when the object will be treated like a string
 	 * @see get_the_msls()
 	 * @return string
-	 */ 
+	 */
 	public function __toString() {
 		$arr = $this->get(
 			(int) $this->options->display,
@@ -84,16 +91,24 @@ class MslsOutput extends MslsMain {
 		);
 		$str = '';
 		if ( !empty( $arr ) ) {
-			$str = $this->options->before_output .
-				$this->options->before_item .
+			$str =
+				$this->tags->before_output .
+				$this->tags->before_item .
 				implode(
-					$this->options->after_item . $this->options->before_item,
+					$this->tags->after_item . $this->tags->before_item,
 					$arr
 				) .
-				$this->options->after_item .
-				$this->options->after_output;
+				$this->tags->after_item .
+				$this->tags->after_output;
 		}
 		return $str;
+	}
+
+	public function set_tags( array $arr ) {
+		foreach ( $arr as $key => $value ) {
+			if ( isset( $this->tags[$key] ) )
+				$this->tags[$key] = $value;
+		}
 	}
 
 }
