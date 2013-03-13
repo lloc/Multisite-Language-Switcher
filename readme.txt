@@ -45,7 +45,7 @@ banner.
 * Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
 * Polish (pl_PL) - [Kamil Frejlich](http://www.mojito-networks.com/)
 * Lithuanian (lt_LT) - Ovidijus Pukys
-
+* Catalan (ca_ES) - Joan López
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
@@ -102,6 +102,10 @@ You could check out the plugin [Native Dashboard](http://wordpress.org/extend/pl
 * Dropdowns for choosing the connections are now text-inputs with jquery-ui autocomplete
 * Plugin cleans up the option-tables now when uninstalled
 * now you can use `<?php if ( function_exists( 'msls_filter_string' ) ) msls_filter_string(); ?>` if you'ld like to print the "hint"-string anywhere in your templates
+* language files for ca_ES added Joan López
+
+= 0.9.8.1 =
+* Fix for "All inone event calendar"
 
 = 0.9.8 =
 * Fix of the "MslsOptionsQueryDay.php"-bug
