@@ -1,0 +1,140 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2012-05-22 16:32:53+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-04-02 10:45+0100\n"
+"Last-Translator: Dennis Ploetner <re@lloc.de>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#: MultisiteLanguageSwitcher.php:117
+msgid "%s and %s"
+msgstr "% és %"
+
+#: MultisiteLanguageSwitcher.php:126
+msgid "This post is also available in %s."
+msgstr "Ez a hozzászólás elérhető más nyelven is:%"
+
+#: includes/MslsAdmin.php:19
+#: includes/MslsAdmin.php:20
+#: includes/MslsMetaBox.php:32
+#: includes/MslsPostTag.php:42
+#: includes/MslsWidget.php:17
+msgid "Multisite Language Switcher"
+msgstr "Multisite Nyelv Választó"
+
+#: includes/MslsAdmin.php:32
+msgid "Multisite Language Switcher is almost ready. You must <a href=\"%s\">complete the configuration process</a>."
+msgstr "A Multisite Nyelv Választó majdnem kész. A következő linken <a href=\"%s\"> befejezheted a telepítést."
+
+#: includes/MslsAdmin.php:42
+msgid "Multisite Language Switcher Options"
+msgstr "Multisite Nyelv Választó Opciók"
+
+#: includes/MslsAdmin.php:44
+msgid "To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "A maximális rugalmasság elérésére minden blog-ot külön kell konfigurálnod."
+
+#: includes/MslsAdmin.php:50
+msgid "Configure"
+msgstr "Konfigurálás"
+
+#: includes/MslsAdmin.php:50
+#: includes/MslsMetaBox.php:113
+msgid "Update"
+msgstr "Frissítés"
+
+#: includes/MslsAdmin.php:90
+msgid "Main Settings"
+msgstr "Beállítások"
+
+#: includes/MslsAdmin.php:94
+msgid "Display"
+msgstr "Mutat"
+
+#: includes/MslsAdmin.php:95
+msgid "Sort output by description"
+msgstr "Listázza az eredményt leírás szerint"
+
+#: includes/MslsAdmin.php:96
+msgid "Exclude this blog from output"
+msgstr "Ezt a blogot ne vegye bele az eredmények közé"
+
+#: includes/MslsAdmin.php:97
+msgid "Show only links with a translation"
+msgstr "Csak azokat a linkeket mutassa, amik rendelkeznek fordítással"
+
+#: includes/MslsAdmin.php:98
+msgid "Display link to the current language"
+msgstr "Az aktuális nyelven mutasson linkeket."
+
+#: includes/MslsAdmin.php:99
+msgid "Description"
+msgstr "Leírás"
+
+#: includes/MslsAdmin.php:100
+msgid "Text/HTML before the list"
+msgstr "Szöveg/HTML a lista előtt"
+
+#: includes/MslsAdmin.php:101
+msgid "Text/HTML after the list"
+msgstr "Szöveg/HTML a lista után"
+
+#: includes/MslsAdmin.php:102
+msgid "Text/HTML before each item"
+msgstr "Szöveg/HTML az egységek előtt"
+
+#: includes/MslsAdmin.php:103
+msgid "Text/HTML after each item"
+msgstr "Szöveg/HTML az egységek után"
+
+#: includes/MslsAdmin.php:104
+msgid "Add hint for available translations"
+msgstr "Adjon útmutatót az elérhető fordításokról"
+
+#: includes/MslsAdmin.php:105
+msgid "Hint priority"
+msgstr "Az útmutatók prioritása"
+
+#: includes/MslsAdmin.php:106
+msgid "Custom URL for flag-images"
+msgstr "Egyedi URL-címek a zászlóképekhez"
+
+#: includes/MslsAdminIcon.php:133
+msgid "Edit the translation in the %s-blog"
+msgstr "Fordítás szerkesztése a % blogban"
+
+#: includes/MslsAdminIcon.php:140
+msgid "Create a new translation in the %s-blog"
+msgstr "Új fordítás készítése a % blogban"
+
+#: includes/MslsLink.php:41
+msgid "Flag and description"
+msgstr "Zászló és leírás"
+
+#: includes/MslsLinkImageOnly.php:22
+msgid "Flag only"
+msgstr "Csak zászló"
+
+#: includes/MslsLinkTextImage.php:22
+msgid "Description and flag"
+msgstr "Leírás és zászló"
+
+#: includes/MslsLinkTextOnly.php:22
+msgid "Description only"
+msgstr "Csak leírás"
+
+#: includes/MslsMetaBox.php:120
+msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
+msgstr "Meg kell határoznod legalább egy másik blogot egy másik nyelven ahhoz, hogy használni tudd ennek a plugin-nak a lehetőségeit!"
+
+#: includes/MslsWidget.php:61
+msgid "Title"
+msgstr "Cím"
+
