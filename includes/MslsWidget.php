@@ -28,14 +28,13 @@ class MslsWidget extends WP_Widget {
 	 * @uses MslsOutput
 	 */
 	public function widget( $args, $instance ) {
-		extract( $args );
-		echo $before_widget;
+		echo $args['before_widget'];
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		if ( $title )
-			echo $before_title . $title . $after_title;
+			echo $args['before_title'], $title, $args['after_title'];
 		$obj = new MslsOutput();
 		echo $obj;
-		echo $after_widget;
+		echo $args['after_widget'];
 	}
 
 	/**
