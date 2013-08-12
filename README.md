@@ -41,6 +41,7 @@ banner.
 *  Catalan (ca_ES) - Joan López
 *  Czech (cs_CZ) - Rastr
 *  Hungarian (hu_HU) - RobiG
+*  Georgian (ka_GE) - [Jas Saran](http://www.gwebpro.com)
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
