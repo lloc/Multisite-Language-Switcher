@@ -103,7 +103,7 @@ You could check out the plugin [Native Dashboard](http://wordpress.org/extend/pl
 == Changelog ==
 
 = 0.9.9 =
-* Dropdowns for choosing the connections are now text-inputs with jquery-ui autocomplete
+* Option to transform the dropdowns for choosing the connections into text-inputs with jquery-ui autocomplete
 * Plugin cleans up the option-tables now when uninstalled
 * now you can use `<?php if ( function_exists( 'msls_filter_string' ) ) msls_filter_string(); ?>` if you'ld like to print the "hint"-string anywhere in your templates
 * language files for ca_ES by Joan López and cs_CZ by Rastr added

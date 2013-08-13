@@ -16,11 +16,6 @@ class MslsAdmin extends MslsMain {
 	 * Init
 	 */
 	public static function init() {
-		wp_enqueue_script(
-			'msls-autocomplete',
-			plugins_url( 'script.js', MSLS_PLUGIN__FILE__ ),
-			array( 'jquery-ui-autocomplete' )
-		);
 		wp_register_style(
 			'msls-styles',
 			plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ),
@@ -28,6 +23,11 @@ class MslsAdmin extends MslsMain {
 			MSLS_PLUGIN_VERSION
 		);
 		wp_enqueue_style( 'msls-styles' );
+		wp_enqueue_script(
+			'msls-autocomplete',
+			plugins_url( 'script.js', MSLS_PLUGIN__FILE__ ),
+			array( 'jquery-ui-autocomplete' )
+		);
 		$obj = new self();
 		add_options_page(
 			__( 'Multisite Language Switcher', 'msls' ),
@@ -41,7 +41,7 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
-	 * There is something wrong? Here comes the message ...
+	 * There is something wrong? Here comes the message…
 	 */
 	public function warning() {
 		$message = '';
@@ -81,9 +81,9 @@ class MslsAdmin extends MslsMain {
 	 * Create a submenu which contains links to all blogs of the current user
 	 */
 	protected function subsubsub() {
-		$arr           = array();
-		$blogs_objects = $this->blogs->get_objects();
-		foreach ( $blogs_objects as $id => $blog ) {
+		$arr   = array();
+		$b_obj = $this->blogs->get_objects();
+		foreach ( $b_obj as $id => $blog ) {
 			if ( $this->blogs->is_plugin_active( $blog->userblog_id ) ) {
 				$arr[] = sprintf(
 					'<a href="%s"%s>%s / %s</a>',
@@ -116,6 +116,7 @@ class MslsAdmin extends MslsMain {
 			__CLASS__
 		);
 		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'section' );
+		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'section' );
 		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'msls' ), array( $this, 'sort_by_description' ), __CLASS__, 'section' );
 		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'msls' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'section' );
 		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'msls' ), array( $this, 'only_with_translation' ), __CLASS__, 'section' );
@@ -133,7 +134,8 @@ class MslsAdmin extends MslsMain {
 	/**
 	 * Section is just a placeholder for now
 	 */
-	public function section() {}
+	public function section() {
+	}
 
 	/**
 	 * Shows the select-form-field 'display'
@@ -144,6 +146,16 @@ class MslsAdmin extends MslsMain {
 			MslsLink::get_types_description(),
 			$this->options->display
 		);
+	}
+
+	/**
+	 * Activate autocomplete
+	 * 
+	 * You can decide if you want to activate the experimental autocomplete
+	 * input fields in the backend instead of the traditional select-menus.
+	 */
+	public function activate_autocomplete() {
+		echo $this->render_checkbox( 'activate_autocomplete' );
 	}
 
 	/**
@@ -319,7 +331,7 @@ class MslsAdmin extends MslsMain {
 	 * @return array Validated input 
 	 */ 
 	public function validate( array $input ) {
-		$input['display']   = (
+		$input['display'] = (
 			!isset( $input['display'] ) ?
 			0 :
 			(int) $input['display']
