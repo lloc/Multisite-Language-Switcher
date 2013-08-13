@@ -42,7 +42,7 @@ banner.
 *  Czech (cs_CZ) - Rastr
 *  Hungarian (hu_HU) - RobiG
 *  Georgian (ka_GE) - [Jas Saran](http://www.gwebpro.com)
-*  Greek (el) - [Christoforos Aivazidis](www.aivazidis.org)
+*  Greek (el) - [Christoforos Aivazidis](http://www.aivazidis.org)
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
