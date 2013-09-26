@@ -1,10 +1,10 @@
-=== Multisite Language Switcher ===
+﻿=== Multisite Language Switcher ===
 
 Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2.1
-Tested up to: 3.6
+Tested up to: 3.6.1
 Stable tag: 0.9.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -92,6 +92,10 @@ You might read first [WordPress in your language](http://codex.wordpress.org/Wor
 = But I'd like the interface to stay in English. =
 
 You could check out the plugin [Native Dashboard](http://wordpress.org/extend/plugins/wp-native-dashboard/).
+
+= Do I really need a multisite? =
+
+It's up to you - of course. Yes, if you want to use the Multisite Language Switcher.
 
 == Screenshots ==
 
