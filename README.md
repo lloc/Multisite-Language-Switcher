@@ -26,8 +26,8 @@ banner.
 
 ## Translators
 
-*  German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net) 
-*  Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de)
+*  German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/) 
+*  Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/)
 *  Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/) 
 *  Brazillian Portuguese (pt_BR) - [Victor](http://www.coolweb.com.br/)
 *  Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/) 
@@ -41,8 +41,9 @@ banner.
 *  Catalan (ca_ES) - Joan López
 *  Czech (cs_CZ) - Rastr
 *  Hungarian (hu_HU) - RobiG
-*  Georgian (ka_GE) - [Jas Saran](http://www.gwebpro.com)
-*  Greek (el) - [Christoforos Aivazidis](http://www.aivazidis.org)
+*  Georgian (ka_GE) - [Jas Saran](http://www.gwebpro.com/)
+*  Greek (el) - [Christoforos Aivazidis](http://www.aivazidis.org/)
+*  Serbian (sr_RS) - [Web Hosting Hub](http://www.webhostinghub.com/)
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
