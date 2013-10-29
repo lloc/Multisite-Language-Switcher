@@ -16,17 +16,17 @@ class MslsAdmin extends MslsMain {
 	 * Init
 	 */
 	public static function init() {
-		wp_register_style(
+		wp_enqueue_style(
 			'msls-styles',
 			plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ),
 			array(),
 			MSLS_PLUGIN_VERSION
 		);
-		wp_enqueue_style( 'msls-styles' );
 		wp_enqueue_script(
 			'msls-autocomplete',
 			plugins_url( 'script.js', MSLS_PLUGIN__FILE__ ),
-			array( 'jquery-ui-autocomplete' )
+			array( 'jquery-ui-autocomplete' ),
+			MSLS_PLUGIN_VERSION
 		);
 		$obj = new self();
 		add_options_page(
@@ -48,7 +48,7 @@ class MslsAdmin extends MslsMain {
 		if ( $this->options->is_empty() ) {
 			$message = sprintf(
 				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
-				admin_url( '/options-general.php?page=MslsAdmin' )
+				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
 			);
 		}
 		if ( '' != $message ) {

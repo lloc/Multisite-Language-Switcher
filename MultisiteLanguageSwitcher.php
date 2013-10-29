@@ -58,6 +58,13 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	}
 
 	/**
+	 * The autoload-stack could be inactive so the function will return false
+	 */
+	if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
+		spl_autoload_register( '__autoload' );
+	spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
+	
+	/**
 	 * Interface for classes which are to register in the MslsRegistry-instance
 	 *
 	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
@@ -73,12 +80,6 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 
 	}
 
-	/**
-	 * The autoload-stack could be inactive so the function will return false
-	 */
-	if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
-		spl_autoload_register( '__autoload' );
-	spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
 
 	register_activation_hook( __FILE__, array( 'MslsPlugin', 'activate' ) );
 	register_deactivation_hook( __FILE__, array( 'MslsPlugin', 'deactivate' ) );
