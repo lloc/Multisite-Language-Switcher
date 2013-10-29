@@ -15,13 +15,16 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 	 * Constructor
 	 */
 	public function __construct() {
-		$args = array(
-			'public'   => true,
-			'_builtin' => false,
-		); 
 		$this->types = array_merge(
-			array( 'post', 'page' ),
-			get_post_types( $args, 'names', 'and' )
+			array( 'post', 'page' ), // we don't need attachment, revision or nav_menu_item here
+			get_post_types(
+				array(
+					'public'   => true,
+					'_builtin' => false,
+				),
+				'names',
+				'and'
+			)
 		);
 		if ( !empty( $_REQUEST['post_type'] ) ) {
 			$this->request = esc_attr( $_REQUEST['post_type'] );

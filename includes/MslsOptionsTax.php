@@ -30,7 +30,7 @@ class MslsOptionsTax extends MslsOptions {
 	 */
 	public static function create( $id = 0 ) {
 		if ( is_admin() ) {
-			$id  = (int) $id;
+			$id  = intval( $id );
 			$obj = MslsContentTypes::create();
 			if ( $obj->is_taxonomy() ) {
 				switch ( $obj->get_request() ) {
