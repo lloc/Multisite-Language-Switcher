@@ -22,10 +22,12 @@ class MslsOutput extends MslsMain {
 	}
 
 	/**
-	 * Get the output as array
+	 * Creates and gets the output as an array
 	 * @param string $display
 	 * @param bool frontend
 	 * @param bool $exists
+	 * @uses MslsOptions
+	 * @uses MslsLink
 	 * @return array
 	 */
 	public function get( $display, $filter = false, $exists = false ) {
@@ -85,20 +87,20 @@ class MslsOutput extends MslsMain {
 			false,
 			isset( $this->options->only_with_translation )
 		);
-		$str = '';
-		if ( !empty( $arr ) ) {
-			$tags = $this->get_tags();
-			$str  = $tags['before_output'] .
-				$tags['before_item'] .
-				implode( $tags['after_item'] . $tags['before_item'], $arr ) .
-				$tags['after_item'] .
-				$tags['after_output'];
-		}
-		return $str;
+
+		if ( empty( $arr ) )
+			return '';
+		
+		$tags = $this->get_tags();
+		return $tags['before_output'] .
+			$tags['before_item'] .
+			implode( $tags['after_item'] . $tags['before_item'], $arr ) .
+			$tags['after_item'] .
+			$tags['after_output'];
 	}
 
 	/**
-	 * Get tags for the output
+	 * Gets tags for the output
 	 * @return array
 	 */
 	public function get_tags() {
@@ -114,7 +116,7 @@ class MslsOutput extends MslsMain {
 	}
 
 	/**
-	 * Set tags for the output
+	 * Sets tags for the output
 	 * @param array $arr
 	 * @return MslsOutput
 	 */

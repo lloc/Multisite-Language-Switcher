@@ -31,8 +31,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
-if ( !class_exists( 'MslsAutoloader' ) ) {
-
+if ( ! class_exists( 'MslsAutoloader' ) ) {
+	/**
+	 * Lets define some constants
+	 */
 	if ( !defined( 'MSLS_PLUGIN_VERSION' ) )
 		define( 'MSLS_PLUGIN_VERSION', '0.9.9' );
 	if ( !defined( 'MSLS_PLUGIN_PATH' ) )
@@ -80,12 +82,11 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 
 	}
 
-
 	register_activation_hook( __FILE__, array( 'MslsPlugin', 'activate' ) );
 	register_deactivation_hook( __FILE__, array( 'MslsPlugin', 'deactivate' ) );
 	register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
 
-	add_action( 'init', array( 'MslsPlugin', 'init_i18n_support' ) );
+	add_action( 'plugins_loaded', array( 'MslsPlugin', 'init_i18n_support' ) );
 	add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
 
 	if ( is_admin() ) {

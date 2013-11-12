@@ -18,7 +18,7 @@ class MslsPlugin {
 	 * excluded in the configuration of the plugin.
 	 */
 	function init_widget() {
-		if ( !MslsOptions::instance()->is_excluded() )
+		if ( ! MslsOptions::instance()->is_excluded() )
 			register_widget( 'MslsWidget' );
 	}
 

@@ -25,7 +25,7 @@ class MslsWidget extends WP_Widget {
 	 * Output of the widget in the frontend
 	 * @param array $args
 	 * @param array $instance
-	 * @uses MslsOutput
+	 * @user MslsOutput
 	 */
 	public function widget( $args, $instance ) {
 		$obj = new MslsOutput();
@@ -34,7 +34,7 @@ class MslsWidget extends WP_Widget {
 		
 		echo $args['before_widget'];
 		if ( $title )
-			echo $args['before_title'], $title, $args['after_title'];
+			echo $args['before_title'], esc_attr( $title ), $args['after_title'];
 		echo $obj;
 		echo $args['after_widget'];
 	}
