@@ -28,9 +28,15 @@ class MslsWidget extends WP_Widget {
 	 * @user MslsOutput
 	 */
 	public function widget( $args, $instance ) {
-		$obj = new MslsOutput();
+		$obj   = new MslsOutput();
+		$title = $instance['title'];
 
-		$title = apply_filters( 'widget_title', $instance['title'] );
+		/**
+		 * Filters the title of the widget
+		 * @param string $title
+		 */
+		if ( has_filter( 'widget_title' ) )
+			$title = apply_filters( 'widget_title', $title );
 		
 		echo $args['before_widget'];
 		if ( $title )

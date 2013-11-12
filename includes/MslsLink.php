@@ -66,7 +66,7 @@ class MslsLink extends MslsGetSet {
 				return $obj;
 		}
 		$types = self::get_types();
-		if ( !in_array( $display, array_keys( $types ), true ) )
+		if ( ! in_array( $display, array_keys( $types ), true ) )
 			$display = 0;
 		return new $types[$display];
 	}

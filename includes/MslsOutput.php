@@ -31,20 +31,23 @@ class MslsOutput extends MslsMain {
 	 * @return array
 	 */
 	public function get( $display, $filter = false, $exists = false ) {
-		$arr   = array();
+		$arr = array();
+
 		$blogs = $this->blogs->get_filtered( $filter );
 		if ( $blogs ) {
 			$mydata = MslsOptions::create();
 			$link   = MslsLink::create( $display );
+
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
-				$current  = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
+
+				$current = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
 				if ( $current ) {
 					$url = $mydata->get_current_link();
 				}
 				else {
 					switch_to_blog( $blog->userblog_id );
-					if ( 'MslsOptions' != get_class( $mydata ) && $exists && !$mydata->has_value( $language ) ) {
+					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ! $mydata->has_value( $language ) ) {
 						restore_current_blog();
 						continue;
 					}
@@ -73,6 +76,7 @@ class MslsOutput extends MslsMain {
 				}
 			}
 		}
+
 		return $arr;
 	}
 

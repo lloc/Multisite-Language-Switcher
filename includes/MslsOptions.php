@@ -135,6 +135,11 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	public function get_permalink( $language ) {
 		$postlink = $this->get_postlink( $language );
 		if ( has_filter( 'msls_options_get_permalink' ) ) {
+			/**
+			 * Filters the url by language
+			 * @param string $postlink
+			 * @param string $language
+			 */
 			$postlink = apply_filters(
 				'msls_options_get_permalink',
 				$postlink,
