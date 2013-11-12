@@ -34,7 +34,8 @@ class MslsGetSet {
 	protected $arr = array();
 
 	/**
-	 * Overloaded set-method
+	 * Overloads the set method.
+	 * 
 	 * @param mixed $key
 	 * @param mixed $value
 	 */
@@ -45,7 +46,8 @@ class MslsGetSet {
 	}
 
 	/**
-	 * Overloaded get-method
+	 * Overloads the get method.
+	 * 
 	 * @param mixed $key
 	 * @return mixed
 	 */
@@ -54,7 +56,8 @@ class MslsGetSet {
 	}
 
 	/**
-	 * Overloaded isset-method
+	 * Overloads the isset method.
+	 * 
 	 * @param mixed $key
 	 * @return bool
 	 */
@@ -63,7 +66,8 @@ class MslsGetSet {
 	}
 
 	/**
-	 * Overloaded unset-method
+	 * Overloads the unset method.
+	 * 
 	 * @param mixed $key
 	 */
 	final public function __unset( $key ) {
@@ -72,7 +76,8 @@ class MslsGetSet {
 	}
 
 	/**
-	 * Reset the properties-container to an empty array
+	 * Resets the properties container to an empty array.
+	 * 
 	 * @return MslsGetSet
 	 */
 	public function reset() {
@@ -81,12 +86,19 @@ class MslsGetSet {
 	}
 
 	/**
-	 * Check if the array has an non empty item with the specified key
+	 * Checks if the array has an non empty item with the specified key name.
 	 * 
 	 * This is method is similar to the overloaded __isset-method since
-	 * __set cleans empty properties but I use for example 
-	 * $obj->has_value( $temp ) and not isset( $obj->$temp ) which is
-	 * the same but a little bit ugly.
+	 * __set cleans empty properties but I use for example
+	 * 
+	 *     $obj->has_value( $temp )
+	 * 
+	 * and not
+	 * 
+	 *     isset( $obj->$temp )
+	 * 
+	 * which is the same but in my opinion a little bit ugly.
+	 * 
 	 * @param string $key
 	 * @return bool
 	 */ 
@@ -95,7 +107,8 @@ class MslsGetSet {
 	}
 
 	/**
-	 * Check if the properties-container is empty
+	 * Checks if the properties-container is empty.
+	 * 
 	 * @return bool
 	 */ 
 	public function is_empty() {
@@ -103,7 +116,8 @@ class MslsGetSet {
 	}
 
 	/**
-	 * Get the complete properties-container as an array
+	 * Gets the complete properties-container as an array.
+	 * 
 	 * @return array
 	 */
 	final public function get_arr() {
