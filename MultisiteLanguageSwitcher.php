@@ -44,17 +44,19 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * The Autoloader does all the magic when it comes to include a file
+	 * 
 	 * @package Msls
 	 */
 	class MslsAutoloader {
 
 		/**
 		 * Static loader method
-		 * @param string $cls
+		 * 
+		 * @param string $class
 		 */
-		public static function load( $cls ) {
-			if ( 'Msls' == substr( $cls, 0, 4 ) ) 
-				require_once dirname( __FILE__ ) . '/includes/' . $cls . '.php';
+		public static function load( $class ) {
+			if ( 'Msls' == substr( $class, 0, 4 ) ) 
+				require_once dirname( __FILE__ ) . '/includes/' . $class . '.php';
 		}
 
 	}
@@ -70,12 +72,14 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 	 * Interface for classes which are to register in the MslsRegistry-instance
 	 *
 	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
+	 * 
 	 * @package Msls
 	 */
 	interface IMslsRegistryInstance {
 
 		/**
-		 * Instance
+		 * Returnse an instance
+		 * 
 		 * @return object
 		 */
 		public static function instance();
@@ -115,13 +119,15 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * Filter for the_content()
+	 * 
 	 * @package Msls
 	 * @uses MslsOptions
+	 * 
 	 * @param string $content
 	 * @return string
 	 */ 
 	function msls_content_filter( $content ) {
-		if ( !is_front_page() && is_singular() ) {
+		if ( ! is_front_page() && is_singular() ) {
 			$options = MslsOptions::instance();
 			if ( $options->is_content_filter() ) {
 				$content .= msls_filter_string();
@@ -133,8 +139,10 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * Create filterstring for msls_content_filter()
+	 * 
 	 * @package Msls
 	 * @uses MslsOutput
+	 * 
 	 * @param string $pref
 	 * @param string $post
 	 * @return string
@@ -168,10 +176,12 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * Get the output for using the links to the translations in your code
-	 * @return string
+	 * 
 	 * @package Msls
+ 	 * @uses the_msls
+ 	 * 
 	 * @param array $arr
-	 * @see the_msls()
+	 * @return string
 	 */
 	function get_the_msls( array $arr = array() ) {
 		$obj = MslsOutput::init()->set_tags( $arr );
@@ -181,11 +191,14 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 	/**
 	 * Output the links to the translations in your template
 	 * 
-	 * You can call of this function directly like that
-	 * <code>if ( function_exists ( 'the_msls' ) ) the_msls();</code>
+	 * You can call this function directly like that
+	 * 
+	 *     if ( function_exists ( 'the_msls' ) )
+	 *         the_msls();
+	 * 
 	 * @package Msls
+	 * 
 	 * @param array $arr
-	 * @uses get_the_msls()
 	 */
 	function the_msls( array $arr = array() ) {
 		echo get_the_msls( $arr );
