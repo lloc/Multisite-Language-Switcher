@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /**
  * MultisiteLanguageSwitcher
+ * 
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */

@@ -48,17 +48,36 @@ class MslsOutput extends MslsMain {
 				else {
 					switch_to_blog( $blog->userblog_id );
 					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ! $mydata->has_value( $language ) ) {
-						restore_current_blog();
-						continue;
+						/**
+						 * We set $language to false so we can first restore the current blog
+						 * and continue with the next blog right after this important step.
+						 */
+						$language = false;
 					}
-					$url = $mydata->get_permalink( $language );
+					else {
+						$url       = $mydata->get_permalink( $language );
+						$link->txt = $blog->get_description();
+					}
 					restore_current_blog();
 				}
-				$link->txt = $blog->get_description();
+
+				/**
+				 * No language no party...
+				 */
+				if ( ! $language )
+					continue;
+
 				$link->src = $this->options->get_flag_url( $language );
 				$link->alt = $language;
+
 				if ( has_filter( 'msls_output_get' ) ) {
-					$arr[] = apply_filters(
+					/**
+					 * Returns HTML-link for an item of the output-arr
+					 * @param string $url
+					 * @param MslsLink $link
+					 * @param bool current
+					 */
+					$arr[] = (string) apply_filters(
 						'msls_output_get',
 						$url,
 						$link,
@@ -82,7 +101,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Returns a string when the object will be treated like a string
-	 * @see get_the_msls()
+	 * 
 	 * @return string
 	 */
 	public function __toString() {
@@ -105,6 +124,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Gets tags for the output
+	 * 
 	 * @return array
 	 */
 	public function get_tags() {
@@ -121,6 +141,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Sets tags for the output
+	 * 
 	 * @param array $arr
 	 * @return MslsOutput
 	 */
