@@ -45,14 +45,16 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Init
+	 * @return MslsMetaBox
 	 */
 	static function init() {
-		if ( !MslsOptions::instance()->is_excluded() ) {
-			$obj = new self();
+		$obj = new self();
+		if ( ! MslsOptions::instance()->is_excluded() ) {
 			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
 			add_action( 'save_post', array( $obj, 'set' ) );
 			add_action( 'trashed_post', array( $obj, 'delete' ) );
 		}
+		return $obj;
 	}
 
 	/**

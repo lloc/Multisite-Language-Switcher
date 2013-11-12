@@ -25,6 +25,7 @@ abstract class MslsMain {
 
 	/**
 	 * Every child of MslsMain has to define a init-method
+	 * @return MslsMain
 	 */
 	abstract public static function init();
 

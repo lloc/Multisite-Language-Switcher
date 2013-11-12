@@ -139,28 +139,30 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 * @return string
 	 */ 
 	function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-		$obj   = new MslsOutput();
+		$obj = new MslsOutput();
+
 		$links = $obj->get( 1, true, true );
-		if ( !empty( $links ) ) {
-			if ( count( $links ) > 1 ) {
-				$last  = array_pop( $links );
-				$links = sprintf(
-					__( '%s and %s', 'msls' ),
-					implode( ', ', $links ),
-					$last
-				);
-			}
-			else {
-				$links = $links[0];
-			}
-			return $pref .
-				sprintf(
-					__( 'This post is also available in %s.', 'msls' ),
-					$links
-				) .
-				$post;
+		if ( empty( $links ) )
+			return '';
+		
+		if ( count( $links ) > 1 ) {
+			$last  = array_pop( $links );
+			$links = sprintf(
+				__( '%s and %s', 'msls' ),
+				implode( ', ', $links ),
+				$last
+			);
 		}
-		return '';
+		else {
+			$links = $links[0];
+		}
+
+		return $pref .
+			sprintf(
+				__( 'This post is also available in %s.', 'msls' ),
+				$links
+			) .
+			$post;
 	}
 
 	/**
@@ -171,9 +173,7 @@ if ( !class_exists( 'MslsAutoloader' ) ) {
 	 * @see the_msls()
 	 */
 	function get_the_msls( array $arr = array() ) {
-		$obj = new MslsOutput();
-		if ( $arr )
-			$obj->set_tags( $arr );
+		$obj = MslsOutput::init()->set_tags( $arr );
 		return( sprintf( '%s', $obj ) );
 	}
 

@@ -15,14 +15,10 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Init
+	 * @return MslsOutput
 	 */
 	public static function init() {
-		$this->tags = array(
-			'before_item'   => $this->options->before_item,
-			'after_item'    => $this->options->after_item,
-			'before_output' => $this->options->before_output,
-			'after_output'  => $this->options->after_output,
-		);
+		return new self();
 	}
 
 	/**
@@ -91,24 +87,40 @@ class MslsOutput extends MslsMain {
 		);
 		$str = '';
 		if ( !empty( $arr ) ) {
-			$str =
-				$this->tags->before_output .
-				$this->tags->before_item .
-				implode(
-					$this->tags->after_item . $this->tags->before_item,
-					$arr
-				) .
-				$this->tags->after_item .
-				$this->tags->after_output;
+			$tags = $this->get_tags();
+			$str  = $tags['before_output'] .
+				$tags['before_item'] .
+				implode( $tags['after_item'] . $tags['before_item'], $arr ) .
+				$tags['after_item'] .
+				$tags['after_output'];
 		}
 		return $str;
 	}
 
-	public function set_tags( array $arr ) {
-		foreach ( $arr as $key => $value ) {
-			if ( isset( $this->tags[$key] ) )
-				$this->tags[$key] = $value;
+	/**
+	 * Get tags for the output
+	 * @return array
+	 */
+	public function get_tags() {
+		if ( empty( $this->tags ) ) {
+			$this->tags = array(
+				'before_item'   => $this->options->before_item,
+				'after_item'    => $this->options->after_item,
+				'before_output' => $this->options->before_output,
+				'after_output'  => $this->options->after_output,
+			);
 		}
+		return $this->tags;
+	}
+
+	/**
+	 * Set tags for the output
+	 * @param array $arr
+	 * @return MslsOutput
+	 */
+	public function set_tags( array $arr = array() ) {
+		$this->tags = wp_parse_args( $this->get_tags(), $arr );
+		return $this;
 	}
 
 }

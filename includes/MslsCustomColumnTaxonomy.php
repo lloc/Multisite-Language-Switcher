@@ -14,18 +14,20 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
 	/**
 	 * Init
+	 * @return MslsCustomColumnTaxonomy
 	 */
 	static function init() {
+		$obj = new self();
 		$options = MslsOptions::instance();
 		if ( !$options->is_excluded() ) {
 			$taxonomy = MslsTaxonomy::instance()->get_request();
 			if ( !empty( $taxonomy ) ) {
-				$obj = new self();
 				add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
 				add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
 				add_action( "delete_{$taxonomy}", array( $obj, 'delete' ), 10, 2 );
 			}
 		}
+		return $obj;
 	}
 
 	/**

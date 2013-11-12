@@ -14,8 +14,10 @@ class MslsAdmin extends MslsMain {
 	
 	/**
 	 * Init
+	 * @return MslsAdmin
 	 */
 	public static function init() {
+		$obj = new self();
 		wp_enqueue_style(
 			'msls-styles',
 			plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ),
@@ -28,7 +30,6 @@ class MslsAdmin extends MslsMain {
 			array( 'jquery-ui-autocomplete' ),
 			MSLS_PLUGIN_VERSION
 		);
-		$obj = new self();
 		add_options_page(
 			__( 'Multisite Language Switcher', 'msls' ),
 			__( 'Multisite Language Switcher', 'msls' ),
@@ -38,6 +39,7 @@ class MslsAdmin extends MslsMain {
 		);
 		add_action( 'admin_init', array( $obj, 'register' ) );
 		add_action( 'admin_notices', array( $obj, 'warning' ) );
+		return $obj;
 	}
 
 	/**
