@@ -15,12 +15,14 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Output format
+	 * 
 	 * @var string
 	 */
 	protected $format_string = '<img src="{src}" alt="{alt}"/> {txt}';
 
 	/**
-	 * Get link types
+	 * Gets all link types as array with "id => name"-items.
+	 * 
 	 * @return array
 	 */
 	public static function get_types() {
@@ -33,7 +35,8 @@ class MslsLink extends MslsGetSet {
 	}
 
 	/**
-	 * Get link description
+	 * Gets the link description.
+	 * 
 	 * @return string
 	 */
 	public static function get_description() {
@@ -41,7 +44,8 @@ class MslsLink extends MslsGetSet {
 	}
 
 	/**
-	 * Get array with all link descriptions
+	 * Gets an array with all link descriptions.
+	 * 
 	 * @return array
 	 */
 	public static function get_types_description() {
@@ -55,7 +59,8 @@ class MslsLink extends MslsGetSet {
 	}
 
 	/**
-	 * Factory: Create a specific instance of MslsLink
+	 * Factory: Creates a specific instance of MslsLink.
+	 * 
 	 * @param int $display
 	 * @return MslsLink
 	 */
