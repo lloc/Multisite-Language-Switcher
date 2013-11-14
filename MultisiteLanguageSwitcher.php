@@ -91,9 +91,8 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 	register_deactivation_hook( __FILE__, array( 'MslsPlugin', 'deactivate' ) );
 	register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
 
-	add_action( 'plugins_loaded', array( 'MslsPlugin', 'init_i18n_support' ) );
 	add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
-
+	add_action( 'plugins_loaded', array( 'MslsPlugin', 'init_i18n_support' ) );
 	if ( is_admin() ) {
 		add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
 

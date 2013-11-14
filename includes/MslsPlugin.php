@@ -56,9 +56,11 @@ class MslsPlugin {
 	 */
 	public static function activate() {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) 
-			return; 
+			return;
 		deactivate_plugins( MSLS_PLUGIN__FILE__ );
-		add_action( 'admin_notices', array( $this, 'message_handler' ) );
+		add_action( 'deactivate_msls', array( 'MslsPlugin', 'message_handler' ) );
+		header( 'Location: ' . admin_url( 'plugins.php?deactivate=true' ) );
+		exit;
 	}
 
 	/**
