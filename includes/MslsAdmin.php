@@ -46,18 +46,12 @@ class MslsAdmin extends MslsMain {
 	 * There is something wrong? Here comes the message…
 	 */
 	public function warning() {
-		$message = '';
-		if ( $this->options->is_empty() ) {
+		if ( user_can( 'manage_options' ) && $this->options->is_empty() ) {
 			$message = sprintf(
 				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
 				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
 			);
-		}
-		if ( '' != $message ) {
-			printf(
-				'<div id="msls-warning" class="updated fade"><p>%s</p></div>',
-				$message
-			);
+			MslsPlugin::message_handler( $message, 'updated fade' );
 		}
 	}
 

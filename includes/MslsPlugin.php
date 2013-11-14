@@ -36,6 +36,17 @@ class MslsPlugin {
 		);
 	}
 
+	public static function message_handler( $message = null, $css_class = 'error' ) {
+		if ( is_null( $message ) ) {
+			$message = __( 'This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'msls' );
+		}
+		printf(
+			'<div id="msls-warning" class="%s"><p>%s</p></div>',
+			$css_class,
+			$message
+		);
+	}
+
 	/**
 	 * Activate plugin
 	 * 
@@ -47,13 +58,7 @@ class MslsPlugin {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) 
 			return; 
 		deactivate_plugins( MSLS_PLUGIN__FILE__ );
-		die(
-			"This plugin needs the activation of the 
-			multisite-feature for working properly. Please read <a 
-			onclick='window.open(this.href); return false;' 
-			href='http://codex.wordpress.org/Create_A_Network'>this 
-			post</a> if you don't know the meaning.\n"
-		);
+		add_action( 'admin_notices', array( $this, 'message_handler' ) );
 	}
 
 	/**
