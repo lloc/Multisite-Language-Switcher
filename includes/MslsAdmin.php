@@ -11,7 +11,7 @@
  * @package Msls
  */
 class MslsAdmin extends MslsMain {
-	
+
 	/**
 	 * Init
 	 * @return MslsAdmin
@@ -43,10 +43,10 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
-	 * There is something wrong? Here comes the message…
+	 * There is something wrong? Here comes the message...
 	 */
 	public function warning() {
-		if ( user_can( 'manage_options' ) && $this->options->is_empty() ) {
+		if ( current_user_can( 'manage_options' ) && $this->options->is_empty() ) {
 			$message = sprintf(
 				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
 				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
@@ -90,10 +90,10 @@ class MslsAdmin extends MslsMain {
 				);
 			}
 		}
-		return( 
+		return(
 			!empty( $arr ) ?
 			sprintf(
-				'<ul class="subsubsub"><li>%s</li></ul>', 
+				'<ul class="subsubsub"><li>%s</li></ul>',
 				implode( ' | </li><li>', $arr )
 			) :
 			''
@@ -146,7 +146,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Activate autocomplete
-	 * 
+	 *
 	 * You can decide if you want to activate the experimental autocomplete
 	 * input fields in the backend instead of the traditional select-menus.
 	 */
@@ -156,7 +156,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Show sort_by_description-field
-	 * 
+	 *
 	 * You can decide that the ouput will be sorted by the description. If not
 	 * the output will be sorted by the language-code.
 	 */
@@ -166,7 +166,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Exclude the current blog
-	 * 
+	 *
 	 * You can exclude a blog explicitly. All your settings will be safe but the
 	 * plugin will ignore this blog while this option is active.
 	 */
@@ -176,8 +176,8 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Show only a link  if a translation is available
-	 * 
-	 * Some user requested this feature. Shows only links to available 
+	 *
+	 * Some user requested this feature. Shows only links to available
 	 * translations.
 	 */
 	public function only_with_translation() {
@@ -186,8 +186,8 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Show a link to the current blog
-	 * 
-	 * Some user requested this feature. If active the plugin will place also a 
+	 *
+	 * Some user requested this feature. If active the plugin will place also a
 	 * link to the current blog.
 	 */
 	public function output_current_blog() {
@@ -196,7 +196,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * The description for the current blog
-	 * 
+	 *
 	 * The language will be used ff there is no description.
 	 */
 	public function description() {
@@ -205,28 +205,28 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * A String which will be placed before the output of the list
-	 */ 
+	 */
 	public function before_output() {
 		echo $this->render_input( 'before_output' );
 	}
 
 	/**
 	 * A String which will be placed after the output of the list
-	 */ 
+	 */
 	public function after_output() {
 		echo $this->render_input( 'after_output' );
 	}
 
 	/**
 	 * A String which will be placed before every item of the list
-	 */ 
+	 */
 	public function before_item() {
 		echo $this->render_input( 'before_item' );
 	}
 
 	/**
 	 * A String which will be placed after every item of the list
-	 */ 
+	 */
 	public function after_item() {
 		echo $this->render_input( 'after_item' );
 	}
@@ -240,16 +240,16 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * If the output in the_content is active you can set the priority too
-	 * 
+	 *
 	 * Default is 10. But may be there are other plugins active and you run into
 	 * trouble. So you can decide a higher (from 1) or a lower (to 100) priority
 	 * for the output
-	 */ 
+	 */
 	public function content_priority() {
 		$temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
 		$arr      = array_combine( $temp, $temp );
 		$selected = (
-			!empty( $this->options->content_priority ) ? 
+			!empty( $this->options->content_priority ) ?
 			$this->options->content_priority :
 			10
 		);
@@ -258,7 +258,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Alternative image-url
-	 * 
+	 *
 	 * @todo This is a value of a directory-url which should be more clear
 	 */
 	public function image_url() {
@@ -267,7 +267,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Render form-element (checkbox)
-	 * 
+	 *
 	 * @param string $key Name and ID of the form-element
 	 * @return string HTML-Code of the checkbox
 	 */
@@ -309,7 +309,7 @@ class MslsAdmin extends MslsMain {
 			$options[] = sprintf(
 				'<option value="%s"%s>%s</option>',
 				$value,
-				( $value == $selected ? ' selected="selected"' : '' ), 
+				( $value == $selected ? ' selected="selected"' : '' ),
 				$description
 			);
 		}
@@ -322,10 +322,10 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Validates input before saving it
-	 * 
+	 *
 	 * @param array $input Values of the submitted form
-	 * @return array Validated input 
-	 */ 
+	 * @return array Validated input
+	 */
 	public function validate( array $input ) {
 		$input['display'] = (
 			!isset( $input['display'] ) ?
