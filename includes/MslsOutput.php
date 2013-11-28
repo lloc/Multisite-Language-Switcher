@@ -44,6 +44,7 @@ class MslsOutput extends MslsMain {
 				$current = ( $blog->userblog_id == $this->blogs->get_current_blog_id() );
 				if ( $current ) {
 					$url = $mydata->get_current_link();
+					$link->txt = $blog->get_description();
 				}
 				else {
 					switch_to_blog( $blog->userblog_id );
@@ -101,7 +102,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Returns a string when the object will be treated like a string
-	 * 
+	 *
 	 * @return string
 	 */
 	public function __toString() {
@@ -113,7 +114,7 @@ class MslsOutput extends MslsMain {
 
 		if ( empty( $arr ) )
 			return '';
-		
+
 		$tags = $this->get_tags();
 		return $tags['before_output'] .
 			$tags['before_item'] .
@@ -124,7 +125,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Gets tags for the output
-	 * 
+	 *
 	 * @return array
 	 */
 	public function get_tags() {
@@ -141,7 +142,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Sets tags for the output
-	 * 
+	 *
 	 * @param array $arr
 	 * @return MslsOutput
 	 */
