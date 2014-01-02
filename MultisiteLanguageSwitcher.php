@@ -5,7 +5,7 @@ Plugin Name: Multisite Language Switcher
 Plugin URI: http://lloc.de/msls
 Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
 Version: 0.9.9
-Author: Dennis Ploetner 
+Author: Dennis Ploetner
 Author URI: http://lloc.de/
 */
 
@@ -13,7 +13,7 @@ Author URI: http://lloc.de/
 Copyright 2013  Dennis Ploetner  (email : re@lloc.de)
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
+it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /**
  * MultisiteLanguageSwitcher
- * 
+ *
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
@@ -45,18 +45,18 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * The Autoloader does all the magic when it comes to include a file
-	 * 
+	 *
 	 * @package Msls
 	 */
 	class MslsAutoloader {
 
 		/**
 		 * Static loader method
-		 * 
+		 *
 		 * @param string $class
 		 */
 		public static function load( $class ) {
-			if ( 'Msls' == substr( $class, 0, 4 ) ) 
+			if ( 'Msls' == substr( $class, 0, 4 ) )
 				require_once dirname( __FILE__ ) . '/includes/' . $class . '.php';
 		}
 
@@ -68,19 +68,19 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 	if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
 		spl_autoload_register( '__autoload' );
 	spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
-	
+
 	/**
 	 * Interface for classes which are to register in the MslsRegistry-instance
 	 *
 	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
-	 * 
+	 *
 	 * @package Msls
 	 */
 	interface IMslsRegistryInstance {
 
 		/**
 		 * Returnse an instance
-		 * 
+		 *
 		 * @return object
 		 */
 		public static function instance();
@@ -103,6 +103,7 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 		add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );
 
 		add_action( 'load-edit.php', array( 'MslsCustomColumn', 'init' ) );
+		add_action( 'load-edit.php', array( 'MslsCustomFilter', 'init' ) );
 
 		add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
 		add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
@@ -119,13 +120,13 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * Filter for the_content()
-	 * 
+	 *
 	 * @package Msls
 	 * @uses MslsOptions
-	 * 
+	 *
 	 * @param string $content
 	 * @return string
-	 */ 
+	 */
 	function msls_content_filter( $content ) {
 		if ( ! is_front_page() && is_singular() ) {
 			$options = MslsOptions::instance();
@@ -139,21 +140,21 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * Create filterstring for msls_content_filter()
-	 * 
+	 *
 	 * @package Msls
 	 * @uses MslsOutput
-	 * 
+	 *
 	 * @param string $pref
 	 * @param string $post
 	 * @return string
-	 */ 
+	 */
 	function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
 		$obj = new MslsOutput();
 
 		$links = $obj->get( 1, true, true );
 		if ( empty( $links ) )
 			return '';
-		
+
 		if ( count( $links ) > 1 ) {
 			$last  = array_pop( $links );
 			$links = sprintf(
@@ -176,10 +177,10 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * Get the output for using the links to the translations in your code
-	 * 
+	 *
 	 * @package Msls
  	 * @uses the_msls
- 	 * 
+ 	 *
 	 * @param array $arr
 	 * @return string
 	 */
@@ -190,14 +191,14 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 
 	/**
 	 * Output the links to the translations in your template
-	 * 
+	 *
 	 * You can call this function directly like that
-	 * 
+	 *
 	 *     if ( function_exists ( 'the_msls' ) )
 	 *         the_msls();
-	 * 
+	 *
 	 * @package Msls
-	 * 
+	 *
 	 * @param array $arr
 	 */
 	function the_msls( array $arr = array() ) {
