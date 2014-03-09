@@ -210,7 +210,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 */
 	public function get_flag_url( $language ) {
 		$url = ( 
-			!is_admin() && isset( $this->image_url ) ?
+			isset( $this->image_url ) ?
 			$this->__get( 'image_url' ) :
 			$this->get_url( 'flags' )
 		);
