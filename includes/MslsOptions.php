@@ -209,11 +209,16 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_flag_url( $language ) {
-		$url = ( 
-			!is_admin() && isset( $this->image_url ) ?
-			$this->__get( 'image_url' ) :
-			$this->get_url( 'flags' )
-		);
+		if ( has_filter( 'msls_options_get_flag_url' ) ) {
+			$url = apply_filters( 'msls_options_get_flag_url', $this );
+		}
+		else {
+			$url = ( 
+				! is_admin() && isset( $this->image_url ) ?
+				$this->__get( 'image_url' ) :
+				$this->get_url( 'flags' )
+			);
+		}
 		if ( 5 == strlen( $language ) )
 			$language = strtolower( substr( $language, -2 ) );
 		return sprintf( '%s/%s.png', $url, $language );
