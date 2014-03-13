@@ -22,7 +22,7 @@ class MslsMetaBox extends MslsMain {
 		if ( isset( $_REQUEST['blog_id'] ) ) {
 			switch_to_blog( (int) $_REQUEST['blog_id'] );
 			$args = array(
-				'post_status' => 'any',
+				'post_status'    => 'any',
 				'posts_per_page' => 10,
 			);
 			if ( isset( $_REQUEST['post_type'] ) ) {
@@ -35,8 +35,13 @@ class MslsMetaBox extends MslsMain {
 			$json_obj = new MslsJson;
 			while ( $my_query->have_posts() ) {
 				$my_query->the_post();
+				if ( has_filter( 'msls_meta_box_suggest' ) ) {
+					$my_query->post = apply_filters( 'msls_meta_box_suggest', $my_query->post );
+				}
 				$json_obj->add( get_the_ID(), get_the_title() );
 			}
+			wp_reset_query();
+			wp_reset_postdata();
 			restore_current_blog();
 		}
 		echo $json_obj;
