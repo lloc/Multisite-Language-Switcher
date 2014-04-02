@@ -20,13 +20,13 @@ class MslsAdmin extends MslsMain {
 		$obj = new self();
 		wp_enqueue_style(
 			'msls-styles',
-			plugins_url( 'styles.css', MSLS_PLUGIN__FILE__ ),
+			plugins_url( 'css/msls.css', MSLS_PLUGIN__FILE__ ),
 			array(),
 			MSLS_PLUGIN_VERSION
 		);
 		wp_enqueue_script(
 			'msls-autocomplete',
-			plugins_url( 'script.js', MSLS_PLUGIN__FILE__ ),
+			plugins_url( 'js/msls.js', MSLS_PLUGIN__FILE__ ),
 			array( 'jquery-ui-autocomplete' ),
 			MSLS_PLUGIN_VERSION
 		);
