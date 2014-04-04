@@ -71,7 +71,14 @@ class MslsMetaBox extends MslsMain {
 			add_meta_box(
 				'msls',
 				__( 'Multisite Language Switcher', 'msls' ),
-				array( $this, 'render' ),
+				array(
+					$this,
+					( 
+						$this->option->activate_autocomplete ?
+						'render_input' :
+						'render_select'
+					)
+				),
 				$post_type,
 				'side',
 				'high'
@@ -80,9 +87,93 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * Render
-	*/
-	public function render() {
+	 * Render the classic select-box
+	 */
+	public function render_select() {
+		$blogs = $this->blogs->get();
+		if ( $blogs ) {
+			global $post;
+			$type   = get_post_type( $post->ID );
+			$mydata = new MslsOptionsPost( $post->ID );
+			$temp   = $post;
+			$lis    = '';
+			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
+			foreach ( $blogs as $blog ) {
+				switch_to_blog( $blog->userblog_id );
+				$language = $blog->get_language();
+				$icon     = MslsAdminIcon::create();
+				$selects  = '';
+				$pto      = get_post_type_object( $type );
+				$icon->set_language( $language );
+				$icon->set_src( $this->options->get_flag_url( $language ) );
+				if ( $mydata->has_value( $language ) )
+					$icon->set_href( $mydata->$language );
+				if ( $pto->hierarchical ) {
+					$selects .= wp_dropdown_pages(
+						array(
+							'post_type' => $type,
+							'selected' => $mydata->$language,
+							'name' => 'msls_input_' . $language,
+							'show_option_none' => ' ',
+							'sort_column' => 'menu_order, post_title',
+							'echo' => 0,
+						)
+					);
+				}
+				else {
+					$options  = '';
+					$my_query = new WP_Query(
+						array(
+							'post_type' => $type,
+							'post_status' => 'any',
+							'orderby' => 'title',
+							'order' => 'ASC',
+							'posts_per_page' => (-1),
+						)
+					);
+					while ( $my_query->have_posts() ) {
+						$my_query->the_post();
+						$my_id    = get_the_ID();
+						$options .= sprintf(
+							'<option value="%s" %s>%s</option>',
+							$my_id,
+							selected( $my_id, $mydata->$language, false ),
+							get_the_title()
+						);
+					}
+					$selects .= sprintf(
+						'<select name="msls_input_%s"><option value=""></option>%s</select>',
+						$language,
+						$options
+					);
+				}
+				$lis .= sprintf(
+					'<li><label for="msls_input_%s">%s</label>%s</li>',
+					$language,
+					$icon,
+					$selects
+				);
+				restore_current_blog();
+			}
+			printf(
+				'<ul>%s</ul><input type="submit" class="button-secondary" value="%s"/>',
+				$lis,
+				__( 'Update', 'msls' )
+			);
+			$post = $temp;
+		}
+		else {
+			printf(
+				'<p>%s</p>',
+				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'msls' )
+			);
+		}
+	}
+	
+	/**
+	 * Render the suggest input-field
+	 */
+	public function render_input() {
 		$blogs = $this->blogs->get();
 		if ( $blogs ) {
 			global $post;

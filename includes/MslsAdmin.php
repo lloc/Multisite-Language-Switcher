@@ -17,19 +17,23 @@ class MslsAdmin extends MslsMain {
 	 * @return MslsAdmin
 	 */
 	public static function init() {
-		$obj = new self();
 		wp_enqueue_style(
 			'msls-styles',
 			plugins_url( 'css/msls.css', MSLS_PLUGIN__FILE__ ),
 			array(),
 			MSLS_PLUGIN_VERSION
 		);
-		wp_enqueue_script(
-			'msls-autocomplete',
-			plugins_url( 'js/msls.js', MSLS_PLUGIN__FILE__ ),
-			array( 'jquery-ui-autocomplete' ),
-			MSLS_PLUGIN_VERSION
-		);
+		if ( $this->option->activate_autocomplete ) {
+			wp_enqueue_script(
+				'msls-autocomplete',
+				plugins_url( 'js/msls.min.js', MSLS_PLUGIN__FILE__ ),
+				array( 'jquery-ui-autocomplete' ),
+				MSLS_PLUGIN_VERSION
+			);
+		}
+
+		$obj = new self();
+
 		add_options_page(
 			__( 'Multisite Language Switcher', 'msls' ),
 			__( 'Multisite Language Switcher', 'msls' ),
@@ -37,8 +41,10 @@ class MslsAdmin extends MslsMain {
 			__CLASS__,
 			array( $obj, 'render' )
 		);
+
 		add_action( 'admin_init', array( $obj, 'register' ) );
 		add_action( 'admin_notices', array( $obj, 'warning' ) );
+
 		return $obj;
 	}
 
@@ -309,7 +315,7 @@ class MslsAdmin extends MslsMain {
 			$options[] = sprintf(
 				'<option value="%s"%s>%s</option>',
 				$value,
-				( $value == $selected ? ' selected="selected"' : '' ),
+				selected( $value, $selected, false ),
 				$description
 			);
 		}

@@ -19,7 +19,7 @@ class MslsCustomColumn extends MslsMain {
 	public static function init() {
 		$obj     = new self();
 		$options = MslsOptions::instance();
-		if ( !$options->is_excluded() ) {
+		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
 			if ( !empty( $post_type ) ) {
 				add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );

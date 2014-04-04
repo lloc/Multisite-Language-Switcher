@@ -15,15 +15,14 @@ class MslsCustomFilter extends MslsMain
      * Init
      * @return MslsCustomFilter
      */
-    public static function init()
-    {
-        $obj = new self();
+    public static function init() {
+        $obj     = new self();
         $options = MslsOptions::instance();
-        if (!$options->is_excluded()) {
+        if ( ! $options->is_excluded() ) {
             $post_type = MslsPostType::instance()->get_request();
-            if (!empty($post_type)) {
-                add_action('restrict_manage_posts', array($obj, 'add_filter') );
-                add_filter('parse_query', array($obj, 'execute_filter') );
+            if ( ! empty( $post_type ) ) {
+                add_action( 'restrict_manage_posts', array( $obj, 'add_filter' ) );
+                add_filter( 'parse_query',           array( $obj, 'execute_filter' ) );
             }
         }
         return $obj;
@@ -32,18 +31,18 @@ class MslsCustomFilter extends MslsMain
     /**
      * Echo's select tag with list of blogs
      */
-    public function add_filter()
-    {
+    public function add_filter() {
         $blogs = $this->blogs->get();
-        $id = (isset($_GET['msls_filter'])) ? (int)$_GET['msls_filter'] : '';
-        if ($blogs) {
+        $id    = ( isset( $_GET['msls_filter'] ) ) ? (int) $_GET['msls_filter'] : '';
+        if ( $blogs ) {
             echo '<select name="msls_filter" id="msls_filter">';
-            echo '<option value="">'.__('Show all blogs', 'msls').'</option>';
-            foreach ($blogs as $blog) {
-                echo sprintf('<option value="%d" %s>%s</option>',
+            echo '<option value="">' . __( 'Show all blogs', 'msls' ) . '</option>';
+            foreach ( $blogs as $blog ) {
+                printf(
+                	'<option value="%d" %s>%s</option>',
                     $blog->userblog_id,
-                    ($id === $blog->userblog_id) ? 'selected="selected"' : '',
-                    sprintf(__('Not translated to the %s-blog', 'msls'), $blog->get_description())
+                    selected( $id, $blog->userblog_id, false ),
+                    sprintf( __( 'Not translated in the %s-blog', 'msls' ), $blog->get_description() )
                 );
             }
             echo '</select>';
