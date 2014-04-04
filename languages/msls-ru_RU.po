@@ -1,170 +1,206 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2011-09-13 14:40:09+00:00\n"
-"PO-Revision-Date: 2011-12-21 10:41+0100\n"
-"Last-Translator: Dennis Ploetner <re@lloc.de>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2014-04-04 11:33+0100\n"
+"PO-Revision-Date: 2014-04-04 11:54+0100\n"
+"Last-Translator: \n"
+"Language-Team: andreyv <jujav4ik@gmail.com>\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: \n"
-"X-Poedit-Country: \n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
-"X-Poedit-Basepath: \n"
-"X-Poedit-Bookmarks: \n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Textdomain-Support: yes"
+"X-Poedit-SearchPath-1: ..\n"
 
-#: includes/MslsAdmin.php:32
-#: includes/MslsAdmin.php:33
-#: includes/MslsMetaBox.php:46
-#: includes/MslsOutput.php:130
-#: includes/MslsPostTag.php:54
-#@ msls
-msgid "Multisite Language Switcher"
-msgstr ""
-
-#: includes/MslsAdmin.php:55
-#: includes/MslsMetaBox.php:136
-#@ msls
-msgid "Update"
-msgstr "Обновить"
-
-#: includes/MslsMetaBox.php:142
-#@ msls
-msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
-msgstr "Вам необходимо добавить минимум один блог на другом языке, чтобы активировать plugin!"
-
-#: includes/MslsOutput.php:174
-#@ msls
-msgid "Title"
-msgstr "Заголовок"
-
-#: includes/MslsOutput.php:215
+# @ msls
+#: ../MultisiteLanguageSwitcher.php:161
 #, php-format
-#@ msls
 msgid "%s and %s"
 msgstr "%s и %s"
 
-#: includes/MslsOutput.php:224
+# @ msls
+#: ../MultisiteLanguageSwitcher.php:172
 #, php-format
-#@ msls
 msgid "This post is also available in %s."
 msgstr "Эта статья также доступна на %s"
 
-#: includes/MslsLink.php:52
-#@ msls
-msgid "Flag and description"
-msgstr "Флаг и название"
+# @ msls
+#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
+#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:94
+#: ../includes/MslsWidget.php:20
+msgid "Multisite Language Switcher"
+msgstr ""
 
-#: includes/MslsLink.php:117
-#@ msls
-msgid "Description only"
-msgstr "Только название"
-
-#: includes/MslsLink.php:140
-#@ msls
-msgid "Flag only"
-msgstr "Только флаг"
-
-#: includes/MslsLink.php:163
-#@ msls
-msgid "Description and flag"
-msgstr "Название и флаг"
-
-#: includes/MslsLink.php:297
+#: ../includes/MslsAdmin.php:57
 #, php-format
-#@ msls
-msgid "Edit the translation in the %s-blog"
-msgstr "Редактировать перевод в %s-блоге"
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
 
-#: includes/MslsLink.php:304
-#, php-format
-#@ msls
-msgid "Create a new translation in the %s-blog"
-msgstr "Добавить перевод в %s-блог"
-
-#: includes/MslsAdmin.php:47
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:70
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher Настройки"
 
-#: includes/MslsAdmin.php:49
-#@ msls
-msgid "To achieve maximum flexibility, you have to configure each blog separately."
+# @ msls
+#: ../includes/MslsAdmin.php:72
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 
-#: includes/MslsAdmin.php:103
-#@ msls
+#: ../includes/MslsAdmin.php:78
+msgid "Configure"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:161
+#: ../includes/MslsMetaBox.php:218
+msgid "Update"
+msgstr "Обновить"
+
+# @ msls
+#: ../includes/MslsAdmin.php:116
 msgid "Main Settings"
 msgstr "Главные настройки"
 
-#: includes/MslsAdmin.php:107
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:120
 msgid "Display"
 msgstr "Показать"
 
-#: includes/MslsAdmin.php:108
-#@ msls
+#: ../includes/MslsAdmin.php:121
+msgid "Activate experimental autocomplete inputs"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsAdmin.php:122
 msgid "Sort output by description"
 msgstr "Отсортировать по названию"
 
-#: includes/MslsAdmin.php:109
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:123
 msgid "Exclude this blog from output"
 msgstr "Исключить блог из меню"
 
-#: includes/MslsAdmin.php:110
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:124
 msgid "Show only links with a translation"
 msgstr "Показывать ссылки с переводом"
 
-#: includes/MslsAdmin.php:111
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:125
 msgid "Display link to the current language"
 msgstr "Показать ссылку на данный язык"
 
-#: includes/MslsAdmin.php:112
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:126
 msgid "Description"
 msgstr "Описание"
 
-#: includes/MslsAdmin.php:113
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:127
 msgid "Text/HTML before the list"
 msgstr "Текст/HTML перед элементом списка"
 
-#: includes/MslsAdmin.php:114
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:128
 msgid "Text/HTML after the list"
 msgstr "Текст/HTML после элемента списка"
 
-#: includes/MslsAdmin.php:115
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:129
 msgid "Text/HTML before each item"
 msgstr "Текст/HTML перед элементом"
 
-#: includes/MslsAdmin.php:116
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:130
 msgid "Text/HTML after each item"
 msgstr "Текст/HTML после элемента"
 
-#: includes/MslsAdmin.php:117
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:131
 msgid "Add hint for available translations"
 msgstr "Добавить подсказку для имеющихся переводов"
 
-#: includes/MslsAdmin.php:118
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:132
 msgid "Hint priority"
 msgstr "Приоритет подсказок"
 
-#: includes/MslsAdmin.php:119
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:133
 msgid "Custom URL for flag-images"
 msgstr "Собственная ссылка на флаг-иконку"
 
+# @ msls
+#: ../includes/MslsAdminIcon.php:143
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "Редактировать перевод в %s-блоге"
+
+# @ msls
+#: ../includes/MslsAdminIcon.php:150
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr "Добавить перевод в %s-блог"
+
+#: ../includes/MslsCustomFilter.php:41
+msgid "Show all blogs"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsCustomFilter.php:46
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsLink.php:43
+msgid "Flag and description"
+msgstr "Флаг и название"
+
+# @ msls
+#: ../includes/MslsLinkImageOnly.php:25
+msgid "Flag only"
+msgstr "Только флаг"
+
+# @ msls
+#: ../includes/MslsLinkTextImage.php:25
+msgid "Description and flag"
+msgstr "Название и флаг"
+
+# @ msls
+#: ../includes/MslsLinkTextOnly.php:25
+msgid "Description only"
+msgstr "Только название"
+
+# @ msls
+#: ../includes/MslsMetaBox.php:168 ../includes/MslsMetaBox.php:225
+msgid ""
+"You should define at least another blog in a different language in order to "
+"have some benefit from this plugin!"
+msgstr ""
+"Вам необходимо добавить минимум один блог на другом языке, чтобы "
+"активировать plugin!"
+
+#: ../includes/MslsPlugin.php:41
+msgid ""
+"This plugin needs the activation of the multisite-feature for working "
+"properly. Please read <a onclick=\"window.open(this.href); return false;\" "
+"href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
+"don't know the meaning."
+msgstr ""
+
+# @ msls
+#: ../includes/MslsWidget.php:68
+msgid "Title"
+msgstr "Заголовок"

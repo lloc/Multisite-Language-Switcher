@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2013-09-25 10:56+0100\n"
-"PO-Revision-Date: 2013-09-25 10:56+0100\n"
+"POT-Creation-Date: 2014-04-04 10:35+0100\n"
+"PO-Revision-Date: 2014-04-04 11:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: Chandan Saud <matrixinfoservice@gmail.com>\n"
 "Language: Georgian (ka_GE)\n"
@@ -16,29 +16,30 @@ msgstr ""
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.5\n"
-"X-Poedit-SearchPath-0: ..\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:147
+#: ../MultisiteLanguageSwitcher.php:161
 #, php-format
 msgid "%s and %s"
 msgstr "%s და %s"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:157
+#: ../MultisiteLanguageSwitcher.php:172
 #, php-format
 msgid "This post is also available in %s."
 msgstr "ეს პოსტი ასევე ხელმისაწვდომია %s."
 
 # @ msls
-#: ../includes/MslsAdmin.php:33 ../includes/MslsAdmin.php:34
-#: ../includes/MslsMetaBox.php:65 ../includes/MslsPostTag.php:93
+#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
+#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:94
 #: ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite ენა Switcher"
 
-#: ../includes/MslsAdmin.php:50
+#: ../includes/MslsAdmin.php:57
 #, php-format
 msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
@@ -46,98 +47,99 @@ msgid ""
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:68
+#: ../includes/MslsAdmin.php:70
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite ენა Switcher პარამეტრები"
 
 # @ msls
-#: ../includes/MslsAdmin.php:70
+#: ../includes/MslsAdmin.php:72
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 "მისაღწევად მაქსიმალური მოქნილობა, თქვენ გაქვთ კონფიგურაციის ყოველ წაკითხვა "
 "ცალკე."
 
-#: ../includes/MslsAdmin.php:76
+#: ../includes/MslsAdmin.php:78
 msgid "Configure"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:76 ../includes/MslsMetaBox.php:119
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:161
+#: ../includes/MslsMetaBox.php:218
 msgid "Update"
 msgstr "განახლების"
 
 # @ msls
-#: ../includes/MslsAdmin.php:114
+#: ../includes/MslsAdmin.php:116
 msgid "Main Settings"
 msgstr "მთავარი პარამეტრები"
 
 # @ msls
-#: ../includes/MslsAdmin.php:118
+#: ../includes/MslsAdmin.php:120
 msgid "Display"
 msgstr "ჩვენების"
 
-#: ../includes/MslsAdmin.php:119
+#: ../includes/MslsAdmin.php:121
 msgid "Activate experimental autocomplete inputs"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:120
+#: ../includes/MslsAdmin.php:122
 msgid "Sort output by description"
 msgstr "დალაგება გამომავალი by აღწერა"
 
 # @ msls
-#: ../includes/MslsAdmin.php:121
+#: ../includes/MslsAdmin.php:123
 msgid "Exclude this blog from output"
 msgstr "გამორიცხავს ამ დღიურში მხრიდან გამომავალი"
 
 # @ msls
-#: ../includes/MslsAdmin.php:122
+#: ../includes/MslsAdmin.php:124
 msgid "Show only links with a translation"
 msgstr "მხოლოდ კავშირები თარგმანი"
 
 # @ msls
-#: ../includes/MslsAdmin.php:123
+#: ../includes/MslsAdmin.php:125
 msgid "Display link to the current language"
 msgstr "ჩვენების ბმული მიმდინარე ენა"
 
 # @ msls
-#: ../includes/MslsAdmin.php:124
+#: ../includes/MslsAdmin.php:126
 msgid "Description"
 msgstr "აღწერა"
 
 # @ msls
-#: ../includes/MslsAdmin.php:125
+#: ../includes/MslsAdmin.php:127
 msgid "Text/HTML before the list"
 msgstr "ტექსტი / HTML ადრე სია"
 
 # @ msls
-#: ../includes/MslsAdmin.php:126
+#: ../includes/MslsAdmin.php:128
 msgid "Text/HTML after the list"
 msgstr "ტექსტი / HTML შემდეგ სიაში"
 
 # @ msls
-#: ../includes/MslsAdmin.php:127
+#: ../includes/MslsAdmin.php:129
 msgid "Text/HTML before each item"
 msgstr "ტექსტი / HTML თითოეული პუნქტის"
 
 # @ msls
-#: ../includes/MslsAdmin.php:128
+#: ../includes/MslsAdmin.php:130
 msgid "Text/HTML after each item"
 msgstr "ტექსტი / HTML ყოველი ნივთი"
 
 # @ msls
-#: ../includes/MslsAdmin.php:129
+#: ../includes/MslsAdmin.php:131
 msgid "Add hint for available translations"
 msgstr "დამატება მინიშნება ხელმისაწვდომი თარგმანი"
 
 # @ msls
-#: ../includes/MslsAdmin.php:130
+#: ../includes/MslsAdmin.php:132
 msgid "Hint priority"
 msgstr "მინიშნება პრიორიტეტი"
 
 # @ msls
-#: ../includes/MslsAdmin.php:131
+#: ../includes/MslsAdmin.php:133
 msgid "Custom URL for flag-images"
 msgstr "საბაჟო URL for flag-გამოსახულებები"
 
@@ -153,8 +155,18 @@ msgstr "შესწორება თარგმანი% s-დღიურ�
 msgid "Create a new translation in the %s-blog"
 msgstr "შექმენით ახალი თარგმანი% s-დღიურში"
 
+#: ../includes/MslsCustomFilter.php:41
+msgid "Show all blogs"
+msgstr ""
+
 # @ msls
-#: ../includes/MslsLink.php:40
+#: ../includes/MslsCustomFilter.php:46
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsLink.php:43
 msgid "Flag and description"
 msgstr "დროშა და აღწერილობა"
 
@@ -174,7 +186,7 @@ msgid "Description only"
 msgstr "აღწერა მხოლოდ"
 
 # @ msls
-#: ../includes/MslsMetaBox.php:126
+#: ../includes/MslsMetaBox.php:168 ../includes/MslsMetaBox.php:225
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -182,7 +194,15 @@ msgstr ""
 "თქვენ უნდა განსაზღვროს სულ ცოტა კიდევ ერთი წაკითხვა სხვა ენაზე, რათა "
 "გარკვეული სარგებელი ამ ჩანართში!"
 
+#: ../includes/MslsPlugin.php:41
+msgid ""
+"This plugin needs the activation of the multisite-feature for working "
+"properly. Please read <a onclick=\"window.open(this.href); return false;\" "
+"href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
+"don't know the meaning."
+msgstr ""
+
 # @ msls
-#: ../includes/MslsWidget.php:60
+#: ../includes/MslsWidget.php:68
 msgid "Title"
 msgstr "სათაური"

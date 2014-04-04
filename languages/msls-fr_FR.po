@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2013-09-26 10:00+0100\n"
-"PO-Revision-Date: 2013-09-26 10:01+0100\n"
+"POT-Creation-Date: 2014-04-04 11:43+0100\n"
+"PO-Revision-Date: 2014-04-04 11:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: Andreas Breitschopp <a-breitschopp@ab-tools.com>\n"
 "Language: French (fr_FR)\n"
@@ -16,29 +16,30 @@ msgstr ""
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.5\n"
-"X-Poedit-SearchPath-0: ..\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:147
+#: ../MultisiteLanguageSwitcher.php:161
 #, php-format
 msgid "%s and %s"
 msgstr "%s et %s"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:157
+#: ../MultisiteLanguageSwitcher.php:172
 #, php-format
 msgid "This post is also available in %s."
 msgstr "Ce article est également disponible en %s."
 
 # @ msls
-#: ../includes/MslsAdmin.php:33 ../includes/MslsAdmin.php:34
-#: ../includes/MslsMetaBox.php:65 ../includes/MslsPostTag.php:93
+#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
+#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:94
 #: ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: ../includes/MslsAdmin.php:50
+#: ../includes/MslsAdmin.php:57
 #, php-format
 msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
@@ -46,97 +47,98 @@ msgid ""
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:68
+#: ../includes/MslsAdmin.php:70
 msgid "Multisite Language Switcher Options"
 msgstr "Options de Multisite Language Switcher"
 
 # @ msls
-#: ../includes/MslsAdmin.php:70
+#: ../includes/MslsAdmin.php:72
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 "Pour un maximum de flexibilité, vous devez configurer chaque blog séparément."
 
-#: ../includes/MslsAdmin.php:76
+#: ../includes/MslsAdmin.php:78
 msgid "Configure"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:76 ../includes/MslsMetaBox.php:119
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:161
+#: ../includes/MslsMetaBox.php:218
 msgid "Update"
 msgstr "Mise à jour"
 
 # @ msls
-#: ../includes/MslsAdmin.php:114
+#: ../includes/MslsAdmin.php:116
 msgid "Main Settings"
 msgstr "Paramètres principaux"
 
 # @ msls
-#: ../includes/MslsAdmin.php:118
+#: ../includes/MslsAdmin.php:120
 msgid "Display"
 msgstr "Affichage"
 
-#: ../includes/MslsAdmin.php:119
+#: ../includes/MslsAdmin.php:121
 msgid "Activate experimental autocomplete inputs"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:120
+#: ../includes/MslsAdmin.php:122
 msgid "Sort output by description"
 msgstr "Trier les résultats par description"
 
 # @ msls
-#: ../includes/MslsAdmin.php:121
+#: ../includes/MslsAdmin.php:123
 msgid "Exclude this blog from output"
 msgstr "Exclure ce blog"
 
 # @ msls
-#: ../includes/MslsAdmin.php:122
+#: ../includes/MslsAdmin.php:124
 msgid "Show only links with a translation"
 msgstr "Afficher uniquement les liens ayant une traduction"
 
 # @ msls
-#: ../includes/MslsAdmin.php:123
+#: ../includes/MslsAdmin.php:125
 msgid "Display link to the current language"
 msgstr "Afficher un lien vers la langue en cours"
 
 # @ msls
-#: ../includes/MslsAdmin.php:124
+#: ../includes/MslsAdmin.php:126
 msgid "Description"
 msgstr "Description"
 
 # @ msls
-#: ../includes/MslsAdmin.php:125
+#: ../includes/MslsAdmin.php:127
 msgid "Text/HTML before the list"
 msgstr "Texte/HTML avant la liste"
 
 # @ msls
-#: ../includes/MslsAdmin.php:126
+#: ../includes/MslsAdmin.php:128
 msgid "Text/HTML after the list"
 msgstr "Texte/HTML après la liste"
 
 # @ msls
-#: ../includes/MslsAdmin.php:127
+#: ../includes/MslsAdmin.php:129
 msgid "Text/HTML before each item"
 msgstr "Texte/HTML avant chaque article"
 
 # @ msls
-#: ../includes/MslsAdmin.php:128
+#: ../includes/MslsAdmin.php:130
 msgid "Text/HTML after each item"
 msgstr "Texte/HTML après chaque article"
 
 # @ msls
-#: ../includes/MslsAdmin.php:129
+#: ../includes/MslsAdmin.php:131
 msgid "Add hint for available translations"
 msgstr "Ajoutez une indication pour les traductions disponibles"
 
 # @ msls
-#: ../includes/MslsAdmin.php:130
+#: ../includes/MslsAdmin.php:132
 msgid "Hint priority"
 msgstr "Priorité de l'indication"
 
 # @ msls
-#: ../includes/MslsAdmin.php:131
+#: ../includes/MslsAdmin.php:133
 msgid "Custom URL for flag-images"
 msgstr "URL personnalisée pour les images de drapeaux"
 
@@ -152,8 +154,18 @@ msgstr "Modifier la traduction dans le %s-blog"
 msgid "Create a new translation in the %s-blog"
 msgstr "Créer une nouvelle traduction dans le %s-blog"
 
+#: ../includes/MslsCustomFilter.php:41
+msgid "Show all blogs"
+msgstr ""
+
 # @ msls
-#: ../includes/MslsLink.php:40
+#: ../includes/MslsCustomFilter.php:46
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsLink.php:43
 msgid "Flag and description"
 msgstr "Drapeau et description"
 
@@ -173,7 +185,7 @@ msgid "Description only"
 msgstr "Description seule"
 
 # @ msls
-#: ../includes/MslsMetaBox.php:126
+#: ../includes/MslsMetaBox.php:168 ../includes/MslsMetaBox.php:225
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -181,7 +193,15 @@ msgstr ""
 "Vous devez définir au moins un autre blog dans une langue différente afin de "
 "pouvoir utiliser ce plugin !"
 
+#: ../includes/MslsPlugin.php:41
+msgid ""
+"This plugin needs the activation of the multisite-feature for working "
+"properly. Please read <a onclick=\"window.open(this.href); return false;\" "
+"href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
+"don't know the meaning."
+msgstr ""
+
 # @ msls
-#: ../includes/MslsWidget.php:60
+#: ../includes/MslsWidget.php:68
 msgid "Title"
 msgstr "Titre"

@@ -1,191 +1,217 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Multisite Language Switcher v0.9.9\n"
+"Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2011-11-13 17:29:39+00:00\n"
-"PO-Revision-Date: 2013-11-27 07:18:16+0000\n"
-"Last-Translator: Dennis Ploetner <re@lloc.de>\n"
+"POT-Creation-Date: 2014-04-04 11:26+0100\n"
+"PO-Revision-Date: 2014-04-04 11:52+0100\n"
+"Last-Translator: \n"
 "Language-Team: Victor Melnichenko <victor.melnichenko@gmail.com>\n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 1.5.3\n"
-"X-Poedit-Language: \n"
-"X-Poedit-Country: \n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
-"X-Poedit-Basepath: \n"
-"X-Poedit-Bookmarks: \n"
+"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Textdomain-Support: yes"
+"X-Poedit-SearchPath-1: ..\n"
 
-#: includes/MslsAdmin.php:35
-#: includes/MslsMetaBox.php:67
-#: includes/MslsPostTag.php:94
-#: includes/MslsWidget.php:20
-#@ msls
-msgid "Multisite Language Switcher"
-msgstr "Multisite Language Switcher"
-
-#: includes/MslsAdmin.php:72
-#: includes/MslsMetaBox.php:121
-#@ msls
-msgid "Update"
-msgstr "Zaktualizuj"
-
-#: includes/MslsMetaBox.php:128
-#@ msls
-msgid "You should define at least another blog in a different language in order to have some benefit from this plugin!"
-msgstr "Powinieneś zdefiniować przynajmniej jeden dodatkowy blog, aby mieć jakikolwiek użytek z tej wtyczki!"
-
-#: includes/MslsAdmin.php:64
-#@ msls
-msgid "Multisite Language Switcher Options"
-msgstr "Multisite Language Switcher Opcje"
-
-#: includes/MslsAdmin.php:66
-#@ msls
-msgid "To achieve maximum flexibility, you have to configure each blog separately."
-msgstr "Aby osiagnąć maksymalną elastyczność, skonfiguruj każdy blog osobno."
-
-#: includes/MslsAdmin.php:110
-#@ msls
-msgid "Main Settings"
-msgstr "Ustawienia główne"
-
-#: includes/MslsAdmin.php:114
-#@ msls
-msgid "Display"
-msgstr "Wyświetl"
-
-#: includes/MslsAdmin.php:116
-#@ msls
-msgid "Sort output by description"
-msgstr "Sortuj listę po opisie"
-
-#: includes/MslsAdmin.php:117
-#@ msls
-msgid "Exclude this blog from output"
-msgstr "Nie wyświetlaj tego bloga na liście"
-
-#: includes/MslsAdmin.php:118
-#@ msls
-msgid "Show only links with a translation"
-msgstr "Pokazuj link tylko, gdy dostępne jest tłumaczenie"
-
-#: includes/MslsAdmin.php:119
-#@ msls
-msgid "Display link to the current language"
-msgstr "Wyświetl link do bieżącego języka"
-
-#: includes/MslsAdmin.php:120
-#@ msls
-msgid "Description"
-msgstr "Opis"
-
-#: includes/MslsAdmin.php:121
-#@ msls
-msgid "Text/HTML before the list"
-msgstr "Text/HTML przed listą języków"
-
-#: includes/MslsAdmin.php:122
-#@ msls
-msgid "Text/HTML after the list"
-msgstr "Text/HTML po liście języków"
-
-#: includes/MslsAdmin.php:123
-#@ msls
-msgid "Text/HTML before each item"
-msgstr "Text/HTML przed każdym językiem"
-
-#: includes/MslsAdmin.php:124
-#@ msls
-msgid "Text/HTML after each item"
-msgstr "Text/HTML po każdym języku"
-
-#: includes/MslsAdmin.php:125
-#@ msls
-msgid "Add hint for available translations"
-msgstr "Dodaj wskazówkę o dostępnych tłumaczeniach"
-
-#: includes/MslsAdmin.php:126
-#@ msls
-msgid "Hint priority"
-msgstr "Priorytet wskazówki"
-
-#: includes/MslsAdmin.php:127
-#@ msls
-msgid "Custom URL for flag-images"
-msgstr "URL do własnego pliku z flagą"
-
-#: includes/MslsLink.php:43
-#@ msls
-msgid "Flag and description"
-msgstr "Flaga i opis"
-
-#: includes/MslsLinkTextOnly.php:25
-#@ msls
-msgid "Description only"
-msgstr "Tylko opis"
-
-#: includes/MslsLinkImageOnly.php:25
-#@ msls
-msgid "Flag only"
-msgstr "Tylko flaga"
-
-#: includes/MslsLinkTextImage.php:25
-#@ msls
-msgid "Description and flag"
-msgstr "Opis i flaga"
-
-#: includes/MslsAdminIcon.php:143
+# @ msls
+#: ../MultisiteLanguageSwitcher.php:161
 #, php-format
-#@ msls
-msgid "Edit the translation in the %s-blog"
-msgstr "Edytuj tłumaczenie w blogu %s"
-
-#: includes/MslsAdminIcon.php:150
-#, php-format
-#@ msls
-msgid "Create a new translation in the %s-blog"
-msgstr "Dodaj nowe tłumaczenie w blogu %s"
-
-#: includes/MslsWidget.php:68
-#@ msls
-msgid "Title"
-msgstr "Tytuł"
-
-#: MultisiteLanguageSwitcher.php:160
-#, php-format
-#@ msls
 msgid "%s and %s"
 msgstr "%s i %s"
 
-#: MultisiteLanguageSwitcher.php:171
+# @ msls
+#: ../MultisiteLanguageSwitcher.php:172
 #, php-format
-#@ msls
 msgid "This post is also available in %s."
 msgstr "Treść dostępna również w %s"
 
-#: includes/MslsAdmin.php:51
-#, php-format
-#@ default
-msgid "Multisite Language Switcher is almost ready. You must <a href=\"%s\">complete the configuration process</a>."
-msgstr "Multisite Language Switcher jest prawie gotowy. Wystarczy, że <a href=\"%s\">dokończysz proces konfiguracji</a>."
+# @ msls
+#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
+#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:94
+#: ../includes/MslsWidget.php:20
+msgid "Multisite Language Switcher"
+msgstr "Multisite Language Switcher"
 
-#: includes/MslsAdmin.php:72
-#@ msls
+# @ default
+#: ../includes/MslsAdmin.php:57
+#, php-format
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
+"Multisite Language Switcher jest prawie gotowy. Wystarczy, że <a href=\"%s"
+"\">dokończysz proces konfiguracji</a>."
+
+# @ msls
+#: ../includes/MslsAdmin.php:70
+msgid "Multisite Language Switcher Options"
+msgstr "Multisite Language Switcher Opcje"
+
+# @ msls
+#: ../includes/MslsAdmin.php:72
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "Aby osiagnąć maksymalną elastyczność, skonfiguruj każdy blog osobno."
+
+# @ msls
+#: ../includes/MslsAdmin.php:78
 msgid "Configure"
 msgstr "Konfiguruj"
 
-#: includes/MslsAdmin.php:115
-#@ msls
+# @ msls
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:161
+#: ../includes/MslsMetaBox.php:218
+msgid "Update"
+msgstr "Zaktualizuj"
+
+# @ msls
+#: ../includes/MslsAdmin.php:116
+msgid "Main Settings"
+msgstr "Ustawienia główne"
+
+# @ msls
+#: ../includes/MslsAdmin.php:120
+msgid "Display"
+msgstr "Wyświetl"
+
+# @ msls
+#: ../includes/MslsAdmin.php:121
 msgid "Activate experimental autocomplete inputs"
 msgstr "Aktywuj eksperymentalne auto-uzupełniane pola"
 
-#: includes/MslsPlugin.php:41
-#@ msls
-msgid "This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick=\"window.open(this.href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you don't know the meaning."
-msgstr "Do poprawnego działania wtyczki potrzeba aktywacji funkcjonalności Sieci. Przeczytaj proszę <a onclick=\"window.open(this.href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network\">ten wpis</a> jeśli nie wiesz o co chodzi."
+# @ msls
+#: ../includes/MslsAdmin.php:122
+msgid "Sort output by description"
+msgstr "Sortuj listę po opisie"
 
+# @ msls
+#: ../includes/MslsAdmin.php:123
+msgid "Exclude this blog from output"
+msgstr "Nie wyświetlaj tego bloga na liście"
+
+# @ msls
+#: ../includes/MslsAdmin.php:124
+msgid "Show only links with a translation"
+msgstr "Pokazuj link tylko, gdy dostępne jest tłumaczenie"
+
+# @ msls
+#: ../includes/MslsAdmin.php:125
+msgid "Display link to the current language"
+msgstr "Wyświetl link do bieżącego języka"
+
+# @ msls
+#: ../includes/MslsAdmin.php:126
+msgid "Description"
+msgstr "Opis"
+
+# @ msls
+#: ../includes/MslsAdmin.php:127
+msgid "Text/HTML before the list"
+msgstr "Text/HTML przed listą języków"
+
+# @ msls
+#: ../includes/MslsAdmin.php:128
+msgid "Text/HTML after the list"
+msgstr "Text/HTML po liście języków"
+
+# @ msls
+#: ../includes/MslsAdmin.php:129
+msgid "Text/HTML before each item"
+msgstr "Text/HTML przed każdym językiem"
+
+# @ msls
+#: ../includes/MslsAdmin.php:130
+msgid "Text/HTML after each item"
+msgstr "Text/HTML po każdym języku"
+
+# @ msls
+#: ../includes/MslsAdmin.php:131
+msgid "Add hint for available translations"
+msgstr "Dodaj wskazówkę o dostępnych tłumaczeniach"
+
+# @ msls
+#: ../includes/MslsAdmin.php:132
+msgid "Hint priority"
+msgstr "Priorytet wskazówki"
+
+# @ msls
+#: ../includes/MslsAdmin.php:133
+msgid "Custom URL for flag-images"
+msgstr "URL do własnego pliku z flagą"
+
+# @ msls
+#: ../includes/MslsAdminIcon.php:143
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "Edytuj tłumaczenie w blogu %s"
+
+# @ msls
+#: ../includes/MslsAdminIcon.php:150
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr "Dodaj nowe tłumaczenie w blogu %s"
+
+#: ../includes/MslsCustomFilter.php:41
+msgid "Show all blogs"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsCustomFilter.php:46
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsLink.php:43
+msgid "Flag and description"
+msgstr "Flaga i opis"
+
+# @ msls
+#: ../includes/MslsLinkImageOnly.php:25
+msgid "Flag only"
+msgstr "Tylko flaga"
+
+# @ msls
+#: ../includes/MslsLinkTextImage.php:25
+msgid "Description and flag"
+msgstr "Opis i flaga"
+
+# @ msls
+#: ../includes/MslsLinkTextOnly.php:25
+msgid "Description only"
+msgstr "Tylko opis"
+
+# @ msls
+#: ../includes/MslsMetaBox.php:168 ../includes/MslsMetaBox.php:225
+msgid ""
+"You should define at least another blog in a different language in order to "
+"have some benefit from this plugin!"
+msgstr ""
+"Powinieneś zdefiniować przynajmniej jeden dodatkowy blog, aby mieć "
+"jakikolwiek użytek z tej wtyczki!"
+
+# @ msls
+#: ../includes/MslsPlugin.php:41
+msgid ""
+"This plugin needs the activation of the multisite-feature for working "
+"properly. Please read <a onclick=\"window.open(this.href); return false;\" "
+"href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
+"don't know the meaning."
+msgstr ""
+"Do poprawnego działania wtyczki potrzeba aktywacji funkcjonalności Sieci. "
+"Przeczytaj proszę <a onclick=\"window.open(this.href); return false;\" href="
+"\"http://codex.wordpress.org/Create_A_Network\">ten wpis</a> jeśli nie wiesz "
+"o co chodzi."
+
+# @ msls
+#: ../includes/MslsWidget.php:68
+msgid "Title"
+msgstr "Tytuł"
