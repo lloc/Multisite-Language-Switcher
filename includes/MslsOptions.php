@@ -52,7 +52,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @param int $id
 	 * @return MslsOptions
 	 */
-	public static function create( $id = 0 ) {
+	static function create( $id = 0 ) {
 		if ( is_admin() ) {
 			$id  = (int) $id;
 			$obj = MslsContentTypes::create();
@@ -228,7 +228,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * Instance
 	 * @return MslsOptions
 	 */
-	public static function instance() {
+	static function instance() {
 		$registry = MslsRegistry::singleton();
 		$cls      = __CLASS__;
 		$obj      = $registry->get_object( $cls );

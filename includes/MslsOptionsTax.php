@@ -28,7 +28,7 @@ class MslsOptionsTax extends MslsOptions {
 	 * @param int $id
 	 * @return MslsOptionsTax
 	 */
-	public static function create( $id = 0 ) {
+	static function create( $id = 0 ) {
 		if ( is_admin() ) {
 			$id  = intval( $id );
 			$obj = MslsContentTypes::create();

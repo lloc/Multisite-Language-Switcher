@@ -43,7 +43,7 @@ class MslsRegistry {
 	 * @return mixed
 	 */
 	private function get( $key ) {
-		return( isset( $this->arr[$key] ) ? $this->arr[$key] : null );
+		return( isset( self::$arr[$key] ) ? self::$arr[$key] : null );
 	}
 
 	/**
@@ -52,14 +52,14 @@ class MslsRegistry {
 	 * @param mixed $instance
 	 */
 	private function set( $key, $instance ) {
-		$this->arr[$key] = $instance;
+		self::$arr[$key] = $instance;
 	}
 
 	/**
 	 * Registry is a singleton
 	 * @return mixed
 	 */
-	public static function singleton() {
+	static function singleton() {
 		if ( !isset( self::$instance ) )
 			self::$instance = new self();
 		return self::$instance;
@@ -70,7 +70,7 @@ class MslsRegistry {
 	 * @param mixed $key
 	 * @return mixed
 	 */
-	public static function get_object( $key ) {
+	static function get_object( $key ) {
 		return self::singleton()->get( $key );
 	}
 
@@ -79,7 +79,7 @@ class MslsRegistry {
 	 * @param mixed $key
 	 * @param mixed $instance
 	 */
-	public static function set_object( $key, $instance ) {
+	static function set_object( $key, $instance ) {
 		self::singleton()->set( $key, $instance );
 	}
 

@@ -17,7 +17,7 @@ class MslsOutput extends MslsMain {
 	 * Init
 	 * @return MslsOutput
 	 */
-	public static function init() {
+	static function init() {
 		return new self();
 	}
 
@@ -68,7 +68,7 @@ class MslsOutput extends MslsMain {
 				if ( ! $language )
 					continue;
 
-				$link->src = $this->options->get_flag_url( $language );
+				$link->src = MslsOptions::instance()->get_flag_url( $language );
 				$link->alt = $language;
 
 				if ( has_filter( 'msls_output_get' ) ) {
@@ -106,10 +106,11 @@ class MslsOutput extends MslsMain {
 	 * @return string
 	 */
 	public function __toString() {
-		$arr = $this->get(
-			(int) $this->options->display,
+		$options = MslsOptions::instance();
+		$arr     = $this->get(
+			(int) $options->display,
 			false,
-			isset( $this->options->only_with_translation )
+			isset( $options->only_with_translation )
 		);
 
 		if ( empty( $arr ) )
@@ -130,11 +131,13 @@ class MslsOutput extends MslsMain {
 	 */
 	public function get_tags() {
 		if ( empty( $this->tags ) ) {
+			$options = MslsOptions::instance();
+
 			$this->tags = array(
-				'before_item'   => $this->options->before_item,
-				'after_item'    => $this->options->after_item,
-				'before_output' => $this->options->before_output,
-				'after_output'  => $this->options->after_output,
+				'before_item'   => $options->before_item,
+				'after_item'    => $options->after_item,
+				'before_output' => $options->before_output,
+				'after_output'  => $options->after_output,
 			);
 		}
 		return $this->tags;

@@ -179,7 +179,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * Get or create a instance of MslsBlogCollection
 	 * @return MslsBlogCollection
 	 */
-	public static function instance() {
+	static function instance() {
 		$registry = MslsRegistry::singleton();
 		$cls      = __CLASS__;
 		$obj      = $registry->get_object( $cls );

@@ -17,7 +17,7 @@ class MslsOptionsQuery extends MslsOptions {
 	 * 
 	 * @return MslsQueryOptions
 	 */
-	public static function create() {
+	static function create() {
 		if ( is_day() ) {
 			return new MslsOptionsQueryDay(
 				get_query_var( 'year' ),

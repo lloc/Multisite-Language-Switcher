@@ -58,7 +58,7 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	 * Get or create a instance of MslsTaxonomy
 	 * @return MslsBlogCollection
 	 */
-	public static function instance() {
+	static function instance() {
 		$registry = MslsRegistry::singleton();
 		$cls      = __CLASS__;
 		$obj      = $registry->get_object( $cls );

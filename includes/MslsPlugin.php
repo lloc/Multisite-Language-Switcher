@@ -17,7 +17,7 @@ class MslsPlugin {
 	 * The widget will only be registered if the current blog is not 
 	 * excluded in the configuration of the plugin.
 	 */
-	function init_widget() {
+	static function init_widget() {
 		if ( ! MslsOptions::instance()->is_excluded() )
 			register_widget( 'MslsWidget' );
 	}
@@ -28,7 +28,7 @@ class MslsPlugin {
 	 * The method will be executed allways on init because we have some
 	 * translatable string in the frontend too.
 	 */
-	public static function init_i18n_support() {
+	static function init_i18n_support() {
 		load_plugin_textdomain(
 			'msls',
 			false,
@@ -36,7 +36,7 @@ class MslsPlugin {
 		);
 	}
 
-	public static function message_handler( $message = null, $css_class = 'error' ) {
+	static function message_handler( $message = null, $css_class = 'error' ) {
 		if ( is_null( $message ) ) {
 			$message = __( 'This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'msls' );
 		}
@@ -54,7 +54,7 @@ class MslsPlugin {
 	 * activation of the plugin. If it fails the plugin will be
 	 * deactivated and the execution will be terminated immediately.
 	 */
-	public static function activate() {
+	static function activate() {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) 
 			return;
 		deactivate_plugins( MSLS_PLUGIN__FILE__ );
@@ -67,7 +67,7 @@ class MslsPlugin {
 	 * Deactivate plugin
 	 * @todo Write the deactivate-method
 	 */
-	public static function deactivate() { }
+	static function deactivate() { }
 
 	/**
 	 * Uninstall plugin
@@ -76,7 +76,7 @@ class MslsPlugin {
 	 * deleted after the uninstall procedure. 
 	 * @return bool
 	 */
-	public static function uninstall() {
+	static function uninstall() {
 		/**
 		 * I want to be sure that the user has not deactivated the 
 		 * multisite because I'd like to use switch_to_blog and 
@@ -105,7 +105,7 @@ class MslsPlugin {
 	 * options-table and returns true if it was successful.
 	 * @return bool
 	 */
-	public static function cleanup() {
+	static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
 			global $wpdb;
 			$sql = $wpdb->prepare(

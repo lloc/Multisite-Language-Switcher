@@ -85,7 +85,7 @@ class MslsBlog {
 	 * @param mixed $b
 	 * return int
 	 */
-	public static function _cmp( $a, $b ) {
+	static function _cmp( $a, $b ) {
 		if ( $a == $b )
 			return 0;
 		return( $a < $b ? (-1) : 1 );
@@ -97,7 +97,7 @@ class MslsBlog {
 	 * @param mixed $b
 	 * return int
 	 */
-	public static function language( $a, $b ) {
+	static function language( $a, $b ) {
 		return( self::_cmp( $a->get_language(), $b->get_language() ) );
 	}
 
@@ -107,7 +107,7 @@ class MslsBlog {
 	 * @param mixed $b
 	 * return int
 	 */
-	public static function description( $a, $b ) {
+	static function description( $a, $b ) {
 		return( self::_cmp( $a->get_description(), $b->get_description() ) );
 	}
 

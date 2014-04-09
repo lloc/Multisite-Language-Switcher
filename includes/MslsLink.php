@@ -25,7 +25,7 @@ class MslsLink extends MslsGetSet {
 	 * 
 	 * @return array
 	 */
-	public static function get_types() {
+	static function get_types() {
 		return array( 
 			'0' => 'MslsLink',
 			'1' => 'MslsLinkTextOnly',
@@ -39,7 +39,7 @@ class MslsLink extends MslsGetSet {
 	 * 
 	 * @return string
 	 */
-	public static function get_description() {
+	static function get_description() {
 		return __( 'Flag and description', 'msls' );
 	}
 
@@ -48,7 +48,7 @@ class MslsLink extends MslsGetSet {
 	 * 
 	 * @return array
 	 */
-	public static function get_types_description() {
+	static function get_types_description() {
 		$temp  = array();
 		foreach ( self::get_types() as $key => $class ) {
 			$temp[$key] = call_user_func(
@@ -64,7 +64,7 @@ class MslsLink extends MslsGetSet {
 	 * @param int $display
 	 * @return MslsLink
 	 */
-	public static function create( $display ) {
+	static function create( $display ) {
 		if ( has_filter( 'msls_link_create' ) ) {
 			/**
 			 * Lets you create your own MslsLink-Object

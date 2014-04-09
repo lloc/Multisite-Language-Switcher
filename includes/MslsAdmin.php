@@ -16,14 +16,14 @@ class MslsAdmin extends MslsMain {
 	 * Init
 	 * @return MslsAdmin
 	 */
-	public static function init() {
+	static function init() {
 		wp_enqueue_style(
 			'msls-styles',
 			plugins_url( 'css/msls.css', MSLS_PLUGIN__FILE__ ),
 			array(),
 			MSLS_PLUGIN_VERSION
 		);
-		if ( $this->option->activate_autocomplete ) {
+		if ( MslsOptions::instance()->activate_autocomplete ) {
 			wp_enqueue_script(
 				'msls-autocomplete',
 				plugins_url( 'js/msls.min.js', MSLS_PLUGIN__FILE__ ),
@@ -52,7 +52,7 @@ class MslsAdmin extends MslsMain {
 	 * There is something wrong? Here comes the message...
 	 */
 	public function warning() {
-		if ( current_user_can( 'manage_options' ) && $this->options->is_empty() ) {
+		if ( current_user_can( 'manage_options' ) && MslsOptions::instance()->is_empty() ) {
 			$message = sprintf(
 				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
 				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
@@ -75,7 +75,7 @@ class MslsAdmin extends MslsMain {
 		do_settings_sections( __CLASS__ );
 		printf(
 			'<p class="submit"><input name="Submit" type="submit" class="button-primary" value="%s" /></p></form></div>',
-			( $this->options->is_empty() ? __( 'Configure', 'msls' ) : __( 'Update', 'msls' ) )
+			( MslsOptions::instance()->is_empty() ? __( 'Configure', 'msls' ) : __( 'Update', 'msls' ) )
 		);
 	}
 
@@ -146,7 +146,7 @@ class MslsAdmin extends MslsMain {
 		echo $this->render_select(
 			'display',
 			MslsLink::get_types_description(),
-			$this->options->display
+			MslsOptions::instance()->display
 		);
 	}
 
@@ -252,11 +252,13 @@ class MslsAdmin extends MslsMain {
 	 * for the output
 	 */
 	public function content_priority() {
-		$temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
-		$arr      = array_combine( $temp, $temp );
+		$temp    = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
+		$arr     = array_combine( $temp, $temp );
+		$options = MslsOptions::instance();
+
 		$selected = (
-			!empty( $this->options->content_priority ) ?
-			$this->options->content_priority :
+			!empty( $options->content_priority ) ?
+			$options->content_priority :
 			10
 		);
 		echo $this->render_select( 'content_priority', $arr, $selected );
@@ -281,7 +283,7 @@ class MslsAdmin extends MslsMain {
 		return sprintf(
 			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1"%2$s/>',
 			$key,
-			( $this->options->$key == 1 ? ' checked="checked"' : '' )
+			( MslsOptions::instance()->$key == 1 ? ' checked="checked"' : '' )
 		);
 	}
 
@@ -296,7 +298,7 @@ class MslsAdmin extends MslsMain {
 		return sprintf(
 			'<input id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"/>',
 			$key,
-			esc_attr( $this->options->$key ),
+			esc_attr( MslsOptions::instance()->$key ),
 			$size
 		);
 	}

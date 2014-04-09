@@ -27,7 +27,7 @@ class MslsContentTypes {
 	 * Factory method
 	 * @return MslsContentTypes
 	 */
-	public static function create() {
+	static function create() {
 		if ( isset( $_REQUEST['taxonomy'] ) )
 			return MslsTaxonomy::instance();
 		return MslsPostType::instance();

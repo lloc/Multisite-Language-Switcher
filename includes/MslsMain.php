@@ -9,13 +9,7 @@
  * Abstraction for the hook classes
  * @package Msls
  */
-abstract class MslsMain {
-
-	/**
-	 * Options
-	 * @var MslsOptions
-	 */
-	protected $options;
+class MslsMain {
 
 	/**
 	 * Blogs
@@ -27,13 +21,14 @@ abstract class MslsMain {
 	 * Every child of MslsMain has to define a init-method
 	 * @return MslsMain
 	 */
-	abstract public static function init();
+	static function init() {
+		throw new Exception( 'Static method init is not defined' );
+	}
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->options = MslsOptions::instance();
 		$this->blogs   = MslsBlogCollection::instance();
 	}
 

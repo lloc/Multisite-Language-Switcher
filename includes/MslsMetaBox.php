@@ -74,7 +74,7 @@ class MslsMetaBox extends MslsMain {
 				array(
 					$this,
 					( 
-						$this->option->activate_autocomplete ?
+						MslsOptions::instance()->activate_autocomplete ?
 						'render_input' :
 						'render_select'
 					)
@@ -100,12 +100,16 @@ class MslsMetaBox extends MslsMain {
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
+
 				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create();
+				$flag_url = MslsOptions::instance()->get_flag_url( $language );
 				$selects  = '';
 				$pto      = get_post_type_object( $type );
+
+				$icon     = MslsAdminIcon::create();
 				$icon->set_language( $language );
-				$icon->set_src( $this->options->get_flag_url( $language ) );
+				$icon->set_src( $flag_url );
+
 				if ( $mydata->has_value( $language ) )
 					$icon->set_href( $mydata->$language );
 				if ( $pto->hierarchical ) {
@@ -184,14 +188,18 @@ class MslsMetaBox extends MslsMain {
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
-				$lang  = $blog->get_language();
-				$icon  = MslsAdminIcon::create()
-					->set_language( $lang )
-					->set_src( $this->options->get_flag_url( $lang ) );
+
+				$language = $blog->get_language();
+				$flag_url = MslsOptions::instance()->get_flag_url( $language );
+
+				$icon = MslsAdminIcon::create()
+					->set_language( $language )
+					->set_src( $flag_url );
+
 				$value = $title = '';
-				if ( $my_data->has_value( $lang ) ) {
-					$icon->set_href( $my_data->$lang );
-					$value = $my_data->$lang;
+				if ( $my_data->has_value( $language ) ) {
+					$icon->set_href( $my_data->$language );
+					$value = $my_data->$language;
 					$title = get_the_title( $value );
 				}
 				$items .= sprintf(
@@ -202,7 +210,7 @@ class MslsMetaBox extends MslsMain {
 					</li>',
 					$blog->userblog_id,
 					$icon,
-					$lang,
+					$language,
 					$value,
 					$title
 				);

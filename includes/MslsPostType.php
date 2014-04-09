@@ -48,7 +48,7 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 	 * Get or create a instance of MslsPostType
 	 * @return MslsPostType
 	 */
-	public static function instance() {
+	static function instance() {
 		$registry = MslsRegistry::singleton();
 		$cls      = __CLASS__;
 		$obj      = $registry->get_object( $cls );

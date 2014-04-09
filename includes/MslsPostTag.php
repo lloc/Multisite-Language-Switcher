@@ -44,7 +44,7 @@ class MslsPostTag extends MslsMain {
 	 * Init
 	 * @return MslsPostTag
 	 */
-	public static function init() {
+	static function init() {
 		$obj      = new self();
 		$taxonomy = MslsPostTag::check();
 		if ( $taxonomy ) {
@@ -66,8 +66,8 @@ class MslsPostTag extends MslsMain {
 	 * Check the taxonomy
 	 * @return string
 	 */
-	public static function check() {
-		if ( MslsOptions::instance()->is_excluded() || !isset( $_REQUEST['taxonomy'] ) ) {
+	static function check() {
+		if ( MslsOptions::instance()->is_excluded() || ! isset( $_REQUEST['taxonomy'] ) ) {
 			$type = MslsContentTypes::create()->get_request();
 			if ( !empty( $type ) ) {
 				$tax = get_taxonomy( $type );
@@ -94,12 +94,16 @@ class MslsPostTag extends MslsMain {
 			$type   = MslsContentTypes::create()->get_request();
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
+
 				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create();
+				$flag_url = MslsOptions::instance()->get_flag_url( $language );
 				$options  = '';
 				$terms    = get_terms( $type, array( 'hide_empty' => 0 ) );
+
+				$icon = MslsAdminIcon::create();
 				$icon->set_language( $language );
-				$icon->set_src( $this->options->get_flag_url( $language ) );
+				$icon->set_src( $flag_url );
+
 				if ( $mydata->has_value( $language ) )
 					$icon->set_href( $mydata->$language );
 				if ( !empty( $terms ) ) {
@@ -146,16 +150,20 @@ class MslsPostTag extends MslsMain {
 			);
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
-				$lang  = $blog->get_language();
-				$icon  = MslsAdminIcon::create()
-					->set_language( $lang )
-					->set_src( $this->options->get_flag_url( $lang ) );
+
+				$language = $blog->get_language();
+				$flag_url = MslsOptions::instance()->get_flag_url( $language );
+
+				$icon = MslsAdminIcon::create()
+					->set_language( $language )
+					->set_src( $flag_url );
+
 				$value = $title = '';
-				if ( $my_data->has_value( $lang ) ) {
-					$term = get_term( $my_data->$lang, $type ); 
+				if ( $my_data->has_value( $language ) ) {
+					$term = get_term( $my_data->$language, $type ); 
 					if ( is_object( $term ) ) { 
-						$icon->set_href( $my_data->$lang );
-						$value = $my_data->$lang;
+						$icon->set_href( $my_data->$language );
+						$value = $my_data->$language;
 						$title = $term->name;
 					}
 				}
@@ -170,7 +178,7 @@ class MslsPostTag extends MslsMain {
 					</td>',
 					$blog->userblog_id,
 					$icon,
-					$lang,
+					$language,
 					$value,
 					$title
 				);

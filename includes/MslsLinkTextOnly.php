@@ -21,7 +21,7 @@ class MslsLinkTextOnly extends MslsLink {
 	 * Get the description
 	 * @return string
 	 */
-	public static function get_description() {
+	static function get_description() {
 		return __( 'Description only', 'msls' );
 	}
 

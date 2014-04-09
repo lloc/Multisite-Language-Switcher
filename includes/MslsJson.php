@@ -47,7 +47,7 @@ class MslsJson {
 	 * @param array $b
 	 * @return int
 	 */
-	public static function compare( array $a, array $b ) {
+	static function compare( array $a, array $b ) {
 		return strnatcmp( $a['label'], $b['label'] );
 	}
 
