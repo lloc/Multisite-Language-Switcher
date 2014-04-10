@@ -4,7 +4,7 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2.1
-Tested up to: 3.6.1
+Tested up to: 3.9
 Stable tag: 0.9.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -53,6 +53,7 @@ banner.
 * Serbian (sr_RS) - [Web Hosting Hub](http://www.webhostinghub.com/)
 * Turkish (tr) - Alican Cakil
 * Armenian (hy_AM) - Yeghishe Nersisyan
+* Bengali (bn_BD) - Md. Nazmul Huda
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
@@ -113,7 +114,9 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 * Option to transform the dropdowns for choosing the connections into text-inputs with jquery-ui autocomplete
 * Plugin cleans up the option-tables now when uninstalled
 * now you can use `<?php if ( function_exists( 'msls_filter_string' ) ) msls_filter_string(); ?>` if you'ld like to print the "hint"-string anywhere in your templates
-* language files for ca_ES by Joan López and cs_CZ by Rastr added
+* language files for ca_ES by Joan López, cs_CZ by Rastr and bn_BD by Md. Nazmul Huda added
+* MslsCustomFilter-Class by Maciej Czerpiński
+* and a lot of other minor improvements
 
 = 0.9.8.1 =
 * Fix for "All inone event calendar"
@@ -159,15 +162,6 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 * new: apply_filters( 'msls_blog_collection_construct', $arr ); in MslsBlogCollection::__construct();
 * bugfix: msls_blog_collection_get
 * language files for fr_FR and es_ES updated
-
-= 0.8 =
-* new: now flags in the backend are allways clickable, link to edit the translation or to create a new item
-* new: meta-box is now also available when you want to add a new post 
-* new: custom url for flag-images
-* new: now you can order the output by description; default is country-code
-* new: apply_filters( 'msls_blog_collection_get', $arr ); in MslsBlogCollection::get();
-* added empty index.php-files to all subdirectories
-* source code meets now the [WordPress PHP formatting standards](http://urbangiraffe.com/articles/wordpress-codesniffer-standard/)
 
 [...]
 

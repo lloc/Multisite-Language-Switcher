@@ -46,6 +46,7 @@ banner.
 *  Serbian (sr_RS) - [Web Hosting Hub](http://www.webhostinghub.com/)
 *  Turkish (tr) - Alican Cakil
 *  Armenian (hy_AM) - Yeghishe Nersisyan
+*  Bengali (bn_BD) - Md. Nazmul Huda
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
