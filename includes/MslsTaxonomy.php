@@ -30,11 +30,11 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 			)
 		);
 		$this->request = (
-			!empty( $_REQUEST['taxonomy'] ) ?
+			! empty( $_REQUEST['taxonomy'] ) ?
 			esc_attr( $_REQUEST['taxonomy'] ) :
 			get_query_var( 'taxonomy' )
 		);
-		if ( !empty( $_REQUEST['post_type'] ) )
+		if ( ! empty( $_REQUEST['post_type'] ) )
 			$this->post_type = esc_attr( $_REQUEST['post_type'] );
 	}
 

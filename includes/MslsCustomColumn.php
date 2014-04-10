@@ -21,7 +21,7 @@ class MslsCustomColumn extends MslsMain {
 		$options = MslsOptions::instance();
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
-			if ( !empty( $post_type ) ) {
+			if ( ! empty( $post_type ) ) {
 				add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
 				add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
 				add_action( 'trashed_post', array( $obj, 'delete' ) );
@@ -40,10 +40,12 @@ class MslsCustomColumn extends MslsMain {
 		if ( $blogs ) {
 			$arr = array();
 			foreach ( $blogs as $blog ) {
-				$lang = $blog->get_language();
-				$url  = MslsOptions::instance()->get_flag_url( $lang );
+				$language = $blog->get_language();
+				$flag_url = MslsOptions::instance()->get_flag_url( $language );
+
 				$icon = new MslsAdminIcon( null );
-				$icon->set_language( $lang )->set_src( url );
+				$icon->set_language( $language )->set_src( $flag_url );
+
 				$arr[] = $icon->get_img();
 			}
 			$columns['mslscol'] = implode( '&nbsp;', $arr );

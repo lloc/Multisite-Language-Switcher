@@ -91,8 +91,9 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		$this->delete();
 		if ( $this->set( $arr ) ) {
 			$arr = $this->get_arr();
-			if ( !empty( $arr ) )
+			if ( ! empty( $arr ) ) {
 				add_option( $this->name, $arr, '', $this->autoload );
+			}
 		}
 	}
 

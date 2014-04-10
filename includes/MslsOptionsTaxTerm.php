@@ -47,7 +47,11 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 */
 	protected function get_base() {
 		$base = get_option( $this->base_option );
-		return( !empty( $base ) ? $base: $this->base_defined );
+		return(
+			! empty( $base ) ?
+			$base :
+			$this->base_defined
+		);
 	}
 
 }

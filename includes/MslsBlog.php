@@ -63,7 +63,7 @@ class MslsBlog {
 	 */
 	public function get_description() {
 		return(
-			!empty( $this->description ) ?
+			! empty( $this->description ) ?
 			$this->description :
 			$this->get_language()
 		);
@@ -76,7 +76,11 @@ class MslsBlog {
 	 * @return string
 	 */
 	public function get_language() {
-		return( !empty( $this->language ) ? $this->language : 'us' );
+		return(
+			! empty( $this->language ) ?
+			$this->language :
+			'us'
+		);
 	}
 
 	/**

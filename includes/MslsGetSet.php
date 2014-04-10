@@ -103,7 +103,7 @@ class MslsGetSet {
 	 * @return bool
 	 */ 
 	public function has_value( $key ) {
-		return( !empty( $this->arr[$key] ) );
+		return( ! empty( $this->arr[$key] ) );
 	}
 
 	/**

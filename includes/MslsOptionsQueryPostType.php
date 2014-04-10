@@ -19,8 +19,9 @@ class MslsOptionsQueryPostType extends MslsOptionsQuery {
 	 * @return bool
 	 */
 	public function has_value( $language ) {
-		if ( !isset( $this->arr[$language] ) )
+		if ( ! isset( $this->arr[$language] ) ) {
 			$this->arr[$language] = get_post_type_object( $this->args[0] );
+		}
 		return (bool) $this->arr[$language];
 	}
 

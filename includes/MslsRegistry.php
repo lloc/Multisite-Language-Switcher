@@ -60,8 +60,9 @@ class MslsRegistry {
 	 * @return mixed
 	 */
 	static function singleton() {
-		if ( !isset( self::$instance ) )
+		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
+		}
 		return self::$instance;
 	}
 

@@ -46,9 +46,10 @@ class MslsLanguageArray {
 	 * @return MslsLanguageArray
 	 */
 	public function set( $key, $value ) {
-		$value = intval( $value );
-		if ( 2 <= strlen( $key ) && 0 < $value )
+		$value = (int) $value;
+		if ( 2 <= strlen( $key ) && 0 < $value ) {
 			$this->arr[$key] = $value;
+		}
 		return $this;
 	}
 

@@ -137,7 +137,7 @@ class MslsAdminIcon {
 	 * @return string
 	 */
 	protected function get_a() {
-		if ( !empty( $this->href ) ) {
+		if ( ! empty( $this->href ) ) {
 			$href  = $this->href;
 			$title = sprintf(
 				__( 'Edit the translation in the %s-blog', 'msls' ),

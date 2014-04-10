@@ -9,9 +9,9 @@
  * Adding custom filter to posts/pages table.
  * @package Msls
  */
-class MslsCustomFilter extends MslsMain
-{
-    /**
+class MslsCustomFilter extends MslsMain {
+
+	/**
      * Init
      * @return MslsCustomFilter
      */
@@ -33,7 +33,7 @@ class MslsCustomFilter extends MslsMain
      */
     public function add_filter() {
         $blogs = $this->blogs->get();
-        $id    = ( isset( $_GET['msls_filter'] ) ) ? (int) $_GET['msls_filter'] : '';
+        $id    = ( isset( $_GET['msls_filter'] ) ? (int) $_GET['msls_filter'] : '' );
         if ( $blogs ) {
             echo '<select name="msls_filter" id="msls_filter">';
             echo '<option value="">' . __( 'Show all blogs', 'msls' ) . '</option>';
@@ -51,38 +51,36 @@ class MslsCustomFilter extends MslsMain
 
     /**
      * Execute filter. Exclude translated posts from WP_Query
-     *
      * @uses $wpdb
-     *
      * @return false or WP_Query object
      */
-    public function execute_filter($query)
-    {
+    public function execute_filter( $query ) {
         $blogs = $this->blogs->get();
 
         //some "validation"
-        if (!isset($_GET['msls_filter'])) {
+        if ( ! isset( $_GET['msls_filter'] ) ) {
             return false;
         }
-        $id = (int)$_GET['msls_filter'];
-        if (isset($blogs[$id])) {
-            $lang = $blogs[$id]->get_language();
+        $id = (int) $_GET['msls_filter'];
+        if ( isset( $blogs[$id] ) ) {
             global $wpdb;
-            //load post we need to exclude (already have translation) from search query
-            $q = $wpdb->prepare('SELECT o.option_id, o.option_name FROM '.$wpdb->options.' as o
-                WHERE o.option_name LIKE %s AND o.option_value LIKE %s',
-                'msls_%',
-                '%"'.$lang.'"%'
-            );
-            $posts = $wpdb->get_results($q);
-            $excludeIds = array();
 
-            foreach ($posts as $post) {
-               $excludeIds[] = substr($post->option_name, 5);
+            //load post we need to exclude (already have translation) from search query
+            $sql = $wpdb->prepare(
+            	"SELECT option_id, option_name FROM {$wpdb->options} WHERE option_name LIKE %s AND option_value LIKE %s",
+                'msls_%',
+                '%"' . $blogs[$id]->get_language() . '"%'
+            );
+            $posts = $wpdb->get_results( $sql );
+
+            $exclude_ids = array();
+            foreach ( $posts as $post ) {
+               $exclude_ids[] = substr( $post->option_name, 5 );
             }
-            $query->query_vars['post__not_in'] = $excludeIds;
+            $query->query_vars['post__not_in'] = $exclude_ids;
             return $query;
         }
         return false;
     }
+
 }

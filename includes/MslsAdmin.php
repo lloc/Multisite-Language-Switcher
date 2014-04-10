@@ -97,7 +97,7 @@ class MslsAdmin extends MslsMain {
 			}
 		}
 		return(
-			!empty( $arr ) ?
+			! empty( $arr ) ?
 			sprintf(
 				'<ul class="subsubsub"><li>%s</li></ul>',
 				implode( ' | </li><li>', $arr )
@@ -257,7 +257,7 @@ class MslsAdmin extends MslsMain {
 		$options = MslsOptions::instance();
 
 		$selected = (
-			!empty( $options->content_priority ) ?
+			! empty( $options->content_priority ) ?
 			$options->content_priority :
 			10
 		);
@@ -336,7 +336,7 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function validate( array $input ) {
 		$input['display'] = (
-			!isset( $input['display'] ) ?
+			! isset( $input['display'] ) ?
 			0 :
 			(int) $input['display']
 		);

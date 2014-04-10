@@ -30,7 +30,7 @@ class MslsOptionsTax extends MslsOptions {
 	 */
 	static function create( $id = 0 ) {
 		if ( is_admin() ) {
-			$id  = intval( $id );
+			$id  = (int) $id;
 			$obj = MslsContentTypes::create();
 			if ( $obj->is_taxonomy() ) {
 				switch ( $obj->get_request() ) {
@@ -98,7 +98,10 @@ class MslsOptionsTax extends MslsOptions {
 		if ( $this->has_value( $language ) ) {
 			$taxonomy = $this->get_tax_query();
 			$url      = $this->check_url(
-				get_term_link( (int) $this->__get( $language ), $taxonomy )
+				get_term_link(
+					(int) $this->__get( $language ),
+					$taxonomy
+				)
 			);
 		}
 		return $url;
@@ -111,7 +114,7 @@ class MslsOptionsTax extends MslsOptions {
 	public function get_current_link() {
 		$taxonomy = $this->get_tax_query();
 		return(
-			!empty( $taxonomy ) ?
+			! empty( $taxonomy ) ?
 			get_term_link( (int) $this->args[0], $taxonomy ) :
 			null
 		);

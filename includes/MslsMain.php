@@ -47,7 +47,7 @@ class MslsMain {
 				$this->blogs->get_current_blog()->get_language() => (int) $object_id,
 			);
 			foreach ( $_POST as $key => $value ) {
-				if ( false !== strpos( $key, 'msls_input_' ) && !empty( $value ) ) {
+				if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
 					$input[substr( $key, 11 )] = (int) $value;
 				}
 			}
@@ -84,9 +84,9 @@ class MslsMain {
 	 * Delete
 	 * @param int $post_id
 	 */
-	public function delete( $post_id ) {
-		$options = new MslsOptionsPost( $post_id );
-		$this->save( $post_id, 'MslsOptionsPost', $options->get_arr() );
+	public function delete( $object_id ) {
+		$options = new MslsOptionsPost( $object_id );
+		$this->save( $object_id, 'MslsOptionsPost', $options->get_arr() );
 	}
 
 }

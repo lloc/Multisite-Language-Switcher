@@ -21,10 +21,10 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 		$options = MslsOptions::instance();
 		if ( !$options->is_excluded() ) {
 			$taxonomy = MslsTaxonomy::instance()->get_request();
-			if ( !empty( $taxonomy ) ) {
+			if ( ! empty( $taxonomy ) ) {
 				add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
-				add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'td' ), 10, 3 );
-				add_action( "delete_{$taxonomy}", array( $obj, 'delete' ), 10, 2 );
+				add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'column_default' ), 10, 3 );
+				add_action( "delete_{$taxonomy}", array( $obj, 'delete' ) );
 			}
 		}
 		return $obj;
@@ -36,8 +36,8 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @param string $column_name
 	 * @param int $item_id
 	 */
-	public function td( $deprecated, $column_name, $item_id ) {
-		parent::td( $column_name, $item_id );
+	public function column_default( $deprecated, $column_name, $item_id ) {
+		$this->td( $column_name, $item_id );
 	}
 
 	/**
@@ -45,9 +45,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @param int $term_id
 	 * @param int $tt_id
 	 */
-	public function delete( $term_id, $tt_id ) {
-		$options = new MslsOptionsTax( $term_id );
-		$this->save( $term_id, 'MslsOptionsTax', $options->get_arr() );
+	public function delete( $object_id ) {
+		$options = new MslsOptionsTax( $object_id );
+		$this->save( $object_id, 'MslsOptionsTax', $options->get_arr() );
 	}
 
 }

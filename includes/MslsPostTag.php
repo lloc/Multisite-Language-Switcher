@@ -21,17 +21,21 @@ class MslsPostTag extends MslsMain {
 		$result = array();
 		if ( isset( $_REQUEST['blog_id'] ) ) {
 			switch_to_blog( (int) $_REQUEST['blog_id'] );
-			$args = array(
-				'orderby' => 'name',
-				'order' => 'ASC',
-				'number' => 10,
-				'hide_empty' => 0,
+			$args = apply_filters(
+				'msls_post_tag_suggest_args',
+				array(
+					'orderby'    => 'name',
+					'order'      => 'ASC',
+					'number'     => 10,
+					'hide_empty' => 0,
+				)
 			);
 			if ( isset( $_REQUEST['s'] ) ) {
 				$args['name__like'] = $_REQUEST['s'];
 			}
 			$json_obj = new MslsJson;
 			foreach ( get_terms( $_REQUEST['post_type'], $args ) as $term ) {
+				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
 				$json_obj->add( $term->term_id, $term->name );
 			}
 			restore_current_blog();
@@ -46,7 +50,7 @@ class MslsPostTag extends MslsMain {
 	 */
 	static function init() {
 		$obj      = new self();
-		$taxonomy = MslsPostTag::check();
+		$taxonomy = self::check();
 		if ( $taxonomy ) {
 			if ( MslsOptions::instance()->activate_autocomplete ) {
 				add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add_input' ) );
@@ -67,9 +71,9 @@ class MslsPostTag extends MslsMain {
 	 * @return string
 	 */
 	static function check() {
-		if ( MslsOptions::instance()->is_excluded() || ! isset( $_REQUEST['taxonomy'] ) ) {
+		if ( ! MslsOptions::instance()->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
 			$type = MslsContentTypes::create()->get_request();
-			if ( !empty( $type ) ) {
+			if ( ! empty( $type ) ) {
 				$tax = get_taxonomy( $type );
 				if ( $tax && current_user_can( $tax->cap->manage_terms ) )
 					return $type;
@@ -106,7 +110,7 @@ class MslsPostTag extends MslsMain {
 
 				if ( $mydata->has_value( $language ) )
 					$icon->set_href( $mydata->$language );
-				if ( !empty( $terms ) ) {
+				if ( ! empty( $terms ) ) {
 					foreach ( $terms as $term ) {
 						$options .= sprintf(
 							'<option value="%s"%s>%s</option>',
