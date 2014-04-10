@@ -23,6 +23,9 @@ class MslsAdmin extends MslsMain {
 			array(),
 			MSLS_PLUGIN_VERSION
 		);
+
+		$obj = new self();
+
 		if ( MslsOptions::instance()->activate_autocomplete ) {
 			wp_enqueue_script(
 				'msls-autocomplete',
@@ -31,8 +34,6 @@ class MslsAdmin extends MslsMain {
 				MSLS_PLUGIN_VERSION
 			);
 		}
-
-		$obj = new self();
 
 		add_options_page(
 			__( 'Multisite Language Switcher', 'msls' ),
@@ -283,7 +284,7 @@ class MslsAdmin extends MslsMain {
 		return sprintf(
 			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1"%2$s/>',
 			$key,
-			( MslsOptions::instance()->$key == 1 ? ' checked="checked"' : '' )
+			( 1 == MslsOptions::instance()->$key ? ' checked="checked"' : '' )
 		);
 	}
 
