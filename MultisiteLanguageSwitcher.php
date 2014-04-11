@@ -232,10 +232,13 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 	        }
 	        else {
 	        	$hreflang = current( explode( '_', $language ) );
+	        	if ( 'us' == $hreflang ) {
+	        		$hreflang = 'en';
+	        	}
 	        }
 	        printf(
 	            '<link rel="alternate" hreflang="%s" href="%s" />',
-	            ( 'us' == $hreflang ? 'en' : $hreflang ),
+	            $hreflang,
 	            $url
 	        );
 	    }
