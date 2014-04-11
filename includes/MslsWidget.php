@@ -28,8 +28,8 @@ class MslsWidget extends WP_Widget {
 	 * @user MslsOutput
 	 */
 	public function widget( $args, $instance ) {
-		$obj   = new MslsOutput();
-		$title = $instance['title'];
+		$title   = $instance['title'];
+		$content = MslsOutput::init()->__toString();
 
 		/**
 		 * Filters the title of the widget
@@ -37,11 +37,11 @@ class MslsWidget extends WP_Widget {
 		 */
 		if ( has_filter( 'widget_title' ) )
 			$title = apply_filters( 'widget_title', $title );
-		
+
 		echo $args['before_widget'];
 		if ( $title )
 			echo $args['before_title'], esc_attr( $title ), $args['after_title'];
-		echo $obj;
+		echo( '' != $content ? $content : __( 'No available translations found', 'msls' ) );
 		echo $args['after_widget'];
 	}
 

@@ -102,7 +102,6 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Returns a string when the object will be treated like a string
-	 *
 	 * @return string
 	 */
 	public function __toString() {
