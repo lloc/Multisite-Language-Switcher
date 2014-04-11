@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
 "POT-Creation-Date: 2014-04-11 15:58+0100\n"
-"PO-Revision-Date: 2014-04-11 15:59+0100\n"
+"PO-Revision-Date: 2014-04-11 17:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: Alexandra Kleijn <blog@buurtaal.de>\n"
 "Language: Dutch (nl_NL)\n"
@@ -46,6 +46,8 @@ msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
 "\">complete the configuration process</a>."
 msgstr ""
+"Multisite Language Switcher is bijna klaar voor gebruik. Je hoeft alleen nog "
+"maar <a href=\"%s\">het configuratieproces ten einde te brengen</a>."
 
 # @ msls
 #: ../includes/MslsAdmin.php:71
@@ -62,7 +64,7 @@ msgstr ""
 
 #: ../includes/MslsAdmin.php:79
 msgid "Configure"
-msgstr ""
+msgstr "Configureren"
 
 # @ msls
 #: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:165
@@ -133,11 +135,11 @@ msgstr "Hint-prioriteit"
 # @ msls
 #: ../includes/MslsAdmin.php:139
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Geavanceerde instellingen"
 
 #: ../includes/MslsAdmin.php:144
 msgid "Activate experimental autocomplete inputs"
-msgstr ""
+msgstr "Experimentele autocomplete input activeren"
 
 # @ msls
 #: ../includes/MslsAdmin.php:145
@@ -146,7 +148,7 @@ msgstr "Alternatieve URL voor vlag-afbeeldingen"
 
 #: ../includes/MslsAdmin.php:146
 msgid "Reference user"
-msgstr ""
+msgstr "Voorbeeldgebruiker"
 
 # @ msls
 #: ../includes/MslsAdmin.php:147
@@ -163,17 +165,17 @@ msgstr "Vertaling in blog %s bewerken"
 #: ../includes/MslsAdminIcon.php:150
 #, php-format
 msgid "Create a new translation in the %s-blog"
-msgstr "Nieuwe vertaling in blog %s aanmaken"
+msgstr "Nieuwe vertaling aanmaken in blog %s"
 
 #: ../includes/MslsCustomFilter.php:39
 msgid "Show all blogs"
-msgstr ""
+msgstr "Alle blogs tonen"
 
 # @ msls
 #: ../includes/MslsCustomFilter.php:45
 #, php-format
 msgid "Not translated in the %s-blog"
-msgstr ""
+msgstr "Niet vertaald in blog %s"
 
 # @ msls
 #: ../includes/MslsLink.php:43
@@ -211,11 +213,15 @@ msgid ""
 "href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
 "don't know the meaning."
 msgstr ""
+"Om deze plugin te gebruiken moet de multisite-functie geactiveerd zijn. Lees "
+"<a onclick=\"window.open(this.href); return false;\" href=\"http://codex."
+"wordpress.org/Create_A_Network\">dit artikel</a> als je niet weet wat "
+"daarmee bedoeld wordt."
 
 # @ msls
 #: ../includes/MslsWidget.php:44
 msgid "No available translations found"
-msgstr ""
+msgstr "Geen beschikbare vertalingen gevonden"
 
 # @ msls
 #: ../includes/MslsWidget.php:68
