@@ -52,7 +52,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		$this->current_blog_id     = get_current_blog_id();
 		$this->current_blog_output = isset( $options->output_current_blog );
 		$this->objects_order       = $options->get_order();
-		if ( !$options->is_excluded() ) {
+		if ( ! $options->is_excluded() ) {
 			$blogs_collection = array();
 			if ( has_filter( 'msls_blog_collection_construct' ) ) {
 				/**
@@ -66,15 +66,12 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 				);
 			}
 			else {
-				$args = array(
-					'blog_id' => $this->current_blog_id,
-					'orderby' => 'registered',
-					'fields' => 'ID',
+				$reference_user   = (
+					$options->has_value( 'reference_user' ) ?
+					$options->reference_user :
+					current( $this->get_users( 'ID', 1 ) )
 				);
-				$blog_users = get_users( $args );
-				if ( ! empty ( $blog_users ) ) {
-					$blogs_collection = get_blogs_of_user( $blog_users[0] );
-				}
+				$blogs_collection = get_blogs_of_user( $reference_user );
 			}
 			foreach ( (array) $blogs_collection as $blog ) {
 				/*
@@ -175,6 +172,21 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		if ( !$filter && $this->current_blog_output )  
 			return $this->get_objects();
 		return $this->get();
+	}
+
+	/**
+	 * Get the first or an array of all registered users of the current blog
+	 * @param first bool
+	 * @return WP_User|Array
+	 */
+	public function get_users( $fields = 'all', $number = '' ) {
+		$args  = array(
+			'blog_id' => $this->current_blog_id,
+			'orderby' => 'registered',
+			'fields'  => $fields,
+			'number'  => $number,
+		);
+		return get_users( $args );
 	}
 
 	/**

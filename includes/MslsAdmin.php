@@ -43,7 +43,7 @@ class MslsAdmin extends MslsMain {
 			array( $obj, 'render' )
 		);
 
-		add_action( 'admin_init', array( $obj, 'register' ) );
+		add_action( 'admin_init',    array( $obj, 'register' ) );
 		add_action( 'admin_notices', array( $obj, 'warning' ) );
 
 		return $obj;
@@ -112,33 +112,51 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function register() {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
+
 		add_settings_section(
-			'section',
+			'main_section',
 			__( 'Main Settings', 'msls' ),
-			array( $this, 'section' ),
+			array( $this, 'main_section' ),
 			__CLASS__
 		);
-		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'section' );
-		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'section' );
-		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'msls' ), array( $this, 'sort_by_description' ), __CLASS__, 'section' );
-		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'msls' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'section' );
-		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'msls' ), array( $this, 'only_with_translation' ), __CLASS__, 'section' );
-		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'msls' ), array( $this, 'output_current_blog' ), __CLASS__, 'section' );
-		add_settings_field( 'description', __( 'Description', 'msls' ), array( $this, 'description' ), __CLASS__, 'section' );
-		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'msls' ), array( $this, 'before_output' ), __CLASS__, 'section' );
-		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'msls' ), array( $this, 'after_output' ), __CLASS__, 'section' );
-		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'msls' ), array( $this, 'before_item' ), __CLASS__, 'section' );
-		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'msls' ), array( $this, 'after_item' ), __CLASS__, 'section' );
+
+		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'msls' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'main_section' );
+
+		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'main_section' );
+		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'msls' ), array( $this, 'sort_by_description' ), __CLASS__, 'main_section' );
+		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'msls' ), array( $this, 'output_current_blog' ), __CLASS__, 'main_section' );
+		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'msls' ), array( $this, 'only_with_translation' ), __CLASS__, 'main_section' );
+
+		add_settings_field( 'description', __( 'Description', 'msls' ), array( $this, 'description' ), __CLASS__, 'main_section' );
+		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'msls' ), array( $this, 'before_output' ), __CLASS__, 'main_section' );
+		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'msls' ), array( $this, 'after_output' ), __CLASS__, 'main_section' );
+		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'msls' ), array( $this, 'before_item' ), __CLASS__, 'main_section' );
+		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'msls' ), array( $this, 'after_item' ), __CLASS__, 'main_section' );
+
 		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'msls' ), array( $this, 'content_filter' ), __CLASS__, 'section' );
 		add_settings_field( 'content_priority', __( 'Hint priority', 'msls' ), array( $this, 'content_priority' ), __CLASS__, 'section' );
-		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'msls' ), array( $this, 'image_url' ), __CLASS__, 'section' );
+
+		add_settings_section(
+			'advanced_section',
+			__( 'Advanced Settings', 'msls' ),
+			array( $this, 'advanced_section' ),
+			__CLASS__
+		);
+
+		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
+		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'msls' ), array( $this, 'image_url' ), __CLASS__, 'advanced_section' );
+		add_settings_field( 'reference_user', __( 'Reference user', 'msls' ), array( $this, 'reference_user' ), __CLASS__, 'advanced_section' );
 	}
 
 	/**
-	 * Section is just a placeholder for now
+	 * main_section is just a placeholder for now
 	 */
-	public function section() {
-	}
+	public function main_section() { }
+
+	/**
+	 * advanced_section is just a placeholder for now
+	 */
+	public function advanced_section() { }
 
 	/**
 	 * Shows the select-form-field 'display'
@@ -148,6 +166,22 @@ class MslsAdmin extends MslsMain {
 			'display',
 			MslsLink::get_types_description(),
 			MslsOptions::instance()->display
+		);
+	}
+
+	/**
+	 * Shows the select-form-field 'reference_user'
+	 */
+	public function reference_user() {
+		$users = array();
+		error_log( MslsOptions::instance()->reference_user );
+		foreach ( MslsBlogCollection::instance()->get_users() as $user ) {
+			$users[$user->ID] = $user->user_nicename;
+		}
+		echo $this->render_select(
+			'reference_user',
+			$users,
+			MslsOptions::instance()->reference_user
 		);
 	}
 
