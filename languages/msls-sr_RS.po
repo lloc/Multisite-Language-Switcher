@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-04 11:33+0100\n"
-"PO-Revision-Date: 2014-04-04 11:56+0100\n"
+"POT-Creation-Date: 2014-04-11 15:50+0100\n"
+"PO-Revision-Date: 2014-04-11 15:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: Borisa Djuraskovic <borisad@webhostinghub.com>\n"
+"Language: Serbian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,30 +17,29 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Basepath: .\n"
-"Language: Serbian\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:161
+#: ../MultisiteLanguageSwitcher.php:162
 #, php-format
 msgid "%s and %s"
 msgstr "%s i %s"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:172
+#: ../MultisiteLanguageSwitcher.php:173
 #, php-format
 msgid "This post is also available in %s."
 msgstr "Ovaj post je takodje dostupan na %s."
 
 # @ msls
-#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
-#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:94
-#: ../includes/MslsWidget.php:20
+#: ../includes/MslsAdmin.php:39 ../includes/MslsAdmin.php:40
+#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:95
+#: ../includes/MslsPostTag.php:152 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: ../includes/MslsAdmin.php:57
+#: ../includes/MslsAdmin.php:58
 #, php-format
 msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
@@ -47,54 +47,40 @@ msgid ""
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:70
+#: ../includes/MslsAdmin.php:71
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher opcije"
 
 # @ msls
-#: ../includes/MslsAdmin.php:72
+#: ../includes/MslsAdmin.php:73
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr "Za maksimum fleksibilnost morate da konfigurišete svaki blog odvojeno"
 
-#: ../includes/MslsAdmin.php:78
+#: ../includes/MslsAdmin.php:79
 msgid "Configure"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:161
-#: ../includes/MslsMetaBox.php:218
+#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:165
+#: ../includes/MslsMetaBox.php:226
 msgid "Update"
 msgstr "Update"
 
 # @ msls
-#: ../includes/MslsAdmin.php:116
+#: ../includes/MslsAdmin.php:118
 msgid "Main Settings"
 msgstr "Glavne postavke"
 
 # @ msls
-#: ../includes/MslsAdmin.php:120
+#: ../includes/MslsAdmin.php:123
 msgid "Display"
 msgstr "Prikaz"
 
-#: ../includes/MslsAdmin.php:121
-msgid "Activate experimental autocomplete inputs"
-msgstr ""
-
-# @ msls
-#: ../includes/MslsAdmin.php:122
-msgid "Sort output by description"
-msgstr "Sortiraj output po opisu"
-
-# @ msls
-#: ../includes/MslsAdmin.php:123
-msgid "Exclude this blog from output"
-msgstr "Isključi ovaj blog iz output-a"
-
 # @ msls
 #: ../includes/MslsAdmin.php:124
-msgid "Show only links with a translation"
-msgstr "Prikaži samo linkove sa prevodom"
+msgid "Sort output by description"
+msgstr "Sortiraj output po opisu"
 
 # @ msls
 #: ../includes/MslsAdmin.php:125
@@ -103,43 +89,66 @@ msgstr "Prikaži link za sledeći jezik"
 
 # @ msls
 #: ../includes/MslsAdmin.php:126
+msgid "Show only links with a translation"
+msgstr "Prikaži samo linkove sa prevodom"
+
+# @ msls
+#: ../includes/MslsAdmin.php:128
 msgid "Description"
 msgstr "Opis"
 
 # @ msls
-#: ../includes/MslsAdmin.php:127
+#: ../includes/MslsAdmin.php:129
 msgid "Text/HTML before the list"
 msgstr "Text/HTML pre liste"
 
 # @ msls
-#: ../includes/MslsAdmin.php:128
+#: ../includes/MslsAdmin.php:130
 msgid "Text/HTML after the list"
 msgstr "Text/HTML nakon liste"
 
 # @ msls
-#: ../includes/MslsAdmin.php:129
+#: ../includes/MslsAdmin.php:131
 msgid "Text/HTML before each item"
 msgstr "Text/HTML pre svake stavke"
 
 # @ msls
-#: ../includes/MslsAdmin.php:130
+#: ../includes/MslsAdmin.php:132
 msgid "Text/HTML after each item"
 msgstr "Text/HTML aposle svake stavke"
 
 # @ msls
-#: ../includes/MslsAdmin.php:131
+#: ../includes/MslsAdmin.php:134
 msgid "Add hint for available translations"
 msgstr "Dodajte hint za dostupne prevode"
 
 # @ msls
-#: ../includes/MslsAdmin.php:132
+#: ../includes/MslsAdmin.php:135
 msgid "Hint priority"
 msgstr "Hint prioritet"
 
 # @ msls
-#: ../includes/MslsAdmin.php:133
+#: ../includes/MslsAdmin.php:139
+msgid "Advanced Settings"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:144
+msgid "Activate experimental autocomplete inputs"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsAdmin.php:145
 msgid "Custom URL for flag-images"
 msgstr "Custom URL za slike zastava"
+
+#: ../includes/MslsAdmin.php:146
+msgid "Reference user"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsAdmin.php:147
+msgid "Exclude this blog from output"
+msgstr "Isključi ovaj blog iz output-a"
 
 # @ msls
 #: ../includes/MslsAdminIcon.php:143
@@ -153,12 +162,12 @@ msgstr "Edituj prevod u %s-blogu"
 msgid "Create a new translation in the %s-blog"
 msgstr "Napravi novi prevod u %s-blogu"
 
-#: ../includes/MslsCustomFilter.php:41
+#: ../includes/MslsCustomFilter.php:39
 msgid "Show all blogs"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsCustomFilter.php:46
+#: ../includes/MslsCustomFilter.php:45
 #, php-format
 msgid "Not translated in the %s-blog"
 msgstr ""
@@ -184,7 +193,7 @@ msgid "Description only"
 msgstr "Samo opis"
 
 # @ msls
-#: ../includes/MslsMetaBox.php:168 ../includes/MslsMetaBox.php:225
+#: ../includes/MslsMetaBox.php:172 ../includes/MslsMetaBox.php:233
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -198,6 +207,11 @@ msgid ""
 "properly. Please read <a onclick=\"window.open(this.href); return false;\" "
 "href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
 "don't know the meaning."
+msgstr ""
+
+# @ msls
+#: ../includes/MslsWidget.php:44
+msgid "No available translations found"
 msgstr ""
 
 # @ msls

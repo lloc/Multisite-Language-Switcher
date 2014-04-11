@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-04 11:38+0100\n"
-"PO-Revision-Date: 2014-04-04 11:41+0100\n"
+"POT-Creation-Date: 2014-04-11 16:02+0100\n"
+"PO-Revision-Date: 2014-04-11 16:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: Rastr <ch.dav@seznam.cz>\n"
 "Language: Czech (cs_CZ)\n"
@@ -22,23 +22,23 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../MultisiteLanguageSwitcher.php:161
+#: ../MultisiteLanguageSwitcher.php:162
 #, php-format
 msgid "%s and %s"
 msgstr "%s a %s"
 
-#: ../MultisiteLanguageSwitcher.php:172
+#: ../MultisiteLanguageSwitcher.php:173
 #, php-format
 msgid "This post is also available in %s."
 msgstr "Tento příspěvek je dostupný také v %s."
 
-#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
-#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:94
-#: ../includes/MslsWidget.php:20
+#: ../includes/MslsAdmin.php:39 ../includes/MslsAdmin.php:40
+#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:95
+#: ../includes/MslsPostTag.php:152 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: ../includes/MslsAdmin.php:57
+#: ../includes/MslsAdmin.php:58
 #, php-format
 msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
@@ -47,85 +47,93 @@ msgstr ""
 "Multisite Language Switcher je téměř připraven. Musíte <a href=\"%s"
 "\">dokončit konfigurační proces<a>."
 
-#: ../includes/MslsAdmin.php:70
+#: ../includes/MslsAdmin.php:71
 msgid "Multisite Language Switcher Options"
 msgstr "Nastavení Multisite Language Switcher"
 
-#: ../includes/MslsAdmin.php:72
+#: ../includes/MslsAdmin.php:73
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 "Pro dosažení maximální flexibility, budete muset nakonfigurovat každý blog "
 "zvlášť."
 
-#: ../includes/MslsAdmin.php:78
+#: ../includes/MslsAdmin.php:79
 msgid "Configure"
 msgstr "Konfigurovat"
 
-#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:161
-#: ../includes/MslsMetaBox.php:218
+#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:165
+#: ../includes/MslsMetaBox.php:226
 msgid "Update"
 msgstr "Aktualizace"
 
-#: ../includes/MslsAdmin.php:116
+#: ../includes/MslsAdmin.php:118
 msgid "Main Settings"
 msgstr "Hlavní nastavení"
 
-#: ../includes/MslsAdmin.php:120
+#: ../includes/MslsAdmin.php:123
 msgid "Display"
 msgstr "Zobrazení"
 
-#: ../includes/MslsAdmin.php:121
-msgid "Activate experimental autocomplete inputs"
-msgstr ""
-
-#: ../includes/MslsAdmin.php:122
+#: ../includes/MslsAdmin.php:124
 msgid "Sort output by description"
 msgstr "Seřadit výstup podle popisu"
-
-#: ../includes/MslsAdmin.php:123
-msgid "Exclude this blog from output"
-msgstr "Vyloučit tento blog z výstupu"
-
-#: ../includes/MslsAdmin.php:124
-msgid "Show only links with a translation"
-msgstr "Zobrazit pouze odkazy s překladem"
 
 #: ../includes/MslsAdmin.php:125
 msgid "Display link to the current language"
 msgstr "Zobrazit odkaz v aktuálním jazyce"
 
 #: ../includes/MslsAdmin.php:126
+msgid "Show only links with a translation"
+msgstr "Zobrazit pouze odkazy s překladem"
+
+#: ../includes/MslsAdmin.php:128
 msgid "Description"
 msgstr "Popis"
 
-#: ../includes/MslsAdmin.php:127
+#: ../includes/MslsAdmin.php:129
 msgid "Text/HTML before the list"
 msgstr "Text/HTML před seznamem"
 
-#: ../includes/MslsAdmin.php:128
+#: ../includes/MslsAdmin.php:130
 msgid "Text/HTML after the list"
 msgstr "Text/HTML za seznamem"
 
-#: ../includes/MslsAdmin.php:129
+#: ../includes/MslsAdmin.php:131
 msgid "Text/HTML before each item"
 msgstr "Text/HTML před každou položkou"
 
-#: ../includes/MslsAdmin.php:130
+#: ../includes/MslsAdmin.php:132
 msgid "Text/HTML after each item"
 msgstr "Text/HTML za každou položkou"
 
-#: ../includes/MslsAdmin.php:131
+#: ../includes/MslsAdmin.php:134
 msgid "Add hint for available translations"
 msgstr "Přidat nápovědu pro dostupné překlady"
 
-#: ../includes/MslsAdmin.php:132
+#: ../includes/MslsAdmin.php:135
 msgid "Hint priority"
 msgstr "Priorita nápovědy"
 
-#: ../includes/MslsAdmin.php:133
+#: ../includes/MslsAdmin.php:139
+msgid "Advanced Settings"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:144
+msgid "Activate experimental autocomplete inputs"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:145
 msgid "Custom URL for flag-images"
 msgstr "Vlastní URL pro obrázky vlajky"
+
+#: ../includes/MslsAdmin.php:146
+msgid "Reference user"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:147
+msgid "Exclude this blog from output"
+msgstr "Vyloučit tento blog z výstupu"
 
 #: ../includes/MslsAdminIcon.php:143
 #, php-format
@@ -137,11 +145,11 @@ msgstr "Upravit překlad v blogu %s"
 msgid "Create a new translation in the %s-blog"
 msgstr "Vytvořit nový překlad v blogu %s"
 
-#: ../includes/MslsCustomFilter.php:41
+#: ../includes/MslsCustomFilter.php:39
 msgid "Show all blogs"
 msgstr ""
 
-#: ../includes/MslsCustomFilter.php:46
+#: ../includes/MslsCustomFilter.php:45
 #, php-format
 msgid "Not translated in the %s-blog"
 msgstr ""
@@ -162,7 +170,7 @@ msgstr "Popis a vlajka"
 msgid "Description only"
 msgstr "Jen popis"
 
-#: ../includes/MslsMetaBox.php:168 ../includes/MslsMetaBox.php:225
+#: ../includes/MslsMetaBox.php:172 ../includes/MslsMetaBox.php:233
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -176,6 +184,10 @@ msgid ""
 "properly. Please read <a onclick=\"window.open(this.href); return false;\" "
 "href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
 "don't know the meaning."
+msgstr ""
+
+#: ../includes/MslsWidget.php:44
+msgid "No available translations found"
 msgstr ""
 
 #: ../includes/MslsWidget.php:68

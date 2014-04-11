@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-04 11:52+0100\n"
-"PO-Revision-Date: 2014-04-04 11:52+0100\n"
+"POT-Creation-Date: 2014-04-11 15:58+0100\n"
+"PO-Revision-Date: 2014-04-11 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Alexandra Kleijn <blog@buurtaal.de>\n"
 "Language: Dutch (nl_NL)\n"
@@ -22,25 +22,25 @@ msgstr ""
 "X-Poedit-SearchPath-1: ..\n"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:161
+#: ../MultisiteLanguageSwitcher.php:162
 #, php-format
 msgid "%s and %s"
 msgstr "%s en %s"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:172
+#: ../MultisiteLanguageSwitcher.php:173
 #, php-format
 msgid "This post is also available in %s."
 msgstr "Deze blogpost is ook beschikbaar in het %s."
 
 # @ msls
-#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
-#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:94
-#: ../includes/MslsWidget.php:20
+#: ../includes/MslsAdmin.php:39 ../includes/MslsAdmin.php:40
+#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:95
+#: ../includes/MslsPostTag.php:152 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: ../includes/MslsAdmin.php:57
+#: ../includes/MslsAdmin.php:58
 #, php-format
 msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
@@ -48,56 +48,42 @@ msgid ""
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:70
+#: ../includes/MslsAdmin.php:71
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher Opties"
 
 # @ msls
-#: ../includes/MslsAdmin.php:72
+#: ../includes/MslsAdmin.php:73
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 "Voor maximale flexibiliteit verdient het aanbeveling elk blog apart te "
 "configureren."
 
-#: ../includes/MslsAdmin.php:78
+#: ../includes/MslsAdmin.php:79
 msgid "Configure"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:161
-#: ../includes/MslsMetaBox.php:218
+#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:165
+#: ../includes/MslsMetaBox.php:226
 msgid "Update"
 msgstr "Actualiseren"
 
 # @ msls
-#: ../includes/MslsAdmin.php:116
+#: ../includes/MslsAdmin.php:118
 msgid "Main Settings"
 msgstr "Instellingen"
 
 # @ msls
-#: ../includes/MslsAdmin.php:120
+#: ../includes/MslsAdmin.php:123
 msgid "Display"
 msgstr "Weergave"
 
-#: ../includes/MslsAdmin.php:121
-msgid "Activate experimental autocomplete inputs"
-msgstr ""
-
-# @ msls
-#: ../includes/MslsAdmin.php:122
-msgid "Sort output by description"
-msgstr "Uitvoer sorteren op beschrijving"
-
-# @ msls
-#: ../includes/MslsAdmin.php:123
-msgid "Exclude this blog from output"
-msgstr "Dit blog niet meenemen in de output"
-
 # @ msls
 #: ../includes/MslsAdmin.php:124
-msgid "Show only links with a translation"
-msgstr "Alleen links met een vertaling tonen"
+msgid "Sort output by description"
+msgstr "Uitvoer sorteren op beschrijving"
 
 # @ msls
 #: ../includes/MslsAdmin.php:125
@@ -106,43 +92,66 @@ msgstr "Link naar de actueel ingestelde taal tonen"
 
 # @ msls
 #: ../includes/MslsAdmin.php:126
+msgid "Show only links with a translation"
+msgstr "Alleen links met een vertaling tonen"
+
+# @ msls
+#: ../includes/MslsAdmin.php:128
 msgid "Description"
 msgstr "Beschrijving"
 
 # @ msls
-#: ../includes/MslsAdmin.php:127
+#: ../includes/MslsAdmin.php:129
 msgid "Text/HTML before the list"
 msgstr "Tekst/HTML voor de lijst"
 
 # @ msls
-#: ../includes/MslsAdmin.php:128
+#: ../includes/MslsAdmin.php:130
 msgid "Text/HTML after the list"
 msgstr "Tekst/HTML na de lijst"
 
 # @ msls
-#: ../includes/MslsAdmin.php:129
+#: ../includes/MslsAdmin.php:131
 msgid "Text/HTML before each item"
 msgstr "Tekst/HTML voor elk item"
 
 # @ msls
-#: ../includes/MslsAdmin.php:130
+#: ../includes/MslsAdmin.php:132
 msgid "Text/HTML after each item"
 msgstr "Tekst/HTML na elk item"
 
 # @ msls
-#: ../includes/MslsAdmin.php:131
+#: ../includes/MslsAdmin.php:134
 msgid "Add hint for available translations"
 msgstr "Hint tonen onder blogpost als er een vertaling beschikbaar is"
 
 # @ msls
-#: ../includes/MslsAdmin.php:132
+#: ../includes/MslsAdmin.php:135
 msgid "Hint priority"
 msgstr "Hint-prioriteit"
 
 # @ msls
-#: ../includes/MslsAdmin.php:133
+#: ../includes/MslsAdmin.php:139
+msgid "Advanced Settings"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:144
+msgid "Activate experimental autocomplete inputs"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsAdmin.php:145
 msgid "Custom URL for flag-images"
 msgstr "Alternatieve URL voor vlag-afbeeldingen"
+
+#: ../includes/MslsAdmin.php:146
+msgid "Reference user"
+msgstr ""
+
+# @ msls
+#: ../includes/MslsAdmin.php:147
+msgid "Exclude this blog from output"
+msgstr "Dit blog niet meenemen in de output"
 
 # @ msls
 #: ../includes/MslsAdminIcon.php:143
@@ -156,12 +165,12 @@ msgstr "Vertaling in blog %s bewerken"
 msgid "Create a new translation in the %s-blog"
 msgstr "Nieuwe vertaling in blog %s aanmaken"
 
-#: ../includes/MslsCustomFilter.php:41
+#: ../includes/MslsCustomFilter.php:39
 msgid "Show all blogs"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsCustomFilter.php:46
+#: ../includes/MslsCustomFilter.php:45
 #, php-format
 msgid "Not translated in the %s-blog"
 msgstr ""
@@ -187,7 +196,7 @@ msgid "Description only"
 msgstr "Alleen beschrijving"
 
 # @ msls
-#: ../includes/MslsMetaBox.php:168 ../includes/MslsMetaBox.php:225
+#: ../includes/MslsMetaBox.php:172 ../includes/MslsMetaBox.php:233
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -201,6 +210,11 @@ msgid ""
 "properly. Please read <a onclick=\"window.open(this.href); return false;\" "
 "href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
 "don't know the meaning."
+msgstr ""
+
+# @ msls
+#: ../includes/MslsWidget.php:44
+msgid "No available translations found"
 msgstr ""
 
 # @ msls
