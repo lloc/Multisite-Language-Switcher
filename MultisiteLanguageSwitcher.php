@@ -33,6 +33,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @since 0.9.8
  */
 if ( ! class_exists( 'MslsAutoloader' ) ) {
+
 	/**
 	 * Lets define some constants
 	 */
@@ -204,5 +205,41 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 	function the_msls( array $arr = array() ) {
 		echo get_the_msls( $arr );
 	}
+
+	/**
+	 * Help searchengines to index and to serve the localized version with
+	 * rel="alternate"-links in the html-header
+	 */
+	function msls_head() {
+	    $blogs  = MslsBlogCollection::instance();
+	    $mydata = MslsOptions::create();
+	    foreach ( $blogs->get_objects() as $blog ) {
+	        $language = $blog->get_language();
+	        if ( $blog->userblog_id == $blogs->get_current_blog_id() ) {
+	            $url = $mydata->get_current_link();
+	        }
+	        else {
+	            switch_to_blog( $blog->userblog_id );
+	            if ( 'MslsOptions' != get_class( $mydata ) && !$mydata->has_value( $language ) ) {
+	                restore_current_blog();
+	                continue;
+	            }
+	            $url = $mydata->get_permalink( $language );
+	            restore_current_blog();
+	        }
+	        if ( has_filter( 'msls_head_hreflang' ) ) {
+	        	$hreflang = apply_filters( 'msls_head_hreflang', $language );
+	        }
+	        else {
+	        	$hreflang = current( explode( '_', $language ) );
+	        }
+	        printf(
+	            '<link rel="alternate" hreflang="%s" href="%s" />',
+	            ( 'us' == $hreflang ? 'en' : $hreflang ),
+	            $url
+	        );
+	    }
+	}
+	add_action( 'wp_head', 'msls_head' );
 
 }
