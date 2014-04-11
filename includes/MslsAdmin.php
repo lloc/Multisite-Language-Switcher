@@ -120,8 +120,6 @@ class MslsAdmin extends MslsMain {
 			__CLASS__
 		);
 
-		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'msls' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'main_section' );
-
 		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'main_section' );
 		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'msls' ), array( $this, 'sort_by_description' ), __CLASS__, 'main_section' );
 		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'msls' ), array( $this, 'output_current_blog' ), __CLASS__, 'main_section' );
@@ -146,6 +144,7 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'msls' ), array( $this, 'image_url' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'reference_user', __( 'Reference user', 'msls' ), array( $this, 'reference_user' ), __CLASS__, 'advanced_section' );
+		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'msls' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'advanced_section' );
 	}
 
 	/**

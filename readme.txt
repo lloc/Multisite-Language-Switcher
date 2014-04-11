@@ -112,11 +112,16 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 
 = 0.9.9 =
 * Option to transform the dropdowns for choosing the connections into text-inputs with jquery-ui autocomplete
-* Plugin cleans up the option-tables now when uninstalled
+* Plugin cleans up the option-tables now when uninstalled, there is now a "Reference User"-option available
+* Problem with multiple admin resolved
+* Plugin inserts now 
 * now you can use `<?php if ( function_exists( 'msls_filter_string' ) ) msls_filter_string(); ?>` if you'ld like to print the "hint"-string anywhere in your templates
 * language files for ca_ES by Joan López, cs_CZ by Rastr and bn_BD by Md. Nazmul Huda added
 * MslsCustomFilter-Class by Maciej Czerpiński
-* and a lot of other minor improvements
+* and tons of other minor improvements
+
+= 0.9.8.2 =
+* lots of language files added
 
 = 0.9.8.1 =
 * Fix for "All inone event calendar"
