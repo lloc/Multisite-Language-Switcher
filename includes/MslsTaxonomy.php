@@ -21,21 +21,23 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->types   = array_merge(
-			array( 'category', 'post_tag' ), // we don't need post_link here
+		$this->types = array_merge(
+			array( 'category', 'post_tag' ), // no 'post_link' here
 			get_taxonomies(
 				array( 'public' => true, '_builtin' => false ),
 				'names',
 				'and'
 			)
 		);
-		$this->request = (
-			! empty( $_REQUEST['taxonomy'] ) ?
-			esc_attr( $_REQUEST['taxonomy'] ) :
-			get_query_var( 'taxonomy' )
-		);
-		if ( ! empty( $_REQUEST['post_type'] ) )
+		if ( ! empty( $_REQUEST['taxonomy'] ) ) {
+			$this->request = esc_attr( $_REQUEST['taxonomy'] );
+		}
+		else {
+			$this->request = get_query_var( 'taxonomy' );
+		}
+		if ( ! empty( $_REQUEST['post_type'] ) ) {
 			$this->post_type = esc_attr( $_REQUEST['post_type'] );
+		}
 	}
 
 	/**

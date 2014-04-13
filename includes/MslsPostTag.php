@@ -38,6 +38,7 @@ class MslsPostTag extends MslsMain {
 				$json->add( $term->term_id, $term->name );
 			}
 			restore_current_blog();
+			
 		}
 		echo(
 			isset( $json ) ?

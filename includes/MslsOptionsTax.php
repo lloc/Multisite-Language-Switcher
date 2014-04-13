@@ -85,7 +85,7 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return string
 	 */
 	protected function check_url( $url ) {
-		return( empty( $url ) || !is_string( $url ) ? '' : $url );
+		return( empty( $url ) || ! is_string( $url ) ? '' : $url );
 	}
 
 	/**
@@ -114,9 +114,9 @@ class MslsOptionsTax extends MslsOptions {
 	public function get_current_link() {
 		$taxonomy = $this->get_tax_query();
 		return(
-			! empty( $taxonomy ) ?
-			get_term_link( (int) $this->args[0], $taxonomy ) :
-			null
+			empty( $taxonomy ) ?
+			null :
+			get_term_link( (int) $this->args[0], $taxonomy )
 		);
 	}
 
