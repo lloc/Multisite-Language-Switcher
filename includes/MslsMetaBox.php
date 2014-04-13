@@ -18,7 +18,6 @@ class MslsMetaBox extends MslsMain {
 	 * the requested search-term and then die silently
 	 */
 	static function suggest() {
-		$result = array();
 		if ( isset( $_REQUEST['blog_id'] ) ) {
 			switch_to_blog( (int) $_REQUEST['blog_id'] );
 			$args = apply_filters(
@@ -29,23 +28,27 @@ class MslsMetaBox extends MslsMain {
 				)
 			);
 			if ( isset( $_REQUEST['post_type'] ) ) {
-				$args['post_type'] = $_REQUEST['post_type'];
+				$args['post_type'] = sanitize_text_field( $_REQUEST['post_type'] );
 			}
 			if ( isset( $_REQUEST['s'] ) ) {
-				$args['s'] = $_REQUEST['s'];
+				$args['s'] = sanitize_text_field( $_REQUEST['s'] );
 			}
 			$my_query = new WP_Query( $args );
-			$json_obj = new MslsJson;
+			$json     = new MslsJson;
 			while ( $my_query->have_posts() ) {
 				$my_query->the_post();
 				$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
-				$json_obj->add( get_the_ID(), get_the_title() );
+				$json->add( get_the_ID(), get_the_title() );
 			}
 			wp_reset_query();
 			wp_reset_postdata();
 			restore_current_blog();
 		}
-		echo $json_obj;
+		echo(
+			isset( $json ) ?
+			$json :
+			json_encode( array() )
+		);
 		die();
 	}
 

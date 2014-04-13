@@ -18,7 +18,6 @@ class MslsPostTag extends MslsMain {
 	 * the requested search-term and then die silently
 	 */
 	static function suggest() {
-		$result = array();
 		if ( isset( $_REQUEST['blog_id'] ) ) {
 			switch_to_blog( (int) $_REQUEST['blog_id'] );
 			$args = apply_filters(
@@ -31,16 +30,20 @@ class MslsPostTag extends MslsMain {
 				)
 			);
 			if ( isset( $_REQUEST['s'] ) ) {
-				$args['name__like'] = $_REQUEST['s'];
+				$args['name__like'] = sanitize_text_field( $_REQUEST['s'] );
 			}
-			$json_obj = new MslsJson;
-			foreach ( get_terms( $_REQUEST['post_type'], $args ) as $term ) {
+			$json = new MslsJson;
+			foreach ( get_terms( sanitize_text_field( $_REQUEST['post_type'] ), $args ) as $term ) {
 				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
-				$json_obj->add( $term->term_id, $term->name );
+				$json->add( $term->term_id, $term->name );
 			}
 			restore_current_blog();
 		}
-		echo $json_obj;
+		echo(
+			isset( $json ) ?
+			$json :
+			json_encode( array() )
+		);
 		die();
 	}
 
