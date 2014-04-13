@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-11 15:49+0100\n"
-"PO-Revision-Date: 2014-04-11 15:49+0100\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2014-04-12 17:04-0800\n"
+"PO-Revision-Date: 2014-04-12 17:04-0800\n"
+"Last-Translator: Alican Cakil <alicancakil@gmail.com>\n"
 "Language-Team: Alican Cakil <alicancakil@gmail.com >\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Textdomain-Support: yes\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
@@ -117,11 +117,11 @@ msgstr "İpucu önceliği"
 
 #: ../includes/MslsAdmin.php:139
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Gelişmiş Ayarlar"
 
 #: ../includes/MslsAdmin.php:144
 msgid "Activate experimental autocomplete inputs"
-msgstr ""
+msgstr "Otomatik tamamlamayı aktif edin (beta)"
 
 #: ../includes/MslsAdmin.php:145
 msgid "Custom URL for flag-images"
@@ -129,7 +129,7 @@ msgstr "Bayrak resimleri için özel URL"
 
 #: ../includes/MslsAdmin.php:146
 msgid "Reference user"
-msgstr ""
+msgstr "Referans kullanıcı"
 
 #: ../includes/MslsAdmin.php:147
 msgid "Exclude this blog from output"
@@ -147,12 +147,12 @@ msgstr "Bu yazının çevirisini oluştur %s"
 
 #: ../includes/MslsCustomFilter.php:39
 msgid "Show all blogs"
-msgstr ""
+msgstr "Tüm blogları göster"
 
 #: ../includes/MslsCustomFilter.php:45
 #, php-format
 msgid "Not translated in the %s-blog"
-msgstr ""
+msgstr "%s-blogunda çevirisi yapılmadı"
 
 #: ../includes/MslsLink.php:43
 msgid "Flag and description"
@@ -185,10 +185,14 @@ msgid ""
 "href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
 "don't know the meaning."
 msgstr ""
+"Bu eklentinin çalışabilmesi için multi-site özelliğinin aktif olması "
+"gerekli. Bunun ne anlama geldiğini bilmiyorsanız, lütfen <a onclick=\"window."
+"open(this.href); return false;\" href=\"http://codex.wordpress.org/"
+"Create_A_Network\">bu sayfaya</a> göz atın."
 
 #: ../includes/MslsWidget.php:44
 msgid "No available translations found"
-msgstr ""
+msgstr "Uygun bir çeviri bulunamadı"
 
 #: ../includes/MslsWidget.php:68
 msgid "Title"
