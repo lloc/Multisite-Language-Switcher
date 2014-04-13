@@ -18,6 +18,7 @@ class MslsMetaBox extends MslsMain {
 	 * the requested search-term and then die silently
 	 */
 	static function suggest() {
+		$json = new MslsJson;
 		if ( isset( $_REQUEST['blog_id'] ) ) {
 			switch_to_blog( (int) $_REQUEST['blog_id'] );
 			$args = apply_filters(
@@ -34,21 +35,15 @@ class MslsMetaBox extends MslsMain {
 				$args['s'] = sanitize_text_field( $_REQUEST['s'] );
 			}
 			$my_query = new WP_Query( $args );
-			$json     = new MslsJson;
 			while ( $my_query->have_posts() ) {
 				$my_query->the_post();
 				$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
 				$json->add( get_the_ID(), get_the_title() );
 			}
-			wp_reset_query();
 			wp_reset_postdata();
 			restore_current_blog();
 		}
-		echo(
-			isset( $json ) ?
-			$json :
-			json_encode( array() )
-		);
+		echo $json; // xss ok
 		die();
 	}
 
@@ -80,7 +75,7 @@ class MslsMetaBox extends MslsMain {
 						MslsOptions::instance()->activate_autocomplete ?
 						'render_input' :
 						'render_select'
-					)
+					),
 				),
 				$post_type,
 				'side',
@@ -109,7 +104,7 @@ class MslsMetaBox extends MslsMain {
 				$selects  = '';
 				$pto      = get_post_type_object( $type );
 
-				$icon     = MslsAdminIcon::create();
+				$icon = MslsAdminIcon::create();
 				$icon->set_language( $language );
 				$icon->set_src( $flag_url );
 
@@ -243,18 +238,18 @@ class MslsMetaBox extends MslsMain {
 	 * @param int $post_id
 	 */
 	public function set( $post_id ) {
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ||
-			wp_is_post_revision( $post_id ) ||
-			! isset( $_POST['msls_noncename'] ) || 
-			! wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) ) {
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) ) {
+			return;
+		}
+		if ( ! isset( $_POST['msls_noncename'] ) || ! wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) ) {
 			return;
 		}
 		if ( 'page' == $_POST['post_type'] ) {
-			if ( !current_user_can( 'edit_page', $post_id ) )
+			if ( ! current_user_can( 'edit_page', $post_id ) )
 				return;
 		}
 		else {
-			if ( !current_user_can( 'edit_post', $post_id ) )
+			if ( ! current_user_can( 'edit_post', $post_id ) )
 				return;
 		}
 		$this->save( $post_id, 'MslsOptionsPost' );

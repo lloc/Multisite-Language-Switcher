@@ -17,9 +17,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @return MslsCustomColumnTaxonomy
 	 */
 	static function init() {
-		$obj = new self();
+		$obj     = new self();
 		$options = MslsOptions::instance();
-		if ( !$options->is_excluded() ) {
+		if ( ! $options->is_excluded() ) {
 			$taxonomy = MslsTaxonomy::instance()->get_request();
 			if ( ! empty( $taxonomy ) ) {
 				add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );

@@ -65,18 +65,21 @@ class MslsCustomColumn extends MslsMain {
 				$mydata = MslsOptions::create( $item_id );
 				foreach ( $blogs as $blog ) {
 					switch_to_blog( $blog->userblog_id );
-					$lang = $blog->get_language();
+
+					$language = $blog->get_language();
+
 					$icon = MslsAdminIcon::create();
-					$icon->set_language( $lang );
-					if ( $mydata->has_value( $lang ) ) {
+					$icon->set_language( $language );
+
+					if ( $mydata->has_value( $language ) ) {
 						$flag_url = MslsOptions::instance()->get_url( 'images/link_edit.png' );
-						$icon->set_href( $mydata->$lang )->set_src( $flag_url );
+						$icon->set_href( $mydata->$language )->set_src( $flag_url );
 					}
 					else {
 						$flag_url = MslsOptions::instance()->get_url( 'images/link_add.png' );
 						$icon->set_src( $flag_url );
 					}
-					echo $icon;
+					echo $icon; // xss ok
 					restore_current_blog();
 				}
 			}

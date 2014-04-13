@@ -144,10 +144,12 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @return bool
 	 */
 	function is_plugin_active( $blog_id ) {
-		if ( !is_array( $this->active_plugins ) )
+		if ( ! is_array( $this->active_plugins ) ) {
 			$this->active_plugins = get_site_option( 'active_sitewide_plugins', array() );
-		if ( isset( $this->active_plugins[MSLS_PLUGIN_PATH] ) )
+		}
+		if ( isset( $this->active_plugins[MSLS_PLUGIN_PATH] ) ) {
 			return true;
+		}
 		$plugins = get_blog_option( $blog_id, 'active_plugins', array() );
 		return( in_array( MSLS_PLUGIN_PATH, $plugins ) );
 	}
@@ -158,8 +160,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	public function get() {
 		$objects = $this->get_objects();
-		if ( $this->has_current_blog() )
+		if ( $this->has_current_blog() ) {
 			unset( $objects[$this->current_blog_id] );
+		}
 		return $objects;
 	}
 
@@ -169,8 +172,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @return array
 	 */
 	public function get_filtered( $filter = false ) {
-		if ( !$filter && $this->current_blog_output )  
+		if ( ! $filter && $this->current_blog_output ) {
 			return $this->get_objects();
+		}
 		return $this->get();
 	}
 
@@ -181,7 +185,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @return WP_User|Array
 	 */
 	public function get_users( $fields = 'all', $number = '' ) {
-		$args  = array(
+		$args = array(
 			'blog_id' => $this->current_blog_id,
 			'orderby' => 'registered',
 			'fields'  => $fields,

@@ -49,13 +49,13 @@ class MslsLink extends MslsGetSet {
 	 * @return array
 	 */
 	static function get_types_description() {
-		$temp  = array();
+		$types = array();
 		foreach ( self::get_types() as $key => $class ) {
-			$temp[$key] = call_user_func(
+			$types[$key] = call_user_func(
 				array( $class, 'get_description' )
 			);
 		}
-		return $temp;
+		return $types;
 	}
 
 	/**

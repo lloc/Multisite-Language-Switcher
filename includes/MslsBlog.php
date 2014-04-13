@@ -37,7 +37,7 @@ class MslsBlog {
 	public function __construct( $obj, $description ) {
 		if ( is_object( $obj ) ) {
 			$this->obj      = $obj;
-			$this->language = (string) get_blog_option( 
+			$this->language = (string) get_blog_option(
 				$this->obj->userblog_id, 'WPLANG'
 			);
 		}
@@ -63,9 +63,9 @@ class MslsBlog {
 	 */
 	public function get_description() {
 		return(
-			! empty( $this->description ) ?
-			$this->description :
-			$this->get_language()
+			empty( $this->description ) ?
+			$this->get_language() :
+			$this->description
 		);
 	}
 
@@ -77,9 +77,9 @@ class MslsBlog {
 	 */
 	public function get_language() {
 		return(
-			! empty( $this->language ) ?
-			$this->language :
-			'us'
+			empty( $this->language ) ?
+			'us' :
+			$this->language
 		);
 	}
 

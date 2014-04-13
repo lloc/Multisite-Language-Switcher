@@ -35,14 +35,19 @@ class MslsWidget extends WP_Widget {
 		 * Filters the title of the widget
 		 * @param string $title
 		 */
-		if ( has_filter( 'widget_title' ) )
+		if ( has_filter( 'widget_title' ) ) {
 			$title = apply_filters( 'widget_title', $title );
+		}
 
-		echo $args['before_widget'];
-		if ( $title )
-			echo $args['before_title'], esc_attr( $title ), $args['after_title'];
-		echo( '' != $content ? $content : __( 'No available translations found', 'msls' ) );
-		echo $args['after_widget'];
+		if ( $title ) {
+			$tile = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
+		}
+
+		if ( '' != $content ) {
+			$content = __( 'No available translations found', 'msls' );
+		}
+
+		echo $args['before_widget'], $title, $content, $args['after_widget'];  // xss ok
 	}
 
 	/**

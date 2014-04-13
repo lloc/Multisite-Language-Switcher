@@ -29,7 +29,7 @@ class MslsMain {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->blogs   = MslsBlogCollection::instance();
+		$this->blogs = MslsBlogCollection::instance();
 	}
 
 	/**
