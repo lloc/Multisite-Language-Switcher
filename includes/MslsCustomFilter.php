@@ -32,8 +32,8 @@ class MslsCustomFilter extends MslsMain {
 	 * Echo's select tag with list of blogs
 	 */
 	public function add_filter() {
-		$blogs = $this->blogs->get();
 		$id    = ( isset( $_GET['msls_filter'] ) ? (int) $_GET['msls_filter'] : '' );
+		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';
 			echo '<option value="">' . __( 'Show all blogs', 'msls' ) . '</option>';
@@ -55,7 +55,7 @@ class MslsCustomFilter extends MslsMain {
 	 * @return false or WP_Query object
 	 */
 	public function execute_filter( $query ) {
-		$blogs = $this->blogs->get();
+		$blogs = MslsBlogCollection::instance()->get();
 
 		//some "validation"
 		if ( ! isset( $_GET['msls_filter'] ) ) {

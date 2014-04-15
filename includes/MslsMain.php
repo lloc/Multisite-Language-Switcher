@@ -12,24 +12,11 @@
 class MslsMain {
 
 	/**
-	 * Blogs
-	 * @var MslsBlogCollection
-	 */
-	protected $blogs;
-
-	/**
 	 * Every child of MslsMain has to define a init-method
 	 * @return MslsMain
 	 */
 	static function init() {
 		throw new Exception( 'Static method init is not defined' );
-	}
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$this->blogs = MslsBlogCollection::instance();
 	}
 
 	/**
@@ -43,25 +30,31 @@ class MslsMain {
 			apply_filters( 'msls_main_save', $object_id, $class );
 		}
 		else {
+			$blogs = MslsBlogCollection::instance();
+
 			$input = array(
-				$this->blogs->get_current_blog()->get_language() => (int) $object_id,
+				$blogs->get_current_blog()->get_language() => (int) $object_id,
 			);
 			foreach ( $_POST as $key => $value ) {
 				if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
 					$input[substr( $key, 11 )] = (int) $value;
 				}
 			}
+
 			$msla      = new MslsLanguageArray( $input );
 			$options   = new $class( $object_id );
-			$language  = $this->blogs->get_current_blog()->get_language();
+			$language  = $blogs->get_current_blog()->get_language();
 			$temp      = $options->get_arr();
 			$object_id = $msla->get_val( $language );
-			if ( 0 != $object_id ) 
+
+			if ( 0 != $object_id ) { 
 				$options->save( $msla->get_arr( $language ) );
-			else
+			}
+			else {
 				$options->delete();
-			$blogs = $this->blogs->get();
-			foreach ( $blogs as $blog ) {
+			}
+
+			foreach ( $blogs->get() as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 				$language  = $blog->get_language();
 				$object_id = $msla->get_val( $language );

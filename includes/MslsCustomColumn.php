@@ -36,7 +36,7 @@ class MslsCustomColumn extends MslsMain {
 	 * @return array
 	 */
 	public function th( $columns ) {
-		$blogs = $this->blogs->get();
+		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			$arr = array();
 			foreach ( $blogs as $blog ) {
@@ -60,7 +60,7 @@ class MslsCustomColumn extends MslsMain {
 	 */
 	public function td( $column_name, $item_id ) {
 		if ( 'mslscol' == $column_name ) {
-			$blogs = $this->blogs->get();
+			$blogs = MslsBlogCollection::instance()->get();
 			if ( $blogs ) {
 				$mydata = MslsOptions::create( $item_id );
 				foreach ( $blogs as $blog ) {

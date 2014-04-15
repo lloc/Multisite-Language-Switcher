@@ -88,7 +88,7 @@ class MslsMetaBox extends MslsMain {
 	 * Render the classic select-box
 	 */
 	public function render_select() {
-		$blogs = $this->blogs->get();
+		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			global $post;
 			$type   = get_post_type( $post->ID );
@@ -176,7 +176,7 @@ class MslsMetaBox extends MslsMain {
 	 * Render the suggest input-field
 	 */
 	public function render_input() {
-		$blogs = $this->blogs->get();
+		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			global $post;
 			$post_type = get_post_type( $post->ID );
