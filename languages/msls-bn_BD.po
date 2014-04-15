@@ -4,11 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-11 15:44+0100\n"
-"PO-Revision-Date: 2014-04-11 15:44+0100\n"
+"POT-Creation-Date: 2014-04-14 15:08+0100\n"
+"PO-Revision-Date: 2014-04-14 15:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: Md. Nazmul Huda <aonik@vootbd.com>\n"
-"Language: Bengali (Bangladesh)\n"
+"Language: bn_BD\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,8 +33,9 @@ msgid "This post is also available in %s."
 msgstr "পোস্টটি %s-তেও পাওয়া যাবে।"
 
 #: ../includes/MslsAdmin.php:39 ../includes/MslsAdmin.php:40
-#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:95
-#: ../includes/MslsPostTag.php:152 ../includes/MslsWidget.php:20
+#: ../includes/MslsMetaBox.php:71 ../includes/MslsPostTag.php:97
+#: ../includes/MslsPostTag.php:147 ../includes/MslsPostTag.php:203
+#: ../includes/MslsPostTag.php:263 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "মাল্টিসাইট ল্যাঙ্গুয়েজ সুইচার"
 
@@ -60,8 +61,8 @@ msgstr "সর্বোচ্চ সুবিধা পেতে হলে আ�
 msgid "Configure"
 msgstr "কনফিগার করুন"
 
-#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:165
-#: ../includes/MslsMetaBox.php:226
+#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:163
+#: ../includes/MslsMetaBox.php:224
 msgid "Update"
 msgstr "আপডেট"
 
@@ -71,7 +72,7 @@ msgstr "মূল সেটিংস"
 
 #: ../includes/MslsAdmin.php:123
 msgid "Display"
-msgstr "ডিসপ্লে"
+msgstr "প্রদর্শন করুন"
 
 #: ../includes/MslsAdmin.php:124
 msgid "Sort output by description"
@@ -79,7 +80,7 @@ msgstr "বর্ণনা অনুযায়ী আউটপুট সাজা
 
 #: ../includes/MslsAdmin.php:125
 msgid "Display link to the current language"
-msgstr "বর্তমান ভাষার ডিসপ্লে লিঙ্ক"
+msgstr "বর্তমান ভাষার প্রদর্শন লিঙ্ক"
 
 #: ../includes/MslsAdmin.php:126
 msgid "Show only links with a translation"
@@ -115,7 +116,7 @@ msgstr "সুত্রের প্রায়োরিটি"
 
 #: ../includes/MslsAdmin.php:139
 msgid "Advanced Settings"
-msgstr ""
+msgstr "অ্যাডভান্সড সেটিংস"
 
 #: ../includes/MslsAdmin.php:144
 msgid "Activate experimental autocomplete inputs"
@@ -123,11 +124,11 @@ msgstr "পরীক্ষামূলক অটোকমপ্লিট ইন�
 
 #: ../includes/MslsAdmin.php:145
 msgid "Custom URL for flag-images"
-msgstr "পতাকার ছবির জন্য কাস্টম ইউআরএল"
+msgstr "পতাকার ইমেজের জন্য কাস্টম URL"
 
 #: ../includes/MslsAdmin.php:146
 msgid "Reference user"
-msgstr ""
+msgstr "রেফারেন্স ইউজার"
 
 #: ../includes/MslsAdmin.php:147
 msgid "Exclude this blog from output"
@@ -145,12 +146,12 @@ msgstr "%s-ব্লগে নতুন একটি অনুবাদ তৈ�
 
 #: ../includes/MslsCustomFilter.php:39
 msgid "Show all blogs"
-msgstr ""
+msgstr "সবগুলো ব্লগ দেখান"
 
 #: ../includes/MslsCustomFilter.php:45
 #, php-format
 msgid "Not translated in the %s-blog"
-msgstr ""
+msgstr "%s-ব্লগে অনুবাদ করা হয়নি"
 
 #: ../includes/MslsLink.php:43
 msgid "Flag and description"
@@ -168,7 +169,7 @@ msgstr "বর্ণনা এবং পতাকা"
 msgid "Description only"
 msgstr "শুধু বর্ণনা"
 
-#: ../includes/MslsMetaBox.php:172 ../includes/MslsMetaBox.php:233
+#: ../includes/MslsMetaBox.php:170 ../includes/MslsMetaBox.php:231
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -186,10 +187,10 @@ msgstr ""
 "পারেন, অনুগ্রহ করে <a onclick=\"window.open(this.href); return false;\" href="
 "\"http://codex.wordpress.org/Create_A_Network\">এই পোস্ট</a>-টি পড়ুন।"
 
-#: ../includes/MslsWidget.php:44
+#: ../includes/MslsWidget.php:47
 msgid "No available translations found"
-msgstr ""
+msgstr "কোন সহজলভ্য অনুবাদ পাওয়া যায়নি"
 
-#: ../includes/MslsWidget.php:68
+#: ../includes/MslsWidget.php:73
 msgid "Title"
-msgstr "শিরোণাম"
+msgstr "টাইটেল"
