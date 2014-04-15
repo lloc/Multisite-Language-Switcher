@@ -21,7 +21,7 @@ posts, pages, custom post types, categories, tags and custom taxonomies.
 
 The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). 
 Thanks to Mark James for his great work. In addition I would like to 
-thank [Jürgen Mayer](http://designetage.com/) for creating the plugin's 
+thank [Jürgen Mayer](http://blog.jrmayer.co/) for creating the plugin's 
 banner.
 
 ## Translators
