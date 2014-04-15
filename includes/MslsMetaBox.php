@@ -189,10 +189,7 @@ class MslsMetaBox extends MslsMain {
 
 				$language = $blog->get_language();
 				$flag_url = MslsOptions::instance()->get_flag_url( $language );
-
-				$icon = MslsAdminIcon::create()
-					->set_language( $language )
-					->set_src( $flag_url );
+				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
 
 				$value = $title = '';
 				if ( $my_data->has_value( $language ) ) {
