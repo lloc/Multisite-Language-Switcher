@@ -19,26 +19,56 @@ class MslsPostTagClassic extends MslsMain {
 		$obj      = new self();
 		$taxonomy = self::check();
 		if ( $taxonomy ) {
-			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'create_input' ) );
-			add_action( "{$taxonomy}_add_form_fields", array( $obj, 'create_input' ) );
+			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add_input' ) );
+			add_action( "{$taxonomy}_add_form_fields", array( $obj, 'edit_input' ) );
 		}
 		add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
 		add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
 		return $obj;
 	}
 
+	public function add_input( $tag ) {
+		$title_format = '<h3>%s</h3>';
+		$item_format  = '<label for="msls_input_%1$s">%2$s</label>
+			<select class="msls-translations" name="msls_input_%1$s">
+			<option value=""></option>
+			%3$s
+			</select>';
+		echo '<div class="form-field">';
+		$this->create_input( $tag, $title_format, $item_format );
+		echo '</div>';
+	}
+	
+	public function edit_input( $tag ) {
+		$title_format = '<tr>
+			<th colspan="2">
+			<strong>%s</strong>
+			</th>
+			</tr>';
+		$item_format  = '<tr class="form-field">
+			<th scope="row" valign="top">
+			<label for="msls_input_%1$s">%2$s</label></th>
+			<td>
+			<select class="msls-translations" name="msls_input_%1$s">
+			<option value=""></option>
+			%3$s
+			</select></td>
+			</tr>';
+		$this->create_input( $tag, $title_format, $item_format );
+	}
+
 	/**
 	 * Edit select
 	 * @param StdClass $tag
 	 */
-	public function create_input( $tag ) {
+	public function create_input( $tag, $title_format, $item_format ) {
 		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
 		$blogs   = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			$mydata = MslsOptionsTax::create( $term_id );
 			$type   = MslsContentTypes::create()->get_request();
 			printf(
-				'<tr><th colspan="2"><strong>%s</strong></th></tr>',
+				$title_format,
 				__( 'Multisite Language Switcher', 'msls' )
 			);
 			foreach ( $blogs as $blog ) {
@@ -65,15 +95,7 @@ class MslsPostTagClassic extends MslsMain {
 					}
 				}
 				printf(
-					'<tr class="form-field">
-					<th scope="row" valign="top">
-					<label for="msls_input_%1$s">%2$s</label></th>
-					<td>
-					<select class="msls-translations" name="msls_input_%1$s">
-					<option value=""></option>
-					%3$s
-					</select></td>
-					</tr>',
+					$item_format,
 					$language,
 					$icon,
 					$options

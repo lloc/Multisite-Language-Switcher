@@ -81,24 +81,56 @@ class MslsPostTag extends MslsMain {
 		return '';
 	}
 
+	public function add_input( $tag ) {
+		$title_format = '<h3>%s</h3>
+			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
+			<input type="hidden" name="msls_action" id="msls_action" type="text" value="suggest_terms"/>';
+		$item_format  = '<tr class="form-field">
+			<th scope="row" valign="top">
+			<label for="msls_title_%1$s">%2$s</label>
+			</th>
+			<td>
+			<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
+			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
+			</td>
+			</tr>';
+		echo '<div class="form-field">';
+		$this->create_input( $tag, $title_format, $item_format );
+		echo '</div>';
+	}
+
+	public function edit_input( $tag ) {
+		$title_format = '<tr>
+			<th colspan="2">
+			<strong>%s</strong>
+			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
+			<input type="hidden" name="msls_action" id="msls_action" type="text" value="suggest_terms"/>
+			</th>
+			</tr>';
+		$item_format  = '<tr class="form-field">
+			<th scope="row" valign="top">
+			<label for="msls_title_%1$s">%2$s</label>
+			</th>
+			<td>
+			<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
+			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
+			</td>
+			</tr>';
+		$this->create_input( $tag, $title_format, $item_format );
+	}
+
 	/**
 	 * Edit input
 	 * @param StdClass $tag
 	 */
-	public function create_input( $tag ) {
+	public function create_input( $tag, $title_format, $item_format ) {
 		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
 		$blogs   = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			$my_data = MslsOptionsTax::create( $term_id );
 			$type    = MslsContentTypes::create()->get_request();
 			printf(
-				'<tr>
-				<th colspan="2">
-				<strong>%s</strong>
-				<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-				<input type="hidden" name="msls_action" id="msls_action" type="text" value="suggest_terms"/>
-				</th>
-				</tr>',
+				$title_format,
 				__( 'Multisite Language Switcher', 'msls' ),
 				$type
 			);
@@ -119,15 +151,7 @@ class MslsPostTag extends MslsMain {
 					}
 				}
 				printf(
-					'<tr class="form-field">
-					<th scope="row" valign="top">
-					<label for="msls_title_%1$s">%2$s</label>
-					</th>
-					<td>
-					<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-					<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
-					</td>
-					</tr>',
+					$item_format,
 					$blog->userblog_id,
 					$icon,
 					$language,
