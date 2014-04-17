@@ -38,7 +38,7 @@ class MslsWidget extends WP_Widget {
 			$tile = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
 		}
 
-		if ( '' != $content ) {
+		if ( '' == $content ) {
 			$content = __( 'No available translations found', 'msls' );
 		}
 
