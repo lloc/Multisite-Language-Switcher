@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2.1
 Tested up to: 3.9
-Stable tag: 0.9.9
+Stable tag: 0.9.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -109,6 +109,9 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 4. Widget
 
 == Changelog ==
+
+= 0.9.9.1 =
+* Bugfix: Widget was defect
 
 = 0.9.9 =
 * Option to transform the dropdowns for choosing the connections into text-inputs with jquery-ui autocomplete
