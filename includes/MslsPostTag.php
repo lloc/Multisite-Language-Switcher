@@ -48,12 +48,12 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsPostTag
 	 */
 	static function init() {
+		$obj = new self();
 		if ( MslsOptions::instance()->activate_autocomplete ) {
-			$obj      = new self();
 			$taxonomy = self::check();
 			if ( $taxonomy ) {
-				add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'create_input' ) );
-				add_action( "{$taxonomy}_add_form_fields", array( $obj, 'create_input' ) );
+				add_action( "{$taxonomy}_add_form_fields",  array( $obj, 'add_input' ) );
+				add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ) );
 			}
 			add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
 			add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
@@ -81,6 +81,10 @@ class MslsPostTag extends MslsMain {
 		return '';
 	}
 
+	/**
+	 * Add the input fields to the add-screen of the taxonomies
+	 * @param StdClass $tag
+	 */
 	public function add_input( $tag ) {
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
@@ -95,10 +99,14 @@ class MslsPostTag extends MslsMain {
 			</td>
 			</tr>';
 		echo '<div class="form-field">';
-		$this->create_input( $tag, $title_format, $item_format );
+		$this->the_input( $tag, $title_format, $item_format );
 		echo '</div>';
 	}
 
+	/**
+	 * Add the input fields to the edit-screen of the taxonomies
+	 * @param StdClass $tag
+	 */
 	public function edit_input( $tag ) {
 		$title_format = '<tr>
 			<th colspan="2">
@@ -116,14 +124,16 @@ class MslsPostTag extends MslsMain {
 			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
 			</td>
 			</tr>';
-		$this->create_input( $tag, $title_format, $item_format );
+		$this->the_input( $tag, $title_format, $item_format );
 	}
 
 	/**
-	 * Edit input
+	 * Print the input fields
 	 * @param StdClass $tag
+	 * @param string $title_format
+	 * @param string $item_format
 	 */
-	public function create_input( $tag, $title_format, $item_format ) {
+	public function the_input( $tag, $title_format, $item_format ) {
 		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
 		$blogs   = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
@@ -164,12 +174,12 @@ class MslsPostTag extends MslsMain {
 	}
 
 	/**
-	 * Set
+	 * Set calls the save method if taxonomy is set
 	 * @param int $term_id
 	 * @param int $tt_id
 	 */
 	public function set( $term_id, $tt_id ) {
-		if ( MslsPostTag::check() )
+		if ( self::check() )
 			$this->save( $term_id, 'MslsOptionsTax' );
 	}
 

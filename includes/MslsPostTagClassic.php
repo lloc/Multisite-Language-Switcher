@@ -1,15 +1,15 @@
 <?php
 /**
- * MslsPostTag
+ * MslsPostTagClassic
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.9
  */
 
 /**
- * Post Tag
+ * Post Tag Clasic
  * @package Msls
  */
-class MslsPostTagClassic extends MslsMain {
+class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Init
@@ -19,14 +19,18 @@ class MslsPostTagClassic extends MslsMain {
 		$obj      = new self();
 		$taxonomy = self::check();
 		if ( $taxonomy ) {
-			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'add_input' ) );
-			add_action( "{$taxonomy}_add_form_fields", array( $obj, 'edit_input' ) );
+			add_action( "{$taxonomy}_add_form_fields",  array( $obj, 'add_input' ) );
+			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ) );
 		}
 		add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
 		add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
 		return $obj;
 	}
 
+	/**
+	 * Add the input fields to the add-screen of the taxonomies
+	 * @param StdClass $tag
+	 */
 	public function add_input( $tag ) {
 		$title_format = '<h3>%s</h3>';
 		$item_format  = '<label for="msls_input_%1$s">%2$s</label>
@@ -35,10 +39,14 @@ class MslsPostTagClassic extends MslsMain {
 			%3$s
 			</select>';
 		echo '<div class="form-field">';
-		$this->create_input( $tag, $title_format, $item_format );
+		$this->the_input( $tag, $title_format, $item_format );
 		echo '</div>';
 	}
 	
+	/**
+	 * Add the input fields to the edit-screen of the taxonomies
+	 * @param StdClass $tag
+	 */
 	public function edit_input( $tag ) {
 		$title_format = '<tr>
 			<th colspan="2">
@@ -54,14 +62,16 @@ class MslsPostTagClassic extends MslsMain {
 			%3$s
 			</select></td>
 			</tr>';
-		$this->create_input( $tag, $title_format, $item_format );
+		$this->the_input( $tag, $title_format, $item_format );
 	}
 
 	/**
-	 * Edit select
+	 * Print the input fields
 	 * @param StdClass $tag
+	 * @param string $title_format
+	 * @param string $item_format
 	 */
-	public function create_input( $tag, $title_format, $item_format ) {
+	public function the_input( $tag, $title_format, $item_format ) {
 		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
 		$blogs   = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
