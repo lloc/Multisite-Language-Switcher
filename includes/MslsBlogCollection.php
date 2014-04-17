@@ -48,12 +48,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * Constructor
 	 */
 	public function __construct() {
-		$options                   = MslsOptions::instance();
 		$this->current_blog_id     = get_current_blog_id();
+		
+		$options = MslsOptions::instance();
+
 		$this->current_blog_output = isset( $options->output_current_blog );
 		$this->objects_order       = $options->get_order();
+
 		if ( ! $options->is_excluded() ) {
-			$blogs_collection = array();
 			if ( has_filter( 'msls_blog_collection_construct' ) ) {
 				/**
 				 * Filters the blogs of the blogs_collection
@@ -155,7 +157,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get an arry of blog-objects but not the current blog
+	 * Get an array of all - but not the current - blog-objects
 	 * @return array
 	 */
 	public function get() {
@@ -196,6 +198,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 	/**
 	 * Get or create a instance of MslsBlogCollection
+	 * - until PHP 5.2 is not longer the minimum for WordPress -
 	 * @return MslsBlogCollection
 	 */
 	static function instance() {
