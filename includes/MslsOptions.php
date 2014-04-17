@@ -138,6 +138,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		if ( has_filter( 'msls_options_get_permalink' ) ) {
 			/**
 			 * Filters the url by language
+			 * @since 0.9.8
 			 * @param string $postlink
 			 * @param string $language
 			 */
@@ -211,7 +212,12 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 */
 	public function get_flag_url( $language ) {
 		if ( has_filter( 'msls_options_get_flag_url' ) ) {
-			$url = apply_filters( 'msls_options_get_flag_url', $this );
+			/**
+			 * Override the path to the flag-icons
+			 * @since 0.9.9
+			 * @param MslsOptions $this
+			 */
+			$url = (string) apply_filters( 'msls_options_get_flag_url', $this );
 		}
 		elseif ( ! is_admin() && isset( $this->image_url ) ) {
 			$url = $this->__get( 'image_url' );

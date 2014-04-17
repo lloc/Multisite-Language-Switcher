@@ -21,24 +21,41 @@ class MslsMetaBox extends MslsMain {
 		$json = new MslsJson;
 		if ( isset( $_REQUEST['blog_id'] ) ) {
 			switch_to_blog( (int) $_REQUEST['blog_id'] );
-			$args = apply_filters(
-				'msls_meta_box_suggest_args',
-				array(
-					'post_status'    => 'any',
-					'posts_per_page' => 10,
-				)
+
+			$args = array(
+				'post_status'    => 'any',
+				'posts_per_page' => 10,
 			);
+				
 			if ( isset( $_REQUEST['post_type'] ) ) {
 				$args['post_type'] = sanitize_text_field( $_REQUEST['post_type'] );
 			}
+
 			if ( isset( $_REQUEST['s'] ) ) {
 				$args['s'] = sanitize_text_field( $_REQUEST['s'] );
 			}
+
+			/**
+			 * Overrides the query-args for the suggest fields in the MetaBox
+			 * @since 0.9.9
+			 * @param array $args
+			 */
+			$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
+
 			$my_query = new WP_Query( $args );
 			while ( $my_query->have_posts() ) {
 				$my_query->the_post();
+
+				/**
+				 * Manipulates the WP_Post object before using it
+				 * @since 0.9.9
+				 * @param WP_Post $post
+				 */
 				$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
-				$json->add( get_the_ID(), get_the_title() );
+
+				if ( is_object( $my_query->post ) ) {
+					$json->add( get_the_ID(), get_the_title() );
+				}
 			}
 			wp_reset_postdata();
 			restore_current_blog();

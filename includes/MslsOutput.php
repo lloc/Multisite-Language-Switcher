@@ -74,6 +74,7 @@ class MslsOutput extends MslsMain {
 				if ( has_filter( 'msls_output_get' ) ) {
 					/**
 					 * Returns HTML-link for an item of the output-arr
+					 * @since 0.9.8
 					 * @param string $url
 					 * @param MslsLink $link
 					 * @param bool current

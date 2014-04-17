@@ -228,7 +228,13 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 	            restore_current_blog();
 	        }
 	        if ( has_filter( 'msls_head_hreflang' ) ) {
-	        	$hreflang = apply_filters( 'msls_head_hreflang', $language );
+
+	        	/**
+	        	 * Overrides the hreflang value
+	        	 * @since 0.9.9
+	        	 * @param string $language
+	        	 */
+	        	$hreflang = (string) apply_filters( 'msls_head_hreflang', $language );
 	        }
 	        else {
 	        	$hreflang = current( explode( '_', $language ) );
@@ -241,6 +247,7 @@ if ( ! class_exists( 'MslsAutoloader' ) ) {
 	            $hreflang,
 	            $url
 	        );
+	        echo "\n";
 	    }
 	}
 	add_action( 'wp_head', 'msls_head' );

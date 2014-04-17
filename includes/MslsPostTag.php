@@ -21,21 +21,37 @@ class MslsPostTag extends MslsMain {
 		$json = new MslsJson;
 		if ( isset( $_REQUEST['blog_id'] ) ) {
 			switch_to_blog( (int) $_REQUEST['blog_id'] );
-			$args = apply_filters(
-				'msls_post_tag_suggest_args',
-				array(
-					'orderby'    => 'name',
-					'order'      => 'ASC',
-					'number'     => 10,
-					'hide_empty' => 0,
-				)
+
+			$args = array(
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+				'number'     => 10,
+				'hide_empty' => 0,
 			);
+
 			if ( isset( $_REQUEST['s'] ) ) {
 				$args['name__like'] = sanitize_text_field( $_REQUEST['s'] );
 			}
+
+			/**
+			 * Overrides the query-args for the suggest fields
+			 * @since 0.9.9
+			 * @param array $args
+			 */
+			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
+
 			foreach ( get_terms( sanitize_text_field( $_REQUEST['post_type'] ), $args ) as $term ) {
+
+				/**
+				 * Manipulates the term object before using it
+				 * @since 0.9.9
+				 * @param StdClass $term
+				 */
 				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
-				$json->add( $term->term_id, $term->name );
+
+				if ( is_object( $term ) ) {
+					$json->add( $term->term_id, $term->name );
+				}
 			}
 			restore_current_blog();
 		}

@@ -31,13 +31,8 @@ class MslsWidget extends WP_Widget {
 		$title   = $instance['title'];
 		$content = MslsOutput::init()->__toString();
 
-		/**
-		 * Filters the title of the widget
-		 * @param string $title
-		 */
-		if ( has_filter( 'widget_title' ) ) {
-			$title = apply_filters( 'widget_title', $title );
-		}
+		/** This filter is documented in wp-includes/default-widgets.php */
+		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
 		if ( $title ) {
 			$tile = $args['before_title'] . esc_attr( $title ) . $args['after_title'];

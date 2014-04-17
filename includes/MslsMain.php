@@ -26,8 +26,14 @@ class MslsMain {
 	 * @param array $input
 	 */
 	protected function save( $object_id, $class ) {
-		if ( has_filter( 'msls_main_save' ) ) {
-			apply_filters( 'msls_main_save', $object_id, $class );
+		if ( has_action( 'msls_main_save' ) ) {
+			/**
+			 * Calls completly customized save-routine
+			 * @since 0.9.9
+			 * @param int $object_id
+			 * @param string Classname
+			 */
+			do_action( 'msls_main_save', $object_id, $class );
 		}
 		else {
 			$blogs = MslsBlogCollection::instance();

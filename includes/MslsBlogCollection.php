@@ -58,11 +58,11 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		if ( ! $options->is_excluded() ) {
 			if ( has_filter( 'msls_blog_collection_construct' ) ) {
 				/**
-				 * Filters the blogs of the blogs_collection
+				 * Returns custom filtered blogs of the blogs_collection
 				 * @since 0.9.8
 				 * @param array $blogs_collection
 				 */
-				$blogs_collection = apply_filters(
+				$blogs_collection = (array) apply_filters(
 					'msls_blog_collection_construct',
 					$blogs_collection
 				);
@@ -75,7 +75,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 				);
 				$blogs_collection = get_blogs_of_user( $reference_user );
 			}
-			foreach ( (array) $blogs_collection as $blog ) {
+			foreach ( $blogs_collection as $blog ) {
 				/*
 				 * get_user_id_from_string returns objects with userblog_id-members 
 				 * instead of a blog_id ... so we need just some correction ;)

@@ -67,8 +67,10 @@ class MslsLink extends MslsGetSet {
 	static function create( $display ) {
 		if ( has_filter( 'msls_link_create' ) ) {
 			/**
-			 * Lets you create your own MslsLink-Object
+			 * Returns custom MslsLink-Object
+			 * @since 0.9.9
 			 * @param int $display
+			 * @return MslsLink
 			 */
 			$obj = apply_filters( 'msls_link_create', $display );
 			if ( is_subclass_of( $obj, 'MslsLink' ) )
