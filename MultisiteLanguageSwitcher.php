@@ -32,13 +32,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
-if ( ! class_exists( 'MslsAutoloader' ) ) {
+if ( !defined( 'MSLS_PLUGIN_VERSION' ) ) {
 
-	/**
-	 * Lets define some constants
-	 */
-	if ( !defined( 'MSLS_PLUGIN_VERSION' ) )
-		define( 'MSLS_PLUGIN_VERSION', '0.9.9' );
+	define( 'MSLS_PLUGIN_VERSION', '0.9.9.2' );
+
 	if ( !defined( 'MSLS_PLUGIN_PATH' ) )
 		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 	if ( !defined( 'MSLS_PLUGIN__FILE__' ) )
