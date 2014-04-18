@@ -212,18 +212,22 @@ if ( !defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	    $mydata = MslsOptions::create();
 	    foreach ( $blogs->get_objects() as $blog ) {
 	        $language = $blog->get_language();
+
 	        if ( $blog->userblog_id == $blogs->get_current_blog_id() ) {
 	            $url = $mydata->get_current_link();
 	        }
 	        else {
 	            switch_to_blog( $blog->userblog_id );
+
 	            if ( 'MslsOptions' != get_class( $mydata ) && !$mydata->has_value( $language ) ) {
 	                restore_current_blog();
 	                continue;
 	            }
 	            $url = $mydata->get_permalink( $language );
+
 	            restore_current_blog();
 	        }
+
 	        if ( has_filter( 'msls_head_hreflang' ) ) {
 
 	        	/**
@@ -234,10 +238,7 @@ if ( !defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	        	$hreflang = (string) apply_filters( 'msls_head_hreflang', $language );
 	        }
 	        else {
-	        	$hreflang = current( explode( '_', $language ) );
-	        	if ( 'us' == $hreflang ) {
-	        		$hreflang = 'en';
-	        	}
+	        	$hreflang = $blog->get_alpha2();
 	        }
 	        printf(
 	            '<link rel="alternate" hreflang="%s" href="%s" />',
