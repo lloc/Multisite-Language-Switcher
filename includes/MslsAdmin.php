@@ -7,7 +7,6 @@
 
 /**
  * Administration of the options
- *
  * @package Msls
  */
 class MslsAdmin extends MslsMain {
@@ -82,6 +81,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Create a submenu which contains links to all blogs of the current user
+	 * @return string
 	 */
 	protected function subsubsub() {
 		$blogs = MslsBlogCollection::instance();
@@ -310,7 +310,7 @@ class MslsAdmin extends MslsMain {
 	 * Render form-element (checkbox)
 	 *
 	 * @param string $key Name and ID of the form-element
-	 * @return string HTML-Code of the checkbox
+	 * @return MslsAdmin
 	 */
 	public function render_checkbox( $key ) {
 		printf(
@@ -326,7 +326,7 @@ class MslsAdmin extends MslsMain {
 	 *
 	 * @param string $key Name and ID of the form-element
 	 * @param string $size Size-attribute of the input-field
-	 * @return string HTML-code of the input-field
+	 * @return MslsAdmin
 	 */
 	public function render_input( $key, $size = '30' ) {
 		printf(
@@ -344,7 +344,7 @@ class MslsAdmin extends MslsMain {
 	 * @param string $key Name and ID of the form-element
 	 * @param array $arr Options as associative array
 	 * @param string $selected Values which should be selected
-	 * @return string HTML-code of the select-input
+	 * @return MslsAdmin
 	 */
 	public function render_select( $key, array $arr, $selected ) {
 		$options = array();
