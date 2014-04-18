@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-11 16:03+0100\n"
-"PO-Revision-Date: 2014-04-11 16:09+0100\n"
+"POT-Creation-Date: 2014-04-18 10:21+0100\n"
+"PO-Revision-Date: 2014-04-18 10:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: Dennis Ploetner <re@lloc.de>\n"
 "Language: German (de_DE)\n"
@@ -34,8 +34,8 @@ msgstr "Der Artikel ist auch in %s verfügbar."
 
 # @ msls
 #: ../includes/MslsAdmin.php:39 ../includes/MslsAdmin.php:40
-#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:95
-#: ../includes/MslsPostTag.php:152 ../includes/MslsWidget.php:20
+#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:160
+#: ../includes/MslsPostTagClassic.php:82 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
@@ -63,18 +63,18 @@ msgstr ""
 
 #: ../includes/MslsAdmin.php:79
 msgid "Configure"
-msgstr "Konfiguriere"
+msgstr "Konfigurieren"
 
 # @ msls
-#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:165
-#: ../includes/MslsMetaBox.php:226
+#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:180
+#: ../includes/MslsMetaBox.php:238
 msgid "Update"
 msgstr "Aktualisieren"
 
 # @ msls
 #: ../includes/MslsAdmin.php:118
 msgid "Main Settings"
-msgstr "Einstellungen"
+msgstr "Allgemeine Einstellungen"
 
 # @ msls
 #: ../includes/MslsAdmin.php:123
@@ -139,8 +139,8 @@ msgstr "Erweiterte Einstellungen"
 #: ../includes/MslsAdmin.php:144
 msgid "Activate experimental autocomplete inputs"
 msgstr ""
-"Experimentelle automatische Vervollständigung in den Eingabefeldern "
-"aktivieren"
+"Experimentelle automatische Vervollständigung in den Eingabefeldern des "
+"Plugins aktivieren"
 
 # @ msls
 #: ../includes/MslsAdmin.php:145
@@ -149,7 +149,7 @@ msgstr "Alternativer URL der Flaggen"
 
 #: ../includes/MslsAdmin.php:146
 msgid "Reference user"
-msgstr "Referenz User"
+msgstr "Referenzbenutzer"
 
 # @ msls
 #: ../includes/MslsAdmin.php:147
@@ -199,7 +199,7 @@ msgid "Description only"
 msgstr "Nur Beschreibung"
 
 # @ msls
-#: ../includes/MslsMetaBox.php:172 ../includes/MslsMetaBox.php:233
+#: ../includes/MslsMetaBox.php:187 ../includes/MslsMetaBox.php:245
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -220,7 +220,7 @@ msgstr ""
 "Artikel</a>, wenn Du nicht weißt, was damit gemeint ist."
 
 # @ msls
-#: ../includes/MslsWidget.php:44
+#: ../includes/MslsWidget.php:42
 msgid "No available translations found"
 msgstr "Keine Übersetzungen verfügbar"
 

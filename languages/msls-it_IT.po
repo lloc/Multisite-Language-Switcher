@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-11 16:01+0100\n"
-"PO-Revision-Date: 2014-04-14 15:09+0100\n"
+"POT-Creation-Date: 2014-04-18 10:32+0100\n"
+"PO-Revision-Date: 2014-04-18 10:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: Antonella Cucinelli <a.cucinelli@freely.de>\n"
 "Language: Italian (it_IT)\n"
@@ -34,8 +34,8 @@ msgstr "Questo post è tradotto anche in %s."
 
 # @ msls
 #: ../includes/MslsAdmin.php:39 ../includes/MslsAdmin.php:40
-#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:95
-#: ../includes/MslsPostTag.php:152 ../includes/MslsWidget.php:20
+#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:160
+#: ../includes/MslsPostTagClassic.php:82 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
@@ -45,6 +45,8 @@ msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
 "\">complete the configuration process</a>."
 msgstr ""
+"Il Multisite Language Switcher è quasi pronto. Devi soltanto <a href=\"%s"
+"\">completare la configurazione</a>."
 
 # @ msls
 #: ../includes/MslsAdmin.php:71
@@ -59,11 +61,11 @@ msgstr "Per la massima flessibilità, devi configurare ogni blog separatamente."
 
 #: ../includes/MslsAdmin.php:79
 msgid "Configure"
-msgstr ""
+msgstr "Configura"
 
 # @ msls
-#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:165
-#: ../includes/MslsMetaBox.php:226
+#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:180
+#: ../includes/MslsMetaBox.php:238
 msgid "Update"
 msgstr "Aggiorna"
 
@@ -130,11 +132,11 @@ msgstr "Priorità del messaggio"
 # @ msls
 #: ../includes/MslsAdmin.php:139
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Impostazioni avanzati"
 
 #: ../includes/MslsAdmin.php:144
 msgid "Activate experimental autocomplete inputs"
-msgstr ""
+msgstr "Rendere attivo gli autocomplete sperimentali"
 
 # @ msls
 #: ../includes/MslsAdmin.php:145
@@ -143,7 +145,7 @@ msgstr "URL alternativo per bandiere"
 
 #: ../includes/MslsAdmin.php:146
 msgid "Reference user"
-msgstr ""
+msgstr "Utente di referenza"
 
 # @ msls
 #: ../includes/MslsAdmin.php:147
@@ -154,22 +156,22 @@ msgstr "Escludi questo blog dall'output"
 #: ../includes/MslsAdminIcon.php:143
 #, php-format
 msgid "Edit the translation in the %s-blog"
-msgstr ""
+msgstr "Modifica traduzione nel %s-blog"
 
 # @ msls
 #: ../includes/MslsAdminIcon.php:150
 #, php-format
 msgid "Create a new translation in the %s-blog"
-msgstr ""
+msgstr "Crea una nuova traduzione nel %s-blog"
 
 #: ../includes/MslsCustomFilter.php:39
 msgid "Show all blogs"
-msgstr ""
+msgstr "Tutti i blog"
 
 #: ../includes/MslsCustomFilter.php:45
 #, php-format
 msgid "Not translated in the %s-blog"
-msgstr ""
+msgstr "Non tradotto nel %s-blog"
 
 # @ msls
 #: ../includes/MslsLink.php:43
@@ -192,7 +194,7 @@ msgid "Description only"
 msgstr "Solo descrizione"
 
 # @ msls
-#: ../includes/MslsMetaBox.php:172 ../includes/MslsMetaBox.php:233
+#: ../includes/MslsMetaBox.php:187 ../includes/MslsMetaBox.php:245
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -207,11 +209,15 @@ msgid ""
 "href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
 "don't know the meaning."
 msgstr ""
+"Questo plugin ha bisogno della funzionalità multisite per funzionare "
+"corettamente. Leggi <a onclick=\"window.open(this.href); return false;\" "
+"href=\"http://codex.wordpress.org/Create_A_Network\">questo articolo</a> se "
+"non sai che cosa vuol dire."
 
 # @ msls
-#: ../includes/MslsWidget.php:44
+#: ../includes/MslsWidget.php:42
 msgid "No available translations found"
-msgstr ""
+msgstr "Nessuna traduzione trovata"
 
 # @ msls
 #: ../includes/MslsWidget.php:68

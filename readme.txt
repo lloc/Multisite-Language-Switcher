@@ -110,6 +110,10 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 
 == Changelog ==
 
+= 0.9.9.2 =
+* Bugfix: Format of the widget-title was not correct
+* Update of the language-files for Italian and German
+
 = 0.9.9.1 =
 * Bugfix: Widget was defect
 

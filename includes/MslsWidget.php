@@ -35,7 +35,7 @@ class MslsWidget extends WP_Widget {
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
 		if ( $title ) {
-			$tile = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
+			$title = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
 		}
 
 		if ( '' == $content ) {
