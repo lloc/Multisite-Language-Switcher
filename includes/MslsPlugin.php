@@ -18,8 +18,9 @@ class MslsPlugin {
 	 * excluded in the configuration of the plugin.
 	 */
 	static function init_widget() {
-		if ( ! MslsOptions::instance()->is_excluded() )
+		if ( ! MslsOptions::instance()->is_excluded() ) {
 			register_widget( 'MslsWidget' );
+		}
 	}
 
 	/**
@@ -36,10 +37,14 @@ class MslsPlugin {
 		);
 	}
 
-	static function message_handler( $message = null, $css_class = 'error' ) {
-		if ( is_null( $message ) ) {
-			$message = __( 'This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'msls' );
-		}
+	/**
+	 * Message handler
+	 * 
+	 * Prints a message box to the screen.
+	 * @param string $message
+	 * @param string $css_class
+	 */
+	static function message_handler( $message, $css_class = 'error' ) {
 		printf(
 			'<div id="msls-warning" class="%s"><p>%s</p></div>',
 			$css_class,
@@ -55,10 +60,10 @@ class MslsPlugin {
 	 * deactivated and the execution will be terminated immediately.
 	 */
 	static function activate() {
-		if ( function_exists( 'is_multisite' ) && is_multisite() ) 
+		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			return;
+		}
 		deactivate_plugins( MSLS_PLUGIN__FILE__ );
-		add_action( 'deactivate_msls', array( 'MslsPlugin', 'message_handler' ) );
 		header( 'Location: ' . admin_url( 'plugins.php?deactivate=true' ) );
 		exit;
 	}
@@ -67,7 +72,13 @@ class MslsPlugin {
 	 * Deactivate plugin
 	 * @todo Write the deactivate-method
 	 */
-	static function deactivate() { }
+	static function deactivate() {
+		if ( ! function_exists( 'is_multisite' ) || ! is_multisite() ) {
+			self::message_handler(
+				__( 'This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'msls' )
+			);
+		}
+	}
 
 	/**
 	 * Uninstall plugin
