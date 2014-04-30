@@ -34,64 +34,65 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 
+	define( 'MSLS_PLUGIN_VERSION', '0.9.9.3' );
+
+	if ( !defined( 'MSLS_PLUGIN_PATH' ) )
+		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
+	if ( !defined( 'MSLS_PLUGIN__FILE__' ) )
+		define( 'MSLS_PLUGIN__FILE__', __FILE__ );
+
+	/**
+	 * The Autoloader does all the magic when it comes to include a file
+	 *
+	 * @package Msls
+	 */
+	class MslsAutoloader {
+
+		/**
+		 * Static loader method
+		 *
+		 * @param string $class
+		 */
+		public static function load( $class ) {
+			if ( 'Msls' == substr( $class, 0, 4 ) )
+				require_once dirname( __FILE__ ) . '/includes/' . $class . '.php';
+		}
+
+	}
+
+	/**
+	 * The autoload-stack could be inactive so the function will return false
+	 */
+	if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
+		spl_autoload_register( '__autoload' );
+	spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
+
+	/**
+	 * Interface for classes which are to register in the MslsRegistry-instance
+	 *
+	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
+	 *
+	 * @package Msls
+	 */
+	interface IMslsRegistryInstance {
+
+		/**
+		 * Returnse an instance
+		 *
+		 * @return object
+		 */
+		public static function instance();
+
+	}
+
+	register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
+
+	add_action( 'plugins_loaded', array( 'MslsPlugin', 'init_i18n_support' ) );
+
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 
-		define( 'MSLS_PLUGIN_VERSION', '0.9.9.3' );
-
-		if ( !defined( 'MSLS_PLUGIN_PATH' ) )
-			define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
-		if ( !defined( 'MSLS_PLUGIN__FILE__' ) )
-			define( 'MSLS_PLUGIN__FILE__', __FILE__ );
-	
-		/**
-		 * The Autoloader does all the magic when it comes to include a file
-		 *
-		 * @package Msls
-		 */
-		class MslsAutoloader {
-	
-			/**
-			 * Static loader method
-			 *
-			 * @param string $class
-			 */
-			public static function load( $class ) {
-				if ( 'Msls' == substr( $class, 0, 4 ) )
-					require_once dirname( __FILE__ ) . '/includes/' . $class . '.php';
-			}
-	
-		}
-	
-		/**
-		 * The autoload-stack could be inactive so the function will return false
-		 */
-		if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
-			spl_autoload_register( '__autoload' );
-		spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
-	
-		/**
-		 * Interface for classes which are to register in the MslsRegistry-instance
-		 *
-		 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
-		 *
-		 * @package Msls
-		 */
-		interface IMslsRegistryInstance {
-	
-			/**
-			 * Returnse an instance
-			 *
-			 * @return object
-			 */
-			public static function instance();
-	
-		}
-	
-		register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
-	
 		add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
-		add_action( 'plugins_loaded', array( 'MslsPlugin', 'init_i18n_support' ) );
-
+		
 		if ( is_admin() ) {
 
 			add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
@@ -256,9 +257,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	else {
 
 		function plugin_needs_multisite() {
-			echo '<div id="message" class="error"><p>';
-			_e( 'This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'msls' );
-			echo '</p></div>';
+			MslsPlugin::message_handler(
+				__( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'msls' )
+			);
 		}
 		add_action( 'admin_notices', 'plugin_needs_multisite' );
 
