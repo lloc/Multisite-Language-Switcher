@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Multisite Language Switcher 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-11 15:43+0100\n"
-"PO-Revision-Date: 2014-04-11 15:43+0100\n"
+"POT-Creation-Date: 2014-04-30 15:34+0100\n"
+"PO-Revision-Date: 2014-04-30 15:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: realloc's asylum <re@lloc.de>\n"
 "MIME-Version: 1.0\n"
@@ -32,34 +32,42 @@ msgstr ""
 msgid "This post is also available in %s."
 msgstr ""
 
-#: ../includes/MslsAdmin.php:39 ../includes/MslsAdmin.php:40
-#: ../includes/MslsMetaBox.php:73 ../includes/MslsPostTag.php:95
-#: ../includes/MslsPostTag.php:152 ../includes/MslsWidget.php:20
+#: ../MultisiteLanguageSwitcher.php:261
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+"\">this post</a> if you don't know the meaning."
+msgstr ""
+
+#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
+#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:160
+#: ../includes/MslsPostTagClassic.php:82 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr ""
 
-#: ../includes/MslsAdmin.php:58
+#: ../includes/MslsAdmin.php:57
 #, php-format
 msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
 "\">complete the configuration process</a>."
 msgstr ""
 
-#: ../includes/MslsAdmin.php:71
+#: ../includes/MslsAdmin.php:70
 msgid "Multisite Language Switcher Options"
 msgstr ""
 
-#: ../includes/MslsAdmin.php:73
+#: ../includes/MslsAdmin.php:72
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 
-#: ../includes/MslsAdmin.php:79
+#: ../includes/MslsAdmin.php:78
 msgid "Configure"
 msgstr ""
 
-#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:165
-#: ../includes/MslsMetaBox.php:226
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:180
+#: ../includes/MslsMetaBox.php:238
 msgid "Update"
 msgstr ""
 
@@ -166,21 +174,13 @@ msgstr ""
 msgid "Description only"
 msgstr ""
 
-#: ../includes/MslsMetaBox.php:172 ../includes/MslsMetaBox.php:233
+#: ../includes/MslsMetaBox.php:187 ../includes/MslsMetaBox.php:245
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
 msgstr ""
 
-#: ../includes/MslsPlugin.php:41
-msgid ""
-"This plugin needs the activation of the multisite-feature for working "
-"properly. Please read <a onclick=\"window.open(this.href); return false;\" "
-"href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
-"don't know the meaning."
-msgstr ""
-
-#: ../includes/MslsWidget.php:44
+#: ../includes/MslsWidget.php:42
 msgid "No available translations found"
 msgstr ""
 
