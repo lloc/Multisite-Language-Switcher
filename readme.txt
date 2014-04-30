@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.2.1
 Tested up to: 3.9
-Stable tag: 0.9.9.1
+Stable tag: 0.9.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -109,6 +109,10 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 4. Widget
 
 == Changelog ==
+
+= 0.9.9.3 =
+* Bugfix: translation hint not shown in admin options 
+* Enhancement: message if no multisite configured
 
 = 0.9.9.2 =
 * Bugfix: Format of the widget-title was not correct

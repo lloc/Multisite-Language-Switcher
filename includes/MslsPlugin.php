@@ -53,34 +53,6 @@ class MslsPlugin {
 	}
 
 	/**
-	 * Activate plugin
-	 * 
-	 * There is a check if the multisite feature is active on the 
-	 * activation of the plugin. If it fails the plugin will be
-	 * deactivated and the execution will be terminated immediately.
-	 */
-	static function activate() {
-		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			return;
-		}
-		deactivate_plugins( MSLS_PLUGIN__FILE__ );
-		header( 'Location: ' . admin_url( 'plugins.php?deactivate=true' ) );
-		exit;
-	}
-
-	/**
-	 * Deactivate plugin
-	 * @todo Write the deactivate-method
-	 */
-	static function deactivate() {
-		if ( ! function_exists( 'is_multisite' ) || ! is_multisite() ) {
-			self::message_handler(
-				__( 'This plugin needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'msls' )
-			);
-		}
-	}
-
-	/**
 	 * Uninstall plugin
 	 * 
 	 * The plugin data in all blogs of the current network will be 
