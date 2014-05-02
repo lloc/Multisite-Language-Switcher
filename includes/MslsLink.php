@@ -10,6 +10,10 @@
  * Link type: Image and text
  * 
  * @package Msls
+ * @property string $txt
+ * @property string $src
+ * @property string $alt
+ * @property string $url
  */
 class MslsLink extends MslsGetSet {
 

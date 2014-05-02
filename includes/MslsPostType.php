@@ -26,6 +26,7 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 				'and'
 			)
 		);
+
 		if ( ! empty( $_REQUEST['post_type'] ) ) {
 			$this->request = esc_attr( $_REQUEST['post_type'] );
 		}

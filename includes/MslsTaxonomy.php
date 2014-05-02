@@ -29,23 +29,17 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 				'and'
 			)
 		);
+
 		if ( ! empty( $_REQUEST['taxonomy'] ) ) {
 			$this->request = esc_attr( $_REQUEST['taxonomy'] );
 		}
 		else {
 			$this->request = get_query_var( 'taxonomy' );
 		}
+
 		if ( ! empty( $_REQUEST['post_type'] ) ) {
 			$this->post_type = esc_attr( $_REQUEST['post_type'] );
 		}
-	}
-
-	/**
-	 * Get the requested post_type of the taxonomy
-	 * @return string
-	 */
-	public function get_post_type() {
-		return $this->post_type;
 	}
 
 	/**
@@ -54,6 +48,14 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	 */
 	public function is_taxonomy() {
 		return true;
+	}
+
+	/**
+	 * Get the requested post_type of the taxonomy
+	 * @return string
+	 */
+	public function get_post_type() {
+		return $this->post_type;
 	}
 
 	/**

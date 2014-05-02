@@ -53,6 +53,12 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	protected $base;
 
 	/**
+	 * Base definition
+	 * @var string
+	 */
+	protected $base_defined = '';
+
+	/**
 	 * Factory method
 	 * @param int $id
 	 * @return MslsOptions
@@ -61,18 +67,26 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		if ( is_admin() ) {
 			$id  = (int) $id;
 			$obj = MslsContentTypes::create();
-			if ( $obj->is_taxonomy() )
+
+			if ( $obj->is_taxonomy() ) {
 				return MslsOptionsTax::create( $id );
+			}
+
 			return new MslsOptionsPost( $id );
 		}
 		else {
-			if ( is_front_page() || is_search() || is_404() )
+			if ( is_front_page() || is_search() || is_404() ) {
 				return new MslsOptions();
-			elseif ( is_category() || is_tag() || is_tax() )
+			}
+			elseif ( is_category() || is_tag() || is_tax() ) {
 				return MslsOptionsTax::create();
-			elseif ( is_date() || is_author() || is_post_type_archive() )
+			}
+			elseif ( is_date() || is_author() || is_post_type_archive() ) {
 				return MslsOptionsQuery::create();
+			}
+
 			global $wp_query;
+
 			return new MslsOptionsPost( $wp_query->get_queried_object_id() );
 		}
 		return null;
@@ -130,7 +144,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return null
 	 */
 	protected function get_base() {
-		return null;
+		return $this->base_defined;
 	}
 
 	/**

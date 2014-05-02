@@ -86,11 +86,12 @@ class MslsPostTag extends MslsMain {
 	 */
 	static function check() {
 		if ( ! MslsOptions::instance()->is_excluded() && isset( $_REQUEST['taxonomy'] ) ) {
-			$type = MslsContentTypes::create()->get_request();
-			if ( ! empty( $type ) ) {
-				$tax = get_taxonomy( $type );
+			$type = MslsContentTypes::create();
+			if ( $type->is_taxonomy() ) {
+				$req = $type->get_request();
+				$tax = get_taxonomy( $req );
 				if ( $tax && current_user_can( $tax->cap->manage_terms ) ) {
-					return $type;
+					return $req;
 				}
 			}
 		}

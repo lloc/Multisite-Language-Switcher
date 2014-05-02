@@ -159,7 +159,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 				/**
 				 * Ovverrides the string for the output of the translation hint
 				 * @since 1.0
-				 * @param array $blogs_collection
+				 * @param string $output
+				 * @param array $links
 				 */
 				$output = apply_filters( 'msls_filter_string', $output, $links );
 			}
@@ -184,11 +185,11 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 				else {
 					$output = '';
 				}
-	
+
 				$output = sprintf(
-						__( 'This post is also available in %s.', 'msls' ),
-						$links
-					);
+					__( 'This post is also available in %s.', 'msls' ),
+					$links
+				);
 			}
 			return( ! empty( $output ) ? $pref . $output . $post : '' );
 		}

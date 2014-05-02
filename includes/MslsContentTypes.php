@@ -34,6 +34,22 @@ class MslsContentTypes {
 	}
 
 	/**
+	 * Check for post_type
+	 * @return bool
+	 */
+	public function is_post_type() {
+		return false;
+	}
+
+	/**
+	 * Check for taxonomy
+	 * @return bool
+	 */
+	public function is_taxonomy() {
+		return false;
+	}
+
+	/**
 	 * Getter
 	 * @return array
 	 */
@@ -52,29 +68,5 @@ class MslsContentTypes {
 			''
 		);
 	}
-
-	/**
-	 * Get the requested taxonomy without a check
-	 * @return string
-	 */
-	public function get_taxonomy() {
-		return $this->taxonomy;
-	}
 	
-	/**
-	 * Check for post_type
-	 * @return bool
-	 */
-	public function is_post_type() {
-		return false;
-	}
-
-	/**
-	 * Check for taxonomy
-	 * @return bool
-	 */
-	public function is_taxonomy() {
-		return false;
-	}
-
 }
