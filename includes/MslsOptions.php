@@ -234,7 +234,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	/**
 	 * Get or create an instance of MslsOptions
 	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
-	 * @return MslsBlogCollection
+	 * @return MslsOptions
 	 */
 	static function instance() {
 		$registry = MslsRegistry::instance();

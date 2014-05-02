@@ -59,7 +59,7 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	/**
 	 * Get or create an instance of MslsTaxonomy
 	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
-	 * @return MslsBlogCollection
+	 * @return MslsTaxonomy
 	 */
 	static function instance() {
 		$registry = MslsRegistry::instance();
