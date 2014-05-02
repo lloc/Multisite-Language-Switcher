@@ -56,6 +56,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		$this->objects_order       = $options->get_order();
 
 		if ( ! $options->is_excluded() ) {
+
+			$reference_user   = (
+				$options->has_value( 'reference_user' ) ?
+				$options->reference_user :
+				current( $this->get_users( 'ID', 1 ) )
+			);
+			$blogs_collection = get_blogs_of_user( $reference_user );
+
 			if ( has_filter( 'msls_blog_collection_construct' ) ) {
 				/**
 				 * Returns custom filtered blogs of the blogs_collection
@@ -67,14 +75,6 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 					$blogs_collection
 				);
 			}
-			else {
-				$reference_user   = (
-					$options->has_value( 'reference_user' ) ?
-					$options->reference_user :
-					current( $this->get_users( 'ID', 1 ) )
-				);
-				$blogs_collection = get_blogs_of_user( $reference_user );
-			}
 			foreach ( $blogs_collection as $blog ) {
 				/*
 				 * get_user_id_from_string returns objects with userblog_id-members 
@@ -84,6 +84,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 				if ( ! isset( $blog->userblog_id ) && isset( $blog->blog_id) ) {
 					$blog->userblog_id = $blog->blog_id;
 				}
+
 				if ( $blog->userblog_id != $this->current_blog_id ) {
 					$temp = get_blog_option( $blog->userblog_id, 'msls' );
 					if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) && $this->is_plugin_active( $blog->userblog_id ) )
@@ -147,7 +148,10 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	function is_plugin_active( $blog_id ) {
 		if ( ! is_array( $this->active_plugins ) ) {
-			$this->active_plugins = get_site_option( 'active_sitewide_plugins', array() );
+			$this->active_plugins = get_site_option(
+				'active_sitewide_plugins',
+				array()
+			);
 		}
 
 		if ( isset( $this->active_plugins[MSLS_PLUGIN_PATH] ) ) {
@@ -186,7 +190,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * Get the registered users of the current blog
 	 * @param string $fields
 	 * @param mixed $number
-	 * @return WP_User|Array
+	 * @return array
 	 */
 	public function get_users( $fields = 'all', $number = '' ) {
 		$args = array(
