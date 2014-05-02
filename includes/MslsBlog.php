@@ -112,21 +112,21 @@ class MslsBlog {
 
 	/**
 	 * Sort objects by language
-	 * @param mixed $a
-	 * @param mixed $b
+	 * @param MslsBlog $a
+	 * @param MslsBlog $b
 	 * return int
 	 */
-	static function language( $a, $b ) {
+	static function language( MslsBlog $a, MslsBlog $b ) {
 		return( self::_cmp( $a->get_language(), $b->get_language() ) );
 	}
 
 	/**
 	 * Sort objects by description
-	 * @param mixed $a
-	 * @param mixed $b
+	 * @param MslsBlog $a
+	 * @param MslsBlog $b
 	 * return int
 	 */
-	static function description( $a, $b ) {
+	static function description( MslsBlog $a, MslsBlog $b ) {
 		return( self::_cmp( $a->get_description(), $b->get_description() ) );
 	}
 

@@ -27,7 +27,7 @@ class WP_Test_MslsOptions extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the reset-method
+	 * Verify the instance-method
 	 */
 	function test_instance_method() {
 		$this->assertInstanceOf( 'MslsOptions', MslsOptions::instance() );

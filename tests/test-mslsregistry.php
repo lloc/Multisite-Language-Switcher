@@ -39,7 +39,7 @@ class WP_Test_MslsRegistry extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the reset-method
+	 * Verify the instance-method
 	 */
 	function test_instance_method() {
 		$this->assertInstanceOf( 'MslsRegistry',  MslsRegistry::instance() );
