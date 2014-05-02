@@ -42,8 +42,10 @@ class MslsOutput extends MslsMain {
 				$language = $blog->get_language();
 
 				$current = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
+
+				$url = $mydata->get_current_link()
+			
 				if ( $current ) {
-					$url = $mydata->get_current_link();
 					$link->txt = $blog->get_description();
 				}
 				else {

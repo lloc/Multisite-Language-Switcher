@@ -74,22 +74,20 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
 			return new MslsOptionsPost( $id );
 		}
-		else {
-			if ( is_front_page() || is_search() || is_404() ) {
-				return new MslsOptions();
-			}
-			elseif ( is_category() || is_tag() || is_tax() ) {
-				return MslsOptionsTax::create();
-			}
-			elseif ( is_date() || is_author() || is_post_type_archive() ) {
-				return MslsOptionsQuery::create();
-			}
 
-			global $wp_query;
-
-			return new MslsOptionsPost( $wp_query->get_queried_object_id() );
+		if ( is_front_page() || is_search() || is_404() ) {
+			return new MslsOptions();
 		}
-		return null;
+		elseif ( is_category() || is_tag() || is_tax() ) {
+			return MslsOptionsTax::create();
+		}
+		elseif ( is_date() || is_author() || is_post_type_archive() ) {
+			return MslsOptionsQuery::create();
+		}
+
+		global $wp_query;
+
+		return new MslsOptionsPost( $wp_query->get_queried_object_id() );
 	}
 
 	/**
