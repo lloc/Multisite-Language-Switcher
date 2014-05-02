@@ -27,7 +27,7 @@ class WP_Test_MslsJson extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the add- and the get-methods
+	 * Verify the add-, the get- and the compare-methods
 	 */
 	function test_add_get_methods() {
 		$obj = new MslsJson();
