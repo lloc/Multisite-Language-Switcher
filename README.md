@@ -6,6 +6,7 @@ _Please keep in mind that the version of the Multisite Language Switcher at GitH
  
 [![Build Status](https://api.travis-ci.org/lloc/Multisite-Language-Switcher.png)](https://api.travis-ci.org/lloc/Multisite-Language-Switcher)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/badges/quality-score.png?s=a2e5dbac2690bbd427f2d48b84473482e7e24fdb)](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/)
+[![Code Coverage](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/badges/coverage.png?s=5f21fa3901165e1d9b7f63d7ef2f80e699695002)](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/)
 
 A simple, powerful and easy to use plugin that will add 
 multilingual support to a WordPress 
