@@ -3,9 +3,9 @@
 Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
-Requires at least: 3.2.1
+Requires at least: 3.6.1
 Tested up to: 3.9
-Stable tag: 0.9.9.3
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

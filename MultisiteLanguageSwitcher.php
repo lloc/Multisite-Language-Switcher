@@ -4,7 +4,7 @@
 Plugin Name: Multisite Language Switcher
 Plugin URI: http://lloc.de/msls
 Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
-Version: 0.9.9.3
+Version: 1.0
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 */
@@ -152,28 +152,45 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
 			$obj = new MslsOutput();
 	
-			$links = $obj->get( 1, true, true );
-			if ( empty( $links ) )
-				return '';
-	
-			if ( count( $links ) > 1 ) {
-				$last  = array_pop( $links );
-				$links = sprintf(
-					__( '%s and %s', 'msls' ),
-					implode( ', ', $links ),
-					$last
-				);
+			$output = __( 'This post is also available in %s.', 'msls' );
+			$links  = $obj->get( 1, true, true );
+
+			if ( has_filter( 'msls_filter_string' ) ) {
+				/**
+				 * Ovverrides the string for the output of the translation hint
+				 * @since 1.0
+				 * @param array $blogs_collection
+				 */
+				$output = apply_filters( 'msls_filter_string', $output, $links );
 			}
 			else {
-				$links = $links[0];
-			}
+				if ( count( $links ) > 1 ) {
+					$last   = array_pop( $links );
+					$output = sprintf(
+						$output,
+						sprintf(
+							__( '%s and %s', 'msls' ),
+							implode( ', ', $links ),
+							$last
+						)
+					); 
+				}
+				elseif ( 1 == count( $links )) {
+					$output = sprintf(
+						$output,
+						$links[0]
+					);
+				}
+				else {
+					$output = '';
+				}
 	
-			return $pref .
-				sprintf(
-					__( 'This post is also available in %s.', 'msls' ),
-					$links
-				) .
-				$post;
+				$output = sprintf(
+						__( 'This post is also available in %s.', 'msls' ),
+						$links
+					);
+			}
+			return( ! empty( $output ) ? $pref . $output . $post : '' );
 		}
 	
 		/**
