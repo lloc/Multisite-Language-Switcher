@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-14 15:08+0100\n"
-"PO-Revision-Date: 2014-04-14 15:08+0100\n"
+"POT-Creation-Date: 2014-05-02 14:57+0100\n"
+"PO-Revision-Date: 2014-05-02 14:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: Md. Nazmul Huda <aonik@vootbd.com>\n"
 "Language: bn_BD\n"
@@ -22,24 +22,35 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../MultisiteLanguageSwitcher.php:162
-#, php-format
-msgid "%s and %s"
-msgstr "%s এবং %s"
-
-#: ../MultisiteLanguageSwitcher.php:173
+#: ../MultisiteLanguageSwitcher.php:155 ../MultisiteLanguageSwitcher.php:189
 #, php-format
 msgid "This post is also available in %s."
 msgstr "পোস্টটি %s-তেও পাওয়া যাবে।"
 
-#: ../includes/MslsAdmin.php:39 ../includes/MslsAdmin.php:40
-#: ../includes/MslsMetaBox.php:71 ../includes/MslsPostTag.php:97
-#: ../includes/MslsPostTag.php:147 ../includes/MslsPostTag.php:203
-#: ../includes/MslsPostTag.php:263 ../includes/MslsWidget.php:20
+#: ../MultisiteLanguageSwitcher.php:172
+#, php-format
+msgid "%s and %s"
+msgstr "%s এবং %s"
+
+#: ../MultisiteLanguageSwitcher.php:278
+#, fuzzy
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+"\">this post</a> if you don't know the meaning."
+msgstr ""
+"এই প্লাগইন কাজ করার জন্য মাল্টিসাইট ফিচার অ্যাকটিভেট করা জরুরী। যদি আপনি বুঝতে না "
+"পারেন, অনুগ্রহ করে <a onclick=\"window.open(this.href); return false;\" href="
+"\"http://codex.wordpress.org/Create_A_Network\">এই পোস্ট</a>-টি পড়ুন।"
+
+#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
+#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:160
+#: ../includes/MslsPostTagClassic.php:82 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "মাল্টিসাইট ল্যাঙ্গুয়েজ সুইচার"
 
-#: ../includes/MslsAdmin.php:58
+#: ../includes/MslsAdmin.php:57
 #, php-format
 msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
@@ -48,21 +59,21 @@ msgstr ""
 "মাল্টিসাইট ল্যাঙ্গুয়েজ সুইচার প্রায় তৈরী। আপনি অবশ্যই <a href=\"%s\"> </a>-প্রসেস "
 "কনফিগার করা শেষ করতে হবে।"
 
-#: ../includes/MslsAdmin.php:71
+#: ../includes/MslsAdmin.php:70
 msgid "Multisite Language Switcher Options"
 msgstr "মাল্টিসাইট ল্যাঙ্গুয়েজ সুইচার অপশনসমূহ"
 
-#: ../includes/MslsAdmin.php:73
+#: ../includes/MslsAdmin.php:72
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr "সর্বোচ্চ সুবিধা পেতে হলে আপনাকে প্রতিটা ব্লগ আলাদা ভাবে কনফিগার করতে হবে।"
 
-#: ../includes/MslsAdmin.php:79
+#: ../includes/MslsAdmin.php:78
 msgid "Configure"
 msgstr "কনফিগার করুন"
 
-#: ../includes/MslsAdmin.php:79 ../includes/MslsMetaBox.php:163
-#: ../includes/MslsMetaBox.php:224
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:180
+#: ../includes/MslsMetaBox.php:238
 msgid "Update"
 msgstr "আপডেট"
 
@@ -169,28 +180,17 @@ msgstr "বর্ণনা এবং পতাকা"
 msgid "Description only"
 msgstr "শুধু বর্ণনা"
 
-#: ../includes/MslsMetaBox.php:170 ../includes/MslsMetaBox.php:231
+#: ../includes/MslsMetaBox.php:187 ../includes/MslsMetaBox.php:245
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
 msgstr ""
 "এই প্লাগইন থেকে কোন সুবিধা পেতে হলে আপনার ভিন্ন ভাষায় অন্ততঃ একটি ব্লগ থাকতে হবে।"
 
-#: ../includes/MslsPlugin.php:41
-msgid ""
-"This plugin needs the activation of the multisite-feature for working "
-"properly. Please read <a onclick=\"window.open(this.href); return false;\" "
-"href=\"http://codex.wordpress.org/Create_A_Network\">this post</a> if you "
-"don't know the meaning."
-msgstr ""
-"এই প্লাগইন কাজ করার জন্য মাল্টিসাইট ফিচার অ্যাকটিভেট করা জরুরী। যদি আপনি বুঝতে না "
-"পারেন, অনুগ্রহ করে <a onclick=\"window.open(this.href); return false;\" href="
-"\"http://codex.wordpress.org/Create_A_Network\">এই পোস্ট</a>-টি পড়ুন।"
-
-#: ../includes/MslsWidget.php:47
+#: ../includes/MslsWidget.php:42
 msgid "No available translations found"
 msgstr "কোন সহজলভ্য অনুবাদ পাওয়া যায়নি"
 
-#: ../includes/MslsWidget.php:73
+#: ../includes/MslsWidget.php:68
 msgid "Title"
 msgstr "টাইটেল"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-30 15:17+0100\n"
-"PO-Revision-Date: 2014-04-30 15:17+0100\n"
+"POT-Creation-Date: 2014-05-02 15:00+0100\n"
+"PO-Revision-Date: 2014-05-02 15:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: Antonella Cucinelli <a.cucinelli@freely.de>\n"
 "Language: Italian (it_IT)\n"
@@ -21,18 +21,18 @@ msgstr ""
 "X-Poedit-SearchPath-1: ..\n"
 
 # @ msls
-#: ../MultisiteLanguageSwitcher.php:162
-#, php-format
-msgid "%s and %s"
-msgstr "%s e %s"
-
-# @ msls
-#: ../MultisiteLanguageSwitcher.php:173
+#: ../MultisiteLanguageSwitcher.php:155 ../MultisiteLanguageSwitcher.php:189
 #, php-format
 msgid "This post is also available in %s."
 msgstr "Questo post è tradotto anche in %s."
 
-#: ../MultisiteLanguageSwitcher.php:261
+# @ msls
+#: ../MultisiteLanguageSwitcher.php:172
+#, php-format
+msgid "%s and %s"
+msgstr "%s e %s"
+
+#: ../MultisiteLanguageSwitcher.php:278
 msgid ""
 "The Multisite Language Switcher needs the activation of the multisite-"
 "feature for working properly. Please read <a onclick=\"window.open(this."

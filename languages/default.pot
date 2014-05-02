@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Multisite Language Switcher 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-04-30 15:34+0100\n"
-"PO-Revision-Date: 2014-04-30 15:34+0100\n"
+"POT-Creation-Date: 2014-05-02 15:02+0100\n"
+"PO-Revision-Date: 2014-05-02 15:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: realloc's asylum <re@lloc.de>\n"
 "MIME-Version: 1.0\n"
@@ -22,17 +22,17 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../MultisiteLanguageSwitcher.php:162
-#, php-format
-msgid "%s and %s"
-msgstr ""
-
-#: ../MultisiteLanguageSwitcher.php:173
+#: ../MultisiteLanguageSwitcher.php:155 ../MultisiteLanguageSwitcher.php:189
 #, php-format
 msgid "This post is also available in %s."
 msgstr ""
 
-#: ../MultisiteLanguageSwitcher.php:261
+#: ../MultisiteLanguageSwitcher.php:172
+#, php-format
+msgid "%s and %s"
+msgstr ""
+
+#: ../MultisiteLanguageSwitcher.php:278
 msgid ""
 "The Multisite Language Switcher needs the activation of the multisite-"
 "feature for working properly. Please read <a onclick=\"window.open(this."
