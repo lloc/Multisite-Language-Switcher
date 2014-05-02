@@ -8,6 +8,11 @@
 /**
  * General options class
  * @package Msls
+ * @property string $description
+ * @property string $before_item
+ * @property string $after_item
+ * @property string $before_output
+ * @property string $after_output
  */
 class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 

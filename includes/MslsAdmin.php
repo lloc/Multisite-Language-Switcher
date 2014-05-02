@@ -8,6 +8,10 @@
 /**
  * Administration of the options
  * @package Msls
+ * @property int $display
+ * @property bool $activate_autocomplete
+ * @property int $reference_user
+ * @property int $content_priority
  */
 class MslsAdmin extends MslsMain {
 
