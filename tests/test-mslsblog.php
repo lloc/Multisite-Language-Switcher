@@ -33,11 +33,11 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 		$obj = new MslsBlog( null, null );
 		$this->assertEquals( null, $obj->test_var );
 
-		$temp = new stdClass();
-		$temp->test_var = 1;
-		$obj = new MslsBlog( $temp, null );
-		$this->assertEquals( 1, $obj->test_var );
-		$this->assertEquals( null, $obj->temp_var );
+		$blog = new stdClass();
+		$blog->userblog_id = 1;
+		$obj = new MslsBlog( $blog, null );
+		$this->assertEquals( 1, $obj->userblog_id );
+		$this->assertEquals( null, $obj->test_var );
 	}
 
 	/**
