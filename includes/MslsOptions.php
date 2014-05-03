@@ -8,6 +8,10 @@
 /**
  * General options class
  * @package Msls
+ * @property bool $activate_autocomplete
+ * @property int $display
+ * @property int $reference_user
+ * @property int $content_priority
  * @property string $description
  * @property string $before_item
  * @property string $after_item
