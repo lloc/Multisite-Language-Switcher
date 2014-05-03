@@ -40,11 +40,9 @@ class MslsOutput extends MslsMain {
 
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
-
-				$current = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
-
-				$url = $mydata->get_current_link()
+				$url      = $mydata->get_current_link();
 			
+				$current = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
 				if ( $current ) {
 					$link->txt = $blog->get_description();
 				}

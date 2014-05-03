@@ -64,19 +64,21 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsPostTag
 	 */
 	static function init() {
-		$obj = new self();
 		if ( MslsOptions::instance()->activate_autocomplete ) {
-			$taxonomy = self::check();
-			if ( $taxonomy ) {
-				add_action( "{$taxonomy}_add_form_fields",  array( $obj, 'add_input' ) );
-				add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ) );
-			}
-			add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
-			add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
+			$obj = new self();
 		}
 		else {
 			$obj = MslsPostTagClassic::init();
 		}
+
+		$taxonomy = self::check();
+		if ( $taxonomy ) {
+			add_action( "{$taxonomy}_add_form_fields",  array( $obj, 'add_input' ) );
+			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ) );
+		}
+		add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
+		add_action( "create_{$taxonomy}", array( $obj, 'set' ) );
+
 		return $obj;
 	}
 
@@ -195,9 +197,10 @@ class MslsPostTag extends MslsMain {
 	 * @param int $term_id
 	 * @param int $tt_id
 	 */
-	public function set( $term_id, $tt_id ) {
-		if ( self::check() )
+	public function set( $term_id ) {
+		if ( self::check() ) {
 			$this->save( $term_id, 'MslsOptionsTax' );
+		}
 	}
 
 }

@@ -16,15 +16,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * @return MslsPostTagClassic
 	 */
 	static function init() {
-		$obj      = new self();
-		$taxonomy = self::check();
-		if ( $taxonomy ) {
-			add_action( "{$taxonomy}_add_form_fields",  array( $obj, 'add_input' ) );
-			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ) );
-		}
-		add_action( "edited_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
-		add_action( "create_{$taxonomy}", array( $obj, 'set' ), 10, 2 );
-		return $obj;
+		return new self();
 	}
 
 	/**
