@@ -36,7 +36,7 @@ class MslsGetSet {
 	/**
 	 * Overloads the set method.
 	 * 
-	 * @param mixed $key
+	 * @param string $key
 	 * @param mixed $value
 	 */
 	final public function __set( $key, $value ) {
@@ -48,7 +48,7 @@ class MslsGetSet {
 	/**
 	 * Overloads the get method.
 	 * 
-	 * @param mixed $key
+	 * @param string $key
 	 * @return mixed
 	 */
 	final public function __get( $key ) {
@@ -58,7 +58,7 @@ class MslsGetSet {
 	/**
 	 * Overloads the isset method.
 	 * 
-	 * @param mixed $key
+	 * @param string $key
 	 * @return bool
 	 */
 	final public function __isset( $key ) {
@@ -68,7 +68,7 @@ class MslsGetSet {
 	/**
 	 * Overloads the unset method.
 	 * 
-	 * @param mixed $key
+	 * @param string $key
 	 */
 	final public function __unset( $key ) {
 		if ( isset( $this->arr[$key] ) )

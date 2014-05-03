@@ -57,7 +57,7 @@ class MslsRegistry {
 
 	/**
 	 * Registry is a singleton
-	 * @return mixed
+	 * @return MslsRegistry
 	 */
 	static function instance() {
 		if ( ! isset( self::$instance ) ) {

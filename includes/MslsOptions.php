@@ -139,7 +139,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
 	/**
 	 * Get base
-	 * @return null
+	 * @return string
 	 */
 	protected function get_base() {
 		return $this->base_defined;

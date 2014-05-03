@@ -23,7 +23,6 @@ class MslsMain {
 	 * Save
 	 * @param int $object_id
 	 * @param string $class
-	 * @param array $input
 	 */
 	protected function save( $object_id, $class ) {
 		if ( has_action( 'msls_main_save' ) ) {
@@ -81,7 +80,7 @@ class MslsMain {
 
 	/**
 	 * Delete
-	 * @param int $post_id
+	 * @param int $object_id
 	 */
 	public function delete( $object_id ) {
 		$options = new MslsOptionsPost( $object_id );
