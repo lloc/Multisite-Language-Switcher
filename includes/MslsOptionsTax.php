@@ -33,35 +33,32 @@ class MslsOptionsTax extends MslsOptions {
 			$id  = (int) $id;
 			$obj = MslsContentTypes::create();
 			if ( $obj->is_taxonomy() ) {
-				switch ( $obj->get_request() ) {
-					case 'category':
-						return new MslsOptionsTaxTermCategory( $id );
-						break;
-					case 'post_tag':
-						return new MslsOptionsTaxTerm( $id );
-						break;
-					default:
-						return new MslsOptionsTax( $id );
+				$req = $obj->get_request();
+				if ( 'category' == $req ) {
+					return new MslsOptionsTaxTermCategory( $id );
 				}
+				elseif ( 'post_tag' == $req ) {
+					return new MslsOptionsTaxTerm( $id );
+				}
+				return new MslsOptionsTax( $id );
 			}
 		}
-		else {
-			global $wp_query;
-			if ( is_category() ) {
-				return new MslsOptionsTaxTermCategory(
-					$wp_query->get_queried_object_id()
-				);
-			}
-			elseif ( is_tag() ) {
-				return new MslsOptionsTaxTerm(
-					$wp_query->get_queried_object_id()
-				);
-			}
-			elseif ( is_tax() ) {
-				return new MslsOptionsTax(
-					$wp_query->get_queried_object_id()
-				);
-			}
+		global $wp_query;
+
+		if ( is_category() ) {
+			return new MslsOptionsTaxTermCategory(
+				$wp_query->get_queried_object_id()
+			);
+		}
+		elseif ( is_tag() ) {
+			return new MslsOptionsTaxTerm(
+				$wp_query->get_queried_object_id()
+			);
+		}
+		elseif ( is_tax() ) {
+			return new MslsOptionsTax(
+				$wp_query->get_queried_object_id()
+			);
 		}
 		return null;
 	}
