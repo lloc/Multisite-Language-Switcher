@@ -189,7 +189,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	/**
 	 * Get the registered users of the current blog
 	 * @param string $fields
-	 * @param mixed $number
+	 * @param string|int $number
 	 * @return array
 	 */
 	public function get_users( $fields = 'all', $number = '' ) {

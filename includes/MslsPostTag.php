@@ -195,7 +195,6 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Set calls the save method if taxonomy is set
 	 * @param int $term_id
-	 * @param int $tt_id
 	 */
 	public function set( $term_id ) {
 		if ( self::check() ) {

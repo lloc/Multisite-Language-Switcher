@@ -100,8 +100,8 @@ class MslsBlog {
 
 	/**
 	 * Sort objects helper
-	 * @param mixed $a
-	 * @param mixed $b
+	 * @param string $a
+	 * @param string $b
 	 * return int
 	 */
 	static function _cmp( $a, $b ) {
