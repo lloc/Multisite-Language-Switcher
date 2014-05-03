@@ -150,11 +150,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * @return string
 		 */
 		function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-			$obj = new MslsOutput();
+			$obj    = new MslsOutput();
+			$links  = $obj->get( 1, true, true );
 	
 			$output = __( 'This post is also available in %s.', 'msls' );
-			$links  = $obj->get( 1, true, true );
-
 			if ( has_filter( 'msls_filter_string' ) ) {
 				/**
 				 * Ovverrides the string for the output of the translation hint
@@ -185,11 +184,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 				else {
 					$output = '';
 				}
-
-				$output = sprintf(
-					__( 'This post is also available in %s.', 'msls' ),
-					$links
-				);
 			}
 			return( ! empty( $output ) ? $pref . $output . $post : '' );
 		}
