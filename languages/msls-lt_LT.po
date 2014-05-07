@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-05-02 15:00+0100\n"
-"PO-Revision-Date: 2014-05-02 15:00+0100\n"
+"POT-Creation-Date: 2014-05-07 09:17+0100\n"
+"PO-Revision-Date: 2014-05-07 09:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: Ovidijus Pukys <liutukaso@gmail.com>\n"
 "Language: lt_LT\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../MultisiteLanguageSwitcher.php:155 ../MultisiteLanguageSwitcher.php:189
+#: ../MultisiteLanguageSwitcher.php:156
 #, php-format
 msgid "This post is also available in %s."
 msgstr "Šis įrašas taip pat yra %s."
@@ -33,17 +33,21 @@ msgstr "Šis įrašas taip pat yra %s."
 msgid "%s and %s"
 msgstr "%s ir %s"
 
-#: ../MultisiteLanguageSwitcher.php:278
+#: ../MultisiteLanguageSwitcher.php:273
 msgid ""
 "The Multisite Language Switcher needs the activation of the multisite-"
 "feature for working properly. Please read <a onclick=\"window.open(this."
 "href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
 "\">this post</a> if you don't know the meaning."
 msgstr ""
+"Multisite Language Switcher reikalingas aktyvavimas keletui funkciju, kad "
+"jos tinkamai veiktu. Prašome perskaityti <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network\"> "
+"šį įrašą </a>, jei jūs nežinote ką tai reiškia."
 
 #: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
-#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:160
-#: ../includes/MslsPostTagClassic.php:82 ../includes/MslsWidget.php:20
+#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:163
+#: ../includes/MslsPostTagClassic.php:74 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
@@ -126,11 +130,11 @@ msgstr "Užuominų prioritetas"
 
 #: ../includes/MslsAdmin.php:139
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Papildomi nustatymai"
 
 #: ../includes/MslsAdmin.php:144
 msgid "Activate experimental autocomplete inputs"
-msgstr ""
+msgstr "Aktyvuok eksperimentinius automatinius užbaigimus"
 
 #: ../includes/MslsAdmin.php:145
 msgid "Custom URL for flag-images"
@@ -138,7 +142,7 @@ msgstr "Nurodyti URL vėliavų paveiksliukams"
 
 #: ../includes/MslsAdmin.php:146
 msgid "Reference user"
-msgstr ""
+msgstr "Nurodytas vartotojas"
 
 #: ../includes/MslsAdmin.php:147
 msgid "Exclude this blog from output"
@@ -156,14 +160,14 @@ msgstr "Sukurti naują vertimą %s įrašui"
 
 #: ../includes/MslsCustomFilter.php:39
 msgid "Show all blogs"
-msgstr ""
+msgstr "Rodyti visus Blog'us"
 
 #: ../includes/MslsCustomFilter.php:45
 #, php-format
 msgid "Not translated in the %s-blog"
-msgstr ""
+msgstr "Nėra vertimo išam %s blogui"
 
-#: ../includes/MslsLink.php:43
+#: ../includes/MslsLink.php:47
 msgid "Flag and description"
 msgstr "Vėliava ir aprašymas"
 
@@ -189,7 +193,7 @@ msgstr ""
 
 #: ../includes/MslsWidget.php:42
 msgid "No available translations found"
-msgstr ""
+msgstr "Nerasti galimi vertimai"
 
 #: ../includes/MslsWidget.php:68
 msgid "Title"
