@@ -48,7 +48,7 @@ class MslsOutput extends MslsMain {
 				}
 				else {
 					switch_to_blog( $blog->userblog_id );
-					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ! $mydata->has_value( $language ) ) {
+					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
 						/**
 						 * We set $language to false so we can first restore the current blog
 						 * and continue with the next blog right after this important step.

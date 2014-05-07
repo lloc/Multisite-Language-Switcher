@@ -234,7 +234,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		        else {
 		            switch_to_blog( $blog->userblog_id );
 	
-		            if ( 'MslsOptions' != get_class( $mydata ) && !$mydata->has_value( $language ) ) {
+		            if ( 'MslsOptions' != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
 		                restore_current_blog();
 		                continue;
 		            }
