@@ -45,8 +45,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @param int $object_id
 	 */
 	public function delete( $object_id ) {
-		$options = new MslsOptionsTax( $object_id );
-		$this->save( $object_id, 'MslsOptionsTax', $options->get_arr() );
+		$this->save( $object_id, 'MslsOptionsTax' );
 	}
 
 }

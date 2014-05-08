@@ -83,8 +83,7 @@ class MslsMain {
 	 * @param int $object_id
 	 */
 	public function delete( $object_id ) {
-		$options = new MslsOptionsPost( $object_id );
-		$this->save( $object_id, 'MslsOptionsPost', $options->get_arr() );
+		$this->save( $object_id, 'MslsOptionsPost' );
 	}
 
 }
