@@ -68,16 +68,27 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the _cmp-method
+	 * Dataprovider
+	 * @return multitype:multitype:number
 	 */
-	function test__cmp_method() {
+	public function compareProvider() {
+		return array(
+			array( 0, 0, 0 ),
+			array( 0, 1, -1 ),
+			array( 1, 0, 1 ),
+			array( -1, -2, 1 ),
+			array( -2, -1, -1 )
+		);
+	}
+
+	/**
+	 * Verify the _cmp-method
+     * @dataProvider compareProvider
+     */
+	function test__cmp_method( $a, $b, $expected ) {
+		$this->assertEquals( $expected, MslsBlog::_cmp( $a, $b ) );		
 		$obj = new MslsBlog( null, null );
-		$a = $b = 0;
-		$this->assertEquals( 0, $obj->_cmp( $a, $b ) );
-		$b = 1;
-		$this->assertEquals( -1, $obj->_cmp( $a, $b ) );
-		$a = 2;
-		$this->assertEquals( 1, $obj->_cmp( $a, $b ) );
+		$this->assertEquals( $expected, $obj->_cmp( $a, $b ) );
 	}
 
 	/**
