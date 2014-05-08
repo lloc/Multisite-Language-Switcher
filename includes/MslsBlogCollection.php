@@ -189,7 +189,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	/**
 	 * Get the registered users of the current blog
 	 * @param string $fields
-	 * @param string|int $number
+	 * @param int $number
 	 * @return array
 	 */
 	public function get_users( $fields = 'all', $number = '' ) {
@@ -209,9 +209,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	static function instance() {
 		$registry = MslsRegistry::instance();
-		if ( ! ( $obj = $registry->get_object( __CLASS__ ) ) ) {
-			$obj = new self;
-			$registry->set_object( __CLASS__, $obj );
+		if ( ! ( $obj = $registry->get_object( 'MslsBlogCollection' ) ) ) {
+			$obj = new self();
+			$registry->set_object( 'MslsBlogCollection'', $obj );
 		}
 		return $obj;
 	}
