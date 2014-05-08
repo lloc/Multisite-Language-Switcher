@@ -208,10 +208,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @return MslsBlogCollection
 	 */
 	static function instance() {
-		$registry = MslsRegistry::instance();
-		if ( ! ( $obj = $registry->get_object( 'MslsBlogCollection' ) ) ) {
+		if ( ! ( $obj = MslsRegistry::get_object( 'MslsBlogCollection' ) ) ) {
 			$obj = new self();
-			$registry->set_object( 'MslsBlogCollection', $obj );
+			MslsRegistry::set_object( 'MslsBlogCollection', $obj );
 		}
 		return $obj;
 	}

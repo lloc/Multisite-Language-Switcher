@@ -51,10 +51,9 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 	 * @return MslsBlogPostType
 	 */
 	static function instance() {
-		$registry = MslsRegistry::instance();
-		if ( ! ( $obj = $registry->get_object( 'MslsBlogPostType' ) ) ) {
+		if ( ! ( $obj = MslsRegistry::get_object( 'MslsBlogPostType' ) ) ) {
 			$obj = new self();
-			$registry->set_object( 'MslsBlogPostType', $obj );
+			MslsRegistry::set_object( 'MslsBlogPostType', $obj );
 		}
 		return $obj;
 	}

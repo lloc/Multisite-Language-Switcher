@@ -258,10 +258,9 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return MslsOptions
 	 */
 	static function instance() {
-		$registry = MslsRegistry::instance();
-		if ( ! ( $obj = $registry->get_object( 'MslsOptions' ) ) ) {
+		if ( ! ( $obj = MslsRegistry::get_object( 'MslsOptions' ) ) ) {
 			$obj = new self();
-			$registry->set_object( 'MslsOptions', $obj );
+			MslsRegistry::set_object( 'MslsOptions', $obj );
 		}
 		return $obj;
 	}

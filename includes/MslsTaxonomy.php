@@ -64,10 +64,9 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	 * @return MslsTaxonomy
 	 */
 	static function instance() {
-		$registry = MslsRegistry::instance();
-		if ( ! ( $obj = $registry->get_object( 'MslsTaxonomy' ) ) ) {
+		if ( ! ( $obj = MslsRegistry::get_object( 'MslsTaxonomy' ) ) ) {
 			$obj = new self();
-			$registry->set_object( 'MslsTaxonomy', $obj );
+			MslsRegistry::set_object( 'MslsTaxonomy', $obj );
 		}
 		return $obj;
 	}
