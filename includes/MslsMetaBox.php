@@ -26,7 +26,7 @@ class MslsMetaBox extends MslsMain {
 				'post_status'    => 'any',
 				'posts_per_page' => 10,
 			);
-				
+
 			if ( isset( $_REQUEST['post_type'] ) ) {
 				$args['post_type'] = sanitize_text_field( $_REQUEST['post_type'] );
 			}

@@ -27,8 +27,8 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 			)
 		);
 
-		if ( ! empty( $_REQUEST['post_type'] ) ) {
-			$this->request = esc_attr( $_REQUEST['post_type'] );
+		if ( filter_has_var( INPUT_GET, 'post_type' ) ) {
+			$this->request = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_SPECIAL_CHARS );
 		}
 		else {
 			$this->request = get_post_type();

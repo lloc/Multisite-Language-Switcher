@@ -178,7 +178,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 						)
 					); 
 				}
-				elseif ( 1 == count( $links )) {
+				elseif ( 1 == count( $links ) ) {
 					$output = sprintf(
 						$output,
 						$links[0]
