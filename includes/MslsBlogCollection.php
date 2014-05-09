@@ -48,7 +48,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->current_blog_id     = get_current_blog_id();
+		$this->current_blog_id = get_current_blog_id();
 		
 		$options = MslsOptions::instance();
 
@@ -105,7 +105,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @return array
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
-		$reference_user   = (
+		$reference_user = (
 			$options->has_value( 'reference_user' ) ?
 			$options->reference_user :
 			current( $this->get_users( 'ID', 1 ) )
