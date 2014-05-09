@@ -41,8 +41,8 @@ class MslsOutput extends MslsMain {
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
 				$url      = $mydata->get_current_link();
-			
-				$current = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
+				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
+
 				if ( $current ) {
 					$link->txt = $blog->get_description();
 				}
@@ -79,12 +79,7 @@ class MslsOutput extends MslsMain {
 					 * @param MslsLink $link
 					 * @param bool current
 					 */
-					$arr[] = (string) apply_filters(
-						'msls_output_get',
-						$url,
-						$link,
-						$current
-					);
+					$arr[] = ( string ) apply_filters( 'msls_output_get', $url, $link, $current );
 				}
 				else {
 					$arr[] = sprintf(

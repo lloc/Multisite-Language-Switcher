@@ -79,6 +79,22 @@ class MslsMain {
 	}
 
 	/**
+	 * Checks if the current input comes from the autosave-functionality
+	 * @return bool
+	 */
+	public function is_autosave( $post_id ) {
+		return( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id );
+	}
+
+	/**
+	 * Checks for the nonce in the INPUT_POST
+	 * @return boolean
+	 */
+	public function verify_nonce() {
+		return( isset( $_POST['msls_noncename'] ) && wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) );
+	}
+
+	/**
 	 * Delete
 	 * @param int $object_id
 	 */

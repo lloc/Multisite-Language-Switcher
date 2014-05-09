@@ -252,19 +252,13 @@ class MslsMetaBox extends MslsMain {
 	 * @param int $post_id
 	 */
 	public function set( $post_id ) {
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) ) {
+		if ( $this->is_autosave( $post_id ) || ! $this->verify_nonce() ) {
 			return;
 		}
-		if ( ! isset( $_POST['msls_noncename'] ) || ! wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) ) {
+
+		$capability = ( 'page' == $_POST['post_type'] ? 'edit_page' : 'edit_post' );
+		if ( ! current_user_can( $capability, $post_id ) ) {
 			return;
-		}
-		if ( 'page' == $_POST['post_type'] ) {
-			if ( ! current_user_can( 'edit_page', $post_id ) )
-				return;
-		}
-		else {
-			if ( ! current_user_can( 'edit_post', $post_id ) )
-				return;
 		}
 		$this->save( $post_id, 'MslsOptionsPost' );
 	}
