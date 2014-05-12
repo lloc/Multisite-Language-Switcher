@@ -21,7 +21,7 @@ jQuery( document ).ready( function( $ ) {
 					success: function( data ) {
 						response( data ); 
 					}
-				} )
+				} );
 			},
 			focus: function( event, ui ) {
 				$( event.target ).val( ui.item.label );

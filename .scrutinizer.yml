@@ -1,0 +1,13 @@
+filter:
+    excluded_paths: [tests/*, bin/*]
+
+tools:
+    js_hint: true
+
+    php_mess_detector: true
+    php_analyzer: true
+    php_cpd: true
+    php_pdepend: true
+    php_code_sniffer:
+        config:
+            standard: "WordPress"

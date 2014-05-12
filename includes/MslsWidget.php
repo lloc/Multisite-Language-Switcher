@@ -42,7 +42,7 @@ class MslsWidget extends WP_Widget {
 			$content = __( 'No available translations found', 'msls' );
 		}
 
-		echo $args['before_widget'], $title, $content, $args['after_widget'];  // xss ok
+		echo $args['before_widget'], $title, $content, $args['after_widget']; // xss ok
 	}
 
 	/**

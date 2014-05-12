@@ -41,14 +41,14 @@ class MslsOutput extends MslsMain {
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
 				$url      = $mydata->get_current_link();
-			
-				$current = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
+				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
+
 				if ( $current ) {
 					$link->txt = $blog->get_description();
 				}
 				else {
 					switch_to_blog( $blog->userblog_id );
-					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ! $mydata->has_value( $language ) ) {
+					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
 						/**
 						 * We set $language to false so we can first restore the current blog
 						 * and continue with the next blog right after this important step.
@@ -79,12 +79,7 @@ class MslsOutput extends MslsMain {
 					 * @param MslsLink $link
 					 * @param bool current
 					 */
-					$arr[] = (string) apply_filters(
-						'msls_output_get',
-						$url,
-						$link,
-						$current
-					);
+					$arr[] = ( string ) apply_filters( 'msls_output_get', $url, $link, $current );
 				}
 				else {
 					$arr[] = sprintf(

@@ -48,7 +48,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->current_blog_id     = get_current_blog_id();
+		$this->current_blog_id = get_current_blog_id();
 		
 		$options = MslsOptions::instance();
 
@@ -57,13 +57,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 		if ( ! $options->is_excluded() ) {
 
-			$reference_user   = (
-				$options->has_value( 'reference_user' ) ?
-				$options->reference_user :
-				current( $this->get_users( 'ID', 1 ) )
-			);
-			$blogs_collection = get_blogs_of_user( $reference_user );
-
+			$blogs_collection = $this->get_blogs_of_reference_user( $options );
 			if ( has_filter( 'msls_blog_collection_construct' ) ) {
 				/**
 				 * Returns custom filtered blogs of the blogs_collection
@@ -79,9 +73,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 				/*
 				 * get_user_id_from_string returns objects with userblog_id-members 
 				 * instead of a blog_id ... so we need just some correction ;)
-				 *
 				 */
-				if ( ! isset( $blog->userblog_id ) && isset( $blog->blog_id) ) {
+				if ( ! isset( $blog->userblog_id ) && isset( $blog->blog_id ) ) {
 					$blog->userblog_id = $blog->blog_id;
 				}
 
@@ -102,6 +95,22 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			}
 			uasort( $this->objects, array( 'MslsBlog', $this->objects_order ) );
 		}
+	}
+
+	/**
+	 * Get the list of the blogs of the reference user
+	 * The first available user of the blog will be used ff there is no
+	 * refrence user is configured 
+	 * @param MslsOptions $options
+	 * @return array
+	 */
+	public function get_blogs_of_reference_user( MslsOptions $options ) {
+		$reference_user = (
+			$options->has_value( 'reference_user' ) ?
+			$options->reference_user :
+			current( $this->get_users( 'ID', 1 ) )
+		);
+		return get_blogs_of_user( $reference_user );
 	}
 
 	/**
@@ -208,10 +217,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @return MslsBlogCollection
 	 */
 	static function instance() {
-		$registry = MslsRegistry::instance();
-		if ( ! ( $obj = $registry->get_object( __CLASS__ ) ) ) {
-			$obj = new self;
-			$registry->set_object( __CLASS__, $obj );
+		if ( ! ( $obj = MslsRegistry::get_object( 'MslsBlogCollection' ) ) ) {
+			$obj = new self();
+			MslsRegistry::set_object( 'MslsBlogCollection', $obj );
 		}
 		return $obj;
 	}

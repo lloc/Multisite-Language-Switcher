@@ -28,8 +28,9 @@ class MslsContentTypes {
 	 * @return MslsContentTypes
 	 */
 	static function create() {
-		if ( isset( $_REQUEST['taxonomy'] ) )
+		if ( filter_has_var( INPUT_GET, 'taxonomy' ) ) {
 			return MslsTaxonomy::instance();
+		}
 		return MslsPostType::instance();
 	}
 

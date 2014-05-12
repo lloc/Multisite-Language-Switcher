@@ -34,11 +34,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 
-	define( 'MSLS_PLUGIN_VERSION', '0.9.9.3' );
+	define( 'MSLS_PLUGIN_VERSION', '1.0' );
 
-	if ( !defined( 'MSLS_PLUGIN_PATH' ) )
+	if ( ! defined( 'MSLS_PLUGIN_PATH' ) )
 		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
-	if ( !defined( 'MSLS_PLUGIN__FILE__' ) )
+	if ( ! defined( 'MSLS_PLUGIN__FILE__' ) )
 		define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 
 	/**
@@ -109,13 +109,16 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
 			add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
 	
-			if ( !empty( $_POST['action'] ) ) {
-				if ( 'add-tag' == $_POST['action'] )
+			if ( ! empty( $_POST['action'] ) ) {
+				if ( 'add-tag' == $_POST['action'] ) {
 					add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
-				elseif ( 'inline-save' == $_POST['action'] )
+				}
+				elseif ( 'inline-save' == $_POST['action'] ) {
 					add_action( 'admin_init', array( 'MslsCustomColumn', 'init' ) );
-				elseif ( 'inline-save-tax' == $_POST['action'] )
+				}
+				elseif ( 'inline-save-tax' == $_POST['action'] ) {
 					add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
+				}
 			}
 		}
 	
@@ -152,8 +155,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
 			$obj    = new MslsOutput();
 			$links  = $obj->get( 1, true, true );
-	
 			$output = __( 'This post is also available in %s.', 'msls' );
+
 			if ( has_filter( 'msls_filter_string' ) ) {
 				/**
 				 * Ovverrides the string for the output of the translation hint
@@ -175,7 +178,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 						)
 					); 
 				}
-				elseif ( 1 == count( $links )) {
+				elseif ( 1 == count( $links ) ) {
 					$output = sprintf(
 						$output,
 						$links[0]
@@ -215,7 +218,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * @param array $arr
 		 */
 		function the_msls( array $arr = array() ) {
-			echo get_the_msls( $arr );
+			echo get_the_msls( $arr ); // xss ok
 		}
 	
 		/**
@@ -223,45 +226,44 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * rel="alternate"-links in the html-header
 		 */
 		function msls_head() {
-		    $blogs  = MslsBlogCollection::instance();
-		    $mydata = MslsOptions::create();
-		    foreach ( $blogs->get_objects() as $blog ) {
-		        $language = $blog->get_language();
-	
-		        if ( $blog->userblog_id == $blogs->get_current_blog_id() ) {
-		            $url = $mydata->get_current_link();
-		        }
-		        else {
-		            switch_to_blog( $blog->userblog_id );
-	
-		            if ( 'MslsOptions' != get_class( $mydata ) && !$mydata->has_value( $language ) ) {
-		                restore_current_blog();
-		                continue;
-		            }
-		            $url = $mydata->get_permalink( $language );
-	
-		            restore_current_blog();
-		        }
-	
-		        if ( has_filter( 'msls_head_hreflang' ) ) {
-	
-		        	/**
-		        	 * Overrides the hreflang value
-		        	 * @since 0.9.9
-		        	 * @param string $language
-		        	 */
-		        	$hreflang = (string) apply_filters( 'msls_head_hreflang', $language );
-		        }
-		        else {
-		        	$hreflang = $blog->get_alpha2();
-		        }
-		        printf(
-		            '<link rel="alternate" hreflang="%s" href="%s" />',
-		            $hreflang,
-		            $url
-		        );
-		        echo "\n";
-		    }
+			$blogs  = MslsBlogCollection::instance();
+			$mydata = MslsOptions::create();
+			foreach ( $blogs->get_objects() as $blog ) {
+				$language = $blog->get_language();
+
+				if ( $blog->userblog_id == $blogs->get_current_blog_id() ) {
+					$url = $mydata->get_current_link();
+				}
+				else {
+					switch_to_blog( $blog->userblog_id );
+
+					if ( 'MslsOptions' != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
+						restore_current_blog();
+						continue;
+					}
+					$url = $mydata->get_permalink( $language );
+
+					restore_current_blog();
+				}
+
+				if ( has_filter( 'msls_head_hreflang' ) ) {
+					/**
+					 * Overrides the hreflang value
+					 * @since 0.9.9
+					 * @param string $language
+					 */
+					$hreflang = (string) apply_filters( 'msls_head_hreflang', $language );
+				}
+				else {
+					$hreflang = $blog->get_alpha2();
+				}
+				printf(
+					'<link rel="alternate" hreflang="%s" href="%s" />',
+					$hreflang,
+					$url
+				);
+				echo "\n";
+			}
 		}
 		add_action( 'wp_head', 'msls_head' );
 
