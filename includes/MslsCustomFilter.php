@@ -52,6 +52,7 @@ class MslsCustomFilter extends MslsMain {
 	/**
 	 * Execute filter. Exclude translated posts from WP_Query
 	 * @uses $wpdb
+	 * @param object $query
 	 * @return false or WP_Query object
 	 */
 	public function execute_filter( $query ) {

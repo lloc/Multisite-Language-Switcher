@@ -80,6 +80,7 @@ class MslsMain {
 
 	/**
 	 * Checks if the current input comes from the autosave-functionality
+	 * @param int $post_id
 	 * @return bool
 	 */
 	public function is_autosave( $post_id ) {

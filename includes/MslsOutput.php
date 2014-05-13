@@ -11,6 +11,10 @@
  */
 class MslsOutput extends MslsMain {
 
+	/**
+	 * Holds the format for the output
+	 * @var array $tags
+	 */
 	protected $tags;
 
 	/**
@@ -24,7 +28,7 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Creates and gets the output as an array
 	 * @param string $display
-	 * @param bool frontend
+	 * @param bool $filter
 	 * @param bool $exists
 	 * @uses MslsOptions
 	 * @uses MslsLink

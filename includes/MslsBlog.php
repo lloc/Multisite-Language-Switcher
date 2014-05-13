@@ -32,7 +32,7 @@ class MslsBlog {
 	/**
 	 * Constructor
 	 * @param StdClass $obj 
-	 * @param string description
+	 * @param string $description
 	 */
 	public function __construct( $obj, $description ) {
 		if ( is_object( $obj ) ) {

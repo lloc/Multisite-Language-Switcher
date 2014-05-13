@@ -14,7 +14,7 @@ class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Factory method
-	 * 
+	 * @param int $id This parameter is unused here
 	 * @return MslsQueryOptions
 	 */
 	static function create( $id = 0 ) {

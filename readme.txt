@@ -79,6 +79,8 @@ Now you can:
 
 Review the
 [Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki)
+or the
+[API Documentation](http://lloc.github.io/Multisite-Language-Switcher/)
 for more information.
 
 == Frequently Asked Questions ==
