@@ -27,7 +27,7 @@ banner.
 
 ## Translators
 
-*  German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/) 
+*  German (de_DE) - [Dennis Ploetner](http://lloc.de/) 
 *  Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/)
 *  Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/) 
 *  Brazillian Portuguese (pt_BR) - [Victor](http://www.coolweb.com.br/)
