@@ -8,7 +8,7 @@
 
 /**
  * Link type: Image and text
- * 
+ *
  * @package Msls
  * @property string $txt
  * @property string $src
@@ -19,18 +19,18 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Output format
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $format_string = '<img src="{src}" alt="{alt}"/> {txt}';
 
 	/**
 	 * Gets all link types as array with "id => name"-items.
-	 * 
+	 *
 	 * @return array
 	 */
 	static function get_types() {
-		return array( 
+		return array(
 			'0' => 'MslsLink',
 			'1' => 'MslsLinkTextOnly',
 			'2' => 'MslsLinkImageOnly',
@@ -40,7 +40,7 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Gets the link description.
-	 * 
+	 *
 	 * @return string
 	 */
 	static function get_description() {
@@ -49,7 +49,7 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Gets an array with all link descriptions.
-	 * 
+	 *
 	 * @return array
 	 */
 	static function get_types_description() {
@@ -64,7 +64,7 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Factory: Creates a specific instance of MslsLink.
-	 * 
+	 *
 	 * @param int $display
 	 * @return MslsLink
 	 */
@@ -77,12 +77,14 @@ class MslsLink extends MslsGetSet {
 			 * @return MslsLink
 			 */
 			$obj = apply_filters( 'msls_link_create', $display );
-			if ( is_subclass_of( $obj, 'MslsLink' ) )
+			if ( is_subclass_of( $obj, 'MslsLink' ) ) {
 				return $obj;
+			}
 		}
 		$types = self::get_types();
-		if ( ! in_array( $display, array_keys( $types ), true ) )
+		if ( ! in_array( $display, array_keys( $types ), true ) ) {
 			$display = 0;
+		}
 		return new $types[$display];
 	}
 
