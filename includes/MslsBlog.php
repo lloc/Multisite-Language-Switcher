@@ -72,15 +72,11 @@ class MslsBlog {
 	/**
 	 * Get the language stored in this object
 	 * 
-	 * This method returns the string 'us' if there is an empty value in language.  
+	 * This method returns the string 'us' if there is an empty value in language. 
 	 * @return string
 	 */
 	public function get_language() {
-		return(
-			empty( $this->language ) ?
-			'us' :
-			$this->language
-		);
+		return( empty( $this->language ) ? 'us' : $this->language );
 	}
 
 	/**
@@ -91,11 +87,7 @@ class MslsBlog {
 	 */
 	public function get_alpha2() {
 		$alpha2 = substr( $this->get_language(), 0, 2 );
-		return(
-			'us' == $alpha2 ?
-			'en' :
-			$alpha2
-		);
+		return( 'us' == $alpha2 ? 'en' : $alpha2 );
 	}
 
 	/**
@@ -105,8 +97,9 @@ class MslsBlog {
 	 * return int
 	 */
 	static function _cmp( $a, $b ) {
-		if ( $a == $b )
+		if ( $a == $b ) {
 			return 0;
+		}
 		return( $a < $b ? (-1) : 1 );
 	}
 
