@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * MslsAdminIcon
  * @author Dennis Ploetner <re@lloc.de>
