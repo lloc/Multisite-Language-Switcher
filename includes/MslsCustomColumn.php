@@ -6,8 +6,8 @@
  */
 
 /**
- * Handling of existing/not existing translations in the backend 
- * listings of various post types
+ * Handling of existing/not existing translations in the backend listings of
+ * various post types
  * @package Msls
  */
 class MslsCustomColumn extends MslsMain {
