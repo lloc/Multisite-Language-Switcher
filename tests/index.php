@@ -1,1 +1,1 @@
-<?php header( 'location: http://' . $_SERVER['HTTP_HOST'] ); ?>
+<?php header( 'location: http://' . filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL ); ?>
