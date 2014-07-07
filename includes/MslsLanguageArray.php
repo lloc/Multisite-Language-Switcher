@@ -33,8 +33,9 @@ class MslsLanguageArray {
 	 * @param array $arr
 	 */
 	public function __construct( array $arr = array() ) {
-		foreach ( $arr as $key => $value ) 
+		foreach ( $arr as $key => $value ) {
 			$this->set( $key, $value );
+		}
 	}
 
 	/**
@@ -70,8 +71,9 @@ class MslsLanguageArray {
 	 */
 	public function get_arr( $key = '' ) {
 		$arr = $this->arr;
-		if ( isset( $arr[$key] ) )
+		if ( isset( $arr[$key] ) ) {
 			unset( $arr[$key] );
+		}
 		return $arr;
 	}
 
