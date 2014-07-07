@@ -19,6 +19,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 
 	/**
 	 * Set href
+	 * @uses get_edit_term_link() 
 	 * @param int $id
 	 * @return MslsAdminIconTaxonomy
 	 */
@@ -33,6 +34,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 
 	/**
 	 * Set the path by type
+	 * @uses add_query_arg()
 	 * @return MslsAdminIconTaxonomy
 	 */
 	protected function set_path() {
