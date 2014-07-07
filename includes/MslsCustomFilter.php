@@ -41,7 +41,7 @@ class MslsCustomFilter extends MslsMain {
 		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';
-			echo '<option value="">' . __( 'Show all blogs', 'msls' ) . '</option>';
+			echo '<option value="">' . esc_html( __( 'Show all blogs', 'msls' ) ) . '</option>';
 			foreach ( $blogs as $blog ) {
 				printf(
 					'<option value="%d" %s>%s</option>',

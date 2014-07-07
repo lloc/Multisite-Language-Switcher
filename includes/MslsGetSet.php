@@ -40,9 +40,9 @@ class MslsGetSet {
 	 * @param mixed $value
 	 */
 	final public function __set( $key, $value ) {
-		$this->arr[$key] = $value;
-		if ( empty( $this->arr[$key] ) ) {
-			unset( $this->arr[$key] );
+		$this->arr[ $key ] = $value;
+		if ( empty( $this->arr[ $key ] ) ) {
+			unset( $this->arr[ $key ] );
 		}
 	}
 
@@ -53,7 +53,7 @@ class MslsGetSet {
 	 * @return mixed
 	 */
 	final public function __get( $key ) {
-		return( isset( $this->arr[$key] ) ? $this->arr[$key] : null );
+		return( isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : null );
 	}
 
 	/**
@@ -63,7 +63,7 @@ class MslsGetSet {
 	 * @return bool
 	 */
 	final public function __isset( $key ) {
-		return isset( $this->arr[$key] );
+		return isset( $this->arr[ $key ] );
 	}
 
 	/**
@@ -72,8 +72,8 @@ class MslsGetSet {
 	 * @param string $key
 	 */
 	final public function __unset( $key ) {
-		if ( isset( $this->arr[$key] ) ) {
-			unset( $this->arr[$key] );
+		if ( isset( $this->arr[ $key ] ) ) {
+			unset( $this->arr[ $key ] );
 		}
 	}
 
@@ -105,7 +105,7 @@ class MslsGetSet {
 	 * @return bool
 	 */
 	public function has_value( $key ) {
-		return( ! empty( $this->arr[$key] ) );
+		return( ! empty( $this->arr[ $key ] ) );
 	}
 
 	/**

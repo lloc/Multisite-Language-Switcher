@@ -49,7 +49,7 @@ class MslsLanguageArray {
 	public function set( $key, $value ) {
 		$value = (int) $value;
 		if ( 2 <= strlen( $key ) && 0 < $value ) {
-			$this->arr[$key] = $value;
+			$this->arr[ $key ] = $value;
 		}
 		return $this;
 	}
@@ -61,7 +61,7 @@ class MslsLanguageArray {
 	 * @return int
 	 */
 	public function get_val( $key ) {
-		return( isset( $this->arr[$key] ) ? $this->arr[$key] : 0 );
+		return( isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : 0 );
 	}
 
 	/**
@@ -71,8 +71,8 @@ class MslsLanguageArray {
 	 */
 	public function get_arr( $key = '' ) {
 		$arr = $this->arr;
-		if ( isset( $arr[$key] ) ) {
-			unset( $arr[$key] );
+		if ( isset( $arr[ $key ] ) ) {
+			unset( $arr[ $key ] );
 		}
 		return $arr;
 	}
