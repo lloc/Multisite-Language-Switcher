@@ -52,7 +52,7 @@ class MslsMain {
 			$temp      = $options->get_arr();
 			$object_id = $msla->get_val( $language );
 
-			if ( 0 != $object_id ) { 
+			if ( 0 != $object_id ) {
 				$options->save( $msla->get_arr( $language ) );
 			}
 			else {
@@ -63,7 +63,7 @@ class MslsMain {
 				switch_to_blog( $blog->userblog_id );
 				$language  = $blog->get_language();
 				$object_id = $msla->get_val( $language );
-				if ( 0 != $object_id ) { 
+				if ( 0 != $object_id ) {
 					$options = new $class( $object_id );
 					$options->save( $msla->get_arr( $language ) );
 				}
