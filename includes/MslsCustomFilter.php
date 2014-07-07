@@ -33,12 +33,11 @@ class MslsCustomFilter extends MslsMain {
 	 * @uses selected
 	 */
 	public function add_filter() {
-		 '';
-		$id = ( 
+		$id = (
 			filter_has_var( INPUT_GET, 'msls_filter' ) ?
-			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ),
+			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ) :
 			''
-		}
+		);
 		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';
