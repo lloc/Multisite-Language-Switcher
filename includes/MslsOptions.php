@@ -123,8 +123,9 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 */
 	public function delete() {
 		$this->reset();
-		if ( $this->exists )
+		if ( $this->exists ) {
 			delete_option( $this->name );
+		}
 	}
 
 	/**
@@ -134,8 +135,9 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 */
 	public function set( $arr ) {
 		if ( is_array( $arr ) ) {
-			foreach ( $arr as $key => $value )
+			foreach ( $arr as $key => $value ) {
 				$this->__set( $key, $value );
+			}
 			return true;
 		}
 		return false;
@@ -210,7 +212,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_order() {
-		return ( 
+		return (
 			isset( $this->sort_by_description ) ?
 			'description' :
 			'language'
