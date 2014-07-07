@@ -30,9 +30,15 @@ class MslsCustomFilter extends MslsMain {
 
 	/**
 	 * Echo's select tag with list of blogs
+	 * @uses selected
 	 */
 	public function add_filter() {
-		$id    = ( isset( $_GET['msls_filter'] ) ? (int) $_GET['msls_filter'] : '' );
+		 '';
+		$id = ( 
+			filter_has_var( INPUT_GET, 'msls_filter' ) ?
+			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ),
+			''
+		}
 		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';
@@ -58,12 +64,11 @@ class MslsCustomFilter extends MslsMain {
 	public function execute_filter( $query ) {
 		$blogs = MslsBlogCollection::instance()->get();
 
-		//some "validation"
-		if ( ! isset( $_GET['msls_filter'] ) ) {
+		if ( ! filter_has_var( INPUT_GET, 'msls_filter' ) ) {
 			return false;
 		}
-		$id = (int) $_GET['msls_filter'];
-		if ( isset( $blogs[$id] ) ) {
+		$id = filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT );
+		if ( isset( $blogs[ $id ] ) ) {
 			global $wpdb;
 
 			//load post we need to exclude (already have translation) from search query

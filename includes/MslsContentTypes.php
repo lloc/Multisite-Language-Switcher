@@ -69,5 +69,5 @@ class MslsContentTypes {
 			''
 		);
 	}
-	
+
 }

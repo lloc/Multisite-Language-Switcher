@@ -80,11 +80,16 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 				if ( $blog->userblog_id != $this->current_blog_id ) {
 					$temp = get_blog_option( $blog->userblog_id, 'msls' );
-					if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) && $this->is_plugin_active( $blog->userblog_id ) )
+					if (
+						is_array( $temp ) &&
+						empty( $temp['exclude_current_blog'] ) &&
+						$this->is_plugin_active( $blog->userblog_id )
+					) {
 						$this->objects[$blog->userblog_id] = new MslsBlog(
 							$blog,
 							$temp['description']
 						);
+					}
 				}
 				else {
 					$this->objects[$this->current_blog_id] = new MslsBlog(
