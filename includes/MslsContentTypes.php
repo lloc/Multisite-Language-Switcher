@@ -55,7 +55,7 @@ class MslsContentTypes {
 	 * @return array
 	 */
 	public function get() {
-		return $this->types;
+		return (array) $this->types;
 	}
 
 	/**
