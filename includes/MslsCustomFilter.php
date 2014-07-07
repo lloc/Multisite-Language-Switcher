@@ -74,7 +74,7 @@ class MslsCustomFilter extends MslsMain {
 			$sql   = $wpdb->prepare(
 				"SELECT option_id, option_name FROM {$wpdb->options} WHERE option_name LIKE %s AND option_value LIKE %s",
 				'msls_%',
-				'%"' . $blogs[$id]->get_language() . '"%'
+				'%"' . $blogs[ $id ]->get_language() . '"%'
 			);
 			$posts = $wpdb->get_results( $sql );
 
