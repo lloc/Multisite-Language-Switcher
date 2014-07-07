@@ -85,14 +85,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 						empty( $temp['exclude_current_blog'] ) &&
 						$this->is_plugin_active( $blog->userblog_id )
 					) {
-						$this->objects[$blog->userblog_id] = new MslsBlog(
+						$this->objects[ $blog->userblog_id ] = new MslsBlog(
 							$blog,
 							$temp['description']
 						);
 					}
 				}
 				else {
-					$this->objects[$this->current_blog_id] = new MslsBlog(
+					$this->objects[ $this->current_blog_id ] = new MslsBlog(
 						$blog,
 						$options->description
 					);
@@ -132,7 +132,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @return bool
 	 */
 	public function has_current_blog() {
-		return( isset( $this->objects[$this->current_blog_id] ) );
+		return( isset( $this->objects[ $this->current_blog_id ] ) );
 	}
 
 	/**
@@ -142,7 +142,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	public function get_current_blog() {
 		return(
 			$this->has_current_blog() ?
-			$this->objects[$this->current_blog_id] :
+			$this->objects[ $this->current_blog_id ] :
 			null
 		);
 	}
@@ -168,7 +168,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			);
 		}
 
-		if ( isset( $this->active_plugins[MSLS_PLUGIN_PATH] ) ) {
+		if ( isset( $this->active_plugins[ MSLS_PLUGIN_PATH ] ) ) {
 			return true;
 		}
 
@@ -183,7 +183,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	public function get() {
 		$objects = $this->get_objects();
 		if ( $this->has_current_blog() ) {
-			unset( $objects[$this->current_blog_id] );
+			unset( $objects[ $this->current_blog_id ] );
 		}
 		return $objects;
 	}
