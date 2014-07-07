@@ -13,6 +13,7 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 
 	/**
 	 * Constructor
+	 * @uses get_post_types
 	 */
 	public function __construct() {
 		$this->types = array_merge(
@@ -28,12 +29,13 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 		);
 
 		if ( filter_has_var( INPUT_GET, 'post_type' ) ) {
-			$this->request = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_SPECIAL_CHARS );
+			$this->request = (string) filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_SPECIAL_CHARS );
 		}
 		else {
 			$this->request = get_post_type();
-			if ( ! $this->request )
-				$this->request = 'post'; 
+			if ( ! $this->request ) {
+				$this->request = 'post';
+			}
 		}
 	}
 
