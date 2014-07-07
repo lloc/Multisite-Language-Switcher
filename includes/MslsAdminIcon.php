@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * MslsAdminIcon
  * @author Dennis Ploetner <re@lloc.de>
@@ -54,8 +54,9 @@ class MslsAdminIcon {
 	static function create() {
 		$obj  = MslsContentTypes::create();
 		$type = $obj->get_request();
-		if ( $obj->is_taxonomy() )
+		if ( $obj->is_taxonomy() ) {
 			return new MslsAdminIconTaxonomy( $type );
+		}
 		return new MslsAdminIcon( $type );
 	}
 
@@ -70,6 +71,7 @@ class MslsAdminIcon {
 
 	/**
 	 * Set the path by type
+	 * @uses add_query_arg()
 	 * @return MslsAdminIcon
 	 */
 	protected function set_path() {
@@ -104,11 +106,12 @@ class MslsAdminIcon {
 
 	/**
 	 * Set href
+	 * @uses get_edit_post_link()
 	 * @param int $id
 	 * @return MslsAdminIcon
 	 */
 	public function set_href( $id ) {
-		$this->href = get_edit_post_link( (int) $id );
+		$this->href = get_edit_post_link( $id );
 		return $this;
 	}
 
@@ -126,7 +129,7 @@ class MslsAdminIcon {
 	 */
 	public function get_img() {
 		return sprintf(
-			'<img alt="%s" src="%s" />',
+			'<img alt="%s" src="%s" />', 
 			$this->language,
 			$this->src
 		);
@@ -161,6 +164,7 @@ class MslsAdminIcon {
 
 	/**
 	 * Creates new admin link
+	 * @uses get_admin_url()
 	 * @return string
 	 */
 	protected function get_edit_new() {
