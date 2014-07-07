@@ -7,13 +7,13 @@
 
 /**
  * Container for an array which will used in JavaScript as object in JSON
- * 
+ *
  *     $obj = new MslsJson;
  *     $obj->add( null, 'Test 3' )
  *         ->add( '2', 'Test 2' )
  *         ->add( 1, 'Test 1' );
  *     echo $obj; // Output: [{"value":1,"label":"Test 1"},{"value":2,"label":"Test 2"},{"value":0,"label":"Test 3"}]
- * 
+ *
  * @package Msls
  */
 class MslsJson {
@@ -40,7 +40,7 @@ class MslsJson {
 
 	/**
 	 * compare
-	 * 
+	 *
 	 * Compare the item with the key "label" of the array $a and the
 	 * array $b
 	 * @param array $a
@@ -53,10 +53,10 @@ class MslsJson {
 
 	/**
 	 * get
-	 * 
+	 *
 	 * Get the array container sorted by label
 	 * @return array
-	 */ 
+	 */
 	public function get() {
 		$arr = $this->arr;
 		usort( $arr, array( __CLASS__, 'compare' ) );
@@ -65,11 +65,11 @@ class MslsJson {
 
 	/**
 	 * __toString
-	 * 
+	 *
 	 * Return the array container as a JSON string when the object will
 	 * be converted to a string
 	 * @return string
-	 */ 
+	 */
 	public function __toString() {
 		return json_encode( $this->get() );
 	}
