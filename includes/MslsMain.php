@@ -40,7 +40,7 @@ class MslsMain {
 			$input = array(
 				$blogs->get_current_blog()->get_language() => (int) $object_id,
 			);
-			foreach ( $_POST as $key => $value ) {
+			foreach ( filter_input_array( INPUT_POST ) as $key => $value ) {
 				if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
 					$input[substr( $key, 11 )] = (int) $value;
 				}
