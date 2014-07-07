@@ -6,14 +6,14 @@
  */
 
 /**
- * Meta box for the edit mode of the (custom) post types 
+ * Meta box for the edit mode of the (custom) post types
  * @package Msls
  */
 class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Suggest
-	 * 
+	 *
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
@@ -88,7 +88,7 @@ class MslsMetaBox extends MslsMain {
 				__( 'Multisite Language Switcher', 'msls' ),
 				array(
 					$this,
-					( 
+					(
 						MslsOptions::instance()->activate_autocomplete ?
 						'render_input' :
 						'render_select'
@@ -188,7 +188,7 @@ class MslsMetaBox extends MslsMain {
 			);
 		}
 	}
-	
+
 	/**
 	 * Render the suggest input-field
 	 */
