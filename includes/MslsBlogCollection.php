@@ -7,8 +7,8 @@
 
 /**
  * Collection of blog-objects
- * 
- * Implements the interface IMslsRegistryInstance because we want to 
+ *
+ * Implements the interface IMslsRegistryInstance because we want to
  * work with a singleton instance of MslsBlogCollection all the time.
  * @package Msls
  */
@@ -49,7 +49,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	public function __construct() {
 		$this->current_blog_id = get_current_blog_id();
-		
+
 		$options = MslsOptions::instance();
 
 		$this->current_blog_output = isset( $options->output_current_blog );
@@ -71,7 +71,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			}
 			foreach ( $blogs_collection as $blog ) {
 				/*
-				 * get_user_id_from_string returns objects with userblog_id-members 
+				 * get_user_id_from_string returns objects with userblog_id-members
 				 * instead of a blog_id ... so we need just some correction ;)
 				 */
 				if ( ! isset( $blog->userblog_id ) && isset( $blog->blog_id ) ) {
@@ -100,7 +100,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	/**
 	 * Get the list of the blogs of the reference user
 	 * The first available user of the blog will be used ff there is no
-	 * refrence user is configured 
+	 * refrence user is configured
 	 * @param MslsOptions $options
 	 * @return array
 	 */
@@ -151,7 +151,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Is plugin active in the blog with that blog_id 
+	 * Is plugin active in the blog with that blog_id
 	 * @param int $blog_id
 	 * @return bool
 	 */

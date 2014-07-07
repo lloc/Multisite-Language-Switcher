@@ -129,7 +129,7 @@ class MslsAdminIcon {
 	 */
 	public function get_img() {
 		return sprintf(
-			'<img alt="%s" src="%s" />', 
+			'<img alt="%s" src="%s" />',
 			$this->language,
 			$this->src
 		);

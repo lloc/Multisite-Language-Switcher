@@ -174,7 +174,7 @@ class MslsAdmin extends MslsMain {
 	public function reference_user() {
 		$users = array();
 		foreach ( MslsBlogCollection::instance()->get_users() as $user ) {
-			$users[$user->ID] = $user->user_nicename;
+			$users[ $user->ID ] = $user->user_nicename;
 		}
 		$this->render_select(
 			'reference_user',
