@@ -42,7 +42,7 @@ class MslsMain {
 			);
 			foreach ( filter_input_array( INPUT_POST ) as $key => $value ) {
 				if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
-					$input[substr( $key, 11 )] = (int) $value;
+					$input[ substr( $key, 11 ) ] = (int) $value;
 				}
 			}
 
@@ -68,8 +68,8 @@ class MslsMain {
 					$options->save( $msla->get_arr( $language ) );
 				}
 				else {
-					if ( isset( $temp[$language] ) ) {
-						$options = new $class( $temp[$language] );
+					if ( isset( $temp[ $language ] ) ) {
+						$options = new $class( $temp[ $language ] );
 						$options->delete();
 					}
 				}
