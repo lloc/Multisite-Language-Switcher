@@ -66,7 +66,9 @@ class MslsCustomFilter extends MslsMain {
 		if ( ! filter_has_var( INPUT_GET, 'msls_filter' ) ) {
 			return false;
 		}
+
 		$id = filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT );
+
 		if ( isset( $blogs[ $id ] ) ) {
 			global $wpdb;
 

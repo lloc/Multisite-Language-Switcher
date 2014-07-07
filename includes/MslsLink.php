@@ -55,7 +55,7 @@ class MslsLink extends MslsGetSet {
 	static function get_types_description() {
 		$types = array();
 		foreach ( self::get_types() as $key => $class ) {
-			$types[$key] = call_user_func(
+			$types[ $key ] = call_user_func(
 				array( $class, 'get_description' )
 			);
 		}
@@ -85,7 +85,7 @@ class MslsLink extends MslsGetSet {
 		if ( ! in_array( $display, array_keys( $types ), true ) ) {
 			$display = 0;
 		}
-		return new $types[$display];
+		return new $types[ $display ];
 	}
 
 	/**
