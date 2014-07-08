@@ -30,7 +30,7 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 			)
 		);
 
-		$this->request = (string) filter_input( INPUT_GET, 'taxonomy', FILTER_SANITIZE_SPECIAL_CHARS );
+		$this->request = (string) filter_input( INPUT_GET, 'taxonomy', FILTER_SANITIZE_STRING );
 		if ( empty( $this->request ) ) {
 			$this->request = get_query_var( 'taxonomy' );
 		}
@@ -39,7 +39,7 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 			$this->post_type = (string) filter_input(
 				INPUT_GET,
 				'post_type',
-				FILTER_SANITIZE_SPECIAL_CHARS
+				FILTER_SANITIZE_STRING
 			);
 		}
 	}

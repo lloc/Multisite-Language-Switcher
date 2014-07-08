@@ -112,14 +112,16 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
 			add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
 
-			if ( ! empty( $_POST['action'] ) ) {
-				if ( 'add-tag' == $_POST['action'] ) {
+			if ( filter_has_var( INPUT_POST, 'action' ) ) {
+				$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
+
+				if ( 'add-tag' == $action  ) {
 					add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
 				}
-				elseif ( 'inline-save' == $_POST['action'] ) {
+				elseif ( 'inline-save' == $action  ) {
 					add_action( 'admin_init', array( 'MslsCustomColumn', 'init' ) );
 				}
-				elseif ( 'inline-save-tax' == $_POST['action'] ) {
+				elseif ( 'inline-save-tax' == $action  ) {
 					add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
 				}
 			}
