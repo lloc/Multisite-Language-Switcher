@@ -36,10 +36,12 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 
 	define( 'MSLS_PLUGIN_VERSION', '1.0' );
 
-	if ( ! defined( 'MSLS_PLUGIN_PATH' ) )
+	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
 		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
-	if ( ! defined( 'MSLS_PLUGIN__FILE__' ) )
+	}
+	if ( ! defined( 'MSLS_PLUGIN__FILE__' ) ) {
 		define( 'MSLS_PLUGIN__FILE__', __FILE__ );
+	}
 
 	/**
 	 * The Autoloader does all the magic when it comes to include a file
@@ -54,8 +56,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * @param string $class
 		 */
 		public static function load( $class ) {
-			if ( 'Msls' == substr( $class, 0, 4 ) )
+			if ( 'Msls' == substr( $class, 0, 4 ) ) {
 				require_once dirname( __FILE__ ) . '/includes/' . $class . '.php';
+			}
 		}
 
 	}
@@ -63,8 +66,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	/**
 	 * The autoload-stack could be inactive so the function will return false
 	 */
-	if ( in_array( '__autoload', (array) spl_autoload_functions() ) )
+	if ( in_array( '__autoload', (array) spl_autoload_functions() ) ) {
 		spl_autoload_register( '__autoload' );
+	}
 	spl_autoload_register( array( 'MslsAutoloader', 'load' ) );
 
 	/**
@@ -92,23 +96,22 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 
 		add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
-		
-		if ( is_admin() ) {
 
+		if ( is_admin() ) {
 			add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
-	
+
 			add_action( 'wp_ajax_suggest_posts', array( 'MslsMetaBox', 'suggest' ) );
 			add_action( 'wp_ajax_suggest_terms', array( 'MslsPostTag', 'suggest' ) );
-	
+
 			add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
 			add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );
-	
+
 			add_action( 'load-edit.php', array( 'MslsCustomColumn', 'init' ) );
 			add_action( 'load-edit.php', array( 'MslsCustomFilter', 'init' ) );
-	
+
 			add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
 			add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
-	
+
 			if ( ! empty( $_POST['action'] ) ) {
 				if ( 'add-tag' == $_POST['action'] ) {
 					add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
@@ -121,7 +124,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 				}
 			}
 		}
-	
+
 		/**
 		 * Filter for the_content()
 		 *
@@ -141,7 +144,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			return $content;
 		}
 		add_filter( 'the_content', 'msls_content_filter' );
-	
+
 		/**
 		 * Create filterstring for msls_content_filter()
 		 *
@@ -176,7 +179,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 							implode( ', ', $links ),
 							$last
 						)
-					); 
+					);
 				}
 				elseif ( 1 == count( $links ) ) {
 					$output = sprintf(
@@ -190,7 +193,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			}
 			return( ! empty( $output ) ? $pref . $output . $post : '' );
 		}
-	
+
 		/**
 		 * Get the output for using the links to the translations in your code
 		 *
@@ -204,7 +207,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			$obj = MslsOutput::init()->set_tags( $arr );
 			return( sprintf( '%s', $obj ) );
 		}
-	
+
 		/**
 		 * Output the links to the translations in your template
 		 *
@@ -220,7 +223,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		function the_msls( array $arr = array() ) {
 			echo get_the_msls( $arr ); // xss ok
 		}
-	
+
 		/**
 		 * Help searchengines to index and to serve the localized version with
 		 * rel="alternate"-links in the html-header
