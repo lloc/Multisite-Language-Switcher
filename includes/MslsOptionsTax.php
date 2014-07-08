@@ -45,7 +45,7 @@ class MslsOptionsTax extends MslsOptions {
 		}
 		else {
 			global $wp_query;
-	
+
 			if ( is_category() ) {
 				return new MslsOptionsTaxTermCategory(
 					$wp_query->get_queried_object_id()

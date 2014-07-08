@@ -69,8 +69,9 @@ class MslsOutput extends MslsMain {
 				/**
 				 * No language no party...
 				 */
-				if ( ! $language )
+				if ( ! $language ) {
 					continue;
+				}
 
 				$link->src = MslsOptions::instance()->get_flag_url( $language );
 				$link->alt = $language;
@@ -112,8 +113,9 @@ class MslsOutput extends MslsMain {
 			isset( $options->only_with_translation )
 		);
 
-		if ( empty( $arr ) )
+		if ( empty( $arr ) ) {
 			return '';
+		}
 
 		$tags = $this->get_tags();
 		return $tags['before_output'] .
