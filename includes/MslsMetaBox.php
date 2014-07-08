@@ -20,7 +20,6 @@ class MslsMetaBox extends MslsMain {
 	static function suggest() {
 		$json = new MslsJson;
 
-		$blog_id =  ?
 		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
 			switch_to_blog(
 				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
@@ -31,13 +30,13 @@ class MslsMetaBox extends MslsMain {
 				'posts_per_page' => 10,
 			);
 
-			if ( isset( $_REQUEST['post_type'] ) ) {
+			if ( filter_has_var( INPUT_POST, 'post_type' ) ) {
 				$args['post_type'] = sanitize_text_field(
 					filter_input( INPUT_POST, 'post_type' )
 				);
 			}
 
-			if ( isset( $_REQUEST['s'] ) ) {
+			if ( filter_has_var( INPUT_POST, 's' ) ) {
 				$args['s'] = sanitize_text_field(
 					filter_input( INPUT_POST, 's' )
 				);

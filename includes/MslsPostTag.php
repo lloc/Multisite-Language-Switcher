@@ -19,8 +19,11 @@ class MslsPostTag extends MslsMain {
 	 */
 	static function suggest() {
 		$json = new MslsJson;
-		if ( isset( $_REQUEST['blog_id'] ) ) {
-			switch_to_blog( (int) $_REQUEST['blog_id'] );
+
+		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
+			switch_to_blog(
+				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
+			);
 
 			$args = array(
 				'orderby'    => 'name',
@@ -29,8 +32,10 @@ class MslsPostTag extends MslsMain {
 				'hide_empty' => 0,
 			);
 
-			if ( isset( $_REQUEST['s'] ) ) {
-				$args['name__like'] = sanitize_text_field( $_REQUEST['s'] );
+			if ( filter_has_var( INPUT_POST, 's' ) ) {
+				$args['s'] = sanitize_text_field(
+					filter_input( INPUT_POST, 's' )
+				);
 			}
 
 			/**
@@ -40,7 +45,7 @@ class MslsPostTag extends MslsMain {
 			 */
 			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
 
-			foreach ( get_terms( sanitize_text_field( $_REQUEST['post_type'] ), $args ) as $term ) {
+			foreach ( get_terms( sanitize_text_field( filter_input( INPUT_POST, 'post_type' ) ), $args ) as $term ) {
 
 				/**
 				 * Manipulates the term object before using it
