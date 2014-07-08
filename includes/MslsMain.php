@@ -92,7 +92,7 @@ class MslsMain {
 	 * @return boolean
 	 */
 	public function verify_nonce() {
-		return( isset( $_POST['msls_noncename'] ) && wp_verify_nonce( $_POST['msls_noncename'], MSLS_PLUGIN_PATH ) );
+		return( filter_has_var( INPUT_POST, 'msls_noncename'] ) && wp_verify_nonce( filter_input( INPUT_POST, 'msls_noncename', FILTER_UNSAFE_RAW ), MSLS_PLUGIN_PATH ) );
 	}
 
 	/**
