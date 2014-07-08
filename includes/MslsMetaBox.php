@@ -19,8 +19,12 @@ class MslsMetaBox extends MslsMain {
 	 */
 	static function suggest() {
 		$json = new MslsJson;
-		if ( isset( $_REQUEST['blog_id'] ) ) {
-			switch_to_blog( (int) $_REQUEST['blog_id'] );
+
+		$blog_id =  ?
+		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
+			switch_to_blog(
+				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
+			);
 
 			$args = array(
 				'post_status'    => 'any',
@@ -28,11 +32,15 @@ class MslsMetaBox extends MslsMain {
 			);
 
 			if ( isset( $_REQUEST['post_type'] ) ) {
-				$args['post_type'] = sanitize_text_field( $_REQUEST['post_type'] );
+				$args['post_type'] = sanitize_text_field(
+					filter_input( INPUT_POST, 'post_type' )
+				);
 			}
 
 			if ( isset( $_REQUEST['s'] ) ) {
-				$args['s'] = sanitize_text_field( $_REQUEST['s'] );
+				$args['s'] = sanitize_text_field(
+					filter_input( INPUT_POST, 's' )
+				);
 			}
 
 			/**
@@ -60,6 +68,7 @@ class MslsMetaBox extends MslsMain {
 			wp_reset_postdata();
 			restore_current_blog();
 		}
+
 		echo $json; // xss ok
 		die();
 	}
@@ -72,8 +81,8 @@ class MslsMetaBox extends MslsMain {
 		$obj = new self();
 		if ( ! MslsOptions::instance()->is_excluded() ) {
 			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
-			add_action( 'save_post', array( $obj, 'set' ) );
-			add_action( 'trashed_post', array( $obj, 'delete' ) );
+			add_action( 'save_post',      array( $obj, 'set' ) );
+			add_action( 'trashed_post',   array( $obj, 'delete' ) );
 		}
 		return $obj;
 	}
@@ -125,8 +134,9 @@ class MslsMetaBox extends MslsMain {
 				$icon->set_language( $language );
 				$icon->set_src( $flag_url );
 
-				if ( $mydata->has_value( $language ) )
+				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( $mydata->$language );
+				}
 				if ( $pto->hierarchical ) {
 					$selects .= wp_dropdown_pages(
 						array(
@@ -256,7 +266,11 @@ class MslsMetaBox extends MslsMain {
 			return;
 		}
 
-		$capability = ( 'page' == $_POST['post_type'] ? 'edit_page' : 'edit_post' );
+		$capability = (
+			'page' == filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING ) ?
+			'edit_page' :
+			'edit_post'
+		);
 		if ( ! current_user_can( $capability, $post_id ) ) {
 			return;
 		}

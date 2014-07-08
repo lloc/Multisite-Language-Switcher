@@ -18,6 +18,7 @@ jQuery( document ).ready( function( $ ) {
 						action: $( '#msls_action' ).val()
 					},
 					dataType: 'JSON',
+					type: 'POST',
 					success: function( data ) {
 						response( data ); 
 					}
