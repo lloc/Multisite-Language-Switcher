@@ -115,13 +115,13 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			if ( filter_has_var( INPUT_POST, 'action' ) ) {
 				$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
 
-				if ( 'add-tag' == $action  ) {
+				if ( 'add-tag' == $action ) {
 					add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
 				}
-				elseif ( 'inline-save' == $action  ) {
+				elseif ( 'inline-save' == $action ) {
 					add_action( 'admin_init', array( 'MslsCustomColumn', 'init' ) );
 				}
-				elseif ( 'inline-save-tax' == $action  ) {
+				elseif ( 'inline-save-tax' == $action ) {
 					add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
 				}
 			}

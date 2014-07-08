@@ -1,10 +1,1 @@
-div#msls.postbox label {
-  width: 16px;
-  margin-right: 8px;
-}
-div#msls.postbox select {
-  width: 226px;
-}
-select.msls-translations {
-  width: 226px;
-}
+div#msls.postbox label{width:16px;margin-right:8px}div#msls.postbox select{width:226px}select.msls-translations{width:226px}
