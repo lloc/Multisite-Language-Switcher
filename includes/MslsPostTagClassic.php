@@ -34,7 +34,7 @@ class MslsPostTagClassic extends MslsPostTag {
 		$this->the_input( $tag, $title_format, $item_format );
 		echo '</div>';
 	}
-	
+
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
 	 * @param StdClass $tag

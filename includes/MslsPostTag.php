@@ -13,7 +13,7 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Suggest
-	 * 
+	 *
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
@@ -165,7 +165,7 @@ class MslsPostTag extends MslsMain {
 			);
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
-	
+
 				$language = $blog->get_language();
 				$flag_url = MslsOptions::instance()->get_flag_url( $language );
 				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
