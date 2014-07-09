@@ -26,7 +26,7 @@ class MslsMetaBox extends MslsMain {
 			);
 
 			$args = array(
-				'post_status'    => 'any',
+				'post_status'    => get_post_stati(),
 				'posts_per_page' => 10,
 			);
 
@@ -153,7 +153,7 @@ class MslsMetaBox extends MslsMain {
 					$my_query = new WP_Query(
 						array(
 							'post_type' => $type,
-							'post_status' => 'any',
+							'post_status' => get_post_stati(),
 							'orderby' => 'title',
 							'order' => 'ASC',
 							'posts_per_page' => (-1),
