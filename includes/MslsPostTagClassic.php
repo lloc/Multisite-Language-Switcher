@@ -66,13 +66,13 @@ class MslsPostTagClassic extends MslsPostTag {
 	 */
 	public function print_option( MslsBlog $blog, MslsContentTypes $type, MslsOptionsTax $mydata, $item_format ) {
 		switch_to_blog( $blog->userblog_id );
-		
+
 		$language = $blog->get_language();
 		$flag_url = MslsOptions::instance()->get_flag_url( $language );
 		$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
 		$options  = '';
 		$terms    = get_terms( $type, array( 'hide_empty' => 0 ) );
-		
+
 		if ( $mydata->has_value( $language ) ) {
 			$icon->set_href( $mydata->$language );
 		}
@@ -92,7 +92,7 @@ class MslsPostTagClassic extends MslsPostTag {
 			$icon,
 			$options
 		);
-		
+
 		restore_current_blog();
 	}
 
@@ -103,15 +103,17 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * @param string $item_format
 	 */
 	public function the_input( $tag, $title_format, $item_format ) {
-		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
 		$blogs   = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
-			$mydata = MslsOptionsTax::create( $term_id );
-			$type   = MslsContentTypes::create()->get_request();
+			$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
+			$mydata  = MslsOptionsTax::create( $term_id );
+			$type    = MslsContentTypes::create()->get_request();
+
 			printf(
 				$title_format,
 				__( 'Multisite Language Switcher', 'msls' )
 			);
+
 			foreach ( $blogs as $blog ) {
 				$this->print_option( $blog, $type, $mydata, $item_format );
 			}
