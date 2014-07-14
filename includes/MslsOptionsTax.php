@@ -29,13 +29,13 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return MslsOptionsTax
 	 */
 	static function create( $id = 0 ) {
+		$id  = (int) $id;
+		$req = ''; 
 		if ( is_admin() ) {
 			$obj = MslsContentTypes::create();
-			if ( ! $obj->is_taxonomy() ) {
-				return $obj;
+			if ( $obj->is_taxonomy() ) {
+				$req = $obj->get_request();
 			}
-			$id  = (int) $id;
-			$req = $obj->get_request();
 		}
 		else {
 			global $wp_query;
