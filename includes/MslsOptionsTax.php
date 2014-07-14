@@ -29,9 +29,10 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return MslsOptionsTax
 	 */
 	static function create( $id = 0 ) {
-		$id  = (int) $id;
 		$req = ''; 
+
 		if ( is_admin() ) {
+			$id  = (int) $id;
 			$obj = MslsContentTypes::create();
 			if ( $obj->is_taxonomy() ) {
 				$req = $obj->get_request();
@@ -42,6 +43,7 @@ class MslsOptionsTax extends MslsOptions {
 			$id  = $wp_query->get_queried_object_id();
 			$req = ( is_category() ? 'category' : ( is_tag() ? 'post_tag' : '' ) );
 		}
+
 		if ( 'category' == $req ) {
 			return new MslsOptionsTaxTermCategory( $id );
 		}
