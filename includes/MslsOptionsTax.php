@@ -31,37 +31,24 @@ class MslsOptionsTax extends MslsOptions {
 	static function create( $id = 0 ) {
 		if ( is_admin() ) {
 			$obj = MslsContentTypes::create();
-			if ( $obj->is_taxonomy() ) {
-
-				$id  = (int) $id;
-
-				$req = $obj->get_request();
-				if ( 'category' == $req ) {
-					return new MslsOptionsTaxTermCategory( $id );
-				}
-				elseif ( 'post_tag' == $req ) {
-					return new MslsOptionsTaxTerm( $id );
-				}
-
-				return new MslsOptionsTax( $id );
+			if ( ! $obj->is_taxonomy() ) {
+				return $obj;
 			}
+			$id  = (int) $id;
+			$req = $obj->get_request();
 		}
-		global $wp_query;
-
-		if ( is_category() ) {
-			return new MslsOptionsTaxTermCategory(
-				$wp_query->get_queried_object_id()
-			);
+		else {
+			global $wp_query;
+			$id  = $wp_query->get_queried_object_id();
+			$req = ( is_category() ? 'category' : ( is_tag() ? 'post_tag' : '' ) );
 		}
-		elseif ( is_tag() ) {
-			return new MslsOptionsTaxTerm(
-				$wp_query->get_queried_object_id()
-			);
+		if ( 'category' == $req ) {
+			return new MslsOptionsTaxTermCategory( $id );
 		}
-
-		return new MslsOptionsTax(
-			$wp_query->get_queried_object_id()
-		);
+		elseif ( 'post_tag' == $req ) {
+			return new MslsOptionsTaxTerm( $id );
+		}
+		return new MslsOptionsTax( $id );
 	}
 
 	/**
