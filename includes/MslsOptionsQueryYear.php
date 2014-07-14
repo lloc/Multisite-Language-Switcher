@@ -21,12 +21,14 @@ class MslsOptionsQueryYear extends MslsOptionsQuery {
 	public function has_value( $language ) {
 		if ( ! isset( $this->arr[ $language ] ) ) {
 			global $wpdb;
-			$this->arr[ $language ] = $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND post_status = 'publish'",
-					$this->args[0]
-				)
+
+			$sql = $wpdb->prepare(
+				"SELECT count(ID) FROM {$wpdb->posts} WHERE YEAR(post_date) = %d AND post_status = 'publish'",
+				$this->args[0]
 			);
+
+			$cache = new MslsSqlCacher( $wpdb, __CLASS__, $this->args[0] );
+			$this->arr[ $language ] = $cache->get_var( $sql );
 		}
 		return (bool) $this->arr[ $language ];
 	}

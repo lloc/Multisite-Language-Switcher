@@ -7,6 +7,7 @@
 
 /**
  * Wrapper to avoid direct SQL without caching
+ * @method get_var 
  * @package Msls
  */
 class MslsSqlCacher {
