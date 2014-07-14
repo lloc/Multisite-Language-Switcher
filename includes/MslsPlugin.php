@@ -67,12 +67,16 @@ class MslsPlugin {
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			global $wpdb;
+
+			$cache = new MslsSqlCacher( $wpdb, __CLASS__, __METHOD__ );
+
 			$sql = $wpdb->prepare(
 				"SELECT blog_id FROM {$wpdb->blogs} WHERE blog_id != %d AND site_id = %d",
 				$wpdb->blogid,
 				$wpdb->siteid
 			);
-			foreach ( $wpdb->get_results( $sql, ARRAY_A ) as $blog ) {
+
+			foreach ( $cache->get_results( $sql, ARRAY_A ) as $blog ) {
 				switch_to_blog( $blog['blog_id'] );
 				self::cleanup();
 				restore_current_blog();

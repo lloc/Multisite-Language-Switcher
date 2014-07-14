@@ -46,7 +46,7 @@ class MslsSqlCacher {
 		if ( false === $result ) {
 			$result = call_user_func_array( array( $this->db, $method ), $args );
 			wp_cache_set( $this->key, $result );
-		} 
+		}
 		return $result;
 	}
 
