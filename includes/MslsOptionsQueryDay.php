@@ -29,7 +29,7 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 			)->format( 'Y-m-d' );
 
 			$sql = $wpdb->prepare(
-				"SELECT count(ID) FROM {$sql_cache->posts} WHERE DATE(post_date) = %s AND post_status = 'publish'",
+				"SELECT count(ID) FROM {$wpdb->posts} WHERE DATE(post_date) = %s AND post_status = 'publish'",
 				$param
 			);
 
