@@ -58,6 +58,45 @@ class MslsPostTagClassic extends MslsPostTag {
 	}
 
 	/**
+	 * Prints options inputs
+	 * @param MslsBlog $blog
+	 * @param MslsContentTypes $type
+	 * @param MslsOptionsTax $mydata
+	 * @param string $item_format
+	 */
+	public function print_option( MslsBlog $blog, MslsContentTypes $type, MslsOptionsTax $mydata, $item_format ) {
+		switch_to_blog( $blog->userblog_id );
+		
+		$language = $blog->get_language();
+		$flag_url = MslsOptions::instance()->get_flag_url( $language );
+		$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
+		$options  = '';
+		$terms    = get_terms( $type, array( 'hide_empty' => 0 ) );
+		
+		if ( $mydata->has_value( $language ) ) {
+			$icon->set_href( $mydata->$language );
+		}
+		if ( ! empty( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$options .= sprintf(
+					'<option value="%s"%s>%s</option>',
+					$term->term_id,
+					( $term->term_id == $mydata->$language ? ' selected="selected"' : '' ),
+					$term->name
+				);
+			}
+		}
+		printf(
+			$item_format,
+			$language,
+			$icon,
+			$options
+		);
+		
+		restore_current_blog();
+	}
+
+	/**
 	 * Print the input fields
 	 * @param StdClass $tag
 	 * @param string $title_format
@@ -74,35 +113,7 @@ class MslsPostTagClassic extends MslsPostTag {
 				__( 'Multisite Language Switcher', 'msls' )
 			);
 			foreach ( $blogs as $blog ) {
-				switch_to_blog( $blog->userblog_id );
-
-				$language = $blog->get_language();
-				$flag_url = MslsOptions::instance()->get_flag_url( $language );
-				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
-				$options  = '';
-				$terms    = get_terms( $type, array( 'hide_empty' => 0 ) );
-
-				if ( $mydata->has_value( $language ) ) {
-					$icon->set_href( $mydata->$language );
-				}
-				if ( ! empty( $terms ) ) {
-					foreach ( $terms as $term ) {
-						$options .= sprintf(
-							'<option value="%s"%s>%s</option>',
-							$term->term_id,
-							( $term->term_id == $mydata->$language ? ' selected="selected"' : '' ),
-							$term->name
-						);
-					}
-				}
-				printf(
-					$item_format,
-					$language,
-					$icon,
-					$options
-				);
-
-				restore_current_blog();
+				$this->print_option( $blog, $type, $mydata, $item_format );
 			}
 		}
 	}

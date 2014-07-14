@@ -54,6 +54,7 @@ class MslsAdminIcon {
 	static function create() {
 		$obj  = MslsContentTypes::create();
 		$type = $obj->get_request();
+
 		if ( $obj->is_taxonomy() ) {
 			return new MslsAdminIconTaxonomy( $type );
 		}
