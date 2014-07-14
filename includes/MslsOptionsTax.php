@@ -29,28 +29,30 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return MslsOptionsTax
 	 */
 	static function create( $id = 0 ) {
-		$req = ''; 
-
 		if ( is_admin() ) {
-			$id  = (int) $id;
 			$obj = MslsContentTypes::create();
-			if ( $obj->is_taxonomy() ) {
-				$req = $obj->get_request();
-			}
+
+			$id  = (int) $id;
+			$req = ( $obj->is_taxonomy() ? $obj->get_request() : '' );
 		}
 		else {
 			global $wp_query;
+
 			$id  = $wp_query->get_queried_object_id();
 			$req = ( is_category() ? 'category' : ( is_tag() ? 'post_tag' : '' ) );
 		}
 
-		if ( 'category' == $req ) {
-			return new MslsOptionsTaxTermCategory( $id );
+		switch ( $req ) {
+			case 'category':
+				$obj = new MslsOptionsTaxTermCategory( $id );
+				break;
+			case 'post_tag':
+				$obj = new MslsOptionsTaxTerm( $id );
+				break;
+			default:
+				$obj = new MslsOptionsTax( $id );
 		}
-		elseif ( 'post_tag' == $req ) {
-			return new MslsOptionsTaxTerm( $id );
-		}
-		return new MslsOptionsTax( $id );
+		return $obj;
 	}
 
 	/**
