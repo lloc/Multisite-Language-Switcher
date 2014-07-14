@@ -7,6 +7,7 @@
 
 /**
  * Internal representation of a blog
+ * @property int $userblog_id 
  * @package Msls
  */
 class MslsBlog {

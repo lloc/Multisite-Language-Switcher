@@ -43,7 +43,7 @@ class MslsRegistry {
 	 * @return mixed
 	 */
 	private function get( $key ) {
-		return( isset( self::$arr[$key] ) ? self::$arr[$key] : null );
+		return( isset( self::$arr[ $key ] ) ? self::$arr[ $key ] : null );
 	}
 
 	/**
@@ -52,7 +52,7 @@ class MslsRegistry {
 	 * @param mixed $instance
 	 */
 	private function set( $key, $instance ) {
-		self::$arr[$key] = $instance;
+		self::$arr[ $key ] = $instance;
 	}
 
 	/**
