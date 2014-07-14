@@ -1,0 +1,195 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MSLS 0.9.9\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2014-07-14 11:41+0100\n"
+"PO-Revision-Date: 2014-07-14 11:41+0100\n"
+"Last-Translator: \n"
+"Language-Team: Erik Bernskiold <erik@bernskioldmedia.com>\n"
+"Language: Swedish (sv_SE)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../MultisiteLanguageSwitcher.php:163
+#, php-format
+msgid "This post is also available in %s."
+msgstr "Detta inlägg finns också på %s."
+
+#: ../MultisiteLanguageSwitcher.php:180
+#, php-format
+msgid "%s and %s"
+msgstr "%s och %s"
+
+#: ../MultisiteLanguageSwitcher.php:284
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+"\">this post</a> if you don't know the meaning."
+msgstr ""
+"För att fungera kräver Multisite Language Switcher att multisite-funktionen "
+"i WordPress är aktiverad. Vänligen läs <a onclick=\"window.open(this.href); "
+"return false;\" href=\"http://codex.wordpress.org/Create_A_Network\">denna "
+"artikel</a> för att få hjälp med att göra detta."
+
+#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
+#: ../includes/MslsMetaBox.php:96 ../includes/MslsPostTag.php:168
+#: ../includes/MslsPostTagClassic.php:74 ../includes/MslsWidget.php:20
+msgid "Multisite Language Switcher"
+msgstr "Multisite Language Switcher"
+
+#: ../includes/MslsAdmin.php:57
+#, php-format
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
+"Multisite Language Switcher är nästan redo. Du måste bara <a href=\"%s"
+"\">slutföra konfigurationsprocessen</a>."
+
+#: ../includes/MslsAdmin.php:70
+msgid "Multisite Language Switcher Options"
+msgstr "Inställningar för Multisite Language Switcher"
+
+#: ../includes/MslsAdmin.php:72
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "För maximal flexibilitet måste du konfigurera varje site separat."
+
+#: ../includes/MslsAdmin.php:78
+msgid "Configure"
+msgstr "Konfigurera"
+
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:189
+#: ../includes/MslsMetaBox.php:247
+msgid "Update"
+msgstr "Uppdatera"
+
+#: ../includes/MslsAdmin.php:118
+msgid "Main Settings"
+msgstr "Huvudinställningar"
+
+#: ../includes/MslsAdmin.php:123
+msgid "Display"
+msgstr "Visning"
+
+#: ../includes/MslsAdmin.php:124
+msgid "Sort output by description"
+msgstr "Sortera output på beskrivning"
+
+#: ../includes/MslsAdmin.php:125
+msgid "Display link to the current language"
+msgstr "Visa en länk till det aktiva språket"
+
+#: ../includes/MslsAdmin.php:126
+msgid "Show only links with a translation"
+msgstr "Visa enbart länkar med en översättning"
+
+#: ../includes/MslsAdmin.php:128
+msgid "Description"
+msgstr "Beskrivning"
+
+#: ../includes/MslsAdmin.php:129
+msgid "Text/HTML before the list"
+msgstr "Text/HTML före listan"
+
+#: ../includes/MslsAdmin.php:130
+msgid "Text/HTML after the list"
+msgstr "Text/HTML efter listan"
+
+#: ../includes/MslsAdmin.php:131
+msgid "Text/HTML before each item"
+msgstr "Text/HTML före varje språk"
+
+#: ../includes/MslsAdmin.php:132
+msgid "Text/HTML after each item"
+msgstr "Text/HTML efter varje språk"
+
+#: ../includes/MslsAdmin.php:134
+msgid "Add hint for available translations"
+msgstr "Lägg till tips för tillgängliga översättningar"
+
+#: ../includes/MslsAdmin.php:135
+msgid "Hint priority"
+msgstr "Prioritet för tips"
+
+#: ../includes/MslsAdmin.php:139
+msgid "Advanced Settings"
+msgstr "Avancerade inställningar"
+
+#: ../includes/MslsAdmin.php:144
+msgid "Activate experimental autocomplete inputs"
+msgstr "Aktivera experimentell funktion för automatisk ifyllnad av textfält"
+
+#: ../includes/MslsAdmin.php:145
+msgid "Custom URL for flag-images"
+msgstr "Egen URL för flagg-bilder"
+
+#: ../includes/MslsAdmin.php:146
+msgid "Reference user"
+msgstr "Referensanvändare"
+
+#: ../includes/MslsAdmin.php:147
+msgid "Exclude this blog from output"
+msgstr "Exkludera denna site från output"
+
+#: ../includes/MslsAdminIcon.php:146
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "Redigera översättningen på %s-siten"
+
+#: ../includes/MslsAdminIcon.php:153
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr "Skapa en ny översättning på %s-siten"
+
+#: ../includes/MslsCustomFilter.php:44
+msgid "Show all blogs"
+msgstr "Visa alla siter"
+
+#: ../includes/MslsCustomFilter.php:50
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr "Inte översatt i %s-siten"
+
+#: ../includes/MslsLink.php:47
+msgid "Flag and description"
+msgstr "Flagga och beskrivning"
+
+#: ../includes/MslsLinkImageOnly.php:25
+msgid "Flag only"
+msgstr "Enbart flagga"
+
+#: ../includes/MslsLinkTextImage.php:25
+msgid "Description and flag"
+msgstr "Beskrivning och flagga"
+
+#: ../includes/MslsLinkTextOnly.php:25
+msgid "Description only"
+msgstr "Enbart beskrivning"
+
+#: ../includes/MslsMetaBox.php:196 ../includes/MslsMetaBox.php:254
+msgid ""
+"You should define at least another blog in a different language in order to "
+"have some benefit from this plugin!"
+msgstr ""
+"Du bör skapa minst en till site i ett annat språk för att ha nytta av detta "
+"tillägg!"
+
+#: ../includes/MslsWidget.php:42
+msgid "No available translations found"
+msgstr "Inga tillgängliga översättningar funna"
+
+#: ../includes/MslsWidget.php:68
+msgid "Title"
+msgstr "Titel"

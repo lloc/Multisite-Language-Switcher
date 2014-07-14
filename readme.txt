@@ -54,7 +54,8 @@ banner.
 * Turkish (tr) - Alican Cakil
 * Armenian (hy_AM) - Yeghishe Nersisyan
 * Bengali (bn_BD) - Md. Nazmul Huda
-* Japanese (ja) - [ThemeBoy](http://themeboy.com/) 
+* Japanese (ja) - [ThemeBoy](http://themeboy.com/)
+* Swedish (sv_SE) - [Erik Bernskiold](http://www.bernskioldmedia.com/)
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
