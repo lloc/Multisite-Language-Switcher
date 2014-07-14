@@ -7,7 +7,8 @@
 
 /**
  * Wrapper to avoid direct SQL without caching
- * @method array get_var( string $sql )
+ * @method mixed get_var( string $sql )
+ * @method array get_results( string $sql )
  * @package Msls
  */
 class MslsSqlCacher {
