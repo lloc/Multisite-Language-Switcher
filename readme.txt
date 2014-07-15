@@ -9,29 +9,19 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple, powerful and easy to use plugin that will help you to
-manage multilingual content in a multisite WordPress installation.
+A simple, powerful and easy to use plugin that will help you to manage multilingual content in a multisite WordPress installation. 
 
 == Description ==
 
-A simple, powerful and easy to use plugin that will add
-multilingual support to a WordPress
-[multisite](http://codex.wordpress.org/Create_A_Network)
-installation, i.e. multiple subdomains or folders (if you need to
-set up multiple sites across multiple domains, you'll also want to
-use the
-[WordPress MU Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/)
-plugin as well - as long as the domains are all hosted on the
-same server.).
+A simple, powerful and easy to use plugin that will add multilingual support to a WordPress [multisite](http://codex.wordpress.org/Create_A_Network) 
+installation, i.e. multiple subdomains or folders (if you need to set up multiple sites across multiple domains, you'll also want to use the [WordPress MU 
+Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/) plugin as well - as long as the domains are all hosted on the same server.).
 
-The Multisite Language Switcher enables you to manage translations of
-posts, pages, custom post types, categories, tags and custom taxonomies.
+The Multisite Language Switcher enables you to manage translations of posts, pages, custom post types, categories, tags and custom taxonomies.
 
-The plugin uses flag-icons from [FamFamFam](http://famfamfam.com).
-Thanks to Mark James for his great work. In addition I would like to
-thank [Jürgen Mayer](http://blog.jrmayer.co/) for creating the plugin's
-banner.
-
+The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition I would like to thank [Jürgen Mayer](
+http://blog.jrmayer.co/) for creating the plugin's banner.
+ 
 = Translators =
 * German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
 * Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/it/)
@@ -58,11 +48,9 @@ banner.
 * Swedish (sv_SE) - [Erik Bernskiold](http://www.bernskioldmedia.com/)
 * Traditional & Simplified Chinese (zh_CN & zh_TW) - DrBenson
 
-If you have created your own language pack, or have an update of an
-existing one, you can [send me](mailto:re@lloc.de) your gettext PO
-and MO so that I can bundle it into the Multisite Language Switcher.
-You can download the latest POT file
-[from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
+If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can 
+bundle it into the Multisite Language Switcher. You can download the latest POT file
+[from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot). 
 
 == Installation ==
 
@@ -87,13 +75,6 @@ for more information.
 
 == Frequently Asked Questions ==
 
-= Is there a function I can call to get the language of the page the user is currently viewing? =
-
-Yes, you can get the language like that
-
-`$blog     = MslsBlogCollection::instance()->get_current_blog();
-$language = $blog->get_language();`
-
 = I have no language options in the General settings. =
 
 You might read first [WordPress in your language](http://codex.wordpress.org/WordPress_in_Your_Language).
@@ -108,7 +89,24 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 
 = How can I automatically redirect users based on the browser language?
 
-The Multisite Language Switcher does not redirect the users automatically. I'm not sure if the plugin should do that. You might check out this [jQuery plugin](https://github.com/danieledesantis/jquery-language-detection) or [this approach with a theme](https://github.com/oncleben31/Multisite-Language-Switcher-Theme) if you need such functionality.
+The Multisite Language Switcher does not redirect the users automatically. I'm not sure if the plugin should do that. You might check out this [jQuery plugin](
+https://github.com/danieledesantis/jquery-language-detection) or [this approach with a theme](https://github.com/oncleben31/Multisite-Language-Switcher-Theme) 
+if you need such functionality.
+
+= How can I add the Multisite Language Switcher to the nav-menu of my blog?
+
+Please check this [example plugin](https://github.com/lloc/MslsMenu) out.
+
+= Is there a function I can call to get the language of the page the user is currently viewing? =
+
+Yes, you can get the language like that
+
+`$blog     = MslsBlogCollection::instance()->get_current_blog();
+$language = $blog->get_language();`
+
+= How can I move from WPML to MSLS?
+
+There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy in here.
 
 == Screenshots ==
 
