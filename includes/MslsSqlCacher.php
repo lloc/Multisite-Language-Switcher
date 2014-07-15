@@ -9,7 +9,7 @@
  * Wrapper to avoid direct SQL without caching
  * @method mixed get_var( string $sql )
  * @method array get_results( string $sql )
- * @method string prepare( string $sql, mixed $a, mixed $b, mixed $c )
+ * @method string prepare( string $sql, mixed $arg,... )
  * @property string $posts
  * @property string $options
  * @package Msls
