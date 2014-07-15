@@ -91,10 +91,7 @@ class MslsPostTag extends MslsMain {
 	 * @return string
 	 */
 	static function check() {
-		if (
-			! MslsOptions::instance()->is_excluded() &&
-			( filter_has_var( INPUT_GET, 'taxonomy' ) || filter_has_var( INPUT_POST, 'taxonomy' ) )
-		) {
+		if ( ! MslsOptions::instance()->is_excluded() && ( filter_has_var( INPUT_GET, 'taxonomy' ) || filter_has_var( INPUT_POST, 'taxonomy' ) ) ) {
 			$type = MslsContentTypes::create();
 			if ( $type->is_taxonomy() ) {
 				$req = $type->get_request();

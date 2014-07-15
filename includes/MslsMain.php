@@ -21,11 +21,12 @@ class MslsMain {
 
 	/**
 	 * Get the input array
+	 * @param int $object_id
 	 * @return array
 	 */
-	public function get_input_array() {
+	public function get_input_array( $object_id ) {
 		$arr = array(
-			$blogs->get_current_blog()->get_language() => (int) $object_id,
+			MslsBlogCollection::instance()->get_current_blog()->get_language() => (int) $object_id,
 		);
 		foreach ( filter_input_array( INPUT_POST ) as $key => $value ) {
 			if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
@@ -53,7 +54,7 @@ class MslsMain {
 		else {
 			$blogs     = MslsBlogCollection::instance();
 			$language  = $blogs->get_current_blog()->get_language();
-			$msla      = new MslsLanguageArray( $this->get_input_array() );
+			$msla      = new MslsLanguageArray( $this->get_input_array( $object_id ) );
 			$options   = new $class( $object_id );
 			$temp      = $options->get_arr();
 			$object_id = $msla->get_val( $language );
