@@ -1,0 +1,190 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MSLS 0.9.9\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2014-05-02 14:58+0100\n"
+"PO-Revision-Date: 2014-07-15 15:02+0100\n"
+"Last-Translator: \n"
+"Language-Team: DrBenson <benson@bensontech.net>\n"
+"Language: Traditional Chinese (zh_TW)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../MultisiteLanguageSwitcher.php:162
+#, php-format
+msgid "%s and %s"
+msgstr "%s 和 %s"
+
+#: ../MultisiteLanguageSwitcher.php:173
+#, php-format
+msgid "This post is also available in %s."
+msgstr "這篇文章同時有 %s"
+
+#: ../MultisiteLanguageSwitcher.php:261
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+"\">this post</a> if you don't know the meaning."
+msgstr ""
+"啟用在多站點語系切換的正常運作所需要的多站點功能。請仔細閱讀 <a onclick="
+"\"window.open(this.href); return false;\" href=\"http://codex.wordpress.org/"
+"Create_A_Network\">this post</a> 如果你不清楚這意思。"
+
+#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
+#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:160
+#: ../includes/MslsPostTagClassic.php:82 ../includes/MslsWidget.php:20
+msgid "Multisite Language Switcher"
+msgstr "多站點語系切換"
+
+#: ../includes/MslsAdmin.php:57
+#, php-format
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr "多站點語系切換幾乎準備就緒。您必須<a href=\"%s\">完成設定程序</a>."
+
+#: ../includes/MslsAdmin.php:70
+msgid "Multisite Language Switcher Options"
+msgstr "多站點語系切換選項"
+
+#: ../includes/MslsAdmin.php:72
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "為了實現最大的靈活性，你必須單獨設定每個部落格。"
+
+#: ../includes/MslsAdmin.php:78
+msgid "Configure"
+msgstr "設定"
+
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:180
+#: ../includes/MslsMetaBox.php:238
+msgid "Update"
+msgstr "更新"
+
+#: ../includes/MslsAdmin.php:118
+msgid "Main Settings"
+msgstr "主設定"
+
+#: ../includes/MslsAdmin.php:123
+msgid "Display"
+msgstr "顯示"
+
+#: ../includes/MslsAdmin.php:124
+msgid "Sort output by description"
+msgstr "依照描述內容排序"
+
+#: ../includes/MslsAdmin.php:125
+msgid "Display link to the current language"
+msgstr "顯示當前的語系的連結"
+
+#: ../includes/MslsAdmin.php:126
+msgid "Show only links with a translation"
+msgstr "只顯示已翻譯的連結"
+
+#: ../includes/MslsAdmin.php:128
+msgid "Description"
+msgstr "內容"
+
+#: ../includes/MslsAdmin.php:129
+msgid "Text/HTML before the list"
+msgstr "Text/HTML 列表之前"
+
+#: ../includes/MslsAdmin.php:130
+msgid "Text/HTML after the list"
+msgstr "Text/HTML 列表之後"
+
+#: ../includes/MslsAdmin.php:131
+msgid "Text/HTML before each item"
+msgstr "Text/HTML 每個項目之前"
+
+#: ../includes/MslsAdmin.php:132
+msgid "Text/HTML after each item"
+msgstr "Text/HTML 每個項目之後"
+
+#: ../includes/MslsAdmin.php:134
+msgid "Add hint for available translations"
+msgstr "添加提示用於可用的翻譯"
+
+#: ../includes/MslsAdmin.php:135
+msgid "Hint priority"
+msgstr "提示優先權"
+
+#: ../includes/MslsAdmin.php:139
+msgid "Advanced Settings"
+msgstr "高級設定選項"
+
+#: ../includes/MslsAdmin.php:144
+msgid "Activate experimental autocomplete inputs"
+msgstr "啟用實驗性的自動完成輸入"
+
+#: ../includes/MslsAdmin.php:145
+msgid "Custom URL for flag-images"
+msgstr "自定義URL用於旗幟-圖像"
+
+#: ../includes/MslsAdmin.php:146
+msgid "Reference user"
+msgstr "參考帳號"
+
+#: ../includes/MslsAdmin.php:147
+msgid "Exclude this blog from output"
+msgstr "從輸出中排除此部落格"
+
+#: ../includes/MslsAdminIcon.php:143
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "編輯翻譯於 %s-部落格"
+
+#: ../includes/MslsAdminIcon.php:150
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr "建立在 %s-部落格 的一個新的翻譯"
+
+#: ../includes/MslsCustomFilter.php:39
+msgid "Show all blogs"
+msgstr "顯示所有網誌"
+
+#: ../includes/MslsCustomFilter.php:45
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr "%s-部落格 的一個新的翻譯"
+
+#: ../includes/MslsLink.php:43
+msgid "Flag and description"
+msgstr "旗幟和內容描述"
+
+#: ../includes/MslsLinkImageOnly.php:25
+msgid "Flag only"
+msgstr "只有旗幟"
+
+#: ../includes/MslsLinkTextImage.php:25
+msgid "Description and flag"
+msgstr "內容描述和旗幟"
+
+#: ../includes/MslsLinkTextOnly.php:25
+msgid "Description only"
+msgstr "只有內容描述"
+
+#: ../includes/MslsMetaBox.php:187 ../includes/MslsMetaBox.php:245
+msgid ""
+"You should define at least another blog in a different language in order to "
+"have some benefit from this plugin!"
+msgstr "你應該至少在另一個部落格定義不同的語系才能於這個外掛有一些效益！ "
+
+#: ../includes/MslsWidget.php:42
+msgid "No available translations found"
+msgstr "沒有發現可用的翻譯"
+
+#: ../includes/MslsWidget.php:68
+msgid "Title"
+msgstr "標題"
