@@ -14,16 +14,22 @@
 class MslsSqlCacher {
 
 	/**
-	 * Database object eg. $wpdb
+	 * Database object
 	 * @var object $db
 	 */
 	protected $db;
 
 	/**
+	 * Name of the object which created this object
+	 * @var string $caller
+	 */
+	protected $caller;
+
+	/**
 	 * Name of stored object
 	 * @var string $key
 	 */
-	protected $key;
+	protected $params;
 
 	/**
 	 * Constructor
@@ -31,9 +37,48 @@ class MslsSqlCacher {
 	 * @param string $caller
 	 * @param string $param
 	 */
-	public function __construct( $db, $caller, $param ) {
-		$this->db = $db;
-		$this->key = (string) $caller . '_' . (string) $param;
+	public function __construct( WPDB $db, $caller ) {
+		$this->db     = $db;
+		$this->caller = $caller;
+		$this->params = array();
+	}
+
+	/**
+	 * Factory
+	 * @uses $wpdb
+	 * @param string $caller
+	 * @return MslsSqlCacher
+	 */
+	public static function init( $caller ) {
+		global $wpdb;
+		return new self( $wpdb, $caller );
+	}
+
+	/**
+	 * Set params
+	 * @param mixed $params
+	 * @return MslsSqlCacher
+	 */
+	public function set_params( $params ) {
+		$this->params = (array) $params;
+		return $this;
+	}
+
+	/**
+	 * Get the name of the key which is in use for the cached object
+	 * @return string
+	 */
+	public function get_key() {
+		return $this->caller . '_' . implode( '_', $this->params );
+	}
+
+	/**
+	 * Magic __get
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		return( isset( $this->db->$key ) ? $this->db->$key : null );
 	}
 
 	/**
@@ -43,10 +88,16 @@ class MslsSqlCacher {
 	 * @return mixed
 	 */
 	public function __call( $method, $args ) {
-		$result = wp_cache_get( $this->key );
-		if ( false === $result ) {
+		if ( 'get_' != substr( $method, 0, 4 ) ) {
 			$result = call_user_func_array( array( $this->db, $method ), $args );
-			wp_cache_set( $this->key, $result );
+		}
+		else {
+			$key    = $this->get_key();
+			$result = wp_cache_get( $key );
+			if ( false === $result ) {
+				$result = call_user_func_array( array( $this->db, $method ), $args );
+				wp_cache_set( $key, $result );
+			}
 		}
 		return $result;
 	}

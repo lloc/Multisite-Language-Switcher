@@ -66,17 +66,16 @@ class MslsPlugin {
 		 * restore_current_blog
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			global $wpdb;
-
-			$sql = $wpdb->prepare(
-				"SELECT blog_id FROM {$wpdb->blogs} WHERE blog_id != %d AND site_id = %d",
-				$wpdb->blogid,
-				$wpdb->siteid
+			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
+			$blogs = $cache->get_results(
+				$cache->prepare(
+					"SELECT blog_id FROM {$cache->blogs} WHERE blog_id != %d AND site_id = %d",
+					$cache->blogid,
+					$cache->siteid
+				)
 			);
 
-			$cache = new MslsSqlCacher( $wpdb, __CLASS__, __METHOD__ );
-
-			foreach ( $cache->get_results( $sql ) as $blog ) {
+			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->blog_id );
 				self::cleanup();
 				restore_current_blog();
@@ -94,13 +93,12 @@ class MslsPlugin {
 	 */
 	static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
-			global $wpdb;
-
-			$sql = $wpdb->prepare(
-				"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
+			$sql   = $cache->prepare(
+				"DELETE FROM {$cache->options} WHERE option_name LIKE %s",
 				'msls_%'
 			);
-			return (bool) $wpdb->query( $sql );
+			return (bool) $cache->query( $sql );
 		}
 		return false;
 	}

@@ -20,21 +20,14 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 */
 	public function has_value( $language ) {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			global $wpdb;
+			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
 
-			$param = DateTime::setDate(
-				$this->args[0],
-				$this->args[1],
-				$this->args[2]
-			)->format( 'Y-m-d' );
-
-			$sql = $wpdb->prepare(
-				"SELECT count(ID) FROM {$wpdb->posts} WHERE DATE(post_date) = %s AND post_status = 'publish'",
-				$param
+			$this->arr[ $language ] = $cache->get_var(
+				$cache->prepare(
+					"SELECT count(ID) FROM {$cache->posts} WHERE DATE(post_date) = %s AND post_status = 'publish'",
+					DateTime::setDate( $this->args[0], $this->args[1], $this->args[2] )->format( 'Y-m-d' )
+				)
 			);
-
-			$cache = new MslsSqlCacher( $wpdb, __CLASS__, $param );
-			$this->arr[ $language ] = $cache->get_var( $sql );
 		}
 		return (bool) $this->arr[ $language ];
 	}

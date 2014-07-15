@@ -57,7 +57,6 @@ class MslsCustomFilter extends MslsMain {
 
 	/**
 	 * Execute filter. Exclude translated posts from WP_Query
-	 * @uses $wpdb
 	 * @param object $query
 	 * @return false or WP_Query object
 	 */
@@ -71,19 +70,19 @@ class MslsCustomFilter extends MslsMain {
 		$id = filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( isset( $blogs[ $id ] ) ) {
-			global $wpdb;
+			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
 
-			//load post we need to exclude (already have translation) from search query
-			$sql   = $wpdb->prepare(
-				"SELECT option_id, option_name FROM {$wpdb->options} WHERE option_name LIKE %s AND option_value LIKE %s",
-				'msls_%',
-				'%"' . $blogs[ $id ]->get_language() . '"%'
+			// load post we need to exclude (already have translation) from search query
+			$posts = $cache->get_results(
+				$cache->prepare(
+					"SELECT option_id, option_name FROM {$cache->options} WHERE option_name LIKE %s AND option_value LIKE %s",
+					'msls_%',
+					'%"' . $blogs[ $id ]->get_language() . '"%'
+				)
 			);
 
-			$cache = new MslsSqlCacher( $wpdb, __CLASS__, __METHOD__ );
-
 			$exclude_ids = array();
-			foreach ( $cache->get_results( $sql ) as $post ) {
+			foreach ( $posts as $post ) {
 				$exclude_ids[] = substr( $post->option_name, 5 );
 			}
 			$query->query_vars['post__not_in'] = $exclude_ids;
