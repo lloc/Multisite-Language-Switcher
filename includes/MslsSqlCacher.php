@@ -38,7 +38,6 @@ class MslsSqlCacher {
 	 * Constructor
 	 * @param object $db
 	 * @param string $caller
-	 * @param string $param
 	 */
 	public function __construct( WPDB $db, $caller ) {
 		$this->db     = $db;
@@ -63,7 +62,7 @@ class MslsSqlCacher {
 	 * @return MslsSqlCacher
 	 */
 	public function set_params( $params ) {
-		$this->params = (array) $params;
+		$this->params = $params;
 		return $this;
 	}
 
@@ -72,7 +71,12 @@ class MslsSqlCacher {
 	 * @return string
 	 */
 	public function get_key() {
-		return $this->caller . '_' . implode( '_', $this->params );
+		$params = (
+			is_array( $this->params ) ?
+			implode( '_', $this->params ) :
+			$this->params
+		);
+		return $this->caller . '_' . $params;
 	}
 
 	/**
