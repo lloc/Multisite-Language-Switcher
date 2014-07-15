@@ -115,16 +115,11 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 
 == Changelog ==
 
-= 0.9.9.3 =
-* Bugfix: translation hint not shown in admin options 
-* Enhancement: message if no multisite configured
+= 1.0 =
+* Swedish and Chinese language files added
+* a lot of enhancements and fixes (coding style, docs, sql cache, performance ...)
 
-= 0.9.9.2 =
-* Bugfix: Format of the widget-title was not correct
-* Update of the language-files for Italian and German
-
-= 0.9.9.1 =
-* Bugfix: Widget was defect
+[...]
 
 = 0.9.9 =
 * Option to transform the dropdowns for choosing the connections into text-inputs with jquery-ui autocomplete
@@ -136,11 +131,7 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 * MslsCustomFilter-Class by Maciej Czerpiński
 * and tons of other minor improvements
 
-= 0.9.8.2 =
-* lots of language files added
-
-= 0.9.8.1 =
-* Fix for "All inone event calendar"
+[...]
 
 = 0.9.8 =
 * Fix of the "MslsOptionsQueryDay.php"-bug
@@ -159,30 +150,6 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 * new: Support for author- and date-archives
 * language files for hr_HR added
 * some modifications of the image path handling by [Tobias Bäthge](http://tobias.baethge.com/)
-
-= 0.9.4 =
-* language files for uk added
-
-= 0.9.3 =
-* language files for ru_RU added
-
-= 0.9.2 =
-* new: _msls_output_get_-filter for customizing the output
-* new: link of the current language is marked with `class="current_language"`
-* new: index.php in all directories redirects to HTTP_HOST
-* bugfix: admin metabox and the link to a _new_ page
-* bugfix: "Display link to the current language" was ignored when option "Show only links with a translation" is checked as well
-* bugfix: _msls_content_filter_ should work only when display a post_type
-* _msls_blog_collection_get_-filter deleted
-
-= 0.9.1 =
-* bugfix: broken methods in MslsAdmin
-
-= 0.9 =
-* new: support for custom post types
-* new: apply_filters( 'msls_blog_collection_construct', $arr ); in MslsBlogCollection::__construct();
-* bugfix: msls_blog_collection_get
-* language files for fr_FR and es_ES updated
 
 [...]
 
