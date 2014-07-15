@@ -10,6 +10,7 @@
  * @method mixed get_var( string $sql )
  * @method array get_results( string $sql )
  * @method string prepare( string $sql, mixed $a, mixed $b = '', mixed $c = '' )
+ * @method mixed query( string $sql )
  * @property string $posts
  * @property string $options
  * @package Msls
@@ -29,8 +30,8 @@ class MslsSqlCacher {
 	protected $caller;
 
 	/**
-	 * Name of stored object
-	 * @var string $key
+	 * Parameters are used to create the key for the cached resultset
+	 * @var mixed $params
 	 */
 	protected $params;
 
@@ -42,7 +43,6 @@ class MslsSqlCacher {
 	public function __construct( WPDB $db, $caller ) {
 		$this->db     = $db;
 		$this->caller = $caller;
-		$this->params = array();
 	}
 
 	/**
