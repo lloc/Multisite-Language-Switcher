@@ -74,11 +74,9 @@ class MslsMain {
 					$options = new $class( $object_id );
 					$options->save( $msla->get_arr( $language ) );
 				}
-				else {
-					if ( isset( $temp[ $language ] ) ) {
-						$options = new $class( $temp[ $language ] );
-						$options->delete();
-					}
+				elseif ( isset( $temp[ $language ] ) ) {
+					$options = new $class( $temp[ $language ] );
+					$options->delete();
 				}
 				restore_current_blog();
 			}
