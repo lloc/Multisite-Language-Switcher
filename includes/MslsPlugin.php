@@ -61,8 +61,8 @@ class MslsPlugin {
 	 */
 	static function uninstall() {
 		/**
-		 * I want to be sure that the user has not deactivated the 
-		 * multisite because I'd like to use switch_to_blog and 
+		 * We want to be sure that the user has not deactivated the 
+		 * multisite because we need to use switch_to_blog and 
 		 * restore_current_blog
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
@@ -76,8 +76,8 @@ class MslsPlugin {
 
 			$cache = new MslsSqlCacher( $wpdb, __CLASS__, __METHOD__ );
 
-			foreach ( $cache->get_results( $sql, ARRAY_A ) as $blog ) {
-				switch_to_blog( $blog['blog_id'] );
+			foreach ( $cache->get_results( $sql ) as $blog ) {
+				switch_to_blog( $blog->blog_id );
 				self::cleanup();
 				restore_current_blog();
 			}
@@ -95,6 +95,7 @@ class MslsPlugin {
 	static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
 			global $wpdb;
+
 			$sql = $wpdb->prepare(
 				"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
 				'msls_%'

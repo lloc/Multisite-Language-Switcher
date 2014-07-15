@@ -2,6 +2,7 @@
 /**
  * MslsCustomFilter
  * @author Maciej Czerpiński <contact@speccode.com>
+ * @contributor Dennis Ploetner <re@lloc.de>
  * @since 0.9.9
  */
 
@@ -78,10 +79,11 @@ class MslsCustomFilter extends MslsMain {
 				'msls_%',
 				'%"' . $blogs[ $id ]->get_language() . '"%'
 			);
-			$posts = $wpdb->get_results( $sql );
+
+			$cache = new MslsSqlCacher( $wpdb, __CLASS__, __METHOD__ );
 
 			$exclude_ids = array();
-			foreach ( $posts as $post ) {
+			foreach ( $cache->get_results( $sql ) as $post ) {
 				$exclude_ids[] = substr( $post->option_name, 5 );
 			}
 			$query->query_vars['post__not_in'] = $exclude_ids;
