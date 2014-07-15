@@ -13,6 +13,9 @@
  * @method mixed query( string $sql )
  * @property string $posts
  * @property string $options
+ * @property string $blogs
+ * @property int $blogid
+ * @property int $siteid
  * @package Msls
  */
 class MslsSqlCacher {

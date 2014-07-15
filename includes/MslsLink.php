@@ -31,10 +31,10 @@ class MslsLink extends MslsGetSet {
 	 */
 	static function get_types() {
 		return array(
-			'0' => 'MslsLink',
-			'1' => 'MslsLinkTextOnly',
-			'2' => 'MslsLinkImageOnly',
-			'3' => 'MslsLinkTextImage',
+			'MslsLink',
+			'MslsLinkTextOnly',
+			'MslsLinkImageOnly',
+			'MslsLinkTextImage',
 		);
 	}
 
@@ -89,13 +89,22 @@ class MslsLink extends MslsGetSet {
 	}
 
 	/**
+	 * Callback function (no lambda here because PHP 5.2 might be still in use)
+	 * @param string $x
+	 * @return string
+	 */
+	public static function callback( $x ) {
+		return '{' . $x . '}';
+	}
+
+	/**
 	 * Handles the request to print the object
 	 */
 	public function __toString() {
 		$temp = $this->get_arr();
 		return str_replace(
 			array_map(
-				create_function( '$x', 'return "{" . $x . "}";' ),
+				array( $this, 'callback' ),
 				array_keys( $temp )
 			),
 			$temp,
