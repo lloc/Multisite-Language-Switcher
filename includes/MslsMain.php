@@ -20,6 +20,22 @@ class MslsMain {
 	}
 
 	/**
+	 * Get the input array
+	 * @return array
+	 */
+	public function get_input_array() {
+		$arr = array(
+			$blogs->get_current_blog()->get_language() => (int) $object_id,
+		);
+		foreach ( filter_input_array( INPUT_POST ) as $key => $value ) {
+			if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
+				$arr[ substr( $key, 11 ) ] = (int) $value;
+			}
+		}
+		return $arr;
+	}
+
+	/**
 	 * Save
 	 * @param int $object_id
 	 * @param string $class
@@ -35,20 +51,10 @@ class MslsMain {
 			do_action( 'msls_main_save', $object_id, $class );
 		}
 		else {
-			$blogs = MslsBlogCollection::instance();
-
-			$input = array(
-				$blogs->get_current_blog()->get_language() => (int) $object_id,
-			);
-			foreach ( filter_input_array( INPUT_POST ) as $key => $value ) {
-				if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
-					$input[ substr( $key, 11 ) ] = (int) $value;
-				}
-			}
-
-			$msla      = new MslsLanguageArray( $input );
-			$options   = new $class( $object_id );
+			$blogs     = MslsBlogCollection::instance();
 			$language  = $blogs->get_current_blog()->get_language();
+			$msla      = new MslsLanguageArray( $this->get_input_array() );
+			$options   = new $class( $object_id );
 			$temp      = $options->get_arr();
 			$object_id = $msla->get_val( $language );
 
