@@ -9,28 +9,28 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple, powerful and easy to use plugin that will help you to 
+A simple, powerful and easy to use plugin that will help you to
 manage multilingual content in a multisite WordPress installation.
 
 == Description ==
 
-A simple, powerful and easy to use plugin that will add 
-multilingual support to a WordPress 
-[multisite](http://codex.wordpress.org/Create_A_Network) 
-installation, i.e. multiple subdomains or folders (if you need to 
-set up multiple sites across multiple domains, you'll also want to 
+A simple, powerful and easy to use plugin that will add
+multilingual support to a WordPress
+[multisite](http://codex.wordpress.org/Create_A_Network)
+installation, i.e. multiple subdomains or folders (if you need to
+set up multiple sites across multiple domains, you'll also want to
 use the
 [WordPress MU Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/)
-plugin as well - as long as the domains are all hosted on the 
+plugin as well - as long as the domains are all hosted on the
 same server.).
 
-The Multisite Language Switcher enables you to manage translations of 
+The Multisite Language Switcher enables you to manage translations of
 posts, pages, custom post types, categories, tags and custom taxonomies.
 
-The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). 
-Thanks to Mark James for his great work. In addition I would like to 
-thank [Jürgen Mayer](http://blog.jrmayer.co/) for creating the plugin's 
-banner. 
+The plugin uses flag-icons from [FamFamFam](http://famfamfam.com).
+Thanks to Mark James for his great work. In addition I would like to
+thank [Jürgen Mayer](http://blog.jrmayer.co/) for creating the plugin's
+banner.
 
 = Translators =
 * German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
@@ -41,7 +41,7 @@ banner.
 * French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 * Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)
 * Ukrainian (uk) - [Victor Melnichenko](http://worm.org.ua/)
-* Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69) 
+* Croatian (hr_HR) - [Brankec69](https://github.com/Brankec69)
 * Romanian (ro_RO) - [Armand K](http://caveatlector.eu/)
 * Polish (pl_PL) - [Kamil Frejlich](http://www.mojito-networks.com/)
 * Lithuanian (lt_LT) - Ovidijus Pukys
@@ -58,26 +58,26 @@ banner.
 * Swedish (sv_SE) - [Erik Bernskiold](http://www.bernskioldmedia.com/)
 * Traditional & Simplified Chinese (zh_CN & zh_TW) - DrBenson
 
-If you have created your own language pack, or have an update of an 
-existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
-and MO so that I can bundle it into the Multisite Language Switcher. 
+If you have created your own language pack, or have an update of an
+existing one, you can [send me](mailto:re@lloc.de) your gettext PO
+and MO so that I can bundle it into the Multisite Language Switcher.
 You can download the latest POT file
 [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
 
 == Installation ==
 
-* Download the plugin and uncompress it with your preferred unzip programme 
-* Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins) 
-* Activate the plugin in your plugin administration page 
-* Set the configuration in Options -> Multisite Language Switcher 
+* Download the plugin and uncompress it with your preferred unzip programme
+* Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins)
+* Activate the plugin in your plugin administration page
+* Set the configuration in Options -> Multisite Language Switcher
 
-Now you can: 
+Now you can:
 
-* connect your translated pages and posts in Posts -> Edit or Page -> Edit 
+* connect your translated pages and posts in Posts -> Edit or Page -> Edit
 * connect your translated categories and tags in Posts -> Categories or Post -> Tags
 * connect your Custom Post Types and Custom Taxonomies across languages
-* use a widget and/or a content_filter which displays a hint to the user if a translation is available 
-* optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files 
+* use a widget and/or a content_filter which displays a hint to the user if a translation is available
+* optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
 
 Review the
 [Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki)
@@ -106,6 +106,10 @@ You could check out the plugin [Native Dashboard](http://wordpress.org/extend/pl
 
 It's up to you - of course. Yes, if you want to use the Multisite Language Switcher.
 
+= How can I automatically redirect users based on the browser language?
+
+The Multisite Language Switcher does not redirect the users automatically. I'm not sure if the plugin should do that. You might check out this [jQuery plugin](https://github.com/danieledesantis/jquery-language-detection) or [this approach with a theme](https://github.com/oncleben31/Multisite-Language-Switcher-Theme) if you need such functionality.
+
 == Screenshots ==
 
 1. Plugin configuration
@@ -117,7 +121,7 @@ It's up to you - of course. Yes, if you want to use the Multisite Language Switc
 
 = 1.0 =
 * Swedish and Chinese language files added
-* a lot of enhancements and fixes (coding style, docs, sql cache, performance ...)
+* numerous enhancements and fixes (coding style, docs, sql cache, performance ...)
 
 [...]
 
