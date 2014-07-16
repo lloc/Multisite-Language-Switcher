@@ -42,17 +42,13 @@ class MslsOptionsTax extends MslsOptions {
 			$req = ( is_category() ? 'category' : ( is_tag() ? 'post_tag' : '' ) );
 		}
 
-		switch ( $req ) {
-			case 'category':
-				$obj = new MslsOptionsTaxTermCategory( $id );
-				break;
-			case 'post_tag':
-				$obj = new MslsOptionsTaxTerm( $id );
-				break;
-			default:
-				$obj = new MslsOptionsTax( $id );
+		if ( 'category' == $req ) {
+			return new MslsOptionsTaxTermCategory( $id );
 		}
-		return $obj;
+		elseif ( 'post_tag' == $req ) {
+			return new MslsOptionsTaxTerm( $id );
+		}
+		return new MslsOptionsTax( $id );
 	}
 
 	/**
