@@ -39,7 +39,7 @@ class MslsRegistry {
 
 	/**
 	 * Get an object by key
-	 * @param mixed $key
+	 * @param string $key
 	 * @return mixed
 	 */
 	private function get( $key ) {
@@ -48,7 +48,7 @@ class MslsRegistry {
 
 	/**
 	 * Set an object
-	 * @param mixed $key
+	 * @param string $key
 	 * @param mixed $instance
 	 */
 	private function set( $key, $instance ) {
@@ -68,7 +68,7 @@ class MslsRegistry {
 
 	/**
 	 * Static get_object calls get
-	 * @param mixed $key
+	 * @param string $key
 	 * @return mixed
 	 */
 	static function get_object( $key ) {
@@ -77,8 +77,8 @@ class MslsRegistry {
 
 	/**
 	 * Static set_object calls set
-	 * @param mixed $key
-	 * @param mixed $instance
+	 * @param string $key
+	 * @param mixed
 	 */
 	static function set_object( $key, $instance ) {
 		self::instance()->set( $key, $instance );
