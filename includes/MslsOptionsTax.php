@@ -33,7 +33,7 @@ class MslsOptionsTax extends MslsOptions {
 			$obj = MslsContentTypes::create();
 
 			$id  = (int) $id;
-			$req = ( $obj->is_taxonomy() ? $obj->get_request() : '' );
+			$req = $obj->acl_request();
 		}
 		else {
 			global $wp_query;
