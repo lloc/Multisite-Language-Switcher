@@ -1,11 +1,9 @@
-# Copyright (C) 2012 
-# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Multisite Language Switcher 0.9.9\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-05-02 15:02+0100\n"
-"PO-Revision-Date: 2014-05-02 15:02+0100\n"
+"Project-Id-Version: Multisite Language Switcher 1.0\n"
+"Report-Msgid-Bugs-To:http://wordpress.org/support/plugin/multisite-language-switcher\n"
+"POT-Creation-Date: 2014-07-16 09:39+0100\n"
+"PO-Revision-Date: 2014-07-16 09:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: realloc's asylum <re@lloc.de>\n"
 "MIME-Version: 1.0\n"
@@ -22,17 +20,17 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../MultisiteLanguageSwitcher.php:155 ../MultisiteLanguageSwitcher.php:189
+#: ../MultisiteLanguageSwitcher.php:163
 #, php-format
 msgid "This post is also available in %s."
 msgstr ""
 
-#: ../MultisiteLanguageSwitcher.php:172
+#: ../MultisiteLanguageSwitcher.php:180
 #, php-format
 msgid "%s and %s"
 msgstr ""
 
-#: ../MultisiteLanguageSwitcher.php:278
+#: ../MultisiteLanguageSwitcher.php:284
 msgid ""
 "The Multisite Language Switcher needs the activation of the multisite-"
 "feature for working properly. Please read <a onclick=\"window.open(this."
@@ -41,8 +39,8 @@ msgid ""
 msgstr ""
 
 #: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
-#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:160
-#: ../includes/MslsPostTagClassic.php:82 ../includes/MslsWidget.php:20
+#: ../includes/MslsMetaBox.php:94 ../includes/MslsPostTag.php:167
+#: ../includes/MslsPostTagClassic.php:114 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr ""
 
@@ -66,8 +64,8 @@ msgstr ""
 msgid "Configure"
 msgstr ""
 
-#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:180
-#: ../includes/MslsMetaBox.php:238
+#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:187
+#: ../includes/MslsMetaBox.php:245
 msgid "Update"
 msgstr ""
 
@@ -139,26 +137,26 @@ msgstr ""
 msgid "Exclude this blog from output"
 msgstr ""
 
-#: ../includes/MslsAdminIcon.php:143
+#: ../includes/MslsAdminIcon.php:147
 #, php-format
 msgid "Edit the translation in the %s-blog"
 msgstr ""
 
-#: ../includes/MslsAdminIcon.php:150
+#: ../includes/MslsAdminIcon.php:154
 #, php-format
 msgid "Create a new translation in the %s-blog"
 msgstr ""
 
-#: ../includes/MslsCustomFilter.php:39
+#: ../includes/MslsCustomFilter.php:45
 msgid "Show all blogs"
 msgstr ""
 
-#: ../includes/MslsCustomFilter.php:45
+#: ../includes/MslsCustomFilter.php:51
 #, php-format
 msgid "Not translated in the %s-blog"
 msgstr ""
 
-#: ../includes/MslsLink.php:43
+#: ../includes/MslsLink.php:47
 msgid "Flag and description"
 msgstr ""
 
@@ -174,7 +172,7 @@ msgstr ""
 msgid "Description only"
 msgstr ""
 
-#: ../includes/MslsMetaBox.php:187 ../includes/MslsMetaBox.php:245
+#: ../includes/MslsMetaBox.php:194 ../includes/MslsMetaBox.php:252
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
