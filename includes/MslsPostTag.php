@@ -68,40 +68,21 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsPostTag
 	 */
 	static function init() {
-		if ( MslsOptions::instance()->activate_autocomplete ) {
-			$obj = new self();
-		}
-		else {
-			$obj = MslsPostTagClassic::init();
-		}
+		$obj = (
+			MslsOptions::instance()->activate_autocomplete ?
+			new self() :
+			MslsPostTagClassic::init()
+		);
 
-		$taxonomy = self::check();
-		if ( $taxonomy ) {
+		$taxonomy = MslsContentTypes::create()->acl_request();
+		if ( '' != $taxonomy ) {
 			add_action( "{$taxonomy}_add_form_fields",  array( $obj, 'add_input' ) );
 			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ) );
+			add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
+			add_action( "create_{$taxonomy}", array( $obj, 'set' ) );
 		}
-		add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
-		add_action( "create_{$taxonomy}", array( $obj, 'set' ) );
 
 		return $obj;
-	}
-
-	/**
-	 * Check the taxonomy
-	 * @return string
-	 */
-	static function check() {
-		if ( ! MslsOptions::instance()->is_excluded() && ( filter_has_var( INPUT_GET, 'taxonomy' ) || filter_has_var( INPUT_POST, 'taxonomy' ) ) ) {
-			$type = MslsContentTypes::create();
-			if ( $type->is_taxonomy() ) {
-				$req = $type->get_request();
-				$tax = get_taxonomy( $req );
-				if ( $tax && current_user_can( $tax->cap->manage_terms ) ) {
-					return $req;
-				}
-			}
-		}
-		return '';
 	}
 
 	/**
@@ -201,7 +182,7 @@ class MslsPostTag extends MslsMain {
 	 * @param int $term_id
 	 */
 	public function set( $term_id ) {
-		if ( self::check() ) {
+		if ( MslsContentTypes::create()->acl_request() ) {
 			$this->save( $term_id, 'MslsOptionsTax' );
 		}
 	}

@@ -53,6 +53,24 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	}
 
 	/**
+	 * Check if the current user can manage this content type
+	 * 
+	 * Returns name of the content type if the user has access or an empty 
+	 * string if the user can not access
+	 * @return string
+	 */
+	public function acl_request() {
+		if ( ! MslsOptions::instance()->is_excluded() ) {
+			$request = $this->get_request();
+			$tax = get_taxonomy( $request );
+			if ( $tax && current_user_can( $tax->cap->manage_terms ) ) {
+				return $request;
+			}
+		}
+		return '';
+	}
+
+	/**
 	 * Get the requested post_type of the taxonomy
 	 * @return string
 	 */
