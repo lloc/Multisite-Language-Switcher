@@ -86,16 +86,14 @@ class MslsAdmin extends MslsMain {
 	protected function subsubsub() {
 		$blogs = MslsBlogCollection::instance();
 		$arr   = array();
-		foreach ( $blogs->get_objects() as $id => $blog ) {
-			if ( $blogs->is_plugin_active( $blog->userblog_id ) ) {
-				$arr[] = sprintf(
-					'<a href="%s"%s>%s / %s</a>',
-					get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
-					( $blog->userblog_id == $blogs->get_current_blog_id() ? ' class="current"' : '' ),
-					$blog->blogname,
-					$blog->get_description()
-				);
-			}
+		foreach ( $blogs->get_plugin_active_blogs() as $blog ) {
+			$arr[] = sprintf(
+				'<a href="%s"%s>%s / %s</a>',
+				get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
+				( $blog->userblog_id == $blogs->get_current_blog_id() ? ' class="current"' : '' ),
+				$blog->blogname,
+				$blog->get_description()
+			);
 		}
 		return(
 			empty( $arr ) ?

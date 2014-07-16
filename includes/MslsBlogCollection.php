@@ -160,7 +160,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @param int $blog_id
 	 * @return bool
 	 */
-	function is_plugin_active( $blog_id ) {
+	public function is_plugin_active( $blog_id ) {
 		if ( ! is_array( $this->active_plugins ) ) {
 			$this->active_plugins = get_site_option(
 				'active_sitewide_plugins',
@@ -174,6 +174,20 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 		$plugins = get_blog_option( $blog_id, 'active_plugins', array() );
 		return( in_array( MSLS_PLUGIN_PATH, $plugins ) );
+	}
+
+	/**
+	 * Get only blogs where the plugin is active
+	 * @return array
+	 */
+	public function get_plugin_active_blogs() {
+		$arr = array();
+		foreach ( $this->get_objects() as $id => $blog ) {
+			if ( $this->is_plugin_active( $blog->userblog_id ) ) {
+				$arr[] = $blog;
+			}
+		}
+		return $arr;
 	}
 
 	/**
