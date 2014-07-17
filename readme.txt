@@ -56,8 +56,8 @@ bundle it into the Multisite Language Switcher. You can download the latest POT 
 
 * Download the plugin and uncompress it with your preferred unzip programme
 * Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins)
-* Activate the plugin in your plugin administration page
-* Set the configuration in Options -> Multisite Language Switcher
+* Activate the plugin in your plugin administration page (by the network administrator on all the blogs or by the root blog administrator for each particular blog).
+* You need to activate the plugin once in each blog, set the configuration in Options -> Multisite Language Switcher
 
 Now you can:
 
