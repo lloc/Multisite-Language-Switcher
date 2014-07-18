@@ -70,28 +70,51 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	static function create( $id = 0 ) {
 		if ( is_admin() ) {
 			$id  = (int) $id;
-			$obj = MslsContentTypes::create();
 
-			if ( $obj->is_taxonomy() ) {
+			if ( MslsContentTypes::create()->is_taxonomy() ) {
 				return MslsOptionsTax::create( $id );
 			}
 
 			return new MslsOptionsPost( $id );
 		}
 
-		if ( is_front_page() || is_search() || is_404() ) {
+		if ( self::is_main_page() ) {
 			return new MslsOptions();
 		}
-		elseif ( is_category() || is_tag() || is_tax() ) {
+		elseif ( self::is_tax_page() ) {
 			return MslsOptionsTax::create();
 		}
-		elseif ( is_date() || is_author() || is_post_type_archive() ) {
+		elseif ( self::is_query_page() ) {
 			return MslsOptionsQuery::create();
 		}
 
 		global $wp_query;
 
 		return new MslsOptionsPost( $wp_query->get_queried_object_id() );
+	}
+
+	/**
+	 * Checks if the current page is a home, front or 404 page
+	 * @return boolean
+	 */
+	public static function is_main_page() {
+		return( is_front_page() || is_search() || is_404() );
+	}
+
+	/**
+	 * Checks if the current page is a category, tag or any other tax archive
+	 * @return boolean
+	 */
+	public static function is_tax_page() {
+		return( is_category() || is_tag() || is_tax() );
+	}
+
+	/**
+	 * Checks if the current page is a date, author any other post_type archive
+	 * @return boolean
+	 */
+	public static function is_query_page() {
+		return( is_date() || is_author() || is_post_type_archive() );
 	}
 
 	/**
