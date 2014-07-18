@@ -56,8 +56,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		$this->objects_order       = $options->get_order();
 
 		if ( ! $options->is_excluded() ) {
-
 			$blogs_collection = $this->get_blogs_of_reference_user( $options );
+
 			if ( has_filter( 'msls_blog_collection_construct' ) ) {
 				/**
 				 * Returns custom filtered blogs of the blogs_collection
@@ -69,15 +69,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 					$blogs_collection
 				);
 			}
-			foreach ( $blogs_collection as $blog ) {
-				/*
-				 * get_user_id_from_string returns objects with userblog_id-members
-				 * instead of a blog_id ... so we need just some correction ;)
-				 */
-				if ( ! isset( $blog->userblog_id ) && isset( $blog->blog_id ) ) {
-					$blog->userblog_id = $blog->blog_id;
-				}
 
+			foreach ( $blogs_collection as $blog ) {
 				if ( $blog->userblog_id != $this->current_blog_id ) {
 					$temp = get_blog_option( $blog->userblog_id, 'msls' );
 					if (
@@ -104,8 +97,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 	/**
 	 * Get the list of the blogs of the reference user
-	 * The first available user of the blog will be used ff there is no
-	 * refrence user is configured
+	 * The first available user of the blog will be used if there is no
+	 * refrence user configured
 	 * @param MslsOptions $options
 	 * @return array
 	 */
@@ -115,7 +108,16 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			$options->reference_user :
 			current( $this->get_users( 'ID', 1 ) )
 		);
-		return get_blogs_of_user( $reference_user );
+		$blogs = get_blogs_of_user( $reference_user );
+		/**
+		 * @todo Check if this is still useful
+		 */
+		if ( is_array( $blogs ) ) {
+			foreach ( $blogs as $key => $blog ) {
+				$blogs[$key]->blog_id = $blog->userblog_id;
+			}
+		}
+		return $blogs;
 	}
 
 	/**

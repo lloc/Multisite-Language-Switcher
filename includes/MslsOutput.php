@@ -53,24 +53,14 @@ class MslsOutput extends MslsMain {
 				else {
 					switch_to_blog( $blog->userblog_id );
 					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
-						/**
-						 * We set $language to false so we can first restore the current blog
-						 * and continue with the next blog right after this important step.
-						 */
-						$language = false;
+						restore_current_blog();
+						continue;
 					}
 					else {
 						$url       = $mydata->get_permalink( $language );
 						$link->txt = $blog->get_description();
 					}
 					restore_current_blog();
-				}
-
-				/**
-				 * No language no party...
-				 */
-				if ( ! $language ) {
-					continue;
 				}
 
 				$link->src = MslsOptions::instance()->get_flag_url( $language );
