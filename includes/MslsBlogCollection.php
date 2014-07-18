@@ -48,6 +48,15 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * Constructor
 	 */
 	public function __construct() {
+		if ( ! has_filter( 'msls_blog_collection_description' ) ) {
+			add_filter(
+				'msls_blog_collection_description',
+				array( $this, 'get_active_blog_description' ),
+				10,
+				3
+			);
+		}
+
 		$this->current_blog_id = get_current_blog_id();
 
 		$options = MslsOptions::instance();
@@ -67,28 +76,46 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			);
 
 			foreach ( $blogs_collection as $blog ) {
-				if ( $blog->userblog_id != $this->current_blog_id ) {
-					$temp = get_blog_option( $blog->userblog_id, 'msls' );
-					if (
-						is_array( $temp ) &&
-						empty( $temp['exclude_current_blog'] ) &&
-						$this->is_plugin_active( $blog->userblog_id )
-					) {
-						$this->objects[ $blog->userblog_id ] = new MslsBlog(
-							$blog,
-							$temp['description']
-						);
-					}
-				}
-				else {
-					$this->objects[ $this->current_blog_id ] = new MslsBlog(
+				$description = apply_filters(
+					'msls_blog_collection_description',
+					( $blog->userblog_id == $this->current_blog_id ? $options->description : false ),
+					$blog,
+					$this->is_plugin_active( $blog->userblog_id )
+				);
+
+				if ( false != $description ) {
+					$this->objects[ $blog->userblog_id ] = new MslsBlog(
 						$blog,
-						$options->description
+						$description
 					);
 				}
 			}
 			uasort( $this->objects, array( 'MslsBlog', $this->objects_order ) );
 		}
+	}
+
+	/**
+	 * Returns the description of an active blog or false if it is not active
+	 * @param string $description
+	 * @param StdClass $blog
+	 * @param boolean $plugin_active
+	 * @return string|boolean
+	 */
+	public static function get_active_blog_description( $descrription, $blog, $plugin_active  ) {
+		if ( false != $descrription ) {
+			return $descrription;
+		}
+
+		$temp = get_blog_option( $blog->userblog_id, 'msls' );
+		if (
+			is_array( $temp ) &&
+			empty( $temp['exclude_current_blog'] ) &&
+			$plugin_active
+		) {
+			return $temp['description'];
+		}
+
+		return false;
 	}
 
 	/**
