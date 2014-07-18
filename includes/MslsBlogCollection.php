@@ -56,19 +56,15 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		$this->objects_order       = $options->get_order();
 
 		if ( ! $options->is_excluded() ) {
-			$blogs_collection = $this->get_blogs_of_reference_user( $options );
-
-			if ( has_filter( 'msls_blog_collection_construct' ) ) {
-				/**
-				 * Returns custom filtered blogs of the blogs_collection
-				 * @since 0.9.8
-				 * @param array $blogs_collection
-				 */
-				$blogs_collection = (array) apply_filters(
-					'msls_blog_collection_construct',
-					$blogs_collection
-				);
-			}
+			/**
+			 * Returns custom filtered blogs of the blogs_collection
+			 * @since 0.9.8
+			 * @param array $blogs_collection
+			 */
+			$blogs_collection = (array) apply_filters(
+				'msls_blog_collection_construct',
+				$this->get_blogs_of_reference_user( $options )
+			);
 
 			foreach ( $blogs_collection as $blog ) {
 				if ( $blog->userblog_id != $this->current_blog_id ) {
@@ -114,7 +110,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		 */
 		if ( is_array( $blogs ) ) {
 			foreach ( $blogs as $key => $blog ) {
-				$blogs[$key]->blog_id = $blog->userblog_id;
+				$blogs[ $key ]->blog_id = $blog->userblog_id;
 			}
 		}
 		return $blogs;
