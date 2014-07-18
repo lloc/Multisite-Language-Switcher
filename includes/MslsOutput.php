@@ -52,7 +52,8 @@ class MslsOutput extends MslsMain {
 				}
 				else {
 					switch_to_blog( $blog->userblog_id );
-					if ( 'MslsOptions' != get_class( $mydata ) && $exists && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
+
+					if ( $this->requirements_not_fulfilled( $mydata, $exists, $language ) ) {
 						restore_current_blog();
 						continue;
 					}
@@ -60,6 +61,7 @@ class MslsOutput extends MslsMain {
 						$url       = $mydata->get_permalink( $language );
 						$link->txt = $blog->get_description();
 					}
+
 					restore_current_blog();
 				}
 
@@ -97,12 +99,12 @@ class MslsOutput extends MslsMain {
 	 */
 	public function __toString() {
 		$options = MslsOptions::instance();
-		$arr     = $this->get(
+
+		$arr = $this->get(
 			(int) $options->display,
 			false,
 			isset( $options->only_with_translation )
 		);
-
 		if ( empty( $arr ) ) {
 			return '';
 		}
@@ -145,4 +147,18 @@ class MslsOutput extends MslsMain {
 		return $this;
 	}
 
+	/**
+	 * Returns true if the requirements not fulfilled
+	 * @param MslsOptions $mydata
+	 * @param boolean $exists
+	 * @param string $language
+	 * @return boolean
+	 */
+	public function requirements_not_fulfilled( $mydata, $exists, $language ) {
+		return(
+			'MslsOptions' != get_class( $mydata ) &&
+			$exists &&
+			( is_null( $mydata ) || ! $mydata->has_value( $language ) )
+		);
+	}
 }

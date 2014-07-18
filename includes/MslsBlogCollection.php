@@ -102,7 +102,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Returns the description of an active blog or false if it is not active
+	 * Returns the description of an configured blog or false if it is not configured
 	 * @param string $description
 	 * @param StdClass $blog
 	 * @param boolean $plugin_active
