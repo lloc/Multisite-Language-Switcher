@@ -312,9 +312,9 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function render_checkbox( $key ) {
 		printf(
-			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1"%2$s/>',
+			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
 			$key,
-			( 1 == MslsOptions::instance()->$key ? ' checked="checked"' : '' )
+			checked( 1, MslsOptions::instance()->$key )
 		);
 		return $this;
 	}
@@ -338,7 +338,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Render form-element (select)
-	 *
+	 * @uses selected
 	 * @param string $key Name and ID of the form-element
 	 * @param array $arr Options as associative array
 	 * @param string $selected Values which should be selected
@@ -348,7 +348,7 @@ class MslsAdmin extends MslsMain {
 		$options = array();
 		foreach ( $arr as $value => $description ) {
 			$options[] = sprintf(
-				'<option value="%s"%s>%s</option>',
+				'<option value="%s" %s>%s</option>',
 				$value,
 				selected( $value, $selected, false ),
 				$description

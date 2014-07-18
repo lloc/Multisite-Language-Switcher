@@ -59,6 +59,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Prints options inputs
+	 * @uses selected
 	 * @param MslsBlog $blog
 	 * @param MslsContentTypes $type
 	 * @param MslsOptionsTax $mydata
@@ -79,9 +80,9 @@ class MslsPostTagClassic extends MslsPostTag {
 		if ( ! empty( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$options .= sprintf(
-					'<option value="%s"%s>%s</option>',
+					'<option value="%s" %s>%s</option>',
 					$term->term_id,
-					( $term->term_id == $mydata->$language ? ' selected="selected"' : '' ),
+					selected( $term->term_id, $mydata->$language ),
 					$term->name
 				);
 			}

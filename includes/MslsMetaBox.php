@@ -109,6 +109,7 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Render the classic select-box
+	 * @uses selected
 	 */
 	public function render_select() {
 		$blogs = MslsBlogCollection::instance()->get();
