@@ -149,7 +149,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Returns true if the requirements not fulfilled
-	 * @param MslsOptions $mydata
+	 * @param mixed $mydata
 	 * @param boolean $exists
 	 * @param string $language
 	 * @return boolean
