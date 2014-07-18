@@ -51,9 +51,9 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		if ( ! has_filter( 'msls_blog_collection_description' ) ) {
 			add_filter(
 				'msls_blog_collection_description',
-				array( $this, 'get_active_blog_description' ),
+				array( $this, 'get_configured_blog_description' ),
 				10,
-				3
+				2
 			);
 		}
 
@@ -76,11 +76,18 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			);
 
 			foreach ( $blogs_collection as $blog ) {
+				$description = false;
+				if ( $blog->userblog_id == $this->current_blog_id ) {
+					$description = $options->description;
+				}
+				elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
+					continue;
+				}
+
 				$description = apply_filters(
 					'msls_blog_collection_description',
-					( $blog->userblog_id == $this->current_blog_id ? $options->description : false ),
-					$blog,
-					$this->is_plugin_active( $blog->userblog_id )
+					$description,
+					$blog
 				);
 
 				if ( false != $description ) {
@@ -101,17 +108,13 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @param boolean $plugin_active
 	 * @return string|boolean
 	 */
-	public static function get_active_blog_description( $descrription, $blog, $plugin_active  ) {
+	public static function get_configured_blog_description( $descrription, $blog  ) {
 		if ( false != $descrription ) {
 			return $descrription;
 		}
 
 		$temp = get_blog_option( $blog->userblog_id, 'msls' );
-		if (
-			is_array( $temp ) &&
-			empty( $temp['exclude_current_blog'] ) &&
-			$plugin_active
-		) {
+		if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
 			return $temp['description'];
 		}
 
