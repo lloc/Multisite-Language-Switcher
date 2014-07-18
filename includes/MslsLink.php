@@ -27,7 +27,7 @@ class MslsLink extends MslsGetSet {
 	/**
 	 * Gets all link types as array with "id => name"-items.
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	static function get_types() {
 		return array(
