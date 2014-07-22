@@ -46,7 +46,7 @@ class WP_Test_MslsAdminIconTaxonomy extends WP_UnitTestCase {
 	 * @depends constructor_method
 	 */
 	function test_set_href( $obj ) {
-		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_href( '/test' ) );
+		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_href( 0 ) );
 	}
 
 }

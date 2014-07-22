@@ -64,7 +64,7 @@ class WP_Test_MslsAdminIcon extends WP_UnitTestCase {
 	 * @depends test_create_method
 	 */
 	function test_set_href( $obj ) {
-		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_href( '/test' ) );
+		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_href( 0 ) );
 	}
 
 	/**
