@@ -41,7 +41,7 @@ class WP_Test_MslsGetSet extends WP_UnitTestCase {
 	 * Verify the is_empty-method
 	 * @depends test_get_arr_method
 	 */
-	function test_is_empty_method() {
+	function test_is_empty_method( $obj ) {
 		$this->assertTrue( $obj->is_empty() );
 		$obj->temp = 'test';
 		$this->assertFalse( $obj->is_empty() );
