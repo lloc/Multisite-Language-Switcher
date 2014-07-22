@@ -30,7 +30,18 @@ class WP_Test_MslsBlogCollection extends WP_UnitTestCase {
 	 * Verify the instance-method
 	 */
 	function test_instance_method() {
-		$this->assertInstanceOf( 'MslsBlogCollection', MslsBlogCollection::instance() );
+		$obj =  MslsBlogCollection::instance();
+		$this->assertInstanceOf( 'MslsBlogCollection', $obj );
+		return $obj;
+	}
+
+	/**
+	 * Verify the get_configured_blog_description-method
+	 * @depends test_instance_method
+	 */
+	function test_get_description_method( $obj ) {
+		$this->assertEquals( 'Test', $obj->get_configured_blog_description( 0, 'Test' ) );
+		$this->assertEquals( false, $obj->get_configured_blog_description( 0, false ) );
 	}
 
 }

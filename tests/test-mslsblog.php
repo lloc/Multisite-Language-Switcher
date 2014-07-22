@@ -30,40 +30,36 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 	 * Verify the __get-method
 	 */
 	function test___get_method() {
-		$obj = new MslsBlog( null, null );
-		$this->assertEquals( null, $obj->test_var );
-
 		$blog = new stdClass();
 		$blog->userblog_id = 1;
-		$obj = new MslsBlog( $blog, null );
+
+		$obj = new MslsBlog( $blog, 'Test' );
 		$this->assertEquals( 1, $obj->userblog_id );
-		$this->assertEquals( null, $obj->test_var );
+
+		return $obj;
 	}
 
 	/**
 	 * Verify the get_description-method
+     * @depends test___get_method
 	 */
-	function test_get_description_method() {
-		$obj = new MslsBlog( null, 'Test' );
+	function test_get_description_method( $obj ) {
 		$this->assertEquals( 'Test', $obj->get_description() );
-
-		$obj = new MslsBlog( null, null );
-		$this->assertEquals( 'us', $obj->get_description() );
 	}
 	
 	/**
 	 * Verify the get_language-method
+	 * @depends test___get_method
 	 */
-	function test_get_language_method() {
-		$obj = new MslsBlog( null, null );
+	function test_get_language_method( $obj ) {
 		$this->assertEquals( 'us', $obj->get_description() );
 	}
 	
 	/**
 	 * Verify the get_alpha2-method
+     * @depends test___get_method
 	 */
-	function test_get_alpha2_method() {
-		$obj = new MslsBlog( null, null );
+	function test_get_alpha2_method( $obj ) {
 		$this->assertEquals( 'en', $obj->get_alpha2() );
 	}
 
@@ -86,7 +82,7 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
      * @dataProvider compareProvider
      */
 	function test__cmp_method( $a, $b, $expected ) {
-		$this->assertEquals( $expected, MslsBlog::_cmp( $a, $b ) );		
+		$this->assertEquals( $expected, MslsBlog::_cmp( $a, $b ) );
 		$obj = new MslsBlog( null, null );
 		$this->assertEquals( $expected, $obj->_cmp( $a, $b ) );
 	}

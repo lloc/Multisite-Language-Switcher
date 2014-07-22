@@ -86,8 +86,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 				$description = apply_filters(
 					'msls_blog_collection_description',
-					$description,
-					$blog
+					$blog->userblog_id,
+					$description
 				);
 
 				if ( false != $description ) {
@@ -103,16 +103,16 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 	/**
 	 * Returns the description of an configured blog or false if it is not configured
-	 * @param string $description
-	 * @param StdClass $blog
-	 * @return string|boolean
+	 * @param int $blog
+	 * @param string|bool $description
+	 * @return string|bool
 	 */
-	public static function get_configured_blog_description( $descrription, $blog  ) {
-		if ( false != $descrription ) {
-			return $descrription;
+	public static function get_configured_blog_description( $blog_id, $description = false  ) {
+		if ( false != $description ) {
+			return $description;
 		}
 
-		$temp = get_blog_option( $blog->userblog_id, 'msls' );
+		$temp = get_blog_option( $blog_id, 'msls' );
 		if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
 			return $temp['description'];
 		}
