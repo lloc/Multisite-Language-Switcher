@@ -48,7 +48,7 @@ class WP_Test_MslsAdmin extends WP_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_render_checkbox( $obj ) {
-		$this->assertInstanceOf( 'MslsAdmin', $obj->render_checkbox( 'test' ) );
+		$this->assertInternalType( 'string', $obj->render_checkbox( 'test' ) );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class WP_Test_MslsAdmin extends WP_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_render_input( $obj ) {
-		$this->assertInstanceOf( 'MslsAdmin', $obj->render_input( 'test' ) );
+		$this->assertInternalType( 'string', $obj->render_input( 'test' ) );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class WP_Test_MslsAdmin extends WP_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_render_select( $obj ) {
-		$this->assertInstanceOf( 'MslsAdmin', $obj->render_select( 'test', array() ) );
+		$this->assertInternalType( 'string', $obj->render_select( 'test', array() ) );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class WP_Test_MslsAdmin extends WP_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_validate( $obj ) {
-		$this->assertInternalType( 'array', $obj->validate( array() ) );
+		$this->assertInternalType( 'string', $obj->validate( array() ) );
 	}
 
 }

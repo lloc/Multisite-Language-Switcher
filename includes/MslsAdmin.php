@@ -159,7 +159,7 @@ class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'display'
 	 */
 	public function display() {
-		$this->render_select(
+		echo $this->render_select(
 			'display',
 			MslsLink::get_types_description(),
 			MslsOptions::instance()->display
@@ -174,7 +174,7 @@ class MslsAdmin extends MslsMain {
 		foreach ( MslsBlogCollection::instance()->get_users() as $user ) {
 			$users[ $user->ID ] = $user->user_nicename;
 		}
-		$this->render_select(
+		echo $this->render_select(
 			'reference_user',
 			$users,
 			MslsOptions::instance()->reference_user
@@ -188,7 +188,7 @@ class MslsAdmin extends MslsMain {
 	 * input fields in the backend instead of the traditional select-menus.
 	 */
 	public function activate_autocomplete() {
-		$this->render_checkbox( 'activate_autocomplete' );
+		echo $this->render_checkbox( 'activate_autocomplete' );
 	}
 
 	/**
@@ -198,7 +198,7 @@ class MslsAdmin extends MslsMain {
 	 * the output will be sorted by the language-code.
 	 */
 	public function sort_by_description() {
-		$this->render_checkbox( 'sort_by_description' );
+		echo $this->render_checkbox( 'sort_by_description' );
 	}
 
 	/**
@@ -208,7 +208,7 @@ class MslsAdmin extends MslsMain {
 	 * plugin will ignore this blog while this option is active.
 	 */
 	public function exclude_current_blog() {
-		$this->render_checkbox( 'exclude_current_blog' );
+		echo $this->render_checkbox( 'exclude_current_blog' );
 	}
 
 	/**
@@ -218,7 +218,7 @@ class MslsAdmin extends MslsMain {
 	 * translations.
 	 */
 	public function only_with_translation() {
-		$this->render_checkbox( 'only_with_translation' );
+		echo $this->render_checkbox( 'only_with_translation' );
 	}
 
 	/**
@@ -228,7 +228,7 @@ class MslsAdmin extends MslsMain {
 	 * link to the current blog.
 	 */
 	public function output_current_blog() {
-		$this->render_checkbox( 'output_current_blog' );
+		echo $this->render_checkbox( 'output_current_blog' );
 	}
 
 	/**
@@ -237,42 +237,42 @@ class MslsAdmin extends MslsMain {
 	 * The language will be used ff there is no description.
 	 */
 	public function description() {
-		$this->render_input( 'description', '40' );
+		echo $this->render_input( 'description', '40' );
 	}
 
 	/**
 	 * A String which will be placed before the output of the list
 	 */
 	public function before_output() {
-		$this->render_input( 'before_output' );
+		echo $this->render_input( 'before_output' );
 	}
 
 	/**
 	 * A String which will be placed after the output of the list
 	 */
 	public function after_output() {
-		$this->render_input( 'after_output' );
+		echo $this->render_input( 'after_output' );
 	}
 
 	/**
 	 * A String which will be placed before every item of the list
 	 */
 	public function before_item() {
-		$this->render_input( 'before_item' );
+		echo $this->render_input( 'before_item' );
 	}
 
 	/**
 	 * A String which will be placed after every item of the list
 	 */
 	public function after_item() {
-		$this->render_input( 'after_item' );
+		echo $this->render_input( 'after_item' );
 	}
 
 	/**
 	 * The output can be placed after the_content
 	 */
 	public function content_filter() {
-		$this->render_checkbox( 'content_filter' );
+		echo $this->render_checkbox( 'content_filter' );
 	}
 
 	/**
@@ -292,7 +292,7 @@ class MslsAdmin extends MslsMain {
 			10 :
 			$options->content_priority
 		);
-		$this->render_select( 'content_priority', $arr, $selected );
+		echo $this->render_select( 'content_priority', $arr, $selected );
 	}
 
 	/**
@@ -301,22 +301,21 @@ class MslsAdmin extends MslsMain {
 	 * @todo This is a value of a directory-url which should be more clear
 	 */
 	public function image_url() {
-		$this->render_input( 'image_url' );
+		echo $this->render_input( 'image_url' );
 	}
 
 	/**
 	 * Render form-element (checkbox)
 	 *
 	 * @param string $key Name and ID of the form-element
-	 * @return MslsAdmin
+	 * @return string
 	 */
 	public function render_checkbox( $key ) {
-		printf(
+		return sprintf(
 			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
 			$key,
 			checked( 1, MslsOptions::instance()->$key )
 		);
-		return $this;
 	}
 
 	/**
@@ -324,16 +323,15 @@ class MslsAdmin extends MslsMain {
 	 *
 	 * @param string $key Name and ID of the form-element
 	 * @param string $size Size-attribute of the input-field
-	 * @return MslsAdmin
+	 * @return string
 	 */
 	public function render_input( $key, $size = '30' ) {
-		printf(
+		return sprintf(
 			'<input id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"/>',
 			$key,
 			esc_attr( MslsOptions::instance()->$key ),
 			$size
 		);
-		return $this;
 	}
 
 	/**
@@ -342,7 +340,7 @@ class MslsAdmin extends MslsMain {
 	 * @param string $key Name and ID of the form-element
 	 * @param array $arr Options as associative array
 	 * @param string $selected Values which should be selected
-	 * @return MslsAdmin
+	 * @return string
 	 */
 	public function render_select( $key, array $arr, $selected ) {
 		$options = array();
@@ -354,12 +352,11 @@ class MslsAdmin extends MslsMain {
 				$description
 			);
 		}
-		printf(
+		sprintf(
 			'<select id="%1$s" name="msls[%1$s]">%2$s</select>',
 			$key,
 			implode( '', $options )
 		);
-		return $this;
 	}
 
 	/**
