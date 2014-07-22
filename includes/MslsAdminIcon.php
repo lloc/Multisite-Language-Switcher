@@ -140,7 +140,7 @@ class MslsAdminIcon {
 	 * Get link as html-tag
 	 * @return string
 	 */
-	protected function get_a() {
+	public function get_a() {
 		if ( ! empty( $this->href ) ) {
 			$href  = $this->href;
 			$title = sprintf(
@@ -168,14 +168,16 @@ class MslsAdminIcon {
 	 * @uses get_admin_url()
 	 * @return string
 	 */
-	protected function get_edit_new() {
+	public function get_edit_new() {
 		/**
 		 * Returns custom path to the admin icon
 		 * @since 0.9.9
 		 * @param string $path
 		 */
-		$path = (string) apply_filters( 'msls_admin_icon_get_edit_new', $this->path );
-		return get_admin_url( get_current_blog_id(), $path );
+		return get_admin_url(
+			get_current_blog_id(),
+			(string) apply_filters( 'msls_admin_icon_get_edit_new', $this->path )
+		);
 	}
 
 }
