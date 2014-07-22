@@ -15,7 +15,7 @@ class MslsAdmin extends MslsMain {
 	 * Init
 	 * @return MslsAdmin
 	 */
-	static function init() {
+	public static function init() {
 		wp_enqueue_style(
 			'msls-styles',
 			plugins_url( 'css/msls.css', MSLS_PLUGIN__FILE__ ),
@@ -83,7 +83,7 @@ class MslsAdmin extends MslsMain {
 	 * Create a submenu which contains links to all blogs of the current user
 	 * @return string
 	 */
-	protected function subsubsub() {
+	public function subsubsub() {
 		$blogs = MslsBlogCollection::instance();
 		$arr   = array();
 		foreach ( $blogs->get_plugin_active_blogs() as $blog ) {
