@@ -27,44 +27,41 @@ class WP_Test_MslsGetSet extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the get_arr-method
+	 * Verify the is_empty-method
 	 */
-	function test_get_arr_method() {
+	function test_is_empty_method() {
 		$obj = new MslsGetSet();
-		$this->assertEquals( array(), $obj->get_arr() );
+
+		$this->assertTrue( $obj->is_empty() );
 		$obj->temp = 'test';
-		$this->assertEquals( array( 'temp' => 'test' ), $obj->get_arr() );
+		$this->assertFalse( $obj->is_empty() );
+
 		return $obj;
 	}
 
 	/**
-	 * Verify the is_empty-method
-	 * @depends test_get_arr_method
+	 * Verify the has_value-method
+	 * @depends test_is_empty_method
 	 */
-	function test_is_empty_method( $obj ) {
-		$this->assertTrue( $obj->is_empty() );
-		$obj->temp = 'test';
-		$this->assertFalse( $obj->is_empty() );
+	function test_has_value_method( $obj ) {
+		$this->assertTrue( $obj->has_value( 'temp' ) );
+	}
+	
+	/**
+	 * Verify the get_arr-method
+	 * @depends test_is_empty_method
+	 */
+	function test_get_arr_method( $obj ) {
+		$this->assertEquals( array( 'temp' => 'test' ), $obj->get_arr() );
 	}
 
 	/**
 	 * Verify the reset-method
-	 * @depends test_get_arr_method
+	 * @depends test_is_empty_method
 	 */
 	function test_reset_method( $obj ) {
-		$obj->temp = 'test';
 		$obj->reset();
 		$this->assertEquals( array(), $obj->get_arr() );
-	}
-
-	/**
-	 * Verify the has_value-method
-	 * @depends test_get_arr_method
-	 */
-	function test_has_value_method( $obj ) {
-		$this->assertFalse( $obj->has_value( 'temp' ) );
-		$obj->temp = 'test';
-		$this->assertTrue( $obj->has_value( 'temp' ) );
 	}
 
 }

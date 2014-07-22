@@ -90,7 +90,7 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 	/**
 	 * Verify the language-method
 	 */
-	function test_language_method() {
+	function test_language_cmp() {
 		$a = new MslsBlog( null, null );
 		$b = new MslsBlog( null, null );
 		$this->assertEquals( 0, $a->language( $a, $b ) );
@@ -99,10 +99,10 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 	/**
 	 * Verify the description-method
 	 */
-	function test_description_method() {
+	function test_description_cmp() {
 		$a = new MslsBlog( null, null );
 		$b = new MslsBlog( null, null );
-		$this->assertEquals( 0, $a->language( $a, $b ) );
+		$this->assertEquals( 0, $a->description( $a, $b ) );
 	}
 
 }
