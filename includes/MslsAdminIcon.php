@@ -75,7 +75,7 @@ class MslsAdminIcon {
 	 * @uses add_query_arg()
 	 * @return MslsAdminIcon
 	 */
-	protected function set_path() {
+	public function set_path() {
 		if ( 'post' != $this->type ) {
 			$this->path = add_query_arg(
 				array( 'post_type' => $this->type ),
