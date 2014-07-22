@@ -49,7 +49,8 @@ class WP_Test_MslsJson extends WP_UnitTestCase {
 	 * Verify the get- and the __toString-methods
 	 * @depends test_add_get_methods
 	 */
-	function test_get_toString_methods( $obj ) {
+	function test___toString_methods( $obj ) {
+		$this->assertInternalType( 'string', $obj->__toString() );
 		$this->assertEquals(
 			'[{"value":1,"label":"Test 1"},{"value":2,"label":"Test 2"},{"value":0,"label":"Test 3"}]',
 			$obj->__toString()
