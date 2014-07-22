@@ -163,7 +163,7 @@ class MslsAdmin extends MslsMain {
 			'display',
 			MslsLink::get_types_description(),
 			MslsOptions::instance()->display
-		);
+		); // xss ok
 	}
 
 	/**
@@ -178,7 +178,7 @@ class MslsAdmin extends MslsMain {
 			'reference_user',
 			$users,
 			MslsOptions::instance()->reference_user
-		);
+		); // xss ok
 	}
 
 	/**
@@ -188,7 +188,7 @@ class MslsAdmin extends MslsMain {
 	 * input fields in the backend instead of the traditional select-menus.
 	 */
 	public function activate_autocomplete() {
-		echo $this->render_checkbox( 'activate_autocomplete' );
+		echo $this->render_checkbox( 'activate_autocomplete' ); // xss ok
 	}
 
 	/**
@@ -198,7 +198,7 @@ class MslsAdmin extends MslsMain {
 	 * the output will be sorted by the language-code.
 	 */
 	public function sort_by_description() {
-		echo $this->render_checkbox( 'sort_by_description' );
+		echo $this->render_checkbox( 'sort_by_description' ); // xss ok
 	}
 
 	/**
@@ -208,7 +208,7 @@ class MslsAdmin extends MslsMain {
 	 * plugin will ignore this blog while this option is active.
 	 */
 	public function exclude_current_blog() {
-		echo $this->render_checkbox( 'exclude_current_blog' );
+		echo $this->render_checkbox( 'exclude_current_blog' ); // xss ok
 	}
 
 	/**
@@ -218,7 +218,7 @@ class MslsAdmin extends MslsMain {
 	 * translations.
 	 */
 	public function only_with_translation() {
-		echo $this->render_checkbox( 'only_with_translation' );
+		echo $this->render_checkbox( 'only_with_translation' ); // xss ok
 	}
 
 	/**
@@ -228,7 +228,7 @@ class MslsAdmin extends MslsMain {
 	 * link to the current blog.
 	 */
 	public function output_current_blog() {
-		echo $this->render_checkbox( 'output_current_blog' );
+		echo $this->render_checkbox( 'output_current_blog' ); // xss ok
 	}
 
 	/**
@@ -237,42 +237,42 @@ class MslsAdmin extends MslsMain {
 	 * The language will be used ff there is no description.
 	 */
 	public function description() {
-		echo $this->render_input( 'description', '40' );
+		echo $this->render_input( 'description', '40' ); // xss ok
 	}
 
 	/**
 	 * A String which will be placed before the output of the list
 	 */
 	public function before_output() {
-		echo $this->render_input( 'before_output' );
+		echo $this->render_input( 'before_output' ); // xss ok
 	}
 
 	/**
 	 * A String which will be placed after the output of the list
 	 */
 	public function after_output() {
-		echo $this->render_input( 'after_output' );
+		echo $this->render_input( 'after_output' ); // xss ok
 	}
 
 	/**
 	 * A String which will be placed before every item of the list
 	 */
 	public function before_item() {
-		echo $this->render_input( 'before_item' );
+		echo $this->render_input( 'before_item' ); // xss ok
 	}
 
 	/**
 	 * A String which will be placed after every item of the list
 	 */
 	public function after_item() {
-		echo $this->render_input( 'after_item' );
+		echo $this->render_input( 'after_item' ); // xss ok
 	}
 
 	/**
 	 * The output can be placed after the_content
 	 */
 	public function content_filter() {
-		echo $this->render_checkbox( 'content_filter' );
+		echo $this->render_checkbox( 'content_filter' ); // xss ok
 	}
 
 	/**
@@ -292,7 +292,7 @@ class MslsAdmin extends MslsMain {
 			10 :
 			$options->content_priority
 		);
-		echo $this->render_select( 'content_priority', $arr, $selected );
+		echo $this->render_select( 'content_priority', $arr, $selected ); // xss ok
 	}
 
 	/**
@@ -301,7 +301,7 @@ class MslsAdmin extends MslsMain {
 	 * @todo This is a value of a directory-url which should be more clear
 	 */
 	public function image_url() {
-		echo $this->render_input( 'image_url' );
+		echo $this->render_input( 'image_url' ); // xss ok
 	}
 
 	/**
@@ -342,7 +342,7 @@ class MslsAdmin extends MslsMain {
 	 * @param string $selected Values which should be selected
 	 * @return string
 	 */
-	public function render_select( $key, array $arr, $selected ) {
+	public function render_select( $key, array $arr, $selected = '' ) {
 		$options = array();
 		foreach ( $arr as $value => $description ) {
 			$options[] = sprintf(
