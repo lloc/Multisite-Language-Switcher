@@ -72,7 +72,7 @@ class WP_Test_MslsAdmin extends WP_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_validate( $obj ) {
-		$this->assertInternalType( 'string', $obj->validate( array() ) );
+		$this->assertInternalType( 'array', $obj->validate( array() ) );
 	}
 
 }
