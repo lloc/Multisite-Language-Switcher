@@ -1,13 +1,13 @@
 <?php
 /**
- * Tests for MslsOptions
+ * Tests for MslsAdminIcon
  *
  * @author Dennis Ploetner <re@lloc.de>
  * @package Msls
  */
 
 /**
- * WP_Test_MslsOptions
+ * WP_Test_MslsAdminIcon
  */
 class WP_Test_MslsAdminIcon extends WP_UnitTestCase {
 

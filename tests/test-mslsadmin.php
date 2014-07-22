@@ -1,13 +1,13 @@
 <?php
 /**
- * Tests for MslsBlog
+ * Tests for MslsAdmin
  *
  * @author Dennis Ploetner <re@lloc.de>
  * @package Msls
  */
 
 /**
- * WP_Test_MslsBlog
+ * WP_Test_MslsAdmin
  */
 class WP_Test_MslsAdmin extends WP_UnitTestCase {
 
