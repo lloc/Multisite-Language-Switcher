@@ -27,10 +27,19 @@ class WP_Test_MslsRegistry extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the set_object- and get_object-method
+	 * Verify the instance-method
 	 */
-	function test_set_method() {
+	function test_instance_method() {
 		$obj = MslsRegistry::instance();
+		$this->assertInstanceOf( 'MslsRegistry', $obj );
+		return $obj;
+	}
+
+	/**
+	 * Verify the set_object- and get_object-method
+	 * @depends test_instance_method
+	 */
+	function test_set_method( $obj ) {
 		$this->assertEquals( null, $obj->get_object( 'test_var' ) );
 		$obj->set_object( 'test_var', 1 );
 		$this->assertEquals( 1, $obj->get_object( 'test_var' ) );
@@ -38,11 +47,5 @@ class WP_Test_MslsRegistry extends WP_UnitTestCase {
 		$this->assertEquals( null, $obj->get_object( 'test_var' ) );
 	}
 
-	/**
-	 * Verify the instance-method
-	 */
-	function test_instance_method() {
-		$this->assertInstanceOf( 'MslsRegistry',  MslsRegistry::instance() );
-	}
 
 }

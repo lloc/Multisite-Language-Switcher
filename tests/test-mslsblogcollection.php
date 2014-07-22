@@ -90,7 +90,7 @@ class WP_Test_MslsBlogCollection extends WP_UnitTestCase {
 	 * @depends test_instance_method
 	 */
 	function test_is_plugin_active( $obj ) {
-		$this->assertInternalType( 'boolean', $obj->is_plugin_active() );
+		$this->assertInternalType( 'boolean', $obj->is_plugin_active( 0 ) );
 	}
 
 	/**
