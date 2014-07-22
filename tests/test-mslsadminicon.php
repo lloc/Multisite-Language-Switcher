@@ -30,7 +30,7 @@ class WP_Test_MslsAdminIcon extends WP_UnitTestCase {
 	 * Verify the create-method
 	 */
 	function test_create_method() {
-		$obj = MslsAdminIcon::init();
+		$obj = MslsAdminIcon::create();
 		$this->assertInstanceOf( 'MslsAdminIcon', $obj );
 		return $obj;
 	}
