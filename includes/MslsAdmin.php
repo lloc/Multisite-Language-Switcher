@@ -352,7 +352,7 @@ class MslsAdmin extends MslsMain {
 				$description
 			);
 		}
-		sprintf(
+		return sprintf(
 			'<select id="%1$s" name="msls[%1$s]">%2$s</select>',
 			$key,
 			implode( '', $options )
