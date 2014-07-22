@@ -36,14 +36,6 @@ class WP_Test_MslsAdmin extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the render-method
-	 * @depends test_init_method
-	 */
-	function test_render( $obj ) {
-		// render just prints a some text
-	}
-
-	/**
 	 * Verify the init-method
 	 * @depends test_init_method
 	 */
@@ -72,7 +64,7 @@ class WP_Test_MslsAdmin extends WP_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_render_select( $obj ) {
-		$this->assertInstanceOf( 'MslsAdmin', $obj->render_select( 'test' ) );
+		$this->assertInstanceOf( 'MslsAdmin', $obj->render_select( 'test', array() ) );
 	}
 
 	/**

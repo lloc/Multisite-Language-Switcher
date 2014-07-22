@@ -365,17 +365,19 @@ class MslsAdmin extends MslsMain {
 	/**
 	 * Validates input before saving it
 	 *
-	 * @param array $input Values of the submitted form
+	 * @param array $arr Values of the submitted form
 	 * @return array Validated input
 	 */
-	public function validate( array $input ) {
-		$input['display']   = (
-			isset( $input['display'] ) ?
-			(int) $input['display'] :
+	public function validate( array $arr ) {
+		$arr['display'] = (
+			isset( $arr['display'] ) ?
+			(int) $arr['display'] :
 			0
 		);
-		$input['image_url'] = esc_url( rtrim( $input['image_url'], '/' ) );
-		return $input;
+		if ( isset( $arr['image_url'] ) ) {
+			$arr['image_url'] = esc_url( rtrim( $arr['image_url'], '/' ) );
+		}
+		return $arr;
 	}
 
 }
