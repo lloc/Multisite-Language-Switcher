@@ -42,16 +42,14 @@ class WP_Test_MslsJson extends WP_UnitTestCase {
 			),
 			$obj->get()
 		);
+		return $obj;
 	}
 
 	/**
 	 * Verify the get- and the __toString-methods
+	 * @depends test_add_get_methods
 	 */
-	function test_get_toString_methods() {
-		$obj = new MslsJson();
-		$obj->add( null, 'Test 3' )
-			->add( '2', 'Test 2' )
-			->add( 1, 'Test 1' );
+	function test_get_toString_methods( $obj ) {
 		$this->assertEquals(
 			'[{"value":1,"label":"Test 1"},{"value":2,"label":"Test 2"},{"value":0,"label":"Test 3"}]',
 			$obj->__toString()

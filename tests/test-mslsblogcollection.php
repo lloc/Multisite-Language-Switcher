@@ -44,4 +44,13 @@ class WP_Test_MslsBlogCollection extends WP_UnitTestCase {
 		$this->assertEquals( false, $obj->get_configured_blog_description( 0, false ) );
 	}
 
+	/**
+	 * Verify the test_get_blogs_of_reference_user-method
+	 * @depends test_instance_method
+	 */
+	function test_get_blogs_of_reference_user( $obj ) {
+		$option = $this->getMock( 'MslsOptions' );
+		$this->assertInternalType( 'array', $obj->get_blogs_of_reference_user( $options ) );
+	}
+
 }

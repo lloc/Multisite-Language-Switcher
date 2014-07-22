@@ -52,7 +52,7 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 	 * @depends test___get_method
 	 */
 	function test_get_language_method( $obj ) {
-		$this->assertEquals( 'us', $obj->get_description() );
+		$this->assertEquals( 'us', $obj->get_language() );
 	}
 	
 	/**

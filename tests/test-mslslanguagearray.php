@@ -27,9 +27,9 @@ class WP_Test_MslsLanguageArray extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the set-method
+	 * Verify the get_val-method
 	 */
-	function test_set_method() {
+	function test_get_val_method() {
 		$arr = array(
 			'fr_FR' => 0, // not ok, value 0 is not ok as blog_id
 			'it'    => 1,
@@ -37,35 +37,28 @@ class WP_Test_MslsLanguageArray extends WP_UnitTestCase {
 			'x'     => 3, // not ok, minlength of string is 2
 		);
 		$obj = new MslsLanguageArray( $arr );
-		$this->assertEquals( array( 'it' => 1, 'de_DE' => 2 ), $obj->get_arr() );
-		$obj->set( 'fr_FR', 3 );
-		$this->assertEquals( array( 'it' => 1, 'de_DE' => 2, 'fr_FR' => 3 ), $obj->get_arr() );
-	}
-
-	/**
-	 * Verify the get_val-method
-	 */
-	function test_get_val_method() {
-		$arr = array(
-			'it'    => 1,
-			'de_DE' => 2,
-		);
-		$obj = new MslsLanguageArray( $arr );
 		$this->assertEquals( 1, $obj->get_val( 'it' ) );
 		$this->assertEquals( 0, $obj->get_val( 'fr_FR' ) );
+		return $obj;
 	}
 
 	/**
 	 * Verify the get_arr-method
+	 * @depends test_get_val_method
 	 */
-	function test_get_arr_method() {
-		$arr = array(
-			'it'    => 1,
-			'de_DE' => 2,
-		);
-		$obj = new MslsLanguageArray( $arr );
+	function test_get_arr_method( $obj ) {
 		$this->assertEquals( array( 'it' => 1, 'de_DE' => 2 ), $obj->get_arr() );
 		$this->assertEquals( array( 'it' => 1 ), $obj->get_arr( 'de_DE' ) );
+	}
+
+	/**
+	 * Verify the set-method
+	 * @depends test_get_val_method
+	 */
+	function test_set_method( $obj ) {
+		$this->assertEquals( array( 'it' => 1, 'de_DE' => 2 ), $obj->get_arr() );
+		$obj->set( 'fr_FR', 3 );
+		$this->assertEquals( array( 'it' => 1, 'de_DE' => 2, 'fr_FR' => 3 ), $obj->get_arr() );
 	}
 
 }
