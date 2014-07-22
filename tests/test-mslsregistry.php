@@ -47,5 +47,4 @@ class WP_Test_MslsRegistry extends WP_UnitTestCase {
 		$this->assertEquals( null, $obj->get_object( 'test_var' ) );
 	}
 
-
 }
