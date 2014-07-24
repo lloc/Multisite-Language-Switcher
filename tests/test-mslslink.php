@@ -51,7 +51,7 @@ class WP_Test_MslsLink extends WP_UnitTestCase {
 	 * Verify the static callback-method
 	 */
 	function test_callback_method() {
-		$this->assertEqual( '{Test}', MslsLink::callback( 'Test' ) );
+		$this->assertEquals( '{Test}', MslsLink::callback( 'Test' ) );
 	}
 
 	/**
