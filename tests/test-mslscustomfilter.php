@@ -1,15 +1,15 @@
 <?php
 /**
- * Tests for MslsCustomColumn
+ * Tests for MslsCustomFilter
  *
  * @author Dennis Ploetner <re@lloc.de>
  * @package Msls
  */
 
 /**
- * WP_Test_MslsCustomColumn
+ * WP_Test_MslsCustomFilter
  */
-class WP_Test_MslsCustomColumn extends WP_UnitTestCase {
+class WP_Test_MslsCustomFilter extends WP_UnitTestCase {
 
 	/**
 	 * SetUp initial settings
@@ -30,17 +30,18 @@ class WP_Test_MslsCustomColumn extends WP_UnitTestCase {
 	 * Verify the init-method
 	 */
 	function test_init_method() {
-		$obj = MslsCustomColumn::init();
-		$this->assertInstanceOf( 'MslsCustomColumn', $obj );
+		$obj = MslsCustomFilter::init();
+		$this->assertInstanceOf( 'MslsCustomFilter', $obj );
 		return $obj;
 	}
 
 	/**
-	 * Verify the th-method
+	 * Verify the init-method
 	 * @depends test_init_method
 	 */
-	function test_th_method( $obj ) {
-		$this->assertInternalType( 'array', $obj->th( array() ) );
+	function test_execute_filter_method( $obj ) {
+		$query = $this->getMock( 'WP_Query' );
+		$this->assertFalse( $obj->execute_filter( $query ) );
 	}
 
 }

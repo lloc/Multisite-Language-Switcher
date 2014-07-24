@@ -9,7 +9,7 @@
 /**
  * WP_Test_MslsCustomColumnTaxonomy
  */
-class WP_MslsCustomColumnTaxonomy extends WP_UnitTestCase {
+class WP_Test_MslsCustomColumnTaxonomy extends WP_UnitTestCase {
 
 	/**
 	 * SetUp initial settings
@@ -30,7 +30,7 @@ class WP_MslsCustomColumnTaxonomy extends WP_UnitTestCase {
 	 * Verify the init-method
 	 */
 	function test_init_method() {
-		$this->assertInstanceOf( 'MslsCustomColumnTaxonomy', MslsCustomColumn::init() );
+		$this->assertInstanceOf( 'MslsCustomColumnTaxonomy', MslsCustomColumnTaxonomy::init() );
 	}
 
 }
