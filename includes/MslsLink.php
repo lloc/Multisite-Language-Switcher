@@ -94,7 +94,7 @@ class MslsLink extends MslsGetSet {
 	 * @return string
 	 */
 	public static function callback( $x ) {
-		return '{' . (string) $x . '}';
+		return '{' . strval( $x ) . '}';
 	}
 
 	/**
