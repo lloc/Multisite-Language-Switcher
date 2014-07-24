@@ -51,12 +51,6 @@ class WP_Test_MslsLink extends WP_UnitTestCase {
 	 * Verify the static callback-method
 	 */
 	function test_callback_method() {
-		$this->assertInternalType( 'string', MslsLink::callback( null ) );
-		$this->assertInternalType( 'string', MslsLink::callback( 'null' ) );
-		$this->assertInternalType( 'string', MslsLink::callback( 1 ) );
-		$this->assertInternalType( 'string', MslsLink::callback( 1.11 ) );
-		$this->assertInternalType( 'string', MslsLink::callback( array() ) );
-		$this->assertInternalType( 'string', MslsLink::callback( new stdClass ) );
 		$this->assertInternalEqual( '{Test}', MslsLink::callback( 'Test' ) );
 	}
 

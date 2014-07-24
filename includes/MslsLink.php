@@ -90,11 +90,11 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Callback function (no lambda here because PHP 5.2 might be still in use)
-	 * @param mixed $x
+	 * @param string $x
 	 * @return string
 	 */
 	public static function callback( $x ) {
-		return '{' . strval( $x ) . '}';
+		return '{' . $x . '}';
 	}
 
 	/**
