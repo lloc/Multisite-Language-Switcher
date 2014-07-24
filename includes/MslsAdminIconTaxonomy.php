@@ -37,7 +37,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 	 * @uses add_query_arg()
 	 * @return MslsAdminIconTaxonomy
 	 */
-	protected function set_path() {
+	public function set_path() {
 		$args      = array( 'taxonomy' => $this->type );
 		$post_type = MslsTaxonomy::instance()->get_post_type();
 		if ( ! empty( $post_type ) ) {

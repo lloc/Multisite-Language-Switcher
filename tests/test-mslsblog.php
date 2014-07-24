@@ -46,7 +46,7 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 	function test_get_description_method( $obj ) {
 		$this->assertEquals( 'Test', $obj->get_description() );
 	}
-	
+
 	/**
 	 * Verify the get_language-method
 	 * @depends test___get_method
@@ -54,7 +54,7 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 	function test_get_language_method( $obj ) {
 		$this->assertEquals( 'us', $obj->get_language() );
 	}
-	
+
 	/**
 	 * Verify the get_alpha2-method
      * @depends test___get_method
