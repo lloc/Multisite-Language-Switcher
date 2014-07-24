@@ -115,26 +115,30 @@ class MslsMetaBox extends MslsMain {
 		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			global $post;
+
 			$type   = get_post_type( $post->ID );
 			$mydata = new MslsOptionsPost( $post->ID );
 			$temp   = $post;
-			$lis    = '';
+
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
+
+			$lis = '';
+
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$flag_url = MslsOptions::instance()->get_flag_url( $language );
-				$selects  = '';
-				$pto      = get_post_type_object( $type );
 
-				$icon = MslsAdminIcon::create();
-				$icon->set_language( $language );
-				$icon->set_src( $flag_url );
-
+				$icon = MslsAdminIcon::create()
+					->set_language( $language )
+					->set_src( MslsOptions::instance()->get_flag_url( $language ) );
 				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( $mydata->$language );
 				}
+
+				$selects = '';
+				$pto     = get_post_type_object( $type );
+
 				if ( $pto->hierarchical ) {
 					$selects .= wp_dropdown_pages(
 						array(
@@ -149,6 +153,7 @@ class MslsMetaBox extends MslsMain {
 				}
 				else {
 					$options  = '';
+
 					$my_query = new WP_Query(
 						array(
 							'post_type' => $type,
@@ -158,6 +163,7 @@ class MslsMetaBox extends MslsMain {
 							'posts_per_page' => (-1),
 						)
 					);
+
 					while ( $my_query->have_posts() ) {
 						$my_query->the_post();
 						$my_id    = get_the_ID();
@@ -168,18 +174,21 @@ class MslsMetaBox extends MslsMain {
 							get_the_title()
 						);
 					}
+
 					$selects .= sprintf(
 						'<select name="msls_input_%s"><option value=""></option>%s</select>',
 						$language,
 						$options
 					);
 				}
+
 				$lis .= sprintf(
 					'<li><label for="msls_input_%s">%s</label>%s</li>',
 					$language,
 					$icon,
 					$selects
 				);
+
 				restore_current_blog();
 			}
 			printf(
@@ -202,13 +211,17 @@ class MslsMetaBox extends MslsMain {
 	 */
 	public function render_input() {
 		$blogs = MslsBlogCollection::instance()->get();
+
 		if ( $blogs ) {
 			global $post;
+
 			$post_type = get_post_type( $post->ID );
 			$my_data   = new MslsOptionsPost( $post->ID );
 			$temp      = $post;
 			$items     = '';
+
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
+
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
@@ -217,11 +230,13 @@ class MslsMetaBox extends MslsMain {
 				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
 
 				$value = $title = '';
+
 				if ( $my_data->has_value( $language ) ) {
 					$icon->set_href( $my_data->$language );
 					$value = $my_data->$language;
 					$title = get_the_title( $value );
 				}
+
 				$items .= sprintf(
 					'<li>
 					<label for="msls_title_%1$s">%2$s</label>
@@ -234,8 +249,10 @@ class MslsMetaBox extends MslsMain {
 					$value,
 					$title
 				);
+
 				restore_current_blog();
 			}
+
 			printf(
 				'<ul>%s</ul>
 				<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
@@ -245,6 +262,7 @@ class MslsMetaBox extends MslsMain {
 				$post_type,
 				__( 'Update', 'msls' )
 			);
+
 			$post = $temp;
 		}
 		else {
@@ -269,9 +287,11 @@ class MslsMetaBox extends MslsMain {
 			'edit_page' :
 			'edit_post'
 		);
+
 		if ( ! current_user_can( $capability, $post_id ) ) {
 			return;
 		}
+
 		$this->save( $post_id, 'MslsOptionsPost' );
 	}
 
