@@ -36,7 +36,7 @@ class WP_Test_MslsCustomFilter extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the init-method
+	 * Verify the execute_filter-method
 	 * @depends test_init_method
 	 */
 	function test_execute_filter_method( $obj ) {

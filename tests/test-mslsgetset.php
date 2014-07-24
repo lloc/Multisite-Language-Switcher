@@ -28,14 +28,27 @@ class WP_Test_MslsGetSet extends WP_UnitTestCase {
 
 	/**
 	 * Verify the is_empty-method
+	 * @covers MslsGetSet::is_empty()
+	 * @covers MslsGetSet::__set()
+	 * @covers MslsGetSet::__get()
+	 * @covers MslsGetSet::__isset()
+	 * @covers MslsGetSet::__unset()
+
 	 */
 	function test_is_empty_method() {
 		$obj = new MslsGetSet();
 
 		$this->assertTrue( $obj->is_empty() );
-		$obj->temp = 'test';
+		$obj->abc = 'test';
+
+		$this->assertEquals( 'test' , $obj->abc );
+		$this->assertTrue( isset( $obj->abc ) );
 		$this->assertFalse( $obj->is_empty() );
 
+		unset( $obj->abc );
+		$this->assertTrue( $obj->is_empty() );
+
+		$obj->temp = 'test';
 		return $obj;
 	}
 

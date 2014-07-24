@@ -27,7 +27,10 @@ class WP_Test_MslsJson extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the add-, the get- and the compare-methods
+	 * Verify the add- and the get-methods
+	 * @covers MslsJson::add
+	 * @covers MslsJson::get
+	 * @covers MslsJson::compare
 	 */
 	function test_add_get_methods() {
 		$obj = new MslsJson();
@@ -46,7 +49,7 @@ class WP_Test_MslsJson extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Verify the get- and the __toString-methods
+	 * Verify the __toString-method
 	 * @depends test_add_get_methods
 	 */
 	function test___toString_methods( $obj ) {
