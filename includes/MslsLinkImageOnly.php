@@ -21,7 +21,7 @@ class MslsLinkImageOnly extends MslsLink {
 	 * Get the description
 	 * @return string
 	 */
-	static function get_description() {
+	public static function get_description() {
 		return __( 'Flag only', 'msls' );
 	}
 
