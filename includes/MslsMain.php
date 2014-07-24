@@ -32,9 +32,12 @@ class MslsMain {
 			$arr[ $current_blog->get_language() ] = (int) $object_id;
 		}
 
-		foreach ( filter_input_array( INPUT_POST ) as $key => $value ) {
-			if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
-				$arr[ substr( $key, 11 ) ] = (int) $value;
+		$input_post = filter_input_array( INPUT_POST );
+		if ( is_array( $input_post ) ) {
+			foreach ( $input_post as $key => $value ) {
+				if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
+					$arr[ substr( $key, 11 ) ] = (int) $value;
+				}
 			}
 		}
 
