@@ -37,53 +37,6 @@ class MslsMain {
 	}
 
 	/**
-	 * Save
-	 * @param int $object_id
-	 * @param string $class
-	 */
-	protected function save( $object_id, $class ) {
-		if ( has_action( 'msls_main_save' ) ) {
-			/**
-			 * Calls completly customized save-routine
-			 * @since 0.9.9
-			 * @param int $object_id
-			 * @param string Classname
-			 */
-			do_action( 'msls_main_save', $object_id, $class );
-		}
-		else {
-			$blogs     = MslsBlogCollection::instance();
-			$language  = $blogs->get_current_blog()->get_language();
-			$msla      = new MslsLanguageArray( $this->get_input_array( $object_id ) );
-			$options   = new $class( $object_id );
-			$temp      = $options->get_arr();
-			$object_id = $msla->get_val( $language );
-
-			if ( 0 != $object_id ) {
-				$options->save( $msla->get_arr( $language ) );
-			}
-			else {
-				$options->delete();
-			}
-
-			foreach ( $blogs->get() as $blog ) {
-				switch_to_blog( $blog->userblog_id );
-				$language  = $blog->get_language();
-				$object_id = $msla->get_val( $language );
-				if ( 0 != $object_id ) {
-					$options = new $class( $object_id );
-					$options->save( $msla->get_arr( $language ) );
-				}
-				elseif ( isset( $temp[ $language ] ) ) {
-					$options = new $class( $temp[ $language ] );
-					$options->delete();
-				}
-				restore_current_blog();
-			}
-		}
-	}
-
-	/**
 	 * Checks if the current input comes from the autosave-functionality
 	 * @param int $post_id
 	 * @return bool
@@ -106,9 +59,60 @@ class MslsMain {
 	/**
 	 * Delete
 	 * @param int $object_id
+	 * @codeCoverageIgnore
 	 */
 	public function delete( $object_id ) {
 		$this->save( $object_id, 'MslsOptionsPost' );
+	}
+
+	/**
+	 * Save
+	 * @param int $object_id
+	 * @param string $class
+	 * @codeCoverageIgnore
+	 */
+	protected function save( $object_id, $class ) {
+		if ( has_action( 'msls_main_save' ) ) {
+			/**
+			 * Calls completly customized save-routine
+			 * @since 0.9.9
+			 * @param int $object_id
+			 * @param string Classname
+			 */
+			do_action( 'msls_main_save', $object_id, $class );
+		}
+		else {
+			$blogs    = MslsBlogCollection::instance();
+			$language = $blogs->get_current_blog()->get_language();
+			$msla     = new MslsLanguageArray( $this->get_input_array( $object_id ) );
+			$options  = new $class( $object_id );
+			$temp     = $options->get_arr();
+	
+			if ( 0 != $msla->get_val( $language ) ) {
+				$options->save( $msla->get_arr( $language ) );
+			}
+			else {
+				$options->delete();
+			}
+	
+			foreach ( $blogs->get() as $blog ) {
+				switch_to_blog( $blog->userblog_id );
+
+				$language = $blog->get_language();
+				$larr_id  = $msla->get_val( $language );
+
+				if ( 0 != $larr_id ) {
+					$options = new $class( $larr_id );
+					$options->save( $msla->get_arr( $language ) );
+				}
+				elseif ( isset( $temp[ $language ] ) ) {
+					$options = new $class( $temp[ $language ] );
+					$options->delete();
+				}
+
+				restore_current_blog();
+			}
+		}
 	}
 
 }

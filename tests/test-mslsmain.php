@@ -35,4 +35,29 @@ class WP_Test_MslsMain extends WP_UnitTestCase {
 		MslsMain::init();
 	}
 
+	/**
+	 * Verify the get_input_array-method
+	 */
+	function test_get_input_array_method() {
+		$obj = new MslsMain;
+		$this->assertInternalType( 'array', $obj->get_input_array( 0 ) );
+		return $obj;
+	}
+
+	/**
+	 * Verify the is_autosave-method
+	 * @depends test_get_input_array_method
+	 */
+	function test_is_autosave_method( $obj ) {
+		$this->assertInternalType( 'boolean', $obj->is_autosave() );
+	}
+	
+	/**
+	 * Verify the verify_nonce-method
+	 * @depends test_get_input_array_method
+	 */
+	function test_verify_nonce_method( $obj ) {
+		$this->assertInternalType( 'boolean', $obj->verify_nonce() );
+	}
+
 }
