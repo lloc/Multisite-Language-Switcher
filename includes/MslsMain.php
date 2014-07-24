@@ -15,7 +15,7 @@ class MslsMain {
 	 * Every child of MslsMain has to define a init-method
 	 * @return MslsMain
 	 */
-	static function init() {
+	public static function init() {
 		throw new Exception( 'Static method init is not defined' );
 	}
 
