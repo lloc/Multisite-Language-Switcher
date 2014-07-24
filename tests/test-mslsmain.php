@@ -40,7 +40,7 @@ class WP_Test_MslsMain extends WP_UnitTestCase {
 	 */
 	function test_get_input_array_method() {
 		$obj = new MslsMain;
-		$this->assertInternalType( 'array', $obj->get_input_array( 1 ) );
+		$this->assertInternalType( 'array', $obj->get_input_array( 0 ) );
 		return $obj;
 	}
 
@@ -49,7 +49,7 @@ class WP_Test_MslsMain extends WP_UnitTestCase {
 	 * @depends test_get_input_array_method
 	 */
 	function test_is_autosave_method( $obj ) {
-		$this->assertInternalType( 'boolean', $obj->is_autosave() );
+		$this->assertInternalType( 'boolean', $obj->is_autosave( 0 ) );
 	}
 	
 	/**
