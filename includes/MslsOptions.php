@@ -67,7 +67,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @param int $id
 	 * @return MslsOptions
 	 */
-	static function create( $id = 0 ) {
+	public static function create( $id = 0 ) {
 		if ( is_admin() ) {
 			$id  = (int) $id;
 
@@ -279,7 +279,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
 	 * @return MslsOptions
 	 */
-	static function instance() {
+	public static function instance() {
 		if ( ! ( $obj = MslsRegistry::get_object( 'MslsOptions' ) ) ) {
 			$obj = new self();
 			MslsRegistry::set_object( 'MslsOptions', $obj );

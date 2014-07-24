@@ -52,7 +52,7 @@ class MslsPostType extends MslsContentTypes implements IMslsRegistryInstance {
 	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
 	 * @return MslsBlogPostType
 	 */
-	static function instance() {
+	public static function instance() {
 		if ( ! ( $obj = MslsRegistry::get_object( 'MslsBlogPostType' ) ) ) {
 			$obj = new self();
 			MslsRegistry::set_object( 'MslsBlogPostType', $obj );

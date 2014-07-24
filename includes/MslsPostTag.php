@@ -17,7 +17,7 @@ class MslsPostTag extends MslsMain {
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
-	static function suggest() {
+	public static function suggest() {
 		$json = new MslsJson;
 
 		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
@@ -67,7 +67,7 @@ class MslsPostTag extends MslsMain {
 	 * Init
 	 * @return MslsPostTag
 	 */
-	static function init() {
+	public static function init() {
 		$obj = (
 			MslsOptions::instance()->activate_autocomplete ?
 			new self() :

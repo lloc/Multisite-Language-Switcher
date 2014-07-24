@@ -262,7 +262,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
 	 * @return MslsBlogCollection
 	 */
-	static function instance() {
+	public static function instance() {
 		if ( ! ( $obj = MslsRegistry::get_object( 'MslsBlogCollection' ) ) ) {
 			$obj = new self();
 			MslsRegistry::set_object( 'MslsBlogCollection', $obj );

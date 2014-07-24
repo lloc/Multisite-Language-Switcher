@@ -27,7 +27,7 @@ class MslsContentTypes {
 	 * Factory method
 	 * @return MslsContentTypes
 	 */
-	static function create() {
+	public static function create() {
 		if ( filter_has_var( INPUT_GET, 'taxonomy' ) || filter_has_var( INPUT_POST, 'taxonomy' ) ) {
 			return MslsTaxonomy::instance();
 		}

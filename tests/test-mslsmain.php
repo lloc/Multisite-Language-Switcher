@@ -51,7 +51,7 @@ class WP_Test_MslsMain extends WP_UnitTestCase {
 	function test_is_autosave_method( $obj ) {
 		$this->assertInternalType( 'boolean', $obj->is_autosave( 0 ) );
 	}
-	
+
 	/**
 	 * Verify the verify_nonce-method
 	 * @depends test_get_input_array_method

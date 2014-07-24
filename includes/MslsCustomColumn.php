@@ -16,7 +16,7 @@ class MslsCustomColumn extends MslsMain {
 	 * Init
 	 * @return MslsCustomColumn
 	 */
-	static function init() {
+	public static function init() {
 		$obj     = new self();
 		$options = MslsOptions::instance();
 		if ( ! $options->is_excluded() ) {

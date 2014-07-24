@@ -16,7 +16,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * Init
 	 * @return MslsCustomColumnTaxonomy
 	 */
-	static function init() {
+	public static function init() {
 		$obj     = new self();
 		$options = MslsOptions::instance();
 		if ( ! $options->is_excluded() ) {

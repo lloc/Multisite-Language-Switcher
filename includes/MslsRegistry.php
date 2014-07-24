@@ -59,7 +59,7 @@ class MslsRegistry {
 	 * Registry is a singleton
 	 * @return MslsRegistry
 	 */
-	static function instance() {
+	public static function instance() {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -71,7 +71,7 @@ class MslsRegistry {
 	 * @param string $key
 	 * @return mixed
 	 */
-	static function get_object( $key ) {
+	public static function get_object( $key ) {
 		return self::instance()->get( $key );
 	}
 
@@ -80,7 +80,7 @@ class MslsRegistry {
 	 * @param string $key
 	 * @param mixed
 	 */
-	static function set_object( $key, $instance ) {
+	public static function set_object( $key, $instance ) {
 		self::instance()->set( $key, $instance );
 	}
 

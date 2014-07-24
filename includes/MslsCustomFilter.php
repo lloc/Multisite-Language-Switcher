@@ -16,7 +16,7 @@ class MslsCustomFilter extends MslsMain {
 	 * Init
 	 * @return MslsCustomFilter
 	 */
-	static function init() {
+	public static function init() {
 		$obj     = new self();
 		$options = MslsOptions::instance();
 		if ( ! $options->is_excluded() ) {

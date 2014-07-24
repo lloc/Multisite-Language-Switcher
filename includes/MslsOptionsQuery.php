@@ -17,7 +17,7 @@ class MslsOptionsQuery extends MslsOptions {
 	 * @param int $id This parameter is unused here
 	 * @return MslsQueryOptions
 	 */
-	static function create( $id = 0 ) {
+	public static function create( $id = 0 ) {
 		if ( is_day() ) {
 			return new MslsOptionsQueryDay(
 				get_query_var( 'year' ),

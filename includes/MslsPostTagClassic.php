@@ -15,7 +15,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * Init
 	 * @return MslsPostTagClassic
 	 */
-	static function init() {
+	public static function init() {
 		return new self();
 	}
 

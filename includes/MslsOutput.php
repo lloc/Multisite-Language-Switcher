@@ -21,7 +21,7 @@ class MslsOutput extends MslsMain {
 	 * Init
 	 * @return MslsOutput
 	 */
-	static function init() {
+	public static function init() {
 		return new self();
 	}
 

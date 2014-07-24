@@ -51,7 +51,7 @@ class MslsAdminIcon {
 	 * Factory method
 	 * @return MslsAdminIcon
 	 */
-	static function create() {
+	public static function create() {
 		$obj  = MslsContentTypes::create();
 		$type = $obj->get_request();
 
