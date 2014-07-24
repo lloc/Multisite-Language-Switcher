@@ -28,6 +28,7 @@ class WP_Test_MslsMain extends WP_UnitTestCase {
 
 	/**
 	 * Verify the static init-method
+	 * @expectedException Exception
 	 * @expectedExceptionCode 0
 	 */
 	function test_init_method() {
