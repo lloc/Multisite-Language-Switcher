@@ -40,7 +40,7 @@ class WP_Test_MslsMain extends WP_UnitTestCase {
 	 */
 	function test_get_input_array_method() {
 		$obj = new MslsMain;
-		$this->assertInternalType( 'array', $obj->get_input_array( 0 ) );
+		$this->assertInternalType( 'array', $obj->get_input_array( 1 ) );
 		return $obj;
 	}
 
