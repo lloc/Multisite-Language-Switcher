@@ -25,14 +25,19 @@ class MslsMain {
 	 * @return array
 	 */
 	public function get_input_array( $object_id ) {
-		$arr = array(
-			MslsBlogCollection::instance()->get_current_blog()->get_language() => (int) $object_id,
-		);
+		$arr = array();
+
+		$current_blog = MslsBlogCollection::instance()->get_current_blog();
+		if ( ! is_null( $current_blog ) ) {
+			$arr[ $current_blog->get_language() ] = (int) $object_id;
+		}
+
 		foreach ( filter_input_array( INPUT_POST ) as $key => $value ) {
 			if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
 				$arr[ substr( $key, 11 ) ] = (int) $value;
 			}
 		}
+
 		return $arr;
 	}
 
@@ -87,14 +92,14 @@ class MslsMain {
 			$msla     = new MslsLanguageArray( $this->get_input_array( $object_id ) );
 			$options  = new $class( $object_id );
 			$temp     = $options->get_arr();
-	
+
 			if ( 0 != $msla->get_val( $language ) ) {
 				$options->save( $msla->get_arr( $language ) );
 			}
 			else {
 				$options->delete();
 			}
-	
+
 			foreach ( $blogs->get() as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
