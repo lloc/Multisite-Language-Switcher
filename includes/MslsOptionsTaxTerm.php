@@ -28,7 +28,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 * @param string $url
 	 * @return string
 	 */
-	protected function check_url( $url ) {
+	public function check_url( $url ) {
 		if ( empty( $url ) || ! is_string( $url ) ) {
 			return '';
 		}
@@ -46,7 +46,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 * Get base
 	 * @return string
 	 */
-	protected function get_base() {
+	public function get_base() {
 		$base = get_option( $this->base_option );
 		return( ! empty( $base ) ? $base : $this->base_defined );
 	}
