@@ -37,6 +37,8 @@ class WP_Test_MslsRegistry extends WP_UnitTestCase {
 
 	/**
 	 * Verify the set_object- and get_object-method
+	 * @covers MslsRegistry::get_object
+	 * @covers MslsRegistry::set_object
 	 * @depends test_instance_method
 	 */
 	function test_set_method( $obj ) {
