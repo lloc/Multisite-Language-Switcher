@@ -30,7 +30,7 @@ class WP_Test_MslsOptionsQuery extends WP_UnitTestCase {
 	 * Verify the static create-method
 	 */
 	function test_create_method() {
-		$this->assertNull( MslsOptionsPost::create() );
+		$this->assertNull( MslsOptionsQuery::create() );
 		return new MslsOptionsQuery();
 	}
 

@@ -101,7 +101,7 @@ class MslsOptionsTax extends MslsOptions {
 		return(
 			empty( $taxonomy ) ?
 			null :
-			get_term_link( $this->get_arg( 0, 0 ), $taxonomy )
+			get_term_link( $this->get_arg( 0, '' ), $taxonomy )
 		);
 	}
 

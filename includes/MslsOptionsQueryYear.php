@@ -38,7 +38,7 @@ class MslsOptionsQueryYear extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_year_link( $this->get_arg( 0, 0 ) );
+		return get_year_link( $this->get_arg( 0, '' ) );
 	}
 
 }
