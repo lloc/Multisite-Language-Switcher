@@ -39,8 +39,9 @@ class WP_Test_MslsOptionsTaxTerm extends WP_UnitTestCase {
 	 * Verify the get_tax_query-method
 	 * @depends test_check_url_method
 	 */
-	function test_get_tax_query_method( $obj ) {
-		$this->assertInternalType( 'string', $obj->get_tax_query() );
+	function test_get_base_method( $obj ) {
+		$this->assertInternalType( 'string', $obj->get_base() );
+		$this->assertEquals( 'tag', $obj->get_base() );
 	}
 
 }

@@ -40,7 +40,7 @@ class WP_Test_MslsOutput extends WP_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_get_method( $obj ) {
-		$this->assertInternalType( 'array', $obj->get() );
+		$this->assertInternalType( 'array', $obj->get( 0 ) );
 	}
 
 	/**

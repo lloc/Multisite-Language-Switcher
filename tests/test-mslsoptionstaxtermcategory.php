@@ -26,4 +26,13 @@ class WP_Test_MslsOptionsTaxTermCategory extends WP_UnitTestCase {
 		parent::tearDown();
 	}
 
+	/**
+	 * Verify the get_tax_query-method
+	 */
+	function test_get_base_method( $obj ) {
+		$obj = new MslsOptionsTaxTermCategory( 0 );
+		$this->assertInternalType( 'string', $obj->get_base() );
+		$this->assertEquals( 'category', $obj->get_base() );
+	}
+	
 }
