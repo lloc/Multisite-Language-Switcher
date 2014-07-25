@@ -20,12 +20,13 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 */
 	public function has_value( $language ) {
 		if ( ! isset( $this->arr[ $language ] ) ) {
+			$date  = new DateTime();
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
 
 			$this->arr[ $language ] = $cache->get_var(
 				$cache->prepare(
 					"SELECT count(ID) FROM {$cache->posts} WHERE DATE(post_date) = %s AND post_status = 'publish'",
-					DateTime::setDate( $this->args[0], $this->args[1], $this->args[2] )->format( 'Y-m-d' )
+					$date->setDate( $this->args[0], $this->args[1], $this->args[2] )->format( 'Y-m-d' )
 				)
 			);
 		}
