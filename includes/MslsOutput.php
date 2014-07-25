@@ -27,7 +27,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Creates and gets the output as an array
-	 * @param string $display
+	 * @param int $display
 	 * @param bool $filter
 	 * @param bool $exists
 	 * @uses MslsOptions
@@ -53,7 +53,7 @@ class MslsOutput extends MslsMain {
 				else {
 					switch_to_blog( $blog->userblog_id );
 
-					if ( $this->requirements_not_fulfilled( $mydata, $exists, $language ) ) {
+					if ( $this->is_requirements_not_fulfilled( $mydata, $exists, $language ) ) {
 						restore_current_blog();
 						continue;
 					}
@@ -154,7 +154,7 @@ class MslsOutput extends MslsMain {
 	 * @param string $language
 	 * @return boolean
 	 */
-	public function requirements_not_fulfilled( $mydata, $exists, $language ) {
+	public function is_requirements_not_fulfilled( $mydata, $exists, $language ) {
 		return(
 			'MslsOptions' != get_class( $mydata ) &&
 			$exists &&
