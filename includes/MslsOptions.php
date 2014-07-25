@@ -130,6 +130,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	/**
 	 * Save
 	 * @param mixed $arr
+	 * @codeCoverageIgnore
 	 */
 	public function save( $arr ) {
 		$this->delete();
@@ -143,6 +144,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
 	/**
 	 * Delete
+	 * @codeCoverageIgnore
 	 */
 	public function delete() {
 		$this->reset();

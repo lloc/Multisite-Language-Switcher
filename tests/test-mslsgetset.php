@@ -28,11 +28,11 @@ class WP_Test_MslsGetSet extends WP_UnitTestCase {
 
 	/**
 	 * Verify the is_empty-method
-	 * @covers MslsGetSet::is_empty()
-	 * @covers MslsGetSet::__set()
-	 * @covers MslsGetSet::__get()
-	 * @covers MslsGetSet::__isset()
-	 * @covers MslsGetSet::__unset()
+	 * @covers MslsGetSet::is_empty
+	 * @covers MslsGetSet::__set
+	 * @covers MslsGetSet::__get
+	 * @covers MslsGetSet::__isset
+	 * @covers MslsGetSet::__unset
 
 	 */
 	function test_is_empty_method() {
