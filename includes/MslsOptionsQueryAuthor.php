@@ -25,7 +25,7 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 			$this->arr[ $language ] = $cache->get_var(
 				$cache->prepare(
 					"SELECT count(ID) FROM {$cache->posts} WHERE post_author = %d AND post_status = 'publish'",
-					$this->args[0]
+					$this->get_arg( 0, 0 )
 				)
 			);
 		}
@@ -38,7 +38,7 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_author_posts_url( $this->args[0] );
+		return get_author_posts_url( $this->get_arg( 0, 0 ) );
 	}
 
 }

@@ -66,6 +66,17 @@ class WP_Test_MslsOptions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Verify the get_arg-method
+	 * @depends test_instance_method
+	 */
+	function test_get_arg_method( $obj ) {
+		$this->assertNull( $obj->get_arg( 0 ) );
+		$this->assertInternalType( 'string', $obj->get_arg( 0, '' ) );
+		$this->assertInternalType( 'float', $obj->get_arg( 0, 1.1 ) );
+		$this->assertInternalType( 'array', $obj->get_arg( 0, array() ) );
+	}
+
+	/**
 	 * Verify the set-method
 	 * @depends test_instance_method
 	 */

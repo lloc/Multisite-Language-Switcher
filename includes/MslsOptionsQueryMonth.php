@@ -25,8 +25,8 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
 			$this->arr[ $language ] = $cache->get_var(
 				$cache->prepare(
 					"SELECT count(ID) FROM {$cache->posts} WHERE YEAR(post_date) = %d AND MONTH(post_date) = %d AND post_status = 'publish'",
-					$this->args[0],
-					$this->args[1]
+					$this->get_arg( 0, 0 ),
+					$this->get_arg( 1, 0 )
 				)
 			);
 		}
@@ -39,7 +39,7 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_month_link( $this->args[0], $this->args[1] );
+		return get_month_link( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ) );
 	}
 
 }

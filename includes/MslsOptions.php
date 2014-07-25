@@ -128,6 +128,20 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	}
 
 	/**
+	 * Gets an element of arg by index
+	 * The returning value is casted to the type of $retval or will be the
+	 * value of $retval if nothing is set at this index.
+	 * @param int $idx
+	 * @param mixed $retval
+	 * @return mixed
+	 */
+	public function get_arg( $idx, $val = null ) {
+		$arg = ( isset( $this->args[$idx] ) ? $this->args[$idx] : $val );
+		settype( $arg, gettype( $val ) );
+		return $arg;
+	}
+
+	/**
 	 * Save
 	 * @param mixed $arr
 	 * @codeCoverageIgnore

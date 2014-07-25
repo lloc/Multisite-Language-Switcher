@@ -20,7 +20,7 @@ class MslsOptionsQueryPostType extends MslsOptionsQuery {
 	 */
 	public function has_value( $language ) {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			$this->arr[ $language ] = get_post_type_object( $this->args[0] );
+			$this->arr[ $language ] = get_post_type_object( $this->get_arg( 0, '' ) );
 		}
 		return (bool) $this->arr[ $language ];
 	}
@@ -31,7 +31,7 @@ class MslsOptionsQueryPostType extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_post_type_archive_link( $this->args[0] );
+		return get_post_type_archive_link( $this->get_arg( 0, '' ) );
 	}
 
 }

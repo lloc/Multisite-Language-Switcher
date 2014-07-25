@@ -26,7 +26,7 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 			$this->arr[ $language ] = $cache->get_var(
 				$cache->prepare(
 					"SELECT count(ID) FROM {$cache->posts} WHERE DATE(post_date) = %s AND post_status = 'publish'",
-					$date->setDate( $this->args[0], $this->args[1], $this->args[2] )->format( 'Y-m-d' )
+					$date->setDate( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ), $this->get_arg( 2, 0 ) )->format( 'Y-m-d' )
 				)
 			);
 		}
@@ -39,7 +39,7 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_day_link( $this->args[0], $this->args[1], $this->args[2] );
+		return get_day_link( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ), $this->get_arg( 2, 0 ) );
 	}
 
 }
