@@ -37,7 +37,7 @@ class WP_Test_MslsOptionsQueryMonth extends WP_UnitTestCase {
 
 	/**
 	 * Verify the get_current_link-method
-	 * @depends test_get_postlink_method
+	 * @depends test_has_value_method
 	 */
 	function test_get_current_link_method( $obj ) {
 		$this->assertInternalType( 'string', $obj->get_current_link() );
