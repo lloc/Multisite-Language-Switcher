@@ -82,6 +82,7 @@ class WP_Test_MslsOptions extends WP_UnitTestCase {
 	 */
 	function test_set_method( $obj ) {
 		$this->assertTrue( $obj->set( array() ) );
+		$this->assertTrue( $obj->set( array( 'temp' => 'abc' ) ) );	
 		$this->assertFalse( $obj->set( 'Test' ) );
 		$this->assertFalse( $obj->set( 1 ) );
 		$this->assertFalse( $obj->set( 1.1 ) );
@@ -111,6 +112,7 @@ class WP_Test_MslsOptions extends WP_UnitTestCase {
 	 */
 	function test_get_postlink_method( $obj ) {
 		$this->assertInternalType( 'string', $obj->get_postlink( 'de_DE' ) );
+		$this->assertEquals( '', $obj->get_postlink( 'de_DE' ) );
 	}
 
 	/**

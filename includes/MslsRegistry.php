@@ -27,6 +27,7 @@ class MslsRegistry {
 	 * Constructor
 	 * 
 	 * Don't call me directly!
+	 * @codeCoverageIgnore
 	 */
 	final private function __construct() { }
 
@@ -34,6 +35,7 @@ class MslsRegistry {
 	 * Clone
 	 * 
 	 * Don't call me directly!
+	 * @codeCoverageIgnore
 	 */
 	final private function __clone() { }
 

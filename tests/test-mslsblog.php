@@ -28,6 +28,8 @@ class WP_Test_MslsBlog extends WP_UnitTestCase {
 
 	/**
 	 * Verify the __get-method
+	 * @covers MslsBlog::__construct
+	 * @covers MslsBlog::__get
 	 */
 	function test___get_method() {
 		$blog = new stdClass();

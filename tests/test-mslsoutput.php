@@ -49,6 +49,8 @@ class WP_Test_MslsOutput extends WP_UnitTestCase {
 	 */
 	function test___toString_method( $obj ) {
 		$this->assertInternalType( 'string', $obj->__toString() );
+		$this->assertInternalType( 'string', strval( $obj ) );
+		$this->assertEquals( $obj->__toString(), strval( $obj ) );
 	}
 
 	/**
