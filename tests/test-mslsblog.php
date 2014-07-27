@@ -9,22 +9,7 @@
 /**
  * WP_Test_MslsBlog
  */
-class WP_Test_MslsBlog extends WP_UnitTestCase {
-
-	/**
-	 * SetUp initial settings
-	 */
-	function setUp() {
-		parent::setUp();
-		wp_cache_flush();
-	}
-
-	/**
-	 * Break down for next test
-	 */
-	function tearDown() {
-		parent::tearDown();
-	}
+class WP_Test_MslsBlog extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the __get-method

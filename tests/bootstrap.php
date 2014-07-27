@@ -12,3 +12,21 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 require $_tests_dir . '/includes/bootstrap.php';
 
+class Msls_UnitTestCase extends WP_UnitTestCase {
+
+	/**
+	 * SetUp initial settings
+	 */
+	function setUp() {
+		parent::setUp();
+		wp_cache_flush();
+	}
+
+	/**
+	 * Break down for next test
+	 */
+	function tearDown() {
+		parent::tearDown();
+	}
+
+}
