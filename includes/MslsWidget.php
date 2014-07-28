@@ -60,6 +60,7 @@ class MslsWidget extends WP_Widget {
 	/**
 	 * Display an input-form in the backend
 	 * @param array $instance
+	 * @codeCoverageIgnore
 	 */
 	public function form( $instance ) {
 		printf(
