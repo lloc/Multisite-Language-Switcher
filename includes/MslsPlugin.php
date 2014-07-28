@@ -31,9 +31,10 @@ class MslsPlugin {
 	 * 
 	 * The method will be executed allways on init because we have some
 	 * translatable string in the frontend too.
+	 * @return boolean
 	 */
 	public static function init_i18n_support() {
-		load_plugin_textdomain(
+		return load_plugin_textdomain(
 			'msls',
 			false,
 			dirname( MSLS_PLUGIN_PATH ) . '/languages/'
@@ -60,7 +61,7 @@ class MslsPlugin {
 	 * 
 	 * The plugin data in all blogs of the current network will be 
 	 * deleted after the uninstall procedure. 
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function uninstall() {
 		/**
@@ -70,6 +71,7 @@ class MslsPlugin {
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
+
 			$blogs = $cache->get_results(
 				$cache->prepare(
 					"SELECT blog_id FROM {$cache->blogs} WHERE blog_id != %d AND site_id = %d",
@@ -92,7 +94,7 @@ class MslsPlugin {
 	 * 
 	 * Removes all values of the current blogs which are stored in the 
 	 * options-table and returns true if it was successful.
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
