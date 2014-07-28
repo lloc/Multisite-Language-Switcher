@@ -28,16 +28,28 @@ class MslsWidget extends WP_Widget {
 	 * @user MslsOutput
 	 */
 	public function widget( $args, $instance ) {
-		$title   = $instance['title'];
-		$content = MslsOutput::init()->__toString();
+		$args = wp_parse_args(
+			$args,
+			array(
+				'before_widget' => '',
+				'after_widget'  => '',
+				'before_title'  => '',
+				'after_title'   => '',
+			)
+		);
 
 		/** This filter is documented in wp-includes/default-widgets.php */
-		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
-
+		$title = apply_filters(
+			'widget_title',
+			( isset( $instance['title'] ) ? $instance['title'] : '' ),
+			$instance,
+			$this->id_base
+		);
 		if ( $title ) {
 			$title = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
 		}
 
+		$content = MslsOutput::init()->__toString();
 		if ( '' == $content ) {
 			$content = __( 'No available translations found', 'msls' );
 		}
