@@ -13,10 +13,9 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the static suggest-method
- 	 * @expectedException WPDieException
-	 * @expectedExceptionMessage []
 	 */
 	function test_suggest_method() {
+		$this->expectOutputString( '[]' );
 		MslsPostTag::suggest();
 	}
 
