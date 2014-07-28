@@ -29,10 +29,8 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	 * Verify the static message_handler-method
 	 */
 	function test_message_handler_method() {
-		$this->expectOutputString( '<div id="msls-warning" class="error"><p>Test1</p></div>' );
-		MslsPlugin::message_handler( 'Test1' );
-		$this->expectOutputString( '<div id="msls-warning" class="success"><p>Test2</p></div>' );
-		MslsPlugin::message_handler( 'Test2', 'success' );
+		$this->expectOutputString( '<div id="msls-warning" class="error"><p>Test</p></div>' );
+		MslsPlugin::message_handler( 'Test' );
 	}
 
 	/**
