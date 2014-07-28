@@ -26,7 +26,17 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 	 * @depends test_widget_method
 	 */
 	function test_update_method( $obj ) {
-		$this->assertInternalType( 'array', $obj->update( array(), array() ) );
+		$result = $obj->update( array(), array() );
+		$this->assertInternalType( 'array', $result );
+		$this->assertEquals( array(), $result );
+		
+		$result = $obj->update( array( 'title' => 'abc' ), array() );
+		$this->assertInternalType( 'array', $result );
+		$this->assertEquals( array( 'title' => 'abc' ), $result );
+		
+		$result = $obj->update( array( 'title' => 'xyz' ), array( 'title' => 'abc' ) );
+		$this->assertInternalType( 'array', $result );
+		$this->assertEquals( array( 'title' => 'xyz' ), $result );
 	}
 
 }
