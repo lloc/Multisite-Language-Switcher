@@ -50,39 +50,27 @@ class MslsAdmin extends MslsMain {
 		return $obj;
 	}
 
-	public function has_languages_installed() {
-	}
-
 	/**
 	 * There is something wrong? Here comes the message...
 	 * @return boolean
 	 */
 	public function has_problems() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return false;
+		if ( current_user_can( 'manage_options' ) ) {
+			if ( 1 == count( $this->languages ) ) {
+				$message = sprintf(
+					__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.' ),
+					esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
+					esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
+				);
+			}
+			elseif ( MslsOptions::instance()->is_empty() ) {
+				$message = sprintf(
+					__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
+					esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
+				);
+			}
 		}
-
-		$message = '';
-
-		if ( 1 == count( $this->languages ) ) {
-			$message = sprintf(
-				__( 'There are no language files installed. You can <a href="%s">manually install the language files</a> or use a <a href="%s">plugin</a> to download these file automatically.' ),
-				esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
-				esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
-			);
-		}
-		elseif ( MslsOptions::instance()->is_empty() ) {
-			$message = sprintf(
-				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
-				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
-			);
-		}
-
-		if ( ! empty( $message ) ) {
-			MslsPlugin::message_handler( $message, 'updated fade' );
-			return true;
-		}
-		return false;
+		return MslsPlugin::message_handler( $message, 'updated fade' );
 	}
 
 	/**

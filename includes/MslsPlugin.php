@@ -62,13 +62,18 @@ class MslsPlugin {
 	 * Prints a message box to the screen.
 	 * @param string $message
 	 * @param string $css_class
+	 * @return boolean
 	 */
 	public static function message_handler( $message, $css_class = 'error' ) {
-		printf(
-			'<div id="msls-warning" class="%s"><p>%s</p></div>',
-			$css_class,
-			$message
-		);
+		if ( ! empty( $message ) ) {
+			printf(
+				'<div id="msls-warning" class="%s"><p>%s</p></div>',
+				$css_class,
+				$message
+			);
+			return true;
+		}
+		return false;
 	}
 
 	/**

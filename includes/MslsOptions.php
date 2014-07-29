@@ -12,6 +12,7 @@
  * @property int $display
  * @property int $reference_user
  * @property int $content_priority
+ * @property string $admin_language
  * @property string $description
  * @property string $before_item
  * @property string $after_item
