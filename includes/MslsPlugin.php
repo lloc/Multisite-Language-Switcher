@@ -46,7 +46,7 @@ class MslsPlugin {
 	 * @param string $locale
 	 * @return string
 	 */
-	public function set_admin_language( $locale ) {
+	public static function set_admin_language( $locale ) {
 		if ( is_admin() ) {
 			$code   = MslsOptions::instance()->admin_language;
 			if ( ! empty( $code ) ) {
