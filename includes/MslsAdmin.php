@@ -55,6 +55,8 @@ class MslsAdmin extends MslsMain {
 	 * @return boolean
 	 */
 	public function has_problems() {
+		$message = '';
+
 		if ( current_user_can( 'manage_options' ) ) {
 			if ( 1 == count( $this->languages ) ) {
 				$message = sprintf(
@@ -70,6 +72,7 @@ class MslsAdmin extends MslsMain {
 				);
 			}
 		}
+
 		return MslsPlugin::message_handler( $message, 'updated fade' );
 	}
 
