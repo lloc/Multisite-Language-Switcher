@@ -42,6 +42,21 @@ class MslsPlugin {
 	}
 
 	/**
+	 * Set the admin language
+	 * @param string $locale
+	 * @return string
+	 */
+	public function set_admin_language( $locale ) {
+		if ( is_admin() ) {
+			$code   = MslsOptions::instance()->admin_language;
+			if ( ! empty( $code ) ) {
+				return $code;
+			}
+		}
+		return $locale;
+	}
+
+	/**
 	 * Message handler
 	 * 
 	 * Prints a message box to the screen.

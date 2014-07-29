@@ -11,6 +11,8 @@
  */
 class MslsAdmin extends MslsMain {
 
+	protected $languages = array();
+
 	/**
 	 * Init
 	 * @return MslsAdmin
@@ -43,22 +45,44 @@ class MslsAdmin extends MslsMain {
 		);
 
 		add_action( 'admin_init',    array( $obj, 'register' ) );
-		add_action( 'admin_notices', array( $obj, 'warning' ) );
+		add_action( 'admin_notices', array( $obj, 'has_problems' ) );
 
 		return $obj;
 	}
 
+	public function has_languages_installed() {
+	}
+
 	/**
 	 * There is something wrong? Here comes the message...
+	 * @return boolean
 	 */
-	public function warning() {
-		if ( current_user_can( 'manage_options' ) && MslsOptions::instance()->is_empty() ) {
+	public function has_problems() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		$message = '';
+
+		if ( 1 == count( $this->languages ) ) {
+			$message = sprintf(
+				__( 'There are no language files installed. You can <a href="%s">manually install the language files</a> or use a <a href="%s">plugin</a> to download these file automatically.' ),
+				esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
+				esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
+			);
+		}
+		elseif ( MslsOptions::instance()->is_empty() ) {
 			$message = sprintf(
 				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
 				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
 			);
-			MslsPlugin::message_handler( $message, 'updated fade' );
 		}
+
+		if ( ! empty( $message ) ) {
+			MslsPlugin::message_handler( $message, 'updated fade' );
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -111,6 +135,22 @@ class MslsAdmin extends MslsMain {
 	public function register() {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
 
+		$this->languages = array( 'en_US' => format_code_lang( 'en_US' ) );
+		foreach ( get_available_languages() as $language ) {
+			$this->languages[ esc_attr( $language ) ] = format_code_lang( $language );
+		}
+		$this->languages = (array) apply_filters( 'msls_admin_register_languages', $this->languages );
+
+		add_settings_section(
+			'language_section',
+			__( 'Language Settings', 'msls' ),
+			array( $this, 'language_section' ),
+			__CLASS__
+		);
+
+		add_settings_field( 'blog_language', __( 'Blog Language', 'msls' ), array( $this, 'blog_language' ), __CLASS__, 'language_section' );
+		add_settings_field( 'admin_language', __( 'Admin Language', 'msls' ), array( $this, 'admin_language' ), __CLASS__, 'language_section' );
+
 		add_settings_section(
 			'main_section',
 			__( 'Main Settings', 'msls' ),
@@ -146,6 +186,11 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
+	 * language_section is just a placeholder for now
+	 */
+	public function language_section() { }
+
+	/**
 	 * main_section is just a placeholder for now
 	 */
 	public function main_section() { }
@@ -154,6 +199,28 @@ class MslsAdmin extends MslsMain {
 	 * advanced_section is just a placeholder for now
 	 */
 	public function advanced_section() { }
+
+	/**
+	 * Shows the select-form-field 'blog_language'
+	 */
+	public function blog_language() {
+		echo $this->render_select(
+			'blog_language',
+			$this->languages,
+			get_option( 'WPLANG', 'en_US' )
+		); // xss ok
+	}
+
+	/**
+	 * Shows the select-form-field 'admin_language'
+	 */
+	public function admin_language() {
+		echo $this->render_select(
+			'admin_language',
+			$this->languages,
+			MslsOptions::instance()->admin_language
+		); // xss ok
+	}
 
 	/**
 	 * Shows the select-form-field 'display'
@@ -314,7 +381,7 @@ class MslsAdmin extends MslsMain {
 		return sprintf(
 			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
 			$key,
-			checked( 1, MslsOptions::instance()->$key )
+			checked( 1, MslsOptions::instance()->$key, false )
 		);
 	}
 
@@ -366,6 +433,10 @@ class MslsAdmin extends MslsMain {
 	 * @return array Validated input
 	 */
 	public function validate( array $arr ) {
+		if ( isset( $arr['blog_language'] ) ) {
+			update_option( 'WPLANG', $arr['blog_language'] );
+			unset( $arr['blog_language'] );
+		}
 		$arr['display'] = (
 			isset( $arr['display'] ) ?
 			(int) $arr['display'] :

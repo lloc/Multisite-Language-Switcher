@@ -96,6 +96,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 
 		add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
+		add_filter( 'locale', array( 'MslsPlugin', 'set_admin_language' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
