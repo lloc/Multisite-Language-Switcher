@@ -100,21 +100,21 @@ class MslsOutput extends MslsMain {
 	public function __toString() {
 		$options = MslsOptions::instance();
 
-		$arr = $this->get(
-			(int) $options->display,
-			false,
-			isset( $options->only_with_translation )
-		);
-		if ( empty( $arr ) ) {
-			return '';
-		}
+		$display = (int) $options->display;
+		$filter  = false;
+		$exists  = isset( $options->only_with_translation );
 
-		$tags = $this->get_tags();
-		return $tags['before_output'] .
-			$tags['before_item'] .
-			implode( $tags['after_item'] . $tags['before_item'], $arr ) .
-			$tags['after_item'] .
-			$tags['after_output'];
+		$arr = $this->get( $display, $filter, $exists );
+
+		if ( ! empty( $arr ) ) {
+			$tags = $this->get_tags();
+
+			return $tags['before_output'] . $tags['before_item'] .
+				implode( $tags['after_item'] . $tags['before_item'], $arr ) .
+				$tags['after_item'] . $tags['after_output'];
+
+		}
+		return '';
 	}
 
 	/**
@@ -137,7 +137,7 @@ class MslsOutput extends MslsMain {
 			 * @since 1.0
 			 * @param array $tags
 			 */
-			$this->tags = ( array ) apply_filters( 'msls_output_get_tags', array() );
+			$this->tags = ( array ) apply_filters( 'msls_output_get_tags', $this->tags );
 		}
 		return $this->tags;
 	}
