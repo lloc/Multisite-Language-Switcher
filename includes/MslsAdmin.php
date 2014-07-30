@@ -98,12 +98,12 @@ class MslsAdmin extends MslsMain {
 		}
 
 		return(
-			! empty( $arr ) ?
+			empty( $arr ) ?
+			'' :
 			sprintf(
 				'<ul class="subsubsub"><li>%s</li></ul>',
 				implode( ' | </li><li>', $arr )
-			) :
-			''
+			)
 		);
 	}
 
