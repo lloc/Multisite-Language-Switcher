@@ -81,7 +81,7 @@ You might read first [WordPress in your language](http://codex.wordpress.org/Wor
 
 = But I'd like the interface to stay in English. =
 
-You could check out the plugin [Native Dashboard](http://wordpress.org/extend/plugins/wp-native-dashboard/).
+You can choose the language of every website and the dashboard in the settings page of the plugin.
 
 = Do I really need a multisite? =
 
@@ -118,6 +118,7 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 == Changelog ==
 
 = 1.0 =
+* choose your frontend/backend language from the installed languages in the plugins settings
 * Swedish and Chinese language files added
 * numerous enhancements and fixes (coding style, docs, sql cache, performance ...)
 
