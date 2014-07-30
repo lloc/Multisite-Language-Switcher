@@ -64,6 +64,12 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	protected $base_defined = '';
 
 	/**
+	 * Available languages
+	 * @var array
+	 */
+	private $available_languages;
+
+	/**
 	 * Factory method
 	 * @param int $id
 	 * @return MslsOptions
@@ -271,24 +277,52 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_flag_url( $language ) {
-		if ( has_filter( 'msls_options_get_flag_url' ) ) {
-			/**
-			 * Override the path to the flag-icons
-			 * @since 0.9.9
-			 * @param MslsOptions $this
-			 */
-			$url = (string) apply_filters( 'msls_options_get_flag_url', $this );
-		}
-		elseif ( ! is_admin() && isset( $this->image_url ) ) {
+		if ( ! is_admin() && isset( $this->image_url ) ) {
 			$url = $this->__get( 'image_url' );
 		}
 		else {
 			$url = $this->get_url( 'flags' );
 		}
+
+		/**
+		 * Override the path to the flag-icons
+		 * @since 0.9.9
+		 * @param MslsOptions $this
+		 */
+		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
+		
 		if ( 5 == strlen( $language ) ) {
 			$language = strtolower( substr( $language, -2 ) );
 		}
 		return sprintf( '%s/%s.png', $url, $language );
+	}
+
+	/**
+	 * Get all available languages
+	 * @uses get_available_languages
+	 * @uses format_code_lang
+	 * @return array
+	 */
+	public function get_available_languages() {
+		if ( empty( $this->available_languages ) ) {
+			$this->available_languages = array(
+				'en_US' => format_code_lang( 'en_US' ),
+			);
+			foreach ( get_available_languages() as $code ) {
+				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
+			}
+
+			/**
+			 * Returns custom filtered available languages
+			 * @since 1.0
+			 * @param array $available_languages
+			 */
+			$this->available_languages = (array) apply_filters(
+				'msls_options_get_available_languages',
+				$this->available_languages
+			);
+		}
+		return $this->available_languages;
 	}
 
 	/**

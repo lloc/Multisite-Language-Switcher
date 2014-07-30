@@ -31,12 +31,6 @@ class MslsBlog {
 	private $description;
 
 	/**
-	 * Available languages
-	 * @var array
-	 */
-	private $available_languages;
-
-	/**
 	 * Constructor
 	 * @param StdClass $obj 
 	 * @param string $description
@@ -95,34 +89,6 @@ class MslsBlog {
 	public function get_alpha2() {
 		$alpha2 = substr( $this->get_language(), 0, 2 );
 		return( 'us' == $alpha2 ? 'en' : $alpha2 );
-	}
-
-	/**
-	 * Get all available languages
-	 * @uses get_available_languages
-	 * @uses format_code_lang
-	 * @return array
-	 */
-	public function get_available_languages() {
-		if ( empty( $this->available_languages ) ) {
-			$this->available_languages = array(
-				'en_US' => format_code_lang( 'en_US' ),
-			);
-			foreach ( get_available_languages() as $code ) {
-				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
-			}
-
-			/**
-			 * Returns custom filtered available languages
-			 * @since 1.0
-			 * @param array $available_languages
-			 */
-			$this->available_languages = (array) apply_filters(
-				'msls_blog_get_available_languages',
-				$this->available_languages
-			);
-		}
-		return $this->available_languages;
 	}
 
 	/**

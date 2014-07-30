@@ -34,16 +34,18 @@ class MslsAdmin extends MslsMain {
 			);
 		}
 
-		add_options_page(
-			__( 'Multisite Language Switcher', 'msls' ),
-			__( 'Multisite Language Switcher', 'msls' ),
-			'manage_options',
-			__CLASS__,
-			array( $obj, 'render' )
-		);
-
-		add_action( 'admin_init',    array( $obj, 'register' ) );
-		add_action( 'admin_notices', array( $obj, 'has_problems' ) );
+		if ( current_user_can( 'manage_options' ) ) {
+			add_options_page(
+				__( 'Multisite Language Switcher', 'msls' ),
+				__( 'Multisite Language Switcher', 'msls' ),
+				'manage_options',
+				__CLASS__,
+				array( $obj, 'render' )
+			);
+	
+			add_action( 'admin_init',    array( $obj, 'register' ) );
+			add_action( 'admin_notices', array( $obj, 'has_problems' ) );
+		}
 
 		return $obj;
 	}
@@ -54,22 +56,20 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function has_problems() {
 		$message = '';
-
-		if ( current_user_can( 'manage_options' ) ) {
-			$blog = MslsBlogCollection::instance()->get_current_blog();
-			if ( ! is_null( $blog ) && 1 == count( $blog->get_available_languages() ) ) {
-				$message = sprintf(
-					__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.' ),
-					esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
-					esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
-				);
-			}
-			elseif ( MslsOptions::instance()->is_empty() ) {
-				$message = sprintf(
-					__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
-					esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
-				);
-			}
+		$options = MslsOptions::instance();
+			
+		if ( 1 == count( $options->get_available_languages() ) ) {
+			$message = sprintf(
+				__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.' ),
+				esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
+				esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
+			);
+		}
+		elseif ( $options->is_empty() ) {
+			$message = sprintf(
+				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
+				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
+			);
 		}
 
 		return MslsPlugin::message_handler( $message, 'updated fade' );
@@ -173,7 +173,7 @@ class MslsAdmin extends MslsMain {
 	public function blog_language() {
 		echo $this->render_select(
 			'blog_language',
-			MslsBlogCollection::instance()->get_available_languages(),
+			MslsOptions::instance()->get_available_languages(),
 			get_option( 'WPLANG', 'en_US' )
 		); // xss ok
 	}
@@ -182,10 +182,11 @@ class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'admin_language'
 	 */
 	public function admin_language() {
+		$options = MslsOptions::instance();
 		echo $this->render_select(
 			'admin_language',
-			MslsBlogCollection::instance()->get_available_languages(),
-			MslsOptions::instance()->admin_language
+			$options->get_available_languages(),
+			$options->admin_language
 		); // xss ok
 	}
 

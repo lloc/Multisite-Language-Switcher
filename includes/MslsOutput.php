@@ -124,12 +124,12 @@ class MslsOutput extends MslsMain {
 	public function get_tags() {
 		if ( empty( $this->tags ) ) {
 			$options = MslsOptions::instance();
-			
+
 			$this->tags = array(
-					'before_item'   => $options->before_item,
-					'after_item'    => $options->after_item,
-					'before_output' => $options->before_output,
-					'after_output'  => $options->after_output,
+				'before_item'   => $options->before_item,
+				'after_item'    => $options->after_item,
+				'before_output' => $options->before_output,
+				'after_output'  => $options->after_output,
 			);
 
 			/**

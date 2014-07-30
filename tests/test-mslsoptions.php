@@ -148,4 +148,12 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 		$this->assertInternalType( 'string', $obj->get_flag_url( 'de_DE' ) );
 	}
 
+	/**
+	 * Verify the get_available_languages-method
+	 * @depends test_instance_method
+	 */
+	function test_get_available_languages_method( $obj ) {
+		$this->assertInternalType( 'array', $obj->get_available_languages() );
+	}
+
 }
