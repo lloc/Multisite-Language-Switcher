@@ -6,7 +6,7 @@
  */
 
 /**
- * Provides functionalities for activation an deactivation
+ * Provides functionalities for general hooks and activation/deactivation
  * @package Msls
  */
 class MslsPlugin {
@@ -49,7 +49,7 @@ class MslsPlugin {
 	 */
 	public static function set_admin_language( $locale ) {
 		if ( is_admin() ) {
-			$code   = MslsOptions::instance()->admin_language;
+			$code = MslsOptions::instance()->admin_language;
 			if ( ! empty( $code ) ) {
 				return $code;
 			}

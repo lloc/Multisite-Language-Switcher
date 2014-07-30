@@ -52,7 +52,6 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 	/**
 	 * Constructor
-	 * @uses MslsPlugin::get_available_languages
 	 */
 	public function __construct() {
 		if ( ! has_filter( 'msls_blog_collection_description' ) ) {
