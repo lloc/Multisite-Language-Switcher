@@ -45,7 +45,14 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	private $active_plugins;
 
 	/**
+	 * Available languages
+	 * @var array
+	 */
+	private $available_languages;
+
+	/**
 	 * Constructor
+	 * @uses MslsPlugin::get_available_languages
 	 */
 	public function __construct() {
 		if ( ! has_filter( 'msls_blog_collection_description' ) ) {
@@ -57,7 +64,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			);
 		}
 
-		$this->current_blog_id = get_current_blog_id();
+		$this->current_blog_id     = get_current_blog_id();
+		$this->available_languages = $this->get_available_languages();
 
 		$options = MslsOptions::instance();
 
@@ -151,6 +159,34 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	public function get_current_blog_id() {
 		return $this->current_blog_id;
+	}
+
+	/**
+	 * Get all available languages
+	 * @uses get_available_languages
+	 * @uses format_code_lang
+	 * @return array
+	 */
+	public function get_available_languages() {
+		if ( empty( $this->available_languages ) ) {
+			$this->available_languages = array(
+				'en_US' => format_code_lang( 'en_US' ),
+			);
+			foreach ( get_available_languages() as $code ) {
+				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
+			}
+
+			/**
+			 * Returns custom filtered available languages
+			 * @since 1.0
+			 * @param array $available_languages
+			 */
+			$this->available_languages = (array) apply_filters(
+				'msls_blog_collection_get_available_languages',
+				$this->available_languages
+			);
+		}
+		return $this->available_languages;
 	}
 
 	/**

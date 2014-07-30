@@ -43,6 +43,7 @@ class MslsPlugin {
 
 	/**
 	 * Set the admin language
+	 * Callback for 'locale' hook
 	 * @param string $locale
 	 * @return string
 	 */

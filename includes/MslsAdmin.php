@@ -11,8 +11,6 @@
  */
 class MslsAdmin extends MslsMain {
 
-	protected $languages = array();
-
 	/**
 	 * Init
 	 * @return MslsAdmin
@@ -58,7 +56,7 @@ class MslsAdmin extends MslsMain {
 		$message = '';
 
 		if ( current_user_can( 'manage_options' ) ) {
-			if ( 1 == count( $this->languages ) ) {
+			if ( 1 == count( MslsBlogCollection::instance()->get_available_languages() ) ) {
 				$message = sprintf(
 					__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.' ),
 					esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
@@ -126,12 +124,6 @@ class MslsAdmin extends MslsMain {
 	public function register() {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
 
-		$this->languages = array( 'en_US' => format_code_lang( 'en_US' ) );
-		foreach ( get_available_languages() as $language ) {
-			$this->languages[ esc_attr( $language ) ] = format_code_lang( $language );
-		}
-		$this->languages = (array) apply_filters( 'msls_admin_register_languages', $this->languages );
-
 		add_settings_section(
 			'language_section',
 			__( 'Language Settings', 'msls' ),
@@ -197,7 +189,7 @@ class MslsAdmin extends MslsMain {
 	public function blog_language() {
 		echo $this->render_select(
 			'blog_language',
-			$this->languages,
+			MslsBlogCollection::instance()->get_available_languages(),
 			get_option( 'WPLANG', 'en_US' )
 		); // xss ok
 	}
@@ -208,7 +200,7 @@ class MslsAdmin extends MslsMain {
 	public function admin_language() {
 		echo $this->render_select(
 			'admin_language',
-			$this->languages,
+			MslsBlogCollection::instance()->get_available_languages(),
 			MslsOptions::instance()->admin_language
 		); // xss ok
 	}

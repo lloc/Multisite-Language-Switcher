@@ -33,7 +33,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the test_get_blogs_of_reference_user-method
 	 * @depends test_instance_method
 	 */
-	function test_get_blogs_of_reference_user( $obj ) {
+	function test_get_blogs_of_reference_user_method( $obj ) {
 		$options = $this->getMock( 'MslsOptions' );
 		$this->assertInternalType( 'array', $obj->get_blogs_of_reference_user( $options ) );
 	}
@@ -42,15 +42,23 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the get_current_blog_id-method
 	 * @depends test_instance_method
 	 */
-	function test_get_current_blog_id( $obj ) {
+	function test_get_current_blog_id_method( $obj ) {
 		$this->assertInternalType( 'integer', $obj->get_current_blog_id() );
+	}
+
+	/**
+	 * Verify the get_available_languages-method
+	 * @depends test_instance_method
+	 */
+	function test_get_available_languages_method( $obj ) {
+		$this->assertInternalType( 'array', $obj->get_available_languages() );
 	}
 
 	/**
 	 * Verify the has_current_blog-method
 	 * @depends test_instance_method
 	 */
-	function test_has_current_blog( $obj ) {
+	function test_has_current_blog_method( $obj ) {
 		$this->assertInternalType( 'boolean', $obj->has_current_blog() );
 	}
 
@@ -58,7 +66,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the get_current_blog-method
 	 * @depends test_instance_method
 	 */
-	function test_get_current_blog( $obj ) {
+	function test_get_current_blog_method( $obj ) {
 		// return MslsBlog|null
 	}
 
@@ -66,7 +74,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the get_objects-method
 	 * @depends test_instance_method
 	 */
-	function test_get_objects( $obj ) {
+	function test_get_objects_method( $obj ) {
 		$this->assertInternalType( 'array', $obj->get_objects() );
 	}
 
@@ -74,7 +82,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the is_plugin_active-method
 	 * @depends test_instance_method
 	 */
-	function test_is_plugin_active( $obj ) {
+	function test_is_plugin_active_method( $obj ) {
 		$this->assertInternalType( 'boolean', $obj->is_plugin_active( 0 ) );
 	}
 
@@ -82,7 +90,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the get_plugin_active_blogs-method
 	 * @depends test_instance_method
 	 */
-	function test_get_plugin_active_blogs( $obj ) {
+	function test_get_plugin_active_blogs_method( $obj ) {
 		$this->assertInternalType( 'array', $obj->get_plugin_active_blogs() );
 	}
 
@@ -90,7 +98,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the get-method
 	 * @depends test_instance_method
 	 */
-	function test_get( $obj ) {
+	function test_get_method( $obj ) {
 		$this->assertInternalType( 'array', $obj->get() );
 	}
 
@@ -98,7 +106,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the get_filtered-method
 	 * @depends test_instance_method
 	 */
-	function test_get_filtered( $obj ) {
+	function test_get_filtered_method( $obj ) {
 		$this->assertInternalType( 'array', $obj->get_filtered() );
 	}
 
@@ -106,7 +114,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 * Verify the get_users-method
 	 * @depends test_instance_method
 	 */
-	function test_get_users( $obj ) {
+	function test_get_users_method( $obj ) {
 		$this->assertInternalType( 'array', $obj->get_users() );
 	}
 
