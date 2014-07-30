@@ -56,7 +56,8 @@ class MslsAdmin extends MslsMain {
 		$message = '';
 
 		if ( current_user_can( 'manage_options' ) ) {
-			if ( 1 == count( MslsBlogCollection::instance()->get_available_languages() ) ) {
+			$blog = MslsBlogCollection::instance()->get_current_blog();
+			if ( ! is_null( $blog ) && 1 == count( $blog->get_available_languages() ) ) {
 				$message = sprintf(
 					__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.' ),
 					esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
@@ -124,43 +125,26 @@ class MslsAdmin extends MslsMain {
 	public function register() {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
 
-		add_settings_section(
-			'language_section',
-			__( 'Language Settings', 'msls' ),
-			array( $this, 'language_section' ),
-			__CLASS__
-		);
+		add_settings_section( 'language_section', __( 'Language Settings', 'msls' ), array( $this, 'language_section' ), __CLASS__ );
 
 		add_settings_field( 'blog_language', __( 'Blog Language', 'msls' ), array( $this, 'blog_language' ), __CLASS__, 'language_section' );
 		add_settings_field( 'admin_language', __( 'Admin Language', 'msls' ), array( $this, 'admin_language' ), __CLASS__, 'language_section' );
 
-		add_settings_section(
-			'main_section',
-			__( 'Main Settings', 'msls' ),
-			array( $this, 'main_section' ),
-			__CLASS__
-		);
+		add_settings_section( 'main_section', __( 'Main Settings', 'msls' ), array( $this, 'main_section' ), __CLASS__ );
 
 		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'main_section' );
 		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'msls' ), array( $this, 'sort_by_description' ), __CLASS__, 'main_section' );
 		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'msls' ), array( $this, 'output_current_blog' ), __CLASS__, 'main_section' );
 		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'msls' ), array( $this, 'only_with_translation' ), __CLASS__, 'main_section' );
-
 		add_settings_field( 'description', __( 'Description', 'msls' ), array( $this, 'description' ), __CLASS__, 'main_section' );
 		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'msls' ), array( $this, 'before_output' ), __CLASS__, 'main_section' );
 		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'msls' ), array( $this, 'after_output' ), __CLASS__, 'main_section' );
 		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'msls' ), array( $this, 'before_item' ), __CLASS__, 'main_section' );
 		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'msls' ), array( $this, 'after_item' ), __CLASS__, 'main_section' );
-
 		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'msls' ), array( $this, 'content_filter' ), __CLASS__, 'main_section' );
 		add_settings_field( 'content_priority', __( 'Hint priority', 'msls' ), array( $this, 'content_priority' ), __CLASS__, 'main_section' );
 
-		add_settings_section(
-			'advanced_section',
-			__( 'Advanced Settings', 'msls' ),
-			array( $this, 'advanced_section' ),
-			__CLASS__
-		);
+		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'msls' ), array( $this, 'advanced_section' ), __CLASS__ );
 
 		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'msls' ), array( $this, 'image_url' ), __CLASS__, 'advanced_section' );

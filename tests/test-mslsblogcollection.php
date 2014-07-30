@@ -47,14 +47,6 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	}
 
 	/**
-	 * Verify the get_available_languages-method
-	 * @depends test_instance_method
-	 */
-	function test_get_available_languages_method( $obj ) {
-		$this->assertInternalType( 'array', $obj->get_available_languages() );
-	}
-
-	/**
 	 * Verify the has_current_blog-method
 	 * @depends test_instance_method
 	 */

@@ -51,6 +51,14 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 	}
 
 	/**
+	 * Verify the get_available_languages-method
+	 * @depends test___get_method
+	 */
+	function test_get_available_languages_method( $obj ) {
+		$this->assertInternalType( 'array', $obj->get_available_languages() );
+	}
+
+	/**
 	 * Dataprovider
 	 * @return multitype:multitype:number
 	 */
