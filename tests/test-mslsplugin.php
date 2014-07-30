@@ -12,6 +12,13 @@
 class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 
 	/**
+	 * Verify the static init-method
+	 */
+	function test_init_method() {
+		$this->assertInternalType( 'boolean', MslsPlugin::init() );
+	}
+
+	/**
 	 * Verify the static init_widget-method
 	 */
 	function test_init_widget_method() {

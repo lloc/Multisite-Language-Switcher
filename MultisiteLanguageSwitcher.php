@@ -33,7 +33,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @since 0.9.8
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-
 	define( 'MSLS_PLUGIN_VERSION', '1.0' );
 
 	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
@@ -94,17 +93,15 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	add_action( 'plugins_loaded', array( 'MslsPlugin', 'init_i18n_support' ) );
 
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-
 		add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
 		add_filter( 'locale', array( 'MslsPlugin', 'set_admin_language' ) );
 
 		if ( is_admin() ) {
+			add_action( 'admin_menu', array( 'MslsPlugin', 'init' ) );
 			add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
 
-			add_action( 'wp_ajax_suggest_posts', array( 'MslsMetaBox', 'suggest' ) );
-			add_action( 'wp_ajax_suggest_terms', array( 'MslsPostTag', 'suggest' ) );
-
 			add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
+
 			add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );
 
 			add_action( 'load-edit.php', array( 'MslsCustomColumn', 'init' ) );
@@ -126,6 +123,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 					add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
 				}
 			}
+
+			add_action( 'wp_ajax_suggest_posts', array( 'MslsMetaBox', 'suggest' ) );
+
+			add_action( 'wp_ajax_suggest_terms', array( 'MslsPostTag', 'suggest' ) );
 		}
 
 		/**

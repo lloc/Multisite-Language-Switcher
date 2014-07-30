@@ -16,22 +16,6 @@ class MslsAdmin extends MslsMain {
 	 * @return MslsAdmin
 	 */
 	public static function init() {
-		wp_enqueue_style(
-			'msls-styles',
-			plugins_url( 'css/msls.css', MSLS_PLUGIN__FILE__ ),
-			array(),
-			MSLS_PLUGIN_VERSION
-		);
-
-		if ( MslsOptions::instance()->activate_autocomplete ) {
-			wp_enqueue_script(
-				'msls-autocomplete',
-				plugins_url( 'js/msls.min.js', MSLS_PLUGIN__FILE__ ),
-				array( 'jquery-ui-autocomplete' ),
-				MSLS_PLUGIN_VERSION
-			);
-		}
-
 		$obj = new self();
 
 		if ( current_user_can( 'manage_options' ) ) {
@@ -100,9 +84,9 @@ class MslsAdmin extends MslsMain {
 	 * @return string
 	 */
 	public function subsubsub() {
-		$blogs = MslsBlogCollection::instance();
-		$arr   = array();
+		$arr = array();
 
+		$blogs = MslsBlogCollection::instance();
 		foreach ( $blogs->get_plugin_active_blogs() as $blog ) {
 			$arr[] = sprintf(
 				'<a href="%s"%s>%s / %s</a>',
@@ -113,12 +97,13 @@ class MslsAdmin extends MslsMain {
 			);
 		}
 
-		if ( empty( $arr ) ) {
-			return '';
-		}
-		return sprintf(
-			'<ul class="subsubsub"><li>%s</li></ul>',
-			implode( ' | </li><li>', $arr )
+		return(
+			! empty( $arr ) ?
+			sprintf(
+				'<ul class="subsubsub"><li>%s</li></ul>',
+				implode( ' | </li><li>', $arr )
+			) :
+			''
 		);
 	}
 

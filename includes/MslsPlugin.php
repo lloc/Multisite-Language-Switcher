@@ -12,9 +12,34 @@
 class MslsPlugin {
 
 	/**
+	 * Loads styles and some js if needed
+	 * The methiod returns true if JS is loaded or false if not
+ 	 * @return boolean
+	 */
+	public static function init() {
+		wp_enqueue_style(
+			'msls-styles',
+			plugins_url( 'css/msls.css', MSLS_PLUGIN__FILE__ ),
+			array(),
+			MSLS_PLUGIN_VERSION
+		);
+
+		if ( MslsOptions::instance()->activate_autocomplete ) {
+			wp_enqueue_script(
+				'msls-autocomplete',
+				plugins_url( 'js/msls.min.js', MSLS_PLUGIN__FILE__ ),
+				array( 'jquery-ui-autocomplete' ),
+				MSLS_PLUGIN_VERSION
+			);
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Register widget
-	 * 
-	 * The widget will only be registered if the current blog is not 
+	 *
+	 * The widget will only be registered if the current blog is not
 	 * excluded in the configuration of the plugin.
 	 * @return boolean
 	 */
@@ -28,7 +53,7 @@ class MslsPlugin {
 
 	/**
 	 * Load textdomain
-	 * 
+	 *
 	 * The method will be executed allways on init because we have some
 	 * translatable string in the frontend too.
 	 * @return boolean
@@ -59,7 +84,7 @@ class MslsPlugin {
 
 	/**
 	 * Message handler
-	 * 
+	 *
 	 * Prints a message box to the screen.
 	 * @param string $message
 	 * @param string $css_class
@@ -79,15 +104,15 @@ class MslsPlugin {
 
 	/**
 	 * Uninstall plugin
-	 * 
-	 * The plugin data in all blogs of the current network will be 
-	 * deleted after the uninstall procedure. 
+	 *
+	 * The plugin data in all blogs of the current network will be
+	 * deleted after the uninstall procedure.
 	 * @return boolean
 	 */
 	public static function uninstall() {
 		/**
-		 * We want to be sure that the user has not deactivated the 
-		 * multisite because we need to use switch_to_blog and 
+		 * We want to be sure that the user has not deactivated the
+		 * multisite because we need to use switch_to_blog and
 		 * restore_current_blog
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
@@ -112,8 +137,8 @@ class MslsPlugin {
 
 	/**
 	 * Cleanup the options
-	 * 
-	 * Removes all values of the current blogs which are stored in the 
+	 *
+	 * Removes all values of the current blogs which are stored in the
 	 * options-table and returns true if it was successful.
 	 * @return boolean
 	 */
