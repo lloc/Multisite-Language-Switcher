@@ -290,7 +290,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		 * @param MslsOptions $this
 		 */
 		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
-		
+
 		if ( 5 == strlen( $language ) ) {
 			$language = strtolower( substr( $language, -2 ) );
 		}

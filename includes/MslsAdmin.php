@@ -23,8 +23,6 @@ class MslsAdmin extends MslsMain {
 			MSLS_PLUGIN_VERSION
 		);
 
-		$obj = new self();
-
 		if ( MslsOptions::instance()->activate_autocomplete ) {
 			wp_enqueue_script(
 				'msls-autocomplete',
@@ -34,6 +32,8 @@ class MslsAdmin extends MslsMain {
 			);
 		}
 
+		$obj = new self();
+
 		if ( current_user_can( 'manage_options' ) ) {
 			add_options_page(
 				__( 'Multisite Language Switcher', 'msls' ),
@@ -42,7 +42,7 @@ class MslsAdmin extends MslsMain {
 				__CLASS__,
 				array( $obj, 'render' )
 			);
-	
+
 			add_action( 'admin_init',    array( $obj, 'register' ) );
 			add_action( 'admin_notices', array( $obj, 'has_problems' ) );
 		}
@@ -57,7 +57,7 @@ class MslsAdmin extends MslsMain {
 	public function has_problems() {
 		$message = '';
 		$options = MslsOptions::instance();
-			
+
 		if ( 1 == count( $options->get_available_languages() ) ) {
 			$message = sprintf(
 				__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.' ),
@@ -85,8 +85,10 @@ class MslsAdmin extends MslsMain {
 			$this->subsubsub(),
 			__( 'To achieve maximum flexibility, you have to configure each blog separately.', 'msls' )
 		);
+
 		settings_fields( 'msls' );
 		do_settings_sections( __CLASS__ );
+
 		printf(
 			'<p class="submit"><input name="Submit" type="submit" class="button-primary" value="%s" /></p></form></div>',
 			( MslsOptions::instance()->is_empty() ? __( 'Configure', 'msls' ) : __( 'Update', 'msls' ) )
@@ -100,6 +102,7 @@ class MslsAdmin extends MslsMain {
 	public function subsubsub() {
 		$blogs = MslsBlogCollection::instance();
 		$arr   = array();
+
 		foreach ( $blogs->get_plugin_active_blogs() as $blog ) {
 			$arr[] = sprintf(
 				'<a href="%s"%s>%s / %s</a>',
@@ -109,13 +112,13 @@ class MslsAdmin extends MslsMain {
 				$blog->get_description()
 			);
 		}
-		return(
-			empty( $arr ) ?
-			'' :
-			sprintf(
-				'<ul class="subsubsub"><li>%s</li></ul>',
-				implode( ' | </li><li>', $arr )
-			)
+
+		if ( empty( $arr ) ) {
+			return '';
+		}
+		return sprintf(
+			'<ul class="subsubsub"><li>%s</li></ul>',
+			implode( ' | </li><li>', $arr )
 		);
 	}
 
@@ -126,12 +129,22 @@ class MslsAdmin extends MslsMain {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
 
 		add_settings_section( 'language_section', __( 'Language Settings', 'msls' ), array( $this, 'language_section' ), __CLASS__ );
+		add_settings_section( 'main_section', __( 'Main Settings', 'msls' ), array( $this, 'main_section' ), __CLASS__ );
+		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'msls' ), array( $this, 'advanced_section' ), __CLASS__ );
+	}
 
+	/**
+	 * Register the fields in the language_section
+	 */
+	public function language_section() {
 		add_settings_field( 'blog_language', __( 'Blog Language', 'msls' ), array( $this, 'blog_language' ), __CLASS__, 'language_section' );
 		add_settings_field( 'admin_language', __( 'Admin Language', 'msls' ), array( $this, 'admin_language' ), __CLASS__, 'language_section' );
+	}
 
-		add_settings_section( 'main_section', __( 'Main Settings', 'msls' ), array( $this, 'main_section' ), __CLASS__ );
-
+	/**
+	 * Register the fields in the main_section
+	 */
+	public function main_section() {
 		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'main_section' );
 		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'msls' ), array( $this, 'sort_by_description' ), __CLASS__, 'main_section' );
 		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'msls' ), array( $this, 'output_current_blog' ), __CLASS__, 'main_section' );
@@ -143,29 +156,17 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'msls' ), array( $this, 'after_item' ), __CLASS__, 'main_section' );
 		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'msls' ), array( $this, 'content_filter' ), __CLASS__, 'main_section' );
 		add_settings_field( 'content_priority', __( 'Hint priority', 'msls' ), array( $this, 'content_priority' ), __CLASS__, 'main_section' );
+	}
 
-		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'msls' ), array( $this, 'advanced_section' ), __CLASS__ );
-
+	/**
+	 * Register the fields in the advanced_section
+	 */
+	public function advanced_section() {
 		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'msls' ), array( $this, 'image_url' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'reference_user', __( 'Reference user', 'msls' ), array( $this, 'reference_user' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'msls' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'advanced_section' );
 	}
-
-	/**
-	 * language_section is just a placeholder for now
-	 */
-	public function language_section() { }
-
-	/**
-	 * main_section is just a placeholder for now
-	 */
-	public function main_section() { }
-
-	/**
-	 * advanced_section is just a placeholder for now
-	 */
-	public function advanced_section() { }
 
 	/**
 	 * Shows the select-form-field 'blog_language'
