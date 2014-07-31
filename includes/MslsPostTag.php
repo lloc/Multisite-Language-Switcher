@@ -133,9 +133,11 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Print the input fields
+	 * Returns true if the blogcollection is not empty
 	 * @param StdClass $tag
 	 * @param string $title_format
 	 * @param string $item_format
+	 * @return boolean
 	 */
 	public function the_input( $tag, $title_format, $item_format ) {
 		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
@@ -143,6 +145,7 @@ class MslsPostTag extends MslsMain {
 		if ( $blogs ) {
 			$my_data = MslsOptionsTax::create( $term_id );
 			$type    = MslsContentTypes::create()->get_request();
+
 			printf(
 				$title_format,
 				__( 'Multisite Language Switcher', 'msls' ),
@@ -174,12 +177,15 @@ class MslsPostTag extends MslsMain {
 				);
 				restore_current_blog();
 			}
+			return true;
 		}
+		return false;
 	}
 
 	/**
 	 * Set calls the save method if taxonomy is set
 	 * @param int $term_id
+ 	 * @codeCoverageIgnore
 	 */
 	public function set( $term_id ) {
 		if ( MslsContentTypes::create()->acl_request() ) {

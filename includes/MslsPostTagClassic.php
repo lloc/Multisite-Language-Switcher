@@ -87,24 +87,21 @@ class MslsPostTagClassic extends MslsPostTag {
 				);
 			}
 		}
-		printf(
-			$item_format,
-			$language,
-			$icon,
-			$options
-		);
+		printf( $item_format, $language, $icon, $options );
 
 		restore_current_blog();
 	}
 
 	/**
 	 * Print the input fields
+	 * Returns true if the blogcollection is not empty
 	 * @param StdClass $tag
 	 * @param string $title_format
 	 * @param string $item_format
+	 * @return boolean
 	 */
 	public function the_input( $tag, $title_format, $item_format ) {
-		$blogs   = MslsBlogCollection::instance()->get();
+		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
 			$mydata  = MslsOptionsTax::create( $term_id );
@@ -118,7 +115,9 @@ class MslsPostTagClassic extends MslsPostTag {
 			foreach ( $blogs as $blog ) {
 				$this->print_option( $blog, $type, $mydata, $item_format );
 			}
+			return true;
 		}
+		return false;
 	}
 
 }
