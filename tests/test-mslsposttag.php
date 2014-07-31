@@ -24,7 +24,9 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 	 * Verify the static init-method
 	 */
 	function test_init_method() {
-		$this->assertInstanceOf( 'MslsPostTag', MslsPostTag::init() );
+		$obj = MslsPostTag::init();
+		$this->assertInstanceOf( 'MslsPostTag', $obj );
+		return $obj;
 	}
 
 	/**
