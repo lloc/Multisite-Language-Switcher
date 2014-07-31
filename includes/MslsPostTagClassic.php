@@ -61,11 +61,11 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * Prints options inputs
 	 * @uses selected
 	 * @param MslsBlog $blog
-	 * @param MslsContentTypes $type
+	 * @param string $type
 	 * @param MslsOptionsTax $mydata
 	 * @param string $item_format
 	 */
-	public function print_option( MslsBlog $blog, MslsContentTypes $type, MslsOptionsTax $mydata, $item_format ) {
+	public function print_option( MslsBlog $blog, $type, MslsOptionsTax $mydata, $item_format ) {
 		switch_to_blog( $blog->userblog_id );
 
 		$language = $blog->get_language();
