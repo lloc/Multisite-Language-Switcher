@@ -82,7 +82,7 @@ class MslsPostTagClassic extends MslsPostTag {
 				$options .= sprintf(
 					'<option value="%s" %s>%s</option>',
 					$term->term_id,
-					selected( $term->term_id, $mydata->$language ),
+					selected( $term->term_id, $mydata->$language, false ),
 					$term->name
 				);
 			}
