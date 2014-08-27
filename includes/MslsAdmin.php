@@ -439,6 +439,7 @@ class MslsAdmin extends MslsMain {
 		if ( isset( $arr['image_url'] ) ) {
 			$arr['image_url'] = esc_url( rtrim( $arr['image_url'], '/' ) );
 		}
+
 		return $arr;
 	}
 
