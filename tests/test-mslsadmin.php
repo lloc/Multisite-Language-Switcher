@@ -61,6 +61,15 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	/**
+	 * Verify the image_url-method
+	 * @depends test_init_method
+	 */
+	function test_image_url( $obj ) {
+		$this->expectOutputString( '<input id="image_url" name="msls[image_url]" value="" size="30"/>' );
+		$obj->image_url();
+	}
+
+	/**
 	 * Verify the render_checkbox-method
 	 * @depends test_init_method
 	 */
@@ -91,7 +100,9 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 */
 	function test_validate( $obj ) {
 		$arr = array();
-		$this->assertInternalType( 'array', $obj->validate( $arr ) );
+		$this->assertEquals( array( 'display' => 0 ), $obj->validate( $arr ) );
+		$arr = array( 'image_url' => 'test', 'display' => '1' );
+		$this->assertEquals( array( 'image_url' => 'test/' ,'display' => 1 ), $obj->validate( $arr ) );
 	}
 
 	/**
