@@ -49,7 +49,8 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_render_select( $obj ) {
-		$this->assertInternalType( 'string', $obj->render_select( 'test', array( 'a', 'b', 'c' ) ) );
+		$arr = array( 'a', 'b', 'c' );
+		$this->assertInternalType( 'string', $obj->render_select( 'test', $arr ) );
 	}
 
 	/**
@@ -57,7 +58,8 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_validate( $obj ) {
-		$this->assertInternalType( 'array', $obj->validate( array() ) );
+		$arr = array();
+		$this->assertInternalType( 'array', $obj->validate( $arr ) );
 	}
 
 }

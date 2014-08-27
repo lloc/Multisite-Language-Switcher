@@ -85,7 +85,7 @@ You can choose the language of every website and the dashboard in the settings p
 
 = Do I really need a multisite? =
 
-It's up to you - of course. Yes, if you want to use the Multisite Language Switcher.
+It's up to you - of course. But yes, if you want to use the Multisite Language Switcher.
 
 = How can I automatically redirect users based on the browser language?
 

@@ -30,7 +30,7 @@ class MslsAdmin extends MslsMain {
 			add_action( 'admin_init',    array( $obj, 'register' ) );
 			add_action( 'admin_notices', array( $obj, 'has_problems' ) );
 
-			add_filter( 'msls_admin_validate', array( $this, 'set_blog_language' )	);
+			add_filter( 'msls_admin_validate', array( $obj, 'set_blog_language' )	);
 		}
 
 		return $obj;
@@ -111,6 +111,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Register the form-elements
+	 * @return bool
 	 */
 	public function register() {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
@@ -118,18 +119,35 @@ class MslsAdmin extends MslsMain {
 		add_settings_section( 'language_section', __( 'Language Settings', 'msls' ), array( $this, 'language_section' ), __CLASS__ );
 		add_settings_section( 'main_section', __( 'Main Settings', 'msls' ), array( $this, 'main_section' ), __CLASS__ );
 		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'msls' ), array( $this, 'advanced_section' ), __CLASS__ );
+
+		/**
+		 * Lets you add your own settings_section
+		 * @since 1.0
+		 * @param string $page
+		 */
+		return (bool) apply_filters( 'msls_admin_register', __CLASS__ );
 	}
 
 	/**
 	 * Register the fields in the language_section
+	 * @return bool
 	 */
 	public function language_section() {
 		add_settings_field( 'blog_language', __( 'Blog Language', 'msls' ), array( $this, 'blog_language' ), __CLASS__, 'language_section' );
 		add_settings_field( 'admin_language', __( 'Admin Language', 'msls' ), array( $this, 'admin_language' ), __CLASS__, 'language_section' );
+
+		/**
+		 * Lets you add your own field to the language section
+		 * @since 1.0
+		 * @param string $page
+		 * @param string $section
+		 */
+		return (bool) apply_filters( 'msls_admin_language_section', __CLASS__, 'language_section' );
 	}
 
 	/**
 	 * Register the fields in the main_section
+	 * @return bool
 	 */
 	public function main_section() {
 		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'main_section' );
@@ -143,16 +161,33 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'msls' ), array( $this, 'after_item' ), __CLASS__, 'main_section' );
 		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'msls' ), array( $this, 'content_filter' ), __CLASS__, 'main_section' );
 		add_settings_field( 'content_priority', __( 'Hint priority', 'msls' ), array( $this, 'content_priority' ), __CLASS__, 'main_section' );
+
+		/**
+		 * Lets you add your own field to the main section
+		 * @since 1.0
+		 * @param string $page
+		 * @param string $section
+		 */
+		return (bool) apply_filters( 'msls_admin_main_section', __CLASS__, 'main_section' );
 	}
 
 	/**
 	 * Register the fields in the advanced_section
+	 * @return bool
 	 */
 	public function advanced_section() {
 		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'msls' ), array( $this, 'image_url' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'reference_user', __( 'Reference user', 'msls' ), array( $this, 'reference_user' ), __CLASS__, 'advanced_section' );
 		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'msls' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'advanced_section' );
+
+		/**
+		 * Lets you add your own field to the advanced section
+		 * @since 1.0
+		 * @param string $page
+		 * @param string $section
+		 */
+		return (bool) apply_filters( 'msls_admin_advanced_section', __CLASS__, 'advanced_section' );
 	}
 
 	/**
@@ -194,9 +229,11 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function reference_user() {
 		$users = array();
+
 		foreach ( MslsBlogCollection::instance()->get_users() as $user ) {
 			$users[ $user->ID ] = $user->user_nicename;
 		}
+
 		echo $this->render_select(
 			'reference_user',
 			$users,
@@ -306,15 +343,15 @@ class MslsAdmin extends MslsMain {
 	 * for the output
 	 */
 	public function content_priority() {
-		$temp    = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
-		$arr     = array_combine( $temp, $temp );
-		$options = MslsOptions::instance();
-
+		$temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
+		$arr      = array_combine( $temp, $temp );
+		$options  = MslsOptions::instance();
 		$selected = (
 			empty( $options->content_priority ) ?
 			10 :
 			$options->content_priority
 		);
+
 		echo $this->render_select( 'content_priority', $arr, $selected ); // xss ok
 	}
 
@@ -387,6 +424,11 @@ class MslsAdmin extends MslsMain {
 	 * @return array Validated input
 	 */
 	public function validate( array $arr ) {
+		/**
+		 * Returns custom filtered input array
+		 * @since 1.0
+		 * @param array $arr
+		 */
 		$arr = apply_filters( 'msls_admin_validate', $arr );
 
 		$arr['display'] = (
