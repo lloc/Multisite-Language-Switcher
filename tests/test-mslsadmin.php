@@ -101,8 +101,8 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_validate( $obj ) {
 		$arr = array();
 		$this->assertEquals( array( 'display' => 0 ), $obj->validate( $arr ) );
-		$arr = array( 'image_url' => 'test', 'display' => '1' );
-		$this->assertEquals( array( 'image_url' => 'test/' ,'display' => 1 ), $obj->validate( $arr ) );
+		$arr = array( 'image_url' => '/test/', 'display' => '1' );
+		$this->assertEquals( array( 'image_url' => '/test' ,'display' => 1 ), $obj->validate( $arr ) );
 	}
 
 	/**
