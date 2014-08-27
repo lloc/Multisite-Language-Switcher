@@ -21,11 +21,43 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	/**
-	 * Verify the init-method
+	 * Verify the subsubsub-method
 	 * @depends test_init_method
 	 */
 	function test_subsubsub( $obj ) {
 		$this->assertInternalType( 'string', $obj->subsubsub() );
+	}
+
+	/**
+	 * Verify the register-method
+	 * @depends test_init_method
+	 */
+	function test_register( $obj ) {
+		$this->assertEquals( true, $obj->register() );
+	}
+
+	/**
+	 * Verify the language_section-method
+	 * @depends test_init_method
+	 */
+	function test_language_section( $obj ) {
+		$this->assertEquals( true, $obj->language_section() );
+	}
+
+	/**
+	 * Verify the main_section-method
+	 * @depends test_init_method
+	 */
+	function test_main_section( $obj ) {
+		$this->assertEquals( true, $obj->main_section() );
+	}
+
+	/**
+	 * Verify the advanced_section-method
+	 * @depends test_init_method
+	 */
+	function test_advanced_section( $obj ) {
+		$this->assertEquals( true, $obj->advanced_section() );
 	}
 
 	/**
@@ -60,6 +92,15 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_validate( $obj ) {
 		$arr = array();
 		$this->assertInternalType( 'array', $obj->validate( $arr ) );
+	}
+
+	/**
+	 * Verify the set_blog_language-method
+	 * @depends test_init_method
+	 */
+	function test_set_blog_language( $obj ) {
+		$arr = array( 'abc' => true, 'blog_language' => 'it_IT' );
+		$this->assertEquals( array( 'abc' => true ), $obj->set_blog_language( $arr ) );
 	}
 
 }
