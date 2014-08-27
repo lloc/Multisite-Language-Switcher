@@ -21,6 +21,14 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	/**
+	 * Verify the has_problems-method
+	 * @depends test_init_method
+	 */
+	function test_has_problems( $obj ) {
+		$this->assertInternalType( 'string', $obj->has_problems() );
+	}
+
+	/**
 	 * Verify the subsubsub-method
 	 * @depends test_init_method
 	 */
@@ -29,44 +37,147 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	/**
-	 * Verify the register-method
+	 * Verify the blog_language-method
 	 * @depends test_init_method
 	 */
-	function test_register( $obj ) {
-		$this->assertEquals( true, $obj->register() );
+	function test_blog_language( $obj ) {
+		$this->expectOutputRegex( '^<select id="blog_language" name="msls\[blog_language\]">.*$' );
+		$obj->blog_language();
 	}
 
 	/**
-	 * Verify the language_section-method
+	 * Verify the admin_language-method
 	 * @depends test_init_method
 	 */
-	function test_language_section( $obj ) {
-		$this->assertEquals( true, $obj->language_section() );
+	function test_admin_language( $obj ) {
+		$this->expectOutputRegex( '^<select id="admin_language" name="msls\[admin_language\]">.*$' );
+		$obj->admin_language();
 	}
 
 	/**
-	 * Verify the main_section-method
+	 * Verify the display-method
 	 * @depends test_init_method
 	 */
-	function test_main_section( $obj ) {
-		$this->assertEquals( true, $obj->main_section() );
+	function test_display( $obj ) {
+		$this->expectOutputRegex( '^<select id="display" name="msls\[display\]">.*$' );
+		$obj->display();
 	}
 
 	/**
-	 * Verify the advanced_section-method
+	 * Verify the reference_user-method
 	 * @depends test_init_method
 	 */
-	function test_advanced_section( $obj ) {
-		$this->assertEquals( true, $obj->advanced_section() );
+	function test_reference_user( $obj ) {
+		$this->expectOutputRegex( '^<select id="reference_user" name="msls\[reference_user\]">.*$' );
+		$obj->reference_user();
 	}
 
 	/**
-	 * Verify the test_content_priority-method
+	 * Verify the activate_autocomplete-method
+	 * @depends test_init_method
+	 */
+	function test_activate_autocomplete( $obj ) {
+		$this->expectOutputRegex( '^<select id="activate_autocomplete" name="msls\[activate_autocomplete\]">.*$' );
+		$obj->activate_autocomplete();
+	}
+
+	/**
+	 * Verify the sort_by_description-method
+	 * @depends test_init_method
+	 */
+	function test_sort_by_description( $obj ) {
+		$this->expectOutputString( '<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" />' );
+		$obj->sort_by_description();
+	}
+
+	/**
+	 * Verify the exclude_current_blog-method
+	 * @depends test_init_method
+	 */
+	function test_exclude_current_blog( $obj ) {
+		$this->expectOutputString( '<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" />' );
+		$obj->exclude_current_blog();
+	}
+
+	/**
+	 * Verify the only_with_translation-method
+	 * @depends test_init_method
+	 */
+	function test_only_with_translation( $obj ) {
+		$this->expectOutputString( '<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" />' );
+		$obj->only_with_translation();
+	}
+
+	/**
+	 * Verify the output_current_blog-method
+	 * @depends test_init_method
+	 */
+	function test_output_current_blog( $obj ) {
+		$this->expectOutputString( '<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" />' );
+		$obj->output_current_blog();
+	}
+
+	/**
+	 * Verify the description-method
+	 * @depends test_init_method
+	 */
+	function test_description( $obj ) {
+		$this->expectOutputString( '<input id="description" name="msls[description]" value="" size="40"/>' );
+		$obj->description();
+	}
+
+	/**
+	 * Verify the before_output-method
+	 * @depends test_init_method
+	 */
+	function test_before_output( $obj ) {
+		$this->expectOutputString( '<input id="before_output" name="msls[before_output]" value="" size="30"/>' );
+		$obj->before_output();
+	}
+
+	/**
+	 * Verify the after_output-method
+	 * @depends test_init_method
+	 */
+	function test_after_output( $obj ) {
+		$this->expectOutputString( '<input id="after_output" name="msls[after_output]" value="" size="30"/>' );
+		$obj->after_output();
+	}
+
+	/**
+	 * Verify the before_item-method
+	 * @depends test_init_method
+	 */
+	function test_before_item( $obj ) {
+		$this->expectOutputString( '<input id="before_item" name="msls[before_item]" value="" size="30"/>' );
+		$obj->before_item();
+	}
+
+	/**
+	 * Verify the after_item-method
+	 * @depends test_init_method
+	 */
+	function test_after_item( $obj ) {
+		$this->expectOutputString( '<input id="after_item" name="msls[after_item]" value="" size="30"/>' );
+		$obj->after_item();
+	}
+
+	/**
+	 * Verify the content_filter-method
+	 * @depends test_init_method
+	 */
+	function test_content_filter( $obj ) {
+		$this->expectOutputString( '<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" />' );
+		$obj->content_filter();
+	}
+
+	/**
+	 * Verify the content_priority-method
 	 * @depends test_init_method
 	 */
 	function test_content_priority( $obj ) {
 		$this->expectOutputRegex( '^<select id="content_priority" name="msls\[content_priority\]">.*$' );
-		$obj->test_content_priority();
+		$obj->content_priority();
 	}
 
 	/**

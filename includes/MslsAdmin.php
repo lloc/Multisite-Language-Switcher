@@ -63,6 +63,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Render the options-page
+	 * @codeCoverageIgnore
 	 */
 	public function render() {
 		printf(
@@ -111,7 +112,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Register the form-elements
-	 * @return bool
+	 * @codeCoverageIgnore
 	 */
 	public function register() {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
@@ -121,16 +122,16 @@ class MslsAdmin extends MslsMain {
 		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'msls' ), array( $this, 'advanced_section' ), __CLASS__ );
 
 		/**
-		 * Lets you add your own settings_section
+		 * Lets you add your own settings section
 		 * @since 1.0
 		 * @param string $page
 		 */
-		return (bool) apply_filters( 'msls_admin_register', __CLASS__ );
+		do_action( 'msls_admin_register', __CLASS__ );
 	}
 
 	/**
 	 * Register the fields in the language_section
-	 * @return bool
+	 * @codeCoverageIgnore
 	 */
 	public function language_section() {
 		add_settings_field( 'blog_language', __( 'Blog Language', 'msls' ), array( $this, 'blog_language' ), __CLASS__, 'language_section' );
@@ -142,12 +143,12 @@ class MslsAdmin extends MslsMain {
 		 * @param string $page
 		 * @param string $section
 		 */
-		return (bool) apply_filters( 'msls_admin_language_section', __CLASS__, 'language_section' );
+		do_action( 'msls_admin_language_section', __CLASS__, 'language_section' );
 	}
 
 	/**
 	 * Register the fields in the main_section
-	 * @return bool
+	 * @codeCoverageIgnore
 	 */
 	public function main_section() {
 		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'main_section' );
@@ -168,12 +169,12 @@ class MslsAdmin extends MslsMain {
 		 * @param string $page
 		 * @param string $section
 		 */
-		return (bool) apply_filters( 'msls_admin_main_section', __CLASS__, 'main_section' );
+		do_action( 'msls_admin_main_section', __CLASS__, 'main_section' );
 	}
 
 	/**
 	 * Register the fields in the advanced_section
-	 * @return bool
+	 * @codeCoverageIgnore
 	 */
 	public function advanced_section() {
 		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
@@ -187,7 +188,7 @@ class MslsAdmin extends MslsMain {
 		 * @param string $page
 		 * @param string $section
 		 */
-		return (bool) apply_filters( 'msls_admin_advanced_section', __CLASS__, 'advanced_section' );
+		do_action( 'msls_admin_advanced_section', __CLASS__, 'advanced_section' );
 	}
 
 	/**
