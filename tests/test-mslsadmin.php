@@ -25,7 +25,10 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_has_problems( $obj ) {
-		$this->assertInternalType( 'bool', $obj->has_problems() );
+		$this->expectOutputRegex( '/^<div id="msls-warning" class="updated fade"><p>.*$/' );
+		$retval = $obj->has_problems();
+
+		$this->assertInternalType( 'bool', $retval );
 	}
 
 	/**
@@ -77,7 +80,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_activate_autocomplete( $obj ) {
-		$this->expectOutputRegex( '/^<select id="activate_autocomplete" name="msls\[activate_autocomplete\]">.*$/' );
+		$this->expectOutputString( '<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" />' );
 		$obj->activate_autocomplete();
 	}
 
