@@ -61,6 +61,15 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	/**
+	 * Verify the test_content_priority-method
+	 * @depends test_init_method
+	 */
+	function test_content_priority( $obj ) {
+		$this->expectOutputRegex( '^<select id="content_priority" name="msls\[content_priority\]">.*$' );
+		$obj->test_content_priority();
+	}
+
+	/**
 	 * Verify the image_url-method
 	 * @depends test_init_method
 	 */
