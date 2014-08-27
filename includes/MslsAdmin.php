@@ -29,6 +29,8 @@ class MslsAdmin extends MslsMain {
 
 			add_action( 'admin_init',    array( $obj, 'register' ) );
 			add_action( 'admin_notices', array( $obj, 'has_problems' ) );
+
+			add_filter( 'msls_admin_validate', array( $this, 'set_blog_language' )	);
 		}
 
 		return $obj;
@@ -318,7 +320,6 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Alternative image-url
-	 *
 	 * @todo This is a value of a directory-url which should be more clear
 	 */
 	public function image_url() {
@@ -327,7 +328,6 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Render form-element (checkbox)
-	 *
 	 * @param string $key Name and ID of the form-element
 	 * @return string
 	 */
@@ -341,7 +341,6 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Render form-element (text-input)
-	 *
 	 * @param string $key Name and ID of the form-element
 	 * @param string $size Size-attribute of the input-field
 	 * @return string
@@ -365,6 +364,7 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function render_select( $key, array $arr, $selected = '' ) {
 		$options = array();
+
 		foreach ( $arr as $value => $description ) {
 			$options[] = sprintf(
 				'<option value="%s" %s>%s</option>',
@@ -373,6 +373,7 @@ class MslsAdmin extends MslsMain {
 				$description
 			);
 		}
+
 		return sprintf(
 			'<select id="%1$s" name="msls[%1$s]">%2$s</select>',
 			$key,
@@ -382,15 +383,12 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Validates input before saving it
-	 *
 	 * @param array $arr Values of the submitted form
 	 * @return array Validated input
 	 */
 	public function validate( array $arr ) {
-		if ( isset( $arr['blog_language'] ) ) {
-			update_option( 'WPLANG', $arr['blog_language'] );
-			unset( $arr['blog_language'] );
-		}
+		$arr = apply_filters( 'msls_admin_validate', $arr );
+
 		$arr['display'] = (
 			isset( $arr['display'] ) ?
 			(int) $arr['display'] :
@@ -398,6 +396,19 @@ class MslsAdmin extends MslsMain {
 		);
 		if ( isset( $arr['image_url'] ) ) {
 			$arr['image_url'] = esc_url( rtrim( $arr['image_url'], '/' ) );
+		}
+		return $arr;
+	}
+
+	/**
+	 * Filter which sets the global blog language
+	 * @param array $arr
+	 * @return array
+	 */
+	public function set_blog_language( array $arr ) {
+		if ( isset( $arr['blog_language'] ) ) {
+			update_option( 'WPLANG', $arr['blog_language'] );
+			unset( $arr['blog_language'] );
 		}
 		return $arr;
 	}
