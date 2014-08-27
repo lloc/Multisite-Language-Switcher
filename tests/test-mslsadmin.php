@@ -25,7 +25,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_has_problems( $obj ) {
-		$this->assertInternalType( 'string', $obj->has_problems() );
+		$this->assertInternalType( 'bool', $obj->has_problems() );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_blog_language( $obj ) {
-		$this->expectOutputRegex( '^<select id="blog_language" name="msls\[blog_language\]">.*$' );
+		$this->expectOutputRegex( '/^<select id="blog_language" name="msls\[blog_language\]">.*$/' );
 		$obj->blog_language();
 	}
 
@@ -50,7 +50,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_admin_language( $obj ) {
-		$this->expectOutputRegex( '^<select id="admin_language" name="msls\[admin_language\]">.*$' );
+		$this->expectOutputRegex( '/^<select id="admin_language" name="msls\[admin_language\]">.*$/' );
 		$obj->admin_language();
 	}
 
@@ -59,7 +59,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_display( $obj ) {
-		$this->expectOutputRegex( '^<select id="display" name="msls\[display\]">.*$' );
+		$this->expectOutputRegex( '/^<select id="display" name="msls\[display\]">.*$/' );
 		$obj->display();
 	}
 
@@ -68,7 +68,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_reference_user( $obj ) {
-		$this->expectOutputRegex( '^<select id="reference_user" name="msls\[reference_user\]">.*$' );
+		$this->expectOutputRegex( '/^<select id="reference_user" name="msls\[reference_user\]">.*$/' );
 		$obj->reference_user();
 	}
 
@@ -77,7 +77,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_activate_autocomplete( $obj ) {
-		$this->expectOutputRegex( '^<select id="activate_autocomplete" name="msls\[activate_autocomplete\]">.*$' );
+		$this->expectOutputRegex( '/^<select id="activate_autocomplete" name="msls\[activate_autocomplete\]">.*$/' );
 		$obj->activate_autocomplete();
 	}
 
@@ -176,7 +176,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_content_priority( $obj ) {
-		$this->expectOutputRegex( '^<select id="content_priority" name="msls\[content_priority\]">.*$' );
+		$this->expectOutputRegex( '/^<select id="content_priority" name="msls\[content_priority\]">.*$/' );
 		$obj->content_priority();
 	}
 

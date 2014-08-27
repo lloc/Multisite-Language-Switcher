@@ -38,7 +38,7 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * There is something wrong? Here comes the message...
-	 * @return boolean
+	 * @return bool
 	 */
 	public function has_problems() {
 		$message = '';
