@@ -437,7 +437,7 @@ class MslsAdmin extends MslsMain {
 			0
 		);
 		if ( isset( $arr['image_url'] ) ) {
-			$arr['image_url'] = rtrim( sanitize_file_name( $arr['image_url'] ), '/' );
+			$arr['image_url'] = sanitize_file_name( rtrim( $arr['image_url'] , '/' ) );
 		}
 
 		return $arr;
