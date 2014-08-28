@@ -90,7 +90,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 					$description
 				);
 
-				if ( false != $description ) {
+				if ( false !== $description ) {
 					$this->objects[ $blog->userblog_id ] = new MslsBlog(
 						$blog,
 						$description
@@ -103,7 +103,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 	/**
 	 * Returns the description of an configured blog or false if it is not configured
-	 * @param int $blog
+	 * @param int $blog_id
 	 * @param string|bool $description
 	 * @return string|bool
 	 */
@@ -209,11 +209,13 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	public function get_plugin_active_blogs() {
 		$arr = array();
+
 		foreach ( $this->get_objects() as $id => $blog ) {
 			if ( $this->is_plugin_active( $blog->userblog_id ) ) {
 				$arr[] = $blog;
 			}
 		}
+
 		return $arr;
 	}
 
