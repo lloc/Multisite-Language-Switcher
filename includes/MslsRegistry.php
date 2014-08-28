@@ -25,7 +25,7 @@ class MslsRegistry {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * Don't call me directly!
 	 * @codeCoverageIgnore
 	 */
@@ -33,7 +33,7 @@ class MslsRegistry {
 
 	/**
 	 * Clone
-	 * 
+	 *
 	 * Don't call me directly!
 	 * @codeCoverageIgnore
 	 */
@@ -80,7 +80,7 @@ class MslsRegistry {
 	/**
 	 * Static set_object calls set
 	 * @param string $key
-	 * @param mixed
+	 * @param mixed $instance
 	 */
 	public static function set_object( $key, $instance ) {
 		self::instance()->set( $key, $instance );
