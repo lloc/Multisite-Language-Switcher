@@ -264,6 +264,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 				else {
 					$hreflang = $blog->get_alpha2();
 				}
+
 				printf(
 					'<link rel="alternate" hreflang="%s" href="%s" />',
 					$hreflang,
