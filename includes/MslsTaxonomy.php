@@ -30,22 +30,10 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 			)
 		);
 
-		if ( filter_has_var( INPUT_GET, 'taxonomy' ) ) {
-			$this->request = filter_input( INPUT_GET, 'taxonomy', FILTER_SANITIZE_STRING );
-		}
-		elseif (  filter_has_var( INPUT_POST, 'taxonomy' ) ) {
-			$this->request = filter_input( INPUT_POST, 'taxonomy', FILTER_SANITIZE_STRING );
-		}
-		else {
-			$this->request = get_query_var( 'taxonomy' );
-		}
+		$screen = get_current_screen();
 
-		if ( filter_has_var( INPUT_GET, 'post_type' ) ) {
-			$this->post_type = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_STRING );
-		}
-		elseif (  filter_has_var( INPUT_POST, 'post_type' ) ) {
-			$this->post_type = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING );
-		}
+		$this->request   = $screen->taxonomy;
+		$this->post_type = $screen->post_type;
 	}
 
 	/**
