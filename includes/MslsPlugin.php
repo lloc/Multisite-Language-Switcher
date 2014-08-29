@@ -164,12 +164,12 @@ class MslsPlugin {
 
 		foreach ( $list as $var ) {
 			if ( filter_has_var( INPUT_POST, $var ) ) {
-				$arr[$var] = filter_input( INPUT_POST, $var );
+				$arr[ $var ] = filter_input( INPUT_POST, $var );
 			}
 			elseif ( filter_has_var( INPUT_GET, $var ) ) {
-				$arr[$var] = filter_input( INPUT_GET, $var );
+				$arr[ $var ] = filter_input( INPUT_GET, $var );
 			} else {
-				$arr[$var] = '';
+				$arr[ $var ] = '';
 			}
 		}
 
