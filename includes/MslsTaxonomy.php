@@ -30,17 +30,21 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 			)
 		);
 
-		$this->request = (string) filter_input( INPUT_GET, 'taxonomy', FILTER_SANITIZE_STRING );
-		if ( empty( $this->request ) ) {
+		if ( filter_has_var( INPUT_GET, 'taxonomy' ) ) {
+			$this->request = filter_input( INPUT_GET, 'taxonomy', FILTER_SANITIZE_STRING );
+		}
+		elseif (  filter_has_var( INPUT_POST, 'taxonomy' ) ) {
+			$this->request = filter_input( INPUT_POST, 'taxonomy', FILTER_SANITIZE_STRING );
+		}
+		else {
 			$this->request = get_query_var( 'taxonomy' );
 		}
 
 		if ( filter_has_var( INPUT_GET, 'post_type' ) ) {
-			$this->post_type = (string) filter_input(
-				INPUT_GET,
-				'post_type',
-				FILTER_SANITIZE_STRING
-			);
+			$this->post_type = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_STRING );
+		}
+		elseif (  filter_has_var( INPUT_POST, 'post_type' ) ) {
+			$this->post_type = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING );
 		}
 	}
 
@@ -54,8 +58,8 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 
 	/**
 	 * Check if the current user can manage this content type
-	 * 
-	 * Returns name of the content type if the user has access or an empty 
+	 *
+	 * Returns name of the content type if the user has access or an empty
 	 * string if the user can not access
 	 * @return string
 	 */
