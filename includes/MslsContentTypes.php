@@ -28,7 +28,8 @@ class MslsContentTypes {
 	 * @return MslsContentTypes
 	 */
 	public static function create() {
-		if ( filter_has_var( INPUT_GET, 'taxonomy' ) || filter_has_var( INPUT_POST, 'taxonomy' ) ) {
+		$_request = MslsPlugin::get_superglobals( array( 'taxonomy' ) );
+		if ( '' != $_request['taxonomy'] ) {
 			return MslsTaxonomy::instance();
 		}
 		return MslsPostType::instance();
@@ -52,8 +53,8 @@ class MslsContentTypes {
 
 	/**
 	 * Check if the current user can manage this content type
-	 * 
-	 * Returns name of the content type if the user has access or an empty 
+	 *
+	 * Returns name of the content type if the user has access or an empty
 	 * string if the user can not access
 	 * @return string
 	 */

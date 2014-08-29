@@ -154,4 +154,25 @@ class MslsPlugin {
 		return false;
 	}
 
+	/**
+	 * Get specific vars from $_POST and $_GET in a safe way
+	 * @param array $list
+	 * @return array
+	 */
+	public static function get_superglobals( array $list ) {
+		$arr = array();
+
+		foreach ( $list as $var ) {
+			if ( filter_has_var( INPUT_POST, $var ) ) {
+				$arr[$var] = filter_input( INPUT_POST, $var );
+			}
+			elseif ( filter_has_var( INPUT_GET, $var ) ) {
+				$arr[$var] = filter_input( INPUT_GET, $var );
+			} else {
+				$arr[$var] = '';
+			}
+		}
+
+		return $arr;
+	}
 }
