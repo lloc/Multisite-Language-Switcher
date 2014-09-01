@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Multisite Language Switcher 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-09-01 16:45+0100\n"
-"PO-Revision-Date: 2014-09-01 16:45+0100\n"
+"POT-Creation-Date: 2014-09-01 17:28+0100\n"
+"PO-Revision-Date: 2014-09-01 17:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: ThemeBoy <translate@themeboy.com>\n"
 "Language: ja\n"
@@ -58,6 +58,9 @@ msgid ""
 "install some language files</a> or you could use a <a href=\"%s\">plugin</a> "
 "to download these files automatically."
 msgstr ""
+"言語ファイルがインストールされていません。手動で<a href=\"%s\">言語ファイルを"
+"インストール</a>または<a href=\"%s\">プラグイン</a>を利用して自動的にファイル"
+"をダウンロードできます。"
 
 #: ../includes/MslsAdmin.php:56
 #, php-format
@@ -87,9 +90,8 @@ msgid "Update"
 msgstr "更新"
 
 #: ../includes/MslsAdmin.php:120
-#, fuzzy
 msgid "Language Settings"
-msgstr "一般設定"
+msgstr "言語設定"
 
 #: ../includes/MslsAdmin.php:121
 msgid "Main Settings"
@@ -101,11 +103,11 @@ msgstr "詳細設定"
 
 #: ../includes/MslsAdmin.php:137
 msgid "Blog Language"
-msgstr ""
+msgstr "ブログ言語"
 
 #: ../includes/MslsAdmin.php:138
 msgid "Admin Language"
-msgstr ""
+msgstr "管理画面言語"
 
 #: ../includes/MslsAdmin.php:154
 msgid "Display"
@@ -141,7 +143,7 @@ msgstr "各項目の前に表示するテキスト・HTML"
 
 #: ../includes/MslsAdmin.php:162
 msgid "Text/HTML after each item"
-msgstr "各項目の前に表示するテキスト・HTML"
+msgstr "各項目の後に表示するテキスト・HTML"
 
 #: ../includes/MslsAdmin.php:163
 msgid "Add hint for available translations"
