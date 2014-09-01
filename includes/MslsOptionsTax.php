@@ -57,6 +57,7 @@ class MslsOptionsTax extends MslsOptions {
 	 */
 	public function get_tax_query() {
 		global $wp_query;
+
 		return(
 			isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ?
 			$wp_query->tax_query->queries[0]['taxonomy'] :
@@ -70,7 +71,11 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return string
 	 */
 	public function check_url( $url ) {
-		return( empty( $url ) || ! is_string( $url ) ? '' : $url );
+		if ( ! empty( $url ) && is_string( $url ) ) {
+
+			return $url;
+		}
+		return '';
 	}
 
 	/**

@@ -29,26 +29,20 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 * @return string
 	 */
 	public function check_url( $url ) {
-		if ( empty( $url ) || ! is_string( $url ) ) {
-			return '';
-		}
-		$base = $this->get_base();
-		if ( $this->base != $base ) {
-			$search  = '/' . $this->base . '/';
-			$replace = '/' . $base . '/';
-			$count   = 1;
-			$url     = str_replace( $search, $replace, $url, $count );
-		}
-		return $url;
-	}
+		$url = parent::check_url( $url );
 
-	/**
-	 * Get base
-	 * @return string
-	 */
-	public function get_base() {
-		$base = get_option( $this->base_option );
-		return( ! empty( $base ) ? $base : $this->base_defined );
+		if ( '' != $url ) {
+			/* Custom structure for categories or tags */
+			$base = get_option( $this->base_option );
+			if ( $this->base != $base ) {
+				$search  = '/' . $this->base . '/';
+				$replace = '/' . $base . '/';
+				$count   = 1;
+				$url     = str_replace( $search, $replace, $url, $count );
+			}
+		}
+
+		return $url;
 	}
 
 }

@@ -67,7 +67,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 	 */
 	function test_set_method( $obj ) {
 		$this->assertTrue( $obj->set( array() ) );
-		$this->assertTrue( $obj->set( array( 'temp' => 'abc' ) ) );	
+		$this->assertTrue( $obj->set( array( 'temp' => 'abc' ) ) );
 		$this->assertFalse( $obj->set( 'Test' ) );
 		$this->assertFalse( $obj->set( 1 ) );
 		$this->assertFalse( $obj->set( 1.1 ) );
@@ -75,14 +75,6 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 		$this->assertFalse( $obj->set( new stdClass() ) );
 	}
 
-	/**
-	 * Verify the get_base-method
-	 * @depends test_instance_method
-	 */
-	function test_get_base_method( $obj ) {
-		$this->assertInternalType( 'string', $obj->get_base() );
-	}
-		
 	/**
 	 * Verify the get_permalink-method
 	 * @depends test_instance_method
@@ -107,7 +99,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 	function test_get_current_link_method( $obj ) {
 		$this->assertInternalType( 'string', $obj->get_current_link() );
 	}
-	
+
 	/**
 	 * Verify the is_excluded-method
 	 * @depends test_instance_method
