@@ -12,12 +12,12 @@
 class WP_Test_MslsOptionsTaxTermCategory extends Msls_UnitTestCase {
 
 	/**
-	 * Verify the get_tax_query-method
+	 * Verify the check_url-method
 	 */
-	function test_get_base_method() {
-		$obj = new MslsOptionsTaxTermCategory( 0 );
-		$this->assertInternalType( 'string', $obj->get_base() );
-		$this->assertEquals( 'category', $obj->get_base() );
+	function test_check_url_method() {
+		$obj = new WP_Test_MslsOptionsTaxTermCategory( 0 );
+		$this->assertInternalType( 'string', $obj->check_url( '' ) );
+		return $obj;
 	}
-	
+
 }
