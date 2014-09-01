@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
 "POT-Creation-Date: 2014-09-01 16:44+0100\n"
-"PO-Revision-Date: 2014-09-01 16:44+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2014-09-01 19:58+0100\n"
+"Last-Translator: Dennis Ploetner <re@lloc.de>\n"
 "Language-Team: Alexandra Kleijn <blog@buurtaal.de>\n"
-"Language: Dutch (nl_NL)\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.5.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -34,17 +34,16 @@ msgid "%s and %s"
 msgstr "%s en %s"
 
 #: ../MultisiteLanguageSwitcher.php:287
-#, fuzzy
 msgid ""
 "The Multisite Language Switcher needs the activation of the multisite-"
 "feature for working properly. Please read <a onclick=\"window.open(this."
 "href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
 "\">this post</a> if you don't know the meaning."
 msgstr ""
-"Om deze plugin te gebruiken moet de multisite-functie geactiveerd zijn. Lees "
-"<a onclick=\"window.open(this.href); return false;\" href=\"http://codex."
-"wordpress.org/Create_A_Network\">dit artikel</a> als je niet weet wat "
-"daarmee bedoeld wordt."
+"Om deze plugin te kunnen gebruiken moet de multisite-functie geactiveerd "
+"zijn. Lees <a onclick=\"window.open(this.href); return false;\" href="
+"\"http://codex.wordpress.org/Create_A_Network\">dit artikel</a> als je niet "
+"weet wat daarmee wordt bedoeld."
 
 # @ msls
 #: ../includes/MslsAdmin.php:23 ../includes/MslsAdmin.php:24
@@ -60,6 +59,9 @@ msgid ""
 "install some language files</a> or you could use a <a href=\"%s\">plugin</a> "
 "to download these files automatically."
 msgstr ""
+"Er zijn geen taalbestanden geïnstalleerd. Je kunt <a href=\"%s\">er een paar "
+"met de hand installeren</a> of dit met behulp van een <a href=\"%s\">plugin</"
+"a> automatisch laten doen."
 
 #: ../includes/MslsAdmin.php:56
 #, php-format
@@ -95,9 +97,8 @@ msgstr "Actualiseren"
 
 # @ msls
 #: ../includes/MslsAdmin.php:120
-#, fuzzy
 msgid "Language Settings"
-msgstr "Instellingen"
+msgstr "Taal-instellingen"
 
 # @ msls
 #: ../includes/MslsAdmin.php:121
@@ -111,11 +112,11 @@ msgstr "Geavanceerde instellingen"
 
 #: ../includes/MslsAdmin.php:137
 msgid "Blog Language"
-msgstr ""
+msgstr "Taal van het blog"
 
 #: ../includes/MslsAdmin.php:138
 msgid "Admin Language"
-msgstr ""
+msgstr "Taal voor de beheerder"
 
 # @ msls
 #: ../includes/MslsAdmin.php:154
