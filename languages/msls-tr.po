@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-05-02 15:01+0100\n"
-"PO-Revision-Date: 2014-05-02 15:01+0100\n"
+"POT-Creation-Date: 2014-09-01 16:43+0100\n"
+"PO-Revision-Date: 2014-09-01 16:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: Alican Cakil <alicancakil@gmail.com >\n"
 "Language: tr\n"
@@ -22,17 +22,17 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../MultisiteLanguageSwitcher.php:155 ../MultisiteLanguageSwitcher.php:189
+#: ../MultisiteLanguageSwitcher.php:165
 #, php-format
 msgid "This post is also available in %s."
 msgstr "Bu yazı %s adresinde de mevcut."
 
-#: ../MultisiteLanguageSwitcher.php:172
+#: ../MultisiteLanguageSwitcher.php:182
 #, php-format
 msgid "%s and %s"
 msgstr "%s ve %s"
 
-#: ../MultisiteLanguageSwitcher.php:278
+#: ../MultisiteLanguageSwitcher.php:287
 #, fuzzy
 msgid ""
 "The Multisite Language Switcher needs the activation of the multisite-"
@@ -45,13 +45,21 @@ msgstr ""
 "open(this.href); return false;\" href=\"http://codex.wordpress.org/"
 "Create_A_Network\">bu sayfaya</a> göz atın."
 
-#: ../includes/MslsAdmin.php:38 ../includes/MslsAdmin.php:39
-#: ../includes/MslsMetaBox.php:88 ../includes/MslsPostTag.php:160
-#: ../includes/MslsPostTagClassic.php:82 ../includes/MslsWidget.php:20
+#: ../includes/MslsAdmin.php:23 ../includes/MslsAdmin.php:24
+#: ../includes/MslsMetaBox.php:94 ../includes/MslsPostTag.php:151
+#: ../includes/MslsPostTagClassic.php:112 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: ../includes/MslsAdmin.php:57
+#: ../includes/MslsAdmin.php:49
+#, php-format
+msgid ""
+"There are no language files installed. You can <a href=\"%s\">manually "
+"install some language files</a> or you could use a <a href=\"%s\">plugin</a> "
+"to download these files automatically."
+msgstr ""
+
+#: ../includes/MslsAdmin.php:56
 #, php-format
 msgid ""
 "Multisite Language Switcher is almost ready. You must <a href=\"%s"
@@ -60,114 +68,127 @@ msgstr ""
 "Multisite Language Switcher eklentisi hazır sayılır! <a href=\"%s"
 "\">Yapılandırma ayarlarını tamamlayın</a>."
 
-#: ../includes/MslsAdmin.php:70
+#: ../includes/MslsAdmin.php:71
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher Ayarları"
 
-#: ../includes/MslsAdmin.php:72
+#: ../includes/MslsAdmin.php:73
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 "Maximum esneklik elde edebilmemiz için, her blogun yapılandırma ayarlarını "
 "ayrı ayrı yapmalısınız."
 
-#: ../includes/MslsAdmin.php:78
+#: ../includes/MslsAdmin.php:81
 msgid "Configure"
 msgstr "Yapılandır"
 
-#: ../includes/MslsAdmin.php:78 ../includes/MslsMetaBox.php:180
-#: ../includes/MslsMetaBox.php:238
+#: ../includes/MslsAdmin.php:81 ../includes/MslsMetaBox.php:197
+#: ../includes/MslsMetaBox.php:263
 msgid "Update"
 msgstr "Güncelle"
 
-#: ../includes/MslsAdmin.php:118
+#: ../includes/MslsAdmin.php:120
+#, fuzzy
+msgid "Language Settings"
+msgstr "Ayarlar"
+
+#: ../includes/MslsAdmin.php:121
 msgid "Main Settings"
 msgstr "Ayarlar"
 
-#: ../includes/MslsAdmin.php:123
-msgid "Display"
-msgstr "Göster"
-
-#: ../includes/MslsAdmin.php:124
-msgid "Sort output by description"
-msgstr "Listeyi açıklamaya göre sırala"
-
-#: ../includes/MslsAdmin.php:125
-msgid "Display link to the current language"
-msgstr "Mevcut dil için link göster"
-
-#: ../includes/MslsAdmin.php:126
-msgid "Show only links with a translation"
-msgstr "Sadece link ve çeviriyi göster"
-
-#: ../includes/MslsAdmin.php:128
-msgid "Description"
-msgstr "Açıklama"
-
-#: ../includes/MslsAdmin.php:129
-msgid "Text/HTML before the list"
-msgstr "Listenin başına TEXT/HTML "
-
-#: ../includes/MslsAdmin.php:130
-msgid "Text/HTML after the list"
-msgstr "Listenin sonuna Text/HTML"
-
-#: ../includes/MslsAdmin.php:131
-msgid "Text/HTML before each item"
-msgstr "Her bağlantının başına Text/HTML"
-
-#: ../includes/MslsAdmin.php:132
-msgid "Text/HTML after each item"
-msgstr "Her bağlantının sonuna Text/HTML"
-
-#: ../includes/MslsAdmin.php:134
-msgid "Add hint for available translations"
-msgstr "Çeviriler için ipucu ekle"
-
-#: ../includes/MslsAdmin.php:135
-msgid "Hint priority"
-msgstr "İpucu önceliği"
-
-#: ../includes/MslsAdmin.php:139
+#: ../includes/MslsAdmin.php:122
 msgid "Advanced Settings"
 msgstr "Gelişmiş Ayarlar"
 
-#: ../includes/MslsAdmin.php:144
+#: ../includes/MslsAdmin.php:137
+msgid "Blog Language"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:138
+msgid "Admin Language"
+msgstr ""
+
+#: ../includes/MslsAdmin.php:154
+msgid "Display"
+msgstr "Göster"
+
+#: ../includes/MslsAdmin.php:155
+msgid "Sort output by description"
+msgstr "Listeyi açıklamaya göre sırala"
+
+#: ../includes/MslsAdmin.php:156
+msgid "Display link to the current language"
+msgstr "Mevcut dil için link göster"
+
+#: ../includes/MslsAdmin.php:157
+msgid "Show only links with a translation"
+msgstr "Sadece link ve çeviriyi göster"
+
+#: ../includes/MslsAdmin.php:158
+msgid "Description"
+msgstr "Açıklama"
+
+#: ../includes/MslsAdmin.php:159
+msgid "Text/HTML before the list"
+msgstr "Listenin başına TEXT/HTML "
+
+#: ../includes/MslsAdmin.php:160
+msgid "Text/HTML after the list"
+msgstr "Listenin sonuna Text/HTML"
+
+#: ../includes/MslsAdmin.php:161
+msgid "Text/HTML before each item"
+msgstr "Her bağlantının başına Text/HTML"
+
+#: ../includes/MslsAdmin.php:162
+msgid "Text/HTML after each item"
+msgstr "Her bağlantının sonuna Text/HTML"
+
+#: ../includes/MslsAdmin.php:163
+msgid "Add hint for available translations"
+msgstr "Çeviriler için ipucu ekle"
+
+#: ../includes/MslsAdmin.php:164
+msgid "Hint priority"
+msgstr "İpucu önceliği"
+
+#: ../includes/MslsAdmin.php:180
 msgid "Activate experimental autocomplete inputs"
 msgstr "Otomatik tamamlamayı aktif edin (beta)"
 
-#: ../includes/MslsAdmin.php:145
+#: ../includes/MslsAdmin.php:181
 msgid "Custom URL for flag-images"
 msgstr "Bayrak resimleri için özel URL"
 
-#: ../includes/MslsAdmin.php:146
+#: ../includes/MslsAdmin.php:182
 msgid "Reference user"
 msgstr "Referans kullanıcı"
 
-#: ../includes/MslsAdmin.php:147
+#: ../includes/MslsAdmin.php:183
 msgid "Exclude this blog from output"
 msgstr "Bu blogu sıralamadan çıkar"
 
-#: ../includes/MslsAdminIcon.php:143
+#: ../includes/MslsAdminIcon.php:147
 #, php-format
 msgid "Edit the translation in the %s-blog"
 msgstr "Bu yazının çevirisini değiştir %s"
 
-#: ../includes/MslsAdminIcon.php:150
+#: ../includes/MslsAdminIcon.php:154
 #, php-format
 msgid "Create a new translation in the %s-blog"
 msgstr "Bu yazının çevirisini oluştur %s"
 
-#: ../includes/MslsCustomFilter.php:39
+#: ../includes/MslsCustomFilter.php:45
 msgid "Show all blogs"
 msgstr "Tüm blogları göster"
 
-#: ../includes/MslsCustomFilter.php:45
+#: ../includes/MslsCustomFilter.php:51
 #, php-format
 msgid "Not translated in the %s-blog"
 msgstr "%s-blogunda çevirisi yapılmadı"
 
-#: ../includes/MslsLink.php:43
+#: ../includes/MslsLink.php:45
 msgid "Flag and description"
 msgstr "Bayrak ve Açıklama"
 
@@ -183,7 +204,7 @@ msgstr "Açıklama ve Bayrak"
 msgid "Description only"
 msgstr "Sadece açıklama"
 
-#: ../includes/MslsMetaBox.php:187 ../includes/MslsMetaBox.php:245
+#: ../includes/MslsMetaBox.php:204 ../includes/MslsMetaBox.php:271
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -191,10 +212,10 @@ msgstr ""
 "Bu eklentiden faydalanabilmek için, farklı dilde en az bir blogunuz daha "
 "olmalı!"
 
-#: ../includes/MslsWidget.php:42
+#: ../includes/MslsWidget.php:54
 msgid "No available translations found"
 msgstr "Uygun bir çeviri bulunamadı"
 
-#: ../includes/MslsWidget.php:68
+#: ../includes/MslsWidget.php:83
 msgid "Title"
 msgstr "Başlık"
