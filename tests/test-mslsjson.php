@@ -22,8 +22,8 @@ class WP_Test_MslsJson extends Msls_UnitTestCase {
 		$obj->add( null, 'Test 3' )
 			->add( '2', 'Test 2' )
 			->add( 1, 'Test 1' );
-		$this->assertEquals( 
-			array( 
+		$this->assertEquals(
+			array(
 				array( 'value' => 1, 'label' => 'Test 1' ),
 				array( 'value' => 2, 'label' => 'Test 2' ),
 				array( 'value' => 0, 'label' => 'Test 3' ),
@@ -34,15 +34,13 @@ class WP_Test_MslsJson extends Msls_UnitTestCase {
 	}
 
 	/**
-	 * Verify the __toString-method
+	 * Verify the encode and the __toString-method
 	 * @depends test_add_get_methods
 	 */
 	function test___toString_methods( $obj ) {
-		$this->assertInternalType( 'string', $obj->__toString() );
-		$this->assertEquals(
-			'[{"value":1,"label":"Test 1"},{"value":2,"label":"Test 2"},{"value":0,"label":"Test 3"}]',
-			$obj->__toString()
-		);
+		$string = '[{"value":1,"label":"Test 1"},{"value":2,"label":"Test 2"},{"value":0,"label":"Test 3"}]';
+		$this->assertEquals( $string, $obj->encode() );
+		$this->assertEquals( $string, $obj->__toString() );
 	}
 
 }

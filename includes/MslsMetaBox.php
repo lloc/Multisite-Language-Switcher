@@ -67,7 +67,7 @@ class MslsMetaBox extends MslsMain {
 			wp_reset_postdata();
 			restore_current_blog();
 		}
-		wp_die( $json );
+		wp_die( $json->encode() );
 	}
 
 	/**

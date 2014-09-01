@@ -60,7 +60,7 @@ class MslsPostTag extends MslsMain {
 			}
 			restore_current_blog();
 		}
-		wp_die( $json );
+		wp_die( $json->encode() );
 	}
 
 	/**

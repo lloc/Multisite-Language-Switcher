@@ -64,14 +64,24 @@ class MslsJson {
 	}
 
 	/**
+	 * encode
+	 *
+	 * Encodes object and returns it as a json-string
+	 * @return string
+	 */
+	public function encode() {
+		return json_encode( $this->get() );
+	}
+
+	/**
 	 * __toString
 	 *
-	 * Return the array container as a JSON string when the object will
-	 * be converted to a string
+	 * Return the encoded object as a string using the encode-method
+	 * @uses encode
 	 * @return string
 	 */
 	public function __toString() {
-		return json_encode( $this->get() );
+		return $this->encode();
 	}
 
 }
