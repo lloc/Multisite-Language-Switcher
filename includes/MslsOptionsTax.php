@@ -65,34 +65,6 @@ class MslsOptionsTax extends MslsOptions {
 		);
 	}
 
-	/**
-	 * Check and correct URL
-	 * @param string $url
-	 * @return string
-	 */
-	public function check_url( $url ) {
-		if ( empty( $url ) || ! is_string( $url ) ) {
-			return '';
-		}
-
-		/**
-		 * The 'blog'-slug-problem :/
-		 */
-		if ( ! is_subdomain_install() ) {
-			$count = 1;
-			$url   = str_replace( home_url(), '', $url, $count );
-
-			if ( is_main_site() ) {
-				$parts = explode( '/%', get_option( 'permalink_structure' ), 2 );
-				$url   = home_url( $parts[0] . $url );
-			}
-			else {
-				$url = home_url( preg_replace( '|^/?blog|', '', $url ) );
-			}
-		}
-
-		return $url;
-	}
 
 	/**
 	 * Get postlink

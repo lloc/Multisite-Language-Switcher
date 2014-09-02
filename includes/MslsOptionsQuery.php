@@ -7,7 +7,7 @@
 
 /**
  * OptionsQuery
- * 
+ *
  * @package Msls
  */
 class MslsOptionsQuery extends MslsOptions {
@@ -51,16 +51,18 @@ class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Get postlink
-	 * 
+	 *
 	 * @param string $language
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
-		return(
-			$this->has_value( $language ) ?
-			$this->get_current_link() :
-			''
-		);
+		if ( $this->has_value( $language ) ) {
+			$link = $this->get_current_link();
+			if ( ! empty( $link ) ) {
+				return $this->check_url( $link );
+			}
+		}
+		return '';
 	}
 
 }
