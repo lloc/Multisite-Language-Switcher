@@ -8,7 +8,6 @@
 
 /**
  * Link type: Image and text
- *
  * @package Msls
  * @property string $txt
  * @property string $src

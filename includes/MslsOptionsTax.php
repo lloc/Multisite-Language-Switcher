@@ -119,6 +119,7 @@ class MslsOptionsTax extends MslsOptions {
 
 	/**
 	 * Wraps the call to get_term_link
+	 * @param int $term_id
 	 */
 	public function get_term_link( $term_id ) {
 		if ( ! empty( $term_id ) ) {
