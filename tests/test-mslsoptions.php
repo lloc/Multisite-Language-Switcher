@@ -148,4 +148,12 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 		$this->assertInternalType( 'array', $obj->get_available_languages() );
 	}
 
+	/**
+	 * Verify the check_url-method
+	 * @depends test_instance_method
+	 */
+	function test_check_url_method( $obj ) {
+		$this->assertInternalType( 'string', $obj->check_url( '' ) );
+	}
+
 }

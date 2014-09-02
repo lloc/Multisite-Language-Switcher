@@ -29,14 +29,6 @@ class WP_Test_MslsOptionsTax extends Msls_UnitTestCase {
 	}
 
 	/**
-	 * Verify the check_url-method
-	 * @depends test_create_method
-	 */
-	function test_check_url_method( $obj ) {
-		$this->assertInternalType( 'string', $obj->check_url( '' ) );
-	}
-
-	/**
 	 * Verify the get_postlink-method
 	 * @depends test_create_method
 	 */
