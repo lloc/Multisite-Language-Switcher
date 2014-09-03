@@ -119,8 +119,8 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 
 = 1.0 =
 * you can choose now your frontend/backend language from the installed languages in the plugins settings
-* Swedish and Chinese language files added
-* numerous enhancements and fixes (coding style, sql cache, performance, docs, unit tests ...)
+* support for 25 languages
+* numerous enhancements and fixes (coding style, sql cache, performance, api docs, unit tests ...)
 
 [...]
 
