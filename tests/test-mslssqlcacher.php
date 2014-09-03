@@ -38,7 +38,7 @@ class WP_Test_MslsSqlCacher extends Msls_UnitTestCase {
 		$this->assertInstanceOf( 'MslsSqlCacher', $obj->set_params( 'Cache_Test' ) );
 		$this->assertInternalType( 'string', $obj->get_key() );
 		$this->assertEquals( 'MslsSqlCacherTest_Cache_Test', $obj->get_key() );
-		
+
 		$sql = $obj->prepare(
 			"SELECT blog_id FROM {$obj->blogs} WHERE blog_id != %d AND site_id = %d",
 			$obj->blogid,

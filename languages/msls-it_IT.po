@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
 "POT-Creation-Date: 2014-09-01 16:45+0100\n"
-"PO-Revision-Date: 2014-09-01 16:45+0100\n"
+"PO-Revision-Date: 2014-09-03 15:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: Antonella Cucinelli <a.cucinelli@freely.de>\n"
 "Language: Italian (it_IT)\n"
@@ -91,9 +91,8 @@ msgstr "Aggiorna"
 
 # @ msls
 #: ../includes/MslsAdmin.php:120
-#, fuzzy
 msgid "Language Settings"
-msgstr "Impostazioni principali"
+msgstr "Impostazioni locali"
 
 # @ msls
 #: ../includes/MslsAdmin.php:121
@@ -107,11 +106,11 @@ msgstr "Impostazioni avanzati"
 
 #: ../includes/MslsAdmin.php:137
 msgid "Blog Language"
-msgstr ""
+msgstr "Lingual del sito"
 
 #: ../includes/MslsAdmin.php:138
 msgid "Admin Language"
-msgstr ""
+msgstr "Lingua della dashboard"
 
 # @ msls
 #: ../includes/MslsAdmin.php:154
