@@ -93,15 +93,11 @@ class MslsPostTag extends MslsMain {
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 			<input type="hidden" name="msls_action" id="msls_action" type="text" value="suggest_terms"/>';
-		$item_format  = '<tr class="form-field">
-			<th scope="row" valign="top">
-			<label for="msls_title_%1$s">%2$s</label>
-			</th>
-			<td>
+
+		$item_format = '<label for="msls_title_%1$s">%2$s</label>
 			<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
-			</td>
-			</tr>';
+			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>';
+
 		echo '<div class="form-field">';
 		$this->the_input( $tag, $title_format, $item_format );
 		echo '</div>';
@@ -119,7 +115,8 @@ class MslsPostTag extends MslsMain {
 			<input type="hidden" name="msls_action" id="msls_action" type="text" value="suggest_terms"/>
 			</th>
 			</tr>';
-		$item_format  = '<tr class="form-field">
+
+		$item_format = '<tr class="form-field">
 			<th scope="row" valign="top">
 			<label for="msls_title_%1$s">%2$s</label>
 			</th>
@@ -128,6 +125,7 @@ class MslsPostTag extends MslsMain {
 			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
 			</td>
 			</tr>';
+
 		$this->the_input( $tag, $title_format, $item_format );
 	}
 

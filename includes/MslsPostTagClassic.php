@@ -25,11 +25,13 @@ class MslsPostTagClassic extends MslsPostTag {
 	 */
 	public function add_input( $tag ) {
 		$title_format = '<h3>%s</h3>';
-		$item_format  = '<label for="msls_input_%1$s">%2$s</label>
+
+		$item_format = '<label for="msls_input_%1$s">%2$s</label>
 			<select class="msls-translations" name="msls_input_%1$s">
 			<option value=""></option>
 			%3$s
 			</select>';
+
 		echo '<div class="form-field">';
 		$this->the_input( $tag, $title_format, $item_format );
 		echo '</div>';
@@ -45,7 +47,8 @@ class MslsPostTagClassic extends MslsPostTag {
 			<strong>%s</strong>
 			</th>
 			</tr>';
-		$item_format  = '<tr class="form-field">
+
+		$item_format = '<tr class="form-field">
 			<th scope="row" valign="top">
 			<label for="msls_input_%1$s">%2$s</label></th>
 			<td>
@@ -54,6 +57,7 @@ class MslsPostTagClassic extends MslsPostTag {
 			%3$s
 			</select></td>
 			</tr>';
+
 		$this->the_input( $tag, $title_format, $item_format );
 	}
 
