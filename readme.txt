@@ -87,13 +87,13 @@ You can choose the language of every website and the dashboard in the settings p
 
 It's up to you - of course. But yes, if you want to use the Multisite Language Switcher.
 
-= How can I automatically redirect users based on the browser language?
+= How can I automatically redirect users based on the browser language? =
 
 The Multisite Language Switcher does not redirect the users automatically. I'm not sure if the plugin should do that. You might check out this [jQuery plugin](
 https://github.com/danieledesantis/jquery-language-detection) or [this approach with a theme](https://github.com/oncleben31/Multisite-Language-Switcher-Theme) 
 if you need such functionality.
 
-= How can I add the Multisite Language Switcher to the nav-menu of my blog?
+= How can I add the Multisite Language Switcher to the nav-menu of my blog? =
 
 Please check this [example plugin](https://github.com/lloc/MslsMenu) out.
 
@@ -104,7 +104,7 @@ Yes, you can get the language like that
 `$blog     = MslsBlogCollection::instance()->get_current_blog();
 $language = $blog->get_language();`
 
-= How can I move from WPML to MSLS?
+= How can I move from WPML to MSLS? =
 
 There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy in here.
 
