@@ -258,7 +258,7 @@ class MslsMetaBox extends MslsMain {
 				'<ul>%s</ul>
 				<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 				<input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>
-				<input type="submit" class="button-secondary" value="%s"/>',
+				<input type="submit" class="button-secondary clear" value="%s"/>',
 				$items,
 				$post_type,
 				__( 'Update', 'msls' )
