@@ -142,12 +142,13 @@ class MslsMetaBox extends MslsMain {
 				if ( $pto->hierarchical ) {
 					$selects .= wp_dropdown_pages(
 						array(
-							'post_type' => $type,
-							'selected' => $mydata->$language,
-							'name' => 'msls_input_' . $language,
-							'show_option_none' => ' ',
-							'sort_column' => 'menu_order, post_title',
-							'echo' => 0,
+							'post_type'         => $type,
+							'selected'          => $mydata->$language,
+							'name'              => 'msls_input_' . $language,
+							'show_option_none'  => ' ',
+							'option_none_value' => 0,
+							'sort_column'       => 'menu_order, post_title',
+							'echo'              => 0,
 						)
 					);
 				}
@@ -176,7 +177,7 @@ class MslsMetaBox extends MslsMain {
 					}
 
 					$selects .= sprintf(
-						'<select name="msls_input_%s"><option value=""></option>%s</select>',
+						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
 						$language,
 						$options
 					);
