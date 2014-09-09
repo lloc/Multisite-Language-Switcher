@@ -166,7 +166,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 
 			if ( has_filter( 'msls_filter_string' ) ) {
 				/**
-				 * Ovverrides the string for the output of the translation hint
+				 * Overrides the string for the output of the translation hint
 				 * @since 1.0
 				 * @param string $output
 				 * @param array $links
