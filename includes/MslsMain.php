@@ -82,7 +82,7 @@ class MslsMain {
 	protected function save( $object_id, $class ) {
 		if ( has_action( 'msls_main_save' ) ) {
 			/**
-			 * Calls completly customized save-routine
+			 * Calls completely customized save-routine
 			 * @since 0.9.9
 			 * @param int $object_id
 			 * @param string Classname
