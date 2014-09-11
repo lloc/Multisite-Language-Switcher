@@ -73,11 +73,7 @@ Now you can:
 *  use a widget and/or a content_filter which displays a hint to the user if a translation is available
 *  optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
 
-Review the
-[Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki)
-or the
-[API Documentation](http://msls.co/api-documentation/)
-for more information.
+Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
 
 ## License
 
