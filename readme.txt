@@ -97,6 +97,10 @@ if you need such functionality.
 
 Please check this [example plugin](https://github.com/lloc/MslsMenu) out.
 
+= I don't want to upload the same media files for every site. What can I do? =
+
+You could try the plugin [Network Shared Media](http://wordpress.org/plugins/network-shared-media/). It adds a new tab to the "Add Media" window, allowing you to access the media files in the other sites in your multisite.
+
 = Is there a function I can call to get the language of the page the user is currently viewing? =
 
 Yes, you can get the language like that
