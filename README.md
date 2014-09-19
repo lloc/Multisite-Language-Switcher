@@ -74,7 +74,3 @@ Now you can:
 *  optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
 
 Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
-
-## License
-
-Multisite Language Switcher is Open Source and, to be more precise, is distributed under [GNU General Public License Version 2](http://www.gnu.org/licenses/gpl-2.0.html). This means that the plugin can also be used in a commercial surrounding.
