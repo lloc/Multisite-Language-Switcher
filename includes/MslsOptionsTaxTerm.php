@@ -44,5 +44,13 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 
 		return $url;
 	}
-
+	
+	/**
+	 * Get base
+	 * @return string
+	 */
+	public function get_base() {
+		$base = get_option( $this->base_option );
+		return( ! empty( $base ) ? $base : $this->base_defined );
+	}
 }
