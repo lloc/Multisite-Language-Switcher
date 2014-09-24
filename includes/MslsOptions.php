@@ -285,7 +285,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	public function get_available_languages() {
 		if ( empty( $this->available_languages ) ) {
 			$this->available_languages = array(
-				'en_US' => format_code_lang( 'en_US' ),
+				'en_US' => __( 'American English', 'msls' ),
 			);
 			foreach ( get_available_languages() as $code ) {
 				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
@@ -322,6 +322,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			$url   = str_replace( home_url(), '', $url, $count );
 
 			if ( is_main_site() ) {
+				get_option( 'permalink_structure' );
 				$parts = explode( '/%', get_option( 'permalink_structure' ), 2 );
 				$url   = home_url( $parts[0] . $url );
 			}
