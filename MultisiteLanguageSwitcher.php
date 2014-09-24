@@ -237,11 +237,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			$mydata = MslsOptions::create();
 			foreach ( $blogs->get_objects() as $blog ) {
 				$language = $blog->get_language();
+				$url      = $mydata->get_current_link();
+				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
 
-				if ( $blog->userblog_id == $blogs->get_current_blog_id() ) {
-					$url = $mydata->get_current_link();
-				}
-				else {
+				if ( ! $current ) {
 					switch_to_blog( $blog->userblog_id );
 
 					if ( 'MslsOptions' != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
