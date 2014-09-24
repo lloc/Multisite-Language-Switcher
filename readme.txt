@@ -117,8 +117,9 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 
 == Changelog ==
 
-= 1.0.1 =
+= 1.0.2 =
 * Bugfix: term links were damaged when term_base option were used
+* Bugfix: en_GB & en_US both displayed as 'English' in Settings > MLS >Blog & Admin language
 
 = 1.0.1 =
 * Bugfix: filter internal types from get_post_stati
