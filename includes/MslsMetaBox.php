@@ -153,7 +153,7 @@ class MslsMetaBox extends MslsMain {
 					);
 				}
 				else {
-					$options  = '';
+					$options = '';
 
 					$my_query = new WP_Query(
 						array(

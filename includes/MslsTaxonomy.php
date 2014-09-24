@@ -58,6 +58,7 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	public function acl_request() {
 		if ( ! MslsOptions::instance()->is_excluded() ) {
 			$request = $this->get_request();
+
 			$tax = get_taxonomy( $request );
 			if ( $tax && current_user_can( $tax->cap->manage_terms ) ) {
 				return $request;

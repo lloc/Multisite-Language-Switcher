@@ -68,11 +68,12 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsPostTag
 	 */
 	public static function init() {
-		$obj = (
-			MslsOptions::instance()->activate_autocomplete ?
-			new self() :
-			MslsPostTagClassic::init()
-		);
+		if ( MslsOptions::instance()->activate_autocomplete	) {
+			$obj = new self();
+		}
+		else {
+			$obj = MslsPostTagClassic::init();
+		}
 
 		$taxonomy = MslsContentTypes::create()->acl_request();
 		if ( '' != $taxonomy ) {
