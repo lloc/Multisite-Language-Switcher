@@ -34,8 +34,9 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 		if ( '' != $url ) {
 			/* Custom structure for categories or tags */
 			$base = get_option( $this->base_option );
-			if ( $this->base != $base ) {
-				$search  = '/' . $this->base . '/';
+
+			if ( !empty( $base ) && $this->base_defined != $base ) {
+				$search  = '/' . $this->base_defined . '/';
 				$replace = '/' . $base . '/';
 				$count   = 1;
 				$url     = str_replace( $search, $replace, $url, $count );
