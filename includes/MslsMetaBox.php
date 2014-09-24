@@ -254,14 +254,26 @@ class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
+			$input_button = sprintf(
+				'<input type="submit" class="button-secondary clear" value="%s"/>',
+				__( 'Update', 'msls' )
+			);
+
+			/**
+			 * Returns the input button, return an empty string if you'ld like to hide the button
+			 * @since 1.0.2
+			 * @param string $input_button
+			 */
+			$input_button = ( string ) apply_filters( 'msls_meta_box_render_input_button', $input_button );
+
 			printf(
 				'<ul>%s</ul>
 				<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 				<input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>
-				<input type="submit" class="button-secondary clear" value="%s"/>',
+				%s',
 				$items,
 				$post_type,
-				__( 'Update', 'msls' )
+				$input_button
 			);
 
 			$post = $temp;
