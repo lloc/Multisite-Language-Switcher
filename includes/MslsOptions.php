@@ -266,14 +266,25 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		/**
 		 * Override the path to the flag-icons
 		 * @since 0.9.9
-		 * @param MslsOptions $this
+		 * @param string $url
 		 */
 		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
 
 		if ( 5 == strlen( $language ) ) {
-			$language = strtolower( substr( $language, -2 ) );
+			$icon = strtolower( substr( $language, -2 ) ) . 'png';
 		}
-		return sprintf( '%s/%s.png', $url, $language );
+		else {
+			$icon = $language . '.png';
+		}
+
+		/**
+		 * Use your own filename for the flag-icon
+		 * @since 1.0.3
+		 * @param MslsOptions $this
+		 */
+		$icon = (string) apply_filters( 'msls_options_get_flag_icon', $icon, $language );
+
+		return sprintf( '%s/%s', $url, $icon );
 	}
 
 	/**
