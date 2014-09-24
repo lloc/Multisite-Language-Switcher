@@ -33,11 +33,28 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 
 		if ( '' != $url ) {
 			/* Custom structure for categories or tags */
-			$base = get_option( $this->base_option );
+			global $wp_rewrite;
 
-			if ( !empty( $base ) && $this->base_defined != $base ) {
-				$search  = '/' . $this->base_defined . '/';
-				$replace = '/' . $base . '/';
+			$bdefined = $this->base_defined;
+
+			$struct   = $wp_rewrite->get_extra_permastruct( $this->get_tax_query() );
+			if ( $struct ) {
+				$struct = explode( '/', $struct );
+				end( $struct );
+				$struct = prev( $struct );
+				if ( false !== $struct ) {
+					$bdefined = $struct;
+				}
+			}
+
+			$boption = get_option( $this->base_option );
+			if ( empty( $boption ) ) {
+				$boption = $this->base_defined;
+			}
+
+			if ( $bdefined != $boption ) {
+				$search  = '/' . $bdefined . '/';
+				$replace = '/' . $boption . '/';
 				$count   = 1;
 				$url     = str_replace( $search, $replace, $url, $count );
 			}
