@@ -37,7 +37,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 
 			$bdefined = $this->base_defined;
 
-			$struct   = $wp_rewrite->get_extra_permastruct( $this->get_tax_query() );
+			$struct = $wp_rewrite->get_extra_permastruct( $this->get_tax_query() );
 			if ( $struct ) {
 				$struct = explode( '/', $struct );
 				end( $struct );

@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.6.1
 Tested up to: 4.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,9 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 4. Widget
 
 == Changelog ==
+
+= 1.0.1 =
+* Bugfix: term links were damaged when term_base option were used
 
 = 1.0.1 =
 * Bugfix: filter internal types from get_post_stati
