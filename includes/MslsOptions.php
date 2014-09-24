@@ -52,12 +52,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	protected $autoload = 'yes';
 
 	/**
-	 * Base
-	 * @var string
-	 */
-	protected $base;
-
-	/**
 	 * Available languages
 	 * @var array
 	 */
