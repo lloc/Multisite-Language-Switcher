@@ -280,7 +280,8 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		/**
 		 * Use your own filename for the flag-icon
 		 * @since 1.0.3
-		 * @param MslsOptions $this
+		 * @param string $icon
+		 * @param string $language
 		 */
 		$icon = (string) apply_filters( 'msls_options_get_flag_icon', $icon, $language );
 
