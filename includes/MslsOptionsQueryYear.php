@@ -7,14 +7,14 @@
 
 /**
  * OptionsQueryYear
- * 
+ *
  * @package Msls
  */
 class MslsOptionsQueryYear extends MslsOptionsQuery {
 
 	/**
 	 * Check if the array has an non empty item which has $language as a key
-	 * 
+	 *
 	 * @param string $language
 	 * @return bool
 	 */
@@ -34,11 +34,11 @@ class MslsOptionsQueryYear extends MslsOptionsQuery {
 
 	/**
 	 * Get current link
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_year_link( $this->get_arg( 0, '' ) );
+		return get_year_link( $this->get_arg( 0, 0 ) );
 	}
 
 }

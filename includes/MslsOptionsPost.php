@@ -43,7 +43,7 @@ class MslsOptionsPost extends MslsOptions {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return (string) get_permalink( $this->get_arg( 0, '' ) );
+		return (string) get_permalink( $this->get_arg( 0, 0 ) );
 	}
 
 }

@@ -38,7 +38,7 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_author_posts_url( $this->get_arg( 0, '' ) );
+		return get_author_posts_url( $this->get_arg( 0, 0 ) );
 	}
 
 }

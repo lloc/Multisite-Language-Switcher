@@ -86,7 +86,7 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return $this->get_term_link( $this->get_arg( 0, '' ) );
+		return $this->get_term_link( $this->get_arg( 0, 0 ) );
 	}
 
 	/**
