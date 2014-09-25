@@ -220,6 +220,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 *     if ( function_exists ( 'the_msls' ) )
 		 *         the_msls();
 		 *
+		 * or just use it as shortcode [sc_msls]
+		 *
 		 * @package Msls
 		 *
 		 * @param array $arr
@@ -227,6 +229,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		function the_msls( array $arr = array() ) {
 			echo get_the_msls( $arr ); // xss ok
 		}
+		add_shortcode( 'sc_msls', 'the_msls' );
 
 		/**
 		 * Help searchengines to index and to serve the localized version with

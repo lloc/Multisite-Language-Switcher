@@ -64,7 +64,7 @@ Now you can:
 * connect your translated pages and posts in Posts -> Edit or Page -> Edit
 * connect your translated categories and tags in Posts -> Categories or Post -> Tags
 * connect your Custom Post Types and Custom Taxonomies across languages
-* use a widget and/or a content_filter which displays a hint to the user if a translation is available
+* use the widget, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
 * optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
 
 Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
@@ -120,6 +120,7 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 = 1.0.3 =
 * Bugfix: alternate hreflang for the current blog was empty
 * Filter: 'msls_options_get_flag_icon' introduced
+* Shortcode [sc_msls] added
 
 = 1.0.2 =
 * Bugfix: term links were damaged when term_base option were used

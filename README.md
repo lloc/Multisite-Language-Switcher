@@ -70,7 +70,7 @@ Now you can:
 *  connect your translated pages and posts in Posts -> Edit or Page -> Edit
 *  connect your translated categories and tags in Posts -> Categories or Post -> Tags
 *  connect your Custom Post Types and Custom Taxonomies across languages
-*  use a widget and/or a content_filter which displays a hint to the user if a translation is available
-*  optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
+*  use the widget, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
+*  optionally you can place the PHP code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
 
 Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
