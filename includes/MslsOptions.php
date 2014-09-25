@@ -271,11 +271,12 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
 
 		if ( 5 == strlen( $language ) ) {
-			$icon = strtolower( substr( $language, -2 ) ) . 'png';
+			$icon = strtolower( substr( $language, -2 ) );
 		}
 		else {
-			$icon = $language . '.png';
+			$icon = $language;
 		}
+		$icon .= '.png';
 
 		/**
 		 * Use your own filename for the flag-icon
