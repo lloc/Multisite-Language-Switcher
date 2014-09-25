@@ -30,7 +30,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * MultisiteLanguageSwitcher
  *
  * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	define( 'MSLS_PLUGIN_VERSION', '1.0.3' );
@@ -44,14 +43,13 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 
 	/**
 	 * The Autoloader does all the magic when it comes to include a file
-	 *
+	 * @since 0.9.8
 	 * @package Msls
 	 */
 	class MslsAutoloader {
 
 		/**
 		 * Static loader method
-		 *
 		 * @param string $class
 		 */
 		public static function load( $class ) {
@@ -74,14 +72,12 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * Interface for classes which are to register in the MslsRegistry-instance
 	 *
 	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
-	 *
 	 * @package Msls
 	 */
 	interface IMslsRegistryInstance {
 
 		/**
 		 * Returnse an instance
-		 *
 		 * @return object
 		 */
 		public static function instance();
@@ -134,7 +130,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 *
 		 * @package Msls
 		 * @uses MslsOptions
-		 *
 		 * @param string $content
 		 * @return string
 		 */
@@ -154,7 +149,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 *
 		 * @package Msls
 		 * @uses MslsOutput
-		 *
 		 * @param string $pref
 		 * @param string $post
 		 * @return string
@@ -202,8 +196,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * Get the output for using the links to the translations in your code
 		 *
 		 * @package Msls
-	 	 * @uses the_msls
-	 	 *
 		 * @param array $arr
 		 * @return string
 		 */
@@ -224,7 +216,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * or just use it as shortcode [sc_msls]
 		 *
 		 * @package Msls
-		 *
+ 	 	 * @uses get_the_msls
 		 * @param array $arr
 		 */
 		function the_msls( $arr = array() ) {
