@@ -207,10 +207,11 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * @param array $arr
 		 * @return string
 		 */
-		function get_the_msls( array $arr = array() ) {
-			$obj = MslsOutput::init()->set_tags( $arr );
+		function get_the_msls( $arr = array() ) {
+			$obj = MslsOutput::init()->set_tags( (array) $arr );
 			return( sprintf( '%s', $obj ) );
 		}
+		add_shortcode( 'sc_msls', 'get_the_msls' );
 
 		/**
 		 * Output the links to the translations in your template
@@ -227,9 +228,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * @param array $arr
 		 */
 		function the_msls( $arr = array() ) {
-			echo get_the_msls( (array) $arr ); // xss ok
+			echo get_the_msls( $arr ); // xss ok
 		}
-		add_shortcode( 'sc_msls', 'the_msls' );
 
 		/**
 		 * Help searchengines to index and to serve the localized version with
