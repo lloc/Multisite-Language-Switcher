@@ -1,37 +1,38 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Multisite Language Switcher 1.0\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/multisite-language-"
-"switcher\n"
-"POT-Creation-Date: 2014-09-01 16:52+0100\n"
-"PO-Revision-Date: 2014-10-17 10:01+0100\n"
+"Project-Id-Version: MSLS 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2014-10-17 08:51+0100\n"
+"PO-Revision-Date: 2014-10-17 10:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: Mohamed Elwan <contact@3mbsol.com>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
-"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
-"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-Basepath: .\n"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../MultisiteLanguageSwitcher.php:165
+#: ../MultisiteLanguageSwitcher.php:159
 #, php-format
 msgid "This post is also available in %s."
 msgstr "هذا الموضوع متاح ايضاً فى %s."
 
-#: ../MultisiteLanguageSwitcher.php:182
+#: ../MultisiteLanguageSwitcher.php:176
 #, php-format
 msgid "%s and %s"
 msgstr "%s و %s"
 
-#: ../MultisiteLanguageSwitcher.php:287
+#: ../MultisiteLanguageSwitcher.php:281
 msgid ""
 "The Multisite Language Switcher needs the activation of the multisite-"
 "feature for working properly. Please read <a onclick=\"window.open(this."
@@ -44,8 +45,8 @@ msgstr ""
 "معرفه المزيد عن تلك الخاصية."
 
 #: ../includes/MslsAdmin.php:23 ../includes/MslsAdmin.php:24
-#: ../includes/MslsMetaBox.php:94 ../includes/MslsPostTag.php:151
-#: ../includes/MslsPostTagClassic.php:112 ../includes/MslsWidget.php:20
+#: ../includes/MslsMetaBox.php:94 ../includes/MslsPostTag.php:150
+#: ../includes/MslsPostTagClassic.php:116 ../includes/MslsWidget.php:20
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
@@ -81,8 +82,8 @@ msgstr "لتحقيق أفضل اداء, عليك ضبط كل مدونة على �
 msgid "Configure"
 msgstr "ضبط"
 
-#: ../includes/MslsAdmin.php:81 ../includes/MslsMetaBox.php:197
-#: ../includes/MslsMetaBox.php:263
+#: ../includes/MslsAdmin.php:81 ../includes/MslsMetaBox.php:198
+#: ../includes/MslsMetaBox.php:259
 msgid "Update"
 msgstr "تحديث"
 
@@ -176,16 +177,16 @@ msgstr "تعديل الترجمة فى مدونة %s"
 msgid "Create a new translation in the %s-blog"
 msgstr "عمل ترجمة جديدة فى مدونة %s"
 
-#: ../includes/MslsCustomFilter.php:45
+#: ../includes/MslsCustomFilter.php:46
 msgid "Show all blogs"
 msgstr "إعرض جميع المدونات"
 
-#: ../includes/MslsCustomFilter.php:51
+#: ../includes/MslsCustomFilter.php:52
 #, php-format
 msgid "Not translated in the %s-blog"
 msgstr "ليست مترجمة فى مدونة %s"
 
-#: ../includes/MslsLink.php:45
+#: ../includes/MslsLink.php:44
 msgid "Flag and description"
 msgstr "العَلَم و الوصف"
 
@@ -201,11 +202,15 @@ msgstr "الوصف و العَلَم"
 msgid "Description only"
 msgstr "الوصف فقط"
 
-#: ../includes/MslsMetaBox.php:204 ../includes/MslsMetaBox.php:271
+#: ../includes/MslsMetaBox.php:205 ../includes/MslsMetaBox.php:284
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
 msgstr "يجب تحديد على الأقل مدونة أخرى بلغة مختلفة لكى تستمتع بمزايا الإضافة!"
+
+#: ../includes/MslsOptions.php:301
+msgid "American English"
+msgstr ""
 
 #: ../includes/MslsWidget.php:54
 msgid "No available translations found"
