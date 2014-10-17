@@ -51,6 +51,7 @@ banner.
 *  Japanese (ja) - [ThemeBoy](http://themeboy.com/)
 *  Swedish (sv_SE) - [Erik Bernskiold](http://www.bernskioldmedia.com/)
 *  Traditional & Simplified Chinese (zh_CN & zh_TW) - DrBenson
+*  Arabic (ar) - Mohamed Elwan
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
