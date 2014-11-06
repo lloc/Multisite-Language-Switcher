@@ -92,7 +92,11 @@ if you need such functionality.
 
 = How can I add the Multisite Language Switcher to the nav-menu of my blog? =
 
-Please check this [plugin](https://wordpress.org/plugins/mslsmenu/) out.
+Please check the add-on [MslsMenu](https://wordpress.org/plugins/mslsmenu/) out.
+
+= I want to have the languages in an HTML select. How can I do that? =
+
+Please check the add-on [MslsSelect](https://wordpress.org/plugins/mslsselect/) out.
 
 = I don't want to upload the same media files for every site. What can I do? =
 
