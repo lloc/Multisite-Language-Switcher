@@ -140,9 +140,11 @@ class MslsMetaBox extends MslsMain {
 				$pto     = get_post_type_object( $type );
 
 				if ( $pto->hierarchical ) {
+					$post_status = array( 'publish', 'draft', 'future', 'pending' );
 					$selects .= wp_dropdown_pages(
 						array(
 							'post_type'         => $type,
+							'post_status'       => $post_status,
 							'selected'          => $mydata->$language,
 							'name'              => 'msls_input_' . $language,
 							'show_option_none'  => ' ',
