@@ -123,7 +123,8 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 == Changelog ==
 
 = 1.0.5 =
-* Filter 'msls_meta_box_render_select_hierarchical' closes this issue https://github.com/lloc/Multisite-Language-Switcher/issues/64
+* Filter 'msls_meta_box_render_select_hierarchical' closes issue [64](https://github.com/lloc/Multisite-Language-Switcher/issues/64)
+* Bugfix for issue [73](https://github.com/lloc/Multisite-Language-Switcher/issues/73)
 
 = 1.0.4 =
 * language files for Arabic (ar) by Mohamed Elwan added

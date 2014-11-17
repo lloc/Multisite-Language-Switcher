@@ -73,7 +73,7 @@ class MslsPlugin {
 	 * @return string
 	 */
 	public static function set_admin_language( $locale ) {
-		if ( is_admin() ) {
+		if ( is_admin() && ( !defined( 'DOING_AJAX' ) || !DOING_AJAX ) ) {
 			$code = MslsOptions::instance()->admin_language;
 			if ( ! empty( $code ) ) {
 				return $code;
