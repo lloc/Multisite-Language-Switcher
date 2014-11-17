@@ -140,17 +140,23 @@ class MslsMetaBox extends MslsMain {
 				$pto     = get_post_type_object( $type );
 
 				if ( $pto->hierarchical ) {
-					$selects .= wp_dropdown_pages(
-						array(
-							'post_type'         => $type,
-							'selected'          => $mydata->$language,
-							'name'              => 'msls_input_' . $language,
-							'show_option_none'  => ' ',
-							'option_none_value' => 0,
-							'sort_column'       => 'menu_order, post_title',
-							'echo'              => 0,
-						)
+					$args = array(
+						'post_type'         => $type,
+						'selected'          => $mydata->$language,
+						'name'              => 'msls_input_' . $language,
+						'show_option_none'  => ' ',
+						'option_none_value' => 0,
+						'sort_column'       => 'menu_order, post_title',
+						'echo'              => 0,
 					);
+					/**
+					 * Overrides the args for wp_dropdown_pages when using the HTML select in the MetaBox
+					 * @since 1.0.5
+					 * @param array $args
+					 */
+					$args = (array) apply_filters( 'msls_meta_box_render_select_hierarchical', $args );
+
+					$selects .= wp_dropdown_pages( $args );
 				}
 				else {
 					$options = '';
