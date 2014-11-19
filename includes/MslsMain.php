@@ -90,7 +90,10 @@ class MslsMain {
 			do_action( 'msls_main_save', $object_id, $class );
 		}
 		else {
-			$blogs    = MslsBlogCollection::instance();
+			$blogs = MslsBlogCollection::instance();
+			if ( ! $blogs->has_current_blog() ) {
+				return;
+			}
 			$language = $blogs->get_current_blog()->get_language();
 			$msla     = new MslsLanguageArray( $this->get_input_array( $object_id ) );
 			$options  = new $class( $object_id );
