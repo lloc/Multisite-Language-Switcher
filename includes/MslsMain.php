@@ -88,41 +88,42 @@ class MslsMain {
 			 * @param string Classname
 			 */
 			do_action( 'msls_main_save', $object_id, $class );
+			return;
+		}
+
+		$blogs = MslsBlogCollection::instance();
+		if ( ! $blogs->has_current_blog() ) {
+			return;
+		}
+
+		$language = $blogs->get_current_blog()->get_language();
+		$msla     = new MslsLanguageArray( $this->get_input_array( $object_id ) );
+		$options  = new $class( $object_id );
+		$temp     = $options->get_arr();
+
+		if ( 0 != $msla->get_val( $language ) ) {
+			$options->save( $msla->get_arr( $language ) );
 		}
 		else {
-			$blogs = MslsBlogCollection::instance();
-			if ( ! $blogs->has_current_blog() ) {
-				return;
-			}
-			$language = $blogs->get_current_blog()->get_language();
-			$msla     = new MslsLanguageArray( $this->get_input_array( $object_id ) );
-			$options  = new $class( $object_id );
-			$temp     = $options->get_arr();
+			$options->delete();
+		}
 
-			if ( 0 != $msla->get_val( $language ) ) {
+		foreach ( $blogs->get() as $blog ) {
+			switch_to_blog( $blog->userblog_id );
+
+			$language = $blog->get_language();
+			$larr_id  = $msla->get_val( $language );
+
+			if ( 0 != $larr_id ) {
+				$options = new $class( $larr_id );
 				$options->save( $msla->get_arr( $language ) );
 			}
-			else {
+			elseif ( isset( $temp[ $language ] ) ) {
+				$options = new $class( $temp[ $language ] );
 				$options->delete();
 			}
 
-			foreach ( $blogs->get() as $blog ) {
-				switch_to_blog( $blog->userblog_id );
-
-				$language = $blog->get_language();
-				$larr_id  = $msla->get_val( $language );
-
-				if ( 0 != $larr_id ) {
-					$options = new $class( $larr_id );
-					$options->save( $msla->get_arr( $language ) );
-				}
-				elseif ( isset( $temp[ $language ] ) ) {
-					$options = new $class( $temp[ $language ] );
-					$options->delete();
-				}
-
-				restore_current_blog();
-			}
+			restore_current_blog();
 		}
 	}
 
