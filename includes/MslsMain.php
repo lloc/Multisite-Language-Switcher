@@ -21,6 +21,20 @@ class MslsMain {
 	}
 
 	/**
+	 * Prints a message in the error log if WP_DEBUG is true
+	 *
+	 * @param mixed $message
+	 */
+	public function debugger( $message ) {
+		if ( WP_DEBUG === true ) {
+			if ( is_array( $message ) || is_object( $message ) ) {
+				$message = print_r( $message, true );
+			}
+			error_log( 'MSLS Debug: ' . $message );
+		}
+	}
+
+	/**
 	 * Get the input array
 	 * @param int $object_id
 	 * @return array
