@@ -35,33 +35,34 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 * @return string
 	 */
 	public function check_base( $url, $options ) {
-		if ( is_string( $url ) && '' != $url ) {
-			global $wp_rewrite;
+		if ( ! is_string( $url ) || empty( $url ) ) {
+			return $url;
+		}
 
-			$base_defined = $options->base_defined;
+		global $wp_rewrite;
 
-			$permastruct = $wp_rewrite->get_extra_permastruct( $options->get_tax_query() );
-			if ( $permastruct ) {
-				$permastruct = explode( '/', $permastruct );
-				end( $permastruct );
-				$permastruct = prev( $permastruct );
-				if ( false !== $permastruct ) {
-					$base_defined = $permastruct;
-				}
+		$base_defined = $options->base_defined;
+
+		$permastruct = $wp_rewrite->get_extra_permastruct( $options->get_tax_query() );
+		if ( $permastruct ) {
+			$permastruct = explode( '/', $permastruct );
+			end( $permastruct );
+			$permastruct = prev( $permastruct );
+			if ( false !== $permastruct ) {
+				$base_defined = $permastruct;
 			}
+		}
 
-			$base_option = get_option( $options->base_option );
-			if ( empty( $base_option ) ) {
-				$base_option = $options->base_defined;
-			}
+		$base_option = get_option( $options->base_option );
+		if ( empty( $base_option ) ) {
+			$base_option = $options->base_defined;
+		}
 
-			if ( $base_defined != $base_option ) {
-				$search  = '/' . $base_defined . '/';
-				$replace = '/' . $base_option . '/';
-				$count   = 1;
-				$url     = str_replace( $search, $replace, $url, $count );
-			}
-
+		if ( $base_defined != $base_option ) {
+			$search  = '/' . $base_defined . '/';
+			$replace = '/' . $base_option . '/';
+			$count   = 1;
+			$url     = str_replace( $search, $replace, $url, $count );
 		}
 
 		return $url;

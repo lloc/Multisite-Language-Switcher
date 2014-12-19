@@ -369,7 +369,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		global $current_site;
 		$permalink_structure = get_blog_option( $current_site->blog_id, 'permalink_structure' );
 		if ( $permalink_structure ) {
-			list( $needle, $temp ) = explode( '/%', $permalink_structure, 2 );
+			list( $needle, ) = explode( '/%', $permalink_structure, 2 );
 
 			$url = str_replace( $needle, '', $url );
 			if ( is_main_site() && $options->with_front ) {
