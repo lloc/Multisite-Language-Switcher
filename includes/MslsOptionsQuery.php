@@ -13,9 +13,15 @@
 class MslsOptionsQuery extends MslsOptions {
 
 	/**
+	 * Rewrite with front
+	 * @var bool
+	 */
+	public $with_front = true;
+
+	/**
 	 * Factory method
 	 * @param int $id This parameter is unused here
-	 * @return MslsQueryOptions
+	 * @return MslsOptionsQuery
 	 */
 	public static function create( $id = 0 ) {
 		if ( is_day() ) {
@@ -59,7 +65,7 @@ class MslsOptionsQuery extends MslsOptions {
 		if ( $this->has_value( $language ) ) {
 			$link = $this->get_current_link();
 			if ( ! empty( $link ) ) {
-				return $this->check_url( $link );
+				return apply_filters( 'check_url', $link, $this );
 			}
 		}
 		return '';

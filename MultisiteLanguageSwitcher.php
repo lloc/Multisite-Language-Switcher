@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @author Dennis Ploetner <re@lloc.de>
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '1.0.4' );
+	define( 'MSLS_PLUGIN_VERSION', '1.0.5' );
 
 	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
 		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );

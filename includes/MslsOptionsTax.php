@@ -25,7 +25,9 @@ class MslsOptionsTax extends MslsOptions {
 
 	/**
 	 * Factory method
+	 *
 	 * @param int $id
+	 *
 	 * @return MslsOptionsTax
 	 */
 	public static function create( $id = 0 ) {
@@ -34,21 +36,30 @@ class MslsOptionsTax extends MslsOptions {
 
 			$id  = (int) $id;
 			$req = $obj->acl_request();
-		}
-		else {
-			global $wp_query;
-
-			$id  = $wp_query->get_queried_object_id();
+		} else {
+			$id  = get_queried_object_id();
 			$req = ( is_category() ? 'category' : ( is_tag() ? 'post_tag' : '' ) );
 		}
 
-		if ( 'category' == $req ) {
-			return new MslsOptionsTaxTermCategory( $id );
+		switch ( $req ) {
+			case 'category':
+				$options = new MslsOptionsTaxTermCategory( $id );
+				break;
+			case 'post_tag':
+				$options = new MslsOptionsTaxTerm( $id );
+				break;
+			default:
+				$options = new MslsOptionsTax( $id );
 		}
-		elseif ( 'post_tag' == $req ) {
-			return new MslsOptionsTaxTerm( $id );
+
+		if ( $req ) {
+			add_filter( 'check_url', array( $options, 'check_base' ), 9, 2 );
+		} else {
+			global $wp_rewrite;
+			$options->with_front = ! empty( $wp_rewrite->extra_permastructs[ $options->get_tax_query() ]['with_front'] );
 		}
-		return new MslsOptionsTax( $id );
+
+		return $options;
 	}
 
 	/**
@@ -58,27 +69,28 @@ class MslsOptionsTax extends MslsOptions {
 	public function get_tax_query() {
 		global $wp_query;
 
-		return(
-			isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ?
+		return (
+		isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ?
 			$wp_query->tax_query->queries[0]['taxonomy'] :
 			''
 		);
 	}
 
-
 	/**
 	 * Get postlink
+	 *
 	 * @param string $language
+	 *
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
+		$url = '';
+
 		if ( $this->has_value( $language ) ) {
-			$link = $this->get_term_link( (int) $this->__get( $language ) );
-			if ( ! empty( $link ) ) {
-				return $this->check_url( $link );
-			}
+			$url = $this->get_term_link( (int) $this->__get( $language ) );
 		}
-		return '';
+
+		return apply_filters( 'check_url', $url, $this );
 	}
 
 	/**
@@ -91,7 +103,10 @@ class MslsOptionsTax extends MslsOptions {
 
 	/**
 	 * Wraps the call to get_term_link
+	 *
 	 * @param int $term_id
+	 *
+	 * @return string
 	 */
 	public function get_term_link( $term_id ) {
 		if ( ! empty( $term_id ) ) {
@@ -103,6 +118,7 @@ class MslsOptionsTax extends MslsOptions {
 				}
 			}
 		}
+
 		return '';
 	}
 

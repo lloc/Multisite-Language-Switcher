@@ -52,6 +52,7 @@ banner.
 *  Swedish (sv_SE) - [Erik Bernskiold](http://www.bernskioldmedia.com/)
 *  Traditional & Simplified Chinese (zh_CN & zh_TW) - DrBenson
 *  Arabic (ar) - Mohamed Elwan
+*  Norwegian (nb_NO) - Ibrahim Qraiqe
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 

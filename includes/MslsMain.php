@@ -13,6 +13,7 @@ class MslsMain {
 
 	/**
 	 * Every child of MslsMain has to define a init-method
+	 * @throws Exception If a child class does not define an init method
 	 * @return MslsMain
 	 */
 	public static function init() {
@@ -93,6 +94,7 @@ class MslsMain {
 
 		$blogs = MslsBlogCollection::instance();
 		if ( ! $blogs->has_current_blog() ) {
+			$this->debugger( 'MslsBlogCollection::instance()->has_current_blog returns false.' );
 			return;
 		}
 

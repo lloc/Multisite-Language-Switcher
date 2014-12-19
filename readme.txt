@@ -48,6 +48,7 @@ http://blog.jrmayer.co/) for creating the plugin's banner.
 * Swedish (sv_SE) - [Erik Bernskiold](http://www.bernskioldmedia.com/)
 * Traditional & Simplified Chinese (zh_CN & zh_TW) - DrBenson
 * Arabic (ar) - Mohamed Elwan
+* Norwegian (nb_NO) - Ibrahim Qraiqe
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can 
 bundle it into the Multisite Language Switcher. You can download the latest POT file
@@ -125,6 +126,8 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 = 1.0.5 =
 * Filter 'msls_meta_box_render_select_hierarchical' closes issue [64](https://github.com/lloc/Multisite-Language-Switcher/issues/64)
 * Bugfix for issue [73](https://github.com/lloc/Multisite-Language-Switcher/issues/73)
+* language files for Norwegian (nb_NO) by Ibrahim Qraiqe added
+* Bugfix for issue [Multisite Language Switcher Options is empty](https://wordpress.org/support/topic/multisite-language-switcher-options-is-empty)
 
 = 1.0.4 =
 * language files for Arabic (ar) by Mohamed Elwan added
