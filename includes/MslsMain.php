@@ -26,7 +26,7 @@ class MslsMain {
 	 * @param mixed $message
 	 */
 	public function debugger( $message ) {
-		if ( WP_DEBUG === true ) {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				$message = print_r( $message, true );
 			}

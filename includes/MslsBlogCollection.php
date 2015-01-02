@@ -49,12 +49,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	public function __construct() {
 		if ( ! has_filter( 'msls_blog_collection_description' ) ) {
-			add_filter(
-				'msls_blog_collection_description',
-				array( $this, 'get_configured_blog_description' ),
-				10,
-				2
-			);
+			add_filter( 'msls_blog_collection_description', array( $this, 'get_configured_blog_description' ), 10, 2 );
 		}
 
 		$this->current_blog_id = get_current_blog_id();
