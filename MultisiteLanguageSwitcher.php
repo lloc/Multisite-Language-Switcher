@@ -234,6 +234,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 				$language = $blog->get_language();
 				$url      = $mydata->get_current_link();
 				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
+				$title = $blog->get_description();
 
 				if ( ! $current ) {
 					switch_to_blog( $blog->userblog_id );
@@ -243,6 +244,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 						continue;
 					}
 					$url = $mydata->get_permalink( $language );
+					$title = $blog->get_description();
 
 					restore_current_blog();
 				}
@@ -260,9 +262,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 				}
 
 				printf(
-					'<link rel="alternate" hreflang="%s" href="%s" />',
+					'<link rel="alternate" hreflang="%s" href="%s" title="%s" />',
 					$hreflang,
-					$url
+					$url,
+					esc_attr($title)
 				);
 				echo "\n";
 			}
