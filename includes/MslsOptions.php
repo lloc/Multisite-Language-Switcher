@@ -56,12 +56,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @var string
 	 */
 	protected $base;
-	
-	/**
-	 * Base definition
-	 * @var string
-	 */
-	protected $base_defined = '';	
 
 	/**
 	 * Available languages
@@ -131,7 +125,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		$this->args   = func_get_args();
 		$this->name   = 'msls' . $this->sep . implode( $this->sep, $this->args );
 		$this->exists = $this->set( get_option( $this->name ) );
-		$this->base   = $this->get_base();
 	}
 
 	/**
@@ -187,14 +180,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Get base
-	 * @return string
-	 */
-	public function get_base() {
-		return $this->base_defined;
 	}
 
 	/**
