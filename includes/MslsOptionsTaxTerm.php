@@ -24,22 +24,45 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	protected $base_defined = 'tag';
 
 	/**
+	 * Rewrite with front
+	 * @var bool
+	 */
+	public $with_front = true;
+
+	/**
 	 * Check and correct URL
 	 * @param string $url
 	 * @return string
 	 */
-	public function check_url( $url ) {
-		$url = parent::check_url( $url );
+	public function check_base( $url, $options ) {
+		if ( ! is_string( $url ) || empty( $url ) ) {
+			return $url;
+		}
 
-		if ( '' != $url ) {
-			/* Custom structure for categories or tags */
-			$base = get_option( $this->base_option );
-			if ( $this->base != $base ) {
-				$search  = '/' . $this->base . '/';
-				$replace = '/' . $base . '/';
-				$count   = 1;
-				$url     = str_replace( $search, $replace, $url, $count );
+		global $wp_rewrite;
+
+		$base_defined = $options->base_defined;
+
+		$permastruct = $wp_rewrite->get_extra_permastruct( $options->get_tax_query() );
+		if ( $permastruct ) {
+			$permastruct = explode( '/', $permastruct );
+			end( $permastruct );
+			$permastruct = prev( $permastruct );
+			if ( false !== $permastruct ) {
+				$base_defined = $permastruct;
 			}
+		}
+
+		$base_option = get_option( $options->base_option );
+		if ( empty( $base_option ) ) {
+			$base_option = $options->base_defined;
+		}
+
+		if ( $base_defined != $base_option ) {
+			$search  = '/' . $base_defined . '/';
+			$replace = '/' . $base_option . '/';
+			$count   = 1;
+			$url     = str_replace( $search, $replace, $url, $count );
 		}
 
 		return $url;

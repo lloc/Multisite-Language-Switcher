@@ -39,6 +39,7 @@ class MslsCustomFilter extends MslsMain {
 			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ) :
 			''
 		);
+
 		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';

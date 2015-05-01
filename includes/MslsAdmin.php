@@ -19,18 +19,13 @@ class MslsAdmin extends MslsMain {
 		$obj = new self();
 
 		if ( current_user_can( 'manage_options' ) ) {
-			add_options_page(
-				__( 'Multisite Language Switcher', 'msls' ),
-				__( 'Multisite Language Switcher', 'msls' ),
-				'manage_options',
-				__CLASS__,
-				array( $obj, 'render' )
-			);
+			$title = __( 'Multisite Language Switcher', 'msls' );
+			add_options_page( $title, $title, 'manage_options', __CLASS__, array( $obj, 'render' ) );
 
 			add_action( 'admin_init',    array( $obj, 'register' ) );
 			add_action( 'admin_notices', array( $obj, 'has_problems' ) );
 
-			add_filter( 'msls_admin_validate', array( $obj, 'set_blog_language' )	);
+			add_filter( 'msls_admin_validate', array( $obj, 'set_blog_language' ) );
 		}
 
 		return $obj;
@@ -67,7 +62,7 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function render() {
 		printf(
-			'<div class="wrap"><div class="icon32" id="icon-options-general"><br></div><h2>%s</h2>%s<form class="clear" action="options.php" method="post"><p>%s</p>',
+			'<div class="wrap"><div class="icon32" id="icon-options-general"><br/></div><h2>%s</h2>%s<br class="clear"/><form action="options.php" method="post"><p>%s</p>',
 			__( 'Multisite Language Switcher Options', 'msls' ),
 			$this->subsubsub(),
 			__( 'To achieve maximum flexibility, you have to configure each blog separately.', 'msls' )
@@ -235,11 +230,7 @@ class MslsAdmin extends MslsMain {
 			$users[ $user->ID ] = $user->user_nicename;
 		}
 
-		echo $this->render_select(
-			'reference_user',
-			$users,
-			MslsOptions::instance()->reference_user
-		); // xss ok
+		echo $this->render_select( 'reference_user', $users, MslsOptions::instance()->reference_user ); // xss ok
 	}
 
 	/**

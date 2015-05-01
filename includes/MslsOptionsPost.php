@@ -29,13 +29,21 @@ class MslsOptionsPost extends MslsOptions {
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
-		if ( $this->has_value( $language ) ) {
-			$post = get_post( (int) $this->__get( $language ) );
-			if ( ! is_null( $post ) && 'publish' == $post->post_status ) {
-				return get_permalink( $post );
-			}
+		if ( ! $this->has_value( $language ) ) {
+			return '';
 		}
-		return '';
+
+		$post = get_post( (int) $this->__get( $language ) );
+		if ( is_null( $post ) || 'publish' != $post->post_status ) {
+			return '';
+		}
+
+		if ( is_null( $this->with_front ) ) {
+			$post_object      = get_post_type_object( $post->post_type );
+			$this->with_front = ! empty( $post_object->rewrite['with_front'] );
+		}
+
+		return apply_filters( 'check_url', get_permalink( $post ), $this );
 	}
 
 	/**
@@ -43,7 +51,7 @@ class MslsOptionsPost extends MslsOptions {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return (string) get_permalink( $this->get_arg( 0, '' ) );
+		return (string) get_permalink( $this->get_arg( 0, 0 ) );
 	}
 
 }

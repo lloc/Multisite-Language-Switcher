@@ -4,7 +4,7 @@
 Plugin Name: Multisite Language Switcher
 Plugin URI: http://msls.co/
 Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
-Version: 1.0
+Version: 1.0.5
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 */
@@ -30,10 +30,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * MultisiteLanguageSwitcher
  *
  * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '1.0' );
+	define( 'MSLS_PLUGIN_VERSION', '1.0.5' );
 
 	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
 		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
@@ -44,14 +43,13 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 
 	/**
 	 * The Autoloader does all the magic when it comes to include a file
-	 *
+	 * @since 0.9.8
 	 * @package Msls
 	 */
 	class MslsAutoloader {
 
 		/**
 		 * Static loader method
-		 *
 		 * @param string $class
 		 */
 		public static function load( $class ) {
@@ -74,14 +72,12 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * Interface for classes which are to register in the MslsRegistry-instance
 	 *
 	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
-	 *
 	 * @package Msls
 	 */
 	interface IMslsRegistryInstance {
 
 		/**
 		 * Returnse an instance
-		 *
 		 * @return object
 		 */
 		public static function instance();
@@ -134,7 +130,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 *
 		 * @package Msls
 		 * @uses MslsOptions
-		 *
 		 * @param string $content
 		 * @return string
 		 */
@@ -154,7 +149,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 *
 		 * @package Msls
 		 * @uses MslsOutput
-		 *
 		 * @param string $pref
 		 * @param string $post
 		 * @return string
@@ -166,7 +160,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 
 			if ( has_filter( 'msls_filter_string' ) ) {
 				/**
-				 * Ovverrides the string for the output of the translation hint
+				 * Overrides the string for the output of the translation hint
 				 * @since 1.0
 				 * @param string $output
 				 * @param array $links
@@ -202,15 +196,14 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * Get the output for using the links to the translations in your code
 		 *
 		 * @package Msls
-	 	 * @uses the_msls
-	 	 *
 		 * @param array $arr
 		 * @return string
 		 */
-		function get_the_msls( array $arr = array() ) {
-			$obj = MslsOutput::init()->set_tags( $arr );
+		function get_the_msls( $arr = array() ) {
+			$obj = MslsOutput::init()->set_tags( (array) $arr );
 			return( sprintf( '%s', $obj ) );
 		}
+		add_shortcode( 'sc_msls', 'get_the_msls' );
 
 		/**
 		 * Output the links to the translations in your template
@@ -220,11 +213,13 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 *     if ( function_exists ( 'the_msls' ) )
 		 *         the_msls();
 		 *
-		 * @package Msls
+		 * or just use it as shortcode [sc_msls]
 		 *
+		 * @package Msls
+ 	 	 * @uses get_the_msls
 		 * @param array $arr
 		 */
-		function the_msls( array $arr = array() ) {
+		function the_msls( $arr = array() ) {
 			echo get_the_msls( $arr ); // xss ok
 		}
 
@@ -237,11 +232,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			$mydata = MslsOptions::create();
 			foreach ( $blogs->get_objects() as $blog ) {
 				$language = $blog->get_language();
+				$url      = $mydata->get_current_link();
+				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
 
-				if ( $blog->userblog_id == $blogs->get_current_blog_id() ) {
-					$url = $mydata->get_current_link();
-				}
-				else {
+				if ( ! $current ) {
 					switch_to_blog( $blog->userblog_id );
 
 					if ( 'MslsOptions' != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {

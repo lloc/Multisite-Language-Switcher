@@ -39,7 +39,7 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_month_link( $this->get_arg( 0, '' ), $this->get_arg( 1, '' ) );
+		return get_month_link( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ) );
 	}
 
 }

@@ -14,10 +14,9 @@ class WP_Test_MslsOptionsTaxTermCategory extends Msls_UnitTestCase {
 	/**
 	 * Verify the check_url-method
 	 */
-	function test_check_url_method() {
+	function test_object() {
 		$obj = new MslsOptionsTaxTermCategory( 0 );
-		$this->assertInternalType( 'string', $obj->check_url( '' ) );
-		return $obj;
+		$this->assertInternalType( 'string', $obj->get_postlink( '' ) );
 	}
 
 }

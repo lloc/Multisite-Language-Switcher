@@ -39,7 +39,7 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_day_link( $this->get_arg( 0, '' ), $this->get_arg( 1, '' ), $this->get_arg( 2, '' ) );
+		return get_day_link( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ), $this->get_arg( 2, 0 ) );
 	}
 
 }

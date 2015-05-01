@@ -5,7 +5,7 @@ Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.6.1
 Tested up to: 4.0
-Stable tag: 1.0
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,8 @@ http://blog.jrmayer.co/) for creating the plugin's banner.
 * Japanese (ja) - [ThemeBoy](http://themeboy.com/)
 * Swedish (sv_SE) - [Erik Bernskiold](http://www.bernskioldmedia.com/)
 * Traditional & Simplified Chinese (zh_CN & zh_TW) - DrBenson
+* Arabic (ar) - Mohamed Elwan
+* Norwegian (nb_NO) - Ibrahim Qraiqe
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can 
 bundle it into the Multisite Language Switcher. You can download the latest POT file
@@ -64,14 +66,10 @@ Now you can:
 * connect your translated pages and posts in Posts -> Edit or Page -> Edit
 * connect your translated categories and tags in Posts -> Categories or Post -> Tags
 * connect your Custom Post Types and Custom Taxonomies across languages
-* use a widget and/or a content_filter which displays a hint to the user if a translation is available
+* use the widget, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
 * optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
 
-Review the
-[Multisite Language Switcher Wiki](https://github.com/lloc/Multisite-Language-Switcher/wiki)
-or the
-[API Documentation](http://msls.co/api-documentation/)
-for more information.
+Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
 
 == Frequently Asked Questions ==
 
@@ -95,7 +93,15 @@ if you need such functionality.
 
 = How can I add the Multisite Language Switcher to the nav-menu of my blog? =
 
-Please check this [example plugin](https://github.com/lloc/MslsMenu) out.
+Please check the add-on [MslsMenu](https://wordpress.org/plugins/mslsmenu/) out.
+
+= I want to have the languages in an HTML select. How can I do that? =
+
+Please check the add-on [MslsSelect](https://wordpress.org/plugins/mslsselect/) out.
+
+= I don't want to upload the same media files for every site. What can I do? =
+
+You could try the plugin [Network Shared Media](http://wordpress.org/plugins/network-shared-media/). It adds a new tab to the "Add Media" window, allowing you to access the media files in the other sites in your multisite.
 
 = Is there a function I can call to get the language of the page the user is currently viewing? =
 
@@ -116,6 +122,28 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 4. Widget
 
 == Changelog ==
+
+= 1.0.5 =
+* Filter 'msls_meta_box_render_select_hierarchical' closes issue [64](https://github.com/lloc/Multisite-Language-Switcher/issues/64)
+* Bugfix for issue [73](https://github.com/lloc/Multisite-Language-Switcher/issues/73)
+* language files for Norwegian (nb_NO) by Ibrahim Qraiqe added
+* Bugfix for issue [Multisite Language Switcher Options is empty](https://wordpress.org/support/topic/multisite-language-switcher-options-is-empty)
+
+= 1.0.4 =
+* language files for Arabic (ar) by Mohamed Elwan added
+
+= 1.0.3 =
+* Bugfix: alternate hreflang for the current blog was empty
+* Filter: 'msls_options_get_flag_icon' introduced
+* Shortcode [sc_msls] added
+
+= 1.0.2 =
+* Bugfix: term links were damaged when term_base option were used
+* Bugfix: en_GB & en_US both displayed as 'English' in Settings > MLS >Blog & Admin language
+* Filter 'msls_meta_box_render_input_button' introduced
+
+= 1.0.1 =
+* Bugfix: filter internal types from get_post_stati
 
 = 1.0 =
 * you can choose now your frontend/backend language from the installed languages in the plugins settings

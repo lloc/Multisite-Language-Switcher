@@ -52,25 +52,27 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	protected $autoload = 'yes';
 
 	/**
-	 * Base
-	 * @var string
-	 */
-	protected $base;
-
-	/**
 	 * Available languages
 	 * @var array
 	 */
 	private $available_languages;
 
 	/**
+	 * Rewrite with front
+	 * @var bool
+	 */
+	public $with_front;
+
+	/**
 	 * Factory method
+	 *
 	 * @param int $id
+	 *
 	 * @return MslsOptions
 	 */
 	public static function create( $id = 0 ) {
 		if ( is_admin() ) {
-			$id  = (int) $id;
+			$id = (int) $id;
 
 			if ( MslsContentTypes::create()->is_taxonomy() ) {
 				return MslsOptionsTax::create( $id );
@@ -80,18 +82,17 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		}
 
 		if ( self::is_main_page() ) {
-			return new MslsOptions();
+			$options = new MslsOptions();
+		} elseif ( self::is_tax_page() ) {
+			$options = MslsOptionsTax::create();
+		} elseif ( self::is_query_page() ) {
+			$options = MslsOptionsQuery::create();
+		} else {
+			$options = new MslsOptionsPost( get_queried_object_id() );
 		}
-		elseif ( self::is_tax_page() ) {
-			return MslsOptionsTax::create();
-		}
-		elseif ( self::is_query_page() ) {
-			return MslsOptionsQuery::create();
-		}
+		add_filter( 'check_url', array( $options, 'check_for_blog_slug' ), 10, 2 );
 
-		global $wp_query;
-
-		return new MslsOptionsPost( $wp_query->get_queried_object_id() );
+		return $options;
 	}
 
 	/**
@@ -99,7 +100,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return boolean
 	 */
 	public static function is_main_page() {
-		return( is_front_page() || is_search() || is_404() );
+		return ( is_front_page() || is_search() || is_404() );
 	}
 
 	/**
@@ -107,7 +108,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return boolean
 	 */
 	public static function is_tax_page() {
-		return( is_category() || is_tag() || is_tax() );
+		return ( is_category() || is_tag() || is_tax() );
 	}
 
 	/**
@@ -115,7 +116,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return boolean
 	 */
 	public static function is_query_page() {
-		return( is_date() || is_author() || is_post_type_archive() );
+		return ( is_date() || is_author() || is_post_type_archive() );
 	}
 
 	/**
@@ -131,19 +132,24 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * Gets an element of arg by index
 	 * The returning value is casted to the type of $retval or will be the
 	 * value of $retval if nothing is set at this index.
+	 *
 	 * @param int $idx
 	 * @param mixed $val
+	 *
 	 * @return mixed
 	 */
 	public function get_arg( $idx, $val = null ) {
 		$arg = ( isset( $this->args[ $idx ] ) ? $this->args[ $idx ] : $val );
 		settype( $arg, gettype( $val ) );
+
 		return $arg;
 	}
 
 	/**
 	 * Save
+	 *
 	 * @param mixed $arr
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function save( $arr ) {
@@ -169,7 +175,9 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
 	/**
 	 * Set
+	 *
 	 * @param mixed $arr
+	 *
 	 * @return bool
 	 */
 	public function set( $arr ) {
@@ -177,20 +185,25 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			foreach ( $arr as $key => $value ) {
 				$this->__set( $key, $value );
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
 	 * Get permalink
+	 *
 	 * @param string $language
+	 *
 	 * @return string
 	 */
 	public function get_permalink( $language ) {
 		/**
 		 * Filters the url by language
 		 * @since 0.9.8
+		 *
 		 * @param string $postlink
 		 * @param string $language
 		 */
@@ -199,12 +212,15 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			$this->get_postlink( $language ),
 			$language
 		);
-		return( '' != $postlink ? $postlink : home_url() );
+
+		return ( '' != $postlink ? $postlink : home_url() );
 	}
 
 	/**
 	 * Get postlink
+	 *
 	 * @param string $language
+	 *
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
@@ -241,7 +257,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 */
 	public function get_order() {
 		return (
-			isset( $this->sort_by_description ) ?
+		isset( $this->sort_by_description ) ?
 			'description' :
 			'language'
 		);
@@ -249,7 +265,9 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
 	/**
 	 * Get url
+	 *
 	 * @param string $dir
+	 *
 	 * @return string
 	 */
 	public function get_url( $dir ) {
@@ -258,28 +276,43 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 
 	/**
 	 * Get flag url
+	 *
 	 * @param string $language
+	 *
 	 * @return string
 	 */
 	public function get_flag_url( $language ) {
 		if ( ! is_admin() && isset( $this->image_url ) ) {
 			$url = $this->__get( 'image_url' );
-		}
-		else {
+		} else {
 			$url = $this->get_url( 'flags' );
 		}
 
 		/**
 		 * Override the path to the flag-icons
 		 * @since 0.9.9
-		 * @param MslsOptions $this
+		 *
+		 * @param string $url
 		 */
 		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
 
 		if ( 5 == strlen( $language ) ) {
-			$language = strtolower( substr( $language, -2 ) );
+			$icon = strtolower( substr( $language, - 2 ) );
+		} else {
+			$icon = $language;
 		}
-		return sprintf( '%s/%s.png', $url, $language );
+		$icon .= '.png';
+
+		/**
+		 * Use your own filename for the flag-icon
+		 * @since 1.0.3
+		 *
+		 * @param string $icon
+		 * @param string $language
+		 */
+		$icon = (string) apply_filters( 'msls_options_get_flag_icon', $icon, $language );
+
+		return sprintf( '%s/%s', $url, $icon );
 	}
 
 	/**
@@ -291,7 +324,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	public function get_available_languages() {
 		if ( empty( $this->available_languages ) ) {
 			$this->available_languages = array(
-				'en_US' => format_code_lang( 'en_US' ),
+				'en_US' => __( 'American English', 'msls' ),
 			);
 			foreach ( get_available_languages() as $code ) {
 				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
@@ -300,6 +333,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			/**
 			 * Returns custom filtered available languages
 			 * @since 1.0
+			 *
 			 * @param array $available_languages
 			 */
 			$this->available_languages = (array) apply_filters(
@@ -307,36 +341,43 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 				$this->available_languages
 			);
 		}
+
 		return $this->available_languages;
 	}
 
 	/**
-	 * Check and correct URL
+	 * The 'blog'-slug-problem :/
+	 *
 	 * @param string $url
+	 * @param MslsOptions $options
+	 *
 	 * @return string
 	 */
-	public function check_url( $url ) {
+	public static function check_for_blog_slug( $url, $options ) {
 		if ( empty( $url ) || ! is_string( $url ) ) {
 			return '';
 		}
 
-		/**
-		 * The 'blog'-slug-problem :/
-		 */
-		if ( ! is_subdomain_install() ) {
-			$count = 1;
-			$url   = str_replace( home_url(), '', $url, $count );
+		global $wp_rewrite;
+		if ( is_subdomain_install() || ! $wp_rewrite->using_permalinks() ) {
+			return $url;
+		}
 
-			if ( is_main_site() ) {
-				$parts = explode( '/%', get_option( 'permalink_structure' ), 2 );
-				$url   = home_url( $parts[0] . $url );
-			}
-			else {
-				$url = home_url( preg_replace( '|^/?blog|', '', $url ) );
+		$count = 1;
+		$url   = str_replace( home_url(), '', $url, $count );
+
+		global $current_site;
+		$permalink_structure = get_blog_option( $current_site->blog_id, 'permalink_structure' );
+		if ( $permalink_structure ) {
+			list( $needle, ) = explode( '/%', $permalink_structure, 2 );
+
+			$url = str_replace( $needle, '', $url );
+			if ( is_main_site() && $options->with_front ) {
+				$url = "{$needle}{$url}";
 			}
 		}
 
-		return $url;
+		return home_url( $url );
 	}
 
 	/**
@@ -349,6 +390,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			$obj = new self();
 			MslsRegistry::set_object( 'MslsOptions', $obj );
 		}
+
 		return $obj;
 	}
 
