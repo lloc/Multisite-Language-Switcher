@@ -213,7 +213,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			$language
 		);
 
-		return ( '' != $postlink ? $postlink : home_url() );
+		return ( '' != $postlink ? $postlink : home_url( '/' ) );
 	}
 
 	/**
@@ -232,7 +232,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return home_url();
+		return home_url( '/' );
 	}
 
 	/**
