@@ -178,7 +178,7 @@ class MslsMetaBox extends MslsMain {
 							'<option value="%s" %s>%s</option>',
 							$my_id,
 							selected( $my_id, $mydata->$language, false ),
-							get_the_title()
+							get_the_title($my_id)
 						);
 
 					$selects .= sprintf(
