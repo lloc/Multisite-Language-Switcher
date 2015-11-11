@@ -45,6 +45,7 @@ class MslsMetaBox extends MslsMain {
 			/**
 			 * Overrides the query-args for the suggest fields in the MetaBox
 			 * @since 0.9.9
+			 *
 			 * @param array $args
 			 */
 			$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
@@ -56,6 +57,7 @@ class MslsMetaBox extends MslsMain {
 				/**
 				 * Manipulates the WP_Post object before using it
 				 * @since 0.9.9
+				 *
 				 * @param WP_Post $post
 				 */
 				$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
@@ -78,9 +80,10 @@ class MslsMetaBox extends MslsMain {
 		$obj = new self();
 		if ( ! MslsOptions::instance()->is_excluded() ) {
 			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
-			add_action( 'save_post',      array( $obj, 'set' ) );
-			add_action( 'trashed_post',   array( $obj, 'delete' ) );
+			add_action( 'save_post', array( $obj, 'set' ) );
+			add_action( 'trashed_post', array( $obj, 'delete' ) );
 		}
+
 		return $obj;
 	}
 
@@ -95,7 +98,7 @@ class MslsMetaBox extends MslsMain {
 				array(
 					$this,
 					(
-						MslsOptions::instance()->activate_autocomplete ?
+					MslsOptions::instance()->activate_autocomplete ?
 						'render_input' :
 						'render_select'
 					),
@@ -130,8 +133,8 @@ class MslsMetaBox extends MslsMain {
 				$language = $blog->get_language();
 
 				$icon = MslsAdminIcon::create()
-					->set_language( $language )
-					->set_src( MslsOptions::instance()->get_flag_url( $language ) );
+				                     ->set_language( $language )
+				                     ->set_src( MslsOptions::instance()->get_flag_url( $language ) );
 				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( $mydata->$language );
 				}
@@ -152,35 +155,36 @@ class MslsMetaBox extends MslsMain {
 					/**
 					 * Overrides the args for wp_dropdown_pages when using the HTML select in the MetaBox
 					 * @since 1.0.5
+					 *
 					 * @param array $args
 					 */
 					$args = (array) apply_filters( 'msls_meta_box_render_select_hierarchical', $args );
 
 					$selects .= wp_dropdown_pages( $args );
-				}
-				else {
+				} else {
 					$options = '';
 
 					$my_query = new WP_Query(
 						array(
-							'post_type' => $type,
-							'post_status' => get_post_stati( array( 'internal' => '' ) ),
-							'orderby' => 'title',
-							'order' => 'ASC',
-							'posts_per_page' => -1,
-							'fields' => 'ids'
+							'post_type'      => $type,
+							'post_status'    => get_post_stati( array( 'internal' => '' ) ),
+							'orderby'        => 'title',
+							'order'          => 'ASC',
+							'posts_per_page' => - 1,
+							'fields'         => 'ids',
 						)
 					);
 
-					if ( $my_query->have_posts() )
-					foreach ($my_query->posts as $my_id)
-						$options .= sprintf(
-							'<option value="%s" %s>%s</option>',
-							$my_id,
-							selected( $my_id, $mydata->$language, false ),
-							get_the_title($my_id)
-						);
-
+					if ( $my_query->have_posts() ) {
+						foreach ( $my_query->posts as $my_id ) {
+							$options .= sprintf(
+								'<option value="%s" %s>%s</option>',
+								$my_id,
+								selected( $my_id, $mydata->$language, false ),
+								get_the_title( $my_id )
+							);
+						}
+					}
 					$selects .= sprintf(
 						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
 						$language,
@@ -203,8 +207,7 @@ class MslsMetaBox extends MslsMain {
 				__( 'Update', 'msls' )
 			);
 			$post = $temp;
-		}
-		else {
+		} else {
 			printf(
 				'<p>%s</p>',
 				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'msls' )
@@ -267,6 +270,7 @@ class MslsMetaBox extends MslsMain {
 			/**
 			 * Returns the input button, return an empty string if you'ld like to hide the button
 			 * @since 1.0.2
+			 *
 			 * @param string $input_button
 			 */
 			$input_button = ( string ) apply_filters( 'msls_meta_box_render_input_button', $input_button );
@@ -282,8 +286,7 @@ class MslsMetaBox extends MslsMain {
 			);
 
 			$post = $temp;
-		}
-		else {
+		} else {
 			printf(
 				'<p>%s</p>',
 				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'msls' )
@@ -293,6 +296,7 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Set
+	 *
 	 * @param int $post_id
 	 */
 	public function set( $post_id ) {
@@ -301,7 +305,7 @@ class MslsMetaBox extends MslsMain {
 		}
 
 		$capability = (
-			'page' == filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING ) ?
+		'page' == filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING ) ?
 			'edit_page' :
 			'edit_post'
 		);

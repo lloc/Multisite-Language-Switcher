@@ -75,7 +75,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 				$description = false;
 				if ( $blog->userblog_id == $this->current_blog_id ) {
 					$description = $options->description;
-				} elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
+				}
+				elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
 					continue;
 				}
 
@@ -129,8 +130,8 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
 		$blogs = get_blogs_of_user(
 			$options->has_value( 'reference_user' ) ?
-				$options->reference_user :
-				current( $this->get_users( 'ID', 1 ) )
+			$options->reference_user :
+			current( $this->get_users( 'ID', 1 ) )
 		);
 
 		/**
@@ -168,7 +169,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	public function get_current_blog() {
 		return (
-		$this->has_current_blog() ?
+			$this->has_current_blog() ?
 			$this->objects[ $this->current_blog_id ] :
 			null
 		);

@@ -265,7 +265,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 					'<link rel="alternate" hreflang="%s" href="%s" title="%s" />',
 					$hreflang,
 					$url,
-					esc_attr($title)
+					esc_attr( $title )
 				);
 				echo "\n";
 			}
