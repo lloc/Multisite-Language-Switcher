@@ -167,20 +167,19 @@ class MslsMetaBox extends MslsMain {
 							'post_status' => get_post_stati( array( 'internal' => '' ) ),
 							'orderby' => 'title',
 							'order' => 'ASC',
-							'posts_per_page' => (-1),
+							'posts_per_page' => -1,
+							'fields' => 'ids'
 						)
 					);
 
-					while ( $my_query->have_posts() ) {
-						$my_query->the_post();
-						$my_id    = get_the_ID();
+					if ( $my_query->have_posts() )
+					foreach ($my_query->posts as $my_id)
 						$options .= sprintf(
 							'<option value="%s" %s>%s</option>',
 							$my_id,
 							selected( $my_id, $mydata->$language, false ),
-							get_the_title()
+							get_the_title($my_id)
 						);
-					}
 
 					$selects .= sprintf(
 						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
