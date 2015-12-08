@@ -25,7 +25,26 @@ Thanks to Mark James for his great work. In addition I would like to
 thank [Jürgen Mayer](http://blog.jrmayer.co/) for creating the plugin's 
 banner.
 
+## Installation
+
+*  Download the plugin and uncompress it with your preferred unzip programme
+*  Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins)
+*  Activate the plugin in your plugin administration page (by the network administrator on all the blogs or by the root blog administrator for each particular blog).
+*  You need to activate the plugin once in each blog, set the configuration in Options -> Multisite Language Switcher
+
+Now you can: 
+
+*  connect your translated pages and posts in Posts -> Edit or Page -> Edit
+*  connect your translated categories and tags in Posts -> Categories or Post -> Tags
+*  connect your Custom Post Types and Custom Taxonomies across languages
+*  use the widget, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
+*  optionally you can place the PHP code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
+
+Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
+
 ## Translators
+
+Thanks to all translators for their great work.
 
 *  German (de_DE) - [Dennis Ploetner](http://lloc.de/) 
 *  Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/)
@@ -60,20 +79,3 @@ existing one, you can [send me](mailto:re@lloc.de) your gettext PO
 and MO so that I can bundle it into the Multisite Language Switcher. 
 You can download the latest POT file
 [from here](https://github.com/lloc/Multisite-Language-Switcher/blob/master/languages/default.pot).
-
-## Installation
-
-*  Download the plugin and uncompress it with your preferred unzip programme
-*  Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins)
-*  Activate the plugin in your plugin administration page (by the network administrator on all the blogs or by the root blog administrator for each particular blog).
-*  You need to activate the plugin once in each blog, set the configuration in Options -> Multisite Language Switcher
-
-Now you can: 
-
-*  connect your translated pages and posts in Posts -> Edit or Page -> Edit
-*  connect your translated categories and tags in Posts -> Categories or Post -> Tags
-*  connect your Custom Post Types and Custom Taxonomies across languages
-*  use the widget, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
-*  optionally you can place the PHP code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
-
-Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
