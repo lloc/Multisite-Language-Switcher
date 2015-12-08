@@ -4,8 +4,8 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.6.1
-Tested up to: 4.3
-Stable tag: 1.0.5
+Tested up to: 4.4
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,8 +22,9 @@ The Multisite Language Switcher enables you to manage translations of posts, pag
 The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition I would like to thank [Jürgen Mayer](
 http://blog.jrmayer.co/) for creating the plugin's banner.
  
-= Translators =
-* German (de_DE) - [Dennis Ploetner](http://www.urlaub-und-reisen.net/)
+== Translators ==
+
+* German (de_DE) - [Dennis Ploetner](http://lloc.de/)
 * Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/it/)
 * Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/)
 * Brazillian Portuguese (pt_BR) - [Coolweb](http://www.coolweb.com.br/)
@@ -49,6 +50,7 @@ http://blog.jrmayer.co/) for creating the plugin's banner.
 * Traditional & Simplified Chinese (zh_CN & zh_TW) - DrBenson
 * Arabic (ar) - Mohamed Elwan
 * Norwegian (nb_NO) - Ibrahim Qraiqe
+* Bulgarian (bg_BG) - [Vencislav Raev](http://www.catblue.net/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can 
 bundle it into the Multisite Language Switcher. You can download the latest POT file
@@ -122,6 +124,10 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 4. Widget
 
 == Changelog ==
+
+= 1.0.6 =
+* language files for Bulgarian (bg_BG) by Vencislav Raev added
+* admin options page heading is now h1 instead of h2
 
 = 1.0.5 =
 * Filter 'msls_meta_box_render_select_hierarchical' closes issue [64](https://github.com/lloc/Multisite-Language-Switcher/issues/64)

@@ -53,6 +53,7 @@ banner.
 *  Traditional & Simplified Chinese (zh_CN & zh_TW) - DrBenson
 *  Arabic (ar) - Mohamed Elwan
 *  Norwegian (nb_NO) - Ibrahim Qraiqe
+*  Bulgarian (bg_BG) - [Vencislav Raev](http://www.catblue.net/)
 
 If you have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
