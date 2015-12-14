@@ -1,0 +1,221 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Multisite Language Switcher 0.9.9\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2014-09-01 17:28+0100\n"
+"PO-Revision-Date: 2014-09-01 17:28+0100\n"
+"Last-Translator: \n"
+"Language-Team: ThemeBoy <translate@themeboy.com>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../MultisiteLanguageSwitcher.php:165
+#, php-format
+msgid "This post is also available in %s."
+msgstr "この投稿は%sで表示できます。"
+
+#: ../MultisiteLanguageSwitcher.php:182
+#, php-format
+msgid "%s and %s"
+msgstr "%sと%s"
+
+#: ../MultisiteLanguageSwitcher.php:287
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+"\">this post</a> if you don't know the meaning."
+msgstr ""
+"マルチサイト言語スイッチャーを利用するにはマルチサイト機能を有効化する必要が"
+"あります。詳しくは<a onclick=\"window.open(this.href); return false;\" href="
+"\"http://codex.wordpress.org/Create_A_Network\">この投稿</a>をお読みくださ"
+"い。"
+
+#: ../includes/MslsAdmin.php:23 ../includes/MslsAdmin.php:24
+#: ../includes/MslsMetaBox.php:94 ../includes/MslsPostTag.php:151
+#: ../includes/MslsPostTagClassic.php:112 ../includes/MslsWidget.php:20
+msgid "Multisite Language Switcher"
+msgstr "マルチサイト言語スイッチャー"
+
+#: ../includes/MslsAdmin.php:49
+#, php-format
+msgid ""
+"There are no language files installed. You can <a href=\"%s\">manually "
+"install some language files</a> or you could use a <a href=\"%s\">plugin</a> "
+"to download these files automatically."
+msgstr ""
+"言語ファイルがインストールされていません。手動で<a href=\"%s\">言語ファイルを"
+"インストール</a>または<a href=\"%s\">プラグイン</a>を利用して自動的にファイル"
+"をダウンロードできます。"
+
+#: ../includes/MslsAdmin.php:56
+#, php-format
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
+"マルチサイト言語スイッチャーの準備がほぼ整いました。<a href=\"%s\">設定を完了"
+"してください</a>。"
+
+#: ../includes/MslsAdmin.php:71
+msgid "Multisite Language Switcher Options"
+msgstr "マルチサイト言語スイッチャーオプション"
+
+#: ../includes/MslsAdmin.php:73
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
+msgstr "柔軟性を最大にするには各ブログを別々に設定することをお勧めします。"
+
+#: ../includes/MslsAdmin.php:81
+msgid "Configure"
+msgstr "設定"
+
+#: ../includes/MslsAdmin.php:81 ../includes/MslsMetaBox.php:197
+#: ../includes/MslsMetaBox.php:263
+msgid "Update"
+msgstr "更新"
+
+#: ../includes/MslsAdmin.php:120
+msgid "Language Settings"
+msgstr "言語設定"
+
+#: ../includes/MslsAdmin.php:121
+msgid "Main Settings"
+msgstr "一般設定"
+
+#: ../includes/MslsAdmin.php:122
+msgid "Advanced Settings"
+msgstr "詳細設定"
+
+#: ../includes/MslsAdmin.php:137
+msgid "Blog Language"
+msgstr "ブログ言語"
+
+#: ../includes/MslsAdmin.php:138
+msgid "Admin Language"
+msgstr "管理画面言語"
+
+#: ../includes/MslsAdmin.php:154
+msgid "Display"
+msgstr "表示"
+
+#: ../includes/MslsAdmin.php:155
+msgid "Sort output by description"
+msgstr "並べ替え（説明文）"
+
+#: ../includes/MslsAdmin.php:156
+msgid "Display link to the current language"
+msgstr "現在の言語のリンクを表示する"
+
+#: ../includes/MslsAdmin.php:157
+msgid "Show only links with a translation"
+msgstr "翻訳があるリンクのみ表示"
+
+#: ../includes/MslsAdmin.php:158
+msgid "Description"
+msgstr "説明文"
+
+#: ../includes/MslsAdmin.php:159
+msgid "Text/HTML before the list"
+msgstr "リストの前に表示するテキスト・HTML"
+
+#: ../includes/MslsAdmin.php:160
+msgid "Text/HTML after the list"
+msgstr "リストの後に表示するテキスト・HTML"
+
+#: ../includes/MslsAdmin.php:161
+msgid "Text/HTML before each item"
+msgstr "各項目の前に表示するテキスト・HTML"
+
+#: ../includes/MslsAdmin.php:162
+msgid "Text/HTML after each item"
+msgstr "各項目の後に表示するテキスト・HTML"
+
+#: ../includes/MslsAdmin.php:163
+msgid "Add hint for available translations"
+msgstr "利用可能な言語のヒントを追加する"
+
+#: ../includes/MslsAdmin.php:164
+msgid "Hint priority"
+msgstr "ヒント優先"
+
+#: ../includes/MslsAdmin.php:180
+msgid "Activate experimental autocomplete inputs"
+msgstr "実験的オートコンプリート入力を有効化する"
+
+#: ../includes/MslsAdmin.php:181
+msgid "Custom URL for flag-images"
+msgstr "国旗画像のカスタムURL"
+
+#: ../includes/MslsAdmin.php:182
+msgid "Reference user"
+msgstr "ユーザー参照"
+
+#: ../includes/MslsAdmin.php:183
+msgid "Exclude this blog from output"
+msgstr "このブログを出力から除外する"
+
+#: ../includes/MslsAdminIcon.php:147
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "%s-ブログの翻訳を編集する"
+
+#: ../includes/MslsAdminIcon.php:154
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr "%s-ブログの新しい翻訳を作成"
+
+#: ../includes/MslsCustomFilter.php:45
+msgid "Show all blogs"
+msgstr "全てのブログを表示"
+
+#: ../includes/MslsCustomFilter.php:51
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr "%s-ブログの翻訳なし"
+
+#: ../includes/MslsLink.php:45
+msgid "Flag and description"
+msgstr "国旗と説明文"
+
+#: ../includes/MslsLinkImageOnly.php:25
+msgid "Flag only"
+msgstr "国旗のみ"
+
+#: ../includes/MslsLinkTextImage.php:25
+msgid "Description and flag"
+msgstr "説明文と国旗"
+
+#: ../includes/MslsLinkTextOnly.php:25
+msgid "Description only"
+msgstr "説明文のみ"
+
+#: ../includes/MslsMetaBox.php:204 ../includes/MslsMetaBox.php:271
+msgid ""
+"You should define at least another blog in a different language in order to "
+"have some benefit from this plugin!"
+msgstr ""
+"このプラグインの機能を使用するため、一つ以上のブログを他言語に定義することを"
+"お勧めします。"
+
+#: ../includes/MslsWidget.php:54
+msgid "No available translations found"
+msgstr "翻訳はみつかりませんでした"
+
+#: ../includes/MslsWidget.php:83
+msgid "Title"
+msgstr "タイトル"

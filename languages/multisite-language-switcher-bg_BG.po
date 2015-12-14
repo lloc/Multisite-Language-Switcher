@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Multisite Language Switcher 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/multisite-language-"
+"switcher\n"
+"POT-Creation-Date: 2015-12-08 22:43+0100\n"
+"PO-Revision-Date: 2015-12-08 22:43+0100\n"
+"Last-Translator: \n"
+"Language-Team: realloc's asylum <re@lloc.de>\n"
+"Language: bg_BG\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../MultisiteLanguageSwitcher.php:159
+#, php-format
+msgid "This post is also available in %s."
+msgstr "Този пост е наличен също в %s."
+
+#: ../MultisiteLanguageSwitcher.php:176
+#, php-format
+msgid "%s and %s"
+msgstr "%s и  %s"
+
+#: ../MultisiteLanguageSwitcher.php:284
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+"\">this post</a> if you don't know the meaning."
+msgstr ""
+"На Multisite Language Switcher се нуждае от активация на функцията multisite-"
+"feature за да работи правилно. Моля, прочетете <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+"\">този пост</a> , ако не знаете смисъла."
+
+#: ../includes/MslsAdmin.php:22 ../includes/MslsMetaBox.php:97
+#: ../includes/MslsPostTag.php:150 ../includes/MslsPostTagClassic.php:116
+#: ../includes/MslsWidget.php:20
+msgid "Multisite Language Switcher"
+msgstr "Multisite Language Switcher"
+
+#: ../includes/MslsAdmin.php:44
+#, php-format
+msgid ""
+"There are no language files installed. You can <a href=\"%s\">manually "
+"install some language files</a> or you could use a <a href=\"%s\">plugin</a> "
+"to download these files automatically."
+msgstr ""
+"Няма инсталирани езикови файлове. Можете да <a href=\"%s\">инсталирате ръчно "
+"някои езикови файлове</a> или бихте могли да използвате <a href=\"%s"
+"\">плъгин</a> за да изтеглите тези файлове автоматично."
+
+#: ../includes/MslsAdmin.php:51
+#, php-format
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
+"Multisite Language Switcher е почти готов. Вие трябва да <a href=\"%s"
+"\">завършите процеса на конфигуриране</a>."
+
+#: ../includes/MslsAdmin.php:66
+msgid "Multisite Language Switcher Options"
+msgstr "Multisite Language Switcher опции"
+
+#: ../includes/MslsAdmin.php:68
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
+msgstr ""
+"За да постигне максимална гъвкавост, трябва да конфигурирате всеки блог "
+"поотделно."
+
+#: ../includes/MslsAdmin.php:76
+msgid "Configure"
+msgstr "Конфигуриране"
+
+#: ../includes/MslsAdmin.php:76 ../includes/MslsMetaBox.php:207
+#: ../includes/MslsMetaBox.php:267
+msgid "Update"
+msgstr "Обновяване"
+
+#: ../includes/MslsAdmin.php:115
+msgid "Language Settings"
+msgstr "Езикови настройки"
+
+#: ../includes/MslsAdmin.php:116
+msgid "Main Settings"
+msgstr "Основни настройки"
+
+#: ../includes/MslsAdmin.php:117
+msgid "Advanced Settings"
+msgstr "Разширени настройки..."
+
+#: ../includes/MslsAdmin.php:132
+msgid "Blog Language"
+msgstr "Език на Блог"
+
+#: ../includes/MslsAdmin.php:133
+msgid "Admin Language"
+msgstr "Език на Администрация"
+
+#: ../includes/MslsAdmin.php:149
+msgid "Display"
+msgstr "Покажи"
+
+#: ../includes/MslsAdmin.php:150
+msgid "Sort output by description"
+msgstr "Сортирай по описание"
+
+#: ../includes/MslsAdmin.php:151
+msgid "Display link to the current language"
+msgstr "Покажи линк към текущия език"
+
+#: ../includes/MslsAdmin.php:152
+msgid "Show only links with a translation"
+msgstr "Покажи само линкове с превод"
+
+#: ../includes/MslsAdmin.php:153
+msgid "Description"
+msgstr "Описание"
+
+#: ../includes/MslsAdmin.php:154
+msgid "Text/HTML before the list"
+msgstr "Текст/HTML преди списъка"
+
+#: ../includes/MslsAdmin.php:155
+msgid "Text/HTML after the list"
+msgstr "Текст/HTML след списъка"
+
+#: ../includes/MslsAdmin.php:156
+msgid "Text/HTML before each item"
+msgstr "Текст/HTML, преди всеки елемент"
+
+#: ../includes/MslsAdmin.php:157
+msgid "Text/HTML after each item"
+msgstr "Текст/HTML след всеки елемент"
+
+#: ../includes/MslsAdmin.php:158
+msgid "Add hint for available translations"
+msgstr "Добави съвет за наличните преводи"
+
+#: ../includes/MslsAdmin.php:159
+msgid "Hint priority"
+msgstr "Приоритет на съвета"
+
+#: ../includes/MslsAdmin.php:175
+msgid "Activate experimental autocomplete inputs"
+msgstr "Активиране на експериментално автоматично въвеждане"
+
+#: ../includes/MslsAdmin.php:176
+msgid "Custom URL for flag-images"
+msgstr "Ваш URL за флаг-снимки"
+
+#: ../includes/MslsAdmin.php:177
+msgid "Reference user"
+msgstr "Референтен потребител"
+
+#: ../includes/MslsAdmin.php:178
+msgid "Exclude this blog from output"
+msgstr "Изключи този блог"
+
+#: ../includes/MslsAdminIcon.php:147
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "Редактиране на превод в %s-блог"
+
+#: ../includes/MslsAdminIcon.php:154
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr "Създаване на нов превод в %s-блог"
+
+#: ../includes/MslsCustomFilter.php:46
+msgid "Show all blogs"
+msgstr "Покажи всички Блогове"
+
+#: ../includes/MslsCustomFilter.php:52
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr "Не е преведено в %s-блог"
+
+#: ../includes/MslsLink.php:44
+msgid "Flag and description"
+msgstr "Флаг и описание"
+
+#: ../includes/MslsLinkImageOnly.php:25
+msgid "Flag only"
+msgstr "Само Флаг"
+
+#: ../includes/MslsLinkTextImage.php:25
+msgid "Description and flag"
+msgstr "Описание и флаг"
+
+#: ../includes/MslsLinkTextOnly.php:25
+msgid "Description only"
+msgstr "Само Описание"
+
+#: ../includes/MslsMetaBox.php:213 ../includes/MslsMetaBox.php:292
+msgid ""
+"You should define at least another blog in a different language in order to "
+"have some benefit from this plugin!"
+msgstr ""
+"Трябва да дефинирате поне още един блог на друг език, за да имат някаква "
+"полза от този плъгин!"
+
+#: ../includes/MslsOptions.php:327
+msgid "American English"
+msgstr ""
+
+#: ../includes/MslsWidget.php:54
+msgid "No available translations found"
+msgstr "Няма намерени налични преводи"
+
+#: ../includes/MslsWidget.php:83
+msgid "Title"
+msgstr "Заглавие"

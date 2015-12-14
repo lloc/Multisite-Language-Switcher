@@ -60,7 +60,7 @@ class MslsPlugin {
 	 */
 	public static function init_i18n_support() {
 		return load_plugin_textdomain(
-			'msls',
+			'multisite-language-switcher',
 			false,
 			dirname( MSLS_PLUGIN_PATH ) . '/languages/'
 		);

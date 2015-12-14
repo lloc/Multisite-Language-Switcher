@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MSLS 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
+"POT-Creation-Date: 2014-12-19 10:34+0100\n"
+"PO-Revision-Date: 2014-12-19 10:35+0100\n"
+"Last-Translator: \n"
+"Language-Team: Mohamed Elwan <contact@3mbsol.com>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Loco-Source-Locale: nb_NO\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-Basepath: .\n"
+"X-Loco-Parser: loco_parse_mo\n"
+"X-Loco-Target-Locale: ar_AE\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../MultisiteLanguageSwitcher.php:159
+#, php-format
+msgid "This post is also available in %s."
+msgstr "Dette innlegget er også tilgjengelig på %s."
+
+#: ../MultisiteLanguageSwitcher.php:176
+#, php-format
+msgid "%s and %s"
+msgstr "%s و %s"
+
+#: ../MultisiteLanguageSwitcher.php:281
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+"\">this post</a> if you don't know the meaning."
+msgstr ""
+"Den Multisite Language Switcher trenger aktivering av multisite-funksjonen "
+"for å jobbe skikkelig. vennligst les <a onclick=\"window.open(this.href); "
+"return false;\" href=\"http://codex.wordpress.org/Create_A_Network\">dette "
+"innlegget</a> hvis du ikke vet betydningen."
+
+#: ../includes/MslsAdmin.php:23 ../includes/MslsAdmin.php:24
+#: ../includes/MslsMetaBox.php:94 ../includes/MslsPostTag.php:150
+#: ../includes/MslsPostTagClassic.php:116 ../includes/MslsWidget.php:20
+msgid "Multisite Language Switcher"
+msgstr "Multisite Language Switcher"
+
+#: ../includes/MslsAdmin.php:49
+#, php-format
+msgid ""
+"There are no language files installed. You can <a href=\"%s\">manually "
+"install some language files</a> or you could use a <a href=\"%s\">plugin</a> "
+"to download these files automatically."
+msgstr ""
+"Det er ingen språkfiler installert. du kan <a href=\"%s\">manuelt installere "
+"noen språkfiler</a> eller du kan bruke en <a href=\"%s\">plugin</a> å laste "
+"ned disse filene automatisk."
+
+#: ../includes/MslsAdmin.php:56
+#, php-format
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
+"Multisite Language Switcher er nesten klar. du må <a href=\"%s\">fullføre "
+"konfigureringen</a>."
+
+#: ../includes/MslsAdmin.php:71
+msgid "Multisite Language Switcher Options"
+msgstr "Multisite Language Switcher alternativer"
+
+#: ../includes/MslsAdmin.php:73
+msgid ""
+"To achieve maximum flexibility, you have to configure each blog separately."
+msgstr ""
+"For å oppnå maksimal fleksibilitet, må du konfigurere hver blogg separat."
+
+#: ../includes/MslsAdmin.php:81
+msgid "Configure"
+msgstr "konfigurere"
+
+#: ../includes/MslsAdmin.php:81 ../includes/MslsMetaBox.php:204
+#: ../includes/MslsMetaBox.php:265
+msgid "Update"
+msgstr "oppdatering"
+
+#: ../includes/MslsAdmin.php:120
+msgid "Language Settings"
+msgstr "Språkinnstillinger"
+
+#: ../includes/MslsAdmin.php:121
+msgid "Main Settings"
+msgstr "Hovedinnstillinger"
+
+#: ../includes/MslsAdmin.php:122
+msgid "Advanced Settings"
+msgstr "avanserte innstillinger"
+
+#: ../includes/MslsAdmin.php:137
+msgid "Blog Language"
+msgstr "Blog språk"
+
+#: ../includes/MslsAdmin.php:138
+msgid "Admin Language"
+msgstr "admin språk"
+
+#: ../includes/MslsAdmin.php:154
+msgid "Display"
+msgstr "Vis"
+
+#: ../includes/MslsAdmin.php:155
+msgid "Sort output by description"
+msgstr "Sorter produksjonen med beskrivelse"
+
+#: ../includes/MslsAdmin.php:156
+msgid "Display link to the current language"
+msgstr "Vis kobling til gjeldende språk"
+
+#: ../includes/MslsAdmin.php:157
+msgid "Show only links with a translation"
+msgstr "Vis bare linker med en oversettelse"
+
+#: ../includes/MslsAdmin.php:158
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: ../includes/MslsAdmin.php:159
+msgid "Text/HTML before the list"
+msgstr "Text/HTML før listen"
+
+#: ../includes/MslsAdmin.php:160
+msgid "Text/HTML after the list"
+msgstr "Text/HTML etter listen"
+
+#: ../includes/MslsAdmin.php:161
+msgid "Text/HTML before each item"
+msgstr "Text/HTML før hver element"
+
+#: ../includes/MslsAdmin.php:162
+msgid "Text/HTML after each item"
+msgstr "Text/HTML etter hvert element"
+
+#: ../includes/MslsAdmin.php:163
+msgid "Add hint for available translations"
+msgstr "Legg hint etter tilgjengelige oversettelser"
+
+#: ../includes/MslsAdmin.php:164
+msgid "Hint priority"
+msgstr "hint prioritet"
+
+#: ../includes/MslsAdmin.php:180
+msgid "Activate experimental autocomplete inputs"
+msgstr "Aktiver eksperimentelle autofullfør-innganger"
+
+#: ../includes/MslsAdmin.php:181
+msgid "Custom URL for flag-images"
+msgstr "tilpassede URL for flaggbilder"
+
+#: ../includes/MslsAdmin.php:182
+msgid "Reference user"
+msgstr "referanse bruker"
+
+#: ../includes/MslsAdmin.php:183
+msgid "Exclude this blog from output"
+msgstr "Utelukke denne bloggen fra utgang"
+
+#: ../includes/MslsAdminIcon.php:147
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "Endre den i %s"
+
+#: ../includes/MslsAdminIcon.php:154
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr "Opprett en ny oversettelse i %s"
+
+#: ../includes/MslsCustomFilter.php:46
+msgid "Show all blogs"
+msgstr "Vis alle blogger"
+
+#: ../includes/MslsCustomFilter.php:52
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr "Ikke oversatt i %s"
+
+#: ../includes/MslsLink.php:44
+msgid "Flag and description"
+msgstr "Flagg og beskrivelse"
+
+#: ../includes/MslsLinkImageOnly.php:25
+msgid "Flag only"
+msgstr "Bare flagget"
+
+#: ../includes/MslsLinkTextImage.php:25
+msgid "Description and flag"
+msgstr "Beskrivelse og flagg"
+
+#: ../includes/MslsLinkTextOnly.php:25
+msgid "Description only"
+msgstr "Bare beskrivelse"
+
+#: ../includes/MslsMetaBox.php:211 ../includes/MslsMetaBox.php:290
+msgid ""
+"You should define at least another blog in a different language in order to "
+"have some benefit from this plugin!"
+msgstr ""
+"Du bør definere minst en annen blogg på et annet språk for å ha noen nytte "
+"av denne plugin!"
+
+#: ../includes/MslsOptions.php:308
+msgid "American English"
+msgstr ""
+
+#: ../includes/MslsWidget.php:54
+msgid "No available translations found"
+msgstr "Ingen tilgjengelige oversettelser funnet"
+
+#: ../includes/MslsWidget.php:83
+msgid "Title"
+msgstr "Title"
