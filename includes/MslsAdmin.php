@@ -19,7 +19,7 @@ class MslsAdmin extends MslsMain {
 		$obj = new self();
 
 		if ( current_user_can( 'manage_options' ) ) {
-			$title = __( 'Multisite Language Switcher', 'msls' );
+			$title = __( 'Multisite Language Switcher', 'multisite-language-switcher' );
 			add_options_page( $title, $title, 'manage_options', __CLASS__, array( $obj, 'render' ) );
 
 			add_action( 'admin_init',    array( $obj, 'register' ) );
@@ -63,9 +63,9 @@ class MslsAdmin extends MslsMain {
 	public function render() {
 		printf(
 			'<div class="wrap"><div class="icon32" id="icon-options-general"><br/></div><h1>%s</h1>%s<br class="clear"/><form action="options.php" method="post"><p>%s</p>',
-			__( 'Multisite Language Switcher Options', 'msls' ),
+			__( 'Multisite Language Switcher Options', 'multisite-language-switcher' ),
 			$this->subsubsub(),
-			__( 'To achieve maximum flexibility, you have to configure each blog separately.', 'msls' )
+			__( 'To achieve maximum flexibility, you have to configure each blog separately.', 'multisite-language-switcher' )
 		);
 
 		settings_fields( 'msls' );
@@ -73,7 +73,7 @@ class MslsAdmin extends MslsMain {
 
 		printf(
 			'<p class="submit"><input name="Submit" type="submit" class="button-primary" value="%s" /></p></form></div>',
-			( MslsOptions::instance()->is_empty() ? __( 'Configure', 'msls' ) : __( 'Update', 'msls' ) )
+			( MslsOptions::instance()->is_empty() ? __( 'Configure', 'multisite-language-switcher' ) : __( 'Update', 'multisite-language-switcher' ) )
 		);
 	}
 
@@ -112,9 +112,9 @@ class MslsAdmin extends MslsMain {
 	public function register() {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
 
-		add_settings_section( 'language_section', __( 'Language Settings', 'msls' ), array( $this, 'language_section' ), __CLASS__ );
-		add_settings_section( 'main_section', __( 'Main Settings', 'msls' ), array( $this, 'main_section' ), __CLASS__ );
-		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'msls' ), array( $this, 'advanced_section' ), __CLASS__ );
+		add_settings_section( 'language_section', __( 'Language Settings', 'multisite-language-switcher' ), array( $this, 'language_section' ), __CLASS__ );
+		add_settings_section( 'main_section', __( 'Main Settings', 'multisite-language-switcher' ), array( $this, 'main_section' ), __CLASS__ );
+		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'multisite-language-switcher' ), array( $this, 'advanced_section' ), __CLASS__ );
 
 		/**
 		 * Lets you add your own settings section
@@ -129,8 +129,8 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function language_section() {
-		add_settings_field( 'blog_language', __( 'Blog Language', 'msls' ), array( $this, 'blog_language' ), __CLASS__, 'language_section' );
-		add_settings_field( 'admin_language', __( 'Admin Language', 'msls' ), array( $this, 'admin_language' ), __CLASS__, 'language_section' );
+		add_settings_field( 'blog_language', __( 'Blog Language', 'multisite-language-switcher' ), array( $this, 'blog_language' ), __CLASS__, 'language_section' );
+		add_settings_field( 'admin_language', __( 'Admin Language', 'multisite-language-switcher' ), array( $this, 'admin_language' ), __CLASS__, 'language_section' );
 
 		/**
 		 * Lets you add your own field to the language section
@@ -146,17 +146,17 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function main_section() {
-		add_settings_field( 'display', __( 'Display', 'msls' ), array( $this, 'display' ), __CLASS__, 'main_section' );
-		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'msls' ), array( $this, 'sort_by_description' ), __CLASS__, 'main_section' );
-		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'msls' ), array( $this, 'output_current_blog' ), __CLASS__, 'main_section' );
-		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'msls' ), array( $this, 'only_with_translation' ), __CLASS__, 'main_section' );
-		add_settings_field( 'description', __( 'Description', 'msls' ), array( $this, 'description' ), __CLASS__, 'main_section' );
-		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'msls' ), array( $this, 'before_output' ), __CLASS__, 'main_section' );
-		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'msls' ), array( $this, 'after_output' ), __CLASS__, 'main_section' );
-		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'msls' ), array( $this, 'before_item' ), __CLASS__, 'main_section' );
-		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'msls' ), array( $this, 'after_item' ), __CLASS__, 'main_section' );
-		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'msls' ), array( $this, 'content_filter' ), __CLASS__, 'main_section' );
-		add_settings_field( 'content_priority', __( 'Hint priority', 'msls' ), array( $this, 'content_priority' ), __CLASS__, 'main_section' );
+		add_settings_field( 'display', __( 'Display', 'multisite-language-switcher' ), array( $this, 'display' ), __CLASS__, 'main_section' );
+		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'multisite-language-switcher' ), array( $this, 'sort_by_description' ), __CLASS__, 'main_section' );
+		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'multisite-language-switcher' ), array( $this, 'output_current_blog' ), __CLASS__, 'main_section' );
+		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'multisite-language-switcher' ), array( $this, 'only_with_translation' ), __CLASS__, 'main_section' );
+		add_settings_field( 'description', __( 'Description', 'multisite-language-switcher' ), array( $this, 'description' ), __CLASS__, 'main_section' );
+		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'multisite-language-switcher' ), array( $this, 'before_output' ), __CLASS__, 'main_section' );
+		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'multisite-language-switcher' ), array( $this, 'after_output' ), __CLASS__, 'main_section' );
+		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'multisite-language-switcher' ), array( $this, 'before_item' ), __CLASS__, 'main_section' );
+		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'multisite-language-switcher' ), array( $this, 'after_item' ), __CLASS__, 'main_section' );
+		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'multisite-language-switcher' ), array( $this, 'content_filter' ), __CLASS__, 'main_section' );
+		add_settings_field( 'content_priority', __( 'Hint priority', 'multisite-language-switcher' ), array( $this, 'content_priority' ), __CLASS__, 'main_section' );
 
 		/**
 		 * Lets you add your own field to the main section
@@ -172,10 +172,10 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function advanced_section() {
-		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'msls' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
-		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'msls' ), array( $this, 'image_url' ), __CLASS__, 'advanced_section' );
-		add_settings_field( 'reference_user', __( 'Reference user', 'msls' ), array( $this, 'reference_user' ), __CLASS__, 'advanced_section' );
-		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'msls' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'advanced_section' );
+		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
+		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'multisite-language-switcher' ), array( $this, 'image_url' ), __CLASS__, 'advanced_section' );
+		add_settings_field( 'reference_user', __( 'Reference user', 'multisite-language-switcher' ), array( $this, 'reference_user' ), __CLASS__, 'advanced_section' );
+		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'multisite-language-switcher' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'advanced_section' );
 
 		/**
 		 * Lets you add your own field to the advanced section

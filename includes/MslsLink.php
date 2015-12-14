@@ -41,7 +41,7 @@ class MslsLink extends MslsGetSet {
 	 * @return string
 	 */
 	public static function get_description() {
-		return __( 'Flag and description', 'msls' );
+		return __( 'Flag and description', 'multisite-language-switcher' );
 	}
 
 	/**

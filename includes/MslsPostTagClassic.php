@@ -113,7 +113,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 			printf(
 				$title_format,
-				__( 'Multisite Language Switcher', 'msls' )
+				__( 'Multisite Language Switcher', 'multisite-language-switcher' )
 			);
 
 			foreach ( $blogs as $blog ) {

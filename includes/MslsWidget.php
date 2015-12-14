@@ -17,7 +17,7 @@ class MslsWidget extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Multisite Language Switcher', 'msls' )
+			$name = __( 'Multisite Language Switcher', 'multisite-language-switcher' )
 		);
 	}
 
@@ -51,7 +51,7 @@ class MslsWidget extends WP_Widget {
 
 		$content = MslsOutput::init()->__toString();
 		if ( '' == $content ) {
-			$content = __( 'No available translations found', 'msls' );
+			$content = __( 'No available translations found', 'multisite-language-switcher' );
 		}
 
 		echo $args['before_widget'], $title, $content, $args['after_widget']; // xss ok
@@ -80,7 +80,7 @@ class MslsWidget extends WP_Widget {
 		printf(
 			'<p><label for="%1$s">%2$s:</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p>',
 			$this->get_field_id( 'title' ),
-			__( 'Title', 'msls' ),
+			__( 'Title', 'multisite-language-switcher' ),
 			$this->get_field_name( 'title' ),
 			( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' )
 		);

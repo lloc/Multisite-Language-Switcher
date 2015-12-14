@@ -94,7 +94,7 @@ class MslsMetaBox extends MslsMain {
 		foreach ( MslsPostType::instance()->get() as $post_type ) {
 			add_meta_box(
 				'msls',
-				__( 'Multisite Language Switcher', 'msls' ),
+				__( 'Multisite Language Switcher', 'multisite-language-switcher' ),
 				array(
 					$this,
 					(
@@ -204,13 +204,13 @@ class MslsMetaBox extends MslsMain {
 			printf(
 				'<ul>%s</ul><input type="submit" class="button-secondary" value="%s"/>',
 				$lis,
-				__( 'Update', 'msls' )
+				__( 'Update', 'multisite-language-switcher' )
 			);
 			$post = $temp;
 		} else {
 			printf(
 				'<p>%s</p>',
-				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'msls' )
+				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'multisite-language-switcher' )
 			);
 		}
 	}
@@ -264,7 +264,7 @@ class MslsMetaBox extends MslsMain {
 
 			$input_button = sprintf(
 				'<input type="submit" class="button-secondary clear" value="%s"/>',
-				__( 'Update', 'msls' )
+				__( 'Update', 'multisite-language-switcher' )
 			);
 
 			/**
@@ -289,7 +289,7 @@ class MslsMetaBox extends MslsMain {
 		} else {
 			printf(
 				'<p>%s</p>',
-				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'msls' )
+				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'multisite-language-switcher' )
 			);
 		}
 	}

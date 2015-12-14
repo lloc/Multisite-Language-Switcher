@@ -43,13 +43,13 @@ class MslsCustomFilter extends MslsMain {
 		$blogs = MslsBlogCollection::instance()->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';
-			echo '<option value="">' . esc_html( __( 'Show all blogs', 'msls' ) ) . '</option>';
+			echo '<option value="">' . esc_html( __( 'Show all blogs', 'multisite-language-switcher' ) ) . '</option>';
 			foreach ( $blogs as $blog ) {
 				printf(
 					'<option value="%d" %s>%s</option>',
 					$blog->userblog_id,
 					selected( $id, $blog->userblog_id, false ),
-					sprintf( __( 'Not translated in the %s-blog', 'msls' ), $blog->get_description() )
+					sprintf( __( 'Not translated in the %s-blog', 'multisite-language-switcher' ), $blog->get_description() )
 				);
 			}
 			echo '</select>';

@@ -7,7 +7,7 @@ Description: A simple but powerful plugin that will help you to manage the relat
 Version: 1.0.6
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
-Text Domain: msls 
+Text Domain: multisite-language-switcher
 */
 
 /*
@@ -157,7 +157,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
 			$obj    = new MslsOutput();
 			$links  = $obj->get( 1, true, true );
-			$output = __( 'This post is also available in %s.', 'msls' );
+			$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
 
 			if ( has_filter( 'msls_filter_string' ) ) {
 				/**
@@ -174,7 +174,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 					$output = sprintf(
 						$output,
 						sprintf(
-							__( '%s and %s', 'msls' ),
+							__( '%s and %s', 'multisite-language-switcher' ),
 							implode( ', ', $links ),
 							$last
 						)
@@ -282,7 +282,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 */
 		function plugin_needs_multisite() {
 			MslsPlugin::message_handler(
-				__( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'msls' )
+				__( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'multisite-language-switcher' )
 			);
 		}
 		add_action( 'admin_notices', 'plugin_needs_multisite' );
