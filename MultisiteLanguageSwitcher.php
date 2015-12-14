@@ -7,6 +7,7 @@ Description: A simple but powerful plugin that will help you to manage the relat
 Version: 1.0.6
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
+Text Domain: msls 
 */
 
 /*
