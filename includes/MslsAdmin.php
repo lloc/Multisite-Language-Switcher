@@ -194,7 +194,7 @@ class MslsAdmin extends MslsMain {
 			'blog_language',
 			MslsOptions::instance()->get_available_languages(),
 			get_option( 'WPLANG', 'en_US' )
-		); // xss ok
+		);
 	}
 
 	/**
@@ -206,7 +206,7 @@ class MslsAdmin extends MslsMain {
 			'admin_language',
 			$options->get_available_languages(),
 			$options->admin_language
-		); // xss ok
+		);
 	}
 
 	/**
@@ -217,7 +217,7 @@ class MslsAdmin extends MslsMain {
 			'display',
 			MslsLink::get_types_description(),
 			MslsOptions::instance()->display
-		); // xss ok
+		);
 	}
 
 	/**
@@ -230,7 +230,7 @@ class MslsAdmin extends MslsMain {
 			$users[ $user->ID ] = $user->user_nicename;
 		}
 
-		echo $this->render_select( 'reference_user', $users, MslsOptions::instance()->reference_user ); // xss ok
+		echo $this->render_select( 'reference_user', $users, MslsOptions::instance()->reference_user );
 	}
 
 	/**
@@ -240,7 +240,7 @@ class MslsAdmin extends MslsMain {
 	 * input fields in the backend instead of the traditional select-menus.
 	 */
 	public function activate_autocomplete() {
-		echo $this->render_checkbox( 'activate_autocomplete' ); // xss ok
+		echo $this->render_checkbox( 'activate_autocomplete' );
 	}
 
 	/**
@@ -250,7 +250,7 @@ class MslsAdmin extends MslsMain {
 	 * the output will be sorted by the language-code.
 	 */
 	public function sort_by_description() {
-		echo $this->render_checkbox( 'sort_by_description' ); // xss ok
+		echo $this->render_checkbox( 'sort_by_description' );
 	}
 
 	/**
@@ -260,7 +260,7 @@ class MslsAdmin extends MslsMain {
 	 * plugin will ignore this blog while this option is active.
 	 */
 	public function exclude_current_blog() {
-		echo $this->render_checkbox( 'exclude_current_blog' ); // xss ok
+		echo $this->render_checkbox( 'exclude_current_blog' );
 	}
 
 	/**
@@ -270,7 +270,7 @@ class MslsAdmin extends MslsMain {
 	 * translations.
 	 */
 	public function only_with_translation() {
-		echo $this->render_checkbox( 'only_with_translation' ); // xss ok
+		echo $this->render_checkbox( 'only_with_translation' );
 	}
 
 	/**
@@ -280,7 +280,7 @@ class MslsAdmin extends MslsMain {
 	 * link to the current blog.
 	 */
 	public function output_current_blog() {
-		echo $this->render_checkbox( 'output_current_blog' ); // xss ok
+		echo $this->render_checkbox( 'output_current_blog' );
 	}
 
 	/**
@@ -289,42 +289,42 @@ class MslsAdmin extends MslsMain {
 	 * The language will be used ff there is no description.
 	 */
 	public function description() {
-		echo $this->render_input( 'description', '40' ); // xss ok
+		echo $this->render_input( 'description', '40' );
 	}
 
 	/**
 	 * A String which will be placed before the output of the list
 	 */
 	public function before_output() {
-		echo $this->render_input( 'before_output' ); // xss ok
+		echo $this->render_input( 'before_output' );
 	}
 
 	/**
 	 * A String which will be placed after the output of the list
 	 */
 	public function after_output() {
-		echo $this->render_input( 'after_output' ); // xss ok
+		echo $this->render_input( 'after_output' );
 	}
 
 	/**
 	 * A String which will be placed before every item of the list
 	 */
 	public function before_item() {
-		echo $this->render_input( 'before_item' ); // xss ok
+		echo $this->render_input( 'before_item' );
 	}
 
 	/**
 	 * A String which will be placed after every item of the list
 	 */
 	public function after_item() {
-		echo $this->render_input( 'after_item' ); // xss ok
+		echo $this->render_input( 'after_item' );
 	}
 
 	/**
 	 * The output can be placed after the_content
 	 */
 	public function content_filter() {
-		echo $this->render_checkbox( 'content_filter' ); // xss ok
+		echo $this->render_checkbox( 'content_filter' );
 	}
 
 	/**
@@ -344,7 +344,7 @@ class MslsAdmin extends MslsMain {
 			$options->content_priority
 		);
 
-		echo $this->render_select( 'content_priority', $arr, $selected ); // xss ok
+		echo $this->render_select( 'content_priority', $arr, $selected );
 	}
 
 	/**
@@ -352,7 +352,7 @@ class MslsAdmin extends MslsMain {
 	 * @todo This is a value of a directory-url which should be more clear
 	 */
 	public function image_url() {
-		echo $this->render_input( 'image_url' ); // xss ok
+		echo $this->render_input( 'image_url' );
 	}
 
 	/**
@@ -443,7 +443,8 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function set_blog_language( array $arr ) {
 		if ( isset( $arr['blog_language'] ) ) {
-			update_option( 'WPLANG', $arr['blog_language'] );
+			$blog_language = ( 'en_US' === $arr['blog_language'] ) ? '' : $arr['blog_language'];
+			update_option( 'WPLANG', $blog_language );
 			unset( $arr['blog_language'] );
 		}
 		return $arr;
