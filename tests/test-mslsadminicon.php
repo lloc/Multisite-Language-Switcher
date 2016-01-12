@@ -19,9 +19,10 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$post_id = $this->factory->post->create( array( 'post_author' => $user_id ) );
 		wp_set_current_user( $user_id );
 
-		$obj = MslsAdminIcon::create();
+		$this->assertInstanceOf( 'MslsAdminIcon', MslsAdminIcon::create() );
 
-		$this->assertInstanceOf( 'MslsAdminIcon', $obj );
+		$obj = new MslsAdminIcon( 'post' );
+
 		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_path() );
 		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_language( 'de_DE' ) );
 		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_src( '/dev/german_flag.png' ) );

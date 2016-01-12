@@ -24,11 +24,9 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 	 * @return MslsAdminIconTaxonomy
 	 */
 	public function set_href( $id ) {
-		$this->href = get_edit_term_link(
-			$id,
-			$this->type,
-			MslsTaxonomy::instance()->get_post_type()
-		);
+		echo MslsTaxonomy::instance()->get_post_type();
+		$this->href = get_edit_term_link( $id, $this->type, MslsTaxonomy::instance()->get_post_type() );
+
 		return $this;
 	}
 
@@ -44,6 +42,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 			$args['post_type'] = $post_type;
 		}
 		$this->path = add_query_arg( $args, $this->path );
+
 		return $this;
 	}
 
