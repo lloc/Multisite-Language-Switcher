@@ -1,2 +1,4 @@
 .idea/*
-setup.sh
+composer.lock
+composer.phar
+vendor/*
