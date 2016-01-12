@@ -55,14 +55,12 @@ class MslsAdminIcon {
 		$obj  = MslsContentTypes::create();
 		$type = $obj->get_request();
 
-		if ( $obj->is_taxonomy() ) {
-			return new MslsAdminIconTaxonomy( $type );
-		}
-		return new MslsAdminIcon( $type );
+		return $obj->is_taxonomy() ? new MslsAdminIconTaxonomy( $type ) : new MslsAdminIcon( $type );
 	}
 
 	/**
 	 * Constructor
+	 *
 	 * @param string $type
 	 */
 	public function __construct( $type ) {
@@ -77,42 +75,49 @@ class MslsAdminIcon {
 	 */
 	public function set_path() {
 		if ( 'post' != $this->type ) {
-			$this->path = add_query_arg(
-				array( 'post_type' => $this->type ),
-				$this->path
-			);
+			$this->path = add_query_arg( array( 'post_type' => $this->type ), $this->path );
 		}
+
 		return $this;
 	}
 
 	/**
 	 * Set language
+	 *
 	 * @param string $language
+	 *
 	 * @return MslsAdminIcon
 	 */
 	public function set_language( $language ) {
 		$this->language = $language;
+
 		return $this;
 	}
 
 	/**
 	 * Set src
+	 *
 	 * @param string $src
+	 *
 	 * @return MslsAdminIcon
 	 */
 	public function set_src( $src ) {
 		$this->src = $src;
+
 		return $this;
 	}
 
 	/**
 	 * Set href
 	 * @uses get_edit_post_link()
+	 *
 	 * @param int $id
+	 *
 	 * @return MslsAdminIcon
 	 */
 	public function set_href( $id ) {
 		$this->href = get_edit_post_link( $id );
+
 		return $this;
 	}
 
@@ -129,11 +134,7 @@ class MslsAdminIcon {
 	 * @return string
 	 */
 	public function get_img() {
-		return sprintf(
-			'<img alt="%s" src="%s" />',
-			$this->language,
-			$this->src
-		);
+		return sprintf( '<img alt="%s" src="%s" />', $this->language, $this->src );
 	}
 
 	/**
@@ -143,24 +144,13 @@ class MslsAdminIcon {
 	public function get_a() {
 		if ( ! empty( $this->href ) ) {
 			$href  = $this->href;
-			$title = sprintf(
-				__( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
-				$this->language
-			);
-		}
-		else {
+			$title = sprintf( __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
+		} else {
 			$href  = $this->get_edit_new();
-			$title = sprintf(
-				__( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
-				$this->language
-			);
+			$title = sprintf( __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
 		}
-		return sprintf(
-			'<a title="%s" href="%s">%s</a>&nbsp;',
-			$title,
-			$href,
-			$this->get_img()
-		);
+
+		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_img() );
 	}
 
 	/**
@@ -173,12 +163,12 @@ class MslsAdminIcon {
 		/**
 		 * Returns custom url of an admin icon link
 		 * @since 0.9.9
+		 *
 		 * @param string $path
 		 */
-		return get_admin_url(
-			get_current_blog_id(),
-			(string) apply_filters( 'msls_admin_icon_get_edit_new', $this->path )
-		);
+		$path = (string) apply_filters( 'msls_admin_icon_get_edit_new', $this->path );
+
+		return get_admin_url( get_current_blog_id(), $path );
 	}
 
 }

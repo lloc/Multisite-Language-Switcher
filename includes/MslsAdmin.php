@@ -338,11 +338,7 @@ class MslsAdmin extends MslsMain {
 		$temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
 		$arr      = array_combine( $temp, $temp );
 		$options  = MslsOptions::instance();
-		$selected = (
-			empty( $options->content_priority ) ?
-			10 :
-			$options->content_priority
-		);
+		$selected = ( empty( $options->content_priority ) ? 10 : $options->content_priority );
 
 		echo $this->render_select( 'content_priority', $arr, $selected );
 	}

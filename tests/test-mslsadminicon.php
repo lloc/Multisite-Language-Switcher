@@ -15,73 +15,29 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 	 * Verify the create-method
 	 */
 	function test_create_method() {
+		$user_id = $this->factory->user->create( array( 'role' => 'editor' ) );
+		$post_id = $this->factory->post->create( array( 'post_author' => $user_id ) );
+		wp_set_current_user( $user_id );
+
 		$obj = MslsAdminIcon::create();
+
 		$this->assertInstanceOf( 'MslsAdminIcon', $obj );
-		return $obj;
-	}
-
-	/**
-	 * Verify the set_path-method
-	 * @depends test_create_method
-	 */
-	function test_set_path( $obj ) {
 		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_path() );
-	}
-
-	/**
-	 * Verify the set_language-method
-	 * @depends test_create_method
-	 */
-	function test_set_language( $obj ) {
 		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_language( 'de_DE' ) );
-	}
+		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_src( '/dev/german_flag.png' ) );
 
-	/**
-	 * Verify the set_src-method
-	 * @depends test_create_method
-	 */
-	function test_set_src( $obj ) {
-		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_src( '/dev/test' ) );
-	}
-
-	/**
-	 * Verify the set_href-method
-	 * @depends test_create_method
-	 */
-	function test_set_href( $obj ) {
-		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_href( 0 ) );
-	}
-
-	/**
-	 * Verify the __toString-method
-	 * @depends test_create_method
-	 */
-	function test___toString( $obj ) {
-		$this->assertInternalType( 'string', $obj->__toString() );
-	}
-
-	/**
-	 * Verify the get_img-method
-	 * @depends test_create_method
-	 */
-	function test_get_img( $obj ) {
-		$this->assertInternalType( 'string', $obj->get_img() );
-	}
-
-	/**
-	 * Verify the get_a-method
-	 * @depends test_create_method
-	 */
-	function test_get_a( $obj ) {
-		$this->assertInternalType( 'string', $obj->get_a() );
-	}
-
-	/**
-	 * Verify the get_edit_new-method
-	 * @depends test_create_method
-	 */
-	function test_get_edit_new( $obj ) {
+		$this->assertEquals( '<img alt="de_DE" src="/dev/german_flag.png" />', $obj->get_img() );
 		$this->assertInternalType( 'string', $obj->get_edit_new() );
+
+		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_href( $post_id ) );
+		$value = '<a title="Edit the translation in the de_DE-blog" href="http://example.org/wp-admin/post.php?post=' . $post_id . '&amp;action=edit"><img alt="de_DE" src="/dev/german_flag.png" /></a>&nbsp;';
+		$this->assertEquals( $value, $obj->get_a() );
+		$this->assertEquals( $value, $obj->__toString() );
+
+		$this->assertInstanceOf( 'MslsAdminIcon', $obj->set_href( 0 ) );
+		$value = '<a title="Create a new translation in the de_DE-blog" href="http://example.org/wp-admin/post-new.php"><img alt="de_DE" src="/dev/german_flag.png" /></a>&nbsp;';
+		$this->assertEquals( $value, $obj->get_a() );
+		$this->assertEquals( $value, $obj->__toString() );
 	}
 
 }
