@@ -7,7 +7,7 @@
 
 /**
  * Internal representation of a blog
- * @property int $userblog_id 
+ * @property int $userblog_id
  * @package Msls
  */
 class MslsBlog {
@@ -32,7 +32,8 @@ class MslsBlog {
 
 	/**
 	 * Constructor
-	 * @param StdClass $obj 
+	 *
+	 * @param StdClass $obj
 	 * @param string $description
 	 */
 	public function __construct( $obj, $description ) {
@@ -49,22 +50,24 @@ class MslsBlog {
 	 * Get a member of the StdClass-object by name
 	 *
 	 * The method return <em>null</em> if the requested member does not exists.
+	 *
 	 * @param string $key
+	 *
 	 * @return mixed|null
 	 */
 	final public function __get( $key ) {
-		return( isset( $this->obj->$key ) ? $this->obj->$key : null );
+		return ( isset( $this->obj->$key ) ? $this->obj->$key : null );
 	}
 
 	/**
 	 * Get the description stored in this object
-	 * 
+	 *
 	 * The method returns the stored language if the description is empty.
 	 * @return string
 	 */
 	public function get_description() {
-		return(
-			empty( $this->description ) ?
+		return (
+		empty( $this->description ) ?
 			$this->get_language() :
 			$this->description
 		);
@@ -72,56 +75,64 @@ class MslsBlog {
 
 	/**
 	 * Get the language stored in this object
-	 * 
-	 * This method returns the string 'us' if there is an empty value in language. 
+	 *
+	 * This method returns the string 'us' if there is an empty value in language.
 	 * @return string
 	 */
 	public function get_language() {
-		return( empty( $this->language ) ? 'us' : $this->language );
+		return ( empty( $this->language ) ? 'us' : $this->language );
 	}
 
 	/**
 	 * Get the alpha2-part of the language-code
-	 * 
+	 *
 	 * This method returns the string 'en' if the language-code contains just 'us'.
 	 * @return string
 	 */
 	public function get_alpha2() {
 		$alpha2 = substr( $this->get_language(), 0, 2 );
-		return( 'us' == $alpha2 ? 'en' : $alpha2 );
+
+		return ( 'us' == $alpha2 ? 'en' : $alpha2 );
 	}
 
 	/**
 	 * Sort objects helper
+	 *
 	 * @param string $a
 	 * @param string $b
-	 * return int
+	 *
+	 * @return integer
 	 */
 	public static function _cmp( $a, $b ) {
 		if ( $a == $b ) {
 			return 0;
 		}
-		return( $a < $b ? (-1) : 1 );
+
+		return ( $a < $b ? ( - 1 ) : 1 );
 	}
 
 	/**
 	 * Sort objects by language
+	 *
 	 * @param MslsBlog $a
 	 * @param MslsBlog $b
-	 * return int
+	 *
+	 * @return integer
 	 */
 	public static function language( MslsBlog $a, MslsBlog $b ) {
-		return( self::_cmp( $a->get_language(), $b->get_language() ) );
+		return ( self::_cmp( $a->get_language(), $b->get_language() ) );
 	}
 
 	/**
 	 * Sort objects by description
+	 *
 	 * @param MslsBlog $a
 	 * @param MslsBlog $b
-	 * return int
+	 *
+	 * @return integer
 	 */
 	public static function description( MslsBlog $a, MslsBlog $b ) {
-		return( self::_cmp( $a->get_description(), $b->get_description() ) );
+		return ( self::_cmp( $a->get_description(), $b->get_description() ) );
 	}
 
 }
