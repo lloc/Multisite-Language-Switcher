@@ -75,8 +75,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 				$description = false;
 				if ( $blog->userblog_id == $this->current_blog_id ) {
 					$description = $options->description;
-				}
-				elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
+				} elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
 					continue;
 				}
 
@@ -110,29 +109,21 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			return $description;
 		}
 
-		$temp = get_blog_option( $blog_id, 'msls' );
-		if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
-			return $temp['description'];
-		}
+		$option = get_blog_option( $blog_id, 'msls' );
 
-		return false;
+		return ( is_array( $option ) && empty( $option['exclude_current_blog'] ) ) ? $option['description'] : false;
 	}
 
 	/**
 	 * Get the list of the blogs of the reference user
-	 * The first available user of the blog will be used if there is no
-	 * refrence user configured
 	 *
 	 * @param MslsOptions $options
 	 *
 	 * @return array
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
-		$blogs = get_blogs_of_user(
-			$options->has_value( 'reference_user' ) ?
-			$options->reference_user :
-			current( $this->get_users( 'ID', 1 ) )
-		);
+		$user  = $this->get_reference_user( $options );
+		$blogs = get_blogs_of_user( $user );
 
 		/**
 		 * @todo Check if this is still useful
@@ -144,6 +135,18 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		}
 
 		return $blogs;
+	}
+
+	/**
+	 * Get reference user
+	 * The first available user of the blog will be used if there is no reference user configured
+	 *
+	 * @param MslsOptions $options
+	 *
+	 * @return integer
+	 */
+	public function get_reference_user( MslsOptions $options ) {
+		return $options->has_value( 'reference_user' ) ? $options->reference_user : current( $this->get_users( 'ID', 1 ) );
 	}
 
 	/**
@@ -169,7 +172,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 */
 	public function get_current_blog() {
 		return (
-			$this->has_current_blog() ?
+		$this->has_current_blog() ?
 			$this->objects[ $this->current_blog_id ] :
 			null
 		);
@@ -244,11 +247,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * @return array
 	 */
 	public function get_filtered( $filter = false ) {
-		if ( ! $filter && $this->current_blog_output ) {
-			return $this->get_objects();
-		}
-
-		return $this->get();
+		return ( ! $filter && $this->current_blog_output ) ? $this->get_objects() : $this->get();
 	}
 
 	/**
