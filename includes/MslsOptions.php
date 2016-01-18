@@ -224,7 +224,18 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
-		return '';
+		/**
+		 * Filter postlink url
+		 *
+		 * __METHOD__ === 'MslsOptions::get_postlink'
+		 *
+		 * @since 1.0.9
+		 *
+		 * @param string $url
+		 * @param MslsOptions $this
+		 * @param string $language
+		 */
+		return apply_filters( __METHOD__, '', $this, $language );
 	}
 
 	/**
@@ -326,6 +337,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			$this->available_languages = array(
 				'en_US' => __( 'American English', 'multisite-language-switcher' ),
 			);
+
 			foreach ( get_available_languages() as $code ) {
 				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
 			}

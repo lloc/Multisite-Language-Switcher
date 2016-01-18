@@ -62,13 +62,26 @@ class MslsOptionsQuery extends MslsOptions {
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
-		if ( $this->has_value( $language ) ) {
-			$link = $this->get_current_link();
-			if ( ! empty( $link ) ) {
-				return apply_filters( 'check_url', $link, $this );
-			}
+		$url = $this->has_value( $language ) ? $this->get_current_link() : '';
+
+		if ( has_filter( 'check_url' ) ) {
+			// TODO: needs _deprecated_filter(), use _deprecated_function() as substitute for now
+			_deprecated_function( 'check_url( $url, $this )', '1.0.9', 'MslsOption::get_postlink( $url, $this, $language )' );
+			$url = apply_filters( 'check_url', $url, $this );
 		}
-		return '';
+
+		/**
+		 * Filter postlink url
+		 *
+		 * __METHOD__ === 'MslsOptionsQuery::get_postlink'
+		 *
+		 * @since 1.0.9
+		 *
+		 * @param string $url
+		 * @param MslsOptions $this
+		 * @param string $language
+		 */
+		return apply_filters( __METHOD__, $url, $this, $language );
 	}
 
 }

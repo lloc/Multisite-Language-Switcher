@@ -29,21 +29,39 @@ class MslsOptionsPost extends MslsOptions {
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
-		if ( ! $this->has_value( $language ) ) {
-			return '';
+		$url = '';
+
+		if ( $this->has_value( $language ) ) {
+			$post = get_post( (int) $this->__get( $language ) );
+
+			if ( $post && 'publish' != $post->post_status ) {
+				if ( is_null( $this->with_front ) ) {
+					$post_object      = get_post_type_object( $post->post_type );
+					$this->with_front = ! empty( $post_object->rewrite['with_front'] );
+				}
+
+				$url = get_permalink( $post );
+			}
 		}
 
-		$post = get_post( (int) $this->__get( $language ) );
-		if ( is_null( $post ) || 'publish' != $post->post_status ) {
-			return '';
+		if ( has_filter( 'check_url' ) ) {
+			// TODO: needs _deprecated_filter(), use _deprecated_function() as substitute for now
+			_deprecated_function( 'check_url( $url, $this )', '1.0.9', 'MslsOption::get_postlink( $url, $this, $language )' );
+			$url = apply_filters( 'check_url', $url, $this );
 		}
 
-		if ( is_null( $this->with_front ) ) {
-			$post_object      = get_post_type_object( $post->post_type );
-			$this->with_front = ! empty( $post_object->rewrite['with_front'] );
-		}
-
-		return apply_filters( 'check_url', get_permalink( $post ), $this );
+		/**
+		 * Filter postlink url
+		 *
+		 * __METHOD__ === 'MslsOptionsPost::get_postlink'
+		 *
+		 * @since 1.0.9
+		 *
+		 * @param string $url
+		 * @param MslsOptions $this
+		 * @param string $language
+		 */
+		return apply_filters( __METHOD__, $url, $this, $language );
 	}
 
 	/**
