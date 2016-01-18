@@ -224,10 +224,10 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
+		$url = '';
+
 		/**
 		 * Filter postlink url
-		 *
-		 * __METHOD__ === 'MslsOptions::get_postlink'
 		 *
 		 * @since 1.0.9
 		 *
@@ -235,7 +235,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		 * @param MslsOptions $this
 		 * @param string $language
 		 */
-		return apply_filters( __METHOD__, '', $this, $language );
+		return apply_filters( 'msls_get_postlink', $url, $this, $language );
 	}
 
 	/**

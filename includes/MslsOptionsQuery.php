@@ -20,8 +20,9 @@ class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Factory method
-	 * @param int $id This parameter is unused here
-	 * @return MslsOptionsQuery
+	 *
+	 * @param int $id This parameter is unused in this method
+	 * @return MslsOptionsQuery|null
 	 */
 	public static function create( $id = 0 ) {
 		if ( is_day() ) {
@@ -65,23 +66,12 @@ class MslsOptionsQuery extends MslsOptions {
 		$url = $this->has_value( $language ) ? $this->get_current_link() : '';
 
 		if ( has_filter( 'check_url' ) ) {
-			// TODO: needs _deprecated_filter(), use _deprecated_function() as substitute for now
-			_deprecated_function( 'check_url( $url, $this )', '1.0.9', 'MslsOption::get_postlink( $url, $this, $language )' );
+			_deprecated_function( 'check_url( $url, $this )', '1.0.9', 'msls_get_postlink( $url, $this, $language )' );
 			$url = apply_filters( 'check_url', $url, $this );
 		}
 
-		/**
-		 * Filter postlink url
-		 *
-		 * __METHOD__ === 'MslsOptionsQuery::get_postlink'
-		 *
-		 * @since 1.0.9
-		 *
-		 * @param string $url
-		 * @param MslsOptions $this
-		 * @param string $language
-		 */
-		return apply_filters( __METHOD__, $url, $this, $language );
+		/** This filter is documented in /includes/MslsOptions.php */
+		return apply_filters( 'msls_get_postlink', $url, $this, $language );
 	}
 
 }
