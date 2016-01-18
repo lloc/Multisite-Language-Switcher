@@ -62,6 +62,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		if ( ! $options->is_excluded() ) {
 			/**
 			 * Returns custom filtered blogs of the blogs_collection
+			 *
 			 * @since 0.9.8
 			 *
 			 * @param array $blogs_collection
@@ -79,17 +80,10 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 					continue;
 				}
 
-				$description = apply_filters(
-					'msls_blog_collection_description',
-					$blog->userblog_id,
-					$description
-				);
+				$description = apply_filters( 'msls_blog_collection_description', $blog->userblog_id, $description );
 
 				if ( false !== $description ) {
-					$this->objects[ $blog->userblog_id ] = new MslsBlog(
-						$blog,
-						$description
-					);
+					$this->objects[ $blog->userblog_id ] = new MslsBlog( $blog, $description );
 				}
 			}
 			uasort( $this->objects, array( 'MslsBlog', $this->objects_order ) );

@@ -207,11 +207,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		 * @param string $postlink
 		 * @param string $language
 		 */
-		$postlink = (string) apply_filters(
-			'msls_options_get_permalink',
-			$this->get_postlink( $language ),
-			$language
-		);
+		$postlink = (string) apply_filters( 'msls_options_get_permalink', $this->get_postlink( $language ), $language );
 
 		return ( '' != $postlink ? $postlink : home_url( '/' ) );
 	}
@@ -220,11 +216,15 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * Get postlink
 	 *
 	 * @param string $language
+	 * @param string $url
 	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ) {
-		$url = '';
+	public function get_postlink( $language, $url = '' ) {
+		if ( has_filter( 'check_url' ) ) {
+			_deprecated_function( 'check_url( $url, $this )', '1.0.9', 'msls_get_postlink( $url, $this, $language )' );
+			$url = apply_filters( 'check_url', $url, $this );
+		}
 
 		/**
 		 * Filter postlink url

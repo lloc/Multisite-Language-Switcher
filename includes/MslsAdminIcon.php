@@ -162,6 +162,7 @@ class MslsAdminIcon {
 	public function get_edit_new() {
 		/**
 		 * Returns custom url of an admin icon link
+		 *
 		 * @since 0.9.9
 		 *
 		 * @param string $path

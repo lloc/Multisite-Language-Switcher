@@ -80,19 +80,16 @@ class MslsOptionsTax extends MslsOptions {
 	 * Get postlink
 	 *
 	 * @param string $language
+	 * @param string $url
 	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ) {
-		$url = $this->has_value( $language ) ? $this->get_term_link( (int) $this->__get( $language ) ) : '';
-
-		if ( has_filter( 'check_url' ) ) {
-			_deprecated_function( 'check_url( $url, $this )', '1.0.9', 'msls_get_postlink( $url, $this, $language )' );
-			$url = apply_filters( 'check_url', $url, $this );
+	public function get_postlink( $language, $url = '' ) {
+		if ( $this->has_value( $language ) ) {
+			$url = $this->get_term_link( (int) $this->__get( $language ) );
 		}
 
-		/** This filter is documented in /includes/MslsOptions.php */
-		return apply_filters( 'msls_get_postlink', $url, $this, $language );
+		return parent::get_postlink( $language, $url );
 	}
 
 	/**

@@ -415,15 +415,12 @@ class MslsAdmin extends MslsMain {
 		/**
 		 * Returns custom filtered input array
 		 * @since 1.0
+		 *
 		 * @param array $arr
 		 */
-		$arr = apply_filters( 'msls_admin_validate', $arr );
+		$arr = (array) apply_filters( 'msls_admin_validate', $arr );
 
-		$arr['display'] = (
-			isset( $arr['display'] ) ?
-			(int) $arr['display'] :
-			0
-		);
+		$arr['display'] = ( isset( $arr['display'] ) ? (int) $arr['display'] : 0 );
 
 		if ( isset( $arr['image_url'] ) ) {
 			$arr['image_url'] = rtrim( esc_attr( $arr['image_url'] ), '/' );
