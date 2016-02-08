@@ -235,7 +235,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		 * @param MslsOptions $this
 		 * @param string $language
 		 */
-		return apply_filters( 'msls_get_postlink', $url, $this, $language );
+		return apply_filters( 'msls_options_get_postlink', $url, $this, $language );
 	}
 
 	/**
