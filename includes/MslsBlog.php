@@ -31,6 +31,12 @@ class MslsBlog {
 	private $description;
 
 	/**
+	 * x-default
+	 * @var boolean
+	 */
+	private $x_default;
+
+	/**
 	 * Constructor
 	 *
 	 * @param StdClass $obj
@@ -38,10 +44,12 @@ class MslsBlog {
 	 */
 	public function __construct( $obj, $description ) {
 		if ( is_object( $obj ) ) {
-			$this->obj      = $obj;
-			$this->language = (string) get_blog_option(
+			$this->obj       = $obj;
+			$this->language  = (string) get_blog_option(
 				$this->obj->userblog_id, 'WPLANG'
 			);
+			$options = get_blog_option( $this->obj->userblog_id, 'msls' );
+			$this->x_default = boolval( isset( $options['x_default'] ) );
 		}
 		$this->description = (string) $description;
 	}
@@ -57,6 +65,15 @@ class MslsBlog {
 	 */
 	final public function __get( $key ) {
 		return ( isset( $this->obj->$key ) ? $this->obj->$key : null );
+	}
+
+	/**
+	 * Is blog the target for the hreflang value 'x-default'
+	 *
+	 * @return bool
+	 */
+	public function is_x_default() {
+		return $this->x_default;
 	}
 
 	/**

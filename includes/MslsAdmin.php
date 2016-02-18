@@ -150,6 +150,7 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'multisite-language-switcher' ), array( $this, 'sort_by_description' ), __CLASS__, 'main_section' );
 		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'multisite-language-switcher' ), array( $this, 'output_current_blog' ), __CLASS__, 'main_section' );
 		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'multisite-language-switcher' ), array( $this, 'only_with_translation' ), __CLASS__, 'main_section' );
+		add_settings_field( 'x_default', __( 'x-default', 'multisite-language-switcher' ), array( $this, 'x_default' ), __CLASS__, 'main_section' );
 		add_settings_field( 'description', __( 'Description', 'multisite-language-switcher' ), array( $this, 'description' ), __CLASS__, 'main_section' );
 		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'multisite-language-switcher' ), array( $this, 'before_output' ), __CLASS__, 'main_section' );
 		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'multisite-language-switcher' ), array( $this, 'after_output' ), __CLASS__, 'main_section' );
@@ -281,6 +282,13 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function output_current_blog() {
 		echo $this->render_checkbox( 'output_current_blog' );
+	}
+
+	/**
+	 * Use this blog's hreflang as x-default
+	 */
+	public function x_default() {
+		echo $this->render_checkbox( 'x_default' );
 	}
 
 	/**
