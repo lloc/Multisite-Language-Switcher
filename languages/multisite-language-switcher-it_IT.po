@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2015-12-16 11:30+0100\n"
-"PO-Revision-Date: 2015-12-16 11:30+0100\n"
+"POT-Creation-Date: 2016-02-18 17:49+0100\n"
+"PO-Revision-Date: 2016-02-18 17:49+0100\n"
 "Last-Translator: Dennis Ploetner <dennis.ploetner@drivek.com>\n"
 "Language-Team: Antonella Cucinelli <a.cucinelli@freely.de>\n"
 "Language: Italian (it_IT)\n"
@@ -32,7 +32,7 @@ msgstr "Questo post è tradotto anche in %s."
 msgid "%s and %s"
 msgstr "%s e %s"
 
-#: ../MultisiteLanguageSwitcher.php:285
+#: ../MultisiteLanguageSwitcher.php:293
 msgid ""
 "The Multisite Language Switcher needs the activation of the multisite-"
 "feature for working properly. Please read <a onclick=\"window.open(this."
@@ -78,7 +78,7 @@ msgid "Edit the translation in the %s-blog"
 msgstr "Modifica traduzione nel %s-blog"
 
 # @ msls
-#: ../includes/MslsAdminIcon.php:154
+#: ../includes/MslsAdminIcon.php:150
 #, php-format
 msgid "Create a new translation in the %s-blog"
 msgstr "Crea una nuova traduzione nel %s-blog"
@@ -167,56 +167,60 @@ msgstr "Mostra il link alla lingua in uso"
 msgid "Show only links with a translation"
 msgstr "Mostra solo link con traduzione"
 
-# @ msls
 #: ../includes/MslsAdmin.php:153
+msgid "x-default"
+msgstr "x-default"
+
+# @ msls
+#: ../includes/MslsAdmin.php:154
 msgid "Description"
 msgstr "Descrizione"
 
 # @ msls
-#: ../includes/MslsAdmin.php:154
+#: ../includes/MslsAdmin.php:155
 msgid "Text/HTML before the list"
 msgstr "Testo/HTML davanti alla lista"
 
 # @ msls
-#: ../includes/MslsAdmin.php:155
+#: ../includes/MslsAdmin.php:156
 msgid "Text/HTML after the list"
 msgstr "Testo/HTML dietro alla lista"
 
 # @ msls
-#: ../includes/MslsAdmin.php:156
+#: ../includes/MslsAdmin.php:157
 msgid "Text/HTML before each item"
 msgstr "Testo/HTML davanti a ogni elemento"
 
 # @ msls
-#: ../includes/MslsAdmin.php:157
+#: ../includes/MslsAdmin.php:158
 msgid "Text/HTML after each item"
 msgstr "Testo/HTML dietro a ogni elemento"
 
 # @ msls
-#: ../includes/MslsAdmin.php:158
+#: ../includes/MslsAdmin.php:159
 msgid "Add hint for available translations"
 msgstr "Messaggio aggiuntivo se esiste una traduzione"
 
 # @ msls
-#: ../includes/MslsAdmin.php:159
+#: ../includes/MslsAdmin.php:160
 msgid "Hint priority"
 msgstr "Priorità del messaggio"
 
-#: ../includes/MslsAdmin.php:175
+#: ../includes/MslsAdmin.php:176
 msgid "Activate experimental autocomplete inputs"
 msgstr "Rendere attivo gli autocomplete sperimentali"
 
 # @ msls
-#: ../includes/MslsAdmin.php:176
+#: ../includes/MslsAdmin.php:177
 msgid "Custom URL for flag-images"
 msgstr "URL alternativo per bandiere"
 
-#: ../includes/MslsAdmin.php:177
+#: ../includes/MslsAdmin.php:178
 msgid "Reference user"
 msgstr "Utente di referenza"
 
 # @ msls
-#: ../includes/MslsAdmin.php:178
+#: ../includes/MslsAdmin.php:179
 msgid "Exclude this blog from output"
 msgstr "Escludi questo blog dall'output"
 
@@ -239,7 +243,7 @@ msgstr ""
 msgid "Description and flag"
 msgstr "Descrizione e bandiera"
 
-#: ../includes/MslsOptions.php:327
+#: ../includes/MslsOptions.php:338
 msgid "American English"
 msgstr "Inglese americano"
 
