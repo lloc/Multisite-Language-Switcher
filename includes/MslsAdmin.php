@@ -159,6 +159,10 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'multisite-language-switcher' ), array( $this, 'content_filter' ), __CLASS__, 'main_section' );
 		add_settings_field( 'content_priority', __( 'Hint priority', 'multisite-language-switcher' ), array( $this, 'content_priority' ), __CLASS__, 'main_section' );
 
+		if ( ! is_subdomain_install() && is_main_site() ) {
+			add_settings_field( 'blog_slug', __( 'Slug for posts', 'multisite-language-switcher' ), array( $this, 'blog_slug' ), __CLASS__, 'main_section' );
+		}
+
 		/**
 		 * Lets you add your own field to the main section
 		 * @since 1.0
@@ -352,6 +356,20 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
+	 * A String which will be placed after the output of the list
+	 */
+	public function blog_slug() {
+		if ( null === MslsOptions::instance()->blog_slug ) {
+			$permalink_structure = get_option( 'permalink_structure' );
+			if ( $permalink_structure ) {
+				list( $blog_slug, ) = explode( '/%', $permalink_structure, 2 );
+				MslsOptions::instance()->blog_slug = $blog_slug;
+			}
+		}
+		echo $this->render_input( 'blog_slug' );
+	}
+
+	/**
 	 * Alternative image-url
 	 * @todo This is a value of a directory-url which should be more clear
 	 */
@@ -429,7 +447,9 @@ class MslsAdmin extends MslsMain {
 		$arr = (array) apply_filters( 'msls_admin_validate', $arr );
 
 		$arr['display'] = ( isset( $arr['display'] ) ? (int) $arr['display'] : 0 );
-
+		if ( isset( $arr['blog_slug'] ) ) {
+			$arr['blog_slug'] = untrailingslashit( $arr['blog_slug'] );
+		}
 		if ( isset( $arr['image_url'] ) ) {
 			$arr['image_url'] = rtrim( esc_attr( $arr['image_url'] ), '/' );
 		}
