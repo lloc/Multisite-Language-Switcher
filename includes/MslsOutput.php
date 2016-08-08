@@ -91,7 +91,7 @@ class MslsOutput extends MslsMain {
 			
 			switch_to_blog( $current_site );
 			$GLOBALS['_wp_switched_stack'] = array();
-                        $GLOBALS['switched']           = FALSE;
+			$GLOBALS['switched']           = FALSE;
 		}
 
 		return $arr;
