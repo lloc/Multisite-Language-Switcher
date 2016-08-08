@@ -229,16 +229,17 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * rel="alternate"-links in the html-header
 		 */
 		function msls_head() {
-			$blogs    = MslsBlogCollection::instance();
-			$mydata   = MslsOptions::create();
-			$x_default = '';
+			$blogs  = MslsBlogCollection::instance();
+			$mydata = MslsOptions::create();
+			$current_site = get_current_blog_id();
 			foreach ( $blogs->get_objects() as $blog ) {
 				$language = $blog->get_language();
 				$url      = $mydata->get_current_link();
 				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
-				$title    = $blog->get_description();
+				$title = $blog->get_description();
 
 				if ( ! $current ) {
+					
 					switch_to_blog( $blog->userblog_id );
 
 					if ( 'MslsOptions' != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
@@ -248,11 +249,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 					$url = $mydata->get_permalink( $language );
 					$title = $blog->get_description();
 
-					restore_current_blog();
-				}
-
-				if ( $blog->is_x_default() ) {
-					$x_default = sprintf( '<link rel="alternate" hreflang="x-default" href="%s" />', $url );
+					
+					
 				}
 
 				if ( has_filter( 'msls_head_hreflang' ) ) {
@@ -275,9 +273,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 				);
 				echo "\n";
 			}
-			if ( ! empty( $x_default ) ) {
-				echo $x_default, "\n";
-			}
+			
+			switch_to_blog( $current_site );
 		}
 		add_action( 'wp_head', 'msls_head' );
 
