@@ -29,8 +29,10 @@ class MslsContentTypes {
 	 */
 	public static function create() {
 		$_request = MslsPlugin::get_superglobals( array( 'taxonomy' ) );
-
-		return ( '' != $_request['taxonomy'] ) ? MslsTaxonomy::instance() : MslsPostType::instance();
+		if ( '' != $_request['taxonomy'] ) {
+			return MslsTaxonomy::instance();
+		}
+		return MslsPostType::instance();
 	}
 
 	/**
@@ -73,7 +75,11 @@ class MslsContentTypes {
 	 * @return string
 	 */
 	public function get_request() {
-		return in_array( $this->request, $this->types ) ? $this->request : '';
+		return(
+			in_array( $this->request, $this->types ) ?
+			$this->request :
+			''
+		);
 	}
 
 }

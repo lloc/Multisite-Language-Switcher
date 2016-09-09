@@ -207,7 +207,11 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		 * @param string $postlink
 		 * @param string $language
 		 */
-		$postlink = (string) apply_filters( 'msls_options_get_permalink', $this->get_postlink( $language ), $language );
+		$postlink = (string) apply_filters(
+			'msls_options_get_permalink',
+			$this->get_postlink( $language ),
+			$language
+		);
 
 		return ( '' != $postlink ? $postlink : home_url( '/' ) );
 	}
@@ -216,26 +220,11 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * Get postlink
 	 *
 	 * @param string $language
-	 * @param string $url
 	 *
 	 * @return string
 	 */
-	public function get_postlink( $language, $url = '' ) {
-		if ( has_filter( 'check_url' ) ) {
-			_deprecated_function( 'check_url( $url, $this )', '1.0.9', 'msls_get_postlink( $url, $this, $language )' );
-			$url = apply_filters( 'check_url', $url, $this );
-		}
-
-		/**
-		 * Filter postlink url
-		 *
-		 * @since 1.0.9
-		 *
-		 * @param string $url
-		 * @param MslsOptions $this
-		 * @param string $language
-		 */
-		return apply_filters( 'msls_options_get_postlink', $url, $this, $language );
+	public function get_postlink( $language ) {
+		return '';
 	}
 
 	/**
@@ -283,6 +272,20 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 */
 	public function get_url( $dir ) {
 		return esc_url( plugins_url( $dir, MSLS_PLUGIN__FILE__ ) );
+	}
+
+	/**
+	 * Returns slug for a post type
+	 * @param string $post_type
+	 *
+	 * @return string
+	 */
+	public function get_slug( $post_type ) {
+		$key = "rewrite_{$post_type}";
+
+		error_log( $key );
+		
+		return isset( $this->$key ) ? $this->$key : '';
 	}
 
 	/**
@@ -337,7 +340,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 			$this->available_languages = array(
 				'en_US' => __( 'American English', 'multisite-language-switcher' ),
 			);
-
 			foreach ( get_available_languages() as $code ) {
 				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
 			}
@@ -371,7 +373,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		}
 
 		global $wp_rewrite;
-		if ( is_subdomain_install() || ! $wp_rewrite->using_permalinks() ) {
+		if ( ! is_subdomain_install() || ! $wp_rewrite->using_permalinks() ) {
 			return $url;
 		}
 

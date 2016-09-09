@@ -62,7 +62,6 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		if ( ! $options->is_excluded() ) {
 			/**
 			 * Returns custom filtered blogs of the blogs_collection
-			 *
 			 * @since 0.9.8
 			 *
 			 * @param array $blogs_collection
@@ -76,14 +75,22 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 				$description = false;
 				if ( $blog->userblog_id == $this->current_blog_id ) {
 					$description = $options->description;
-				} elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
+				}
+				elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
 					continue;
 				}
 
-				$description = apply_filters( 'msls_blog_collection_description', $blog->userblog_id, $description );
+				$description = apply_filters(
+					'msls_blog_collection_description',
+					$blog->userblog_id,
+					$description
+				);
 
 				if ( false !== $description ) {
-					$this->objects[ $blog->userblog_id ] = new MslsBlog( $blog, $description );
+					$this->objects[ $blog->userblog_id ] = new MslsBlog(
+						$blog,
+						$description
+					);
 				}
 			}
 			uasort( $this->objects, array( 'MslsBlog', $this->objects_order ) );
@@ -103,21 +110,29 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			return $description;
 		}
 
-		$option = get_blog_option( $blog_id, 'msls' );
+		$temp = get_blog_option( $blog_id, 'msls' );
+		if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
+			return $temp['description'];
+		}
 
-		return ( is_array( $option ) && empty( $option['exclude_current_blog'] ) ) ? $option['description'] : false;
+		return false;
 	}
 
 	/**
-	 * Get the list of the blogs of the reference user
+	 * Gets the list of the blogs of the reference user
+	 * The first available user of the blog will be used if there is no
+	 * refrence user configured
 	 *
 	 * @param MslsOptions $options
 	 *
 	 * @return array
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
-		$user  = $this->get_reference_user( $options );
-		$blogs = get_blogs_of_user( $user );
+		$blogs = get_blogs_of_user(
+			$options->has_value( 'reference_user' ) ?
+			$options->reference_user :
+			current( $this->get_users( 'ID', 1 ) )
+		);
 
 		/**
 		 * @todo Check if this is still useful
@@ -132,15 +147,16 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get reference user
-	 * The first available user of the blog will be used if there is no reference user configured
-	 *
-	 * @param MslsOptions $options
-	 *
-	 * @return integer
+	 * Gets blog(s) by language
 	 */
-	public function get_reference_user( MslsOptions $options ) {
-		return $options->has_value( 'reference_user' ) ? $options->reference_user : current( $this->get_users( 'ID', 1 ) );
+	public function get_blog_id( $language ) {
+		foreach ( $this->get_objects() as $blog ) {
+			if ( $language == $blog->get_language() ) {
+				return $blog->userblog_id;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -152,7 +168,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Check if current blog is in the collection
+	 * Checks if current blog is in the collection
 	 *
 	 * @return bool
 	 */
@@ -161,20 +177,20 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get current blog as object
+	 * Gets current blog as object
 	 * @return MslsBlog|null
 	 */
 	public function get_current_blog() {
 		return (
-		$this->has_current_blog() ?
+			$this->has_current_blog() ?
 			$this->objects[ $this->current_blog_id ] :
 			null
 		);
 	}
 
 	/**
-	 * Get an array with all blog-objects
-	 * @return array
+	 * Gets an array with all blog-objects
+	 * @return MslsBlog[]
 	 */
 	public function get_objects() {
 		return $this->objects;
@@ -205,7 +221,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get only blogs where the plugin is active
+	 * Gets only blogs where the plugin is active
 	 * @return array
 	 */
 	public function get_plugin_active_blogs() {
@@ -221,7 +237,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get an array of all - but not the current - blog-objects
+	 * Gets an array of all - but not the current - blog-objects
 	 * @return array
 	 */
 	public function get() {
@@ -234,18 +250,22 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get an array with filtered blog-objects
+	 * Gets an array with filtered blog-objects
 	 *
 	 * @param bool $filter
 	 *
 	 * @return array
 	 */
 	public function get_filtered( $filter = false ) {
-		return ( ! $filter && $this->current_blog_output ) ? $this->get_objects() : $this->get();
+		if ( ! $filter && $this->current_blog_output ) {
+			return $this->get_objects();
+		}
+
+		return $this->get();
 	}
 
 	/**
-	 * Get the registered users of the current blog
+	 * Gets the registered users of the current blog
 	 *
 	 * @param string $fields
 	 * @param int|string $number
@@ -264,7 +284,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	}
 
 	/**
-	 * Get or create an instance of MslsBlogCollection
+	 * Gets or creates an instance of MslsBlogCollection
 	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
 	 * @return MslsBlogCollection
 	 */

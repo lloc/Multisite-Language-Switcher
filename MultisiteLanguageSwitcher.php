@@ -4,7 +4,7 @@
 Plugin Name: Multisite Language Switcher
 Plugin URI: http://msls.co/
 Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
-Version: 1.0.8
+Version: 1.1
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 Text Domain: multisite-language-switcher
@@ -33,7 +33,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @author Dennis Ploetner <re@lloc.de>
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '1.0.8' );
+	define( 'MSLS_PLUGIN_VERSION', '1.1' );
 
 	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
 		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
@@ -57,7 +57,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 */
 		public static function load( $class ) {
 			if ( 'Msls' == substr( $class, 0, 4 ) ) {
-				require_once dirname( __FILE__ ) . '/includes/' . $class . '.php';
+				require_once dirname( __FILE__ ) . "/includes/{$class}.php";
 			}
 		}
 
@@ -229,14 +229,13 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * rel="alternate"-links in the html-header
 		 */
 		function msls_head() {
-			$blogs    = MslsBlogCollection::instance();
-			$mydata   = MslsOptions::create();
-			$x_default = '';
+			$blogs  = MslsBlogCollection::instance();
+			$mydata = MslsOptions::create();
 			foreach ( $blogs->get_objects() as $blog ) {
 				$language = $blog->get_language();
 				$url      = $mydata->get_current_link();
 				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
-				$title    = $blog->get_description();
+				$title = $blog->get_description();
 
 				if ( ! $current ) {
 					switch_to_blog( $blog->userblog_id );
@@ -249,10 +248,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 					$title = $blog->get_description();
 
 					restore_current_blog();
-				}
-
-				if ( $blog->is_x_default() ) {
-					$x_default = sprintf( '<link rel="alternate" hreflang="x-default" href="%s" />', $url );
 				}
 
 				if ( has_filter( 'msls_head_hreflang' ) ) {
@@ -274,9 +269,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 					esc_attr( $title )
 				);
 				echo "\n";
-			}
-			if ( ! empty( $x_default ) ) {
-				echo $x_default, "\n";
 			}
 		}
 		add_action( 'wp_head', 'msls_head' );

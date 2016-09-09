@@ -4,8 +4,8 @@ Contributors: realloc
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.6.1
-Tested up to: 4.4
-Stable tag: 1.0.9
+Tested up to: 4.6
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/
 The Multisite Language Switcher enables you to manage translations of posts, pages, custom post types, categories, tags and custom taxonomies.
 
 The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition I would like to thank [Jürgen Mayer](
-http://blog.jrmayer.co/) for creating the plugin's banner.
+http://kreativewerk.com/) for creating the plugin's banner.
  
 == Installation ==
 
@@ -91,8 +91,8 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 
 == Changelog ==
 
-= 1.0.9 =
-* alternate hreflang value for 'x-default'
+= 1.1 =
+* Fix and enhancements for translated slugs
 
 = 1.0.8 =
 * Bugfix for issue [American English doesn't work with WordPress 4.3](https://wordpress.org/support/topic/american-english-doesnt-work-with-wordpress-43?replies=12#post-7791218)

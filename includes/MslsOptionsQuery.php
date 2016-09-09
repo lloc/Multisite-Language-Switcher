@@ -20,9 +20,8 @@ class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Factory method
-	 *
-	 * @param int $id This parameter is unused in this method
-	 * @return MslsOptionsQuery|null
+	 * @param int $id This parameter is unused here
+	 * @return MslsOptionsQuery
 	 */
 	public static function create( $id = 0 ) {
 		if ( is_day() ) {
@@ -60,16 +59,16 @@ class MslsOptionsQuery extends MslsOptions {
 	 * Get postlink
 	 *
 	 * @param string $language
-	 * @param string $url
-	 *
 	 * @return string
 	 */
-	public function get_postlink( $language, $url = '' ) {
+	public function get_postlink( $language ) {
 		if ( $this->has_value( $language ) ) {
-			$url = $this->get_current_link();
+			$link = $this->get_current_link();
+			if ( ! empty( $link ) ) {
+				return apply_filters( 'check_url', $link, $this );
+			}
 		}
-
-		return parent::get_postlink( $language, $url );
+		return '';
 	}
 
 }

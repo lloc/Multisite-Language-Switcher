@@ -31,12 +31,6 @@ class MslsBlog {
 	private $description;
 
 	/**
-	 * x-default
-	 * @var boolean
-	 */
-	private $x_default;
-
-	/**
 	 * Constructor
 	 *
 	 * @param StdClass $obj
@@ -44,12 +38,10 @@ class MslsBlog {
 	 */
 	public function __construct( $obj, $description ) {
 		if ( is_object( $obj ) ) {
-			$this->obj       = $obj;
-			$this->language  = (string) get_blog_option(
+			$this->obj      = $obj;
+			$this->language = (string) get_blog_option(
 				$this->obj->userblog_id, 'WPLANG'
 			);
-			$options = get_blog_option( $this->obj->userblog_id, 'msls' );
-			$this->x_default = boolval( isset( $options['x_default'] ) );
 		}
 		$this->description = (string) $description;
 	}
@@ -65,15 +57,6 @@ class MslsBlog {
 	 */
 	final public function __get( $key ) {
 		return ( isset( $this->obj->$key ) ? $this->obj->$key : null );
-	}
-
-	/**
-	 * Is blog the target for the hreflang value 'x-default'
-	 *
-	 * @return bool
-	 */
-	public function is_x_default() {
-		return $this->x_default;
 	}
 
 	/**
@@ -118,7 +101,7 @@ class MslsBlog {
 	 * @param string $a
 	 * @param string $b
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public static function _cmp( $a, $b ) {
 		if ( $a == $b ) {
@@ -134,7 +117,7 @@ class MslsBlog {
 	 * @param MslsBlog $a
 	 * @param MslsBlog $b
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public static function language( MslsBlog $a, MslsBlog $b ) {
 		return ( self::_cmp( $a->get_language(), $b->get_language() ) );
@@ -146,7 +129,7 @@ class MslsBlog {
 	 * @param MslsBlog $a
 	 * @param MslsBlog $b
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	public static function description( MslsBlog $a, MslsBlog $b ) {
 		return ( self::_cmp( $a->get_description(), $b->get_description() ) );

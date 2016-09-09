@@ -12,6 +12,18 @@
 class MslsAdmin extends MslsMain {
 
 	/**
+	 * @var MslsOptions $options
+	 */
+	protected $options;
+
+	/**
+	 * MslsAdmin constructor.
+	 */
+	public function __construct() {
+		$this->options = MslsOptions::instance();
+	}
+
+	/**
 	 * Init
 	 * @return MslsAdmin
 	 */
@@ -22,7 +34,7 @@ class MslsAdmin extends MslsMain {
 			$title = __( 'Multisite Language Switcher', 'multisite-language-switcher' );
 			add_options_page( $title, $title, 'manage_options', __CLASS__, array( $obj, 'render' ) );
 
-			add_action( 'admin_init',    array( $obj, 'register' ) );
+			add_action( 'admin_init', array( $obj, 'register' ) );
 			add_action( 'admin_notices', array( $obj, 'has_problems' ) );
 
 			add_filter( 'msls_admin_validate', array( $obj, 'set_blog_language' ) );
@@ -32,12 +44,34 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
+	 * You can use every method of the decorated object
+	 *
+	 * @param string $method
+	 * @param mixed $args
+	 *
+	 * @return mixed
+	 */
+	public function __call( $method, $args ) {
+		$parts = explode( '_', $method, 2 );
+		if ( 2 == count( $parts ) ) {
+			switch( $parts[0] ) {
+				case 'rewrite':
+					return $this->render_rewrite( $parts[1] );
+					break;
+				case 'text':
+					echo $this->render_input( $parts[1] );
+					break;
+			}
+		}
+	}
+
+	/**
 	 * There is something wrong? Here comes the message...
 	 * @return bool
 	 */
 	public function has_problems() {
 		$message = '';
-		$options = MslsOptions::instance();
+		$options = $this->options;
 
 		if ( 1 == count( $options->get_available_languages() ) ) {
 			$message = sprintf(
@@ -45,8 +79,7 @@ class MslsAdmin extends MslsMain {
 				esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
 				esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
 			);
-		}
-		elseif ( $options->is_empty() ) {
+		} elseif ( $options->is_empty() ) {
 			$message = sprintf(
 				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
 				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
@@ -73,7 +106,7 @@ class MslsAdmin extends MslsMain {
 
 		printf(
 			'<p class="submit"><input name="Submit" type="submit" class="button-primary" value="%s" /></p></form></div>',
-			( MslsOptions::instance()->is_empty() ? __( 'Configure', 'multisite-language-switcher' ) : __( 'Update', 'multisite-language-switcher' ) )
+			( $this->options->is_empty() ? __( 'Configure', 'multisite-language-switcher' ) : __( 'Update', 'multisite-language-switcher' ) )
 		);
 	}
 
@@ -95,8 +128,8 @@ class MslsAdmin extends MslsMain {
 			);
 		}
 
-		return(
-			empty( $arr ) ?
+		return (
+		empty( $arr ) ?
 			'' :
 			sprintf(
 				'<ul class="subsubsub"><li>%s</li></ul>',
@@ -112,13 +145,31 @@ class MslsAdmin extends MslsMain {
 	public function register() {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
 
-		add_settings_section( 'language_section', __( 'Language Settings', 'multisite-language-switcher' ), array( $this, 'language_section' ), __CLASS__ );
-		add_settings_section( 'main_section', __( 'Main Settings', 'multisite-language-switcher' ), array( $this, 'main_section' ), __CLASS__ );
-		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'multisite-language-switcher' ), array( $this, 'advanced_section' ), __CLASS__ );
+		add_settings_section( 'language_section', __( 'Language Settings', 'multisite-language-switcher' ), array(
+			$this,
+			'language_section'
+		), __CLASS__ );
+		add_settings_section( 'main_section', __( 'Main Settings', 'multisite-language-switcher' ), array(
+			$this,
+			'main_section'
+		), __CLASS__ );
+		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'multisite-language-switcher' ), array(
+			$this,
+			'advanced_section'
+		), __CLASS__ );
+
+		global $wp_rewrite;
+		if ( $wp_rewrite->using_permalinks() ) {
+			add_settings_section( 'rewrites_section', __( 'Rewrites Settings', 'multisite-language-switcher' ), array(
+				$this,
+				'rewrites_section'
+			), __CLASS__ );
+		}
 
 		/**
 		 * Lets you add your own settings section
 		 * @since 1.0
+		 *
 		 * @param string $page
 		 */
 		do_action( 'msls_admin_register', __CLASS__ );
@@ -129,12 +180,19 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function language_section() {
-		add_settings_field( 'blog_language', __( 'Blog Language', 'multisite-language-switcher' ), array( $this, 'blog_language' ), __CLASS__, 'language_section' );
-		add_settings_field( 'admin_language', __( 'Admin Language', 'multisite-language-switcher' ), array( $this, 'admin_language' ), __CLASS__, 'language_section' );
+		add_settings_field( 'blog_language', __( 'Blog Language', 'multisite-language-switcher' ), array(
+			$this,
+			'blog_language'
+		), __CLASS__, 'language_section' );
+		add_settings_field( 'admin_language', __( 'Admin Language', 'multisite-language-switcher' ), array(
+			$this,
+			'admin_language'
+		), __CLASS__, 'language_section' );
 
 		/**
 		 * Lets you add your own field to the language section
 		 * @since 1.0
+		 *
 		 * @param string $page
 		 * @param string $section
 		 */
@@ -146,26 +204,55 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function main_section() {
-		add_settings_field( 'display', __( 'Display', 'multisite-language-switcher' ), array( $this, 'display' ), __CLASS__, 'main_section' );
-		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'multisite-language-switcher' ), array( $this, 'sort_by_description' ), __CLASS__, 'main_section' );
-		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'multisite-language-switcher' ), array( $this, 'output_current_blog' ), __CLASS__, 'main_section' );
-		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'multisite-language-switcher' ), array( $this, 'only_with_translation' ), __CLASS__, 'main_section' );
-		add_settings_field( 'x_default', __( 'x-default', 'multisite-language-switcher' ), array( $this, 'x_default' ), __CLASS__, 'main_section' );
-		add_settings_field( 'description', __( 'Description', 'multisite-language-switcher' ), array( $this, 'description' ), __CLASS__, 'main_section' );
-		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'multisite-language-switcher' ), array( $this, 'before_output' ), __CLASS__, 'main_section' );
-		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'multisite-language-switcher' ), array( $this, 'after_output' ), __CLASS__, 'main_section' );
-		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'multisite-language-switcher' ), array( $this, 'before_item' ), __CLASS__, 'main_section' );
-		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'multisite-language-switcher' ), array( $this, 'after_item' ), __CLASS__, 'main_section' );
-		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'multisite-language-switcher' ), array( $this, 'content_filter' ), __CLASS__, 'main_section' );
-		add_settings_field( 'content_priority', __( 'Hint priority', 'multisite-language-switcher' ), array( $this, 'content_priority' ), __CLASS__, 'main_section' );
-
-		if ( ! is_subdomain_install() && is_main_site() ) {
-			add_settings_field( 'blog_slug', __( 'Slug for posts', 'multisite-language-switcher' ), array( $this, 'blog_slug' ), __CLASS__, 'main_section' );
-		}
+		add_settings_field( 'display', __( 'Display', 'multisite-language-switcher' ), array(
+			$this,
+			'display'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'multisite-language-switcher' ), array(
+			$this,
+			'sort_by_description'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'multisite-language-switcher' ), array(
+			$this,
+			'output_current_blog'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'multisite-language-switcher' ), array(
+			$this,
+			'only_with_translation'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'description', __( 'Description', 'multisite-language-switcher' ), array(
+			$this,
+			'description'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'multisite-language-switcher' ), array(
+			$this,
+			'text_before_output'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'multisite-language-switcher' ), array(
+			$this,
+			'text_after_output'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'multisite-language-switcher' ), array(
+			$this,
+			'text_before_item'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'multisite-language-switcher' ), array(
+			$this,
+			'text_after_item'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'multisite-language-switcher' ), array(
+			$this,
+			'content_filter'
+		), __CLASS__, 'main_section' );
+		add_settings_field( 'content_priority', __( 'Hint priority', 'multisite-language-switcher' ), array(
+			$this,
+			'content_priority'
+		), __CLASS__, 'main_section' );
 
 		/**
 		 * Lets you add your own field to the main section
 		 * @since 1.0
+		 *
 		 * @param string $page
 		 * @param string $section
 		 */
@@ -177,18 +264,51 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function advanced_section() {
-		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' ), array( $this, 'activate_autocomplete' ), __CLASS__, 'advanced_section' );
-		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'multisite-language-switcher' ), array( $this, 'image_url' ), __CLASS__, 'advanced_section' );
-		add_settings_field( 'reference_user', __( 'Reference user', 'multisite-language-switcher' ), array( $this, 'reference_user' ), __CLASS__, 'advanced_section' );
-		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'multisite-language-switcher' ), array( $this, 'exclude_current_blog' ), __CLASS__, 'advanced_section' );
+		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' ), array(
+			$this,
+			'activate_autocomplete'
+		), __CLASS__, 'advanced_section' );
+		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'multisite-language-switcher' ), array(
+			$this,
+			'text_image_url'
+		), __CLASS__, 'advanced_section' );
+		add_settings_field( 'reference_user', __( 'Reference user', 'multisite-language-switcher' ), array(
+			$this,
+			'reference_user'
+		), __CLASS__, 'advanced_section' );
+		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'multisite-language-switcher' ), array(
+			$this,
+			'exclude_current_blog'
+		), __CLASS__, 'advanced_section' );
 
 		/**
 		 * Lets you add your own field to the advanced section
 		 * @since 1.0
+		 *
 		 * @param string $page
 		 * @param string $section
 		 */
 		do_action( 'msls_admin_advanced_section', __CLASS__, 'advanced_section' );
+	}
+
+	/**
+	 * Register the fields in the rewrites_section
+	 * @since 1.1
+	 * @codeCoverageIgnore
+	 */
+	public function rewrites_section() {
+		foreach ( get_post_types( array( 'public' => true ), 'objects' ) as $key => $object ) {
+			$title = sprintf( __( '%s Slug', 'multisite-language-switcher' ), $object->label );
+			add_settings_field( "rewrite_{$key}", $title, array( $this, "rewrite_{$key}" ), __CLASS__, 'rewrites_section' );
+		}
+
+		/**
+		 * Lets you add your own field to the rewrites section
+		 *
+		 * @param string $page
+		 * @param string $section
+		 */
+		do_action( 'msls_admin_rewrites_section', __CLASS__, 'rewrites_section' );
 	}
 
 	/**
@@ -197,7 +317,7 @@ class MslsAdmin extends MslsMain {
 	public function blog_language() {
 		echo $this->render_select(
 			'blog_language',
-			MslsOptions::instance()->get_available_languages(),
+			$this->options->get_available_languages(),
 			get_option( 'WPLANG', 'en_US' )
 		);
 	}
@@ -206,7 +326,7 @@ class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'admin_language'
 	 */
 	public function admin_language() {
-		$options = MslsOptions::instance();
+		$options = $this->options;
 		echo $this->render_select(
 			'admin_language',
 			$options->get_available_languages(),
@@ -221,7 +341,7 @@ class MslsAdmin extends MslsMain {
 		echo $this->render_select(
 			'display',
 			MslsLink::get_types_description(),
-			MslsOptions::instance()->display
+			$this->options->display
 		);
 	}
 
@@ -235,11 +355,11 @@ class MslsAdmin extends MslsMain {
 			$users[ $user->ID ] = $user->user_nicename;
 		}
 
-		echo $this->render_select( 'reference_user', $users, MslsOptions::instance()->reference_user );
+		echo $this->render_select( 'reference_user', $users, $this->options->reference_user );
 	}
 
 	/**
-	 * Activate autocomplete
+	 render
 	 *
 	 * You can decide if you want to activate the experimental autocomplete
 	 * input fields in the backend instead of the traditional select-menus.
@@ -289,47 +409,12 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
-	 * Use this blog's hreflang as x-default
-	 */
-	public function x_default() {
-		echo $this->render_checkbox( 'x_default' );
-	}
-
-	/**
 	 * The description for the current blog
 	 *
 	 * The language will be used ff there is no description.
 	 */
 	public function description() {
 		echo $this->render_input( 'description', '40' );
-	}
-
-	/**
-	 * A String which will be placed before the output of the list
-	 */
-	public function before_output() {
-		echo $this->render_input( 'before_output' );
-	}
-
-	/**
-	 * A String which will be placed after the output of the list
-	 */
-	public function after_output() {
-		echo $this->render_input( 'after_output' );
-	}
-
-	/**
-	 * A String which will be placed before every item of the list
-	 */
-	public function before_item() {
-		echo $this->render_input( 'before_item' );
-	}
-
-	/**
-	 * A String which will be placed after every item of the list
-	 */
-	public function after_item() {
-		echo $this->render_input( 'after_item' );
 	}
 
 	/**
@@ -347,70 +432,79 @@ class MslsAdmin extends MslsMain {
 	 * for the output
 	 */
 	public function content_priority() {
-		$temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
-		$arr      = array_combine( $temp, $temp );
-		$options  = MslsOptions::instance();
-		$selected = ( empty( $options->content_priority ) ? 10 : $options->content_priority );
+		$temp = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
+		$arr = array_combine( $temp, $temp );
+		$selected = (
+		empty( $this->options->content_priority ) ?
+			10 :
+			$this->options->content_priority
+		);
 
 		echo $this->render_select( 'content_priority', $arr, $selected );
 	}
 
 	/**
-	 * A String which will be placed after the output of the list
+	 * Rewrites slugs for registered post types
+	 *
+	 * @param string $key
 	 */
-	public function blog_slug() {
-		if ( null === MslsOptions::instance()->blog_slug ) {
-			$permalink_structure = get_option( 'permalink_structure' );
-			if ( $permalink_structure ) {
-				list( $blog_slug, ) = explode( '/%', $permalink_structure, 2 );
-				MslsOptions::instance()->blog_slug = $blog_slug;
-			}
-		}
-		echo $this->render_input( 'blog_slug' );
-	}
+	public function render_rewrite( $key ) {
+		$rewrite = get_post_type_object( $key )->rewrite;
 
-	/**
-	 * Alternative image-url
-	 * @todo This is a value of a directory-url which should be more clear
-	 */
-	public function image_url() {
-		echo $this->render_input( 'image_url' );
+		$value = '';
+		if ( true === $rewrite ) {
+			$value = $key;
+		}
+		elseif ( ! empty( $rewrite['slug'] ) ) {
+			$value = $rewrite['slug'];
+		}
+
+		echo $this->render_input( "rewrite_{$key}", 30, $value, true );
 	}
 
 	/**
 	 * Render form-element (checkbox)
+	 *
 	 * @param string $key Name and ID of the form-element
+	 *
 	 * @return string
 	 */
 	public function render_checkbox( $key ) {
 		return sprintf(
 			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
 			$key,
-			checked( 1, MslsOptions::instance()->$key, false )
+			checked( 1, $this->options->$key, false )
 		);
 	}
 
 	/**
 	 * Render form-element (text-input)
+	 *
 	 * @param string $key Name and ID of the form-element
 	 * @param string $size Size-attribute of the input-field
+	 * @param string $default
+	 * @param bool $readonly
+	 *
 	 * @return string
 	 */
-	public function render_input( $key, $size = '30' ) {
+	public function render_input( $key, $size = '30', $default = '', $readonly = false ) {
 		return sprintf(
-			'<input id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"/>',
+			'<input id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"%4$s/>',
 			$key,
-			esc_attr( MslsOptions::instance()->$key ),
-			$size
+			esc_attr( ! empty( $this->options->$key ) ? $this->options->$key : $default ),
+			$size,
+			$readonly ? ' readonly="readonly"' : ''
 		);
 	}
 
 	/**
 	 * Render form-element (select)
 	 * @uses selected
+	 *
 	 * @param string $key Name and ID of the form-element
 	 * @param array $arr Options as associative array
 	 * @param string $selected Values which should be selected
+	 *
 	 * @return string
 	 */
 	public function render_select( $key, array $arr, $selected = '' ) {
@@ -434,7 +528,9 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Validates input before saving it
+	 *
 	 * @param array $arr Values of the submitted form
+	 *
 	 * @return array Validated input
 	 */
 	public function validate( array $arr ) {
@@ -444,12 +540,14 @@ class MslsAdmin extends MslsMain {
 		 *
 		 * @param array $arr
 		 */
-		$arr = (array) apply_filters( 'msls_admin_validate', $arr );
+		$arr = apply_filters( 'msls_admin_validate', $arr );
 
-		$arr['display'] = ( isset( $arr['display'] ) ? (int) $arr['display'] : 0 );
-		if ( isset( $arr['blog_slug'] ) ) {
-			$arr['blog_slug'] = untrailingslashit( $arr['blog_slug'] );
-		}
+		$arr['display'] = (
+		isset( $arr['display'] ) ?
+			(int) $arr['display'] :
+			0
+		);
+
 		if ( isset( $arr['image_url'] ) ) {
 			$arr['image_url'] = rtrim( esc_attr( $arr['image_url'] ), '/' );
 		}
@@ -459,7 +557,9 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Filter which sets the global blog language
+	 *
 	 * @param array $arr
+	 *
 	 * @return array
 	 */
 	public function set_blog_language( array $arr ) {
@@ -468,6 +568,7 @@ class MslsAdmin extends MslsMain {
 			update_option( 'WPLANG', $blog_language );
 			unset( $arr['blog_language'] );
 		}
+
 		return $arr;
 	}
 

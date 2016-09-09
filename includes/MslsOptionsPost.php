@@ -25,27 +25,32 @@ class MslsOptionsPost extends MslsOptions {
 
 	/**
 	 * Get postlink
-	 *
 	 * @param string $language
-	 * @param string $url
-	 *
 	 * @return string
 	 */
-	public function get_postlink( $language, $url = '' ) {
-		if ( $this->has_value( $language ) ) {
-			$post = get_post( (int) $this->__get( $language ) );
-
-			if ( $post && 'publish' != $post->post_status ) {
-				if ( is_null( $this->with_front ) ) {
-					$post_object      = get_post_type_object( $post->post_type );
-					$this->with_front = ! empty( $post_object->rewrite['with_front'] );
-				}
-
-				$url = get_permalink( $post );
-			}
+	public function get_postlink( $language ) {
+		if ( ! $this->has_value( $language ) ) {
+			return '';
 		}
 
-		return parent::get_postlink( $language, $url );
+		$post = get_post( (int) $this->__get( $language ) );
+		if ( is_null( $post ) || 'publish' != $post->post_status ) {
+			return '';
+		}
+
+		if ( is_null( $this->with_front ) ) {
+			$post_object      = get_post_type_object( $post->post_type );
+			$this->with_front = ! empty( $post_object->rewrite['with_front'] );
+		}
+
+		global $current_site;
+		$blog_id = MslsBlogCollection::instance()->get_blog_id( $language );
+		if ( $current_site->blog_id != $blog_id ) {
+			$option = get_blog_option( $blog_id, 'msls' );
+			//error_log( print_r( $option, true ) );
+		}
+
+		return apply_filters( 'check_url', get_permalink( $post ), $this );
 	}
 
 	/**
