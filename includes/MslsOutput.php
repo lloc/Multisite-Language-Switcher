@@ -41,7 +41,9 @@ class MslsOutput extends MslsMain {
 		if ( $blogs ) {
 			$mydata = MslsOptions::create();
 			$link   = MslsLink::create( $display );
-
+                        
+                        $current_site = get_current_blog_id();
+                        
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
 				$url      = $mydata->get_current_link();
@@ -61,8 +63,6 @@ class MslsOutput extends MslsMain {
 						$url       = $mydata->get_permalink( $language );
 						$link->txt = $blog->get_description();
 					}
-
-					restore_current_blog();
 				}
 
 				$link->src = MslsOptions::instance()->get_flag_url( $language );
@@ -88,6 +88,10 @@ class MslsOutput extends MslsMain {
 					);
 				}
 			}
+			
+			switch_to_blog( $current_site );
+			$GLOBALS['_wp_switched_stack'] = array();
+			$GLOBALS['switched']           = FALSE;
 		}
 
 		return $arr;
