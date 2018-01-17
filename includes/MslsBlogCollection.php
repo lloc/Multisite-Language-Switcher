@@ -297,4 +297,22 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		return $obj;
 	}
 
+	/**
+	 * Returns a specific blog language.
+	 *
+	 * @param int $blog_id
+	 *
+	 * @return string
+	 */
+	public static function get_blog_language( $blog_id = null ) {
+		if ( null === $blog_id ) {
+			$blog_id = get_current_blog_id();
+		}
+
+		$language = (string) get_blog_option(
+			$blog_id, 'WPLANG'
+		);
+
+		return '' !== $language ? $language : 'en_US';
+	}
 }
