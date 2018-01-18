@@ -150,13 +150,16 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * Gets blog(s) by language
 	 */
 	public function get_blog_id( $language ) {
+		$blog_id = null;
+
 		foreach ( $this->get_objects() as $blog ) {
 			if ( $language == $blog->get_language() ) {
-				return $blog->userblog_id;
+				$blog_id =  $blog->userblog_id;
+				break;
 			}
 		}
 
-		return null;
+		return apply_filters( 'msls_blog_collection_get_blog_id', $blog_id, $language );
 	}
 
 	/**
