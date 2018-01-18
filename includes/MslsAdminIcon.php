@@ -18,6 +18,12 @@ class MslsAdminIcon {
 	protected $language;
 
 	/**
+	 * Origin Language
+	 * @var string
+	 */
+	public $origin_language;
+
+	/**
 	 * Source
 	 * @var string
 	 */
@@ -48,6 +54,12 @@ class MslsAdminIcon {
 	protected $path = 'post-new.php';
 
 	/**
+	 * The current object ID
+	 * @var int
+	 */
+	protected $id;
+
+	/**
 	 * Factory method
 	 * @return MslsAdminIcon
 	 */
@@ -58,6 +70,7 @@ class MslsAdminIcon {
 		if ( $obj->is_taxonomy() ) {
 			return new MslsAdminIconTaxonomy( $type );
 		}
+
 		return new MslsAdminIcon( $type );
 	}
 
@@ -82,6 +95,7 @@ class MslsAdminIcon {
 				$this->path
 			);
 		}
+
 		return $this;
 	}
 
@@ -170,6 +184,15 @@ class MslsAdminIcon {
 	 * @return string
 	 */
 	public function get_edit_new() {
+		$path = $this->path;
+
+		if ( null !== $this->id && null !== $this->origin_language ) {
+			$path = add_query_arg(
+				array( 'msls_id' => $this->id, 'msls_lang' => $this->origin_language ),
+				$this->path
+			);
+		}
+
 		/**
 		 * Returns custom url of an admin icon link
 		 * @since 0.9.9
@@ -177,8 +200,24 @@ class MslsAdminIcon {
 		 */
 		return get_admin_url(
 			get_current_blog_id(),
-			(string) apply_filters( 'msls_admin_icon_get_edit_new', $this->path )
+			(string) apply_filters( 'msls_admin_icon_get_edit_new', $path )
 		);
 	}
 
+	/**
+	 * Sets the id of the object this icon is for.
+	 * @param int $id
+	 */
+	public function set_id( $id ) {
+		$this->id = $id;
+		return $this;
+	}
+
+	/**
+	 * Sets the origin language for this icon.
+	 * @param string $origin_language
+	 */
+	public function set_origin_language( $origin_language ) {
+		$this->origin_language = $origin_language;
+	}
 }

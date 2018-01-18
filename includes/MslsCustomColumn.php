@@ -46,6 +46,11 @@ class MslsCustomColumn extends MslsMain {
 				$icon = new MslsAdminIcon( null );
 				$icon->set_language( $language )->set_src( $flag_url );
 
+				if ( $post_id = get_the_ID() ) {
+					$icon->set_id( $post_id );
+					$icon->set_origin_language( 'it_IT' );
+				}
+
 				$arr[] = $icon->get_img();
 			}
 			$columns['mslscol'] = implode( '&nbsp;', $arr );
@@ -61,6 +66,7 @@ class MslsCustomColumn extends MslsMain {
 	public function td( $column_name, $item_id ) {
 		if ( 'mslscol' == $column_name ) {
 			$blogs = MslsBlogCollection::instance()->get();
+			$origin_language = MslsBlogCollection::get_blog_language();
 			if ( $blogs ) {
 				$mydata = MslsOptions::create( $item_id );
 				foreach ( $blogs as $blog ) {
@@ -70,6 +76,11 @@ class MslsCustomColumn extends MslsMain {
 
 					$icon = MslsAdminIcon::create();
 					$icon->set_language( $language );
+
+					if ( $post_id = get_the_ID() ) {
+						$icon->set_id( $post_id );
+						$icon->set_origin_language( $origin_language );
+					}
 
 					if ( $mydata->has_value( $language ) ) {
 						$flag_url = MslsOptions::instance()->get_url( 'images/link_edit.png' );

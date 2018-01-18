@@ -39,9 +39,7 @@ class MslsBlog {
 	public function __construct( $obj, $description ) {
 		if ( is_object( $obj ) ) {
 			$this->obj      = $obj;
-			$this->language = (string) get_blog_option(
-				$this->obj->userblog_id, 'WPLANG'
-			);
+			$this->language = MslsBlogCollection::get_blog_language( $this->obj->userblog_id );
 		}
 		$this->description = (string) $description;
 	}

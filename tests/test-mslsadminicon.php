@@ -41,4 +41,23 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertEquals( $value, $obj->__toString() );
 	}
 
+	/**
+	 * Test path is built using id and language if available
+	 */
+	public function test_path_is_built_using_id_and_language_if_available() {
+		$post_id = $this->factory->post->create();
+		$obj     = new MslsAdminIcon( 'post' );
+		$lang    = 'de_DE';
+		$obj->set_origin_language( $lang );
+		$obj->set_id( $post_id );
+
+		$a = $obj->get_edit_new();
+
+		$query = parse_url( $a, PHP_URL_QUERY );
+		parse_str( $query, $query_frags );
+		$this->assertArrayHasKey( 'msls_id', $query_frags );
+		$this->assertEquals( $post_id, $query_frags['msls_id'] );
+		$this->assertArrayHasKey( 'msls_lang', $query_frags );
+		$this->assertEquals( $lang, $query_frags['msls_lang'] );
+	}
 }

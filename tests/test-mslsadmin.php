@@ -130,42 +130,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	/**
-	 * Verify the before_output-method
-	 * @depends test_init_method
-	 */
-	function test_before_output( $obj ) {
-		$this->expectOutputString( '<input id="before_output" name="msls[before_output]" value="" size="30"/>' );
-		$obj->before_output();
-	}
-
-	/**
-	 * Verify the after_output-method
-	 * @depends test_init_method
-	 */
-	function test_after_output( $obj ) {
-		$this->expectOutputString( '<input id="after_output" name="msls[after_output]" value="" size="30"/>' );
-		$obj->after_output();
-	}
-
-	/**
-	 * Verify the before_item-method
-	 * @depends test_init_method
-	 */
-	function test_before_item( $obj ) {
-		$this->expectOutputString( '<input id="before_item" name="msls[before_item]" value="" size="30"/>' );
-		$obj->before_item();
-	}
-
-	/**
-	 * Verify the after_item-method
-	 * @depends test_init_method
-	 */
-	function test_after_item( $obj ) {
-		$this->expectOutputString( '<input id="after_item" name="msls[after_item]" value="" size="30"/>' );
-		$obj->after_item();
-	}
-
-	/**
 	 * Verify the content_filter-method
 	 * @depends test_init_method
 	 */
@@ -181,15 +145,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_content_priority( $obj ) {
 		$this->expectOutputRegex( '/^<select id="content_priority" name="msls\[content_priority\]">.*$/' );
 		$obj->content_priority();
-	}
-
-	/**
-	 * Verify the image_url-method
-	 * @depends test_init_method
-	 */
-	function test_image_url( $obj ) {
-		$this->expectOutputString( '<input id="image_url" name="msls[image_url]" value="" size="30"/>' );
-		$obj->image_url();
 	}
 
 	/**

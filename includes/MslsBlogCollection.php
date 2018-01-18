@@ -150,13 +150,16 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 	 * Gets blog(s) by language
 	 */
 	public function get_blog_id( $language ) {
+		$blog_id = null;
+
 		foreach ( $this->get_objects() as $blog ) {
 			if ( $language == $blog->get_language() ) {
-				return $blog->userblog_id;
+				$blog_id =  $blog->userblog_id;
+				break;
 			}
 		}
 
-		return null;
+		return apply_filters( 'msls_blog_collection_get_blog_id', $blog_id, $language );
 	}
 
 	/**
@@ -297,4 +300,22 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		return $obj;
 	}
 
+	/**
+	 * Returns a specific blog language.
+	 *
+	 * @param int $blog_id
+	 *
+	 * @return string
+	 */
+	public static function get_blog_language( $blog_id = null ) {
+		if ( null === $blog_id ) {
+			$blog_id = get_current_blog_id();
+		}
+
+		$language = (string) get_blog_option(
+			$blog_id, 'WPLANG'
+		);
+
+		return '' !== $language ? $language : 'en_US';
+	}
 }

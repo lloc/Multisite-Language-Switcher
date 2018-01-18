@@ -110,4 +110,28 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 		$this->assertInternalType( 'array', $obj->get_users() );
 	}
 
+	public function filter_available_languages( array $available_languages = array() ) {
+		$available_languages[] = 'de_DE';
+
+		return $available_languages;
+	}
+
+	/**
+	 * Test get_blog_language
+	 */
+	public function test_get_blog_language() {
+		$blog_id = $this->factory->blog->create();
+		add_filter( 'get_available_languages', array( $this, 'filter_available_languages' ) );
+		add_blog_option( $blog_id, 'WPLANG', 'de_DE' );
+		$this->assertEquals( 'de_DE', MslsBlogCollection::get_blog_language( $blog_id ) );
+	}
+
+	/**
+	 * Test get_blog_language when WPLANG option is missing
+	 */
+	public function test_get_blog_language_when_wplang_option_is_missing() {
+		$blog_id = $this->factory->blog->create();
+		delete_blog_option( $blog_id, 'WPLANG' );
+		$this->assertEquals( 'en_US', MslsBlogCollection::get_blog_language( $blog_id ) );
+	}
 }
