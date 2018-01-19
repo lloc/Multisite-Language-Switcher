@@ -111,6 +111,8 @@ class MslsPostTagClassic extends MslsPostTag {
 			$mydata  = MslsOptionsTax::create( $term_id );
 			$type    = MslsContentTypes::create()->get_request();
 
+			$this->maybe_set_linked_term( $mydata );
+
 			printf(
 				$title_format,
 				__( 'Multisite Language Switcher', 'multisite-language-switcher' )
@@ -124,4 +126,40 @@ class MslsPostTagClassic extends MslsPostTag {
 		return false;
 	}
 
+	/**
+	 * Sets the selected element in the data from the `$_GET` superglobal, if any.
+	 * @param MslsOptionsTax $mydata
+	 * @return MslsOptionsTax
+	 */
+	public function maybe_set_linked_term( MslsOptionsTax $mydata ) {
+		if ( ! isset( $_GET['msls_id'], $_GET['msls_lang'] ) ) {
+			return $mydata;
+		}
+
+		$origin_lang = trim( $_GET['msls_lang'] );
+
+		if ( isset( $mydata->{$origin_lang} ) ) {
+			return $mydata;
+		}
+
+		$origin_term_id = (int) $_GET['msls_id'];
+
+		$origin_blog_id = MslsBlogCollection::instance()->get_blog_id( $origin_lang );
+
+		if ( null === $origin_blog_id ) {
+			return $mydata;
+		}
+
+		switch_to_blog( $origin_blog_id );
+		$origin_term = get_term( $origin_term_id, $mydata->base );
+		restore_current_blog();
+
+		if ( ! $origin_term instanceof WP_Term ) {
+			return $mydata;
+		}
+
+		$mydata->{$origin_lang} = $origin_term_id;
+
+		return $mydata;
+	}
 }
