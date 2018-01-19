@@ -17,6 +17,10 @@ class MslsPlugin {
  	 * @return boolean
 	 */
 	public static function init() {
+		$postfix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG
+			? ''
+			: '.min';
+
 		wp_enqueue_style(
 			'msls-styles',
 			plugins_url( 'css/msls.css', MSLS_PLUGIN__FILE__ ),
@@ -27,7 +31,7 @@ class MslsPlugin {
 		if ( MslsOptions::instance()->activate_autocomplete ) {
 			wp_enqueue_script(
 				'msls-autocomplete',
-				plugins_url( 'js/msls.min.js', MSLS_PLUGIN__FILE__ ),
+				plugins_url( "js/msls{$postfix}.js", MSLS_PLUGIN__FILE__ ),
 				array( 'jquery-ui-autocomplete' ),
 				MSLS_PLUGIN_VERSION
 			);
