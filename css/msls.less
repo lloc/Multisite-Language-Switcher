@@ -11,3 +11,18 @@ div#msls.postbox {
 select.msls-translations {
 	width: @select-width;
 }
+#msls.postbox{
+	.inside {
+        li {
+            display: flex;
+            align-items: center;
+            label {
+                display: flex;
+                flex-grow: .1;
+            }
+            input.msls_title, select{
+                flex-grow: .9;
+            }
+        }
+	}
+}

@@ -1,1 +1,1 @@
-div#msls.postbox label{width:16px;margin-right:6px}div#msls.postbox select{width:226px}select.msls-translations{width:226px}
+div#msls.postbox label{width:16px;margin-right:6px}div#msls.postbox select{width:226px}select.msls-translations{width:226px}#msls.postbox .inside li{display:flex;align-items:center}#msls.postbox .inside li label{display:flex;flex-grow:.1}#msls.postbox .inside li input.msls_title,#msls.postbox .inside li select{flex-grow:.9}
