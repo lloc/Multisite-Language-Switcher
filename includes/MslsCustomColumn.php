@@ -76,11 +76,8 @@ class MslsCustomColumn extends MslsMain {
 
 					$icon = MslsAdminIcon::create();
 					$icon->set_language( $language );
-
-					if ( $post_id = get_the_ID() ) {
-						$icon->set_id( $post_id );
-						$icon->set_origin_language( $origin_language );
-					}
+					$icon->set_id( $item_id );
+					$icon->set_origin_language( $origin_language );
 
 					if ( $mydata->has_value( $language ) ) {
 						$flag_url = MslsOptions::instance()->get_url( 'images/link_edit.png' );
