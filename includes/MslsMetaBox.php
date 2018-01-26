@@ -229,6 +229,9 @@ class MslsMetaBox extends MslsMain {
 
 			$post_type = get_post_type( $post->ID );
 			$my_data   = new MslsOptionsPost( $post->ID );
+
+			$this->maybe_set_linked_post( $my_data );
+
 			$temp      = $post;
 			$items     = '';
 
