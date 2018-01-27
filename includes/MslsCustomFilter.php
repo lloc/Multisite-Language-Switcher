@@ -17,8 +17,9 @@ class MslsCustomFilter extends MslsMain {
 	 * @return MslsCustomFilter
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
-		$obj     = new static( $options );
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+		$obj        = new static( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
@@ -41,7 +42,7 @@ class MslsCustomFilter extends MslsMain {
 			''
 		);
 
-		$blogs = MslsBlogCollection::instance()->get();
+		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';
 			echo '<option value="">' . esc_html( __( 'Show all blogs', 'multisite-language-switcher' ) ) . '</option>';
@@ -63,7 +64,7 @@ class MslsCustomFilter extends MslsMain {
 	 * @return false or WP_Query object
 	 */
 	public function execute_filter( WP_Query $query ) {
-		$blogs = MslsBlogCollection::instance()->get();
+		$blogs = $this->collection->get();
 
 		if ( ! filter_has_var( INPUT_GET, 'msls_filter' ) ) {
 			return false;

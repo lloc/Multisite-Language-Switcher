@@ -77,8 +77,9 @@ class MslsMetaBox extends MslsMain {
 	 * @return MslsMetaBox
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
-		$obj     = new static( $options );
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+		$obj        = new static( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
@@ -117,7 +118,7 @@ class MslsMetaBox extends MslsMain {
 	 * @uses selected
 	 */
 	public function render_select() {
-		$blogs           = MslsBlogCollection::instance()->get();
+		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			global $post;
 
@@ -224,7 +225,7 @@ class MslsMetaBox extends MslsMain {
 	 * Render the suggest input-field
 	 */
 	public function render_input() {
-		$blogs = MslsBlogCollection::instance()->get();
+		$blogs = $this->collection->get();
 
 		if ( $blogs ) {
 			global $post;
@@ -343,7 +344,7 @@ class MslsMetaBox extends MslsMain {
 
 		$origin_post_id = (int) $_GET['msls_id'];
 
-		$origin_blog_id = MslsBlogCollection::instance()->get_blog_id( $origin_lang );
+		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
 
 		if ( null === $origin_blog_id ) {
 			return $mydata;

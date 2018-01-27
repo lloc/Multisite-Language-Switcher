@@ -12,12 +12,14 @@
 class MslsAdmin extends MslsMain {
 
 	/**
-	 * Init
+	 * Factory
+	 *
 	 * @return MslsAdmin
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
-		$obj     = new static( $options );
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+		$obj        = new static( $options, $collection );
 
 		if ( current_user_can( 'manage_options' ) ) {
 			$title = __( 'Multisite Language Switcher', 'multisite-language-switcher' );
@@ -106,12 +108,11 @@ class MslsAdmin extends MslsMain {
 	public function subsubsub() {
 		$arr = array();
 
-		$blogs = MslsBlogCollection::instance();
-		foreach ( $blogs->get_plugin_active_blogs() as $blog ) {
+		foreach ( $this->collection->get_plugin_active_blogs() as $blog ) {
 			$arr[] = sprintf(
 				'<a href="%s"%s>%s / %s</a>',
 				get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
-				( $blog->userblog_id == $blogs->get_current_blog_id() ? ' class="current"' : '' ),
+				( $blog->userblog_id == $this->collection->get_current_blog_id() ? ' class="current"' : '' ),
 				$blog->blogname,
 				$blog->get_description()
 			);
@@ -340,7 +341,7 @@ class MslsAdmin extends MslsMain {
 	public function reference_user() {
 		$users = array();
 
-		foreach ( MslsBlogCollection::instance()->get_users() as $user ) {
+		foreach ( $this->collection->get_users() as $user ) {
 			$users[ $user->ID ] = $user->user_nicename;
 		}
 

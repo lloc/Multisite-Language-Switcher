@@ -97,7 +97,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * @return boolean
 	 */
 	public function the_input( $tag, $title_format, $item_format ) {
-		$blogs = MslsBlogCollection::instance()->get();
+		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
 			$mydata  = MslsOptionsTax::create( $term_id );

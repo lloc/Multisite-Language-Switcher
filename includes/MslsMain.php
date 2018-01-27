@@ -12,15 +12,22 @@
 class MslsMain {
 
 	/**
-	 * @var MslsOptions $options
+	 * @var MslsOptions
 	 */
 	protected $options;
 
 	/**
-	 * @param MslsOptions $options
+	 * @var MslsBlogCollection
 	 */
-	public function __construct( MslsOptions $options ) {
-		$this->options = $options;
+	protected $collection;
+
+	/**
+	 * @param MslsOptions $options
+	 * @param MslsBlogCollection $collection
+	 */
+	public function __construct( MslsOptions $options, MslsBlogCollection $collection ) {
+		$this->options    = $options;
+		$this->collection = $collection;
 	}
 
 	/**
@@ -29,9 +36,10 @@ class MslsMain {
 	 * @return MslsMain
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
 
-		return new static( $options );
+		return new static( $options, $collection );
 	}
 
 	/**
@@ -56,7 +64,7 @@ class MslsMain {
 	public function get_input_array( $object_id ) {
 		$arr = array();
 
-		$current_blog = MslsBlogCollection::instance()->get_current_blog();
+		$current_blog = $this->collection->get_current_blog();
 		if ( ! is_null( $current_blog ) ) {
 			$arr[ $current_blog->get_language() ] = (int) $object_id;
 		}
@@ -120,13 +128,12 @@ class MslsMain {
 			return;
 		}
 
-		$blogs = MslsBlogCollection::instance();
-		if ( ! $blogs->has_current_blog() ) {
+		if ( ! $this->collection->has_current_blog() ) {
 			$this->debugger( 'MslsBlogCollection::instance()->has_current_blog returns false.' );
 			return;
 		}
 
-		$language = $blogs->get_current_blog()->get_language();
+		$language = $this->collection->get_current_blog()->get_language();
 		$msla     = new MslsLanguageArray( $this->get_input_array( $object_id ) );
 		$options  = new $class( $object_id );
 		$temp     = $options->get_arr();
@@ -138,7 +145,7 @@ class MslsMain {
 			$options->delete();
 		}
 
-		foreach ( $blogs->get() as $blog ) {
+		foreach ( $this->collection->get() as $blog ) {
 			switch_to_blog( $blog->userblog_id );
 
 			$language = $blog->get_language();

@@ -13,12 +13,14 @@
 class MslsCustomColumn extends MslsMain {
 
 	/**
-	 * Init
+	 * Factory
+	 *
 	 * @return MslsCustomColumn
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
-		$obj     = new static( $options );
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+		$obj        = new static( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
@@ -37,7 +39,7 @@ class MslsCustomColumn extends MslsMain {
 	 * @return array
 	 */
 	public function th( $columns ) {
-		$blogs = MslsBlogCollection::instance()->get();
+		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			$arr = array();
 			foreach ( $blogs as $blog ) {
@@ -66,7 +68,7 @@ class MslsCustomColumn extends MslsMain {
 	 */
 	public function td( $column_name, $item_id ) {
 		if ( 'mslscol' == $column_name ) {
-			$blogs = MslsBlogCollection::instance()->get();
+			$blogs           = $this->collection->get();
 			$origin_language = MslsBlogCollection::get_blog_language();
 			if ( $blogs ) {
 				$mydata = MslsOptions::create( $item_id );

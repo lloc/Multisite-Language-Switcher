@@ -68,10 +68,11 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsPostTag
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
 
 		if ( $options->activate_autocomplete	) {
-			$obj = new static( $options );
+			$obj = new static( $options, $collection );
 		}
 		else {
 			$obj = MslsPostTagClassic::init();
@@ -142,7 +143,7 @@ class MslsPostTag extends MslsMain {
 	 */
 	public function the_input( $tag, $title_format, $item_format ) {
 		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
-		$blogs   = MslsBlogCollection::instance()->get();
+		$blogs   = $this->collection->get();
 		if ( $blogs ) {
 			$my_data = MslsOptionsTax::create( $term_id );
 
@@ -218,7 +219,7 @@ class MslsPostTag extends MslsMain {
 
 		$origin_term_id = (int) $_GET['msls_id'];
 
-		$origin_blog_id = MslsBlogCollection::instance()->get_blog_id( $origin_lang );
+		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
 
 		if ( null === $origin_blog_id ) {
 			return $mydata;
