@@ -17,8 +17,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @return MslsCustomColumnTaxonomy
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
-		$obj     = new static( $options );
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+		$obj        = new static( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			$taxonomy = MslsTaxonomy::instance()->get_request();

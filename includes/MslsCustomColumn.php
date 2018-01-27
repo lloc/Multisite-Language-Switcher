@@ -24,12 +24,14 @@ class MslsCustomColumn extends MslsMain {
 
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
-			if ( ! empty( $post_type ) ) {
+
+				if ( ! empty( $post_type ) ) {
 				add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
 				add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
 				add_action( 'trashed_post', array( $obj, 'delete' ) );
 			}
 		}
+
 		return $obj;
 	}
 
