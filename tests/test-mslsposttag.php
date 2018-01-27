@@ -11,6 +11,12 @@
  */
 class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 
+	function get_test() {
+		$options = MslsOptions::instance();
+
+		return new MslsPostTag( $options );
+	}
+
 	/**
 	 * Verify the static suggest-method
 	 * @expectedException WPDieException
@@ -21,17 +27,8 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 	}
 
 	/**
-	 * Verify the static init-method
-	 */
-	function test_init_method() {
-		$obj = MslsPostTag::init();
-		$this->assertInstanceOf( 'MslsPostTag', $obj );
-		return $obj;
-	}
-
-	/**
 	 * Verify the static the_input-method
-	 * @depends test_init_method
+	 * @depends get_test
 	 */
 	function test_the_input_method( $obj ) {
 		$tag = new StdClass;
@@ -57,7 +54,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 		$_GET['msls_id']   = $term_id;
 		$_GET['msls_lang'] = 'de_DE';
 
-		$obj          = MslsPostTag::init();
+		$obj          = $this->get_test();
 		$updated_data = $obj->maybe_set_linked_term( $term_data );
 
 		$this->assertTrue( isset( $updated_data->de_DE ) );
@@ -81,7 +78,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 
 		$_GET['msls_lang'] = 'de_DE';
 
-		$obj          = MslsPostTag::init();
+		$obj          = $this->get_test();
 		$updated_data = $obj->maybe_set_linked_term( $term_data );
 
 		$this->assertFalse( isset( $updated_data->de_DE ) );
@@ -89,7 +86,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 		unset( $_GET['msls_lang'] );
 		$_GET['msls_id'] = $term_id;
 
-		$obj          = MslsPostTag::init();
+		$obj          = $this->get_test();
 		$updated_data = $obj->maybe_set_linked_term( $term_data );
 
 		$this->assertFalse( isset( $updated_data->de_DE ) );
@@ -113,7 +110,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 		$_GET['msls_lang'] = 'fr_FR';
 		$_GET['msls_id']   = $term_id;
 
-		$obj          = MslsPostTag::init();
+		$obj          = $this->get_test();
 		$updated_data = $obj->maybe_set_linked_term( $term_data );
 
 		$this->assertFalse( isset( $updated_data->de_DE ) );
@@ -134,7 +131,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 		$_GET['msls_id']   = 2323;
 		$_GET['msls_lang'] = 'de_DE';
 
-		$obj          = MslsPostTag::init();
+		$obj          = $this->get_test();
 		$updated_data = $obj->maybe_set_linked_term( $term_data );
 
 		$this->assertFalse( isset( $updated_data->de_DE ) );

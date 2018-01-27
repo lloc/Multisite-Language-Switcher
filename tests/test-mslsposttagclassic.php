@@ -11,18 +11,14 @@
  */
 class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 
-	/**
-	 * Verify the static init-method
-	 */
-	function test_init_method() {
-		$obj =  MslsPostTagClassic::init();
-		$this->assertInstanceOf( 'MslsPostTagClassic', $obj );
-		return $obj;
+	function get_test() {
+		$options = MslsOptions::instance();
+		return new MslsPostTagClassic( $options );
 	}
 
 	/**
 	 * Verify the static the_input-method
-	 * @depends test_init_method
+	 * @depends get_test
 	 */
 	function test_the_input_method( $obj ) {
 		$tag = new StdClass;

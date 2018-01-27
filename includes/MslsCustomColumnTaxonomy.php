@@ -17,16 +17,19 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @return MslsCustomColumnTaxonomy
 	 */
 	public static function init() {
-		$obj     = new self();
 		$options = MslsOptions::instance();
+		$obj     = new static( $options );
+
 		if ( ! $options->is_excluded() ) {
 			$taxonomy = MslsTaxonomy::instance()->get_request();
+
 			if ( ! empty( $taxonomy ) ) {
 				add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
 				add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'column_default' ), 10, 3 );
 				add_action( "delete_{$taxonomy}", array( $obj, 'delete' ) );
 			}
 		}
+
 		return $obj;
 	}
 

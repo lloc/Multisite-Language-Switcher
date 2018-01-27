@@ -12,20 +12,14 @@
 class WP_Test_MslsMain extends Msls_UnitTestCase {
 
 	/**
-	 * Verify the static init-method
-	 * @expectedException Exception
-	 * @expectedExceptionCode 0
-	 */
-	function test_init_method() {
-		MslsMain::init();
-	}
-
-	/**
 	 * Verify the get_input_array-method
 	 */
 	function test_get_input_array_method() {
-		$obj = new MslsMain;
+		$options = MslsOptions::instance();
+		$obj     = new MslsMain( $options );
+
 		$this->assertInternalType( 'array', $obj->get_input_array( 0 ) );
+
 		return $obj;
 	}
 

@@ -12,14 +12,6 @@
 class MslsPostTagClassic extends MslsPostTag {
 
 	/**
-	 * Init
-	 * @return MslsPostTagClassic
-	 */
-	public static function init() {
-		return new self();
-	}
-
-	/**
 	 * Add the input fields to the add-screen of the taxonomies
 	 * @param StdClass $tag
 	 */
@@ -73,7 +65,7 @@ class MslsPostTagClassic extends MslsPostTag {
 		switch_to_blog( $blog->userblog_id );
 
 		$language = $blog->get_language();
-		$flag_url = MslsOptions::instance()->get_flag_url( $language );
+		$flag_url = $this->options->get_flag_url( $language );
 		$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
 		$options  = '';
 		$terms    = get_terms( $type, array( 'hide_empty' => 0 ) );
