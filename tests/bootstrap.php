@@ -34,17 +34,13 @@ class Msls_UnitTestCase extends WP_UnitTestCase {
 	/**
 	 * Polyfill to make sure whatever mocking method is supported will be used.
 	 *
-	 * The `getMock` method was has been removed on latest versions of PHPUnit.
+	 * The `getMock` method has been removed on latest versions of PHPUnit.
 	 *
 	 * @param string $class The class to mock
 	 *
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	public function getMock( $class ) {
-		if ( method_exists( 'WP_UnitTestCase', 'getMock' ) ) {
-			return parent::getMock( $class );
-		}
-
 		return $this->getMockBuilder( $class )->getMock();
 	}
 }
