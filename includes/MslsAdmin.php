@@ -12,23 +12,12 @@
 class MslsAdmin extends MslsMain {
 
 	/**
-	 * @var MslsOptions $options
-	 */
-	protected $options;
-
-	/**
-	 * MslsAdmin constructor.
-	 */
-	public function __construct() {
-		$this->options = MslsOptions::instance();
-	}
-
-	/**
 	 * Init
 	 * @return MslsAdmin
 	 */
 	public static function init() {
-		$obj = new self();
+		$options = MslsOptions::instance();
+		$obj     = new static( $options );
 
 		if ( current_user_can( 'manage_options' ) ) {
 			$title = __( 'Multisite Language Switcher', 'multisite-language-switcher' );

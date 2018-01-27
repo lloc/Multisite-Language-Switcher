@@ -17,8 +17,9 @@ class MslsCustomColumn extends MslsMain {
 	 * @return MslsCustomColumn
 	 */
 	public static function init() {
-		$obj     = new self();
 		$options = MslsOptions::instance();
+		$obj     = new static( $options );
+
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
 			if ( ! empty( $post_type ) ) {
@@ -41,7 +42,7 @@ class MslsCustomColumn extends MslsMain {
 			$arr = array();
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
-				$flag_url = MslsOptions::instance()->get_flag_url( $language );
+				$flag_url = $this->options->get_flag_url( $language );
 
 				$icon = new MslsAdminIcon( null );
 				$icon->set_language( $language )->set_src( $flag_url );
@@ -80,14 +81,15 @@ class MslsCustomColumn extends MslsMain {
 					$icon->set_origin_language( $origin_language );
 
 					if ( $mydata->has_value( $language ) ) {
-						$flag_url = MslsOptions::instance()->get_url( 'images/link_edit.png' );
+						$flag_url = $this->options->get_url( 'images/link_edit.png' );
 						$icon->set_href( $mydata->$language )->set_src( $flag_url );
 					}
 					else {
-						$flag_url = MslsOptions::instance()->get_url( 'images/link_add.png' );
+						$flag_url = $this->options->get_url( 'images/link_add.png' );
 						$icon->set_src( $flag_url );
 					}
-					echo $icon; // xss ok
+					echo $icon;
+
 					restore_current_blog();
 				}
 			}

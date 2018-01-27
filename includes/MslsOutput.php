@@ -18,14 +18,6 @@ class MslsOutput extends MslsMain {
 	protected $tags;
 
 	/**
-	 * Init
-	 * @return MslsOutput
-	 */
-	public static function init() {
-		return new self();
-	}
-
-	/**
 	 * Creates and gets the output as an array
 	 * @param int $display
 	 * @param bool $filter

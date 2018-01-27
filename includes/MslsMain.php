@@ -12,12 +12,26 @@
 class MslsMain {
 
 	/**
-	 * Every child of MslsMain has to define a init-method
-	 * @throws Exception If a child class does not define an init method
+	 * @var MslsOptions $options
+	 */
+	protected $options;
+
+	/**
+	 * @param MslsOptions $options
+	 */
+	public function __construct( MslsOptions $options ) {
+		$this->options = $options;
+	}
+
+	/**
+	 * Factory
+	 *
 	 * @return MslsMain
 	 */
 	public static function init() {
-		throw new Exception( 'Static method init is not defined' );
+		$options = MslsOptions::instance();
+
+		return new static( $options );
 	}
 
 	/**

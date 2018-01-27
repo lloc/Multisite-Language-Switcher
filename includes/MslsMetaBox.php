@@ -77,8 +77,10 @@ class MslsMetaBox extends MslsMain {
 	 * @return MslsMetaBox
 	 */
 	public static function init() {
-		$obj = new self();
-		if ( ! MslsOptions::instance()->is_excluded() ) {
+		$options = MslsOptions::instance();
+		$obj     = new static( $options );
+
+		if ( ! $options->is_excluded() ) {
 			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
 			add_action( 'save_post', array( $obj, 'set' ) );
 			add_action( 'trashed_post', array( $obj, 'delete' ) );

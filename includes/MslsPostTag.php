@@ -68,8 +68,10 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsPostTag
 	 */
 	public static function init() {
-		if ( MslsOptions::instance()->activate_autocomplete	) {
-			$obj = new self();
+		$options = MslsOptions::instance();
+
+		if ( $options->activate_autocomplete	) {
+			$obj = new static( $options );
 		}
 		else {
 			$obj = MslsPostTagClassic::init();
@@ -157,7 +159,7 @@ class MslsPostTag extends MslsMain {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$flag_url = MslsOptions::instance()->get_flag_url( $language );
+				$flag_url = $this->options->get_flag_url( $language );
 				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
 
 				$value = $title = '';
@@ -169,6 +171,7 @@ class MslsPostTag extends MslsMain {
 						$title = $term->name;
 					}
 				}
+
 				printf(
 					$item_format,
 					$blog->userblog_id,
