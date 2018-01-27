@@ -25,7 +25,8 @@ class WP_Test_MslsCustomFilter extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_execute_filter_method( $obj ) {
-		$query = $this->getMock( 'WP_Query' );
+		$query = $this->getMockBuilder( WP_Query::class )->getMock();
+
 		$this->assertFalse( $obj->execute_filter( $query ) );
 	}
 
