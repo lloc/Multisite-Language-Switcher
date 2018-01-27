@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Output in the frontend
  * @package Msls

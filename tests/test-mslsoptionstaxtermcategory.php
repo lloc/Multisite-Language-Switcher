@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsOptionsTaxTermCategory;
+
 /**
  * WP_Test_MslsOptionsTaxTermCategory
  */

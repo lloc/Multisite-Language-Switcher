@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsOptionsQueryYear;
+
 /**
  * WP_Test_MslsOptionsQueryYear
  */

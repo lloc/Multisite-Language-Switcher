@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsBlogCollection;
+
 /**
  * WP_Test_MslsBlogCollection
  */

@@ -5,6 +5,8 @@
  * @since 0.9.9
  */
 
+namespace lloc\Msls;
+
 /**
  * Container for an array which will used in JavaScript as object in JSON
  * @example https://gist.githubusercontent.com/lloc/2c232cef3f910acf692f/raw/1c4f62e1de57ca48f19c37e3a63e7dc311b76b2f/MslsJson.php

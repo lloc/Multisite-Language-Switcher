@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsOptionsTax;
+
 /**
  * WP_Test_MslsOptionsTax
  */

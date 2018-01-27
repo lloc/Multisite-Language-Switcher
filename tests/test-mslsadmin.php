@@ -6,6 +6,10 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsAdmin;
+use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsBlogCollection;
+
 /**
  * WP_Test_MslsAdmin
  */

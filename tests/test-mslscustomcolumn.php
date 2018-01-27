@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsCustomColumn;
+
 /**
  * WP_Test_MslsCustomColumn
  */

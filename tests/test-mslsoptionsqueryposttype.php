@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsOptionsQueryPostType;
+
 /**
  * WP_Test_MslsOptionsQueryPostType
  */

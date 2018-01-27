@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsGetSet;
+
 /**
  * WP_Test_MslsGetSet
  */

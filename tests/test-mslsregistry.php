@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsRegistry;
+
 /**
  * WP_Test_MslsRegistry
  */

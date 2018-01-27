@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsOptionsQueryAuthor;
+
 /**
  * WP_Test_MslsOptionsQueryAuthor
  */

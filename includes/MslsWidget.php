@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * The standard widget of the Multisite Language Switcher
  * @package Msls

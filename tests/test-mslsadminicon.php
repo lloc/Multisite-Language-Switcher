@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsAdminIcon;
+
 /**
  * WP_Test_MslsAdminIcon
  */

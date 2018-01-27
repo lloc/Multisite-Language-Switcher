@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Registry instead of singletons
  * @package Msls

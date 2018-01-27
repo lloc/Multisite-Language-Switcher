@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Handles the icon links in the backend
  * @package Msls

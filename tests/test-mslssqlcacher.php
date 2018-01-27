@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsSqlCacher;
+
 /**
  * WP_Test_MslsPostTag
  */

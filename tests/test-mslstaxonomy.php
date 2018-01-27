@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsTaxonomy;
+
 /**
  * WP_Test_MslsTaxonomy
  */

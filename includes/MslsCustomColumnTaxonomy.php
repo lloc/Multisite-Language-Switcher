@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Handling of existing/not existing translations in the backend 
  * listings of various taxonomies

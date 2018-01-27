@@ -14,7 +14,7 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 require $_tests_dir . '/includes/bootstrap.php';
 
-class Msls_UnitTestCase extends WP_UnitTestCase {
+class Msls_UnitTestCase extends \WP_UnitTestCase {
 
 	/**
 	 * SetUp initial settings

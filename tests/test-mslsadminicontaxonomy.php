@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsAdminIconTaxonomy;
+
 /**
  * WP_Test_MslsAdminIconTaxonomy
  */

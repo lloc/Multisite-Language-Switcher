@@ -6,6 +6,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Link type: Image and text
  * @package Msls

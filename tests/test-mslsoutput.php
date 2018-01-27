@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsOutput;
+
 /**
  * WP_Test_MslsOutput
  */

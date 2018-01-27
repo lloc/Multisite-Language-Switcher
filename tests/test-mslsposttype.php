@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsPostType;
+
 /**
  * WP_Test_MslsPostType
  */

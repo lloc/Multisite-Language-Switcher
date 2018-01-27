@@ -6,6 +6,10 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsPostTag;
+use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsBlogCollection;
+
 /**
  * WP_Test_MslsPostTag
  */
@@ -20,7 +24,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the static suggest-method
-	 * @expectedException WPDieException
+	 * @expectedException \WPDieException
 	 * @expectedExceptionMessage []
 	 */
 	function test_suggest_method() {

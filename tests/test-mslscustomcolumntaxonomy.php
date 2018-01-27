@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsCustomColumnTaxonomy;
+
 /**
  * WP_Test_MslsCustomColumnTaxonomy
  */

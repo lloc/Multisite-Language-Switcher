@@ -6,6 +6,7 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsLinkTextOnly;
 /**
  * WP_Test_MslsLinkTextOnly
  */

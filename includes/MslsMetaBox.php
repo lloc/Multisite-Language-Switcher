@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Meta box for the edit mode of the (custom) post types
  * @package Msls

@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsJson;
+
 /**
  * WP_Test_MslsJson
  */

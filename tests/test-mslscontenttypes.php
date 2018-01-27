@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsContentTypes;
+
 /**
  * WP_Test_MslsContentTypes
  */

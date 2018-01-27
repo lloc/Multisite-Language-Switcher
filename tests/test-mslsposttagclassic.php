@@ -6,6 +6,10 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsPostTagClassic;
+use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsBlogCollection;
+
 /**
  * WP_Test_MslsPostTagClassic
  */

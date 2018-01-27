@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Provides functionalities for general hooks and activation/deactivation
  * @package Msls

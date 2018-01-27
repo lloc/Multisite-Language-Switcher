@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsOptionsQueryMonth;
+
 /**
  * WP_Test_MslsOptionsQueryMonth
  */

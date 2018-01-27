@@ -6,6 +6,8 @@
  * @since 0.9.9
  */
 
+namespace lloc\Msls;
+
 /**
  * Adding custom filter to posts/pages table.
  * @package Msls

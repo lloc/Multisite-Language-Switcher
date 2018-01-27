@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsCustomFilter;
+
 /**
  * WP_Test_MslsCustomFilter
  */

@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Generic class for overloading properties
  * @example https://gist.githubusercontent.com/lloc/2c232cef3f910acf692f/raw/f4eb70f4b1f8dc90c212d85d65af40c6604a32b9/MslsGetSet.php

@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsMetaBox;
+
 /**
  * WP_Test_MslsMetaBox
  */

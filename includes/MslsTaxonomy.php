@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Content types: Taxonomies (Tags, Categories, ...)
  * @package Msls

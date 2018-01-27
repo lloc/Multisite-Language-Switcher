@@ -5,6 +5,8 @@
  * @since 0.9.8
  */
 
+namespace lloc\Msls;
+
 /**
  * Internal representation of a blog
  * @property int $userblog_id
@@ -14,7 +16,7 @@ class MslsBlog {
 
 	/**
 	 * WordPress generates such an object
-	 * @var StdClass
+	 * @var \StdClass
 	 */
 	private $obj;
 

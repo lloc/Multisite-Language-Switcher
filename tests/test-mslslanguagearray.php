@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsLanguageArray;
+
 /**
  * WP_Test_MslsLanguageArray
  */

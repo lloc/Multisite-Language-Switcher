@@ -27,6 +27,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+namespace lloc\Msls;
+
 /**
  * MultisiteLanguageSwitcher
  *
@@ -155,7 +157,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		 * @return string
 		 */
 		function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-			$obj    = new MslsOutput();
+			$obj    = MslsOutput::init();
 			$links  = $obj->get( 1, true, true );
 			$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
 
@@ -234,8 +236,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			foreach ( $blogs->get_objects() as $blog ) {
 				$language = $blog->get_language();
 				$url      = $mydata->get_current_link();
-				$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
-				$title = $blog->get_description();
+				$current  = ( $blog->userblog_id == $blogs->get_current_blog_id() );
+				$title    = $blog->get_description();
 
 				if ( ! $current ) {
 					switch_to_blog( $blog->userblog_id );

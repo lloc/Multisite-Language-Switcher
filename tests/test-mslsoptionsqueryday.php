@@ -6,6 +6,8 @@
  * @package Msls
  */
 
+use lloc\Msls\MslsOptionsQueryDay;
+
 /**
  * WP_Test_MslsOptionsQueryDay
  */
