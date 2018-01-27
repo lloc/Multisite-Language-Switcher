@@ -12,9 +12,10 @@
 class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 
 	function get_test() {
-		$options = MslsOptions::instance();
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
 
-		return new MslsPostTag( $options );
+		return new MslsPostTag( $options, $collection );
 	}
 
 	/**

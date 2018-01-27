@@ -15,8 +15,9 @@ class WP_Test_MslsMain extends Msls_UnitTestCase {
 	 * Verify the get_input_array-method
 	 */
 	function test_get_input_array_method() {
-		$options = MslsOptions::instance();
-		$obj     = new MslsMain( $options );
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+		$obj        = new MslsMain( $options, $collection );
 
 		$this->assertInternalType( 'array', $obj->get_input_array( 0 ) );
 
