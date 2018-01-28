@@ -325,7 +325,7 @@ class MslsMetaBox extends MslsMain {
 			return;
 		}
 
-		$this->save( $post_id, 'MslsOptionsPost' );
+		$this->save( $post_id, MslsOptionsPost::class );
 	}
 
 	/**
@@ -356,7 +356,7 @@ class MslsMetaBox extends MslsMain {
 		$origin_post = get_post( $origin_post_id );
 		restore_current_blog();
 
-		if ( ! $origin_post instanceof WP_Post ) {
+		if ( ! $origin_post instanceof \WP_Post ) {
 			return $mydata;
 		}
 

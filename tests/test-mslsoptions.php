@@ -38,7 +38,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 	 * Verify the static create-method
 	 */
 	function test_create_method() {
-		$this->assertInstanceOf( 'MslsOptions', MslsOptions::create() );
+		$this->assertInstanceOf( MslsOptions::class, MslsOptions::create() );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 	 */
 	function test_instance_method() {
 		$obj = MslsOptions::instance();
-		$this->assertInstanceOf( 'MslsOptions', $obj );
+		$this->assertInstanceOf( MslsOptions::class, $obj );
 		return $obj;
 	}
 

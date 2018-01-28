@@ -26,15 +26,16 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Gets all link types as array with "id => name"-items
+	 *
 	 * @return string[]
 	 */
 	public static function get_types() {
-		return array(
-			'MslsLink',
-			'MslsLinkTextOnly',
-			'MslsLinkImageOnly',
-			'MslsLinkTextImage',
-		);
+		return [
+			MslsLink::class,
+			MslsLinkTextOnly::class,
+			MslsLinkImageOnly::class,
+			MslsLinkTextImage::class,
+		];
 	}
 
 	/**

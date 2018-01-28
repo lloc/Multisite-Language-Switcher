@@ -9,6 +9,7 @@ namespace lloc\Msls;
 
 /**
  * Abstraction for the hook classes
+ *
  * @package Msls
  */
 class MslsMain {
@@ -109,7 +110,7 @@ class MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function delete( $object_id ) {
-		$this->save( $object_id, 'MslsOptionsPost' );
+		$this->save( $object_id, MslsOptionsPost::class );
 	}
 
 	/**

@@ -95,7 +95,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 					);
 				}
 			}
-			uasort( $this->objects, array( 'MslsBlog', $this->objects_order ) );
+			uasort( $this->objects, array( MslsBlog::class, $this->objects_order ) );
 		}
 	}
 

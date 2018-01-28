@@ -11,7 +11,7 @@ namespace lloc\Msls;
  * The standard widget of the Multisite Language Switcher
  * @package Msls
  */
-class MslsWidget extends WP_Widget {
+class MslsWidget extends \WP_Widget {
 
 	/**
 	 * Constructor
@@ -25,19 +25,21 @@ class MslsWidget extends WP_Widget {
 
 	/**
 	 * Output of the widget in the frontend
+	 *
 	 * @param array $args
 	 * @param array $instance
+	 *
 	 * @user MslsOutput
 	 */
 	public function widget( $args, $instance ) {
 		$args = wp_parse_args(
 			$args,
-			array(
+			[
 				'before_widget' => '',
 				'after_widget'  => '',
 				'before_title'  => '',
 				'after_title'   => '',
-			)
+			]
 		);
 
 		/** This filter is documented in wp-includes/default-widgets.php */
@@ -61,8 +63,10 @@ class MslsWidget extends WP_Widget {
 
 	/**
 	 * Update widget in the backend
+	 *
 	 * @param array $new_instance
 	 * @param array $old_instance
+	 *
 	 * @return array
 	 */
 	public function update( $new_instance, $old_instance ) {
@@ -70,12 +74,15 @@ class MslsWidget extends WP_Widget {
 		if ( isset( $new_instance['title'] ) ) {
 			$instance['title'] = strip_tags( $new_instance['title'] );
 		}
+
 		return $instance;
 	}
 
 	/**
 	 * Display an input-form in the backend
+	 *
 	 * @param array $instance
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function form( $instance ) {

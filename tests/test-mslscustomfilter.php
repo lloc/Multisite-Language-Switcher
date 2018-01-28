@@ -18,12 +18,13 @@ class WP_Test_MslsCustomFilter extends Msls_UnitTestCase {
 	 */
 	function test_init_method() {
 		$obj = MslsCustomFilter::init();
-		$this->assertInstanceOf( 'MslsCustomFilter', $obj );
+		$this->assertInstanceOf( MslsCustomFilter::class, $obj );
 		return $obj;
 	}
 
 	/**
 	 * Verify the execute_filter-method
+	 *
 	 * @depends test_init_method
 	 */
 	function test_execute_filter_method( $obj ) {

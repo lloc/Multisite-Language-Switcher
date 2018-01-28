@@ -7,6 +7,7 @@
  */
 
 use lloc\Msls\MslsMetaBox;
+use lloc\Msls\MslsOptionsPost;
 
 /**
  * WP_Test_MslsMetaBox
@@ -29,7 +30,7 @@ class WP_Test_MslsMetaBox extends Msls_UnitTestCase {
 	 */
 	function test_init_method() {
 		$obj = MslsMetaBox::init();
-		$this->assertInstanceOf( 'MslsMetaBox', $obj );
+		$this->assertInstanceOf( MslsMetaBox::class, $obj );
 		return $obj;
 	}
 

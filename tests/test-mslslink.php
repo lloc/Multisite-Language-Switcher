@@ -45,10 +45,10 @@ class WP_Test_MslsLink extends Msls_UnitTestCase {
 	 * Verify the static create-method
 	 */
 	function test_create_method() {
-		$this->assertInstanceOf( 'MslsLink', MslsLink::create( 1 ) );
-		$this->assertInstanceOf( 'MslsLink', MslsLink::create( null ) );
+		$this->assertInstanceOf( MslsLink::class, MslsLink::create( 1 ) );
+		$this->assertInstanceOf( MslsLink::class, MslsLink::create( null ) );
 		$obj = MslsLink::create( 0 );
-		$this->assertInstanceOf( 'MslsLink', $obj );
+		$this->assertInstanceOf( MslsLink::class, $obj );
 		return $obj;
 	}
 

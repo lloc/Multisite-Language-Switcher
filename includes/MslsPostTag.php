@@ -197,7 +197,7 @@ class MslsPostTag extends MslsMain {
 	 */
 	public function set( $term_id ) {
 		if ( MslsContentTypes::create()->acl_request() ) {
-			$this->save( $term_id, 'MslsOptionsTax' );
+			$this->save( $term_id, MslsOptionsTax::class );
 		}
 	}
 
@@ -231,7 +231,7 @@ class MslsPostTag extends MslsMain {
 		$origin_term = get_term( $origin_term_id, $mydata->base );
 		restore_current_blog();
 
-		if ( ! $origin_term instanceof WP_Term ) {
+		if ( ! $origin_term instanceof \WP_Term ) {
 			return $mydata;
 		}
 

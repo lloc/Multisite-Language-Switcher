@@ -20,7 +20,7 @@ class WP_Test_MslsPostType extends Msls_UnitTestCase {
 	 */
 	function test_instance_method() {
 		$obj = MslsPostType::instance();
-		$this->assertInstanceOf( 'MslsPostType', $obj );
+		$this->assertInstanceOf( MslsPostType::class, $obj );
 		return $obj;
 	}
 

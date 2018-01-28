@@ -22,7 +22,7 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 */
 	public function has_value( $language ) {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			$date  = new DateTime();
+			$date  = new \DateTime();
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
 
 			$this->arr[ $language ] = $cache->get_var(

@@ -18,7 +18,7 @@ class WP_Test_MslsCustomColumn extends Msls_UnitTestCase {
 	 */
 	function test_init_method() {
 		$obj = MslsCustomColumn::init();
-		$this->assertInstanceOf( 'MslsCustomColumn', $obj );
+		$this->assertInstanceOf( MslsCustomColumn::class, $obj );
 		return $obj;
 	}
 

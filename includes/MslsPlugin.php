@@ -9,36 +9,188 @@ namespace lloc\Msls;
 
 /**
  * Provides functionalities for general hooks and activation/deactivation
+ *
  * @package Msls
  */
 class MslsPlugin {
 
 	/**
-	 * Loads styles and some js if needed
-	 * The methiod returns true if JS is loaded or false if not
- 	 * @return boolean
+	 * @var MslsOptions
+	 */
+	protected $options;
+
+	/**
+	 * @param MslsOptions $options
+	 */
+	public function __construct( MslsOptions $options ) {
+		$this->options = $options;
+	}
+
+	/**
+	 * Factory
 	 */
 	public static function init() {
-		$postfix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG
-			? ''
-			: '.min';
+		$options = MslsOptions::instance();
+		$obj     = new self( $options );
+
+		add_action( 'plugins_loaded', [ $obj, 'init_i18n_support' ] );
+
+		register_activation_hook( MSLS_PLUGIN__FILE__, [ $obj, 'activate' ] );
+
+		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
+			add_action( 'widgets_init', [ $obj, 'init_widget' ] );
+			add_filter( 'the_content', [ $obj, 'content_filter' ] );
+
+			add_filter( 'msls_get_output', [ $obj, 'get_output' ] );
+
+			if ( is_admin() ) {
+				add_action( 'admin_menu', [ $obj, 'admin_menu' ] );
+
+				add_action( 'admin_menu', [ MslsAdmin::class, 'init' ] );
+				add_action( 'load-post.php', [ MslsMetaBox::class, 'init' ] );
+				add_action( 'load-post-new.php', [ MslsMetaBox::class, 'init' ] );
+				add_action( 'load-edit.php', [ MslsCustomColumn::class, 'init' ] );
+				add_action( 'load-edit.php', [ MslsCustomFilter::class, 'init' ] );
+
+				add_action( 'load-edit-tags.php', [ MslsCustomColumnTaxonomy::class, 'init' ] );
+				add_action( 'load-edit-tags.php', [ MslsPostTag::class, 'init' ] );
+
+				if ( filter_has_var( INPUT_POST, 'action' ) ) {
+					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
+
+					if ( 'add-tag' == $action ) {
+						add_action( 'admin_init', [ MslsPostTag::class, 'init' ] );
+					} elseif ( 'inline-save' == $action ) {
+						add_action( 'admin_init', [ MslsCustomColumn::class, 'init' ] );
+					} elseif ( 'inline-save-tax' == $action ) {
+						add_action( 'admin_init', [ MslsCustomColumnTaxonomy::class, 'init' ] );
+					}
+				}
+
+				add_action( 'wp_ajax_suggest_posts', [ MslsMetaBox::class, 'suggest' ] );
+				add_action( 'wp_ajax_suggest_terms', [ MslsPostTag::class, 'suggest' ] );
+			}
+		}
+		else {
+			add_action( 'admin_notices', function () {
+				self::message_handler(
+					__( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'multisite-language-switcher' )
+				);
+			} );
+		}
+
+		return $obj;
+	}
+
+	/**
+	 * @return MslsOutput
+	 */
+	public function get_output() {
+		static $obj = null;
+
+		if ( is_null( $obj ) ) {
+			$obj = MslsOutput::init();
+		}
+
+		return $obj;
+	}
+
+	/**
+	 * Filter for the_content()
+	 *
+	 * @package Msls
+	 * @uses MslsOptions
+	 * @param string $content
+	 * @return string
+	 */
+	function content_filter( $content ) {
+		if ( ! is_front_page() && is_singular() ) {
+			$options = $this->options;
+
+			if ( $options->is_content_filter() ) {
+				$content .= $this->filter_string();
+			}
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Create filterstring for msls_content_filter()
+	 *
+	 * @package Msls
+	 * @uses MslsOutput
+	 * @param string $pref
+	 * @param string $post
+	 * @return string
+	 */
+	function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
+		$obj    = MslsOutput::init();
+		$links  = $obj->get( 1, true, true );
+		$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
+
+		if ( has_filter( 'msls_filter_string' ) ) {
+			/**
+			 * Overrides the string for the output of the translation hint
+			 * @since 1.0
+			 * @param string $output
+			 * @param array $links
+			 */
+			$output = apply_filters( 'msls_filter_string', $output, $links );
+		}
+		else {
+			$output = '';
+
+			if ( count( $links ) > 1 ) {
+				$last   = array_pop( $links );
+				$output = sprintf(
+					$output,
+					sprintf(
+						__( '%s and %s', 'multisite-language-switcher' ),
+						implode( ', ', $links ),
+						$last
+					)
+				);
+			}
+			elseif ( 1 == count( $links ) ) {
+				$output = sprintf(
+					$output,
+					$links[0]
+				);
+			}
+		}
+
+		return ! empty( $output ) ? $pref . $output . $post : '';
+	}
+
+	/**
+	 * Loads styles and some js if needed
+	 *
+	 * The methiod returns true if JS is loaded or false if not
+ 	 *
+	 * @return boolean
+	 */
+	public function admin_menu() {
+		$postfix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' 	: '.min';
 
 		wp_enqueue_style(
 			'msls-styles',
 			plugins_url( 'css/msls.css', MSLS_PLUGIN__FILE__ ),
-			array(),
+			[],
 			MSLS_PLUGIN_VERSION
 		);
 
-		if ( MslsOptions::instance()->activate_autocomplete ) {
+		if ( $this->options->activate_autocomplete ) {
 			wp_enqueue_script(
 				'msls-autocomplete',
 				plugins_url( "js/msls{$postfix}.js", MSLS_PLUGIN__FILE__ ),
 				array( 'jquery-ui-autocomplete' ),
 				MSLS_PLUGIN_VERSION
 			);
+
 			return true;
 		}
+
 		return false;
 	}
 
@@ -49,43 +201,30 @@ class MslsPlugin {
 	 * excluded in the configuration of the plugin.
 	 * @return boolean
 	 */
-	public static function init_widget() {
-		if ( ! MslsOptions::instance()->is_excluded() ) {
-			register_widget( 'MslsWidget' );
+	public function init_widget() {
+		if ( ! $this->options->is_excluded() ) {
+			register_widget( MslsWidget::class );
+
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
 	 * Load textdomain
 	 *
-	 * The method will be executed allways on init because we have some
+	 * The method should be executed always on init because we have some
 	 * translatable string in the frontend too.
+	 *
 	 * @return boolean
 	 */
-	public static function init_i18n_support() {
+	public function init_i18n_support() {
 		return load_plugin_textdomain(
 			'multisite-language-switcher',
 			false,
 			dirname( MSLS_PLUGIN_PATH ) . '/languages/'
 		);
-	}
-
-	/**
-	 * Set the admin language
-	 * Callback for 'locale' hook
-	 * @param string $locale
-	 * @return string
-	 */
-	public static function set_admin_language( $locale ) {
-		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
-			$code = MslsOptions::instance()->admin_language;
-			if ( ! empty( $code ) ) {
-				return $code;
-			}
-		}
-		return $locale;
 	}
 
 	/**
@@ -109,13 +248,21 @@ class MslsPlugin {
 	}
 
 	/**
+	 * Activate plugin
+	 */
+	public function activate(){
+		register_uninstall_hook( MSLS_PLUGIN__FILE__, [ $this, 'uninstall' ] );
+	}
+
+	/**
 	 * Uninstall plugin
 	 *
 	 * The plugin data in all blogs of the current network will be
 	 * deleted after the uninstall procedure.
+	 *
 	 * @return boolean
 	 */
-	public static function uninstall() {
+	public function uninstall() {
 		/**
 		 * We want to be sure that the user has not deactivated the
 		 * multisite because we need to use switch_to_blog and
@@ -138,6 +285,7 @@ class MslsPlugin {
 				restore_current_blog();
 			}
 		}
+
 		return self::cleanup();
 	}
 
@@ -146,6 +294,7 @@ class MslsPlugin {
 	 *
 	 * Removes all values of the current blogs which are stored in the
 	 * options-table and returns true if it was successful.
+	 *
 	 * @return boolean
 	 */
 	public static function cleanup() {
@@ -155,8 +304,10 @@ class MslsPlugin {
 				"DELETE FROM {$cache->options} WHERE option_name LIKE %s",
 				'msls_%'
 			);
+
 			return (bool) $cache->query( $sql );
 		}
+
 		return false;
 	}
 
@@ -166,16 +317,16 @@ class MslsPlugin {
 	 * @return array
 	 */
 	public static function get_superglobals( array $list ) {
-		$arr = array();
+		$arr = [];
 
 		foreach ( $list as $var ) {
+			$arr[ $var ] = '';
+
 			if ( filter_has_var( INPUT_POST, $var ) ) {
 				$arr[ $var ] = filter_input( INPUT_POST, $var );
 			}
 			elseif ( filter_has_var( INPUT_GET, $var ) ) {
 				$arr[ $var ] = filter_input( INPUT_GET, $var );
-			} else {
-				$arr[ $var ] = '';
 			}
 		}
 

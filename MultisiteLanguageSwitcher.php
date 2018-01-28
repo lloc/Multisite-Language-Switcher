@@ -27,9 +27,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-namespace lloc\Msls;
-
-require __DIR__.'/vendor/autoload.php';
+require __DIR__. '/vendor/autoload.php';
 
 /**
  * MultisiteLanguageSwitcher
@@ -46,223 +44,42 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 	}
 
-	add_action( 'plugins_loaded', array( 'MslsPlugin', 'init_i18n_support' ) );
+	lloc\Msls\MslsPlugin::init();
 
 	/**
-	 * Interface for classes which are to register in the MslsRegistry-instance
+	 * Get the output for using the links to the translations in your code
 	 *
-	 * get_called_class is just avalable in php >= 5.3 so I defined an interface here
 	 * @package Msls
+	 *
+	 * @param array $arr
+	 *
+	 * @return string
 	 */
-	interface IMslsRegistryInstance {
+	function get_the_msls( array $arr = [] ) {
+		$obj = apply_filters( 'msls_get_output', null );
 
-		/**
-		 * Returnse an instance
-		 * @return object
-		 */
-		public static function instance();
-
+		return ! is_null( $obj ) ? strval( $obj->set_tags( $arr ) ) : '';
 	}
 
-	register_uninstall_hook( __FILE__, array( 'MslsPlugin', 'uninstall' ) );
+	add_shortcode( 'sc_msls', 'get_the_msls' );
 
-	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-		add_action( 'widgets_init', array( 'MslsPlugin', 'init_widget' ) );
-		add_filter( 'locale', array( 'MslsPlugin', 'set_admin_language' ) );
-
-		if ( is_admin() ) {
-			add_action( 'admin_menu', array( 'MslsPlugin', 'init' ) );
-			add_action( 'admin_menu', array( 'MslsAdmin', 'init' ) );
-
-			add_action( 'load-post.php', array( 'MslsMetaBox', 'init' ) );
-
-			add_action( 'load-post-new.php', array( 'MslsMetaBox', 'init' ) );
-
-			add_action( 'load-edit.php', array( 'MslsCustomColumn', 'init' ) );
-			add_action( 'load-edit.php', array( 'MslsCustomFilter', 'init' ) );
-
-			add_action( 'load-edit-tags.php', array( 'MslsCustomColumnTaxonomy', 'init' ) );
-			add_action( 'load-edit-tags.php', array( 'MslsPostTag', 'init' ) );
-
-			if ( filter_has_var( INPUT_POST, 'action' ) ) {
-				$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
-
-				if ( 'add-tag' == $action ) {
-					add_action( 'admin_init', array( 'MslsPostTag', 'init' ) );
-				}
-				elseif ( 'inline-save' == $action ) {
-					add_action( 'admin_init', array( 'MslsCustomColumn', 'init' ) );
-				}
-				elseif ( 'inline-save-tax' == $action ) {
-					add_action( 'admin_init', array( 'MslsCustomColumnTaxonomy', 'init' ) );
-				}
-			}
-
-			add_action( 'wp_ajax_suggest_posts', array( 'MslsMetaBox', 'suggest' ) );
-
-			add_action( 'wp_ajax_suggest_terms', array( 'MslsPostTag', 'suggest' ) );
-		}
-
-		/**
-		 * Filter for the_content()
-		 *
-		 * @package Msls
-		 * @uses MslsOptions
-		 * @param string $content
-		 * @return string
-		 */
-		function msls_content_filter( $content ) {
-			if ( ! is_front_page() && is_singular() ) {
-				$options = MslsOptions::instance();
-				if ( $options->is_content_filter() ) {
-					$content .= msls_filter_string();
-				}
-			}
-			return $content;
-		}
-		add_filter( 'the_content', 'msls_content_filter' );
-
-		/**
-		 * Create filterstring for msls_content_filter()
-		 *
-		 * @package Msls
-		 * @uses MslsOutput
-		 * @param string $pref
-		 * @param string $post
-		 * @return string
-		 */
-		function msls_filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-			$obj    = MslsOutput::init();
-			$links  = $obj->get( 1, true, true );
-			$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
-
-			if ( has_filter( 'msls_filter_string' ) ) {
-				/**
-				 * Overrides the string for the output of the translation hint
-				 * @since 1.0
-				 * @param string $output
-				 * @param array $links
-				 */
-				$output = apply_filters( 'msls_filter_string', $output, $links );
-			}
-			else {
-				if ( count( $links ) > 1 ) {
-					$last   = array_pop( $links );
-					$output = sprintf(
-						$output,
-						sprintf(
-							__( '%s and %s', 'multisite-language-switcher' ),
-							implode( ', ', $links ),
-							$last
-						)
-					);
-				}
-				elseif ( 1 == count( $links ) ) {
-					$output = sprintf(
-						$output,
-						$links[0]
-					);
-				}
-				else {
-					$output = '';
-				}
-			}
-			return( ! empty( $output ) ? $pref . $output . $post : '' );
-		}
-
-		/**
-		 * Get the output for using the links to the translations in your code
-		 *
-		 * @package Msls
-		 * @param array $arr
-		 * @return string
-		 */
-		function get_the_msls( $arr = array() ) {
-			$obj = MslsOutput::init()->set_tags( (array) $arr );
-			return( sprintf( '%s', $obj ) );
-		}
-		add_shortcode( 'sc_msls', 'get_the_msls' );
-
-		/**
-		 * Output the links to the translations in your template
-		 *
-		 * You can call this function directly like that
-		 *
-		 *     if ( function_exists ( 'the_msls' ) )
-		 *         the_msls();
-		 *
-		 * or just use it as shortcode [sc_msls]
-		 *
-		 * @package Msls
- 	 	 * @uses get_the_msls
-		 * @param array $arr
-		 */
-		function the_msls( $arr = array() ) {
-			echo get_the_msls( $arr ); // xss ok
-		}
-
-		/**
-		 * Help searchengines to index and to serve the localized version with
-		 * rel="alternate"-links in the html-header
-		 */
-		function msls_head() {
-			$blogs  = MslsBlogCollection::instance();
-			$mydata = MslsOptions::create();
-			foreach ( $blogs->get_objects() as $blog ) {
-				$language = $blog->get_language();
-				$url      = $mydata->get_current_link();
-				$current  = ( $blog->userblog_id == $blogs->get_current_blog_id() );
-				$title    = $blog->get_description();
-
-				if ( ! $current ) {
-					switch_to_blog( $blog->userblog_id );
-
-					if ( 'MslsOptions' != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
-						restore_current_blog();
-						continue;
-					}
-					$url = $mydata->get_permalink( $language );
-					$title = $blog->get_description();
-
-					restore_current_blog();
-				}
-
-				if ( has_filter( 'msls_head_hreflang' ) ) {
-					/**
-					 * Overrides the hreflang value
-					 * @since 0.9.9
-					 * @param string $language
-					 */
-					$hreflang = (string) apply_filters( 'msls_head_hreflang', $language );
-				}
-				else {
-					$hreflang = $blog->get_alpha2();
-				}
-
-				printf(
-					'<link rel="alternate" hreflang="%s" href="%s" title="%s" />',
-					$hreflang,
-					$url,
-					esc_attr( $title )
-				);
-				echo "\n";
-			}
-		}
-		add_action( 'wp_head', 'msls_head' );
-
+	/**
+	 * Output the links to the translations in your template
+	 *
+	 * You can call this function directly like that
+	 *
+	 *     if ( function_exists ( 'the_msls' ) )
+	 *         the_msls();
+	 *
+	 * or just use it as shortcode [sc_msls]
+	 *
+	 * @package Msls
+	 * @uses get_the_msls
+	 *
+	 * @param array $arr
+	 */
+	function the_msls( array $arr = [] ) {
+		echo get_the_msls( $arr );
 	}
-	else {
 
-		/**
-		 * Prints a message that the Multisite Language Switcher needs an
-		 * active multisite to work properly.
-		 */
-		function plugin_needs_multisite() {
-			MslsPlugin::message_handler(
-				__( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'multisite-language-switcher' )
-			);
-		}
-		add_action( 'admin_notices', 'plugin_needs_multisite' );
-
-	}
 }

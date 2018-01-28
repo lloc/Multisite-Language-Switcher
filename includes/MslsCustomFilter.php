@@ -27,9 +27,10 @@ class MslsCustomFilter extends MslsMain {
 			$post_type = MslsPostType::instance()->get_request();
 			if ( ! empty( $post_type ) ) {
 				add_action( 'restrict_manage_posts', array( $obj, 'add_filter' ) );
-				add_filter( 'parse_query',           array( $obj, 'execute_filter' ) );
+				add_filter( 'parse_query', array( $obj, 'execute_filter' ) );
 			}
 		}
+
 		return $obj;
 	}
 
@@ -39,7 +40,7 @@ class MslsCustomFilter extends MslsMain {
 	 */
 	public function add_filter() {
 		$id = (
-			filter_has_var( INPUT_GET, 'msls_filter' ) ?
+		filter_has_var( INPUT_GET, 'msls_filter' ) ?
 			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ) :
 			''
 		);
@@ -62,10 +63,12 @@ class MslsCustomFilter extends MslsMain {
 
 	/**
 	 * Execute filter. Exclude translated posts from WP_Query
-	 * @param WP_Query $query
+	 *
+	 * @param \WP_Query $query
+	 *
 	 * @return false or WP_Query object
 	 */
-	public function execute_filter( WP_Query $query ) {
+	public function execute_filter( \WP_Query $query ) {
 		$blogs = $this->collection->get();
 
 		if ( ! filter_has_var( INPUT_GET, 'msls_filter' ) ) {
@@ -91,8 +94,10 @@ class MslsCustomFilter extends MslsMain {
 				$exclude_ids[] = substr( $post->option_name, 5 );
 			}
 			$query->query_vars['post__not_in'] = $exclude_ids;
+
 			return $query;
 		}
+
 		return false;
 	}
 

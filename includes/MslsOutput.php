@@ -21,9 +21,11 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Creates and gets the output as an array
+	 *
 	 * @param int $display
 	 * @param bool $filter
 	 * @param bool $exists
+	 *
 	 * @uses MslsOptions
 	 * @uses MslsLink
 	 * @return array
@@ -43,15 +45,13 @@ class MslsOutput extends MslsMain {
 
 				if ( $current ) {
 					$link->txt = $blog->get_description();
-				}
-				else {
+				} else {
 					switch_to_blog( $blog->userblog_id );
 
 					if ( $this->is_requirements_not_fulfilled( $mydata, $exists, $language ) ) {
 						restore_current_blog();
 						continue;
-					}
-					else {
+					} else {
 						$url       = $mydata->get_permalink( $language );
 						$link->txt = $blog->get_description();
 					}
@@ -59,13 +59,14 @@ class MslsOutput extends MslsMain {
 					restore_current_blog();
 				}
 
-				$link->src = MslsOptions::instance()->get_flag_url( $language );
+				$link->src = $this->options->get_flag_url( $language );
 				$link->alt = $language;
 
 				if ( has_filter( 'msls_output_get' ) ) {
 					/**
 					 * Returns HTML-link for an item of the output-arr
 					 * @since 0.9.8
+					 *
 					 * @param string $url
 					 * @param MslsLink $link
 					 * @param bool current
@@ -92,23 +93,20 @@ class MslsOutput extends MslsMain {
 	 * @return string
 	 */
 	public function __toString() {
-		$options = MslsOptions::instance();
-
-		$display = (int) $options->display;
+		$display = (int) $this->options->display;
 		$filter  = false;
-		$exists  = isset( $options->only_with_translation );
+		$exists  = isset( $this->options->only_with_translation );
 
 		$arr = $this->get( $display, $filter, $exists );
-
-		if ( ! empty( $arr ) ) {
-			$tags = $this->get_tags();
-
-			return $tags['before_output'] . $tags['before_item'] .
-				implode( $tags['after_item'] . $tags['before_item'], $arr ) .
-				$tags['after_item'] . $tags['after_output'];
-
+		if ( empty( $arr ) ) {
+			return '';
 		}
-		return '';
+
+		$tags = $this->get_tags();
+
+		return $tags['before_output'] . $tags['before_item'] .
+		       implode( $tags['after_item'] . $tags['before_item'], $arr ) .
+		       $tags['after_item'] . $tags['after_output'];
 	}
 
 	/**
@@ -117,22 +115,22 @@ class MslsOutput extends MslsMain {
 	 */
 	public function get_tags() {
 		if ( empty( $this->tags ) ) {
-			$options = MslsOptions::instance();
-
 			$this->tags = array(
-				'before_item'   => $options->before_item,
-				'after_item'    => $options->after_item,
-				'before_output' => $options->before_output,
-				'after_output'  => $options->after_output,
+				'before_item'   => $this->options->before_item,
+				'after_item'    => $this->options->after_item,
+				'before_output' => $this->options->before_output,
+				'after_output'  => $this->options->after_output,
 			);
 
 			/**
 			 * Returns tags array for the output
 			 * @since 1.0
+			 *
 			 * @param array $tags
 			 */
 			$this->tags = ( array ) apply_filters( 'msls_output_get_tags', $this->tags );
 		}
+
 		return $this->tags;
 	}
 
@@ -140,25 +138,25 @@ class MslsOutput extends MslsMain {
 	 * Sets tags for the output
 	 *
 	 * @param array $arr
+	 *
 	 * @return MslsOutput
 	 */
-	public function set_tags( array $arr = array() ) {
+	public function set_tags( array $arr = [] ) {
 		$this->tags = wp_parse_args( $this->get_tags(), $arr );
+
 		return $this;
 	}
 
 	/**
 	 * Returns true if the requirements not fulfilled
+	 *
 	 * @param MslsOptions|null $mydata
 	 * @param boolean $exists
 	 * @param string $language
+	 *
 	 * @return boolean
 	 */
 	public function is_requirements_not_fulfilled( $mydata, $exists, $language ) {
-		return(
-			'MslsOptions' != get_class( $mydata ) &&
-			$exists &&
-			( is_null( $mydata ) || ! $mydata->has_value( $language ) )
-		);
+		return MslsOptions::class != get_class( $mydata ) && $exists && ( is_null( $mydata ) || ! $mydata->has_value( $language ) );
 	}
 }

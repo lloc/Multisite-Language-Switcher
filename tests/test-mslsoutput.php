@@ -18,7 +18,7 @@ class WP_Test_MslsOutput extends Msls_UnitTestCase {
 	 */
 	function test_init_method() {
 		$obj = MslsOutput::init();
-		$this->assertInstanceOf( 'MslsOutput', $obj );
+		$this->assertInstanceOf( MslsOutput::class, $obj );
 		return $obj;
 	}
 
@@ -53,7 +53,7 @@ class WP_Test_MslsOutput extends Msls_UnitTestCase {
 	 * @depends test_init_method
 	 */
 	function test_set_tags_method( $obj ) {
-		$this->assertInstanceOf( 'MslsOutput', $obj->set_tags() );
+		$this->assertInstanceOf( MslsOutput::class, $obj->set_tags() );
 	}
 
 	/**

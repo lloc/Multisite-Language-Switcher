@@ -19,7 +19,7 @@ class WP_Test_MslsRegistry extends Msls_UnitTestCase {
 	 */
 	function test_instance_method() {
 		$obj = MslsRegistry::instance();
-		$this->assertInstanceOf( 'MslsRegistry', $obj );
+		$this->assertInstanceOf( MslsRegistry::class, $obj );
 		return $obj;
 	}
 

@@ -18,7 +18,7 @@ class WP_Test_MslsOptionsTax extends Msls_UnitTestCase {
 	 */
 	function test_create_method() {
 		$obj = MslsOptionsTax::create();
-		$this->assertInstanceOf( 'MslsOptionsTax', $obj );
+		$this->assertInstanceOf( MslsOptionsTax::class, $obj );
 		return $obj;
 	}
 

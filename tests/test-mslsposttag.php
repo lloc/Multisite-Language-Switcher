@@ -9,6 +9,7 @@
 use lloc\Msls\MslsPostTag;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsOptionsTax;
 
 /**
  * WP_Test_MslsPostTag

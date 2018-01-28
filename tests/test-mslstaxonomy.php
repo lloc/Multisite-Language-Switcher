@@ -20,7 +20,7 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 	 */
 	function test_instance_method() {
 		$obj = MslsTaxonomy::instance();
-		$this->assertInstanceOf( 'MslsTaxonomy', $obj );
+		$this->assertInstanceOf( MslsTaxonomy::class, $obj );
 		return $obj;
 	}
 

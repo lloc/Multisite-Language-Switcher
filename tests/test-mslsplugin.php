@@ -7,31 +7,38 @@
  */
 
 use lloc\Msls\MslsPlugin;
+use lloc\Msls\MslsOptions;
 
 /**
  * WP_Test_MslsPlugin
  */
 class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 
+	function get_test() {
+		$options = MslsOptions::instance();
+
+		return new MslsPlugin( $options );
+	}
+
 	/**
 	 * Verify the static init-method
 	 */
-	function test_init_method() {
-		$this->assertInternalType( 'boolean', MslsPlugin::init() );
+	function test_admin_menu_method() {
+		$this->assertInternalType( 'boolean', $this->get_test()->admin_menu() );
 	}
 
 	/**
 	 * Verify the static init_widget-method
 	 */
 	function test_init_widget_method() {
-		$this->assertInternalType( 'boolean', MslsPlugin::init_widget() );
+		$this->assertInternalType( 'boolean', $this->get_test()->init_widget() );
 	}
 
 	/**
 	 * Verify the static init_i18n_support-method
 	 */
 	function test_init_i18n_support_method() {
-		$this->assertInternalType( 'boolean', MslsPlugin::init_i18n_support() );
+		$this->assertInternalType( 'boolean', $this->get_test()->init_i18n_support() );
 	}
 
 	/**
@@ -46,7 +53,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	 * Verify the static uninstall-method
 	 */
 	function test_uninstall_method() {
-		$this->assertInternalType( 'boolean', MslsPlugin::uninstall() );
+		$this->assertInternalType( 'boolean', $this->get_test()->uninstall() );
 	}
 
 	/**

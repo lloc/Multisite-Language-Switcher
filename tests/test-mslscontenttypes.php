@@ -18,7 +18,7 @@ class WP_Test_MslsContentTypes extends Msls_UnitTestCase {
 	 */
 	function test_create_method() {
 		$obj = MslsContentTypes::create();
-		$this->assertInstanceOf( 'MslsContentTypes', $obj );
+		$this->assertInstanceOf( MslsContentTypes::class, $obj );
 		return $obj;
 	}
 

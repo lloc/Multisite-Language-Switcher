@@ -7,6 +7,7 @@
  */
 
 use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsOptions;
 
 /**
  * WP_Test_MslsBlogCollection
@@ -18,7 +19,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	 */
 	function test_instance_method() {
 		$obj =  MslsBlogCollection::instance();
-		$this->assertInstanceOf( 'MslsBlogCollection', $obj );
+		$this->assertInstanceOf( MslsBlogCollection::class, $obj );
 		return $obj;
 	}
 
