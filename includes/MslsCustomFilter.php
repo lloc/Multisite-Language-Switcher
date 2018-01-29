@@ -16,6 +16,9 @@ class MslsCustomFilter extends MslsMain {
 
 	/**
 	 * Init
+	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @return MslsCustomFilter
 	 */
 	public static function init() {
@@ -26,8 +29,8 @@ class MslsCustomFilter extends MslsMain {
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
 			if ( ! empty( $post_type ) ) {
-				add_action( 'restrict_manage_posts', array( $obj, 'add_filter' ) );
-				add_filter( 'parse_query', array( $obj, 'execute_filter' ) );
+				add_action( 'restrict_manage_posts', [ $obj, 'add_filter' ] );
+				add_filter( 'parse_query', [ $obj, 'execute_filter' ] );
 			}
 		}
 

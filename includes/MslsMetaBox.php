@@ -76,6 +76,9 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Init
+	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @return MslsMetaBox
 	 */
 	public static function init() {
@@ -84,9 +87,9 @@ class MslsMetaBox extends MslsMain {
 		$obj        = new static( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
-			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
-			add_action( 'save_post', array( $obj, 'set' ) );
-			add_action( 'trashed_post', array( $obj, 'delete' ) );
+			add_action( 'add_meta_boxes', [ $obj, 'add' ] );
+			add_action( 'save_post', [ $obj, 'set' ] );
+			add_action( 'trashed_post', [ $obj, 'delete' ] );
 		}
 
 		return $obj;

@@ -17,19 +17,10 @@ class WP_Test_MslsCustomFilter extends Msls_UnitTestCase {
 	 * Verify the init-method
 	 */
 	function test_init_method() {
-		$obj = MslsCustomFilter::init();
-		$this->assertInstanceOf( MslsCustomFilter::class, $obj );
-		return $obj;
-	}
-
-	/**
-	 * Verify the execute_filter-method
-	 *
-	 * @depends test_init_method
-	 */
-	function test_execute_filter_method( $obj ) {
+		$obj   = MslsCustomFilter::init();
 		$query = $this->getMockBuilder( WP_Query::class )->getMock();
 
+		$this->assertInstanceOf( MslsCustomFilter::class, $obj );
 		$this->assertFalse( $obj->execute_filter( $query ) );
 	}
 

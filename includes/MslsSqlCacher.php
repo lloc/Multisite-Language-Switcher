@@ -56,7 +56,7 @@ class MslsSqlCacher {
 	/**
 	 * Factory
 	 *
-	 * @uses $wpdb
+	 * @uses \WPDB $wpdb
 	 *
 	 * @param string $caller
 	 *

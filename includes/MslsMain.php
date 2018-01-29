@@ -36,6 +36,8 @@ class MslsMain {
 	/**
 	 * Factory
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @return MslsMain
 	 */
 	public static function init() {

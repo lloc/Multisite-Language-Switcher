@@ -16,6 +16,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
 	/**
 	 * Init
+	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @return MslsCustomColumnTaxonomy
 	 */
 	public static function init() {
@@ -27,9 +30,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 			$taxonomy = MslsTaxonomy::instance()->get_request();
 
 			if ( ! empty( $taxonomy ) ) {
-				add_filter( "manage_edit-{$taxonomy}_columns" , array( $obj, 'th' ) );
-				add_action( "manage_{$taxonomy}_custom_column" , array( $obj, 'column_default' ), 10, 3 );
-				add_action( "delete_{$taxonomy}", array( $obj, 'delete' ) );
+				add_filter( "manage_edit-{$taxonomy}_columns" , [ $obj, 'th' ] );
+				add_action( "manage_{$taxonomy}_custom_column" , [ $obj, 'column_default' ], 10, 3 );
+				add_action( "delete_{$taxonomy}", [ $obj, 'delete' ] );
 			}
 		}
 

@@ -28,6 +28,10 @@ class MslsPlugin {
 
 	/**
 	 * Factory
+	 *
+	 * @codeCoverageIgnore
+	 *
+	 * @return MslsPlugin
 	 */
 	public static function init() {
 		$options = MslsOptions::instance();

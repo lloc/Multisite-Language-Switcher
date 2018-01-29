@@ -6,10 +6,17 @@
     "php": ">=5.6",
     "composer/installers": "~1.0.6"
   },
+  "require-dev": {
+    "phpunit/phpunit": ">=5.7"
+  },
   "autoload": {
     "psr-4": {
       "lloc\\Msls\\": "includes/"
     }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "coverage": "phpunit --coverage-html tests/coverage"
   },
   "authors": [
     {

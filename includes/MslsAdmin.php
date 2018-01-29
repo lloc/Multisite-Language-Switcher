@@ -16,6 +16,8 @@ class MslsAdmin extends MslsMain {
 	/**
 	 * Factory
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @return MslsAdmin
 	 */
 	public static function init() {
@@ -27,10 +29,10 @@ class MslsAdmin extends MslsMain {
 			$title = __( 'Multisite Language Switcher', 'multisite-language-switcher' );
 			add_options_page( $title, $title, 'manage_options', __CLASS__, array( $obj, 'render' ) );
 
-			add_action( 'admin_init', array( $obj, 'register' ) );
-			add_action( 'admin_notices', array( $obj, 'has_problems' ) );
+			add_action( 'admin_init', [ $obj, 'register' ] );
+			add_action( 'admin_notices', [ $obj, 'has_problems' ] );
 
-			add_filter( 'msls_admin_validate', array( $obj, 'set_blog_language' ) );
+			add_filter( 'msls_admin_validate', [ $obj, 'set_blog_language' ] );
 		}
 
 		return $obj;

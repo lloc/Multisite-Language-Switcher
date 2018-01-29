@@ -18,8 +18,10 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 	 */
 	function test_widget_method() {
 		$obj = new MslsWidget();
+
 		$this->expectOutputString( 'No available translations found' );
 		$obj->widget( array(), array() );
+
 		return $obj;
 	}
 

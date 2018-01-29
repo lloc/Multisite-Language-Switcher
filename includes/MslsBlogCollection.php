@@ -314,7 +314,7 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 			$blog_id = get_current_blog_id();
 		}
 
-		$language = (string) get_blog_option(
+		$language = ( string ) get_blog_option(
 			$blog_id, 'WPLANG'
 		);
 

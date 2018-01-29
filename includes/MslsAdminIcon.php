@@ -87,15 +87,14 @@ class MslsAdminIcon {
 
 	/**
 	 * Set the path by type
+	 *
 	 * @uses add_query_arg()
+	 *
 	 * @return MslsAdminIcon
 	 */
 	public function set_path() {
 		if ( 'post' != $this->type ) {
-			$this->path = add_query_arg(
-				array( 'post_type' => $this->type ),
-				$this->path
-			);
+			$this->path = add_query_arg( [ 'post_type' => $this->type ], $this->path );
 		}
 
 		return $this;
@@ -103,32 +102,41 @@ class MslsAdminIcon {
 
 	/**
 	 * Set language
+	 *
 	 * @param string $language
+	 *
 	 * @return MslsAdminIcon
 	 */
 	public function set_language( $language ) {
 		$this->language = $language;
+
 		return $this;
 	}
 
 	/**
 	 * Set src
+	 *
 	 * @param string $src
+	 *
 	 * @return MslsAdminIcon
 	 */
 	public function set_src( $src ) {
 		$this->src = $src;
+
 		return $this;
 	}
 
 	/**
 	 * Set href
 	 * @uses get_edit_post_link()
+	 *
 	 * @param int $id
+	 *
 	 * @return MslsAdminIcon
 	 */
 	public function set_href( $id ) {
 		$this->href = get_edit_post_link( $id );
+
 		return $this;
 	}
 
@@ -142,14 +150,11 @@ class MslsAdminIcon {
 
 	/**
 	 * Get image as html-tag
+	 *
 	 * @return string
 	 */
 	public function get_img() {
-		return sprintf(
-			'<img alt="%s" src="%s" />',
-			$this->language,
-			$this->src
-		);
+		return sprintf( '<img alt="%s" src="%s" />', $this->language, $this->src );
 	}
 
 	/**
@@ -207,19 +212,29 @@ class MslsAdminIcon {
 	}
 
 	/**
-	 * Sets the id of the object this icon is for.
+	 * Sets the id of the object this icon is for
+	 *
 	 * @param int $id
+	 *
+	 * @return MslsAdminIcon
 	 */
 	public function set_id( $id ) {
 		$this->id = $id;
+
 		return $this;
 	}
 
 	/**
-	 * Sets the origin language for this icon.
+	 * Sets the origin language for this icon
+	 *
 	 * @param string $origin_language
+	 *
+	 * @return MslsAdminIcon
 	 */
 	public function set_origin_language( $origin_language ) {
 		$this->origin_language = $origin_language;
+
+		return $this;
 	}
+
 }

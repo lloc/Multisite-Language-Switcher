@@ -67,6 +67,9 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Init
+	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @return MslsPostTag
 	 */
 	public static function init() {
@@ -82,10 +85,10 @@ class MslsPostTag extends MslsMain {
 
 		$taxonomy = MslsContentTypes::create()->acl_request();
 		if ( '' != $taxonomy ) {
-			add_action( "{$taxonomy}_add_form_fields",  array( $obj, 'add_input' ) );
-			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ) );
-			add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
-			add_action( "create_{$taxonomy}", array( $obj, 'set' ) );
+			add_action( "{$taxonomy}_add_form_fields",  [ $obj, 'add_input' ] );
+			add_action( "{$taxonomy}_edit_form_fields", [ $obj, 'edit_input' ] );
+			add_action( "edited_{$taxonomy}", [ $obj, 'set' ] );
+			add_action( "create_{$taxonomy}", [ $obj, 'set' ] );
 		}
 
 		return $obj;
@@ -93,7 +96,8 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
-	 * @param StdClass $tag
+	 *
+	 * @param \StdClass $tag
 	 */
 	public function add_input( $tag ) {
 		$title_format = '<h3>%s</h3>
@@ -111,7 +115,7 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
-	 * @param StdClass $tag
+	 * @param \StdClass $tag
 	 */
 	public function edit_input( $tag ) {
 		$title_format = '<tr>
@@ -138,7 +142,7 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Print the input fields
 	 * Returns true if the blogcollection is not empty
-	 * @param StdClass $tag
+	 * @param \StdClass $tag
 	 * @param string $title_format
 	 * @param string $item_format
 	 * @return boolean

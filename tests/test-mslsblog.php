@@ -15,8 +15,6 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the __get-method
-	 * @covers MslsBlog::__construct
-	 * @covers MslsBlog::__get
 	 */
 	function test___get_method() {
 		$blog = new stdClass();
@@ -24,31 +22,8 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 
 		$obj = new MslsBlog( $blog, 'Test' );
 		$this->assertEquals( 1, $obj->userblog_id );
-
-		return $obj;
-	}
-
-	/**
-	 * Verify the get_description-method
-     * @depends test___get_method
-	 */
-	function test_get_description_method( $obj ) {
 		$this->assertEquals( 'Test', $obj->get_description() );
-	}
-
-	/**
-	 * Verify the get_language-method
-	 * @depends test___get_method
-	 */
-	function test_get_language_method( $obj ) {
 		$this->assertEquals( 'en_US', $obj->get_language() );
-	}
-
-	/**
-	 * Verify the get_alpha2-method
-     * @depends test___get_method
-	 */
-	function test_get_alpha2_method( $obj ) {
 		$this->assertEquals( 'en', $obj->get_alpha2() );
 	}
 

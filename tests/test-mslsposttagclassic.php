@@ -15,7 +15,7 @@ use lloc\Msls\MslsBlogCollection;
  */
 class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 
-	function get_test() {
+	public function get_test() {
 		$options    = MslsOptions::instance();
 		$collection = MslsBlogCollection::instance();
 
@@ -24,9 +24,10 @@ class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the static the_input-method
-	 * @depends get_test
 	 */
-	function test_the_input_method( $obj ) {
+	public function test_the_input_method() {
+		$obj = $this->get_test();
+
 		$tag = new StdClass;
 		$tag->term_id = 1;
 		$this->assertInternalType( 'boolean', $obj->the_input( $tag, 'test', 'test' ) );

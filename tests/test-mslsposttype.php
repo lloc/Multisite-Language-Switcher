@@ -15,8 +15,6 @@ class WP_Test_MslsPostType extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the instance-method
-	 * @covers MslsPostType::instance
-	 * @covers MslsPostType::__construct
 	 */
 	function test_instance_method() {
 		$obj = MslsPostType::instance();

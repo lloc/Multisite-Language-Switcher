@@ -43,8 +43,6 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the static instance-method
-	 * @covers MslsOptions::instance
-	 * @covers MslsOptions::__construct
 	 */
 	function test_instance_method() {
 		$obj = MslsOptions::instance();

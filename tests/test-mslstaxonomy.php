@@ -15,8 +15,6 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the instance-method
-	 * @covers MslsTaxonomy::instance
-	 * @covers MslsTaxonomy::__construct
 	 */
 	function test_instance_method() {
 		$obj = MslsTaxonomy::instance();

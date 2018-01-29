@@ -15,8 +15,6 @@ class WP_Test_MslsSqlCacher extends Msls_UnitTestCase {
 
 	/**
 	 * Verify the static init-method
- 	 * @covers MslsSqlCacher::init
- 	 * @covers MslsSqlCacher::__construct
 	 */
 	function test_init_method() {
 		$obj = MslsSqlCacher::init( 'MslsSqlCacherTest' );
@@ -27,10 +25,6 @@ class WP_Test_MslsSqlCacher extends Msls_UnitTestCase {
 	/**
 	 * Verify the rest of the methods
 	 * @depends test_init_method
- 	 * @covers MslsSqlCacher::set_params
- 	 * @covers MslsSqlCacher::get_key
- 	 * @covers MslsSqlCacher::__get
- 	 * @covers MslsSqlCacher::__call
 	 */
 	function test_set_params_method( $obj ) {
 		$this->assertInstanceOf( MslsSqlCacher::class, $obj->set_params( array( 'Cache', 'Test' ) ) );
