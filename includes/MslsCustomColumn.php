@@ -64,13 +64,17 @@ class MslsCustomColumn extends MslsMain {
 			}
 			$columns['mslscol'] = implode( '&nbsp;', $arr );
 		}
+
 		return $columns;
 	}
 
 	/**
 	 * Table body
+	 *
 	 * @param string $column_name
 	 * @param int $item_id
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function td( $column_name, $item_id ) {
 		if ( 'mslscol' == $column_name ) {

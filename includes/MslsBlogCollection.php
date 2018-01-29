@@ -320,4 +320,5 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 
 		return '' !== $language ? $language : 'en_US';
 	}
+
 }

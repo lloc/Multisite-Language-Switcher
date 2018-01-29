@@ -7,20 +7,25 @@
  */
 
 use lloc\Msls\MslsCustomColumn;
+use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsBlogCollection;
 
 /**
  * WP_Test_MslsCustomColumn
  */
 class WP_Test_MslsCustomColumn extends Msls_UnitTestCase {
 
-	/**
-	 * Verify the init-method
-	 */
-	function test_init_method() {
-		$obj = MslsCustomColumn::init();
-		$this->assertInstanceOf( MslsCustomColumn::class, $obj );
+	public function get_test() {
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
 
-		$this->assertInternalType( 'array', $obj->th( array() ) );
+		return new MslsCustomColumn( $options, $collection );
+	}
+
+	function test_th() {
+		$obj = $this->get_test();
+
+		$this->assertInternalType( 'array', $obj->th( [] ) );
 	}
 
 }

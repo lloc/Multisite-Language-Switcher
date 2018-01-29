@@ -248,6 +248,7 @@ class MslsPlugin {
 			);
 			return true;
 		}
+
 		return false;
 	}
 

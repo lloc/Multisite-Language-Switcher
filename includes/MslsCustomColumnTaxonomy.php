@@ -15,7 +15,7 @@ namespace lloc\Msls;
 class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
 	/**
-	 * Init
+	 * Factory
 	 *
 	 * @codeCoverageIgnore
 	 *
@@ -41,6 +41,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
 	/**
 	 * Table body
+	 *
 	 * @param string $deprecated
 	 * @param string $column_name
 	 * @param int $item_id
@@ -51,6 +52,9 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
 	/**
 	 * Delete
+	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @param int $object_id
 	 */
 	public function delete( $object_id ) {

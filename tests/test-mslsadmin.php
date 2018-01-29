@@ -9,6 +9,7 @@
 use lloc\Msls\MslsAdmin;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsBlog;
 
 /**
  * WP_Test_MslsAdmin
@@ -22,26 +23,70 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		return new MslsAdmin( $options, $collection );
 	}
 
-	/**
-	 * Verify the has_problems-method
-	 */
-	function test_has_problems() {
-		$obj = $this->get_test();
+	function test_has_problems_no_problem() {
+		$options = $this->getMockBuilder( MslsOptions::class )->getMock();
+		$options->method( 'get_available_languages' )->willReturn( [ 'de_DE', 'it_IT' ] );
+
+		$collection = MslsBlogCollection::instance();
+
+		$obj = new MslsAdmin( $options, $collection );
+
+		$this->assertFalse( $obj->has_problems() );
+	}
+
+	function test_has_problems_one_language() {
+		$options = $this->getMockBuilder( MslsOptions::class )->getMock();
+		$options->method( 'get_available_languages' )->willReturn( [ 'de_DE' ] );
+
+		$collection = MslsBlogCollection::instance();
+
+		$obj = new MslsAdmin( $options, $collection );
 
 		$this->expectOutputRegex( '/^<div id="msls-warning" class="updated fade"><p>.*$/' );
-		$retval = $obj->has_problems();
 
-		$this->assertInternalType( 'bool', $retval );
+		$this->assertTrue( $obj->has_problems() );
 	}
 
-	/**
-	 * Verify the subsubsub-method
-	 */
-	function test_subsubsub() {
+	function test_has_problems_is_empty() {
+		$options = $this->getMockBuilder( MslsOptions::class )->getMock();
+		$options->method( 'is_empty' )->willReturn( true );
+
+		$collection = MslsBlogCollection::instance();
+
+		$obj = new MslsAdmin( $options, $collection );
+
+		$this->expectOutputRegex( '/^<div id="msls-warning" class="updated fade"><p>.*$/' );
+
+		$this->assertTrue( $obj->has_problems() );
+	}
+
+	public function test_subsubsub_empty() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->subsubsub() );
+		$this->assertEquals( '', $obj->subsubsub() );
 	}
+
+	/* function test_subsubsub_two_blogs() {
+		$options    = $this->getMockBuilder( MslsOptions::class )->getMock();
+
+		$blog_1              = $this->getMockBuilder( MslsBlog::class)->disableOriginalConstructor()->getMock();
+		$blog_1->userblog_id = 1;
+		$blog_1->blogname    = 'Test 1';
+		$blog_1->method( 'get_description' )->willReturn( 'Descr 1' );
+
+		$blog_2              = $this->getMockBuilder( MslsBlog::class)->disableOriginalConstructor()->getMock();
+		$blog_2->userblog_id = 2;
+		$blog_2->blogname    = 'Test 2';
+		$blog_2->method( 'get_description' )->willReturn( 'Descr 2' );
+
+		$collection = $this->getMockBuilder( MslsBlogCollection::class)->getMock();
+		$collection->method( 'get_plugin_active_blogs' )->willReturn( [ $blog_1, $blog_2 ] );
+		$collection->method( 'get_current_blog_id' )->willReturn( 1 );
+
+		$obj = new MslsAdmin( $options, $collection );
+
+		$this->assertInternalType( 'string', $obj->subsubsub() );
+	} */
 
 	/**
 	 * Verify the blog_language-method

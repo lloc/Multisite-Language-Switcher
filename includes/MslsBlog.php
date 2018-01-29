@@ -35,7 +35,7 @@ class MslsBlog {
 	/**
 	 * Constructor
 	 *
-	 * @param StdClass $obj
+	 * @param \StdClass $obj
 	 * @param string $description
 	 */
 	public function __construct( $obj, $description ) {
@@ -43,6 +43,7 @@ class MslsBlog {
 			$this->obj      = $obj;
 			$this->language = MslsBlogCollection::get_blog_language( $this->obj->userblog_id );
 		}
+
 		$this->description = (string) $description;
 	}
 
@@ -56,7 +57,7 @@ class MslsBlog {
 	 * @return mixed|null
 	 */
 	final public function __get( $key ) {
-		return ( isset( $this->obj->$key ) ? $this->obj->$key : null );
+		return isset( $this->obj->$key ) ? $this->obj->$key : null;
 	}
 
 	/**
@@ -67,7 +68,7 @@ class MslsBlog {
 	 */
 	public function get_description() {
 		return (
-		empty( $this->description ) ?
+			empty( $this->description ) ?
 			$this->get_language() :
 			$this->description
 		);

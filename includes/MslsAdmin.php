@@ -66,15 +66,14 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function has_problems() {
 		$message = '';
-		$options = $this->options;
 
-		if ( 1 == count( $options->get_available_languages() ) ) {
+		if ( 1 == count( $this->options->get_available_languages() ) ) {
 			$message = sprintf(
 				__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.' ),
 				esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
 				esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
 			);
-		} elseif ( $options->is_empty() ) {
+		} elseif ( $this->options->is_empty() ) {
 			$message = sprintf(
 				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
 				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
@@ -110,7 +109,7 @@ class MslsAdmin extends MslsMain {
 	 * @return string
 	 */
 	public function subsubsub() {
-		$arr = array();
+		$arr = [];
 
 		foreach ( $this->collection->get_plugin_active_blogs() as $blog ) {
 			$arr[] = sprintf(
@@ -123,7 +122,7 @@ class MslsAdmin extends MslsMain {
 		}
 
 		return (
-		empty( $arr ) ?
+			empty( $arr ) ?
 			'' :
 			sprintf(
 				'<ul class="subsubsub"><li>%s</li></ul>',
@@ -320,11 +319,10 @@ class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'admin_language'
 	 */
 	public function admin_language() {
-		$options = $this->options;
 		echo $this->render_select(
 			'admin_language',
-			$options->get_available_languages(),
-			$options->admin_language
+			$this->options->get_available_languages(),
+			$this->options->admin_language
 		);
 	}
 
@@ -502,7 +500,7 @@ class MslsAdmin extends MslsMain {
 	 * @return string
 	 */
 	public function render_select( $key, array $arr, $selected = '' ) {
-		$options = array();
+		$options = [];
 
 		foreach ( $arr as $value => $description ) {
 			$options[] = sprintf(
