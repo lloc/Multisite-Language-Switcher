@@ -1,0 +1,20 @@
+<project>
+  <target name="phploc"
+          description="Measure project size using PHPLOC">
+    <exec executable="phploc">
+      <arg value="--log-csv" />
+      <arg value="${basedir}/build/logs/phploc.csv" />
+      <arg value="--exclude" />
+      <arg value="${basedir}/build" />
+      <arg value="--exclude" />
+      <arg value="${basedir}/cache" />
+      <arg value="--exclude" />
+      <arg value="${basedir}/data" />
+      <arg value="--exclude" />
+      <arg value="${basedir}/lib/vendor" />
+      <arg value="--exclude" />
+      <arg value="${basedir}/log" />
+      <arg path="${basedir}" />
+    </exec>
+  </target>
+</project>
