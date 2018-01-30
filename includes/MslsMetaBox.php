@@ -28,7 +28,7 @@ class MslsMetaBox extends MslsMain {
 			);
 
 			$args = array(
-				'post_status'    => get_post_stati( array( 'internal' => '' ) ),
+				'post_status'    => get_post_stati( [ 'internal' => '' ] ),
 				'posts_per_page' => 10,
 			);
 
@@ -52,7 +52,7 @@ class MslsMetaBox extends MslsMain {
 			 */
 			$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
 
-			$my_query = new WP_Query( $args );
+			$my_query = new \WP_Query( $args );
 			while ( $my_query->have_posts() ) {
 				$my_query->the_post();
 
@@ -60,7 +60,7 @@ class MslsMetaBox extends MslsMain {
 				 * Manipulates the WP_Post object before using it
 				 * @since 0.9.9
 				 *
-				 * @param WP_Post $post
+				 * @param \WP_Post $post
 				 */
 				$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
 
@@ -103,14 +103,14 @@ class MslsMetaBox extends MslsMain {
 			add_meta_box(
 				'msls',
 				__( 'Multisite Language Switcher', 'multisite-language-switcher' ),
-				array(
+				[
 					$this,
 					(
 					MslsOptions::instance()->activate_autocomplete ?
 						'render_input' :
 						'render_select'
 					),
-				),
+				],
 				$post_type,
 				'side',
 				'high'
@@ -175,10 +175,10 @@ class MslsMetaBox extends MslsMain {
 				} else {
 					$options = '';
 
-					$my_query = new WP_Query(
+					$my_query = new \WP_Query(
 						array(
 							'post_type'      => $type,
-							'post_status'    => get_post_stati( array( 'internal' => '' ) ),
+							'post_status'    => get_post_stati( [ 'internal' => '' ] ),
 							'orderby'        => 'title',
 							'order'          => 'ASC',
 							'posts_per_page' => - 1,

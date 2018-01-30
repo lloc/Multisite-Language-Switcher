@@ -64,7 +64,7 @@ class MslsOptions extends MslsGetSet {
 	 * @var bool
 	 */
 	public $with_front;
-	
+
 	/**
 	 * Factory method
 	 *
@@ -92,7 +92,8 @@ class MslsOptions extends MslsGetSet {
 		} else {
 			$options = new MslsOptionsPost( get_queried_object_id() );
 		}
-		add_filter( 'check_url', array( $options, 'check_for_blog_slug' ), 10, 2 );
+
+		add_filter( 'check_url', [ $options, 'check_for_blog_slug' ], 10, 2 );
 
 		return $options;
 	}

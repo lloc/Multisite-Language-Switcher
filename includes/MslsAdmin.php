@@ -27,7 +27,7 @@ class MslsAdmin extends MslsMain {
 
 		if ( current_user_can( 'manage_options' ) ) {
 			$title = __( 'Multisite Language Switcher', 'multisite-language-switcher' );
-			add_options_page( $title, $title, 'manage_options', __CLASS__, array( $obj, 'render' ) );
+			add_options_page( $title, $title, 'manage_options', __CLASS__, [ $obj, 'render' ] );
 
 			add_action( 'admin_init', [ $obj, 'register' ] );
 			add_action( 'admin_notices', [ $obj, 'has_problems' ] );
@@ -49,7 +49,7 @@ class MslsAdmin extends MslsMain {
 	public function __call( $method, $args ) {
 		$parts = explode( '_', $method, 2 );
 		if ( 2 == count( $parts ) ) {
-			switch( $parts[0] ) {
+			switch ( $parts[0] ) {
 				case 'rewrite':
 					return $this->render_rewrite( $parts[1] );
 					break;
@@ -122,7 +122,7 @@ class MslsAdmin extends MslsMain {
 		}
 
 		return (
-			empty( $arr ) ?
+		empty( $arr ) ?
 			'' :
 			sprintf(
 				'<ul class="subsubsub"><li>%s</li></ul>',
@@ -136,7 +136,7 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function register() {
-		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
+		register_setting( 'msls', 'msls', [ $this, 'validate' ] );
 
 		add_settings_section( 'language_section', __( 'Language Settings', 'multisite-language-switcher' ), array(
 			$this,
@@ -290,9 +290,9 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function rewrites_section() {
-		foreach ( get_post_types( array( 'public' => true ), 'objects' ) as $key => $object ) {
+		foreach ( get_post_types( [ 'public' => true ], 'objects' ) as $key => $object ) {
 			$title = sprintf( __( '%s Slug', 'multisite-language-switcher' ), $object->label );
-			add_settings_field( "rewrite_{$key}", $title, array( $this, "rewrite_{$key}" ), __CLASS__, 'rewrites_section' );
+			add_settings_field( "rewrite_{$key}", $title, [ $this, "rewrite_{$key}" ], __CLASS__, 'rewrites_section' );
 		}
 
 		/**
@@ -351,7 +351,7 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
-	 render
+	 * render
 	 *
 	 * You can decide if you want to activate the experimental autocomplete
 	 * input fields in the backend instead of the traditional select-menus.
@@ -424,10 +424,10 @@ class MslsAdmin extends MslsMain {
 	 * for the output
 	 */
 	public function content_priority() {
-		$temp = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
-		$arr = array_combine( $temp, $temp );
+		$temp     = array_merge( range( 1, 10 ), [ 20, 50, 100 ] );
+		$arr      = array_combine( $temp, $temp );
 		$selected = (
-		empty( $this->options->content_priority ) ?
+			empty( $this->options->content_priority ) ?
 			10 :
 			$this->options->content_priority
 		);
@@ -446,8 +446,7 @@ class MslsAdmin extends MslsMain {
 		$value = '';
 		if ( true === $rewrite ) {
 			$value = $key;
-		}
-		elseif ( ! empty( $rewrite['slug'] ) ) {
+		} elseif ( ! empty( $rewrite['slug'] ) ) {
 			$value = $rewrite['slug'];
 		}
 

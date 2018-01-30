@@ -65,11 +65,11 @@ class MslsCustomFilter extends MslsMain {
 	}
 
 	/**
-	 * Execute filter. Exclude translated posts from WP_Query
+	 * Executes filter, excludes translated posts from WP_Query
 	 *
 	 * @param \WP_Query $query
 	 *
-	 * @return false or WP_Query object
+	 * @return bool|\WP_Query
 	 */
 	public function execute_filter( \WP_Query $query ) {
 		$blogs = $this->collection->get();

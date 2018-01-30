@@ -55,7 +55,9 @@ class MslsJson {
 	 */
 	public function get() {
 		$arr = $this->arr;
-		usort( $arr, array( __CLASS__, 'compare' ) );
+
+		usort( $arr, [ __CLASS__, 'compare' ] );
+
 		return $arr;
 	}
 

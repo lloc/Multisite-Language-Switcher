@@ -2,6 +2,8 @@
 
 _Please keep in mind that the version of the Multisite Language Switcher at GitHub is a work in progress._
 
+Run `composer install --no-dev` if you plan to use the repository anyways.
+
 **Download the [latest stable from the WordPress Plugin Directory](http://downloads.wordpress.org/plugin/multisite-language-switcher.zip).**
  
 [![Build Status](https://api.travis-ci.org/lloc/Multisite-Language-Switcher.png)](https://api.travis-ci.org/lloc/Multisite-Language-Switcher)

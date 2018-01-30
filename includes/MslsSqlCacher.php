@@ -117,12 +117,12 @@ class MslsSqlCacher {
 	 */
 	public function __call( $method, $args ) {
 		if ( 'get_' != substr( $method, 0, 4 ) ) {
-			$result = call_user_func_array( array( $this->db, $method ), $args );
+			$result = call_user_func_array( [ $this->db, $method ], $args );
 		} else {
 			$key    = $this->get_key();
 			$result = wp_cache_get( $key );
 			if ( false === $result ) {
-				$result = call_user_func_array( array( $this->db, $method ), $args );
+				$result = call_user_func_array( [ $this->db, $method ], $args );
 				wp_cache_set( $key, $result );
 			}
 		}

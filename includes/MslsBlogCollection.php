@@ -49,7 +49,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 */
 	public function __construct() {
 		if ( ! has_filter( 'msls_blog_collection_description' ) ) {
-			add_filter( 'msls_blog_collection_description', array( $this, 'get_configured_blog_description' ), 10, 2 );
+			add_filter( 'msls_blog_collection_description', [ $this, 'get_configured_blog_description' ], 10, 2 );
 		}
 
 		$this->current_blog_id = get_current_blog_id();
@@ -93,7 +93,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 					);
 				}
 			}
-			uasort( $this->objects, array( MslsBlog::class, $this->objects_order ) );
+			uasort( $this->objects, [ MslsBlog::class, $this->objects_order ] );
 		}
 	}
 

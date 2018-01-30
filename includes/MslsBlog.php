@@ -48,7 +48,7 @@ class MslsBlog {
 	}
 
 	/**
-	 * Get a member of the StdClass-object by name
+	 * Get a member of the \StdClass-object by name
 	 *
 	 * The method return <em>null</em> if the requested member does not exists.
 	 *

@@ -25,20 +25,15 @@ class MslsTaxonomy extends MslsContentTypes {
 	 */
 	public function __construct() {
 		$this->types = array_merge(
-			array( 'category', 'post_tag' ), // no 'post_link' here
-			get_taxonomies(
-				array( 'public' => true, '_builtin' => false ),
-				'names',
-				'and'
-			)
+			[ 'category', 'post_tag' ], // no 'post_link' here
+			get_taxonomies( [ 'public' => true, '_builtin' => false ], 'names', 'and' )
 		);
 
-		$_request = MslsPlugin::get_superglobals( array( 'taxonomy', 'post_type' ) );
+		$_request = MslsPlugin::get_superglobals( [ 'taxonomy', 'post_type' ] );
 		if ( '' != $_request['taxonomy'] ) {
 			$this->request   = esc_attr( $_request['taxonomy'] );
 			$this->post_type = esc_attr( $_request['post_type'] );
-		}
-		else {
+		} else {
 			$this->request = get_query_var( 'taxonomy' );
 		}
 	}
@@ -56,6 +51,7 @@ class MslsTaxonomy extends MslsContentTypes {
 	 *
 	 * Returns name of the content type if the user has access or an empty
 	 * string if the user can not access
+	 *
 	 * @return string
 	 */
 	public function acl_request() {
@@ -67,11 +63,13 @@ class MslsTaxonomy extends MslsContentTypes {
 				return $request;
 			}
 		}
+
 		return '';
 	}
 
 	/**
 	 * Get the requested post_type of the taxonomy
+	 *
 	 * @return string
 	 */
 	public function get_post_type() {

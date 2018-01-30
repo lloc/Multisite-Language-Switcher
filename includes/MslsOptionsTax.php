@@ -40,7 +40,7 @@ class MslsOptionsTax extends MslsOptions {
 			$req = $obj->acl_request();
 		} else {
 			$id  = get_queried_object_id();
-			$req = ( is_category() ? 'category' : ( is_tag() ? 'post_tag' : '' ) );
+			$req = is_category() ? 'category' : is_tag() ? 'post_tag' : '';
 		}
 
 		switch ( $req ) {
@@ -55,7 +55,7 @@ class MslsOptionsTax extends MslsOptions {
 		}
 
 		if ( $req ) {
-			add_filter( 'check_url', array( $options, 'check_base' ), 9, 2 );
+			add_filter( 'check_url', [ $options, 'check_base' ], 9, 2 );
 		} else {
 			global $wp_rewrite;
 			$options->with_front = ! empty( $wp_rewrite->extra_permastructs[ $options->get_tax_query() ]['with_front'] );
@@ -71,11 +71,9 @@ class MslsOptionsTax extends MslsOptions {
 	public function get_tax_query() {
 		global $wp_query;
 
-		return (
-		isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ?
+		return isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ?
 			$wp_query->tax_query->queries[0]['taxonomy'] :
-			''
-		);
+			'';
 	}
 
 	/**

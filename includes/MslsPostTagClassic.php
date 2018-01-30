@@ -15,7 +15,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
-	 * @param StdClass $tag
+	 * @param \StdClass $tag
 	 */
 	public function add_input( $tag ) {
 		$title_format = '<h3>%s</h3>';
@@ -33,7 +33,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
-	 * @param StdClass $tag
+	 * @param \StdClass $tag
 	 */
 	public function edit_input( $tag ) {
 		$title_format = '<tr>
@@ -70,11 +70,12 @@ class MslsPostTagClassic extends MslsPostTag {
 		$flag_url = $this->options->get_flag_url( $language );
 		$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
 		$options  = '';
-		$terms    = get_terms( $type, array( 'hide_empty' => 0 ) );
+		$terms    = get_terms( $type, [ 'hide_empty' => 0 ] );
 
 		if ( $mydata->has_value( $language ) ) {
 			$icon->set_href( $mydata->$language );
 		}
+
 		if ( ! empty( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$options .= sprintf(
@@ -85,6 +86,7 @@ class MslsPostTagClassic extends MslsPostTag {
 				);
 			}
 		}
+
 		printf( $item_format, $language, $icon, $options );
 
 		restore_current_blog();
@@ -93,7 +95,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	/**
 	 * Print the input fields
 	 * Returns true if the blogcollection is not empty
-	 * @param StdClass $tag
+	 * @param \StdClass $tag
 	 * @param string $title_format
 	 * @param string $item_format
 	 * @return boolean

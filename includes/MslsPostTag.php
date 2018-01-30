@@ -52,7 +52,7 @@ class MslsPostTag extends MslsMain {
 				/**
 				 * Manipulates the term object before using it
 				 * @since 0.9.9
-				 * @param StdClass $term
+				 * @param \StdClass $term
 				 */
 				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
 
