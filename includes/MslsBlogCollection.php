@@ -10,11 +10,9 @@ namespace lloc\Msls;
 /**
  * Collection of blog-objects
  *
- * Implements the interface IMslsRegistryInstance because we want to
- * work with a singleton instance of MslsBlogCollection all the time.
  * @package Msls
  */
-class MslsBlogCollection implements IMslsRegistryInstance {
+class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * ID of the current blog
@@ -286,20 +284,6 @@ class MslsBlogCollection implements IMslsRegistryInstance {
 		);
 
 		return get_users( $args );
-	}
-
-	/**
-	 * Gets or creates an instance of MslsBlogCollection
-	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
-	 * @return MslsBlogCollection
-	 */
-	public static function instance() {
-		if ( ! ( $obj = MslsRegistry::get_object( 'MslsBlogCollection' ) ) ) {
-			$obj = new self();
-			MslsRegistry::set_object( 'MslsBlogCollection', $obj );
-		}
-
-		return $obj;
 	}
 
 	/**

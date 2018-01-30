@@ -9,16 +9,18 @@ namespace lloc\Msls;
 
 /**
  * Generic class for overloading properties
+ *
  * @example https://gist.githubusercontent.com/lloc/2c232cef3f910acf692f/raw/f4eb70f4b1f8dc90c212d85d65af40c6604a32b9/MslsGetSet.php
+ *
  * @package Msls
  */
-class MslsGetSet {
+class MslsGetSet extends MslsRegistryInstance {
 
 	/**
 	 * Generic container for all properties of an instance
 	 * @var array $arr
 	 */
-	protected $arr = array();
+	protected $arr = [];
 
 	/**
 	 * Overloads the set method.
@@ -28,6 +30,7 @@ class MslsGetSet {
 	 */
 	final public function __set( $key, $value ) {
 		$this->arr[ $key ] = $value;
+
 		if ( empty( $this->arr[ $key ] ) ) {
 			unset( $this->arr[ $key ] );
 		}
@@ -40,7 +43,7 @@ class MslsGetSet {
 	 * @return mixed
 	 */
 	final public function __get( $key ) {
-		return( isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : null );
+		return isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : null;
 	}
 
 	/**
@@ -70,7 +73,8 @@ class MslsGetSet {
 	 * @return MslsGetSet
 	 */
 	public function reset() {
-		$this->arr = array();
+		$this->arr = [];
+
 		return $this;
 	}
 
@@ -92,7 +96,7 @@ class MslsGetSet {
 	 * @return bool
 	 */
 	public function has_value( $key ) {
-		return( ! empty( $this->arr[ $key ] ) );
+		return ! empty( $this->arr[ $key ] );
 	}
 
 	/**
@@ -101,7 +105,7 @@ class MslsGetSet {
 	 * @return bool
 	 */
 	public function is_empty() {
-		return( empty( $this->arr ) );
+		return empty( $this->arr );
 	}
 
 	/**

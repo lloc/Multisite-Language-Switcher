@@ -15,12 +15,14 @@ class MslsRegistry {
 
 	/**
 	 * Generic container
+	 *
 	 * @var array
 	 */
 	private static $arr = array();
 
 	/**
 	 * Instance
+	 *
 	 * @var MslsRegistry
 	 */
 	private static $instance;
@@ -29,29 +31,36 @@ class MslsRegistry {
 	 * Constructor
 	 *
 	 * Don't call me directly!
+	 *
 	 * @codeCoverageIgnore
 	 */
-	final private function __construct() { }
+	final private function __construct() {
+	}
 
 	/**
 	 * Clone
 	 *
 	 * Don't call me directly!
+	 *
 	 * @codeCoverageIgnore
 	 */
-	final private function __clone() { }
+	final private function __clone() {
+	}
 
 	/**
 	 * Get an object by key
+	 *
 	 * @param string $key
+	 *
 	 * @return mixed
 	 */
 	private function get( $key ) {
-		return( isset( self::$arr[ $key ] ) ? self::$arr[ $key ] : null );
+		return ( isset( self::$arr[ $key ] ) ? self::$arr[ $key ] : null );
 	}
 
 	/**
 	 * Set an object
+	 *
 	 * @param string $key
 	 * @param mixed $instance
 	 */
@@ -61,18 +70,22 @@ class MslsRegistry {
 
 	/**
 	 * Registry is a singleton
+	 *
 	 * @return MslsRegistry
 	 */
 	public static function instance() {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
+
 		return self::$instance;
 	}
 
 	/**
 	 * Static get_object calls get
+	 *
 	 * @param string $key
+	 *
 	 * @return mixed
 	 */
 	public static function get_object( $key ) {
@@ -81,6 +94,7 @@ class MslsRegistry {
 
 	/**
 	 * Static set_object calls set
+	 *
 	 * @param string $key
 	 * @param mixed $instance
 	 */

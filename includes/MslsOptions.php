@@ -21,7 +21,7 @@ namespace lloc\Msls;
  * @property string $before_output
  * @property string $after_output
  */
-class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
+class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Args
@@ -64,7 +64,7 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 	 * @var bool
 	 */
 	public $with_front;
-
+	
 	/**
 	 * Factory method
 	 *
@@ -394,20 +394,6 @@ class MslsOptions extends MslsGetSet implements IMslsRegistryInstance {
 		}
 
 		return home_url( $url );
-	}
-
-	/**
-	 * Get or create an instance of MslsOptions
-	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
-	 * @return MslsOptions
-	 */
-	public static function instance() {
-		if ( ! ( $obj = MslsRegistry::get_object( 'MslsOptions' ) ) ) {
-			$obj = new self();
-			MslsRegistry::set_object( 'MslsOptions', $obj );
-		}
-
-		return $obj;
 	}
 
 }

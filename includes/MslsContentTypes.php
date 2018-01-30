@@ -11,7 +11,7 @@ namespace lloc\Msls;
  * Supported content types
  * @package Msls
  */
-class MslsContentTypes {
+class MslsContentTypes extends MslsRegistryInstance {
 
 	/**
 	 * Request
@@ -30,10 +30,11 @@ class MslsContentTypes {
 	 * @return MslsContentTypes
 	 */
 	public static function create() {
-		$_request = MslsPlugin::get_superglobals( array( 'taxonomy' ) );
+		$_request = MslsPlugin::get_superglobals( [ 'taxonomy' ] );
 		if ( '' != $_request['taxonomy'] ) {
 			return MslsTaxonomy::instance();
 		}
+
 		return MslsPostType::instance();
 	}
 

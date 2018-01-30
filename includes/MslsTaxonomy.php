@@ -9,9 +9,10 @@ namespace lloc\Msls;
 
 /**
  * Content types: Taxonomies (Tags, Categories, ...)
+ *
  * @package Msls
  */
-class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
+class MslsTaxonomy extends MslsContentTypes {
 
 	/**
 	 * Post type
@@ -75,19 +76,6 @@ class MslsTaxonomy extends MslsContentTypes implements IMslsRegistryInstance {
 	 */
 	public function get_post_type() {
 		return $this->post_type;
-	}
-
-	/**
-	 * Get or create an instance of MslsTaxonomy
-	 * @todo Until PHP 5.2 is not longer the minimum for WordPress ...
-	 * @return MslsTaxonomy
-	 */
-	public static function instance() {
-		if ( ! ( $obj = MslsRegistry::get_object( 'MslsTaxonomy' ) ) ) {
-			$obj = new self();
-			MslsRegistry::set_object( 'MslsTaxonomy', $obj );
-		}
-		return $obj;
 	}
 
 }
