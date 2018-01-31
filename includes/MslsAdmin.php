@@ -27,7 +27,7 @@ class MslsAdmin extends MslsMain {
 
 		if ( current_user_can( 'manage_options' ) ) {
 			$title = __( 'Multisite Language Switcher', 'multisite-language-switcher' );
-			add_options_page( $title, $title, 'manage_options', __CLASS__, [ $obj, 'render' ] );
+			add_options_page( $title, $title, 'manage_options', $obj->get_menu_slug(), [ $obj, 'render' ] );
 
 			add_action( 'admin_init', [ $obj, 'register' ] );
 			add_action( 'admin_notices', [ $obj, 'has_problems' ] );
@@ -36,6 +36,24 @@ class MslsAdmin extends MslsMain {
 		}
 
 		return $obj;
+	}
+
+	/**
+	 * Let's do this simple
+	 *
+	 * @return string
+	 */
+	public function get_menu_slug() {
+		return 'MslsAdmin';
+	}
+
+	/**
+	 * Get's the link for the switcher-settings in the wp-admin
+	 *
+	 * @return string
+	 */
+	public function get_options_page_link() {
+		return sprintf( '/options-general.php?page=%s', $this->get_menu_slug() );
 	}
 
 	/**
@@ -75,8 +93,8 @@ class MslsAdmin extends MslsMain {
 			);
 		} elseif ( $this->options->is_empty() ) {
 			$message = sprintf(
-				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.' ),
-				esc_url( admin_url( '/options-general.php?page=MslsAdmin' ) )
+				__( 'Multisite Language Switcher is almost ready. You must complete the configuration process</a>.' ),
+				esc_url( admin_url( $this->get_options_page_link() ) )
 			);
 		}
 
@@ -104,6 +122,7 @@ class MslsAdmin extends MslsMain {
 		);
 	}
 
+
 	/**
 	 * Create a submenu which contains links to all blogs of the current user
 	 * @return string
@@ -114,7 +133,7 @@ class MslsAdmin extends MslsMain {
 		foreach ( $this->collection->get_plugin_active_blogs() as $blog ) {
 			$arr[] = sprintf(
 				'<a href="%s"%s>%s / %s</a>',
-				get_admin_url( $blog->userblog_id, '/options-general.php?page=MslsAdmin' ),
+				get_admin_url( $blog->userblog_id, $this->get_options_page_link() ),
 				( $blog->userblog_id == $this->collection->get_current_blog_id() ? ' class="current"' : '' ),
 				$blog->blogname,
 				$blog->get_description()
@@ -122,7 +141,7 @@ class MslsAdmin extends MslsMain {
 		}
 
 		return (
-		empty( $arr ) ?
+			empty( $arr ) ?
 			'' :
 			sprintf(
 				'<ul class="subsubsub"><li>%s</li></ul>',
