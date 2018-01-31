@@ -196,10 +196,6 @@ class MslsAdmin extends MslsMain {
 			$this,
 			'blog_language'
 		), __CLASS__, 'language_section' );
-		add_settings_field( 'admin_language', __( 'Admin Language', 'multisite-language-switcher' ), array(
-			$this,
-			'admin_language'
-		), __CLASS__, 'language_section' );
 
 		/**
 		 * Lets you add your own field to the language section
@@ -331,17 +327,6 @@ class MslsAdmin extends MslsMain {
 			'blog_language',
 			$this->options->get_available_languages(),
 			get_option( 'WPLANG', 'en_US' )
-		);
-	}
-
-	/**
-	 * Shows the select-form-field 'admin_language'
-	 */
-	public function admin_language() {
-		echo $this->render_select(
-			'admin_language',
-			$this->options->get_available_languages(),
-			$this->options->admin_language
 		);
 	}
 
