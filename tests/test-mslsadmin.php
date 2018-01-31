@@ -97,17 +97,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$this->expectOutputRegex( '/^<select id="blog_language" name="msls\[blog_language\]">.*$/' );
 		$obj->blog_language();
 	}
-
-	/**
-	 * Verify the admin_language-method
-	 */
-	function test_admin_language() {
-		$obj = $this->get_test();
-
-		$this->expectOutputRegex( '/^<select id="admin_language" name="msls\[admin_language\]">.*$/' );
-		$obj->admin_language();
-	}
-
+	
 	/**
 	 * Verify the display-method
 	 */
