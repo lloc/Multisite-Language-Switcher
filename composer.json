@@ -17,8 +17,7 @@
   },
   "scripts": {
     "test": "phpunit",
-    "coverage": "phpunit --coverage-html tests/coverage",
-    "cl": "vendor/lloc/gitphpcl/changelog -f Changelog.md"
+    "coverage": "phpunit --coverage-html tests/coverage"
   },
   "authors": [
     {
