@@ -1,10 +1,6 @@
 .idea/*
 composer.lock
-composer.phar
 vendor/
 tests/coverage
 tests/docs
 tests/xml
-
-!vendor/autoload.php
-!vendor/composer

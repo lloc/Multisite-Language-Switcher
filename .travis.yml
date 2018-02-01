@@ -1,17 +1,26 @@
 language: php
 
 php:
-    - 5.6
+  - 5.6
 
 env:
-    - WP_VERSION=latest WP_MULTISITE=1
+  - WP_VERSION=latest WP_MULTISITE=1
 
 sudo: false
-
 install:
-    - composer install
-
+  - composer install
 before_script:
-    - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION 
-
+  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 script: phpunit
+before_deploy:
+  - rm -rf vendor && composer install --no-dev
+deploy:
+  provider: releases
+  api_key:
+    secure: jAk9v6tk8YaITI7r/gvwdwSzeZXBkI1O20Q2vdwdvaYjURIOtYym+gAmLmv4yk2RqUYKZ9RugfWNZxoAkrpL8frIPrix0v/mcBC1wFayNEuTOM2qK863Hp8v+IZk86j/QjLU4ZsQi2KB6+7MU2DWlGYsoHNQbMnMcA7C6C+lHJA=
+  file_glob: true
+  file:
+    - vendor/autoload.php
+    - vendor/composer/*
+  on:
+    tags: true
