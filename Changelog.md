@@ -37,6 +37,9 @@
     - PhpDox for code documentation added
 * **Rewrites:**
     - panels added
+* **Languages:**
+    - languages files for Mexican Spansh (es_MX) by Fernando Mata added
+
 
 ## 1.1
 * Fix and enhancements for translated slugs

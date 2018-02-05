@@ -124,6 +124,7 @@ Thanks to all translators for their great work.
 * Arabic (ar) - Mohamed Elwan
 * Norwegian (nb_NO) - Ibrahim Qraiqe
 * Bulgarian (bg_BG) - [Vencislav Raev](http://www.catblue.net/)
+* Mexican Spansh (es_MX) - [Fernando Mata](https://fernandomata.mx/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can
 bundle it into the Multisite Language Switcher. You can download the latest POT file
