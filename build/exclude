@@ -1,0 +1,14 @@
+/.git/
+/.idea/
+/bin/
+/build/
+/tests/
+/release/
+/multisite-language-switcher/
+.gitignore
+composer.lock
+*.yml
+*.md
+*.xml
+*.sh
+*.zip

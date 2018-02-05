@@ -12,11 +12,13 @@ before_script:
 script: phpunit
 before_deploy:
   - composer install --no-dev
+  - bash bin/git-release.sh
 deploy:
   provider: releases
   api_key:
     secure: jAk9v6tk8YaITI7r/gvwdwSzeZXBkI1O20Q2vdwdvaYjURIOtYym+gAmLmv4yk2RqUYKZ9RugfWNZxoAkrpL8frIPrix0v/mcBC1wFayNEuTOM2qK863Hp8v+IZk86j/QjLU4ZsQi2KB6+7MU2DWlGYsoHNQbMnMcA7C6C+lHJA=
   skip_cleanup: true
+  file: multisite-language-switcher.php
   on:
     repo: lloc/Multisite-Language-Switcher
     tags: true
