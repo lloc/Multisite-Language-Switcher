@@ -80,7 +80,7 @@ class MslsPostTag extends MslsMain {
 			$obj = new static( $options, $collection );
 		}
 		else {
-			$obj = MslsPostTagClassic::init();
+			$obj = new MslsPostTagClassic( $options, $collection );
 		}
 
 		$taxonomy = MslsContentTypes::create()->acl_request();
