@@ -115,6 +115,19 @@ class MslsMetaBox extends MslsMain {
 				'side',
 				'high'
 			);
+
+			if ( MslsOptions::instance()->activate_content_import ) {
+				add_meta_box(
+					'msls-language-import',
+					__( 'Multisite Language Switcher - Import content', 'multisite-language-switcher' ),
+					[
+						$this,
+						'render_import_content_metabox',
+					],
+					$post_type,
+					'side',
+					'high' );
+			}
 		}
 	}
 
@@ -366,5 +379,9 @@ class MslsMetaBox extends MslsMain {
 		$mydata->{$origin_lang} = $origin_post_id;
 
 		return $mydata;
+	}
+
+	public function render_import_content_metabox() {
+		echo "Import content meta box";
 	}
 }

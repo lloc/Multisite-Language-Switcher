@@ -288,6 +288,10 @@ class MslsAdmin extends MslsMain {
 			$this,
 			'exclude_current_blog'
 		), __CLASS__, 'advanced_section' );
+		add_settings_field( 'activate_content_import', __( 'Activate the content import functionality', 'multisite-language-switcher' ), array(
+			$this,
+			'activate_content_import'
+		), __CLASS__, 'advanced_section' );
 
 		/**
 		 * Lets you add your own field to the advanced section
@@ -362,6 +366,16 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function activate_autocomplete() {
 		echo $this->render_checkbox( 'activate_autocomplete' );
+	}
+
+	/**
+	 * render
+	 *
+	 * You can decide if you want to activate the content import functionality
+	 * in the backend instead of the traditional select-menus.
+	 */
+	public function activate_content_import() {
+		echo $this->render_checkbox( 'activate_content_import' );
 	}
 
 	/**
