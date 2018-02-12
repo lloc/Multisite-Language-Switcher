@@ -118,7 +118,7 @@ class MslsMetaBox extends MslsMain {
 
 			if ( MslsOptions::instance()->activate_content_import ) {
 				add_meta_box(
-					'msls-language-import',
+					'msls-content-import',
 					__( 'Multisite Language Switcher - Import content', 'multisite-language-switcher' ),
 					[
 						$this,
@@ -382,6 +382,51 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	public function render_import_content_metabox() {
-		echo "Import content meta box";
+		$post            = get_post();
+		$mydata          = new MslsOptionsPost( $post->ID );
+		$languages       = MslsOptionsPost::instance()->get_available_languages();
+		$current         = MslsBlogCollection::get_blog_language( get_current_blog_id() );
+		$languages       = array_diff_key( $languages, array( $current => $current ) );
+		$input_lang      = isset( $_GET['msls_lang'] ) ? $_GET['msls_lang'] : null;
+		$input_id        = isset( $_GET['msls_id'] ) ? $_GET['msls_id'] : null;
+		$has_input       = null !== $input_lang && null !== $input_id;
+		$blogs           = MslsBlogCollection::instance();
+		$available       = array_filter( array_map( function ( $lang ) use ( $mydata ) {
+			return $mydata->{$lang};
+		}, array_keys( $languages ) ) );
+		$has_translation = count( $available ) >= 1;
+
+		if ( $has_input || $has_translation ) {
+			?>
+			<fieldset>
+				<legend><?php esc_html_e( 'Warning! This will override and replace all the post content with the content from the source post!',
+						'multisite-language-switcher' ) ?></legend>
+				<?php foreach ( $languages as $language => $label ) : ?>
+					<?php
+					$id   = $mydata->language;
+					$blog = $blogs->get_blog_id( $language );
+					if ( null === $id && $has_input && $input_lang === $language ) {
+						$id   = $input_id;
+						$blog = $blogs->get_blog_id( $language );
+					}
+					?>
+					<?php if ( null !== $id ) : ?>
+						<button
+								type="submit"
+								class="button-primary"
+								name="msls_import"
+								value="<?php echo "{$blog}|{$id}" ?>"
+						>
+							<?php echo $label ?>
+						</button>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			</fieldset>
+			<?php
+		} else {
+			?>
+			<p><?php esc_html_e( 'No translated versions linked to this post: import content functionality is disabled.', 'multisite-language-switcher' ) ?></p>
+			<?php
+		}
 	}
 }
