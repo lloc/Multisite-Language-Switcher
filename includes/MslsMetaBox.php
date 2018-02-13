@@ -241,8 +241,10 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Render the suggest input-field
+	 *
+	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
 	 */
-	public function render_input() {
+	public function render_input( $echo = true ) {
 		$blogs = $this->collection->get();
 
 		if ( $blogs ) {
@@ -381,6 +383,9 @@ class MslsMetaBox extends MslsMain {
 		return $mydata;
 	}
 
+	/**
+	 * Renders the content import metabox.
+	 */
 	public function render_import_content_metabox() {
 		$post            = get_post();
 		$mydata          = new MslsOptionsPost( $post->ID );
@@ -397,36 +402,33 @@ class MslsMetaBox extends MslsMain {
 		$has_translation = count( $available ) >= 1;
 
 		if ( $has_input || $has_translation ) {
-			?>
-			<fieldset>
-				<legend><?php esc_html_e( 'Warning! This will override and replace all the post content with the content from the source post!',
-						'multisite-language-switcher' ) ?></legend>
-				<?php foreach ( $languages as $language => $label ) : ?>
-					<?php
-					$id   = $mydata->language;
+			$label_template = __( 'Import content from %s', 'multisite-language-switcher' );
+			$output = '<fieldset>';
+			$output .= '<legend>'
+			           . esc_html__( 'Warning! This will override and replace all the post content with the content from the source post!', 'multisite-language-switcher' )
+			           . '</legend>';
+			foreach ( $languages as $language => $label ) {
+				$id   = $mydata->language;
+				$blog = $blogs->get_blog_id( $language );
+				$label = sprintf( $label_template, $label );
+				if ( null === $id && $has_input && $input_lang === $language ) {
+					$id   = $input_id;
 					$blog = $blogs->get_blog_id( $language );
-					if ( null === $id && $has_input && $input_lang === $language ) {
-						$id   = $input_id;
-						$blog = $blogs->get_blog_id( $language );
-					}
-					?>
-					<?php if ( null !== $id ) : ?>
-						<button
-								type="submit"
-								class="button-primary"
-								name="msls_import"
-								value="<?php echo "{$blog}|{$id}" ?>"
-						>
-							<?php echo $label ?>
-						</button>
-					<?php endif; ?>
-				<?php endforeach; ?>
-			</fieldset>
-			<?php
+				}
+				if ( null !== $id ) {
+					$output .= sprintf( '<button type="submit", class="button-primary" name="msls_import" value="%s">%s</button>',
+						"{$blog}|{$id}",
+						$label
+					);
+				}
+			}
+			$output .= '</fieldset>';
 		} else {
-			?>
-			<p><?php esc_html_e( 'No translated versions linked to this post: import content functionality is disabled.', 'multisite-language-switcher' ) ?></p>
-			<?php
+			$output = '<p>' .
+			          esc_html__( 'No translated versions linked to this post: import content functionality is disabled.', 'multisite-language-switcher' )
+			          . '</p>';
 		}
+
+		echo $output;
 	}
 }
