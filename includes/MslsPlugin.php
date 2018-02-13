@@ -12,6 +12,7 @@ namespace lloc\Msls;
  *
  * @package Msls
  */
+
 class MslsPlugin {
 
 	/**
@@ -62,12 +63,14 @@ class MslsPlugin {
 				if ( filter_has_var( INPUT_POST, 'action' ) ) {
 					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
 
-					if ( 'add-tag' == $action ) {
+					if ( 'add-tag' === $action ) {
 						add_action( 'admin_init', [ MslsPostTag::class, 'init' ] );
-					} elseif ( 'inline-save' == $action ) {
+					} elseif ( 'inline-save' === $action ) {
 						add_action( 'admin_init', [ MslsCustomColumn::class, 'init' ] );
-					} elseif ( 'inline-save-tax' == $action ) {
+					} elseif ( 'inline-save-tax' === $action ) {
 						add_action( 'admin_init', [ MslsCustomColumnTaxonomy::class, 'init' ] );
+					} elseif ( 'editpost' === $action && filter_has_var(INPUT_POST, 'msls_import')){
+						\lloc\Msls\ContentImport\Service::instance()->register();
 					}
 				}
 
