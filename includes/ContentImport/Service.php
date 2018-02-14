@@ -25,7 +25,7 @@ class Service extends MslsRegistryInstance {
 		}
 
 		add_filter( 'wp_insert_post_data', function ( array $data ) {
-			ContentImporter::instance()->import( $data );
+			ContentImporter::instance()->on_wp_insert_post( $data );
 		}, 99 );
 		add_filter( 'wp_insert_post_empty_content', function ( $empty ) {
 			ContentImporter::instance()->filter_empty( $empty );
