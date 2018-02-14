@@ -20,8 +20,6 @@ class Service extends MslsRegistryInstance {
 	 * @return bool Whether the content import functionality support classes where hooked or not.
 	 */
 	public function register() {
-		$registered = true;
-
 		if ( ! MslsOptions::instance()->activate_content_import ) {
 			return false;
 		}
@@ -39,6 +37,6 @@ class Service extends MslsRegistryInstance {
 			AttachmentPathFinder::instance()->filter_srcset( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId );
 		}, 99, 5 );
 
-		return $registered;
+		return true;
 	}
 }
