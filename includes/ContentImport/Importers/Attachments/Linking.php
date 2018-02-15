@@ -14,7 +14,10 @@ use lloc\Msls\ContentImport\Importers\BaseImporter;
 class Linking extends BaseImporter {
 
 	public function import( array $data ) {
-		$this->logger->log_information( __( 'Post attachments were left in place in the source blog and linked in the destination post.', 'multisite-language-switcher' ) );
+		$this->logger->log_information(
+			'post-thumbnail',
+			__( 'Post attachments were left in place in the source blog and linked in the destination post.', 'multisite-language-switcher' )
+		);
 
 		return parent::import( $data );
 	}

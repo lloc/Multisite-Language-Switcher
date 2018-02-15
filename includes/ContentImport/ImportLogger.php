@@ -27,8 +27,15 @@ class ImportLogger {
 	 *
 	 * @param ImportLogger|null $logger
 	 */
-	public function merge( ImportLogger $logger) {
+	public function merge( ImportLogger $logger ) {
 		$this->data = array_merge_recursive( $this->data, $logger->get_data() );
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_data() {
+		return $this->data;
 	}
 
 	/**
@@ -56,24 +63,39 @@ class ImportLogger {
 	 * @param string $root  Where to log the information.
 	 */
 	protected function log( $where, $what, $root = 'info' ) {
-		$where_path = explode( $this->levels_delimiter, $where );
-
 		if ( ! isset( $this->data[ $root ] ) ) {
 			$this->data[ $root ] = [];
 		}
 
-		// build a nested array
+		$data = $this->build_nested_array( $this->build_path( $where ), $what );
+
+
+		$this->data[ $root ] = array_merge_recursive( $this->data[ $root ], $data );
+	}
+
+	protected function build_nested_array( $path, $what = '' ) {
 		$json = '{"'
-		        . implode( '":{"', $where_path )
+		        . implode( '":{"', $path )
 		        . '":' . json_encode( $what )
 		        . implode(
 			        '',
-			        array_fill( 0, count( $where_path ),
+			        array_fill( 0, count( $path ),
 				        '}' )
 		        );
 		$data = json_decode( $json, true );
 
-		$this->data[ $root ] = array_merge_recursive( $this->data[ $root ], $data );
+		return $data;
+	}
+
+	/**
+	 * @param $where
+	 *
+	 * @return array
+	 */
+	protected function build_path( $where ) {
+		$where_path = explode( $this->levels_delimiter, $where );
+
+		return $where_path;
 	}
 
 	/**
@@ -109,14 +131,36 @@ class ImportLogger {
 	 *
 	 * @param string $message
 	 */
-	public function log_information( $message ) {
-		$this->data['info'] = $message;
+	public function log_information( $key, $message ) {
+		$this->data['info'][ $key ] = $message;
+	}
+
+	public function get_error( $where ) {
+		return $this->get_nested_value( 'error' . $this->levels_delimiter . $where );
 	}
 
 	/**
-	 * @return array
+	 * @param $where
+	 *
+	 * @return mixed
 	 */
-	public function get_data() {
-		return $this->data;
+	protected function get_nested_value( $where ) {
+		$path = $this->build_path( $where );
+
+		$data = $this->data[ array_shift( $path ) ];
+
+		foreach ( $path as $frag ) {
+			$data = $data[ $frag ];
+		}
+
+		return $data;
+	}
+
+	public function get_success( $where ) {
+		return $this->get_nested_value( 'success' . $this->levels_delimiter . $where );
+	}
+
+	public function get_information( $key ) {
+		return isset( $this->data['info'][ $key ] ) ? $this->data['info'][ $key ] : '';
 	}
 }
