@@ -34,17 +34,12 @@ class ImportCoordinates {
 	public $source_post;
 
 	/**
-	 * ImportCoordinates constructor.
-	 *
-	 * @param int $source_blog_id
-	 * @param int $source_post_id
-	 * @param int $dest_blog_id
-	 * @param int $dest_post_id
+	 * @var string
 	 */
-	public function __construct( $source_blog_id, $source_post_id, $dest_blog_id, $dest_post_id ) {
-		$this->source_blog_id = $source_blog_id;
-		$this->source_post_id = $source_post_id;
-		$this->dest_blog_id = $dest_blog_id;
-		$this->dest_post_id = $dest_post_id;
-	}
+	public $source_lang;
+
+	/**
+	 * @var string
+	 */
+	public $dest_lang;
 }

@@ -2,11 +2,16 @@
 namespace lloc\Msls\ContentImport\Importers;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
-use lloc\Msls\ContentImport\ImportLog;
+use lloc\Msls\ContentImport\ImportLogger;
 use lloc\Msls\ContentImport\Relations;
 
 interface Importer {
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function import( array $data );
 
 	/**
@@ -17,9 +22,9 @@ interface Importer {
 	public function set_import_coordinates( ImportCoordinates $import_coordinates );
 
 	/**
-	 * @return ImportLog
+	 * @return ImportLogger
 	 */
-	public function get_log();
+	public function get_logger();
 
 	/**
 	 * @return Relations

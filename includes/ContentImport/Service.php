@@ -25,16 +25,16 @@ class Service extends MslsRegistryInstance {
 		}
 
 		add_filter( 'wp_insert_post_data', function ( array $data ) {
-			ContentImporter::instance()->on_wp_insert_post( $data );
+			return ContentImporter::instance()->on_wp_insert_post( $data );
 		}, 99 );
 		add_filter( 'wp_insert_post_empty_content', function ( $empty ) {
-			ContentImporter::instance()->filter_empty( $empty );
+			return ContentImporter::instance()->filter_empty( $empty );
 		} );
 		add_filter( 'wp_get_attachment_image_src', function ( $image, $attachmentId ) {
-			AttachmentPathFinder::instance()->filter_src( $image, $attachmentId );
+			return AttachmentPathFinder::instance()->filter_src( $image, $attachmentId );
 		}, 99, 2 );
 		add_filter( 'wp_calculate_image_srcset', function ( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
-			AttachmentPathFinder::instance()->filter_srcset( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId );
+			return AttachmentPathFinder::instance()->filter_srcset( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId );
 		}, 99, 5 );
 
 		return true;

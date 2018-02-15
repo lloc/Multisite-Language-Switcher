@@ -3,7 +3,7 @@
 namespace lloc\Msls\ContentImport\Importers;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
-use lloc\Msls\ContentImport\ImportLog;
+use lloc\Msls\ContentImport\ImportLogger;
 use lloc\Msls\ContentImport\Relations;
 
 abstract class BaseImporter implements Importer {
@@ -14,9 +14,9 @@ abstract class BaseImporter implements Importer {
 	public $import_coordinates;
 
 	/**
-	 * @var ImportLog
+	 * @var ImportLogger
 	 */
-	public $log;
+	public $logger;
 
 	/**
 	 * @var Relations
@@ -26,12 +26,13 @@ abstract class BaseImporter implements Importer {
 	/**
 	 * BaseImporter constructor.
 	 *
-	 * @param ImportLog|null $log
-	 * @param Relations|null $relations
+	 * @param ImportLogger|null $logger
+	 * @param Relations|null    $relations
 	 */
-	public function __construct( ImportLog $log = null, Relations $relations = null ) {
-		$this->log       = null !== $log ?: new ImportLog();
-		$this->relations = null !== $relations ?: new Relations();
+	public function __construct( ImportCoordinates $import_coordinates, ImportLogger $logger = null, Relations $relations = null ) {
+		$this->import_coordinates = $import_coordinates;
+		$this->logger             = null !== $logger ?: new ImportLogger( $this->import_coordinates );
+		$this->relations          = null !== $relations ?: new Relations( $this->import_coordinates );
 	}
 
 	/**
@@ -53,10 +54,10 @@ abstract class BaseImporter implements Importer {
 	}
 
 	/**
-	 * @return ImportLog
+	 * @return ImportLogger
 	 */
-	public function get_log() {
-		return $this->log;
+	public function get_logger() {
+		return $this->logger;
 	}
 
 	/**
