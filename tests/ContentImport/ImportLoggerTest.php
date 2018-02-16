@@ -33,28 +33,28 @@ class ImportLoggerTest extends \Msls_UnitTestCase {
 		return new Logger( $this->import_coordinates->reveal() );
 	}
 
-	public function testLog_error() {
+	public function test_log_error() {
 		$obj = $this->make_instance();
 		$obj->log_error( 'some/path/foo', 'foo-bar' );
 
 		$this->assertEquals( 'foo-bar', $obj->get_error( 'some/path/foo' ) );
 	}
 
-	public function testLog_success() {
+	public function test_log_success() {
 		$obj = $this->make_instance();
 		$obj->log_success( 'some/path/foo', 'foo-bar' );
 
 		$this->assertEquals( 'foo-bar', $obj->get_success( 'some/path/foo' ) );
 	}
 
-	public function testLog_information() {
+	public function test_log_information() {
 		$obj = $this->make_instance();
 		$obj->log_information( 'foo', 'bar' );
 
 		$this->assertEquals( 'bar', $obj->get_information( 'foo' ) );
 	}
 
-	public function testMerge() {
+	public function test_merge() {
 		$obj_1 = $this->make_instance();
 		$obj_2 = $this->make_instance();
 
@@ -80,7 +80,7 @@ class ImportLoggerTest extends \Msls_UnitTestCase {
 		$this->assertEquals( [ 'one' => '23', 'two' => '89' ], $obj_1->get_success( 'bar/one/two' ) );
 	}
 
-	public function testSave() {
+	public function test_save() {
 		$this->markTestSkipped( 'Skipped as how and where to log is still undecided' );
 	}
 }

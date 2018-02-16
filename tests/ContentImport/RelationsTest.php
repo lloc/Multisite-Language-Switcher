@@ -4,9 +4,7 @@ namespace lloc\Msls\ContentImport;
 
 
 use lloc\Msls\MslsOptions;
-use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
-use Prophecy\Prophet;
 
 class RelationsTest extends \Msls_UnitTestCase {
 
@@ -32,7 +30,7 @@ class RelationsTest extends \Msls_UnitTestCase {
 		return new Relations( $this->import_coordinates->reveal() );
 	}
 
-	public function testMerge() {
+	public function test_merge() {
 		$creator   = $this->prophesize( MslsOptions::class );
 		$dest_lang = 'de_DE';
 		$obj_1     = $this->make_instance();
@@ -55,9 +53,9 @@ class RelationsTest extends \Msls_UnitTestCase {
 		$this->assertCount( 6, $obj_1->get_data() );
 	}
 
-	public function testCreate() {
+	public function test_create() {
 		$dest_lang = 'de_DE';
-		$post_id = $this->factory->post->create();
+		$post_id   = $this->factory->post->create();
 		list( $creator_1, $creator_2, $creator_3 ) = array_map( function ( ObjectProphecy $c ) use ( $dest_lang, $post_id ) {
 			$c->save( [ $dest_lang => $post_id ] )->shouldBeCalled();
 
@@ -68,7 +66,7 @@ class RelationsTest extends \Msls_UnitTestCase {
 			$this->prophesize( MslsOptions::class ),
 		] );
 
-		$obj      = $this->make_instance();
+		$obj = $this->make_instance();
 
 		$obj->should_create( $creator_1->reveal(), $dest_lang, $post_id );
 		$obj->should_create( $creator_2->reveal(), $dest_lang, $post_id );
