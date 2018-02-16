@@ -55,7 +55,7 @@ class Relations {
 		foreach ( $this->to_create as $relation ) {
 			/** @var MslsOptions $option */
 			list( $option, $lang, $id ) = $relation;
-			$option->save( array( $lang => $id ) );
+			$option->save( [ $lang => $id ] );
 		}
 		restore_current_blog();
 	}
