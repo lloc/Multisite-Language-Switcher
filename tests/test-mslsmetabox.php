@@ -16,15 +16,8 @@ use lloc\Msls\MslsRegistry;
  */
 class WP_Test_MslsMetaBox extends Msls_UnitTestCase {
 
-	public function filter_available_languages( array $available_languages = array() ) {
-		$available_languages[] = 'de_DE';
-
-		return $available_languages;
-	}
-
 	public function setUp() {
 		parent::setUp();
-		add_filter( 'get_available_languages', array( $this, 'filter_available_languages' ) );
 	}
 
 	/**

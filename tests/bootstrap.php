@@ -22,6 +22,7 @@ class Msls_UnitTestCase extends \WP_UnitTestCase {
 	 */
 	function setUp() {
 		parent::setUp();
+		add_filter( 'get_available_languages', array( $this, 'filter_available_languages' ) );
 		wp_cache_flush();
 	}
 
@@ -30,6 +31,19 @@ class Msls_UnitTestCase extends \WP_UnitTestCase {
 	 */
 	function tearDown() {
 		parent::tearDown();
+	}
+
+	/**
+	 * Filters the list of available languages to allow setting the WPLANG option in blogs.
+	 *
+	 * @param array $available_languages
+	 *
+	 * @return array
+	 */
+	public function filter_available_languages( array $available_languages = array() ) {
+		$available_languages[] = 'de_DE';
+
+		return $available_languages;
 	}
 
 }

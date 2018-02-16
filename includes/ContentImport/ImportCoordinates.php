@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: luca
- * Date: 14/02/2018
- * Time: 10:11
- */
 
 namespace lloc\Msls\ContentImport;
 
+use lloc\Msls\MslsBlogCollection;
 
 class ImportCoordinates {
 
@@ -42,4 +37,30 @@ class ImportCoordinates {
 	 * @var string
 	 */
 	public $dest_lang;
+
+	/**
+	 * Validates the coordinates.
+	 *
+	 * @return bool
+	 */
+	public function validate() {
+		if ( ! get_blog_post( $this->source_blog_id, $this->source_post_id ) ) {
+			return false;
+		}
+		if ( ! get_blog_post( $this->dest_blog_id, $this->dest_post_id ) ) {
+			return false;
+		}
+		if ( ! $this->source_post instanceof \WP_Post ) {
+			return false;
+		}
+
+		if ( $this->source_lang !== MslsBlogCollection::get_blog_language( $this->source_blog_id ) ) {
+			return false;
+		}
+		if ( $this->dest_lang !== MslsBlogCollection::get_blog_language( $this->dest_blog_id ) ) {
+			return false;
+		}
+
+		return true;
+	}
 }

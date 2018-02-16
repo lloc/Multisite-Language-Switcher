@@ -27,7 +27,11 @@ class ImportLogger {
 	 *
 	 * @param ImportLogger|null $logger
 	 */
-	public function merge( ImportLogger $logger ) {
+	public function merge( ImportLogger $logger = null ) {
+		if ( null === $logger ) {
+			return;
+		}
+
 		$this->data = array_merge_recursive( $this->data, $logger->get_data() );
 	}
 

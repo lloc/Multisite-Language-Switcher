@@ -42,7 +42,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @param \lloc\Msls\MslsMain|null $main
 	 */
 	public function __construct( MslsMain $main = null ) {
-		$this->main = null !== $main ?: MslsMain::init();
+		$this->main = $main ?: MslsMain::init();
 	}
 
 	/**
@@ -119,7 +119,7 @@ class ContentImporter extends MslsRegistryInstance {
 		$import_coordinates->source_lang    = $source_lang;
 		$import_coordinates->dest_lang      = $dest_lang;
 
-		return $this->import_content( $import_coordinates, $data, $source_post_id, $dest_lang, $dest_post_id );
+		return $this->import_content( $import_coordinates, $data );
 	}
 
 	/**
@@ -139,7 +139,16 @@ class ContentImporter extends MslsRegistryInstance {
 		return true;
 	}
 
-	protected function parse_sources() {
+	/**
+	 * Parses the source blog and post IDs from the $_POST array validating them.
+	 *
+	 * @return array|bool
+	 */
+	public function parse_sources() {
+		if ( ! isset( $_POST['msls_import'] ) ) {
+			return false;
+		}
+
 		$import_data = array_filter( explode( '|', trim( $_POST['msls_import'] ) ), 'is_numeric' );
 
 		if ( count( $import_data ) !== 2 ) {
@@ -160,6 +169,10 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @return mixed|void
 	 */
 	public function import_content( ImportCoordinates $import_coordinates, array $post_fields = [] ) {
+		if ( ! $import_coordinates->validate() ) {
+			return $post_fields;
+		}
+
 		/**
 		 * Fires before the import runs.
 		 *
@@ -179,13 +192,27 @@ class ContentImporter extends MslsRegistryInstance {
 		 */
 		$post_fields = apply_filters( 'msls_content_import_data_before_import', $post_fields, $import_coordinates );
 
-		$importers = [
-			'post-fields'    => PostFieldsImporters::make( $import_coordinates ),
-			'post-meta'      => PostMetaImporters::make( $import_coordinates ),
-			'terms'          => TermsImporters::make( $import_coordinates ),
-			'post-thumbnail' => PostThumbnailImporters::make( $import_coordinates ),
-			'attachments'    => AttachmentsImporters::make( $import_coordinates ),
-		];
+		/**
+		 * Filters the importers map before it's populated.
+		 *
+		 * Returning a non `null` value here will override the creation of the importers map completely
+		 * and use the one returned in the filter.
+		 *
+		 * @since TBD
+		 *
+		 * @param null              $importers
+		 * @param ImportCoordinates $import_coordinates
+		 */
+		$importers = apply_filters( 'msls_content_import_importers', null, $import_coordinates );
+		if ( null === $importers ) {
+			$importers = [
+				'post-fields'    => PostFieldsImporters::make( $import_coordinates ),
+				'post-meta'      => PostMetaImporters::make( $import_coordinates ),
+				'terms'          => TermsImporters::make( $import_coordinates ),
+				'post-thumbnail' => PostThumbnailImporters::make( $import_coordinates ),
+				'attachments'    => AttachmentsImporters::make( $import_coordinates ),
+			];
+		}
 
 		/**
 		 * Filters the map of importers that should be used.
@@ -195,26 +222,25 @@ class ContentImporter extends MslsRegistryInstance {
 		 * @param array             $importers An array of importers in the shape [ <type> => <Importer $importer> ]
 		 * @param ImportCoordinates $import_coordinates
 		 */
-		$importers = apply_filters( 'msls_content_import_importers', $importers, $import_coordinates );
+		$importers = apply_filters( 'msls_content_import_importers_map', $importers, $import_coordinates );
 
-		$log       = isset( $this->logger ) ?: new ImportLogger( $import_coordinates );
-		$relations = isset( $this->relations ) ?: new Relations( $import_coordinates );
+		$log            = $this->logger ?: new ImportLogger( $import_coordinates );
+		$relations      = $this->relations ?: new Relations( $import_coordinates );
 
-		$source_post_id = $import_coordinates->source_post_id;
-		$dest_lang      = $import_coordinates->dest_lang;
-		$dest_post_id   = $import_coordinates->dest_post_id;
-
-		$relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
-
-		foreach ( $importers as $key => $importer ) {
-			/** @var Importer $importer */
-			$post_fields = $importer->import( $post_fields );
-			$log->merge( $importer->get_logger() );
-			$relations->merge( $importer->get_relations() );
+		if ( ! empty( $importers ) && is_array( $importers ) ) {
+			$source_post_id = $import_coordinates->source_post_id;
+			$dest_lang      = $import_coordinates->dest_lang;
+			$dest_post_id   = $import_coordinates->dest_post_id;
+			$relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
+			foreach ( $importers as $key => $importer ) {
+				/** @var Importer $importer */
+				$post_fields = $importer->import( $post_fields );
+				$log->merge( $importer->get_logger() );
+				$relations->merge( $importer->get_relations() );
+			}
+			$relations->create();
+			$log->save();
 		}
-
-		$relations->create();
-		$log->save();
 
 		/**
 		 * Fires after the import ran.

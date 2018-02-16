@@ -36,7 +36,11 @@ class Relations {
 	 *
 	 * @param Relations|null $relations
 	 */
-	public function merge( Relations $relations ) {
+	public function merge( Relations $relations = null ) {
+		if ( null === $relations ) {
+			return;
+		}
+
 		$this->to_create = array_merge_recursive( $this->to_create, $relations->get_data() );
 	}
 
