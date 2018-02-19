@@ -63,7 +63,7 @@ class ImportersBaseFactoryTest extends \Msls_UnitTestCase {
 	 * Test will return filtered importer
 	 */
 	public function test_will_return_filtered_importer() {
-		$importer = ( $this->prophesize( Importer::class ) )->reveal();
+		$importer = $this->prophesize( Importer::class )->reveal();
 
 		add_filter( 'msls_content_import_one_importer', function () use ( $importer ) {
 			return $importer;
