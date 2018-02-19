@@ -52,4 +52,19 @@ class ImportCoordinatesTest extends \Msls_UnitTestCase {
 
 		$this->assertTrue( $obj->validate() );
 	}
+
+	/**
+	 * Test set_importer_for
+	 */
+	public function test_set_importer_for() {
+		$obj = new ImportCoordinates();
+
+		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
+
+		$obj->set_importer_for( 'foo', 'bar' );
+
+		$this->assertEquals( 'bar', $obj->get_importer_for( 'foo' ) );
+
+		$this->assertEmpty( $obj->get_importer_for( 'baz' ) );
+	}
 }

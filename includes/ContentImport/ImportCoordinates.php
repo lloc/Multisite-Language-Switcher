@@ -39,6 +39,12 @@ class ImportCoordinates {
 	public $dest_lang;
 
 	/**
+	 * @var array An array keeping track of which importer (slug) should be used for
+	 *            a specific import type, shape [ <import-type> => <slug> ]
+	 */
+	public $importers = [];
+
+	/**
 	 * Validates the coordinates.
 	 *
 	 * @return bool
@@ -62,5 +68,28 @@ class ImportCoordinates {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Sets the slug of the importer that should be used for a type of import.
+	 *
+	 * @param string $importer_type
+	 * @param string $slug
+	 */
+	public function set_importer_for( $importer_type, $slug) {
+		$this->importers[ $importer_type ] = $slug;
+	}
+
+	/**
+	 * Returns the importer (slug) for a specific type of imports.
+	 *
+	 * @param string $importer_type
+	 *
+	 * @return string|null The import slug if set or `null` if not set.
+	 */
+	public function get_importer_for( $importer_type ) {
+		return isset( $this->importers[ $importer_type ] )
+			? $this->importers[ $importer_type ]
+			: null;
 	}
 }

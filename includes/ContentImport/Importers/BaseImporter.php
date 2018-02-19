@@ -6,7 +6,7 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\ImportLogger;
 use lloc\Msls\ContentImport\Relations;
 
-abstract class BaseImporter implements Importer {
+class BaseImporter implements Importer {
 
 	/**
 	 * @var ImportCoordinates
