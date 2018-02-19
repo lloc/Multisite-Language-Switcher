@@ -119,6 +119,8 @@ class ContentImporter extends MslsRegistryInstance {
 		$import_coordinates->source_lang    = $source_lang;
 		$import_coordinates->dest_lang      = $dest_lang;
 
+		$import_coordinates->parse_importers();
+
 		return $this->import_content( $import_coordinates, $data );
 	}
 
@@ -224,8 +226,8 @@ class ContentImporter extends MslsRegistryInstance {
 		 */
 		$importers = apply_filters( 'msls_content_import_importers_map', $importers, $import_coordinates );
 
-		$log            = $this->logger ?: new ImportLogger( $import_coordinates );
-		$relations      = $this->relations ?: new Relations( $import_coordinates );
+		$log       = $this->logger ?: new ImportLogger( $import_coordinates );
+		$relations = $this->relations ?: new Relations( $import_coordinates );
 
 		if ( ! empty( $importers ) && is_array( $importers ) ) {
 			$source_post_id = $import_coordinates->source_post_id;

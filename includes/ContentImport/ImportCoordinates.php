@@ -6,6 +6,8 @@ use lloc\Msls\MslsBlogCollection;
 
 class ImportCoordinates {
 
+	const IMPORTERS_GLOBAL_KEY = 'msls_importers';
+
 	/**
 	 * @var int
 	 */
@@ -71,16 +73,6 @@ class ImportCoordinates {
 	}
 
 	/**
-	 * Sets the slug of the importer that should be used for a type of import.
-	 *
-	 * @param string $importer_type
-	 * @param string $slug
-	 */
-	public function set_importer_for( $importer_type, $slug) {
-		$this->importers[ $importer_type ] = $slug;
-	}
-
-	/**
 	 * Returns the importer (slug) for a specific type of imports.
 	 *
 	 * @param string $importer_type
@@ -91,5 +83,51 @@ class ImportCoordinates {
 		return isset( $this->importers[ $importer_type ] )
 			? $this->importers[ $importer_type ]
 			: null;
+	}
+
+	/**
+	 * Parses the importers from superglobals.
+	 */
+	public function parse_importers() {
+		// bitmask
+		$source = isset( $_REQUEST[ self::IMPORTERS_GLOBAL_KEY ] ) * 100
+		          + isset( $_POST[ self::IMPORTERS_GLOBAL_KEY ] ) * 10
+		          + isset( $_GET[ self::IMPORTERS_GLOBAL_KEY ] );
+
+		switch ( $source ) {
+			case 100:
+			case 101;
+			case 111:
+			case 110:
+				$source = $_REQUEST;
+				break;
+			case 010:
+			case 011:
+			case 000:
+			default:
+				$source = $_POST;
+				break;
+			case 001:
+				$source = $_GET;
+				break;
+		}
+
+		$importers = isset( $source[ self::IMPORTERS_GLOBAL_KEY ] ) && is_array( $source[ self::IMPORTERS_GLOBAL_KEY ] )
+			? $source[ self::IMPORTERS_GLOBAL_KEY ]
+			: [];
+
+		foreach ( $importers as $importer_type => $slug ) {
+			$this->set_importer_for( $importer_type, $slug );
+		}
+	}
+
+	/**
+	 * Sets the slug of the importer that should be used for a type of import.
+	 *
+	 * @param string $importer_type
+	 * @param string $slug
+	 */
+	public function set_importer_for( $importer_type, $slug ) {
+		$this->importers[ $importer_type ] = $slug;
 	}
 }
