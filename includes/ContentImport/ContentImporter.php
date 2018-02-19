@@ -166,7 +166,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 *                                             left empty if the method is not called as a consequence
 	 *                                             of filtering the `wp_insert_post_data` filter.
 	 *
-	 * @return mixed|void
+	 * @return array An array of modified post fields.
 	 */
 	public function import_content( ImportCoordinates $import_coordinates, array $post_fields = [] ) {
 		if ( ! $import_coordinates->validate() ) {
