@@ -7,6 +7,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
+
 /**
  * Meta box for the edit mode of the (custom) post types
  * @package Msls
@@ -121,8 +123,8 @@ class MslsMetaBox extends MslsMain {
 					'msls-content-import',
 					__( 'Multisite Language Switcher - Import content', 'multisite-language-switcher' ),
 					[
-						$this,
-						'render_import_content_metabox',
+						ContentImportMetaBox::instance(),
+						'render',
 					],
 					$post_type,
 					'side',
@@ -381,54 +383,5 @@ class MslsMetaBox extends MslsMain {
 		$mydata->{$origin_lang} = $origin_post_id;
 
 		return $mydata;
-	}
-
-	/**
-	 * Renders the content import metabox.
-	 */
-	public function render_import_content_metabox() {
-		$post            = get_post();
-		$mydata          = new MslsOptionsPost( $post->ID );
-		$languages       = MslsOptionsPost::instance()->get_available_languages();
-		$current         = MslsBlogCollection::get_blog_language( get_current_blog_id() );
-		$languages       = array_diff_key( $languages, array( $current => $current ) );
-		$input_lang      = isset( $_GET['msls_lang'] ) ? $_GET['msls_lang'] : null;
-		$input_id        = isset( $_GET['msls_id'] ) ? $_GET['msls_id'] : null;
-		$has_input       = null !== $input_lang && null !== $input_id;
-		$blogs           = MslsBlogCollection::instance();
-		$available       = array_filter( array_map( function ( $lang ) use ( $mydata ) {
-			return $mydata->{$lang};
-		}, array_keys( $languages ) ) );
-		$has_translation = count( $available ) >= 1;
-
-		if ( $has_input || $has_translation ) {
-			$label_template = __( 'Import content from %s', 'multisite-language-switcher' );
-			$output = '<fieldset>';
-			$output .= '<legend>'
-			           . esc_html__( 'Warning! This will override and replace all the post content with the content from the source post!', 'multisite-language-switcher' )
-			           . '</legend>';
-			foreach ( $languages as $language => $label ) {
-				$id   = $mydata->language;
-				$blog = $blogs->get_blog_id( $language );
-				$label = sprintf( $label_template, $label );
-				if ( null === $id && $has_input && $input_lang === $language ) {
-					$id   = $input_id;
-					$blog = $blogs->get_blog_id( $language );
-				}
-				if ( null !== $id ) {
-					$output .= sprintf( '<button type="submit", class="button-primary" name="msls_import" value="%s">%s</button>',
-						"{$blog}|{$id}",
-						$label
-					);
-				}
-			}
-			$output .= '</fieldset>';
-		} else {
-			$output = '<p>' .
-			          esc_html__( 'No translated versions linked to this post: import content functionality is disabled.', 'multisite-language-switcher' )
-			          . '</p>';
-		}
-
-		echo $output;
 	}
 }
