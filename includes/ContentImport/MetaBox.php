@@ -2,6 +2,8 @@
 
 namespace lloc\Msls\ContentImport;
 
+use lloc\Msls\ContentImport\Importers\ImportersFactory;
+use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptionsPost;
 use lloc\Msls\MslsRegistryInstance;
@@ -68,15 +70,55 @@ class MetaBox extends MslsRegistryInstance {
 				'msls_id'   => $id,
 				'msls_lang' => $language,
 				'width'     => 600,
-				'height'    => 550,
+				'height'    => 900,
 				'inlineId'  => 'msls-import-dialog',
 			], '' )
 		);
 	}
 
-	protected function inline_thickbox_html() {
-		$out = '<div style="display: none;" id="msls-import-dialog"><p>Import stuff</p></div>';
+	protected function inline_thickbox_html( $echo = true ) {
+		ob_start();
+		?>
+        <div style="display: none;" id="msls-import-dialog">
+            <h3>Select what should be imported and how</h3>
+			<?php $factories = Map::instance()->factories();
+			/** @var ImportersFactory $factory */
+			foreach ( $factories as $slug => $factory ) : ?>
+				<?php $details = $factory->details() ?>
+                <h4><?php echo esc_html( $details->name ) ?></h4>
+				<?php if ( empty( $details->importers ) ) : ?>
+                    <p><?php esc_html_e( 'No importers available for this type of content.', 'multisite-language-switcher' ) ?></p>
+				<?php else: ?>
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="radio" name="importers[<?php echo esc_attr( $details->slug ) ?>]">
+								<?php esc_html_e( 'Off - Do not import this type of content in the destination post.', 'multisite-language-switcher' ) ?>
+                            </label>
+                        </li>
+						<?php foreach ( $details->importers as $importer_slug => $importer_info ) : ?>
+                            <li>
+                                <label>
+                                    <input type="radio" name="importers[<?php echo esc_attr( $details->slug ) ?>]"
+                                           value="<?php echo esc_attr( $importer_slug ) ?>"
+										<?php checked( $details->selected, $importer_slug ) ?>
+                                    >
+									<?php echo( esc_html( sprintf( '%s -  %s', $importer_info->name, $importer_info->description ) ) ) ?>
+                                </label>
+                            </li>
+						<?php endforeach; ?>
+                    </ul>
+				<?php endif; ?>
+			<?php endforeach; ?>
+        </div>
 
-		return $out;
+		<?php
+		$html = ob_get_clean();
+
+		if ( $echo ) {
+			echo $html;
+		}
+
+		return $html;
 	}
 }

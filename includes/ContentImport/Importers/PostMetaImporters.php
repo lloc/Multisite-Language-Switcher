@@ -8,7 +8,21 @@ class PostMetaImporters extends ImportersBaseFactory {
 
 	const TYPE = 'post-meta';
 
-	protected static $importers_map = [
-		'duplicating' => Duplicating::class,
+	protected $importers_map = [
+		Duplicating::TYPE => Duplicating::class,
 	];
+
+	/**
+	 * Returns the factory details.
+	 *
+	 * @return string
+	 */
+	public function details() {
+		return (object) [
+			'slug' => static::TYPE,
+			'name' => __( 'Meta Fields', 'multisite-language-switcher' ),
+			'importers' => $this->importers_info(),
+			'selected'  => $this->selected(),
+		];
+	}
 }

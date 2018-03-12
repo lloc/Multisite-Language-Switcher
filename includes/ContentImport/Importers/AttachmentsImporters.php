@@ -8,7 +8,21 @@ class AttachmentsImporters extends ImportersBaseFactory {
 
 	const TYPE = 'attachments';
 
-	protected static $importers_map = [
-		'linking' => Linking::class,
+	protected $importers_map = [
+		Linking::TYPE => Linking::class,
 	];
+
+	/**
+	 * Returns the factory details.
+	 *
+	 * @return string
+	 */
+	public function details() {
+		return (object) [
+			'slug'      => static::TYPE,
+			'name'      => __( 'Image Attachments', 'multisite-language-switcher' ),
+			'importers' => $this->importers_info(),
+			'selected'  => $this->selected(),
+		];
+	}
 }

@@ -6,6 +6,21 @@ use lloc\Msls\ContentImport\Importers\BaseImporter;
 
 class Duplicating extends BaseImporter {
 
+	const TYPE = 'duplicating';
+
+	/**
+	 * Returns an array of information about the importer.
+	 *
+	 * @return \stdClass
+	 */
+	public static function info() {
+		return (object) [
+			'slug'        => static::TYPE,
+			'name'        => __( 'Duplicating', 'multisite-language-switcher' ),
+			'description' => __( 'Copies the source post meta to the destination.', 'multisite-language-switcher' )
+		];
+	}
+
 	public function import( array $data ) {
 		$source_blog_id = $this->import_coordinates->source_blog_id;
 		$source_post_id = $this->import_coordinates->source_post_id;
@@ -37,8 +52,8 @@ class Duplicating extends BaseImporter {
 		 *
 		 * @since TBD
 		 *
-		 * @param array             $blacklist
-		 * @param array             $meta
+		 * @param array $blacklist
+		 * @param array $meta
 		 * @param ImportCoordinates $import_coordinates
 		 */
 		$blacklist = apply_filters( 'msls_content_import_term_meta_blacklist', $blacklist, $meta, $this->import_coordinates );

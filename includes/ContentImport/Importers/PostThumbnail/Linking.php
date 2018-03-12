@@ -14,6 +14,21 @@ use lloc\Msls\ContentImport\Importers\BaseImporter;
  */
 class Linking extends BaseImporter {
 
+	const TYPE = 'linking';
+
+	/**
+	 * Returns an array of information about the importer.
+	 *
+	 * @return \stdClass
+	 */
+	public static function info() {
+		return (object) [
+			'slug'        => static::TYPE,
+			'name'        => __( 'Linking', 'multisite-language-switcher' ),
+			'description' => __( 'Links the featured image from the source post to the destination post; the image is not duplicated.', 'multisite-language-switcher' )
+		];
+	}
+
 	public function import( array $data ) {
 		$source_blog_id = $this->import_coordinates->source_blog_id;
 		$source_post_id = $this->import_coordinates->source_post_id;
@@ -60,7 +75,10 @@ class Linking extends BaseImporter {
 			// Generate the metadata for the attachment, and update the database record.
 			$dest_post_thumbnail_meta = wp_generate_attachment_metadata( $dest_post_thumbnail_id, $source_post_thumbnail_file );
 			wp_update_attachment_metadata( $dest_post_thumbnail_id, $dest_post_thumbnail_meta );
-			update_post_meta( $dest_post_thumbnail_id, AttachmentPathFinder::IMPORTED, [ 'blog' => $source_blog_id, 'post' => $source_post_thumbnail_id ] );
+			update_post_meta( $dest_post_thumbnail_id, AttachmentPathFinder::IMPORTED, [
+				'blog' => $source_blog_id,
+				'post' => $source_post_thumbnail_id
+			] );
 
 			$dest_post_thumbnail_set = set_post_thumbnail( $dest_post_id, $dest_post_thumbnail_id );
 

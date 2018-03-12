@@ -8,7 +8,21 @@ class PostThumbnailImporters extends ImportersBaseFactory {
 
 	const TYPE = 'post-thumbnail';
 
-	protected static $importers_map = [
-		'duplicating' => Linking::class,
+	protected $importers_map = [
+		Linking::TYPE => Linking::class,
 	];
+
+	/**
+	 * Returns the factory details.
+	 *
+	 * @return string
+	 */
+	public function details() {
+		return (object) [
+			'slug' => static::TYPE,
+			'name' => __( 'Featured Image', 'multisite-language-switcher' ),
+			'importers' => $this->importers_info(),
+			'selected'  => $this->selected(),
+		];
+	}
 }

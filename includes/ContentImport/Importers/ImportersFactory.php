@@ -13,5 +13,21 @@ interface ImportersFactory {
 	 *
 	 * @return Importer
 	 */
-	public static function make( ImportCoordinates $import_coordinates );
+	public function make( ImportCoordinates $import_coordinates );
+
+	/**
+	 * Returns the factory details.
+	 *
+	 * @return string
+	 */
+	public function details();
+
+	/**
+	 * Returns the slug of the default importer for this factory.
+	 *
+	 * @since TBD
+	 *
+	 * @return string
+	 */
+	public function selected();
 }

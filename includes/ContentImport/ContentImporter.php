@@ -2,12 +2,8 @@
 
 namespace lloc\Msls\ContentImport;
 
-use lloc\Msls\ContentImport\Importers\AttachmentsImporters;
 use lloc\Msls\ContentImport\Importers\Importer;
-use lloc\Msls\ContentImport\Importers\PostFieldsImporters;
-use lloc\Msls\ContentImport\Importers\PostMetaImporters;
-use lloc\Msls\ContentImport\Importers\PostThumbnailImporters;
-use lloc\Msls\ContentImport\Importers\TermsImporters;
+use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMain;
 use lloc\Msls\MslsOptionsPost;
@@ -206,25 +202,10 @@ class ContentImporter extends MslsRegistryInstance {
 		 * @param ImportCoordinates $import_coordinates
 		 */
 		$importers = apply_filters( 'msls_content_import_importers', null, $import_coordinates );
-		if ( null === $importers ) {
-			$importers = [
-				'post-fields'    => PostFieldsImporters::make( $import_coordinates ),
-				'post-meta'      => PostMetaImporters::make( $import_coordinates ),
-				'terms'          => TermsImporters::make( $import_coordinates ),
-				'post-thumbnail' => PostThumbnailImporters::make( $import_coordinates ),
-				'attachments'    => AttachmentsImporters::make( $import_coordinates ),
-			];
-		}
 
-		/**
-		 * Filters the map of importers that should be used.
-		 *
-		 * @since TBD
-		 *
-		 * @param array             $importers An array of importers in the shape [ <type> => <Importer $importer> ]
-		 * @param ImportCoordinates $import_coordinates
-		 */
-		$importers = apply_filters( 'msls_content_import_importers_map', $importers, $import_coordinates );
+		if ( null === $importers ) {
+			$importers = Map::instance()->make( $import_coordinates );
+		}
 
 		$log       = $this->logger ?: new ImportLogger( $import_coordinates );
 		$relations = $this->relations ?: new Relations( $import_coordinates );

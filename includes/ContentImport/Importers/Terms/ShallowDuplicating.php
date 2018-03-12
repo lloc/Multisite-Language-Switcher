@@ -14,6 +14,21 @@ use lloc\Msls\MslsOptionsTaxTerm;
  */
 class ShallowDuplicating extends BaseImporter {
 
+	const TYPE = 'shallow-duplicating';
+
+	/**
+	 * Returns an array of information about the importer.
+	 *
+	 * @return \stdClass
+	 */
+	public static function info() {
+		return (object) [
+			'slug'        => static::TYPE,
+			'name'        => __( 'Shallow Duplicating', 'multisite-language-switcher' ),
+			'description' => __( 'Shallow (one level deep) duplication or assignment of the source post taxonomy terms to the destnation post.', 'multisite-language-switcher' )
+		];
+	}
+
 	public function import( array $data ) {
 		$source_blog_id = $this->import_coordinates->source_blog_id;
 		$source_post_id = $this->import_coordinates->source_post_id;
@@ -75,15 +90,13 @@ class ShallowDuplicating extends BaseImporter {
 		 *
 		 * @since TBD
 		 *
-		 * @param array             $blacklist
-		 * @param \WP_Term          $term
-		 * @param array             $meta
+		 * @param array $blacklist
+		 * @param \WP_Term $term
+		 * @param array $meta
 		 * @param ImportCoordinates $import_coordinates
 		 */
 		$blacklist = apply_filters( 'msls_content_import_term_meta_blacklist', array(), $term, $meta, $this->import_coordinates );
 
 		return array_diff_key( $meta, array_combine( $blacklist, $blacklist ) );
 	}
-
-
 }

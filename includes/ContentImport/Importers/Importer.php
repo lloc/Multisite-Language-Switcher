@@ -30,4 +30,11 @@ interface Importer {
 	 * @return Relations
 	 */
 	public function get_relations();
+
+	/**
+	 * Returns an array of information about the importer.
+	 *
+	 * @return \stdClass
+	 */
+	public static function info(  );
 }
