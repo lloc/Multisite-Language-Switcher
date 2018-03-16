@@ -60,16 +60,26 @@ class Relations {
 			/** @var MslsOptions $option */
 			list( $option, $lang, $id ) = $relation;
 			$option->save( [ $lang => $id ] );
+			$source_id = $option->get_arg( 0, $id );
+
+			$local_options[ $source_id ] = [ $option, $id ];
 		}
 		restore_current_blog();
+		/** @var MslsOptions $local_option */
+		foreach ( $local_options as $source_id => $option_data ) {
+			list( $source_option, $local_id ) = $option_data;
+			$option_class = get_class( $source_option );
+			$local_option = call_user_func( [ $option_class, 'create' ], $local_id );
+			$local_option->save( [ $this->import_coordinates->source_lang => $source_id ] );
+		}
 	}
 
 	/**
 	 * Sets a relation that should be created.
 	 *
 	 * @param MslsOptions $creator
-	 * @param string      $dest_lang
-	 * @param string      $dest_post_id
+	 * @param string $dest_lang
+	 * @param string $dest_post_id
 	 */
 	public function should_create( MslsOptions $creator, $dest_lang, $dest_post_id ) {
 		$this->to_create[] = [ $creator, $dest_lang, $dest_post_id ];
