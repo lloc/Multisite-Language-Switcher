@@ -129,6 +129,7 @@ class MslsMetaBox extends MslsMain {
 					$post_type,
 					'side',
 					'high' );
+				add_action( 'admin_footer', [ ContentImportMetaBox::instance(), 'print_modal_html' ] );
 			}
 		}
 	}

@@ -240,7 +240,7 @@ class ContentImporterTest extends \Msls_UnitTestCase {
 		$obj = $this->make_instance();
 
 		switch_to_blog( $source_blog_id );
-		$updated_data = $obj->on_wp_insert_post( $data );
+		$updated_data = $obj->handle_import( $data );
 
 		$this->assertEquals( $data, $updated_data );
 	}

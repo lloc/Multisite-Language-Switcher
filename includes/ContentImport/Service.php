@@ -25,8 +25,11 @@ class Service extends MslsRegistryInstance {
 		}
 
 		add_filter( 'wp_insert_post_data', function ( array $data ) {
-			return ContentImporter::instance()->on_wp_insert_post( $data );
+			return ContentImporter::instance()->handle_import( $data );
 		}, 99 );
+		add_action( 'template_redirect', function () {
+			return ContentImporter::instance()->handle_import();
+		} );
 		add_filter( 'wp_insert_post_empty_content', function ( $empty ) {
 			return ContentImporter::instance()->filter_empty( $empty );
 		} );

@@ -33,6 +33,16 @@ class ContentImporter extends MslsRegistryInstance {
 	protected $relations;
 
 	/**
+	 * @var bool Whether the class should handle requests or not.
+	 */
+	protected $handle = true;
+
+	/**
+	 * @var int The ID of the post the class created while handling the request, if any.
+	 */
+	protected $has_created_post = 0;
+
+	/**
 	 * ContentImporter constructor.
 	 *
 	 * @param \lloc\Msls\MslsMain|null $main
@@ -70,14 +80,13 @@ class ContentImporter extends MslsRegistryInstance {
 	}
 
 	/**
-	 * Filters the `wp_insert_post_data` filter to modify the data that will be inserted for
-	 * a post and run the real import if needed.
+	 * Handles an import request happening during a post save or a template redirect.
 	 *
-	 * @param array $data
+	 * @param array|null $data
 	 *
 	 * @return array The updated, if needed, data array.
 	 */
-	public function on_wp_insert_post( array $data ) {
+	public function handle_import( array $data = [] ) {
 		if ( ! $this->pre_flight_check() || false === $sources = $this->parse_sources() ) {
 			return $data;
 		}
@@ -89,13 +98,15 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 
 		$source_lang  = MslsBlogCollection::get_blog_language( $source_blog_id );
-		$dest_post_id = get_the_ID();
-		$dest_blog_id = get_current_blog_id();
-		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
+		$dest_post_id = $this->get_the_ID();
 
 		if ( empty( $dest_post_id ) ) {
 			return $data;
 		}
+
+		$dest_blog_id = get_current_blog_id();
+		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
+
 
 		switch_to_blog( $source_blog_id );
 		$source_post = get_post( $source_post_id );
@@ -117,7 +128,18 @@ class ContentImporter extends MslsRegistryInstance {
 
 		$import_coordinates->parse_importers();
 
-		return $this->import_content( $import_coordinates, $data );
+		$data = $this->import_content( $import_coordinates, $data );
+
+		if ( $this->has_created_post ) {
+			$data['ID']          = $dest_post_id;
+			$data['post_status'] = $data['post_status'] === 'auto-draft' ? 'draft' : $data['post_status'];
+			$this->insert_post( $data );
+			$edit_post_link = html_entity_decode( get_edit_post_link( $dest_post_id ) );
+			wp_redirect( $edit_post_link );
+			die();
+		}
+
+		return $data;
 	}
 
 	/**
@@ -125,7 +147,11 @@ class ContentImporter extends MslsRegistryInstance {
 	 *
 	 * @return bool
 	 */
-	protected function pre_flight_check() {
+	protected function pre_flight_check( array $data = [] ) {
+		if ( ! $this->handle ) {
+			return false;
+		}
+
 		if ( ! $this->main->verify_nonce() ) {
 			return false;
 		}
@@ -156,11 +182,39 @@ class ContentImporter extends MslsRegistryInstance {
 		return array_map( 'intval', $import_data );
 	}
 
+	protected function get_the_ID() {
+		$id = get_the_ID();
+
+		if ( ! empty( $id ) ) {
+			return $id;
+		}
+
+		return $this->insert_post( [ 'post_title' => 'MSLS Content Import Draft - ' . date( 'Y-m-d H:i:s' ) ] );
+	}
+
+	protected function insert_post( array $data = [] ) {
+		if ( empty( $data ) ) {
+			return false;
+		}
+
+		$this->handle( false );;
+		$post_id = wp_insert_post( $data );
+		$this->handle( true );
+
+		$this->has_created_post = $post_id ?: false;
+
+		return $this->has_created_post;
+	}
+
+	public function handle( $handle ) {
+		$this->handle = $handle;
+	}
+
 	/**
 	 * Imports content according to the provided coordinates.
 	 *
 	 * @param       ImportCoordinates $import_coordinates
-	 * @param array                   $post_fields An optional array of post fields; this can be
+	 * @param array $post_fields An optional array of post fields; this can be
 	 *                                             left empty if the method is not called as a consequence
 	 *                                             of filtering the `wp_insert_post_data` filter.
 	 *
@@ -185,7 +239,7 @@ class ContentImporter extends MslsRegistryInstance {
 		 *
 		 * @since TBD
 		 *
-		 * @param array             $post_fields
+		 * @param array $post_fields
 		 * @param ImportCoordinates $import_coordinates
 		 */
 		$post_fields = apply_filters( 'msls_content_import_data_before_import', $post_fields, $import_coordinates );
@@ -198,7 +252,7 @@ class ContentImporter extends MslsRegistryInstance {
 		 *
 		 * @since TBD
 		 *
-		 * @param null              $importers
+		 * @param null $importers
 		 * @param ImportCoordinates $import_coordinates
 		 */
 		$importers = apply_filters( 'msls_content_import_importers', null, $import_coordinates );
@@ -207,22 +261,23 @@ class ContentImporter extends MslsRegistryInstance {
 			$importers = Map::instance()->make( $import_coordinates );
 		}
 
-		$log       = $this->logger ?: new ImportLogger( $import_coordinates );
-		$relations = $this->relations ?: new Relations( $import_coordinates );
+		$this->logger    = $this->logger ?: new ImportLogger( $import_coordinates );
+		$this->relations = $this->relations ?: new Relations( $import_coordinates );
 
 		if ( ! empty( $importers ) && is_array( $importers ) ) {
 			$source_post_id = $import_coordinates->source_post_id;
 			$dest_lang      = $import_coordinates->dest_lang;
 			$dest_post_id   = $import_coordinates->dest_post_id;
-			$relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
+			$this->relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
+
 			foreach ( $importers as $key => $importer ) {
 				/** @var Importer $importer */
 				$post_fields = $importer->import( $post_fields );
-				$log->merge( $importer->get_logger() );
-				$relations->merge( $importer->get_relations() );
+				$this->logger->merge( $importer->get_logger() );
+				$this->relations->merge( $importer->get_relations() );
 			}
-			$relations->create();
-			$log->save();
+			$this->relations->create();
+			$this->logger->save();
 		}
 
 		/**
@@ -231,22 +286,22 @@ class ContentImporter extends MslsRegistryInstance {
 		 * @since TBD
 		 *
 		 * @param ImportCoordinates $import_coordinates
-		 * @param ImportLogger      $log
-		 * @param Relations         $relations
+		 * @param ImportLogger $logger
+		 * @param Relations $relations
 		 */
-		do_action( 'msls_content_import_after_import', $import_coordinates, $log, $relations );
+		do_action( 'msls_content_import_after_import', $import_coordinates, $this->logger, $this->relations );
 
 		/**
 		 * Filters the data after the import ran.
 		 *
 		 * @since TBD
 		 *
-		 * @param array             $post_fields
+		 * @param array $post_fields
 		 * @param ImportCoordinates $import_coordinates
-		 * @param ImportLogger      $log
-		 * @param Relations         $relations
+		 * @param ImportLogger $logger
+		 * @param Relations $relations
 		 */
-		return apply_filters( 'msls_content_import_data_after_import', $post_fields, $import_coordinates, $log, $relations );
+		return apply_filters( 'msls_content_import_data_after_import', $post_fields, $import_coordinates, $this->logger, $this->relations );
 	}
 
 	/**

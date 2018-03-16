@@ -69,9 +69,11 @@ class MslsPlugin {
 						add_action( 'admin_init', [ MslsCustomColumn::class, 'init' ] );
 					} elseif ( 'inline-save-tax' === $action ) {
 						add_action( 'admin_init', [ MslsCustomColumnTaxonomy::class, 'init' ] );
-					} elseif ( 'editpost' === $action && filter_has_var(INPUT_POST, 'msls_import')){
-						\lloc\Msls\ContentImport\Service::instance()->register();
 					}
+				}
+
+				if ( filter_has_var( INPUT_POST, 'msls_import' ) ) {
+					\lloc\Msls\ContentImport\Service::instance()->register();
 				}
 
 				add_action( 'wp_ajax_suggest_posts', [ MslsMetaBox::class, 'suggest' ] );
