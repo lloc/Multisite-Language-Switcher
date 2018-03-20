@@ -38,7 +38,7 @@ class MetaBox extends MslsRegistryInstance {
 					'multisite-language-switcher' )
 			                   . '</legend>';
 			foreach ( $languages as $language => $label ) {
-				$id    = $mydata->language;
+				$id    = $mydata->{$language};
 				$blog  = $blogs->get_blog_id( $language );
 				$label = sprintf( $label_template, $label );
 				if ( null === $id && $has_input && $input_lang === $language ) {
@@ -50,7 +50,7 @@ class MetaBox extends MslsRegistryInstance {
 						'msls_import'  => "{$blog}|{$id}",
 					];
 					$output     .= sprintf( '<a class="button-primary thickbox" href="%s">%s</a>',
-						$this->inline_thickbox_url(),
+						$this->inline_thickbox_url( $this->data ),
 						$label
 					);
 				}
@@ -72,7 +72,7 @@ class MetaBox extends MslsRegistryInstance {
 			'title'    => 'Title of it',
 			'width'    => 600,
 			'height'   => 900,
-			'inlineId' => 'msls-import-dialog',
+			'inlineId' => 'msls-import-dialog-'. str_replace('|', '-',$data['msls_import']),
 		], $data );
 
 		return esc_url(
@@ -85,9 +85,11 @@ class MetaBox extends MslsRegistryInstance {
 	}
 
 	protected function inline_thickbox_html( $echo = true, array $data = [] ) {
+		$slug = str_replace( '|', '-', $data['msls_import'] );
+
 		ob_start();
 		?>
-        <div style="display: none;" id="msls-import-dialog">
+        <div style="display: none;" id="msls-import-dialog-<?php echo esc_attr( $slug ) ?>">
             <h3><?php esc_html_e( 'Select what should be imported and how', 'multisite-language-switcher' ) ?></h3>
 
             <form action="<?php echo add_query_arg( [] ) ?>" method="post">

@@ -126,17 +126,13 @@ class ContentImporter extends MslsRegistryInstance {
 		$import_coordinates->source_lang    = $source_lang;
 		$import_coordinates->dest_lang      = $dest_lang;
 
-		$import_coordinates->parse_importers();
+		$import_coordinates->parse_importers_from_request();
 
 		$data = $this->import_content( $import_coordinates, $data );
 
 		if ( $this->has_created_post ) {
-			$data['ID']          = $dest_post_id;
-			$data['post_status'] = $data['post_status'] === 'auto-draft' ? 'draft' : $data['post_status'];
-			$this->insert_post( $data );
-			$edit_post_link = html_entity_decode( get_edit_post_link( $dest_post_id ) );
-			wp_redirect( $edit_post_link );
-			die();
+			$this->update_inserted_post_data( $dest_post_id, $data );
+			$this->redirect_to_post( $dest_post_id );
 		}
 
 		return $data;
@@ -208,6 +204,13 @@ class ContentImporter extends MslsRegistryInstance {
 
 	public function handle( $handle ) {
 		$this->handle = $handle;
+
+		// also prevent MSLS from saving
+		if ( false === $handle ) {
+			add_action( 'msls_main_save', '__return_false' );
+		} else {
+			remove_action( 'msls_main_save', '__return_false' );
+		}
 	}
 
 	/**
@@ -276,6 +279,7 @@ class ContentImporter extends MslsRegistryInstance {
 				$this->logger->merge( $importer->get_logger() );
 				$this->relations->merge( $importer->get_relations() );
 			}
+
 			$this->relations->create();
 			$this->logger->save();
 		}
@@ -324,5 +328,30 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param $post_id
+	 */
+	protected function redirect_to_post( $post_id ) {
+		$edit_post_link = html_entity_decode( get_edit_post_link( $post_id ) );
+		wp_redirect( $edit_post_link );
+		die();
+	}
+
+	/**
+	 * @param array $data
+	 * @param int $post_id
+	 *
+	 * @return array
+	 */
+	protected function update_inserted_post_data( $post_id, array $data ) {
+		$data['ID']          = $post_id;
+		$data['post_status'] = empty( $data['post_status'] ) || $data['post_status'] === 'auto-draft'
+			? 'draft'
+			: $data['post_status'];
+		$this->insert_post( $data );
+
+		return $data;
 	}
 }

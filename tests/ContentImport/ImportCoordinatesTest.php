@@ -85,19 +85,19 @@ class ImportCoordinatesTest extends \Msls_UnitTestCase {
 
 		unset( $_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] );
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 
 		$_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 
 		$_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [ 'foo' => 'bar' ];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEquals( 'bar', $obj->get_importer_for( 'foo' ) );
 	}
@@ -110,19 +110,19 @@ class ImportCoordinatesTest extends \Msls_UnitTestCase {
 
 		unset( $_POST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] );
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 
 		$_POST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 
 		$_POST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [ 'foo' => 'bar' ];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEquals( 'bar', $obj->get_importer_for( 'foo' ) );
 	}
@@ -135,19 +135,19 @@ class ImportCoordinatesTest extends \Msls_UnitTestCase {
 
 		unset( $_GET[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] );
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 
 		$_GET[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 
 		$_GET[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [ 'foo' => 'bar' ];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEquals( 'bar', $obj->get_importer_for( 'foo' ) );
 	}
@@ -161,14 +161,14 @@ class ImportCoordinatesTest extends \Msls_UnitTestCase {
 		unset( $_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] );
 		unset( $_POST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] );
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 
 		$_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [];
 		$_POST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ]    = [ 'some' => 'baz' ];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 		$this->assertEmpty( $obj->get_importer_for( 'some' ) );
@@ -176,7 +176,7 @@ class ImportCoordinatesTest extends \Msls_UnitTestCase {
 		$_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [ 'foo' => 'bar' ];
 		$_POST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ]    = [ 'some' => 'baz' ];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEquals( 'bar', $obj->get_importer_for( 'foo' ) );
 		$this->assertEmpty( $obj->get_importer_for( 'some' ) );
@@ -191,14 +191,14 @@ class ImportCoordinatesTest extends \Msls_UnitTestCase {
 		unset( $_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] );
 		unset( $_GET[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] );
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 
 		$_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [];
 		$_GET[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ]     = [ 'some' => 'baz' ];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEmpty( $obj->get_importer_for( 'foo' ) );
 		$this->assertEmpty( $obj->get_importer_for( 'some' ) );
@@ -206,7 +206,7 @@ class ImportCoordinatesTest extends \Msls_UnitTestCase {
 		$_REQUEST[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ] = [ 'foo' => 'bar' ];
 		$_GET[ ImportCoordinates::IMPORTERS_GLOBAL_KEY ]     = [ 'some' => 'baz' ];
 
-		$obj->parse_importers();
+		$obj->parse_importers_from_request();
 
 		$this->assertEquals( 'bar', $obj->get_importer_for( 'foo' ) );
 		$this->assertEmpty( $obj->get_importer_for( 'some' ) );

@@ -86,9 +86,9 @@ class ImportCoordinates {
 	}
 
 	/**
-	 * Parses the importers from superglobals.
+	 * Parses the importers from request superglobals.
 	 */
-	public function parse_importers() {
+	public function parse_importers_from_request() {
 		// bitmask
 		$source = isset( $_REQUEST[ self::IMPORTERS_GLOBAL_KEY ] ) * 100
 		          + isset( $_POST[ self::IMPORTERS_GLOBAL_KEY ] ) * 10

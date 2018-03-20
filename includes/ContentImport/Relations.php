@@ -14,9 +14,15 @@ use lloc\Msls\MslsOptions;
 class Relations {
 
 	/**
-	 * @var array
+	 * @var MslsOptions[]
 	 */
 	public $to_create = [];
+
+	/**
+	 * @var MslsOptions[]
+	 */
+	protected $local_options = [];
+
 	/**
 	 * @var ImportCoordinates
 	 */
@@ -55,18 +61,28 @@ class Relations {
 	 * Creates the relations between the source blog elements and the destination one.
 	 */
 	public function create() {
+		$this->create_source_to_local();
+		$this->create_local_to_source();
+	}
+
+	protected function create_source_to_local() {
 		switch_to_blog( $this->import_coordinates->source_blog_id );
+
 		foreach ( $this->to_create as $relation ) {
 			/** @var MslsOptions $option */
 			list( $option, $lang, $id ) = $relation;
 			$option->save( [ $lang => $id ] );
 			$source_id = $option->get_arg( 0, $id );
 
-			$local_options[ $source_id ] = [ $option, $id ];
+			$this->local_options[ $source_id ] = [ $option, $id ];
 		}
+
 		restore_current_blog();
+	}
+
+	protected function create_local_to_source() {
 		/** @var MslsOptions $local_option */
-		foreach ( $local_options as $source_id => $option_data ) {
+		foreach ( $this->local_options as $source_id => $option_data ) {
 			list( $source_option, $local_id ) = $option_data;
 			$option_class = get_class( $source_option );
 			$local_option = call_user_func( [ $option_class, 'create' ], $local_id );
