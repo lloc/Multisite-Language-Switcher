@@ -8,7 +8,7 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 
 	const IMPORTED = '_msls_imported';
 
-	public function filter_src( $image, $attachment_id ) {
+	public function filter_src( array $image, $attachment_id ) {
 		if ( empty( $image ) || false === ( $msls_imported = $this->has_import_data( $attachment_id ) ) ) {
 			return $image;
 		}
@@ -47,8 +47,8 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 		return $msls_imported;
 	}
 
-	public function filter_srcset( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
-		if ( false === ( $mslsImported = $this->has_import_data( $attachmentId ) ) ) {
+	public function filter_srcset( array $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
+		if ( ! $this->has_import_data( $attachmentId ) ) {
 			return $sources;
 		}
 
