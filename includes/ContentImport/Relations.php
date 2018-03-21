@@ -84,6 +84,22 @@ class Relations {
 		/** @var MslsOptions $local_option */
 		foreach ( $this->local_options as $source_id => $option_data ) {
 			list( $source_option, $local_id ) = $option_data;
+
+			/**
+			 * Allows plugins to filter the local to source relation creation and override the class creation method completely.
+			 *
+			 * @since TBD
+			 *
+			 * @param mixed $created If not `null` then the class will not create the local to source relation.
+			 * @param int $local_id
+			 * @param int $source_id
+			 * @param MslsOptions $source_option
+			 */
+			$created = apply_filters( 'msls_content_import_relation_local_to_source_create', null, $local_id, $source_id, $source_option );
+			if ( null !== $created ) {
+				continue;
+			}
+
 			$option_class = get_class( $source_option );
 			$local_option = call_user_func( [ $option_class, 'create' ], $local_id );
 			$local_option->save( [ $this->import_coordinates->source_lang => $source_id ] );

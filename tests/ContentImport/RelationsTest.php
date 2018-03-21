@@ -4,6 +4,7 @@ namespace lloc\Msls\ContentImport;
 
 
 use lloc\Msls\MslsOptions;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class RelationsTest extends \Msls_UnitTestCase {
@@ -54,10 +55,15 @@ class RelationsTest extends \Msls_UnitTestCase {
 	}
 
 	public function test_create() {
-		$dest_lang = 'de_DE';
-		$post_id   = $this->factory->post->create();
-		list( $creator_1, $creator_2, $creator_3 ) = array_map( function ( ObjectProphecy $c ) use ( $dest_lang, $post_id ) {
-			$c->save( [ $dest_lang => $post_id ] )->shouldBeCalled();
+		$source_lang = 'it_IT';
+		$dest_lang   = 'de_DE';
+		$post_ids    = $this->factory->post->create_many( 3 );
+		list( $creator_1, $creator_2, $creator_3 ) = array_map( function ( ObjectProphecy $c ) use ( $source_lang, $dest_lang, $post_ids ) {
+			static $i;
+			$i = $i === null ? 0 : ++$i;
+
+			$c->save( [ $dest_lang => $post_ids[ $i ] ] )->shouldBeCalled();
+			$c->get_arg( Argument::type( 'int' ), $post_ids[ $i ] )->willReturn( $post_ids[ $i ] );
 
 			return $c;
 		}, [
@@ -65,14 +71,21 @@ class RelationsTest extends \Msls_UnitTestCase {
 			$this->prophesize( MslsOptions::class ),
 			$this->prophesize( MslsOptions::class ),
 		] );
+		$inverted = [];
+		add_filter( 'msls_content_import_relation_local_to_source_create', function ( $_, $local_id, $source_id ) use ( &$inverted ) {
+			$inverted[ ] = $local_id;
+			return true;
+		}, 10, 3 );
 
 		$obj = $this->make_instance();
 
-		$obj->should_create( $creator_1->reveal(), $dest_lang, $post_id );
-		$obj->should_create( $creator_2->reveal(), $dest_lang, $post_id );
-		$obj->should_create( $creator_3->reveal(), $dest_lang, $post_id );
+		$obj->should_create( $creator_1->reveal(), $dest_lang, $post_ids[0] );
+		$obj->should_create( $creator_2->reveal(), $dest_lang, $post_ids[1] );
+		$obj->should_create( $creator_3->reveal(), $dest_lang, $post_ids[2] );
 
 		$obj->create();
+
+		$this->assertEquals( $post_ids, $inverted );
 	}
 
 	function setUp() {
