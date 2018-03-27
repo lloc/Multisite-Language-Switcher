@@ -31,8 +31,8 @@ class BaseImporter implements Importer {
 	 */
 	public function __construct( ImportCoordinates $import_coordinates, ImportLogger $logger = null, Relations $relations = null ) {
 		$this->import_coordinates = $import_coordinates;
-		$this->logger             = null !== $logger ?: new ImportLogger( $this->import_coordinates );
-		$this->relations          = null !== $relations ?: new Relations( $this->import_coordinates );
+		$this->logger = $logger ?: new ImportLogger( $this->import_coordinates );
+		$this->relations = $relations ?: new Relations( $this->import_coordinates );
 	}
 
 	/**

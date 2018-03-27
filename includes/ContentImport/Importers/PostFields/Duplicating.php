@@ -42,7 +42,7 @@ class Duplicating extends BaseImporter {
 		return $data;
 	}
 
-	protected function filter_fields() {
+	public function filter_fields() {
 		$fields = array(
 			'post_content',
 			'post_content_filtered',

@@ -87,8 +87,6 @@ class Linking extends BaseImporter {
 			} else {
 				$this->logger->log_error( 'post-thumbnail/set', $dest_post_thumbnail_id );
 			}
-
-			// @todo should dest post thumbnail be related with the source one?
 		}
 
 		return $data;

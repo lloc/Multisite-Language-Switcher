@@ -28,23 +28,28 @@ class Duplicating extends BaseImporter {
 
 		switch_to_blog( $source_blog_id );
 		$source_meta = get_post_custom( $source_post_id );
-		restore_current_blog();
+
+		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
 		$source_meta = $this->filter_post_meta( $source_meta );
 
 		foreach ( $source_meta as $key => $entries ) {
-			if ( '' !== get_post_meta( $dest_post_id, $key ) ) {
-				foreach ( $entries as $entry ) {
-					add_post_meta( $dest_post_id, $key, $entry );
-					$this->logger->log_success( 'meta/added', array( $key => $entry ) );
-				}
+			delete_post_meta( $dest_post_id, $key );
+			foreach ( $entries as $entry ) {
+				$entry = maybe_unserialize( $entry );
+				add_post_meta( $dest_post_id, $key, $entry );
+				$this->logger->log_success( 'meta/added', array( $key => $entry ) );
 			}
 		}
+
+		wp_cache_delete( $dest_post_id, 'post_meta' );
+
+		restore_current_blog();
 
 		return $data;
 	}
 
-	protected function filter_post_meta( array $meta ) {
+	public function filter_post_meta( array $meta ) {
 		$blacklist = array( '_edit_last', '_thumbnail_id', '_edit_lock' );
 
 		/**
@@ -56,7 +61,7 @@ class Duplicating extends BaseImporter {
 		 * @param array $meta
 		 * @param ImportCoordinates $import_coordinates
 		 */
-		$blacklist = apply_filters( 'msls_content_import_term_meta_blacklist', $blacklist, $meta, $this->import_coordinates );
+		$blacklist = apply_filters( 'msls_content_import_post_meta_blacklist', $blacklist, $meta, $this->import_coordinates );
 
 		return array_diff_key( $meta, array_combine( $blacklist, $blacklist ) );
 	}

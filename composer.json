@@ -14,6 +14,11 @@
       "lloc\\Msls\\": "includes/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "lloc\\Msls\\": "tests/"
+    }
+  },
   "scripts": {
     "test": "phpunit",
     "coverage": "phpunit --coverage-html tests/coverage"
