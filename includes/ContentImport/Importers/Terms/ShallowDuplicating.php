@@ -44,7 +44,7 @@ class ShallowDuplicating extends BaseImporter {
 			array_map( array( MslsOptionsTaxTerm::class, 'create' ), $source_terms_ids )
 		);
 
-		restore_current_blog();
+		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
 		/** @var \WP_Term $term */
 		foreach ( $source_terms as $term ) {
@@ -80,6 +80,8 @@ class ShallowDuplicating extends BaseImporter {
 				$this->logger->log_success( "term/added/{$term->taxonomy}", array( $term->name => $term->term_id ) );
 			}
 		}
+
+		restore_current_blog();
 
 		return $data;
 	}
