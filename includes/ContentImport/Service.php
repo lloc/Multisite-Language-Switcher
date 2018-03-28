@@ -24,6 +24,17 @@ class Service extends MslsRegistryInstance {
 			return false;
 		}
 
+		$this->hook();
+
+		return true;
+	}
+
+	/**
+	 * Hooks the filters and actions for this service provider.
+	 *
+	 * Differently from the `register` method this method will not check for options to hook.
+	 */
+	public function hook() {
 		add_filter( 'wp_insert_post_data', function ( array $data ) {
 			return ContentImporter::instance()->handle_import( $data );
 		}, 99 );
@@ -36,13 +47,11 @@ class Service extends MslsRegistryInstance {
 		add_filter( 'wp_insert_post_empty_content', function ( $empty ) {
 			return ContentImporter::instance()->filter_empty( $empty );
 		} );
-		add_filter( 'wp_get_attachment_image_src', function ( $image, $attachmentId ) {
-			return AttachmentPathFinder::instance()->filter_src( $image, $attachmentId );
+		add_filter( 'wp_get_attachment_url', function ( $url, $post_id ) {
+			return AttachmentPathFinder::instance()->filter_attachment_url( $url, $post_id );
 		}, 99, 2 );
 		add_filter( 'wp_calculate_image_srcset', function ( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
 			return AttachmentPathFinder::instance()->filter_srcset( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId );
 		}, 99, 5 );
-
-		return true;
 	}
 }

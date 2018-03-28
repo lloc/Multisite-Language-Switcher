@@ -8,24 +8,6 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 
 	const IMPORTED = '_msls_imported';
 
-	public function filter_src( array $image, $attachment_id ) {
-		if ( empty( $image ) || false === ( $msls_imported = $this->has_import_data( $attachment_id ) ) ) {
-			return $image;
-		}
-
-		$sourcePost = get_blog_post( $msls_imported['blog'], $msls_imported['post'] );
-
-		if ( empty( $sourcePost ) ) {
-			delete_post_meta( $attachment_id, self::IMPORTED );
-
-			return $image;
-		}
-
-		$image[0] = $sourcePost->guid;
-
-		return $image;
-	}
-
 	protected function has_import_data( $attachment_id ) {
 		if ( empty( $attachment_id ) ) {
 			return false;
@@ -48,19 +30,57 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 	}
 
 	public function filter_srcset( array $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
-		if ( ! $this->has_import_data( $attachmentId ) ) {
+		if ( ! $msls_imported = $this->has_import_data( $attachmentId ) ) {
 			return $sources;
 		}
 
-		$extension              = '.' . pathinfo( $imageSrc, PATHINFO_EXTENSION );
-		$srcSrcWithoutExtension = str_replace( $extension, '', $imageSrc );
+		$source_post = get_blog_post( $msls_imported['blog'], $msls_imported['post'] );
+
+		if ( false === $source_post ) {
+			return $sources;
+		}
+
+		$extension              = '.' . pathinfo( $source_post->guid, PATHINFO_EXTENSION );
+		$pattern = '/(-[\\d]+x[\\d]+)*' . preg_quote( $extension, '/' ) . '$/';
+		$srcWithoutExtension = preg_replace( $pattern, '', $imageSrc );
 
 		foreach ( $sources as $key => &$value ) {
-			$srcWithoutExtension = str_replace( $extension, '', $value['url'] );
-			$srcWithoutExtension = preg_replace( '/-[\\d]+x[\\d]+$/', '', $srcWithoutExtension );
-			$value['url']        = str_replace( $srcWithoutExtension, $srcSrcWithoutExtension, $value['url'] );
+			preg_match( $pattern, $value['url'], $matches );
+			$w_and_h      = ! empty( $matches[1] ) ? $matches[1] : '';
+			$value['url'] = $srcWithoutExtension . $w_and_h. $extension;
 		}
 
 		return $sources;
+	}
+
+	public function filter_attachment_url( $url, $attachment_id ) {
+		if ( ! $msls_imported = $this->has_import_data( $attachment_id ) ) {
+			return $url;
+		}
+
+		$source_post = $this->get_source_post( $attachment_id, $msls_imported );
+
+		if ( false === $source_post ) {
+			return $url;
+		}
+
+		return $source_post->guid;
+	}
+
+	/**
+	 * @param int $attachment_id
+	 * @param array $msls_imported
+	 *
+	 * @return \WP_Post|false
+	 */
+	protected function get_source_post( $attachment_id, $msls_imported ) {
+		$source_post = get_blog_post( $msls_imported['blog'], $msls_imported['post'] );
+
+		if ( empty( $source_post ) || !$source_post instanceof \WP_Post) {
+			delete_post_meta( $attachment_id, self::IMPORTED );
+			return false;
+		}
+
+		return $source_post;
 	}
 }

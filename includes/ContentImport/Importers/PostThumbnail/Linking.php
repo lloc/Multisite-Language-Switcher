@@ -43,10 +43,15 @@ class Linking extends BaseImporter {
 			: false;
 		$source_upload_dir                = wp_upload_dir();
 
-		restore_current_blog();
+		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
-		if ( empty( get_post_thumbnail_id( $dest_post_id ) ) && $source_post_thumbnail_attachment instanceof \WP_Post ) {
-			$source_post_thumbnail_file = $source_upload_dir['basedir'] . '/' . $source_post_thumbnail_meta['file'];
+		if ( $source_post_thumbnail_attachment instanceof \WP_Post ) {
+			// in some instances the folder sep. `/` might be duplicated, we de-duplicate it
+			array_walk( $source_upload_dir, function ( &$entry ) {
+				$entry = str_replace( '//', '/', $entry );
+			} );
+			$dir                        = untrailingslashit( str_replace( $source_upload_dir['subdir'], '', $source_upload_dir['path'] ) );
+			$source_post_thumbnail_file = $dir . '/' . $source_post_thumbnail_meta['file'];
 
 			// Check the type of file. We'll use this as the 'post_mime_type'.
 			$filetype = wp_check_filetype( basename( $source_post_thumbnail_file ), null );
@@ -60,21 +65,34 @@ class Linking extends BaseImporter {
 				'post_status'    => 'inherit',
 			);
 
-			// Insert the attachment.
-			$dest_post_thumbnail_id = wp_insert_attachment( $attachment, $source_post_thumbnail_file, $dest_post_id );
+			$existing_criteria = [
+				'post_type'   => 'attachment',
+				'title'       => $attachment['post_title'],
+				'post_parent' => $dest_post_id
+			];
+			$found             = get_posts( $existing_criteria );
 
-			if ( empty( $dest_post_thumbnail_id ) ) {
-				$this->logger->log_error( 'post-thumbnail/created', $dest_post_thumbnail_id );
+			if ( $found && $found[0] instanceof \WP_Post ) {
+				$dest_post_thumbnail_id = $found[0]->ID;
+				$this->logger->log_success( 'post-thumbnail/existing', $dest_post_thumbnail_id );
 			} else {
-				$this->logger->log_success( 'post-thumbnail/created', $dest_post_thumbnail_id );
+				// Insert the attachment.
+				$dest_post_thumbnail_id = wp_insert_attachment( $attachment, $source_post_thumbnail_file, $dest_post_id );
+
+				if ( empty( $dest_post_thumbnail_id ) ) {
+					$this->logger->log_error( 'post-thumbnail/created', $dest_post_thumbnail_id );
+				} else {
+					$this->logger->log_success( 'post-thumbnail/created', $dest_post_thumbnail_id );
+				}
+
+				// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+				// Generate the metadata for the attachment, and update the database record.
+				$dest_post_thumbnail_meta = wp_generate_attachment_metadata( $dest_post_thumbnail_id, $source_post_thumbnail_file );
+				wp_update_attachment_metadata( $dest_post_thumbnail_id, $dest_post_thumbnail_meta );
 			}
 
-			// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-
-			// Generate the metadata for the attachment, and update the database record.
-			$dest_post_thumbnail_meta = wp_generate_attachment_metadata( $dest_post_thumbnail_id, $source_post_thumbnail_file );
-			wp_update_attachment_metadata( $dest_post_thumbnail_id, $dest_post_thumbnail_meta );
 			update_post_meta( $dest_post_thumbnail_id, AttachmentPathFinder::IMPORTED, [
 				'blog' => $source_blog_id,
 				'post' => $source_post_thumbnail_id
@@ -82,12 +100,14 @@ class Linking extends BaseImporter {
 
 			$dest_post_thumbnail_set = set_post_thumbnail( $dest_post_id, $dest_post_thumbnail_id );
 
-			if ( $dest_post_thumbnail_set ) {
+			if ( $dest_post_thumbnail_set || $found ) {
 				$this->logger->log_success( 'post-thumbnail/set', $dest_post_thumbnail_id );
 			} else {
 				$this->logger->log_error( 'post-thumbnail/set', $dest_post_thumbnail_id );
 			}
 		}
+
+		restore_current_blog();
 
 		return $data;
 	}

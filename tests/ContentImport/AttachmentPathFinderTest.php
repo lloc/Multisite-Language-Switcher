@@ -24,64 +24,64 @@ class AttachmentPathFinderTest extends \Msls_UnitTestCase {
 	}
 
 	/**
-	 * Test filter_src with empty image date
+	 * Test filter_attachment_url with empty image date
 	 */
-	public function test_filter_src_with_empty_image_date() {
+	public function test_filter_attachment_url_with_empty_image_date() {
 		$sut = $this->make_instance();
 		$id  = $this->factory->attachment->create();
 
-		$filtered = $sut->filter_src( [], $id );
+		$filtered = $sut->filter_attachment_url( '', $id );
 
-		$this->assertEquals( [], $filtered );
+		$this->assertEquals( '', $filtered );
 	}
 
 	/**
-	 * Test filter_src with not linked attachment
+	 * Test filter_attachment_url with not linked attachment
 	 */
-	public function test_filter_sic_with_not_linked_attachment() {
+	public function test_filter_attachment_url_with_not_linked_attachment() {
 		$sut   = $this->make_instance();
 		$id    = $this->factory->attachment->create();
-		$input = [ 'http://example.com/images/image.jpg' ];
+		$input = 'http://example.com/images/image.jpg';
 
-		$filtered = $sut->filter_src( $input, $id );
+		$filtered = $sut->filter_attachment_url( $input, $id );
 
 		$this->assertEquals( $input, $filtered );
 	}
 
 	/**
-	 * Test filter_src with bad linked attachment data
+	 * Test filter_attachment_url with bad linked attachment data
 	 */
-	public function test_filter_src_with_bad_linked_attachment_data() {
+	public function test_filter_attachment_url_with_bad_linked_attachment_data() {
 		$sut = $this->make_instance();
 		$id  = $this->factory->attachment->create();
 		add_post_meta( $id, Finder::IMPORTED, 'foo-bar' );
-		$input = [ 'http://example.com/images/image.jpg' ];
+		$input = 'http://example.com/images/image.jpg';
 
-		$filtered = $sut->filter_src( $input, $id );
+		$filtered = $sut->filter_attachment_url( $input, $id );
 
 		$this->assertEquals( $input, $filtered );
 		$this->assertEquals( '', get_post_meta( $id, Finder::IMPORTED, true ), 'The bad meta should be deleted.' );
 	}
 
 	/**
-	 * Test filter_src with good format meta but bad data
+	 * Test filter_attachment_url with good format meta but bad data
 	 */
-	public function test_filter_src_with_good_format_meta_but_bad_data() {
+	public function test_filter_attachment_url_with_good_format_meta_but_bad_data() {
 		$sut = $this->make_instance();
 		$id  = $this->factory->attachment->create();
 		add_post_meta( $id, Finder::IMPORTED, [ 'glob' => 23, 'bar' => 89 ] );
-		$input = [ 'http://example.com/images/image.jpg' ];
+		$input = 'http://example.com/images/image.jpg';
 
-		$filtered = $sut->filter_src( $input, $id );
+		$filtered = $sut->filter_attachment_url( $input, $id );
 
 		$this->assertEquals( $input, $filtered );
 		$this->assertEquals( '', get_post_meta( $id, Finder::IMPORTED, true ), 'The bad meta should be deleted.' );
 	}
 
 	/**
-	 * Test filter_src with imported image
+	 * Test filter_attachment_url with imported image
 	 */
-	public function test_filter_src_with_imported_image() {
+	public function test_filter_attachment_url_with_imported_image() {
 		$sut         = $this->make_instance();
 		$id          = $this->factory->attachment->create();
 		$source_blog = $this->factory->blog->create();
@@ -89,11 +89,11 @@ class AttachmentPathFinderTest extends \Msls_UnitTestCase {
 		$source_post = $this->factory->attachment->create_and_get();
 		restore_current_blog();
 		add_post_meta( $id, Finder::IMPORTED, [ 'blog' => $source_blog, 'post' => $source_post->ID ] );
-		$input = [ 'http://example.com/images/image.jpg' ];
+		$input = 'http://example.com/images/image.jpg';
 
-		$filtered = $sut->filter_src( $input, $id );
+		$filtered = $sut->filter_attachment_url( $input, $id );
 
-		$this->assertEquals( [ $source_post->guid ], $filtered );
+		$this->assertEquals( $source_post->guid, $filtered );
 	}
 
 
@@ -103,10 +103,6 @@ class AttachmentPathFinderTest extends \Msls_UnitTestCase {
 	public function test_filter_srcset_with_bad_data() {
 		$sut = $this->make_instance();
 		$id  = $this->factory->attachment->create();
-//		$source_blog = $this->factory->blog->create();
-//		switch_to_blog( $source_blog );
-//		$source_post = $this->factory->attachment->create_and_get();
-//		restore_current_blog();
 		add_post_meta( $id, Finder::IMPORTED, [ 'foo' ] );
 		$sources = [
 			[
@@ -127,7 +123,7 @@ class AttachmentPathFinderTest extends \Msls_UnitTestCase {
 		$id          = $this->factory->attachment->create();
 		$source_blog = $this->factory->blog->create();
 		switch_to_blog( $source_blog );
-		$source_post = $this->factory->attachment->create_and_get();
+		$source_post = $this->factory->attachment->create_upload_object( msls_test_data( 'images/image-one.jpg' ) );
 		restore_current_blog();
 		add_post_meta( $id, Finder::IMPORTED, [ 'blog' => $source_blog, 'post' => $source_post ] );
 		$sources = [
