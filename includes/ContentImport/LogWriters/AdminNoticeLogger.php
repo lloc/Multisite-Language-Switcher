@@ -15,7 +15,6 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 	protected $import_coordinates;
 
 	public function write( array $data ) {
-		$data ['error'] = $data['success']; // debug
 		$message        = '<h3>' . esc_html__( 'Multisite Language Switcher last import report', 'multisite-language-switcher' ) . '</h3>';
 		$message        .= '<b>' . sprintf(
 				esc_html__( 'From post %d on site %d to post %d on site %d', 'multisite-language-switcher' ),
