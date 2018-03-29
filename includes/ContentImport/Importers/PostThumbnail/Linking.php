@@ -39,8 +39,15 @@ class Linking extends BaseImporter {
 		$source_post_thumbnail_id         = (int) get_post_thumbnail_id( $source_post_id );
 		$source_post_thumbnail_attachment = get_post( $source_post_thumbnail_id );
 		$source_post_thumbnail_meta       = $source_post_thumbnail_attachment instanceof \WP_Post ?
-			wp_get_attachment_metadata( $source_post_thumbnail_id )
+			$this->get_attachment_meta( $source_post_thumbnail_id )
 			: false;
+
+		if ( false === $source_post_thumbnail_meta ) {
+			$this->logger->log_success( 'post-thumbnail/missing-meta', $source_post_thumbnail_id );
+
+			return $data;
+		}
+
 		$source_upload_dir                = wp_upload_dir();
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
@@ -50,8 +57,8 @@ class Linking extends BaseImporter {
 			array_walk( $source_upload_dir, function ( &$entry ) {
 				$entry = str_replace( '//', '/', $entry );
 			} );
-			$dir                        = untrailingslashit( str_replace( $source_upload_dir['subdir'], '', $source_upload_dir['path'] ) );
-			$source_post_thumbnail_file = $dir . '/' . $source_post_thumbnail_meta['file'];
+			$source_uploads_dir         = untrailingslashit( str_replace( $source_upload_dir['subdir'], '', $source_upload_dir['path'] ) );
+			$source_post_thumbnail_file = $source_uploads_dir . '/' . $source_post_thumbnail_meta['_wp_attached_file'];
 
 			// Check the type of file. We'll use this as the 'post_mime_type'.
 			$filetype = wp_check_filetype( basename( $source_post_thumbnail_file ), null );
@@ -68,8 +75,8 @@ class Linking extends BaseImporter {
 			$existing_criteria = [
 				'post_type'   => 'attachment',
 				'title'       => $attachment['post_title'],
-				'post_parent' => $dest_post_id
 			];
+
 			$found             = get_posts( $existing_criteria );
 
 			if ( $found && $found[0] instanceof \WP_Post ) {
@@ -85,15 +92,15 @@ class Linking extends BaseImporter {
 					$this->logger->log_success( 'post-thumbnail/created', $dest_post_thumbnail_id );
 				}
 
-				// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
-				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+				// the `_wp_attached_file` meta has been set before, so we skip it
+				unset( $source_post_thumbnail_meta['_wp_attached_file'] );
 
-				// Generate the metadata for the attachment, and update the database record.
-				$dest_post_thumbnail_meta = wp_generate_attachment_metadata( $dest_post_thumbnail_id, $source_post_thumbnail_file );
-				wp_update_attachment_metadata( $dest_post_thumbnail_id, $dest_post_thumbnail_meta );
+				foreach ( $source_post_thumbnail_meta as $key => $value ) {
+					add_post_meta( $dest_post_thumbnail_id, $key, $value, true );
+				}
 			}
 
-			update_post_meta( $dest_post_thumbnail_id, AttachmentPathFinder::IMPORTED, [
+			update_post_meta( $dest_post_thumbnail_id, AttachmentPathFinder::LINKED, [
 				'blog' => $source_blog_id,
 				'post' => $source_post_thumbnail_id
 			] );
@@ -110,5 +117,13 @@ class Linking extends BaseImporter {
 		restore_current_blog();
 
 		return $data;
+	}
+
+	protected function get_attachment_meta( $source_post_thumbnail_id ) {
+		$keys = [ '_wp_attached_file', '_wp_attachment_metadata', '_wp_attachment_image_alt' ];
+
+		return array_combine( $keys, array_map( function ( $key ) use ( $source_post_thumbnail_id ) {
+			return get_post_meta( $source_post_thumbnail_id, $key, true );
+		}, $keys ) );
 	}
 }

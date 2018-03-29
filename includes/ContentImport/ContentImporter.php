@@ -98,15 +98,14 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 
 		$source_lang  = MslsBlogCollection::get_blog_language( $source_blog_id );
-		$dest_post_id = $this->get_the_ID();
+		$dest_blog_id = get_current_blog_id();
+		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
+
+		$dest_post_id = $this->get_the_blog_post_ID( $dest_blog_id );
 
 		if ( empty( $dest_post_id ) ) {
 			return $data;
 		}
-
-		$dest_blog_id = get_current_blog_id();
-		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
-
 
 		switch_to_blog( $source_blog_id );
 		$source_post = get_post( $source_post_id );
@@ -131,8 +130,8 @@ class ContentImporter extends MslsRegistryInstance {
 		$data = $this->import_content( $import_coordinates, $data );
 
 		if ( $this->has_created_post ) {
-			$this->update_inserted_post_data( $dest_post_id, $data );
-			$this->redirect_to_post( $dest_post_id );
+			$this->update_inserted_blog_post_data($dest_blog_id, $dest_post_id, $data );
+			$this->redirect_to_blog_post( $dest_blog_id, $dest_post_id );
 		}
 
 		return $data;
@@ -178,26 +177,38 @@ class ContentImporter extends MslsRegistryInstance {
 		return array_map( 'intval', $import_data );
 	}
 
-	protected function get_the_ID() {
+	protected function get_the_blog_post_ID( $blog_id ) {
+		switch_to_blog( $blog_id );
+
 		$id = get_the_ID();
 
 		if ( ! empty( $id ) ) {
+			restore_current_blog();
+
 			return $id;
 		}
 
-		return $this->insert_post( [ 'post_title' => 'MSLS Content Import Draft - ' . date( 'Y-m-d H:i:s' ) ] );
+		return $this->insert_blog_post( $blog_id, [ 'post_title' => 'MSLS Content Import Draft - ' . date( 'Y-m-d H:i:s' ) ] );
 	}
 
-	protected function insert_post( array $data = [] ) {
+	protected function insert_blog_post( $blog_id, array $data = [] ) {
 		if ( empty( $data ) ) {
 			return false;
 		}
 
-		$this->handle( false );;
-		$post_id = wp_insert_post( $data );
+		switch_to_blog( $blog_id );
+
+		$this->handle( false );
+		if ( isset( $data['ID'] ) ) {
+			$post_id = wp_update_post( $data );
+		} else {
+			$post_id = wp_insert_post( $data );
+		}
 		$this->handle( true );
 
 		$this->has_created_post = $post_id ?: false;
+
+		restore_current_blog();
 
 		return $this->has_created_post;
 	}
@@ -309,6 +320,29 @@ class ContentImporter extends MslsRegistryInstance {
 	}
 
 	/**
+	 * @param array $data
+	 * @param int $post_id
+	 *
+	 * @return array
+	 */
+	protected function update_inserted_blog_post_data($blog_id, $post_id, array $data ) {
+		$data['ID']          = $post_id;
+		$data['post_status'] = empty( $data['post_status'] ) || $data['post_status'] === 'auto-draft'
+			? 'draft'
+			: $data['post_status'];
+		$this->insert_blog_post( $blog_id, $data );
+
+		return $data;
+	}
+
+	protected function redirect_to_blog_post( $dest_blog_id, $post_id ) {
+		switch_to_blog( $dest_blog_id );
+		$edit_post_link = html_entity_decode( get_edit_post_link( $post_id ) );
+		wp_redirect( $edit_post_link );
+		die();
+	}
+
+	/**
 	 * Filters whether the post should be considered empty or not.
 	 *
 	 * Empty posts would not be saved to database but it's fine if in
@@ -328,30 +362,5 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @param $post_id
-	 */
-	protected function redirect_to_post( $post_id ) {
-		$edit_post_link = html_entity_decode( get_edit_post_link( $post_id ) );
-		wp_redirect( $edit_post_link );
-		die();
-	}
-
-	/**
-	 * @param array $data
-	 * @param int $post_id
-	 *
-	 * @return array
-	 */
-	protected function update_inserted_post_data( $post_id, array $data ) {
-		$data['ID']          = $post_id;
-		$data['post_status'] = empty( $data['post_status'] ) || $data['post_status'] === 'auto-draft'
-			? 'draft'
-			: $data['post_status'];
-		$this->insert_post( $data );
-
-		return $data;
 	}
 }

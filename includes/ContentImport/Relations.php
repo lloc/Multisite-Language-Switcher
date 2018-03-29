@@ -63,6 +63,7 @@ class Relations {
 	public function create() {
 		$this->create_source_to_local();
 		$this->create_local_to_source();
+		restore_current_blog();
 	}
 
 	protected function create_source_to_local() {
@@ -76,11 +77,11 @@ class Relations {
 
 			$this->local_options[ $source_id ] = [ $option, $id ];
 		}
-
-		restore_current_blog();
 	}
 
 	protected function create_local_to_source() {
+		switch_to_blog( $this->import_coordinates->dest_blog_id );
+
 		/** @var MslsOptions $local_option */
 		foreach ( $this->local_options as $source_id => $option_data ) {
 			list( $source_option, $local_id ) = $option_data;

@@ -85,6 +85,10 @@ class MetaBox extends MslsRegistryInstance {
 	}
 
 	protected function inline_thickbox_html( $echo = true, array $data = [] ) {
+		if ( ! isset( $data['msls_import'] ) ) {
+			return '';
+		}
+
 		$slug = str_replace( '|', '-', $data['msls_import'] );
 
 		ob_start();

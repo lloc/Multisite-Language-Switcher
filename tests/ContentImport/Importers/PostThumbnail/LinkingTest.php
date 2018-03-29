@@ -40,7 +40,7 @@ class LinkingTest extends TestCase {
 		$this->assertEquals( [
 			'blog' => $import_coordinates->source_blog_id,
 			'post' => $source_thumbnail_id,
-		], get_post_meta( $post_thumbnail_id, AttachmentPathFinder::IMPORTED, true ) );
+		], get_post_meta( $post_thumbnail_id, AttachmentPathFinder::LINKED, true ) );
 	}
 
 	/**
@@ -79,7 +79,7 @@ class LinkingTest extends TestCase {
 		$this->assertEquals( [
 			'blog' => $import_coordinates->source_blog_id,
 			'post' => $source_thumbnail_id,
-		], get_post_meta( $post_thumbnail_id, AttachmentPathFinder::IMPORTED, true ) );
+		], get_post_meta( $post_thumbnail_id, AttachmentPathFinder::LINKED, true ) );
 	}
 
 	/**

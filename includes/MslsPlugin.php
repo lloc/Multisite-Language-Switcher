@@ -48,6 +48,8 @@ class MslsPlugin {
 
 			add_filter( 'msls_get_output', [ $obj, 'get_output' ] );
 
+			\lloc\Msls\ContentImport\Service::instance()->register();
+
 			if ( is_admin() ) {
 				add_action( 'admin_menu', [ $obj, 'admin_menu' ] );
 
@@ -70,10 +72,6 @@ class MslsPlugin {
 					} elseif ( 'inline-save-tax' === $action ) {
 						add_action( 'admin_init', [ MslsCustomColumnTaxonomy::class, 'init' ] );
 					}
-				}
-
-				if ( filter_has_var( INPUT_POST, 'msls_import' ) ) {
-					\lloc\Msls\ContentImport\Service::instance()->register();
 				}
 
 				add_action( 'wp_ajax_suggest_posts', [ MslsMetaBox::class, 'suggest' ] );
