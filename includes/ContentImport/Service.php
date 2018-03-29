@@ -2,6 +2,7 @@
 
 namespace lloc\Msls\ContentImport;
 
+use lloc\Msls\ContentImport\LogWriters\AdminNoticeLogger;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsRegistryInstance;
 
@@ -41,6 +42,11 @@ class Service extends MslsRegistryInstance {
 		add_action( 'load-post.php', function () {
 			return ContentImporter::instance()->handle_import();
 		} );
+		add_action( 'load-post.php', function () {
+			add_action( 'admin_notices', function () {
+				AdminNoticeLogger::instance()->show_last_log();
+			} );
+		} );
 		add_action( 'load-post-new.php', function () {
 			return ContentImporter::instance()->handle_import();
 		} );
@@ -53,5 +59,8 @@ class Service extends MslsRegistryInstance {
 		add_filter( 'wp_calculate_image_srcset', function ( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
 			return AttachmentPathFinder::instance()->filter_srcset( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId );
 		}, 99, 5 );
+
+		if ( is_admin() ) {
+		}
 	}
 }

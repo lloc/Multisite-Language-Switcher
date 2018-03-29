@@ -3,6 +3,9 @@
 namespace lloc\Msls\ContentImport;
 
 
+use lloc\Msls\ContentImport\LogWriters\AdminNoticeLogger;
+use lloc\Msls\ContentImport\LogWriters\LogWriter;
+
 class ImportLogger {
 
 	protected $levels_delimiter = '/';
@@ -46,7 +49,32 @@ class ImportLogger {
 	 * Saves the log or prints it some place.
 	 */
 	public function save() {
-		// @todo how and where to log?
+		$log_writer = $default_log_writer = AdminNoticeLogger::instance();
+		$log_writer->set_import_coordinates( $this->import_coordinates );
+
+		/**
+		 * Filters the log class or object that should be used to write the log to the destination.
+		 *
+		 * @param LogWriter $log_writer
+		 * @param ImportCoordinates $import_coordinates
+		 */
+		$log_writer = apply_filters( 'msls_content_import_log_writer', $log_writer, $this->import_coordinates );
+
+		if ( empty( $log_writer ) ) {
+			// we assume that was done on purpose to prevent logging
+			return;
+		}
+
+		if ( is_string( $log_writer ) ) {
+			$log_writer = new $log_writer;
+		}
+
+		if ( ! $log_writer instanceof LogWriter ) {
+			// something is fishy, let's use the default one
+			$log_writer = $default_log_writer;
+		}
+
+		$log_writer->write( $this->get_data() );
 	}
 
 	/**

@@ -30,7 +30,7 @@ class Linking extends BaseImporter {
 
 	public function import( array $data ) {
 		$this->logger->log_information(
-			'post-thumbnail',
+			'post-attachments',
 			__( 'Post attachments were left in place in the source blog and linked in the destination post.', 'multisite-language-switcher' )
 		);
 
