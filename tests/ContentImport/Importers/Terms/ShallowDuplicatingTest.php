@@ -42,6 +42,9 @@ class ShallowDuplicatingTest extends TestCase {
 		$mutated = $obj->import( $dest_post_data );
 
 		$this->assertEquals( $dest_post_data, $mutated );
+
+		switch_to_blog($import_coordinates->dest_blog_id);
+
 		$dest_terms = wp_get_object_terms( $import_coordinates->dest_post_id, 'category' );
 		$this->assertCount( 3, $dest_terms );
 		$this->assertEmpty($source_term_ids);
@@ -79,6 +82,9 @@ class ShallowDuplicatingTest extends TestCase {
 		$mutated = $obj->import( $dest_post_data );
 
 		$this->assertEquals( $dest_post_data, $mutated );
+
+		switch_to_blog($import_coordinates->dest_blog_id);
+
 		$dest_terms = wp_get_object_terms( $import_coordinates->dest_post_id, 'post_tag' );
 		$this->assertCount( 3, $dest_terms );
 		$this->assertEmpty($source_term_ids);
@@ -117,8 +123,48 @@ class ShallowDuplicatingTest extends TestCase {
 		$mutated = $obj->import( $dest_post_data );
 
 		$this->assertEquals( $dest_post_data, $mutated );
+
+		switch_to_blog($import_coordinates->dest_blog_id);
 		$dest_terms = wp_get_object_terms( $import_coordinates->dest_post_id, 'post_tag' );
 		$this->assertCount( 3, $dest_terms );
-		$this->assertEmpty( $children_source_term_ids );
+	}
+
+	/**
+	 * It should create a new term in the destination blog if source term is linked to non-existent
+	 *
+	 * @test
+	 */
+	public function should_create_a_new_term_in_the_destination_blog_if_source_term_is_linked_to_non_existent() {
+		/** @var ImportCoordinates $import_coordinates */
+		list( $import_coordinates, $logger, $relations, $dest_post_data ) = $this->setup_source_and_dest();
+
+		switch_to_blog( $import_coordinates->source_blog_id );
+		$source_term_id = $this->factory()->category->create();
+		wp_set_object_terms( $import_coordinates->source_post_id, $source_term_id, 'category' );
+		$option = MslsOptionsTax::create( $source_term_id );
+		$option->set( $import_coordinates->dest_lang, 23 );
+
+		$relations->should_create( Argument::type( MslsOptionsTax::class ), $import_coordinates->dest_lang, Argument::type( 'int' ) )->will( function ( array $args ) use ( $source_term_id ) {
+			/** @var MslsOptionsTax $option */
+			list( $option, $lang, $id ) = $args;
+			$this_source_term_id = $option->get_arg( 0, 23 );
+			Assert::assertEquals( $source_term_id, $this_source_term_id );
+
+			return true;
+		} );
+
+		restore_current_blog();
+
+		$obj = new ShallowDuplicating( $import_coordinates, $logger->reveal(), $relations->reveal() );
+
+		$mutated = $obj->import( $dest_post_data );
+
+		$this->assertEquals( $dest_post_data, $mutated );
+
+		switch_to_blog($import_coordinates->dest_blog_id);
+
+		$dest_terms = wp_get_object_terms( $import_coordinates->dest_post_id, 'category' );
+		$this->assertCount( 1, $dest_terms );
+		MslsOptionsTax::create($dest_terms[0]->term_id);
 	}
 }
