@@ -49,8 +49,9 @@ class MetaBox extends MslsRegistryInstance {
 					$this->data = [
 						'msls_import'  => "{$blog}|{$id}",
 					];
-					$output     .= sprintf( '<a class="button-primary thickbox" href="%s">%s</a>',
+					$output .= sprintf( '<a class="button-primary thickbox" href="%s" title="%s">%s</a>',
 						$this->inline_thickbox_url( $this->data ),
+						$label,
 						$label
 					);
 				}
@@ -69,10 +70,9 @@ class MetaBox extends MslsRegistryInstance {
 	protected function inline_thickbox_url( array $data = [] ) {
 		$args = array_merge( [
 			'modal'    => true,
-			'title'    => 'Title of it',
-			'width'    => 600,
-			'height'   => 900,
-			'inlineId' => 'msls-import-dialog-'. str_replace('|', '-',$data['msls_import']),
+			'width'    => 770, // meh, just a guess on *most* devices
+			'height'   => 770,
+			'inlineId' => 'msls-import-dialog-' . str_replace( '|', '-', $data['msls_import'] ),
 		], $data );
 
 		return esc_url(
