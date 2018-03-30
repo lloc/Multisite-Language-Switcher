@@ -20,7 +20,4 @@
             <group>external-http</group>
         </exclude>
     </groups>
-    <php>
-        <env name="WP_TESTS_DIR" value="/Users/luca/repos/wordpress-tests-lib"/>
-    </php>
 </phpunit>
