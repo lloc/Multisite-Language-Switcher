@@ -188,6 +188,10 @@ class ContentImporter extends MslsRegistryInstance {
 			return $id;
 		}
 
+		if ( isset( $_REQUEST['post'] ) && filter_var( $_REQUEST['post'], FILTER_VALIDATE_INT ) ) {
+			return (int) $_REQUEST['post'];
+		}
+
 		return $this->insert_blog_post( $blog_id, [ 'post_title' => 'MSLS Content Import Draft - ' . date( 'Y-m-d H:i:s' ) ] );
 	}
 
