@@ -31,17 +31,25 @@ class Duplicating extends BaseImporter {
 	public function import( array $data ) {
 		$source_post = $this->import_coordinates->source_post;
 
-		$fields = $this->filter_fields();
-
-		foreach ( $fields as $field ) {
+		foreach ( $this->filter_fields() as $field ) {
 			$value          = $source_post->{$field};
 			$data[ $field ] = $value;
 			$this->logger->log_success( 'post-field/added', [ $field => $value ] );
 		}
 
+		if ( ! doing_action( 'wp_insert_post_data' ) ) {
+			$postarr = array_merge( $data, [ 'ID' => $this->import_coordinates->dest_post_id ] );
+			wp_insert_post( $postarr );
+		}
+
 		return $data;
 	}
 
+	/**
+	 * Filters the post fields that should be duplicated from the source post to the destination one.
+	 *
+	 * @return array
+	 */
 	public function filter_fields() {
 		$fields = array(
 			'post_content',

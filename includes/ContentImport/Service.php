@@ -36,9 +36,6 @@ class Service extends MslsRegistryInstance {
 	 * Differently from the `register` method this method will not check for options to hook.
 	 */
 	public function hook() {
-		add_filter( 'wp_insert_post_data', function ( array $data ) {
-			return ContentImporter::instance()->handle_import( $data );
-		}, 99 );
 		add_action( 'load-post.php', function () {
 			return ContentImporter::instance()->handle_import();
 		} );
