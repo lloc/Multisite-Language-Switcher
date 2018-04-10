@@ -91,15 +91,31 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 		return $html;
 	}
 
-	public function show_last_log() {
+	public function show_last_log($echo = true) {
 		if ( ! ( $html = get_transient( $this->transient ) ) ) {
 			return;
 		}
 
-		echo $html;
+		if ( $echo ) {
+			echo $html;
+		}
+
+		// we've shown it, no reason to keep it
+		delete_transient( $this->transient );
+
+		return $html;
 	}
 
 	public function set_import_coordinates( $import_coordinates ) {
 		$this->import_coordinates = $import_coordinates;
+	}
+
+	/**
+	 * Returns the name of the transient where the logger will store the output HTML.
+	 *
+	 * @return string
+	 */
+	public function get_transient() {
+		return $this->transient;
 	}
 }
