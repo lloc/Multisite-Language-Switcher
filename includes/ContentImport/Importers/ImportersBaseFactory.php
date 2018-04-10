@@ -34,8 +34,6 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 		 *
 		 * Returning an Importer instance here will force the class to return that.
 		 *
-		 * @since TBD
-		 *
 		 * @param                   $importer Importer
 		 * @param ImportCoordinates $import_coordinates
 		 */
@@ -79,8 +77,6 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 
 	/**
 	 * Returns the slug of the selected importer for this factory.
-	 *
-	 * @since TBD
 	 *
 	 * @return string
 	 */

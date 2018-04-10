@@ -25,8 +25,6 @@ class Map extends MslsRegistryInstance {
 		 * While the filter `msls_content_import_importers_factories_map` will allow filtering the factories this
 		 * will directly modify the built importers.
 		 *
-		 * @since TBD
-		 *
 		 * @param array $importers An array of importers in the shape [ <string: $slug> => <Importer: $importer> ]
 		 * @param ImportCoordinates $import_coordinates
 		 *
@@ -58,8 +56,6 @@ class Map extends MslsRegistryInstance {
 		 *
 		 * While the filter `msls_content_import_importers_map` will allow filtering the importers after they have been built
 		 * by the factories this filter acts before allowing the modification of the factories before any importer is built.
-		 *
-		 * @since TBD
 		 *
 		 * @param array $importers An array of importer factories in the shape [ <string: $slug> => <ImportersFactory: $factory> ]
 		 *

@@ -61,8 +61,6 @@ class Duplicating extends BaseImporter {
 		/**
 		 * Filters the list of post fields that should be imported for a post.
 		 *
-		 * @since TBD
-		 *
 		 * @param array $blacklist
 		 * @param ImportCoordinates $import_coordinates
 		 */

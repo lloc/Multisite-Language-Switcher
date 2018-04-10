@@ -119,8 +119,6 @@ class ShallowDuplicating extends BaseImporter {
 		/**
 		 * Filters the list of term meta that should not be imported for a term.
 		 *
-		 * @since TBD
-		 *
 		 * @param array $blacklist
 		 * @param \WP_Term $term
 		 * @param array $meta

@@ -89,8 +89,6 @@ class Relations {
 			/**
 			 * Allows plugins to filter the local to source relation creation and override the class creation method completely.
 			 *
-			 * @since TBD
-			 *
 			 * @param mixed $created If not `null` then the class will not create the local to source relation.
 			 * @param int $local_id
 			 * @param int $source_id

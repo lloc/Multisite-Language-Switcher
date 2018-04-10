@@ -55,8 +55,6 @@ class Duplicating extends BaseImporter {
 		/**
 		 * Filters the list of post meta that should not be imported for a post.
 		 *
-		 * @since TBD
-		 *
 		 * @param array $blacklist
 		 * @param array $meta
 		 * @param ImportCoordinates $import_coordinates

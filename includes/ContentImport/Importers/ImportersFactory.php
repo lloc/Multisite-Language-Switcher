@@ -25,8 +25,6 @@ interface ImportersFactory {
 	/**
 	 * Returns the slug of the default importer for this factory.
 	 *
-	 * @since TBD
-	 *
 	 * @return string
 	 */
 	public function selected();

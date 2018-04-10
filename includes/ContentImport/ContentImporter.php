@@ -246,8 +246,6 @@ class ContentImporter extends MslsRegistryInstance {
 		/**
 		 * Fires before the import runs.
 		 *
-		 * @since TBD
-		 *
 		 * @param ImportCoordinates $import_coordinates
 		 */
 		do_action( 'msls_content_import_before_import', $import_coordinates );
@@ -267,8 +265,6 @@ class ContentImporter extends MslsRegistryInstance {
 		 *
 		 * Returning a non `null` value here will override the creation of the importers map completely
 		 * and use the one returned in the filter.
-		 *
-		 * @since TBD
 		 *
 		 * @param null $importers
 		 * @param ImportCoordinates $import_coordinates
@@ -312,8 +308,6 @@ class ContentImporter extends MslsRegistryInstance {
 
 		/**
 		 * Filters the data after the import ran.
-		 *
-		 * @since TBD
 		 *
 		 * @param array $post_fields
 		 * @param ImportCoordinates $import_coordinates
