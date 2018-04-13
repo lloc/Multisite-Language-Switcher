@@ -157,6 +157,6 @@ class MslsOutput extends MslsMain {
 	 * @return boolean
 	 */
 	public function is_requirements_not_fulfilled( $mydata, $exists, $language ) {
-		return MslsOptions::class != get_class( $mydata ) && $exists && ( is_null( $mydata ) || ! $mydata->has_value( $language ) );
+		return $exists && ( is_null( $mydata ) || ( ! $mydata->has_value( $language ) && MslsOptions::class != get_class( $mydata ) );
 	}
 }
