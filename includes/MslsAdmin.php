@@ -85,16 +85,16 @@ class MslsAdmin extends MslsMain {
 	public function has_problems() {
 		$message = '';
 
-		if ( 1 == count( $this->options->get_available_languages() ) ) {
+		if  ( $this->options->is_empty() ) {
+			$message = sprintf(
+				__( 'Multisite Language Switcher is almost ready. You must complete the configuration process</a>.' ),
+				esc_url( admin_url( $this->get_options_page_link() ) )
+			);
+		} elseif ( 1 == count( $this->options->get_available_languages() ) ) {
 			$message = sprintf(
 				__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.' ),
 				esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
 				esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
-			);
-		} elseif ( $this->options->is_empty() ) {
-			$message = sprintf(
-				__( 'Multisite Language Switcher is almost ready. You must complete the configuration process</a>.' ),
-				esc_url( admin_url( $this->get_options_page_link() ) )
 			);
 		}
 
