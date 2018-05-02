@@ -7,6 +7,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
+
 /**
  * Meta box for the edit mode of the (custom) post types
  * @package Msls
@@ -115,6 +117,20 @@ class MslsMetaBox extends MslsMain {
 				'side',
 				'high'
 			);
+
+			if ( MslsOptions::instance()->activate_content_import ) {
+				add_meta_box(
+					'msls-content-import',
+					__( 'Multisite Language Switcher - Import content', 'multisite-language-switcher' ),
+					[
+						ContentImportMetaBox::instance(),
+						'render',
+					],
+					$post_type,
+					'side',
+					'high' );
+				add_action( 'admin_footer', [ ContentImportMetaBox::instance(), 'print_modal_html' ] );
+			}
 		}
 	}
 
@@ -228,8 +244,10 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Render the suggest input-field
+	 *
+	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
 	 */
-	public function render_input() {
+	public function render_input( $echo = true ) {
 		$blogs = $this->collection->get();
 
 		if ( $blogs ) {

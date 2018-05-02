@@ -6,6 +6,17 @@ $_tests_dir = getenv('WP_TESTS_DIR');
 if ( ! $_tests_dir ) $_tests_dir = '/tmp/wordpress-tests-lib';
 
 require_once $_tests_dir . '/includes/functions.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+function msls_test_data( $path = null ) {
+	$data_root = __DIR__ . '/_data/';
+
+	if ( null !== $path ) {
+		return $data_root . ltrim( $path, '/\\' );
+	}
+
+	return $data_root;
+}
 
 function _manually_load_plugin() {
 	require dirname( __FILE__ ) . '/../MultisiteLanguageSwitcher.php';
@@ -21,6 +32,7 @@ class Msls_UnitTestCase extends \WP_UnitTestCase {
 	 */
 	function setUp() {
 		parent::setUp();
+		add_filter( 'get_available_languages', array( $this, 'filter_available_languages' ) );
 		wp_cache_flush();
 	}
 
@@ -29,6 +41,19 @@ class Msls_UnitTestCase extends \WP_UnitTestCase {
 	 */
 	function tearDown() {
 		parent::tearDown();
+	}
+
+	/**
+	 * Filters the list of available languages to allow setting the WPLANG option in blogs.
+	 *
+	 * @param array $available_languages
+	 *
+	 * @return array
+	 */
+	public function filter_available_languages( array $available_languages = array() ) {
+		$available_languages[] = 'de_DE';
+
+		return $available_languages;
 	}
 
 }
