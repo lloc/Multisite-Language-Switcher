@@ -1,6 +1,6 @@
 ﻿=== Multisite Language Switcher ===
 
-Contributors: realloc
+Contributors: realloc, lucatume
 Donate link: http://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, international, localization, i18n
 Requires at least: 3.6.1
