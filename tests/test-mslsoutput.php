@@ -6,7 +6,7 @@
  * @package Msls
  */
 
-use lloc\Msls\MslsOutput;
+use lloc\Msls\MslsOutput, lloc\Msls\MslsOptions, lloc\Msls\MslsOptionsPost;
 
 /**
  * WP_Test_MslsOutput
@@ -57,11 +57,43 @@ class WP_Test_MslsOutput extends Msls_UnitTestCase {
 	}
 
 	/**
-	 * Verify the get_tags-method
+	 * Verify the is_requirements_not_fulfilled-method
 	 * @depends test_init_method
 	 */
-	function test_is_requirements_not_fulfilled_method( $obj ) {
-		$this->assertInternalType( 'boolean', $obj->is_requirements_not_fulfilled( null, false, 'de_DE' ) );
+	function test_is_requirements_not_fulfilled_method_with_null( $obj ) {
+		$test = $obj->is_requirements_not_fulfilled( null, false, 'de_DE' );
+		$this->assertFalse( $test );
+
+		$test = $obj->is_requirements_not_fulfilled( null, true, 'de_DE' );
+		$this->assertTrue( $test );
+	}
+
+	/**
+	 * Verify the is_requirements_not_fulfilled-method
+	 * @depends test_init_method
+	 */
+	function test_is_requirements_not_fulfilled_method_with_mslsoptions( $obj ) {
+		$mydata = new MslsOptions();
+
+		$test = $obj->is_requirements_not_fulfilled( $mydata, false, 'de_DE' );
+		$this->assertFalse( $test );
+
+		$test = $obj->is_requirements_not_fulfilled( $mydata, true, 'de_DE' );
+		$this->assertFalse( $test );
+	}
+
+	/**
+	 * Verify the is_requirements_not_fulfilled-method
+	 * @depends test_init_method
+	 */
+	function test_is_requirements_not_fulfilled_method_with_mslsoptionspost( $obj ) {
+		$mydata = new MslsOptionsPost();
+
+		$test = $obj->is_requirements_not_fulfilled( $mydata, false, 'de_DE' );
+		$this->assertFalse( $test );
+
+		$test = $obj->is_requirements_not_fulfilled( $mydata, true, 'de_DE' );
+		$this->assertTrue( $test );
 	}
 
 }
