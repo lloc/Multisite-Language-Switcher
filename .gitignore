@@ -1,6 +1,7 @@
-.idea/*
 composer.lock
+composer.phar
 vendor/
+.idea/
 tests/coverage
 tests/docs
 tests/xml
