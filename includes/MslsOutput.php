@@ -72,8 +72,7 @@ class MslsOutput extends MslsMain {
 					 * @param bool current
 					 */
 					$arr[] = ( string ) apply_filters( 'msls_output_get', $url, $link, $current );
-				}
-				else {
+				} else {
 					$arr[] = sprintf(
 						'<a href="%s" title="%s"%s>%s</a>',
 						$url,
@@ -150,13 +149,18 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Returns true if the requirements not fulfilled
 	 *
-	 * @param MslsOptions|null $mydata
+	 * @param MslsOptions|null $thing
 	 * @param boolean $exists
 	 * @param string $language
 	 *
 	 * @return boolean
 	 */
-	public function is_requirements_not_fulfilled( $mydata, $exists, $language ) {
-		return MslsOptions::class != get_class( $mydata ) && $exists && ( is_null( $mydata ) || ! $mydata->has_value( $language ) );
+	public function is_requirements_not_fulfilled( $thing, $exists, $language ) {
+		if ( is_null( $thing ) ) {
+			return $exists;
+		}
+
+		return MslsOptions::class != get_class( $thing ) && ! $thing->has_value( $language ) && $exists;
 	}
+
 }
