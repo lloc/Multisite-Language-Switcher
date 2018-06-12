@@ -53,12 +53,12 @@ class MslsLink extends MslsGetSet {
 	 * @return array
 	 */
 	public static function get_types_description() {
-		$types = array();
+		$types = [];
+
 		foreach ( self::get_types() as $key => $class ) {
-			$types[ $key ] = call_user_func(
-				array( $class, 'get_description' )
-			);
+			$types[ $key ] = call_user_func( [ $class, 'get_description' ] );
 		}
+
 		return $types;
 	}
 
@@ -66,6 +66,7 @@ class MslsLink extends MslsGetSet {
 	 * Factory: Creates a specific instance of MslsLink
 	 *
 	 * @param int $display
+	 *
 	 * @return MslsLink
 	 */
 	public static function create( $display ) {
@@ -73,7 +74,9 @@ class MslsLink extends MslsGetSet {
 			/**
 			 * Returns custom MslsLink-Object
 			 * @since 0.9.9
+			 *
 			 * @param int $display
+			 *
 			 * @return MslsLink
 			 */
 			$obj = apply_filters( 'msls_link_create', $display );
@@ -81,16 +84,20 @@ class MslsLink extends MslsGetSet {
 				return $obj;
 			}
 		}
+
 		$types = self::get_types();
 		if ( ! in_array( $display, array_keys( $types ), true ) ) {
 			$display = 0;
 		}
+
 		return new $types[ $display ];
 	}
 
 	/**
 	 * Callback function (no lambda here because PHP 5.2 might be still in use)
+	 *
 	 * @param mixed $x
+	 *
 	 * @return string
 	 */
 	public static function callback( $x ) {
@@ -99,15 +106,14 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Handles the request to print the object
+	 *
 	 * @return string
 	 */
 	public function __toString() {
 		$temp = $this->get_arr();
+
 		return str_replace(
-			array_map(
-				array( $this, 'callback' ),
-				array_keys( $temp )
-			),
+			array_map( [ $this, 'callback' ], array_keys( $temp ) ),
 			$temp,
 			$this->format_string
 		);

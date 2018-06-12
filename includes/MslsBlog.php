@@ -81,7 +81,7 @@ class MslsBlog {
 	 * @return string
 	 */
 	public function get_language() {
-		return ( empty( $this->language ) ? 'us' : $this->language );
+		return empty( $this->language ) ? 'us' : $this->language;
 	}
 
 	/**
@@ -121,7 +121,7 @@ class MslsBlog {
 	 * @return int
 	 */
 	public static function language( MslsBlog $a, MslsBlog $b ) {
-		return ( self::_cmp( $a->get_language(), $b->get_language() ) );
+		return self::_cmp( $a->get_language(), $b->get_language() );
 	}
 
 	/**
@@ -133,7 +133,7 @@ class MslsBlog {
 	 * @return int
 	 */
 	public static function description( MslsBlog $a, MslsBlog $b ) {
-		return ( self::_cmp( $a->get_description(), $b->get_description() ) );
+		return self::_cmp( $a->get_description(), $b->get_description() );
 	}
 
 }
