@@ -1,15 +1,44 @@
 language: php
-
-php:
-  - 5.6
+allow_failures:
+  - php: 7.2
+    env: PHPUNIT_VERSION=phpunit-7.phar WP_VERSION=latest WP_MULTISITE=1
+matrix:
+  include:
+    - php: 5.6
+    env:
+      - WP_VERSION=latest WP_MULTISITE=1
+    before_script:
+      - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+    script: phpunit
+    - php: 7
+    env:
+      - WP_VERSION=latest WP_MULTISITE=1
+    before_script:
+      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+    script: phpunit
+    - php: 7.1
+    env:
+      - PHPUNIT_VERSION=phpunit-6.phar
+      - WP_VERSION=latest WP_MULTISITE=1
+    - php: 7.2
+    env:
+      - PHPUNIT_VERSION=phpunit-6.phar
+      - WP_VERSION=latest WP_MULTISITE=1
+    - php: 7.2
+    env:
+      - PHPUNIT_VERSION=phpunit-7.phar
+      - WP_VERSION=latest WP_MULTISITE=1     
+before_script:
+  - wget https://phar.phpunit.de/$PHPUNIT_VERSION
+  - chmod +x $PHPUNIT_VERSION
+  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+script:
+  - ./$PHPUNIT_VERSION
 env:
   - WP_VERSION=latest WP_MULTISITE=1
 sudo: false
 install:
   - composer install
-before_script:
-  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-script: phpunit
 before_deploy:
   - composer install --no-dev
   - bash bin/git-release.sh
