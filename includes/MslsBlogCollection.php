@@ -196,7 +196,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return MslsBlog[]
 	 */
 	public function get_objects() {
-		return $this->objects;
+		return apply_filters( 'msls_blog_collection_get', $this->objects );
 	}
 
 	/**
@@ -249,7 +249,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 			unset( $objects[ $this->current_blog_id ] );
 		}
 
-		return $objects;
+		return apply_filters( 'msls_blog_collection_get', $objects );
 	}
 
 	/**
