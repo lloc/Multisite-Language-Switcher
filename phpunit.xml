@@ -12,7 +12,7 @@
     </testsuite>
     <filter>
         <whitelist>
-            <directory suffix=".php">.</directory>
+            <directory suffix=".php">./includes/</directory>
         </whitelist>
     </filter>
     <groups>
