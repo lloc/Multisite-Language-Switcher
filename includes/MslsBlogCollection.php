@@ -196,7 +196,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return MslsBlog[]
 	 */
 	public function get_objects() {
-		return apply_filters( 'msls_blog_collection_get', $this->objects );
+		return apply_filters( 'msls_blog_collection_get_objects', $this->objects );
 	}
 
 	/**
