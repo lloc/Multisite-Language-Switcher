@@ -340,9 +340,10 @@ class MslsOptions extends MslsGetSet {
 	 */
 	public function get_available_languages() {
 		if ( empty( $this->available_languages ) ) {
-			$this->available_languages = array(
+			$this->available_languages = [
 				'en_US' => __( 'American English', 'multisite-language-switcher' ),
-			);
+			];
+
 			foreach ( get_available_languages() as $code ) {
 				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
 			}

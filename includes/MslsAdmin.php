@@ -141,7 +141,7 @@ class MslsAdmin extends MslsMain {
 		}
 
 		return (
-			empty( $arr ) ?
+		empty( $arr ) ?
 			'' :
 			sprintf(
 				'<ul class="subsubsub"><li>%s</li></ul>',
@@ -445,7 +445,7 @@ class MslsAdmin extends MslsMain {
 		$temp     = array_merge( range( 1, 10 ), [ 20, 50, 100 ] );
 		$arr      = array_combine( $temp, $temp );
 		$selected = (
-			empty( $this->options->content_priority ) ?
+		empty( $this->options->content_priority ) ?
 			10 :
 			$this->options->content_priority
 		);

@@ -75,8 +75,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 				$description = false;
 				if ( $blog->userblog_id == $this->current_blog_id ) {
 					$description = $options->description;
-				}
-				elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
+				} elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
 					continue;
 				}
 
@@ -130,8 +129,8 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
 		$blogs = get_blogs_of_user(
 			$options->has_value( 'reference_user' ) ?
-			$options->reference_user :
-			current( $this->get_users( 'ID', 1 ) )
+				$options->reference_user :
+				current( $this->get_users( 'ID', 1 ) )
 		);
 
 		/**
@@ -154,7 +153,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 		foreach ( $this->get_objects() as $blog ) {
 			if ( $language == $blog->get_language() ) {
-				$blog_id =  $blog->userblog_id;
+				$blog_id = $blog->userblog_id;
 				break;
 			}
 		}
@@ -176,7 +175,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return bool
 	 */
 	public function has_current_blog() {
-		return ( isset( $this->objects[ $this->current_blog_id ] ) );
+		return isset( $this->objects[ $this->current_blog_id ] );
 	}
 
 	/**
@@ -184,11 +183,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return MslsBlog|null
 	 */
 	public function get_current_blog() {
-		return (
-			$this->has_current_blog() ?
-			$this->objects[ $this->current_blog_id ] :
-			null
-		);
+		return $this->has_current_blog() ? $this->objects[ $this->current_blog_id ] : null;
 	}
 
 	/**
@@ -245,6 +240,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 */
 	public function get() {
 		$objects = $this->get_objects();
+
 		if ( $this->has_current_blog() ) {
 			unset( $objects[ $this->current_blog_id ] );
 		}
@@ -276,12 +272,12 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return array
 	 */
 	public function get_users( $fields = 'all', $number = '' ) {
-		$args = array(
+		$args = [
 			'blog_id' => $this->current_blog_id,
 			'orderby' => 'registered',
 			'fields'  => $fields,
 			'number'  => $number,
-		);
+		];
 
 		return get_users( $args );
 	}
