@@ -7,6 +7,7 @@
 /multisite-language-switcher/
 .gitignore
 composer.lock
+composer.phar
 *.yml
 *.md
 *.xml
