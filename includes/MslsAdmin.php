@@ -25,7 +25,8 @@ class MslsAdmin extends MslsMain {
 		$collection = MslsBlogCollection::instance();
 		$obj        = new static( $options, $collection );
 
-		if ( current_user_can( 'manage_options' ) ) {
+		$caps = apply_filters( 'msls_admin_caps', 'manage_options' );
+		if ( current_user_can( $caps ) ) {
 			$title = __( 'Multisite Language Switcher', 'multisite-language-switcher' );
 			add_options_page( $title, $title, 'manage_options', $obj->get_menu_slug(), [ $obj, 'render' ] );
 

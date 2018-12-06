@@ -249,6 +249,7 @@ class MslsPlugin {
 				$css_class,
 				$message
 			);
+
 			return true;
 		}
 
@@ -258,8 +259,8 @@ class MslsPlugin {
 	/**
 	 * Activate plugin
 	 */
-	public function activate(){
-		register_uninstall_hook( MSLS_PLUGIN__FILE__, [ $this, 'uninstall' ] );
+	public static function activate(){
+		register_uninstall_hook( MSLS_PLUGIN__FILE__, [ __CLASS__, 'uninstall' ] );
 	}
 
 	/**
@@ -270,7 +271,7 @@ class MslsPlugin {
 	 *
 	 * @return boolean
 	 */
-	public function uninstall() {
+	public static function uninstall() {
 		/**
 		 * We want to be sure that the user has not deactivated the
 		 * multisite because we need to use switch_to_blog and

@@ -236,7 +236,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * Gets an array of all - but not the current - blog-objects
-	 * @return array
+	 * @return MslsBlog[]
 	 */
 	public function get() {
 		$objects = $this->get_objects();
@@ -253,7 +253,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @param bool $filter
 	 *
-	 * @return array
+	 * @return MslsBlog[]
 	 */
 	public function get_filtered( $filter = false ) {
 		if ( ! $filter && $this->current_blog_output ) {
