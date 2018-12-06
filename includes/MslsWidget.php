@@ -55,7 +55,10 @@ class MslsWidget extends \WP_Widget {
 
 		$content = MslsOutput::init()->__toString();
 		if ( '' == $content ) {
-			$content = __( 'No available translations found', 'multisite-language-switcher' );
+			$content = apply_filters(
+				'msls_widget_alternative_content',
+				__( 'No available translations found', 'multisite-language-switcher' )
+			);
 		}
 
 		echo $args['before_widget'], $title, $content, $args['after_widget']; // xss ok
@@ -71,6 +74,7 @@ class MslsWidget extends \WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
+
 		if ( isset( $new_instance['title'] ) ) {
 			$instance['title'] = strip_tags( $new_instance['title'] );
 		}
