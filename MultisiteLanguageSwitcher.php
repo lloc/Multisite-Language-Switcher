@@ -37,7 +37,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
  * @author Dennis Ploetner <re@lloc.de>
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '2.1' );
+	define( 'MSLS_PLUGIN_VERSION', '2.0' );
 
 	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
 		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
