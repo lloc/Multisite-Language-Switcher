@@ -1,16 +1,11 @@
-## 2.1 (2018-12-09)
-
-### Features
-
-* **Gutenberg ready**
-    - short code converted to block 
-
 ## 2.0
 
 ### Features
 
 * **Content import**
     - new experimental content import feature introduced
+* **PHP improvements**
+    - 5.6 is minimum
 
 ## 1.2 (2018-02-01)
 

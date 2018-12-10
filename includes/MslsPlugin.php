@@ -76,20 +76,6 @@ class MslsPlugin {
 
 				add_action( 'wp_ajax_suggest_posts', [ MslsMetaBox::class, 'suggest' ] );
 				add_action( 'wp_ajax_suggest_terms', [ MslsPostTag::class, 'suggest' ] );
-
-				if ( function_exists( 'register_block_type' ) ) {
-					wp_register_script( 'sc_msls-block', plugins_url( 'sc_msls-block.js', MSLS_PLUGIN__FILE__ ), [
-						'wp-blocks',
-						'wp-element',
-						'wp-components',
-						'wp-editor'
-					] );
-
-					register_block_type( 'msls/sc_msls-block', [
-						'editor_script' => 'sc_msls-block',
-						'render_callback' => 'get_the_msls',
-					] );
-				}
 			}
 		}
 		else {
