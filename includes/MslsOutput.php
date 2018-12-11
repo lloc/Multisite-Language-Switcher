@@ -87,7 +87,10 @@ class MslsOutput extends MslsMain {
 		return $arr;
 	}
 
-    public function msls_head() {
+	/**
+	 * @return string
+	 */
+    public function get_alternate_links() {
 		$blogs  = MslsBlogCollection::instance();
 		$mydata = MslsOptions::create();
 
@@ -140,10 +143,10 @@ class MslsOutput extends MslsMain {
 		}
 
 		if ( 1 === count( $arr ) ) {
-			echo $default, PHP_EOL;
+			return $default;
 		}
 		else {
-			echo implode( PHP_EOL, $arr ), PHP_EOL;
+			return implode( PHP_EOL, $arr );
 		}
 	}
 
