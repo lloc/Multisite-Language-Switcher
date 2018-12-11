@@ -18,7 +18,7 @@ class MslsWidget extends \WP_Widget {
 	 */
 	public function __construct() {
 		parent::__construct(
-			false,
+			'mslswidget',
 			$name = __( 'Multisite Language Switcher', 'multisite-language-switcher' )
 		);
 	}

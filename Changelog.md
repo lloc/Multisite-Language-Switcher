@@ -1,3 +1,10 @@
+## 2.0.2
+
+### Bug Fixes
+
+* **Widget** namespace from base_id removed
+* **Admin Options** was 2 times called
+
 ## 2.0.1
 
 ### Bug Fixes
