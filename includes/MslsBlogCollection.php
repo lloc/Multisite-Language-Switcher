@@ -170,12 +170,22 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	}
 
 	/**
+	 * Checks if blog is the current blog
+	 * @param MslsBlog $blog
+	 *
+	 * @return bool
+	 */
+	public function is_current_blog( MslsBlog $blog ) {
+		return $blog->userblog_id === $this->get_current_blog_id();
+	}
+
+	/**
 	 * Checks if current blog is in the collection
 	 *
 	 * @return bool
 	 */
 	public function has_current_blog() {
-		return isset( $this->objects[ $this->current_blog_id ] );
+		return isset( $this->objects[ $this->get_current_blog_id() ] );
 	}
 
 	/**
@@ -183,7 +193,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return MslsBlog|null
 	 */
 	public function get_current_blog() {
-		return $this->has_current_blog() ? $this->objects[ $this->current_blog_id ] : null;
+		return $this->has_current_blog() ? $this->objects[ $this->get_current_blog_id() ] : null;
 	}
 
 	/**

@@ -45,6 +45,7 @@ class MslsPlugin {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			add_action( 'widgets_init', [ $obj, 'init_widget' ] );
 			add_filter( 'the_content', [ $obj, 'content_filter' ] );
+			add_action( 'wp_head', [ $obj, 'print_alternate_links' ] );
 
 			add_filter( 'msls_get_output', [ $obj, 'get_output' ] );
 
@@ -100,6 +101,13 @@ class MslsPlugin {
 		}
 
 		return $obj;
+	}
+
+	/**
+	 * Filter for wp_head
+	 */
+	public function print_alternate_links() {
+		$this->get_output()->msls_head();
 	}
 
 	/**

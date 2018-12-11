@@ -1,3 +1,10 @@
+## 2.0.1
+
+### Bug Fixes
+
+* **Shortcode** corrected
+* **Alternate href links** reintegrated
+
 ## 2.0
 
 ### Features

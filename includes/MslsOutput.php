@@ -31,7 +31,7 @@ class MslsOutput extends MslsMain {
 	 * @return array
 	 */
 	public function get( $display, $filter = false, $exists = false ) {
-		$arr = array();
+		$arr = [];
 
 		$blogs = $this->collection->get_filtered( $filter );
 		if ( $blogs ) {
@@ -40,10 +40,13 @@ class MslsOutput extends MslsMain {
 
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
-				$url      = $mydata->get_current_link();
-				$current  = ( $blog->userblog_id == $this->collection->get_current_blog_id() );
 
-				if ( $current ) {
+				$link->src = $this->options->get_flag_url( $language );
+				$link->alt = $language;
+
+				$is_current_blog = $this->collection->is_current_blog( $blog );
+				if ( $is_current_blog ) {
+					$url       = $mydata->get_current_link();
 					$link->txt = $blog->get_description();
 				} else {
 					switch_to_blog( $blog->userblog_id );
@@ -59,9 +62,6 @@ class MslsOutput extends MslsMain {
 					restore_current_blog();
 				}
 
-				$link->src = $this->options->get_flag_url( $language );
-				$link->alt = $language;
-
 				if ( has_filter( 'msls_output_get' ) ) {
 					/**
 					 * Returns HTML-link for an item of the output-arr
@@ -69,15 +69,15 @@ class MslsOutput extends MslsMain {
 					 *
 					 * @param string $url
 					 * @param MslsLink $link
-					 * @param bool current
+					 * @param bool $is_current_blog
 					 */
-					$arr[] = ( string ) apply_filters( 'msls_output_get', $url, $link, $current );
+					$arr[] = ( string ) apply_filters( 'msls_output_get', $url, $link, $is_current_blog );
 				} else {
 					$arr[] = sprintf(
 						'<a href="%s" title="%s"%s>%s</a>',
 						$url,
 						$link->txt,
-						( $current ? ' class="current_language"' : '' ),
+						$is_current_blog ? ' class="current_language"' : '',
 						$link
 					);
 				}
@@ -85,6 +85,66 @@ class MslsOutput extends MslsMain {
 		}
 
 		return $arr;
+	}
+
+    public function msls_head() {
+		$blogs  = MslsBlogCollection::instance();
+		$mydata = MslsOptions::create();
+
+		foreach ( $blogs->get_objects() as $blog ) {
+			$language = $blog->get_language();
+			$url      = $mydata->get_current_link();
+			$current  = ( $blog->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() );
+			$title    = $blog->get_description();
+
+			if ( ! $current ) {
+				switch_to_blog( $blog->userblog_id );
+
+				if ( 'MslsOptions' != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
+					restore_current_blog();
+					continue;
+				}
+
+				$url   = $mydata->get_permalink( $language );
+				$title = $blog->get_description();
+
+				restore_current_blog();
+			}
+
+			if ( has_filter( 'msls_head_hreflang' ) ) {
+				/**
+				 * Overrides the hreflang value
+				 * @since 0.9.9
+				 * @param string $language
+				 */
+				$hreflang = (string) apply_filters( 'msls_head_hreflang', $language );
+			}
+			else {
+				$hreflang = $blog->get_alpha2();
+			}
+
+			if ( ! isset( $default ) ) {
+				$default = sprintf(
+					'<link rel="alternate" hreflang="x-default" href="%s" title="%s" />',
+					$url,
+					esc_attr( $title )
+				);
+			}
+
+			$arr[] = sprintf(
+				'<link rel="alternate" hreflang="%s" href="%s" title="%s" />',
+				$hreflang,
+				$url,
+				esc_attr( $title )
+			);
+		}
+
+		if ( 1 === count( $arr ) ) {
+			echo $default, PHP_EOL;
+		}
+		else {
+			echo implode( PHP_EOL, $arr ), PHP_EOL;
+		}
 	}
 
 	/**
