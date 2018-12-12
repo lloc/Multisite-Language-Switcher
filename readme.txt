@@ -92,7 +92,7 @@ There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes handy
 
 == Changelog ==
 
-There is a separate [Changelog](https://github.com/lloc/Multisite-Language-Switcher/Changelog.md) for this project available.
+There is a separate [Changelog](https://github.com/lloc/Multisite-Language-Switcher/blob/master/Changelog.md) for this project available.
 
 == Translators ==
 
