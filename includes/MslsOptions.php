@@ -201,7 +201,6 @@ class MslsOptions extends MslsGetSet {
 		foreach ( $arr as $key => $value ) {
 			$this->__set( $key, $value );
 		}
-		print_r( $arr );
 
 		return true;
 	}

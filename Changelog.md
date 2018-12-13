@@ -1,3 +1,8 @@
+## 2.0.3
+
+### Bug Fixes
+* **Language lookup** `us` was saved but code looked up for `en_US` 
+
 ## 2.0.2
 
 ### Bug Fixes
