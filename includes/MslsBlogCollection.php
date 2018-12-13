@@ -171,6 +171,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * Checks if blog is the current blog
+	 *
 	 * @param MslsBlog $blog
 	 *
 	 * @return bool
@@ -213,19 +214,16 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 */
 	public function is_plugin_active( $blog_id ) {
 		if ( ! is_array( $this->active_plugins ) ) {
-			$this->active_plugins = get_site_option(
-				'active_sitewide_plugins',
-				array()
-			);
+			$this->active_plugins = get_site_option( 'active_sitewide_plugins', [] );
 		}
 
 		if ( isset( $this->active_plugins[ MSLS_PLUGIN_PATH ] ) ) {
 			return true;
 		}
 
-		$plugins = get_blog_option( $blog_id, 'active_plugins', array() );
+		$plugins = get_blog_option( $blog_id, 'active_plugins', [] );
 
-		return ( in_array( MSLS_PLUGIN_PATH, $plugins ) );
+		return in_array( MSLS_PLUGIN_PATH, $plugins );
 	}
 
 	/**
@@ -296,19 +294,18 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * Returns a specific blog language.
 	 *
 	 * @param int $blog_id
+	 * @param string $default
 	 *
 	 * @return string
 	 */
-	public static function get_blog_language( $blog_id = null ) {
+	public static function get_blog_language( $blog_id = null, $default = 'en_US' ) {
 		if ( null === $blog_id ) {
 			$blog_id = get_current_blog_id();
 		}
 
-		$language = ( string ) get_blog_option(
-			$blog_id, 'WPLANG'
-		);
+		$language = ( string ) get_blog_option( $blog_id, 'WPLANG' );
 
-		return '' !== $language ? $language : 'en_US';
+		return '' !== $language ? $language : $default;
 	}
 
 }

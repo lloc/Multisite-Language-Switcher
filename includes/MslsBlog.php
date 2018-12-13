@@ -67,33 +67,29 @@ class MslsBlog {
 	 * @return string
 	 */
 	public function get_description() {
-		return (
-			empty( $this->description ) ?
-			$this->get_language() :
-			$this->description
-		);
+		return empty( $this->description ) ? $this->get_language() : $this->description;
 	}
 
 	/**
-	 * Get the language stored in this object
+	 * Gets the language stored in this object
 	 *
-	 * This method returns the string 'us' if there is an empty value in language.
+	 * @param string $default
+	 *
 	 * @return string
 	 */
-	public function get_language() {
-		return empty( $this->language ) ? 'us' : $this->language;
+	public function get_language( $default = 'en_US' ) {
+		return empty( $this->language ) ? $default : $this->language;
 	}
 
 	/**
-	 * Get the alpha2-part of the language-code
+	 * Gets the alpha2-part of the language-code
 	 *
-	 * This method returns the string 'en' if the language-code contains just 'us'.
 	 * @return string
 	 */
 	public function get_alpha2() {
-		$alpha2 = substr( $this->get_language(), 0, 2 );
+		$language = $this->get_language();
 
-		return ( 'us' == $alpha2 ? 'en' : $alpha2 );
+		return substr( $language, 0, 2 );
 	}
 
 	/**

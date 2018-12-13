@@ -103,7 +103,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return boolean
 	 */
 	public static function is_main_page() {
-		return ( is_front_page() || is_search() || is_404() );
+		return is_front_page() || is_search() || is_404();
 	}
 
 	/**
@@ -111,7 +111,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return boolean
 	 */
 	public static function is_tax_page() {
-		return ( is_category() || is_tag() || is_tax() );
+		return is_category() || is_tag() || is_tax();
 	}
 
 	/**
@@ -119,7 +119,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return boolean
 	 */
 	public static function is_query_page() {
-		return ( is_date() || is_author() || is_post_type_archive() );
+		return is_date() || is_author() || is_post_type_archive();
 	}
 
 	/**
@@ -142,7 +142,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return mixed
 	 */
 	public function get_arg( $idx, $val = null ) {
-		$arg = ( isset( $this->args[ $idx ] ) ? $this->args[ $idx ] : $val );
+		$arg = isset( $this->args[ $idx ] ) ? $this->args[ $idx ] : $val;
 		settype( $arg, gettype( $val ) );
 
 		return $arg;
@@ -184,15 +184,26 @@ class MslsOptions extends MslsGetSet {
 	 * @return bool
 	 */
 	public function set( $arr ) {
-		if ( is_array( $arr ) ) {
-			foreach ( $arr as $key => $value ) {
-				$this->__set( $key, $value );
-			}
-
-			return true;
+		if ( ! is_array( $arr ) ) {
+			return false;
 		}
 
-		return false;
+		/**
+		 * Mapping for us language code
+		 */
+		$map = [ 'us' => 'en_US', 'en' => 'en_US' ];
+		foreach ( $map as $old => $new ) {
+			if ( isset( $arr[ $old ] ) ) {
+				$arr[ $new ] = $arr[ $old ];
+			}
+		}
+
+		foreach ( $arr as $key => $value ) {
+			$this->__set( $key, $value );
+		}
+		print_r( $arr );
+
+		return true;
 	}
 
 	/**
@@ -216,7 +227,7 @@ class MslsOptions extends MslsGetSet {
 			$language
 		);
 
-		return ( '' != $postlink ? $postlink : home_url( '/' ) );
+		return '' != $postlink ? $postlink : home_url( '/' );
 	}
 
 	/**
@@ -334,6 +345,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Get all available languages
+	 *
 	 * @uses get_available_languages
 	 * @uses format_code_lang
 	 * @return array

@@ -94,6 +94,8 @@ class MslsOutput extends MslsMain {
 		$blogs  = MslsBlogCollection::instance();
 		$mydata = MslsOptions::create();
 
+		$arr     = [];
+		$default = '';
 		foreach ( $blogs->get_objects() as $blog ) {
 			$language = $blog->get_language();
 			$url      = $mydata->get_current_link();
@@ -103,7 +105,7 @@ class MslsOutput extends MslsMain {
 			if ( ! $current ) {
 				switch_to_blog( $blog->userblog_id );
 
-				if ( 'MslsOptions' != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
+				if ( MslsOptions::class != get_class( $mydata ) && ( is_null( $mydata ) || ! $mydata->has_value( $language ) ) ) {
 					restore_current_blog();
 					continue;
 				}
@@ -126,7 +128,7 @@ class MslsOutput extends MslsMain {
 				$hreflang = $blog->get_alpha2();
 			}
 
-			if ( ! isset( $default ) ) {
+			if ( '' === $default ) {
 				$default = sprintf(
 					'<link rel="alternate" hreflang="x-default" href="%s" title="%s" />',
 					$url,
