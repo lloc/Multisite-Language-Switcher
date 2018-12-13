@@ -68,6 +68,8 @@ class MslsOptions extends MslsGetSet {
 	/**
 	 * Factory method
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @param int $id
 	 *
 	 * @return MslsOptions

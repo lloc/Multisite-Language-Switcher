@@ -63,6 +63,9 @@ class MslsAdminIcon {
 
 	/**
 	 * Factory method
+	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @return MslsAdminIcon
 	 */
 	public static function create() {

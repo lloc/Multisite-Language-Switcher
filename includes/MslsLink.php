@@ -65,6 +65,8 @@ class MslsLink extends MslsGetSet {
 	/**
 	 * Factory: Creates a specific instance of MslsLink
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @param int $display
 	 *
 	 * @return MslsLink

@@ -6,6 +6,7 @@ matrix:
   include:
     - php: 5.6
     env:
+      - PHPUNIT_VERSION=phpunit-6.phar
       - WP_VERSION=latest WP_MULTISITE=1
     before_script:
       - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION

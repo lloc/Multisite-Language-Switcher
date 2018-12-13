@@ -28,6 +28,8 @@ class MslsOptionsTax extends MslsOptions {
 	/**
 	 * Factory method
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @param int $id
 	 *
 	 * @return MslsOptionsTax

@@ -22,7 +22,11 @@ class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Factory method
+	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @param int $id This parameter is unused here
+	 *
 	 * @return MslsOptionsQuery
 	 */
 	public static function create( $id = 0 ) {
