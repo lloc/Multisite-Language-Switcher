@@ -6,7 +6,7 @@ Run `composer install --no-dev` if you plan to use the repository anyways.
 
 **Download the [latest stable from the WordPress Plugin Directory](http://downloads.wordpress.org/plugin/multisite-language-switcher.zip).**
  
-[![Build Status](https://api.travis-ci.org/lloc/Multisite-Language-Switcher.png)](https://api.travis-ci.org/lloc/Multisite-Language-Switcher)
+[![Build Status](https://travis-ci.org/lloc/Multisite-Language-Switcher.svg?branch=master)](https://travis-ci.org/lloc/Multisite-Language-Switcher)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/badges/quality-score.png?s=a2e5dbac2690bbd427f2d48b84473482e7e24fdb)](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/)
 
 A simple, powerful and easy to use plugin that will add 
