@@ -2,7 +2,7 @@
 
 ## Using the widget
 
-As described in the section [Editing association](/user-docs/editing-association-contents) of posts, besides indicating for each post or page the available translations, the widget can be integrated in any dynamic sidebar.
+As described in the section [Editing association](/user-docs/editing-association-contents.html) of posts, besides indicating for each post or page the available translations, the widget can be integrated in any dynamic sidebar.
 
 ![Widgets admin](/widgets-admin.png)
 
