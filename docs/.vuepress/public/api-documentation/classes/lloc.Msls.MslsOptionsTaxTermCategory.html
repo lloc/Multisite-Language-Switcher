@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API - Multisite Language Switcher</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API - Multisite Language Switcher</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/lloc.html">\lloc</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">190</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">1</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-377709109"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-377709109" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-454908306"></a>
+                                <a href="../namespaces/lloc.html" style="margin-left: 30px; padding-left: 0">lloc</a>
+            </div>
+            <div id="namespace-454908306" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-418383884"></a>
+                                <a href="../namespaces/lloc.Msls.html" style="margin-left: 30px; padding-left: 0">Msls</a>
+            </div>
+            <div id="namespace-418383884" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-881036878"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.html" style="margin-left: 30px; padding-left: 0">ContentImport</a>
+            </div>
+            <div id="namespace-881036878" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2049608270"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.html" style="margin-left: 30px; padding-left: 0">Importers</a>
+            </div>
+            <div id="namespace-2049608270" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-157710889"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.Attachments.html" style="margin-left: 30px; padding-left: 0">Attachments</a>
+            </div>
+            <div id="namespace-157710889" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.Attachments.Linking.html">Linking</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-105709181"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.PostFields.html" style="margin-left: 30px; padding-left: 0">PostFields</a>
+            </div>
+            <div id="namespace-105709181" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostFields.Duplicating.html">Duplicating</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-490586650"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.PostMeta.html" style="margin-left: 30px; padding-left: 0">PostMeta</a>
+            </div>
+            <div id="namespace-490586650" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostMeta.Duplicating.html">Duplicating</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-58282860"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.PostThumbnail.html" style="margin-left: 30px; padding-left: 0">PostThumbnail</a>
+            </div>
+            <div id="namespace-58282860" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostThumbnail.Linking.html">Linking</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-730920917"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.Terms.html" style="margin-left: 30px; padding-left: 0">Terms</a>
+            </div>
+            <div id="namespace-730920917" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.Terms.ShallowDuplicating.html">ShallowDuplicating</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/lloc.Msls.ContentImport.Importers.Importer.html">Importer</a></li>
+                                                    <li class="interface"><a href="../classes/lloc.Msls.ContentImport.Importers.ImportersFactory.html">ImportersFactory</a></li>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.AttachmentsImporters.html">AttachmentsImporters</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.BaseImporter.html">BaseImporter</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.ImportersBaseFactory.html">ImportersBaseFactory</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.Map.html">Map</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostFieldsImporters.html">PostFieldsImporters</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostMetaImporters.html">PostMetaImporters</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostThumbnailImporters.html">PostThumbnailImporters</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.TermsImporters.html">TermsImporters</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-423166145"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.LogWriters.html" style="margin-left: 30px; padding-left: 0">LogWriters</a>
+            </div>
+            <div id="namespace-423166145" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/lloc.Msls.ContentImport.LogWriters.LogWriter.html">LogWriter</a></li>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.LogWriters.AdminNoticeLogger.html">AdminNoticeLogger</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.AttachmentPathFinder.html">AttachmentPathFinder</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.ContentImporter.html">ContentImporter</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html">ImportCoordinates</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.ImportLogger.html">ImportLogger</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.MetaBox.html">MetaBox</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Relations.html">Relations</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Service.html">Service</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.MslsAdmin.html">MslsAdmin</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsAdminIcon.html">MslsAdminIcon</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsAdminIconTaxonomy.html">MslsAdminIconTaxonomy</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsBlog.html">MslsBlog</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsBlogCollection.html">MslsBlogCollection</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsContentTypes.html">MslsContentTypes</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsCustomColumn.html">MslsCustomColumn</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsCustomColumnTaxonomy.html">MslsCustomColumnTaxonomy</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsCustomFilter.html">MslsCustomFilter</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsGetSet.html">MslsGetSet</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsJson.html">MslsJson</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLanguageArray.html">MslsLanguageArray</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLink.html">MslsLink</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLinkImageOnly.html">MslsLinkImageOnly</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLinkTextImage.html">MslsLinkTextImage</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLinkTextOnly.html">MslsLinkTextOnly</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsMain.html">MslsMain</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsMetaBox.html">MslsMetaBox</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptions.html">MslsOptions</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsPost.html">MslsOptionsPost</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQuery.html">MslsOptionsQuery</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryAuthor.html">MslsOptionsQueryAuthor</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryDay.html">MslsOptionsQueryDay</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryMonth.html">MslsOptionsQueryMonth</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryPostType.html">MslsOptionsQueryPostType</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryYear.html">MslsOptionsQueryYear</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsTax.html">MslsOptionsTax</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsTaxTerm.html">MslsOptionsTaxTerm</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsTaxTermCategory.html">MslsOptionsTaxTermCategory</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOutput.html">MslsOutput</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsPlugin.html">MslsPlugin</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsPostTag.html">MslsPostTag</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsPostTagClassic.html">MslsPostTagClassic</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsPostType.html">MslsPostType</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsRegistry.html">MslsRegistry</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsRegistryInstance.html">MslsRegistryInstance</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsSqlCacher.html">MslsSqlCacher</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsTaxonomy.html">MslsTaxonomy</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsWidget.html">MslsWidget</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/lloc.Msls.html">\lloc\Msls</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\lloc\Msls</small>MslsOptionsTaxTermCategory</h1>
+                    <p><em>Category options</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/lloc.Msls.MslsOptionsTaxTerm.html#method_check_base" class="">check_base()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_create" class="">create()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptionsTax.html#method_get_tax_query" class="">get_tax_query()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_postlink" class="">get_postlink()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_current_link" class="">get_current_link()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptionsTax.html#method_get_term_link" class="">get_term_link()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_is_main_page" class="">is_main_page()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_is_tax_page" class="">is_tax_page()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_is_query_page" class="">is_query_page()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_arg" class="">get_arg()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_save" class="">save()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_delete" class="">delete()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_set" class="">set()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_permalink" class="">get_permalink()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_is_excluded" class="">is_excluded()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_is_content_filter" class="">is_content_filter()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_order" class="">get_order()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_url" class="">get_url()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_slug" class="">get_slug()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_flag_url" class="">get_flag_url()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_get_available_languages" class="">get_available_languages()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#method_check_for_blog_slug" class="">check_for_blog_slug()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#method___set" class="">__set()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#method___get" class="">__get()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#method___isset" class="">__isset()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#method___unset" class="">__unset()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#method_reset" class="">reset()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#method_has_value" class="">has_value()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#method_is_empty" class="">is_empty()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#method_get_arr" class="">get_arr()</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsRegistryInstance.html#method_instance" class="">instance()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_with_front" class="">$with_front</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_activate_autocomplete" class="">$activate_autocomplete</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_display" class="">$display</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_reference_user" class="">$reference_user</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_content_priority" class="">$content_priority</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_admin_language" class="">$admin_language</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_description" class="">$description</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_before_item" class="">$before_item</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_after_item" class="">$after_item</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_before_output" class="">$before_output</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_after_output" class="">$after_output</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/lloc.Msls.MslsOptionsTaxTermCategory.html#property_base_option" class="">$base_option</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptionsTaxTermCategory.html#property_base_defined" class="">$base_defined</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_sep" class="">$sep</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_autoload" class="">$autoload</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_args" class="">$args</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_name" class="">$name</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_exists" class="">$exists</a><br />
+                                                                    <a href="../classes/lloc.Msls.MslsGetSet.html#property_arr" class="">$arr</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/lloc.Msls.MslsOptions.html#property_available_languages" class="">$available_languages</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/MslsOptionsTaxTermCategory.html"><div class="path-wrapper">MslsOptionsTaxTermCategory.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Msls</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/lloc.Msls.MslsRegistryInstance.html">\lloc\Msls\MslsRegistryInstance</a></div>
+                                                                    
+                                        <div class="namespace-wrapper"><a href="../classes/lloc.Msls.MslsGetSet.html">\lloc\Msls\MslsGetSet</a></div>
+                                                                    
+                                        <div class="namespace-wrapper"><a href="../classes/lloc.Msls.MslsOptions.html">\lloc\Msls\MslsOptions</a></div>
+                                                                    
+                                        <div class="namespace-wrapper"><a href="../classes/lloc.Msls.MslsOptionsTax.html">\lloc\Msls\MslsOptionsTax</a></div>
+                                                                    
+                                        <div class="namespace-wrapper"><a href="../classes/lloc.Msls.MslsOptionsTaxTerm.html">\lloc\Msls\MslsOptionsTaxTerm</a></div>
+                                                                                                    <div class="namespace-wrapper">\lloc\Msls\MslsOptionsTaxTermCategory</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_with_front" name="property_with_front" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$with_front</h3>
+                <pre class="signature">$with_front : boolean</pre>
+                <p><em>Rewrite with front</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_activate_autocomplete" name="property_activate_autocomplete" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$activate_autocomplete</h3>
+                <pre class="signature">$activate_autocomplete : boolean</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_display" name="property_display" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$display</h3>
+                <pre class="signature">$display : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_reference_user" name="property_reference_user" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$reference_user</h3>
+                <pre class="signature">$reference_user : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_content_priority" name="property_content_priority" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$content_priority</h3>
+                <pre class="signature">$content_priority : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_admin_language" name="property_admin_language" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$admin_language</h3>
+                <pre class="signature">$admin_language : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_description" name="property_description" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$description</h3>
+                <pre class="signature">$description : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_before_item" name="property_before_item" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$before_item</h3>
+                <pre class="signature">$before_item : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_after_item" name="property_after_item" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$after_item</h3>
+                <pre class="signature">$after_item : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_before_output" name="property_before_output" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$before_output</h3>
+                <pre class="signature">$before_output : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_after_output" name="property_after_output" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$after_output</h3>
+                <pre class="signature">$after_output : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_base_option" name="property_base_option" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$base_option</h3>
+                <pre class="signature">$base_option : string</pre>
+                <p><em>Base option</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_base_defined" name="property_base_defined" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$base_defined</h3>
+                <pre class="signature">$base_defined : string</pre>
+                <p><em>Base standard definition</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_sep" name="property_sep" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$sep</h3>
+                <pre class="signature">$sep : string</pre>
+                <p><em>Separator</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_autoload" name="property_autoload" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$autoload</h3>
+                <pre class="signature">$autoload : string</pre>
+                <p><em>Autoload</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_args" name="property_args" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$args</h3>
+                <pre class="signature">$args : array</pre>
+                <p><em>Args</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_name" name="property_name" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$name</h3>
+                <pre class="signature">$name : string</pre>
+                <p><em>Name</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_exists" name="property_exists" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$exists</h3>
+                <pre class="signature">$exists : boolean</pre>
+                <p><em>Exists</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_arr" name="property_arr" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$arr</h3>
+                <pre class="signature">$arr : array</pre>
+                <p><em>Generic container for all properties of an instance</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_available_languages" name="property_available_languages" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$available_languages</h3>
+                <pre class="signature">$available_languages : array</pre>
+                <p><em>Available languages</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_check_base" name="method_check_base" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">check_base()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">check_base(string  <span class="argument">$url</span>,   <span class="argument">$options</span>) : string</pre>
+                <p><em>Check and correct URL</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$url </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptionsTaxTerm.html"><div class="path-wrapper">\lloc\Msls\MslsOptionsTaxTerm</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_create" name="method_create" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">create()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">create(integer  <span class="argument">$id</span>) : \lloc\Msls\MslsOptions</pre>
+                <p><em>Factory method</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$id </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/lloc.Msls.MslsOptions.html">\lloc\Msls\MslsOptions</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            codeCoverageIgnore
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_tax_query" name="method_get_tax_query" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_tax_query()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_tax_query() : string</pre>
+                <p><em>Get the queried taxonomy</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptionsTax.html"><div class="path-wrapper">\lloc\Msls\MslsOptionsTax</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_postlink" name="method_get_postlink" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_postlink()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_postlink(string  <span class="argument">$language</span>) : string</pre>
+                <p><em>Get postlink</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$language </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_current_link" name="method_get_current_link" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_current_link()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_current_link() : string</pre>
+                <p><em>Get current link</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_term_link" name="method_get_term_link" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_term_link()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_term_link(integer  <span class="argument">$term_id</span>) : string</pre>
+                <p><em>Wraps the call to get_term_link</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$term_id </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptionsTax.html"><div class="path-wrapper">\lloc\Msls\MslsOptionsTax</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_main_page" name="method_is_main_page" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_main_page()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_main_page() : boolean</pre>
+                <p><em>Checks if the current page is a home, front or 404 page</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_tax_page" name="method_is_tax_page" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_tax_page()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_tax_page() : boolean</pre>
+                <p><em>Checks if the current page is a category, tag or any other tax archive</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_query_page" name="method_is_query_page" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_query_page()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_query_page() : boolean</pre>
+                <p><em>Checks if the current page is a date, author any other post_type archive</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct() </pre>
+                <p><em>Constructor</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_arg" name="method_get_arg" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_arg()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_arg(integer  <span class="argument">$idx</span>, mixed  <span class="argument">$val = null</span>) : mixed</pre>
+                <p><em>Gets an element of arg by index
+The returning value is casted to the type of $retval or will be the
+value of $retval if nothing is set at this index.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$idx </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$val </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_save" name="method_save" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">save()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">save(mixed  <span class="argument">$arr</span>) </pre>
+                <p><em>Save</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$arr </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            codeCoverageIgnore
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_delete" name="method_delete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">delete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">delete() </pre>
+                <p><em>Delete</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            codeCoverageIgnore
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_set" name="method_set" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">set()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">set(mixed  <span class="argument">$arr</span>) : boolean</pre>
+                <p><em>Set</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$arr </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_permalink" name="method_get_permalink" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_permalink()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_permalink(string  <span class="argument">$language</span>) : string</pre>
+                <p><em>Get permalink</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$language </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_excluded" name="method_is_excluded" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_excluded()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_excluded() : boolean</pre>
+                <p><em>Is excluded</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_content_filter" name="method_is_content_filter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_content_filter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_content_filter() : boolean</pre>
+                <p><em>Is content</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_order" name="method_get_order" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_order()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_order() : string</pre>
+                <p><em>Get order</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_url" name="method_get_url" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_url()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_url(string  <span class="argument">$dir</span>) : string</pre>
+                <p><em>Get url</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$dir </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_slug" name="method_get_slug" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_slug()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_slug(string  <span class="argument">$post_type</span>) : string</pre>
+                <p><em>Returns slug for a post type</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$post_type </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_flag_url" name="method_get_flag_url" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_flag_url()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_flag_url(string  <span class="argument">$language</span>) : string</pre>
+                <p><em>Get flag url</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$language </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_available_languages" name="method_get_available_languages" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_available_languages()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_available_languages() : array</pre>
+                <p><em>Get all available languages</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                                                            <dt>Uses</dt>
+                                                                <dd>get_available_languages</dd>
+                                            <dd>format_code_lang</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_check_for_blog_slug" name="method_check_for_blog_slug" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">check_for_blog_slug()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">check_for_blog_slug(string  <span class="argument">$url</span>, \lloc\Msls\MslsOptions  <span class="argument">$options</span>) : string</pre>
+                <p><em>The &#039;blog&#039;-slug-problem :/</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$url </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/lloc.Msls.MslsOptions.html">\lloc\Msls\MslsOptions</a></td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsOptions.html"><div class="path-wrapper">\lloc\Msls\MslsOptions</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___set" name="method___set" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__set()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__set(string  <span class="argument">$key</span>, mixed  <span class="argument">$value</span>) </pre>
+                <p><em>Overloads the set method.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                    <span class="label label-info">final</span>
+                                    <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___get" name="method___get" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__get()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__get(string  <span class="argument">$key</span>) : mixed</pre>
+                <p><em>Overloads the get method.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                    <span class="label label-info">final</span>
+                                    <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___isset" name="method___isset" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__isset()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__isset(string  <span class="argument">$key</span>) : boolean</pre>
+                <p><em>Overloads the isset method.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                    <span class="label label-info">final</span>
+                                    <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___unset" name="method___unset" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__unset()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__unset(string  <span class="argument">$key</span>) </pre>
+                <p><em>Overloads the unset method.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                    <span class="label label-info">final</span>
+                                    <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_reset" name="method_reset" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">reset()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">reset() : \lloc\Msls\MslsGetSet</pre>
+                <p><em>Resets the properties container to an empty array.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/lloc.Msls.MslsGetSet.html">\lloc\Msls\MslsGetSet</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_has_value" name="method_has_value" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">has_value()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">has_value(string  <span class="argument">$key</span>) : boolean</pre>
+                <p><em>Checks if the array has an non empty item with the specified key name.</em></p>
+                <p>This is method is similar to the overloaded <strong>isset-method since
+</strong>set cleans empty properties but I use for example</p>
+<pre><code>$obj-&gt;has_value( $temp )</code></pre>
+<p>and not</p>
+<pre><code>isset( $obj-&gt;$temp )</code></pre>
+<p>which is the same but in my opinion a little bit ugly.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_is_empty" name="method_is_empty" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">is_empty()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">is_empty() : boolean</pre>
+                <p><em>Checks if the properties-container is empty.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_arr" name="method_get_arr" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_arr()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_arr() : array</pre>
+                <p><em>Gets the complete properties-container as an array.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                    <span class="label label-info">final</span>
+                                    <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsGetSet.html"><div class="path-wrapper">\lloc\Msls\MslsGetSet</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_instance" name="method_instance" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">instance()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">instance() : object</pre>
+                <p><em>Gets or creates an instance of the called class</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    object
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/lloc.Msls.MslsRegistryInstance.html"><div class="path-wrapper">\lloc\Msls\MslsRegistryInstance</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">MslsOptionsTaxTermCategory.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/MslsOptionsTaxTermCategory.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/lloc.html">\lloc</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on December 19th, 2018 at 15:56.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <title>API - Multisite Language Switcher</title>
+  <parser>
+    <target>docs/.vuepress/public/api-documentation/cache</target>
+  </parser>
+  <transformer>
+    <target>docs/.vuepress/public/api-documentation</target>
+  </transformer>
+  <files>
+    <directory>includes</directory>
+    <ignore>tests</ignore>
+    <ignore>vendor</ignore>
+  </files>
+</phpdoc>

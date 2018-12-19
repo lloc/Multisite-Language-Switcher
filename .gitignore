@@ -5,3 +5,4 @@ vendor/
 tests/coverage
 tests/docs
 tests/xml
+node_modules

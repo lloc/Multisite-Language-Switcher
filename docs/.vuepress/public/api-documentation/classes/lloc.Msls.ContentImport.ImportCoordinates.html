@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API - Multisite Language Switcher</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API - Multisite Language Switcher</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/lloc.html">\lloc</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">190</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">1</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-442636523"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-442636523" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1226778421"></a>
+                                <a href="../namespaces/lloc.html" style="margin-left: 30px; padding-left: 0">lloc</a>
+            </div>
+            <div id="namespace-1226778421" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-449178231"></a>
+                                <a href="../namespaces/lloc.Msls.html" style="margin-left: 30px; padding-left: 0">Msls</a>
+            </div>
+            <div id="namespace-449178231" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1602846140"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.html" style="margin-left: 30px; padding-left: 0">ContentImport</a>
+            </div>
+            <div id="namespace-1602846140" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-623156473"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.html" style="margin-left: 30px; padding-left: 0">Importers</a>
+            </div>
+            <div id="namespace-623156473" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1604671353"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.Attachments.html" style="margin-left: 30px; padding-left: 0">Attachments</a>
+            </div>
+            <div id="namespace-1604671353" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.Attachments.Linking.html">Linking</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-659576000"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.PostFields.html" style="margin-left: 30px; padding-left: 0">PostFields</a>
+            </div>
+            <div id="namespace-659576000" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostFields.Duplicating.html">Duplicating</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1133848826"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.PostMeta.html" style="margin-left: 30px; padding-left: 0">PostMeta</a>
+            </div>
+            <div id="namespace-1133848826" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostMeta.Duplicating.html">Duplicating</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-681160968"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.PostThumbnail.html" style="margin-left: 30px; padding-left: 0">PostThumbnail</a>
+            </div>
+            <div id="namespace-681160968" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostThumbnail.Linking.html">Linking</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-325307009"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.Importers.Terms.html" style="margin-left: 30px; padding-left: 0">Terms</a>
+            </div>
+            <div id="namespace-325307009" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.Terms.ShallowDuplicating.html">ShallowDuplicating</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/lloc.Msls.ContentImport.Importers.Importer.html">Importer</a></li>
+                                                    <li class="interface"><a href="../classes/lloc.Msls.ContentImport.Importers.ImportersFactory.html">ImportersFactory</a></li>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.AttachmentsImporters.html">AttachmentsImporters</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.BaseImporter.html">BaseImporter</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.ImportersBaseFactory.html">ImportersBaseFactory</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.Map.html">Map</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostFieldsImporters.html">PostFieldsImporters</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostMetaImporters.html">PostMetaImporters</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.PostThumbnailImporters.html">PostThumbnailImporters</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Importers.TermsImporters.html">TermsImporters</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1644385617"></a>
+                                <a href="../namespaces/lloc.Msls.ContentImport.LogWriters.html" style="margin-left: 30px; padding-left: 0">LogWriters</a>
+            </div>
+            <div id="namespace-1644385617" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/lloc.Msls.ContentImport.LogWriters.LogWriter.html">LogWriter</a></li>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.LogWriters.AdminNoticeLogger.html">AdminNoticeLogger</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.AttachmentPathFinder.html">AttachmentPathFinder</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.ContentImporter.html">ContentImporter</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html">ImportCoordinates</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.ImportLogger.html">ImportLogger</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.MetaBox.html">MetaBox</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Relations.html">Relations</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.ContentImport.Service.html">Service</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/lloc.Msls.MslsAdmin.html">MslsAdmin</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsAdminIcon.html">MslsAdminIcon</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsAdminIconTaxonomy.html">MslsAdminIconTaxonomy</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsBlog.html">MslsBlog</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsBlogCollection.html">MslsBlogCollection</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsContentTypes.html">MslsContentTypes</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsCustomColumn.html">MslsCustomColumn</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsCustomColumnTaxonomy.html">MslsCustomColumnTaxonomy</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsCustomFilter.html">MslsCustomFilter</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsGetSet.html">MslsGetSet</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsJson.html">MslsJson</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLanguageArray.html">MslsLanguageArray</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLink.html">MslsLink</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLinkImageOnly.html">MslsLinkImageOnly</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLinkTextImage.html">MslsLinkTextImage</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsLinkTextOnly.html">MslsLinkTextOnly</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsMain.html">MslsMain</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsMetaBox.html">MslsMetaBox</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptions.html">MslsOptions</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsPost.html">MslsOptionsPost</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQuery.html">MslsOptionsQuery</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryAuthor.html">MslsOptionsQueryAuthor</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryDay.html">MslsOptionsQueryDay</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryMonth.html">MslsOptionsQueryMonth</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryPostType.html">MslsOptionsQueryPostType</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsQueryYear.html">MslsOptionsQueryYear</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsTax.html">MslsOptionsTax</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsTaxTerm.html">MslsOptionsTaxTerm</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOptionsTaxTermCategory.html">MslsOptionsTaxTermCategory</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsOutput.html">MslsOutput</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsPlugin.html">MslsPlugin</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsPostTag.html">MslsPostTag</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsPostTagClassic.html">MslsPostTagClassic</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsPostType.html">MslsPostType</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsRegistry.html">MslsRegistry</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsRegistryInstance.html">MslsRegistryInstance</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsSqlCacher.html">MslsSqlCacher</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsTaxonomy.html">MslsTaxonomy</a></li>
+                                                    <li class="class"><a href="../classes/lloc.Msls.MslsWidget.html">MslsWidget</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/lloc.Msls.ContentImport.html">\lloc\Msls\ContentImport</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\lloc\Msls\ContentImport</small>ImportCoordinates</h1>
+                    <p><em></em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#method_validate" class="">validate()</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#method_get_importer_for" class="">get_importer_for()</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#method_parse_importers_from_request" class="">parse_importers_from_request()</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#method_set_importer_for" class="">set_importer_for()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#property_source_blog_id" class="">$source_blog_id</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#property_source_post_id" class="">$source_post_id</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#property_dest_blog_id" class="">$dest_blog_id</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#property_dest_post_id" class="">$dest_post_id</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#property_source_post" class="">$source_post</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#property_source_lang" class="">$source_lang</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#property_dest_lang" class="">$dest_lang</a><br />
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#property_importers" class="">$importers</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/lloc.Msls.ContentImport.ImportCoordinates.html#constant_IMPORTERS_GLOBAL_KEY" class="">IMPORTERS_GLOBAL_KEY</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/ContentImport.ImportCoordinates.html"><div class="path-wrapper">ContentImport/ImportCoordinates.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\lloc\Msls\ContentImport\ImportCoordinates</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_IMPORTERS_GLOBAL_KEY" name="constant_IMPORTERS_GLOBAL_KEY" class="anchor"></a>
+            <article id="constant_IMPORTERS_GLOBAL_KEY" class="constant">
+                <h3 class="">IMPORTERS_GLOBAL_KEY</h3>
+                <pre class="signature">IMPORTERS_GLOBAL_KEY</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_source_blog_id" name="property_source_blog_id" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$source_blog_id</h3>
+                <pre class="signature">$source_blog_id : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_source_post_id" name="property_source_post_id" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$source_post_id</h3>
+                <pre class="signature">$source_post_id : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_dest_blog_id" name="property_dest_blog_id" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$dest_blog_id</h3>
+                <pre class="signature">$dest_blog_id : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_dest_post_id" name="property_dest_post_id" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$dest_post_id</h3>
+                <pre class="signature">$dest_post_id : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_source_post" name="property_source_post" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$source_post</h3>
+                <pre class="signature">$source_post : \WP_Post</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                \WP_Post
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_source_lang" name="property_source_lang" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$source_lang</h3>
+                <pre class="signature">$source_lang : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_dest_lang" name="property_dest_lang" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$dest_lang</h3>
+                <pre class="signature">$dest_lang : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_importers" name="property_importers" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$importers</h3>
+                <pre class="signature">$importers : array</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                &mdash; An array keeping track of which importer (slug) should be used for
+           a specific import type, shape [ &lt;import-type&gt; =&gt; &lt;slug&gt; ]                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_validate" name="method_validate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">validate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">validate() : boolean</pre>
+                <p><em>Validates the coordinates.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_get_importer_for" name="method_get_importer_for" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">get_importer_for()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">get_importer_for(string  <span class="argument">$importer_type</span>) : string|null</pre>
+                <p><em>Returns the importer (slug) for a specific type of imports.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$importer_type </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string|null
+                                            &mdash; <p>The import slug if set or <code>null</code> if not set.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_parse_importers_from_request" name="method_parse_importers_from_request" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">parse_importers_from_request()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">parse_importers_from_request() </pre>
+                <p><em>Parses the importers from request superglobals.</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_set_importer_for" name="method_set_importer_for" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">set_importer_for()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">set_importer_for(string  <span class="argument">$importer_type</span>, string  <span class="argument">$slug</span>) </pre>
+                <p><em>Sets the slug of the importer that should be used for a type of import.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$importer_type </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$slug </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">ImportCoordinates.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/ContentImport/ImportCoordinates.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/lloc.html">\lloc</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on December 19th, 2018 at 15:56.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
