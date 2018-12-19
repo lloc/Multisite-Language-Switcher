@@ -2,12 +2,14 @@
 /.idea/
 /bin/
 /build/
+/docs/
 /tests/
 /release/
 /multisite-language-switcher/
 .gitignore
 composer.lock
 composer.phar
+package.json
 *.yml
 *.md
 *.xml

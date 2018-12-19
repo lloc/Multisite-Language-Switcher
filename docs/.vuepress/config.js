@@ -19,6 +19,10 @@ module.exports = {
       {
         text: 'Plugin Directory',
         link: 'https://wordpress.org/plugins/multisite-language-switcher/',
+      },
+      {
+        text: 'API documentation',
+        link: '/api-documentation/',
       }
     ],
     sidebar: [
