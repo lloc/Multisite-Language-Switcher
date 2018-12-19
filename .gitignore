@@ -7,4 +7,4 @@ tests/docs
 tests/xml
 node_modules
 docs/.vuepress/dist/
-
+docs/.vuepress/public/api-documentation/
