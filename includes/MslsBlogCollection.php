@@ -146,7 +146,11 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	}
 
 	/**
-	 * Gets blog(s) by language
+	 * Gets blog_id by language
+	 *
+	 * @param $language
+	 *
+	 * @return null|string
 	 */
 	public function get_blog_id( $language ) {
 		$blog_id = null;

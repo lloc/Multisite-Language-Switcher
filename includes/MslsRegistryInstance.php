@@ -1,4 +1,9 @@
 <?php
+/**
+ * MslsRegistryInstance
+ * @author Dennis Ploetner <re@lloc.de>
+ * @since 1.1
+ */
 
 namespace lloc\Msls;
 

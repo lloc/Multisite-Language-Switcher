@@ -21,6 +21,8 @@ class MslsPlugin {
 	protected $options;
 
 	/**
+	 * MslsPlugin constructor.
+	 *
 	 * @param MslsOptions $options
 	 */
 	public function __construct( MslsOptions $options ) {
@@ -91,6 +93,8 @@ class MslsPlugin {
 	}
 
 	/**
+	 * Gets MslsOutput object
+	 *
 	 * @return MslsOutput
 	 */
 	public function get_output() {
@@ -113,8 +117,6 @@ class MslsPlugin {
 	/**
 	 * Filter for the_content()
 	 *
-	 * @package Msls
-	 * @uses MslsOptions
 	 * @param string $content
 	 * @return string
 	 */
@@ -133,8 +135,6 @@ class MslsPlugin {
 	/**
 	 * Create filterstring for msls_content_filter()
 	 *
-	 * @package Msls
-	 * @uses MslsOutput
 	 * @param string $pref
 	 * @param string $post
 	 * @return string
