@@ -374,3 +374,18 @@ You can configure the output-tags in the admin settings of the plugin but you ca
     add_filter( 'msls_output_get_tags', 'my_msls_output_get_tags' );
 
 *This would override completely the configuration without looking for existing values.*
+
+## msls\_widget\_alternative\_content
+
+The widget will output "No available translations found" if you set "Show only links with a translation" in the plugin options and if there is no translation available. You can override the output-string:
+
+    /**
+     * @param string $text
+     * @return array
+     */
+    function my_msls_widget_alternative_content( $text ) {       
+        return '';
+    }
+    add_filter( 'msls_widget_alternative_content', 'my_msls_widget_alternative_content' );
+
+*This would be helpful if you want to show an empty string.*
