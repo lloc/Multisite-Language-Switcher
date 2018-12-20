@@ -24,7 +24,7 @@ So far the plugin installation follows the usual procedure. In a practical way, 
 
 ## Settings in the administration menu
 
-The plugin settings are rather simple (in the **Administration Menu -> Settings -> Multisite Language Switcher**). You need to activate the plugin once in each blog : click « Save » at the bottom of the settings even if you haven't changed anything yet. It’s the only way for the plugin to offer the necessary flexibility, regarding each language for example.
+The plugin settings are rather simple (in the **Administration Menu -> Settings -> Multisite Language Switcher**). You need to activate the plugin once in each blog : click « Save » at the bottom of the settings even if you haven't changed anything yet. It's the only way for the plugin to offer the necessary flexibility, regarding each language for example.
 
 ![Plugin settings](/settings.png)
 

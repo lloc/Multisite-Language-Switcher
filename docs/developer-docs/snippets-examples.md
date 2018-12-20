@@ -20,7 +20,7 @@ The Multisite Language Switcher has also a similar functionality that sets the l
 
 ## Manipulate the Nav Menu
 
-The class MslsOutput comes in handy when you’d like to manipulate the items of a Navigation Menu. First you should check if plugin is active (just check for the existence of function ‘the_msls’) and if it is the primary menu in your theme (the name can vary). Then you can create the object and request the array of links (in my example just linked flags) to the translations. After that you can create the output, add it to $items and return it.
+The class MslsOutput comes in handy when you'd like to manipulate the items of a Navigation Menu. First you should check if plugin is active (just check for the existence of function ‘the_msls’) and if it is the primary menu in your theme (the name can vary). Then you can create the object and request the array of links (in my example just linked flags) to the translations. After that you can create the output, add it to $items and return it.
 
 Here comes a simplified version of the add-on MslsMenu:
 
