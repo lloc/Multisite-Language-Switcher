@@ -21,7 +21,7 @@
   },
   "scripts": {
     "test": "phpunit",
-    "coverage": "phpunit --coverage-html tests/coverage"
+    "coverage": "phpunit --coverage-html docs/.vuepress/public/coverage"
   },
   "authors": [
     {
