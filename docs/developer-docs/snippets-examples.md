@@ -26,7 +26,7 @@ Here comes a simplified version of the add-on MslsMenu:
 
     function my_custom_menu_item( $items, $args ) {
         if ( function_exists ( 'the_msls' ) && 'primary' == $args->theme_location ) {
-            $obj = new lloc\Msls\MslsOutput::init();
+            $obj = lloc\Msls\MslsOutput::init();
             $arr = $obj->get( 2 );
             if ( !empty( $arr ) ) {
                 $items .= '<li>' . implode( '</li><li>', $arr ) . '</li>';
