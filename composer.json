@@ -1,7 +1,7 @@
 {
   "name": "realloc/multisite-language-switcher",
   "description": "Multisite Language Switcher",
-  "version": "2.0.3",
+  "version": "v2.0.3",
   "require": {
     "php": ">=5.6",
     "composer/installers": "~1.0.6"
