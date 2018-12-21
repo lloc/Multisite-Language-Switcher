@@ -1,7 +1,14 @@
 {
   "scripts": {
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "uglify": "uglifyjs js/msls.js > js/msls.min.js",
+    "less": "lessc css/msls.less css/msls.css --clean-css=\"--s1 --advanced --compatibility=ie8\"",
+    "build": "npm run uglify && npm run less"
+  },
+  "devDependencies": {
+    "less": "^3.9.0",
+    "less-plugin-clean-css": "^1.5.1",
+    "uglify-js": "^3.4.9"
   }
 }
-

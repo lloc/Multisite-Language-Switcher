@@ -49,6 +49,10 @@ class MslsPlugin {
 			add_filter( 'the_content', [ $obj, 'content_filter' ] );
 			add_action( 'wp_head', [ $obj, 'print_alternate_links' ] );
 
+			if ( function_exists( 'register_block_type' ) )  {
+				add_action( 'init', [ $obj, 'block_init' ] );
+			}
+
 			add_filter( 'msls_get_output', [ $obj, 'get_output' ] );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
@@ -179,6 +183,34 @@ class MslsPlugin {
 	}
 
 	/**
+	 * Register block and shortcode.
+	 */
+	public function block_init() {
+		if ( ! $this->options->is_excluded() ) {
+			$handle   = 'msls-widget-block';
+			$callback = [ $this, 'block_render' ];
+
+			wp_register_script(
+				$handle,
+				plugins_url( 'js/msls-widget-block.js', MSLS_PLUGIN__FILE__ ),
+				[ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ]
+			);
+
+			register_block_type( 'lloc/msls-widget-block', [
+				'attributes'      => [ 'title' => [ 'type' => 'string' ] ],
+				'editor_script'   => $handle,
+				'render_callback' => $callback,
+			] );
+
+			add_shortcode( 'sc_msls_widget', $callback );
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Loads styles and some js if needed
 	 *
 	 * The methiod returns true if JS is loaded or false if not
@@ -199,7 +231,7 @@ class MslsPlugin {
 			wp_enqueue_script(
 				'msls-autocomplete',
 				plugins_url( "js/msls{$postfix}.js", MSLS_PLUGIN__FILE__ ),
-				array( 'jquery-ui-autocomplete' ),
+				[ 'jquery-ui-autocomplete' ],
 				MSLS_PLUGIN_VERSION
 			);
 
@@ -224,6 +256,19 @@ class MslsPlugin {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Render widget output
+	 *
+	 * @return string
+	 */
+	public function block_render() {
+		ob_start();
+		the_widget( MslsWidget::ID_BASE );
+		$output = ob_get_clean();
+
+		return $output;
 	}
 
 	/**
