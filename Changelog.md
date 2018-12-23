@@ -1,4 +1,9 @@
-## 2.0.3
+## 2.1.0
+
+### Features
+
+* **Gutenberg block** you'll find now also a new block in the widget-category
+* **New shortcode** there is a new shortcode [sc_msls_widget] available that renders the widget
 
 ### Bug Fixes
 * **Language lookup** `us` was saved but code looked up for `en_US` 

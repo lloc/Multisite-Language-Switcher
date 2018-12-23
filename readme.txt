@@ -6,7 +6,7 @@ Tags: multilingual, multisite, language, switcher, international, localization, 
 Requires at least: 3.6.1
 Tested up to: 5.0
 Requires PHP: 5.6
-Stable tag: 2.0.3
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,8 @@ Now you can:
 * connect your translated pages and posts in Posts -> Edit or Page -> Edit
 * connect your translated categories and tags in Posts -> Categories or Post -> Tags
 * connect your Custom Post Types and Custom Taxonomies across languages
-* use the widget, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
+* use the widget, the Gutenberg block, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
+* find also a shortcode for the widget [sc_msls_widget]
 * optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
 
 Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
