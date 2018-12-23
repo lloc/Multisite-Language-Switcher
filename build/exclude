@@ -10,7 +10,7 @@
 .gitignore
 composer.lock
 composer.phar
-package.json
+package-lock.json
 *.yml
 *.md
 *.xml

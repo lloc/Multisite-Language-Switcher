@@ -26,6 +26,7 @@ This is a shortcode that renders the widget output because there are themes that
 
 The last shortcode is also available as a block in the new Gutenberg editor. This is a first step because the UI is right now far from perfect.
 
+![Widgets admin](/block-editor.png)
 
 ## Using the API 
 
