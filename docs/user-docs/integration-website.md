@@ -10,13 +10,22 @@ The output depends on your settings in the plugin configuration and on the CSS o
 
 ![Widget output](/widget-output.png)
 
-## Using the shortcode
+## Using the shortcodes
 
-The **Multisite Language Switcher** comes with the shortcode:
+The **Multisite Language Switcher** comes with two shortcodes:
 
     [sc_msls]
 
 You can insert it into your posts or pages when you want to show a link to the alternative translation of the current content.
+
+    [sc_msls_widget]
+
+This is a shortcode that renders the widget output because there are themes that you widgets also in that way. 
+
+## Using the block
+
+The last shortcode is also available as a block in the new Gutenberg editor. This is a first step because the UI is right now far from perfect.
+
 
 ## Using the API 
 
