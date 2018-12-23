@@ -15,16 +15,22 @@ namespace lloc\Msls;
 class MslsMain {
 
 	/**
+	 * Instance of options
+	 *
 	 * @var MslsOptions
 	 */
 	protected $options;
 
 	/**
+	 * Collection of blog objects
+	 *
 	 * @var MslsBlogCollection
 	 */
 	protected $collection;
 
 	/**
+	 * Constructor
+	 *
 	 * @param MslsOptions $options
 	 * @param MslsBlogCollection $collection
 	 */
@@ -38,7 +44,7 @@ class MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @return MslsMain
+	 * @return static
 	 */
 	public static function init() {
 		$options    = MslsOptions::instance();
@@ -63,11 +69,13 @@ class MslsMain {
 
 	/**
 	 * Get the input array
+	 *
 	 * @param int $object_id
+	 *
 	 * @return array
 	 */
 	public function get_input_array( $object_id ) {
-		$arr = array();
+		$arr = [];
 
 		$current_blog = $this->collection->get_current_blog();
 		if ( ! is_null( $current_blog ) ) {
@@ -75,11 +83,14 @@ class MslsMain {
 		}
 
 		$input_post = filter_input_array( INPUT_POST );
-		if ( is_array( $input_post ) ) {
-			foreach ( $input_post as $key => $value ) {
-				if ( false !== strpos( $key, 'msls_input_' ) && ! empty( $value ) ) {
-					$arr[ substr( $key, 11 ) ] = (int) $value;
-				}
+		if ( ! is_array( $input_post ) ) {
+			return $arr;
+		}
+
+		foreach ( $input_post as $k => $v ) {
+			list ( $key, $value ) = $this->get_input_value( $k, $v );
+			if ( $value ) {
+				$arr[ $key ] = $value;
 			}
 		}
 
@@ -87,12 +98,29 @@ class MslsMain {
 	}
 
 	/**
+	 * Prepare input key/value-pair
+	 * @param $key
+	 * @param $value
+	 *
+	 * @return array
+	 */
+	protected function get_input_value( $key, $value ) {
+		if ( false === strpos( $key, 'msls_input_' ) || empty( $value ) ) {
+			return [ '', 0 ];
+		}
+
+		return [ substr( $key, 11 ), intval( $value ) ];
+	}
+
+	/**
 	 * Checks if the current input comes from the autosave-functionality
+	 *
 	 * @param int $post_id
+	 *
 	 * @return bool
 	 */
 	public function is_autosave( $post_id ) {
-		return( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id );
+		return ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id );
 	}
 
 	/**
@@ -100,7 +128,7 @@ class MslsMain {
 	 * @return boolean
 	 */
 	public function verify_nonce() {
-		return(
+		return (
 			filter_has_var( INPUT_POST, 'msls_noncename' ) &&
 			wp_verify_nonce( filter_input( INPUT_POST, 'msls_noncename' ), MSLS_PLUGIN_PATH )
 		);
@@ -108,7 +136,9 @@ class MslsMain {
 
 	/**
 	 * Delete
+	 *
 	 * @param int $object_id
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function delete( $object_id ) {
@@ -117,8 +147,10 @@ class MslsMain {
 
 	/**
 	 * Save
+	 *
 	 * @param int $object_id
 	 * @param string $class
+	 *
 	 * @codeCoverageIgnore
 	 */
 	protected function save( $object_id, $class ) {
@@ -126,15 +158,18 @@ class MslsMain {
 			/**
 			 * Calls completely customized save-routine
 			 * @since 0.9.9
+			 *
 			 * @param int $object_id
 			 * @param string Classname
 			 */
 			do_action( 'msls_main_save', $object_id, $class );
+
 			return;
 		}
 
 		if ( ! $this->collection->has_current_blog() ) {
 			$this->debugger( 'MslsBlogCollection::instance()->has_current_blog returns false.' );
+
 			return;
 		}
 
@@ -145,8 +180,7 @@ class MslsMain {
 
 		if ( 0 != $msla->get_val( $language ) ) {
 			$options->save( $msla->get_arr( $language ) );
-		}
-		else {
+		} else {
 			$options->delete();
 		}
 
@@ -159,8 +193,7 @@ class MslsMain {
 			if ( 0 != $larr_id ) {
 				$options = new $class( $larr_id );
 				$options->save( $msla->get_arr( $language ) );
-			}
-			elseif ( isset( $temp[ $language ] ) ) {
+			} elseif ( isset( $temp[ $language ] ) ) {
 				$options = new $class( $temp[ $language ] );
 				$options->delete();
 			}
