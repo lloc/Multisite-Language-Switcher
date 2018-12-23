@@ -264,8 +264,12 @@ class MslsPlugin {
 	 * @return string
 	 */
 	public function block_render() {
+		if ( ! $this->init_widget() ) {
+			return '';
+		}
+
 		ob_start();
-		the_widget( MslsWidget::ID_BASE );
+		the_widget( MslsWidget::class );
 		$output = ob_get_clean();
 
 		return $output;

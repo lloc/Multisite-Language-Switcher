@@ -6,6 +6,7 @@
 /tests/
 /release/
 /multisite-language-switcher/
+/node_modules/
 .gitignore
 composer.lock
 composer.phar

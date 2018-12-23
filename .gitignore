@@ -1,5 +1,6 @@
 composer.lock
 composer.phar
+package-lock.json
 vendor/
 .idea/
 tests/coverage
