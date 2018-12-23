@@ -88,6 +88,8 @@ class MslsOutput extends MslsMain {
 	}
 
 	/**
+	 * Get alternate links for the head section
+	 *
 	 * @return string
 	 */
     public function get_alternate_links() {

@@ -16,6 +16,8 @@ namespace lloc\Msls;
 class MslsPlugin {
 
 	/**
+	 * Injected MslsOptions object
+	 *
 	 * @var MslsOptions
 	 */
 	protected $options;

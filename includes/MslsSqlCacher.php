@@ -1,6 +1,7 @@
 <?php
 /**
  * MslsSqlCacher
+ *
  * @author Dennis Ploetner <re@lloc.de>
  * @since 1.0
  */
@@ -9,7 +10,9 @@ namespace lloc\Msls;
 
 /**
  * Wrapper to avoid direct SQL without caching
+ *
  * @example https://gist.githubusercontent.com/lloc/2c232cef3f910acf692f/raw/91e5fe9ada922a82a32b83eaabad1e2a2ee50338/MslsSqlCacher.php
+ *
  * @method mixed get_var( string $sql )
  * @method array get_results( string $sql )
  * @method string prepare( string $sql, mixed $a, $b = '', $c = '' )
@@ -45,6 +48,8 @@ class MslsSqlCacher {
 	protected $params;
 
 	/**
+	 * Constructor
+	 *
 	 * @param \WPDB $db
 	 * @param $caller
 	 */
