@@ -22,6 +22,8 @@ The Multisite Language Switcher enables you to manage translations of posts, pag
 
 The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition I would like to thank [Jürgen Mayer](
 http://kreativewerk.com/) for creating the plugin's banner.
+
+Please, don't forget to [rate this plugin](https://wordpress.org/support/plugin/multisite-language-switcher/reviews/)! :-)
  
 == Installation ==
 
@@ -49,7 +51,7 @@ You might read first [WordPress in your language](http://codex.wordpress.org/Wor
 
 = But I'd like the interface to stay in English. =
 
-You can choose the language of every website and the dashboard in the settings page of the plugin.
+You can choose the language of the dashboard in the settings of your user profile.
 
 = Do I really need a multisite? =
 
@@ -75,9 +77,11 @@ You could try the plugin [Network Shared Media](http://wordpress.org/plugins/net
 
 = Is there a function I can call to get the language of the page the user is currently viewing? =
 
-Yes, you can get the language like that
+Yes, you should use the WordPress API function `get_locale()` but you could also use code like that
 
-`$blog     = MslsBlogCollection::instance()->get_current_blog();
+`use lloc\Msls\MslsBlogCollection;
+
+$blog     = MslsBlogCollection::instance()->get_current_blog();
 $language = $blog->get_language();`
 
 = How can I move from WPML to MSLS? =

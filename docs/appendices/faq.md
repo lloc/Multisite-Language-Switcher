@@ -6,7 +6,7 @@ You might read first [WordPress in your language](http://codex.wordpress.org/Wor
 
 ## But I'd like the interface to stay in English. ##
 
-You can choose the language of every website and the dashboard in the settings page of the plugin.
+You can choose the language of the dashboard in the settings of your user profile.
 
 ## Do I really need a multisite? ##
 
@@ -28,8 +28,10 @@ You could try the plugin [Network Shared Media](http://wordpress.org/plugins/net
 
 ## Is there a function I can call to get the language of the page the user is currently viewing? ##
 
-Yes, you can get the language like that
+Yes, you should use the WordPress API function **get_locale()** but you could also use code like that
 
+    use lloc\Msls\MslsBlogCollection;
+    
 	$blog     = MslsBlogCollection::instance()->get_current_blog();
 	$language = $blog->get_language();
 
