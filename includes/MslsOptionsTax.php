@@ -36,13 +36,11 @@ class MslsOptionsTax extends MslsOptions {
 	 */
 	public static function create( $id = 0 ) {
 		if ( is_admin() || ! empty( $id ) ) {
-			$obj = MslsContentTypes::create();
-
 			$id  = (int) $id;
-			$req = $obj->acl_request();
+			$req = MslsContentTypes::create()->acl_request();
 		} else {
 			$id  = get_queried_object_id();
-			$req = is_category() ? 'category' : is_tag() ? 'post_tag' : '';
+			$req = is_category( $id ) ? 'category' : is_tag( $id ) ? 'post_tag' : '';
 		}
 
 		switch ( $req ) {
@@ -60,6 +58,7 @@ class MslsOptionsTax extends MslsOptions {
 			add_filter( 'check_url', [ $options, 'check_base' ], 9, 2 );
 		} else {
 			global $wp_rewrite;
+
 			$options->with_front = ! empty( $wp_rewrite->extra_permastructs[ $options->get_tax_query() ]['with_front'] );
 		}
 
