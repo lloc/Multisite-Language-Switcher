@@ -72,9 +72,11 @@ class MslsOptionsTax extends MslsOptions {
 	public function get_tax_query() {
 		global $wp_query;
 
-		return isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ?
-			$wp_query->tax_query->queries[0]['taxonomy'] :
-			'';
+		if ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
+			return $wp_query->tax_query->queries[0]['taxonomy'];
+		}
+
+		return parent::get_tax_query();
 	}
 
 	/**

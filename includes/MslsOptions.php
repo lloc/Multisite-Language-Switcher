@@ -243,6 +243,14 @@ class MslsOptions extends MslsGetSet {
 	}
 
 	/**
+	 * Get the queried taxonomy
+	 * @return string
+	 */
+	public function get_tax_query() {
+		return '';
+	}
+
+	/**
 	 * Get current link
 	 * @return string
 	 */
