@@ -1,3 +1,10 @@
+## 2.1.1
+
+### Bug Fixes
+* **Taxonomies**
+    - ternary stacking problem
+    - get_tax_query() method moved - closes [issue 98](https://github.com/lloc/Multisite-Language-Switcher/issues/98)
+    
 ## 2.1.0
 
 ### Features
