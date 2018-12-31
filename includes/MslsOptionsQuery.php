@@ -58,6 +58,7 @@ class MslsOptionsQuery extends MslsOptions {
 				get_query_var( 'post_type' )
 			);
 		}
+
 		return null;
 	}
 

@@ -35,12 +35,15 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return MslsOptionsTax
 	 */
 	public static function create( $id = 0 ) {
-		if ( is_admin() || ! empty( $id ) ) {
-			$id  = (int) $id;
+		$id  = ! empty( $id ) ? (int) $id : get_queried_object_id();
+		$req = '';
+
+		if ( is_admin() ) {
 			$req = MslsContentTypes::create()->acl_request();
-		} else {
-			$id  = get_queried_object_id();
-			$req = is_category( $id ) ? 'category' : is_tag( $id ) ? 'post_tag' : '';
+		} elseif ( is_category() ) {
+			$req = 'category';
+		} elseif ( is_tag( $id ) ) {
+			$req = 'post_tag';
 		}
 
 		switch ( $req ) {

@@ -23,7 +23,7 @@ class MslsContentTypes extends MslsRegistryInstance {
 	 * Types
 	 * @var array
 	 */
-	protected $types = array();
+	protected $types = [];
 
 	/**
 	 * Factory method
@@ -62,6 +62,7 @@ class MslsContentTypes extends MslsRegistryInstance {
 	 *
 	 * Returns name of the content type if the user has access or an empty
 	 * string if the user can not access
+	 *
 	 * @return string
 	 */
 	public function acl_request() {
@@ -81,11 +82,7 @@ class MslsContentTypes extends MslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_request() {
-		return(
-			in_array( $this->request, $this->types ) ?
-			$this->request :
-			''
-		);
+		return in_array( $this->request, $this->types ) ? $this->request : '';
 	}
 
 }
