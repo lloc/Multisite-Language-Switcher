@@ -1,16 +1,17 @@
 ## 2.1.1
 
 ### Bug Fixes
-* **Taxonomies**
-    - ternary stacking problem
-    - get_tax_query() method moved - closes [issue 98](https://github.com/lloc/Multisite-Language-Switcher/issues/98)
-    
+
+* **Taxonomies** ternary stacking problem solved
+
 ## 2.1.0
 
 ### Features
 
 * **Gutenberg block** you'll find now also a new block in the widget-category
 * **New shortcode** there is a new shortcode [sc_msls_widget] available that renders the widget
+
+## 2.0.3
 
 ### Bug Fixes
 * **Language lookup** `us` was saved but code looked up for `en_US` 
