@@ -69,9 +69,9 @@ class MslsAdminIcon {
 	 * @return MslsAdminIcon
 	 */
 	public static function create() {
-		$obj  = MslsContentTypes::create();
-		$type = $obj->get_request();
+		$obj = MslsContentTypes::create();
 
+		$type = $obj->get_request();
 		if ( $obj->is_taxonomy() ) {
 			return new MslsAdminIconTaxonomy( $type );
 		}
@@ -91,13 +91,12 @@ class MslsAdminIcon {
 	/**
 	 * Set the path by type
 	 *
-	 * @uses add_query_arg()
-	 *
 	 * @return MslsAdminIcon
 	 */
 	public function set_path() {
 		if ( 'post' != $this->type ) {
-			$this->path = add_query_arg( [ 'post_type' => $this->type ], $this->path );
+			$query_vars = [ 'post_type' => $this->type ];
+			$this->path = add_query_arg( $query_vars, $this->path );
 		}
 
 		return $this;
@@ -131,7 +130,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Set href
-	 * @uses get_edit_post_link()
 	 *
 	 * @param int $id
 	 *
@@ -162,34 +160,27 @@ class MslsAdminIcon {
 
 	/**
 	 * Get link as html-tag
+	 *
 	 * @return string
 	 */
 	public function get_a() {
 		if ( ! empty( $this->href ) ) {
-			$href  = $this->href;
-			$title = sprintf(
-				__( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
-				$this->language
-			);
+			$href = $this->href;
+			$str  = __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' );
 		}
 		else {
-			$href  = $this->get_edit_new();
-			$title = sprintf(
-				__( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
-				$this->language
-			);
+			$href = $this->get_edit_new();
+			$str  = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
 		}
-		return sprintf(
-			'<a title="%s" href="%s">%s</a>&nbsp;',
-			$title,
-			$href,
-			$this->get_img()
-		);
+
+		$title = sprintf( $str, $this->language );
+
+		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_img() );
 	}
 
 	/**
 	 * Creates new admin link
-	 * @uses get_admin_url()
+	 *
 	 * @todo check if we need this method separately
 	 * @return string
 	 */
