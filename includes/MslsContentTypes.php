@@ -74,7 +74,7 @@ class MslsContentTypes extends MslsRegistryInstance {
 	 * @return array
 	 */
 	public function get() {
-		return (array) $this->types;
+		return (array) apply_filters('msls_supported_post_types', $this->types);
 	}
 
 	/**
@@ -82,7 +82,8 @@ class MslsContentTypes extends MslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_request() {
-		return in_array( $this->request, $this->types ) ? $this->request : '';
+		return in_array( $this->request, apply_filters('msls_supported_post_types', $this->types) ) 
+			? $this->request : '';
 	}
 
 }
