@@ -1,3 +1,10 @@
+## 2.2.0
+
+### Features
+
+* **Flags** There was a general improvement how MSLS gets the icons
+* **New filter**: 'msls_supported_post_types' is now available if you need MSLS for non-public post types
+
 ## 2.1.1
 
 ### Bug Fixes

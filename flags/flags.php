@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * File is auto-generated
+ * 
+* 114 translations-teams for WordPress found
+ */
 return $flags = [
     'af' => 'za.png',
     'ar' => 'arableague.png',
@@ -114,3 +120,19 @@ return $flags = [
     'zh_CN' => 'cn.png',
     'zh_HK' => 'hk.png',
 ];
+
+/**
+ * 164 unused icons in flags/
+ * 
+ * ad.png, ae.png, ag.png, ai.png, an.png, ao.png, as.png, at.png, aw.png, ax.png, bb.png, bf.png, bh.png, bi.png, bj.png
+ * bm.png, bn.png, bo.png, bs.png, bv.png, bw.png, bz.png, cc.png, cd.png, cf.png, cg.png, ci.png, ck.png, cm.png, cs.png
+ * cu.png, cv.png, cx.png, cy.png, dj.png, dm.png, do.png, ec.png, eg.png, eh.png, england.png, er.png, et.png, fam.png, fj.png
+ * fk.png, fm.png, fo.png, ga.png, gd.png, gf.png, gh.png, gi.png, gl.png, gm.png, gn.png, gp.png, gq.png, gs.png, gu.png
+ * gw.png, gy.png, hm.png, hn.png, ht.png, ie.png, io.png, jm.png, jo.png, ke.png, kg.png, ki.png, km.png, kn.png, kp.png
+ * kw.png, ky.png, lb.png, lc.png, li.png, lr.png, ls.png, lu.png, ly.png, mc.png, md.png, me.png, mg.png, mh.png, ml.png
+ * mo.png, mp.png, mq.png, mr.png, ms.png, mt.png, mu.png, mv.png, mw.png, mz.png, na.png, nc.png, ne.png, nf.png, ng.png
+ * ni.png, nr.png, nu.png, om.png, pa.png, pg.png, pm.png, pn.png, pr.png, ps.png, pw.png, py.png, qa.png, re.png, rw.png
+ * sa.png, sb.png, sc.png, sd.png, sg.png, sh.png, sj.png, sl.png, sm.png, sn.png, so.png, sr.png, st.png, sv.png, sy.png
+ * sz.png, tc.png, td.png, tf.png, tg.png, tj.png, tk.png, tl.png, tm.png, tn.png, to.png, tt.png, tv.png, tz.png, ug.png
+ * um.png, us.png, uy.png, va.png, vc.png, vg.png, vi.png, vu.png, wf.png, ws.png, ye.png, yt.png, zm.png, zw.png
+ */

@@ -29,7 +29,7 @@
  */
 $content = file_get_contents( 'build/translations.json' );
 $json    = json_decode( $content );
-$glob    = glob( '*.png' );
+$glob    = glob( 'flags/*.png' );
 $exceptions = [
 	'el'  => 'gr.png',
 	'et'  => 'ee.png',
@@ -81,7 +81,15 @@ $exceptions = [
 ];
 
 $icons = $not_found = [];
+
+echo '<?php', PHP_EOL, PHP_EOL;
+
 if ( isset( $json->translations ) ) {
+	$count = count( $json->translations );
+
+	echo '/**', PHP_EOL, ' * File is auto-generated', PHP_EOL, ' * ', PHP_EOL;
+	echo "* {$count} translations-teams for WordPress found", PHP_EOL, ' */', PHP_EOL;
+
 	foreach ( $json->translations as $item ) {
 		if ( isset( $exceptions[ $item->language ] ) ) {
 			$icons[ $item->language ] = $exceptions[ $item->language ];
@@ -93,10 +101,31 @@ if ( isset( $json->translations ) ) {
 	}
 }
 
-echo '<?php', PHP_EOL, 'return $flags = [', PHP_EOL;
+
+echo 'return $flags = [', PHP_EOL;
 
 foreach ( array_filter ( $icons ) as $key => $value ) {
+	$needle = "flags/{$value}";
+	$index  = array_search( $needle, $glob );
+	if ( $index !== false ) {
+		unset( $glob[ $index ] );
+	}
 	echo sprintf("    '%s' => '%s',", $key, $value ), PHP_EOL;
 }
 
-echo '];', PHP_EOL;
+echo '];', PHP_EOL, PHP_EOL;
+
+$count = count( $glob );
+if ( $count > 0 ) {
+	echo '/**', PHP_EOL, " * {$count} unused icons in flags/", PHP_EOL, ' * ', PHP_EOL;
+
+	array_walk( $glob, function( &$item ) {
+		$item = substr( $item, 6 );
+	} );
+
+	foreach ( array_chunk( $glob, 15 ) as $flags ) {
+		echo ' * ', implode( ', ', $flags ), PHP_EOL;
+	}
+
+	echo ' */', PHP_EOL;
+}
