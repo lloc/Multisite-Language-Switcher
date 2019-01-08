@@ -6,7 +6,11 @@ In order to choose the blog language, go to the administration menu, to *Setting
 
 ![Choose the blog language](/choose-language.png)
 
-> The default downloaded version of WordPress includes only one language. Make sure that you already have the WordPress files related to the languages that you want to use on the other blogs! For this to work, you have to install less .mo files concerning the languages that you want: See the following articles.
+::: warning Make sure
+The default downloaded version of WordPress includes only one language. Make sure that you already have the WordPress files related to the languages that you want to use on the other blogs! For this to work, you have to install less .mo files concerning the languages that you want.
+:::
+
+See the following articles:
 
 -  [​Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language)​
 -  and [WordPress in your language](http://codex.wordpress.org/WordPress_in_Your_Language)​

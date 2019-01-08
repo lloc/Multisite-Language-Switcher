@@ -311,6 +311,24 @@ class MslsOptions extends MslsGetSet {
 		return isset( $this->$key ) ? $this->$key : '';
 	}
 
+	public function get_icon( $language ) {
+		static $arr = null;
+
+		if ( is_null( $arr ) ) {
+			$arr  = include plugin_dir_path( MSLS_PLUGIN__FILE__ ) . 'flags/flags.php';
+		}
+
+		if ( isset( $arr[ $language ] ) ) {
+			return $arr[ $language ];
+		}
+
+		if ( 5 == strlen( $language ) ) {
+			$language = strtolower( substr( $language, - 2 ) );
+		}
+
+		return $language . '.png';
+	}
+
 	/**
 	 * Get flag url
 	 *
@@ -333,12 +351,7 @@ class MslsOptions extends MslsGetSet {
 		 */
 		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
 
-		if ( 5 == strlen( $language ) ) {
-			$icon = strtolower( substr( $language, - 2 ) );
-		} else {
-			$icon = $language;
-		}
-		$icon .= '.png';
+		$icon = $this->get_icon( $language );
 
 		/**
 		 * Use your own filename for the flag-icon

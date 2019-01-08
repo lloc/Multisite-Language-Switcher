@@ -20,7 +20,9 @@
   },
   "scripts": {
     "test": "phpunit",
-    "coverage": "phpunit --coverage-html docs/.vuepress/public/coverage"
+    "coverage": "phpunit --coverage-html docs/.vuepress/public/coverage",
+    "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
+    "flags": "php bin/flags.php > flags/flags.php"
   },
   "authors": [
     {
