@@ -4,7 +4,7 @@
 Plugin Name: Multisite Language Switcher
 Plugin URI: http://msls.co/
 Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
-Version: 2.2.0
+Version: 2.3.0
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 Text Domain: multisite-language-switcher
@@ -37,7 +37,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
  * @author Dennis Ploetner <re@lloc.de>
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '2.2.0' );
+	define( 'MSLS_PLUGIN_VERSION', '2.3.0' );
 
 	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
 		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
@@ -83,6 +83,50 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 */
 	function the_msls( array $arr = [] ) {
 		echo get_the_msls( $arr );
+	}
+
+	/**
+	 * Gets the URL of the country flag-icon for a specific locale
+	 *
+	 * @param string $locale
+	 *
+	 * @return string
+	 */
+	function get_msls_flag_url( $locale ) {
+		return ( new \lloc\Msls\MslsOptions )->get_flag_url( $locale );
+	}
+
+	/**
+	 * Gets the description for a blog fro a specific locale
+	 *
+	 * @param string $locale
+	 *
+	 * @return bool|string
+	 */
+	function get_msls_blog_description( $locale ) {
+		$collection   = \lloc\Msls\MslsBlogCollection::instance();
+		$blog_objects = $collection->get_objects();
+
+		if ( $blog_objects ) {
+			foreach ( $blog_objects as $blog ) {
+				if ( $locale === $blog->get_language() ) {
+					return $blog->get_description();
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Gets the permalink for a translation of the current post in a given language
+	 *
+	 * @param string $locale
+	 *
+	 * @return string
+	 */
+	function get_msls_permalink( $locale ) {
+		return \lloc\Msls\MslsOptions::create()->get_permalink( $locale );
 	}
 
 }

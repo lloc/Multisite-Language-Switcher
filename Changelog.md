@@ -1,3 +1,12 @@
+## 2.3.0
+
+### Feature
+
+* **New API functions**
+    - `get_msls_flag_url( string $language ): string;`
+    - `get_msls_blog_description( string $language ): bool|string;`
+    - `get_msls_permalink( string $locale ): string;`
+
 ## 2.2.0
 
 ### Features

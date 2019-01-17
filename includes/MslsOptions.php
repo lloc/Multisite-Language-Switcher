@@ -311,6 +311,11 @@ class MslsOptions extends MslsGetSet {
 		return isset( $this->$key ) ? $this->$key : '';
 	}
 
+	/**
+	 * @param string $language
+	 *
+	 * @return string
+	 */
 	public function get_icon( $language ) {
 		static $arr = null;
 

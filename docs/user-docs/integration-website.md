@@ -33,3 +33,10 @@ The last shortcode is also available as a block in the new Gutenberg editor. Thi
 It is also possible to directly use the plugin features in your theme, you can use for example the following code in the *header.php* file of your WordPress theme.
 
     <?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>
+    
+MSLS comes with some additional API functions if you need the URL of a flag by URL for example. There is also the possibility to get the description of the blog and the permalink of the current content by language (locale):
+
+    $language    = get_locale();
+    $flag_url    = get_msls_flag_url( $language );
+    $description = get_msls_blog_description( $language );
+    $locale_href = get_msls_permalink( $locale );
