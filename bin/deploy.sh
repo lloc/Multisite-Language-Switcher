@@ -3,7 +3,7 @@
 set -e
 
 npm run docs:build
-phpdoc
+./vendor/bin/phpdoc
 
 cd docs/.vuepress/dist
 echo 'msls.co' > CNAME
