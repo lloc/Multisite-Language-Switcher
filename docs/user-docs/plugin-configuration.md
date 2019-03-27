@@ -107,4 +107,4 @@ Activate this new functionality if you need to copy the original content with me
 
 ## Rewrite settings
 
-This part is mostly readonly and shows if there are any slugs translated. The pluin can save the translated slug and use it to create the correct connection.  
+This part is mostly readonly and shows if there are any slugs translated. The plugin can save the translated slug and use it to create the correct connection.  
