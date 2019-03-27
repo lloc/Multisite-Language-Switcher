@@ -93,7 +93,7 @@ There are flag-images included but you can set also a **custom directory** if yo
 
 **This is an important but somewhat overseen field.**
 
-The easist (but not the only one) way to connect websites is the user. There is no problem if you have just one user that accesses all the websites. But this option is useful if you want to connect a subset or if you have more than 1 admin.
+The easiest (but not the only one) way to connect websites is the user. There is no problem if you have just one user that accesses all the websites. But this option is useful if you want to connect a subset or if you have more than 1 admin.
 
 Just set who is the reference for the connections and you are done.
 
