@@ -229,15 +229,15 @@ class MslsAdmin extends MslsMain {
 			$this,
 			'display'
 		), __CLASS__, 'main_section', array( 'label_for' => 'display' ) );
-		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'multisite-language-switcher' ), array(
+		add_settings_field( 'sort_by_description', __( 'Sort languages', 'multisite-language-switcher' ), array(
 			$this,
 			'sort_by_description'
 		), __CLASS__, 'main_section' );
-		add_settings_field( 'output_current_blog', __( 'Display link to the current language', 'multisite-language-switcher' ), array(
+		add_settings_field( 'output_current_blog', __( 'Current language link', 'multisite-language-switcher' ), array(
 			$this,
 			'output_current_blog'
 		), __CLASS__, 'main_section' );
-		add_settings_field( 'only_with_translation', __( 'Show only links with a translation', 'multisite-language-switcher' ), array(
+		add_settings_field( 'only_with_translation', __( 'Translation links', 'multisite-language-switcher' ), array(
 			$this,
 			'only_with_translation'
 		), __CLASS__, 'main_section' );
@@ -261,7 +261,7 @@ class MslsAdmin extends MslsMain {
 			$this,
 			'text_after_item'
 		), __CLASS__, 'main_section', array( 'label_for' => 'after_item' ) );
-		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'multisite-language-switcher' ), array(
+		add_settings_field( 'content_filter', __( 'Available translations hint', 'multisite-language-switcher' ), array(
 			$this,
 			'content_filter'
 		), __CLASS__, 'main_section' );
@@ -285,7 +285,7 @@ class MslsAdmin extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function advanced_section() {
-		add_settings_field( 'activate_autocomplete', __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' ), array(
+		add_settings_field( 'activate_autocomplete', __( 'Autocomplete', 'multisite-language-switcher' ), array(
 			$this,
 			'activate_autocomplete'
 		), __CLASS__, 'advanced_section' );
@@ -297,11 +297,11 @@ class MslsAdmin extends MslsMain {
 			$this,
 			'reference_user'
 		), __CLASS__, 'advanced_section', array( 'label_for' => 'reference_user' ) );
-		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'multisite-language-switcher' ), array(
+		add_settings_field( 'exclude_current_blog', __( 'Exclude blog', 'multisite-language-switcher' ), array(
 			$this,
 			'exclude_current_blog'
 		), __CLASS__, 'advanced_section' );
-		add_settings_field( 'activate_content_import', __( 'Activate the content import functionality', 'multisite-language-switcher' ), array(
+		add_settings_field( 'activate_content_import', __( 'Content import', 'multisite-language-switcher' ), array(
 			$this,
 			'activate_content_import'
 		), __CLASS__, 'advanced_section' );
@@ -385,7 +385,14 @@ class MslsAdmin extends MslsMain {
 	 * input fields in the backend instead of the traditional select-menus.
 	 */
 	public function activate_autocomplete() {
-		echo $this->render_checkbox( 'activate_autocomplete' );
+		printf(
+			'%s %s',
+			$this->render_checkbox( 'activate_autocomplete' ),
+			$this->render_checkbox_label(
+				'activate_autocomplete',
+				__( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' )
+			)
+		);
 	}
 
 	/**
@@ -395,17 +402,31 @@ class MslsAdmin extends MslsMain {
 	 * in the backend instead of the traditional select-menus.
 	 */
 	public function activate_content_import() {
-		echo $this->render_checkbox( 'activate_content_import' );
+		printf(
+			'%s %s',
+			$this->render_checkbox( 'activate_content_import' ),
+			$this->render_checkbox_label(
+				'activate_content_import',
+				__( 'Activate the content import functionality', 'multisite-language-switcher' )
+			)
+		);
 	}
 
 	/**
 	 * Show sort_by_description-field
 	 *
-	 * You can decide that the ouput will be sorted by the description. If not
+	 * You can decide that the output will be sorted by the description. If not
 	 * the output will be sorted by the language-code.
 	 */
 	public function sort_by_description() {
-		echo $this->render_checkbox( 'sort_by_description' );
+		printf(
+			'%s %s',
+			$this->render_checkbox( 'sort_by_description' ),
+			$this->render_checkbox_label(
+				'sort_by_description',
+				__( 'Sort languages by description', 'multisite-language-switcher' )
+			)
+		);
 	}
 
 	/**
@@ -415,7 +436,14 @@ class MslsAdmin extends MslsMain {
 	 * plugin will ignore this blog while this option is active.
 	 */
 	public function exclude_current_blog() {
-		echo $this->render_checkbox( 'exclude_current_blog' );
+		printf(
+			'%s %s',
+			$this->render_checkbox( 'exclude_current_blog' ),
+			$this->render_checkbox_label(
+				'exclude_current_blog',
+				__( 'Exclude this blog from output', 'multisite-language-switcher' )
+			)
+		);
 	}
 
 	/**
@@ -425,7 +453,14 @@ class MslsAdmin extends MslsMain {
 	 * translations.
 	 */
 	public function only_with_translation() {
-		echo $this->render_checkbox( 'only_with_translation' );
+		printf(
+			'%s %s',
+			$this->render_checkbox( 'only_with_translation' ),
+			$this->render_checkbox_label(
+				'only_with_translation',
+				__( 'Show only links with a translation', 'multisite-language-switcher' )
+			)
+		);
 	}
 
 	/**
@@ -435,7 +470,14 @@ class MslsAdmin extends MslsMain {
 	 * link to the current blog.
 	 */
 	public function output_current_blog() {
-		echo $this->render_checkbox( 'output_current_blog' );
+		printf(
+			'%s %s',
+			$this->render_checkbox( 'output_current_blog' ),
+			$this->render_checkbox_label(
+				'output_current_blog',
+				__( 'Display link to the current language', 'multisite-language-switcher' )
+			)
+		);
 	}
 
 	/**
@@ -451,7 +493,14 @@ class MslsAdmin extends MslsMain {
 	 * The output can be placed after the_content
 	 */
 	public function content_filter() {
-		echo $this->render_checkbox( 'content_filter' );
+		printf(
+			'%s %s',
+			$this->render_checkbox( 'content_filter' ),
+			$this->render_checkbox_label(
+				'content_filter',
+				__( 'Add hint for available translations', 'multisite-language-switcher' )
+			)
+		);
 	}
 
 	/**
@@ -494,7 +543,7 @@ class MslsAdmin extends MslsMain {
 	/**
 	 * Render form-element (checkbox)
 	 *
-	 * @param string $key Name and ID of the form-element
+	 * @param string $key   Name and ID of the form-element
 	 *
 	 * @return string
 	 */
@@ -503,6 +552,22 @@ class MslsAdmin extends MslsMain {
 			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
 			$key,
 			checked( 1, $this->options->$key, false )
+		);
+	}
+
+	/**
+	 * Renders a form checkbox label.
+	 *
+	 * @param string $key   Name and ID of the checkbox.
+	 * @param string $label Label text for the checkbox.
+	 *
+	 * @return string
+	 */
+	public function render_checkbox_label( $key, $label ) {
+		return sprintf(
+			'<label for="%1$s">%2$s</label>',
+			$key,
+			esc_html( $label )
 		);
 	}
 

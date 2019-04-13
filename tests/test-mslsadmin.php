@@ -97,7 +97,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$this->expectOutputRegex( '/^<select id="blog_language" name="msls\[blog_language\]">.*$/' );
 		$obj->blog_language();
 	}
-	
+
 	/**
 	 * Verify the display-method
 	 */
@@ -124,7 +124,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_activate_autocomplete() {
 		$obj = $this->get_test();
 
-		$this->expectOutputString( '<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" />' );
+		$this->expectOutputString( '<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" /> <label for="activate_autocomplete">Activate experimental autocomplete inputs</label>' );
 		$obj->activate_autocomplete();
 	}
 
@@ -134,7 +134,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_sort_by_description() {
 		$obj = $this->get_test();
 
-		$this->expectOutputString( '<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" />' );
+		$this->expectOutputString( '<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" /> <label for="sort_by_description">Sort languages by description</label>' );
 		$obj->sort_by_description();
 	}
 
@@ -144,7 +144,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_exclude_current_blog() {
 		$obj = $this->get_test();
 
-		$this->expectOutputString( '<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" />' );
+		$this->expectOutputString( '<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" /> <label for="exclude_current_blog">Exclude this blog from output</label>' );
 		$obj->exclude_current_blog();
 	}
 
@@ -154,7 +154,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_only_with_translation() {
 		$obj = $this->get_test();
 
-		$this->expectOutputString( '<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" />' );
+		$this->expectOutputString( '<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" /> <label for="only_with_translation">Show only links with a translation</label>' );
 		$obj->only_with_translation();
 	}
 
@@ -164,7 +164,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_output_current_blog() {
 		$obj = $this->get_test();
 
-		$this->expectOutputString( '<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" />' );
+		$this->expectOutputString( '<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" /> <label for="output_current_blog">Display link to the current language</label>' );
 		$obj->output_current_blog();
 	}
 
@@ -184,7 +184,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_content_filter() {
 		$obj = $this->get_test();
 
-		$this->expectOutputString( '<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" />' );
+		$this->expectOutputString( '<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" /> <label for="content_filter">Add hint for available translations</label>' );
 		$obj->content_filter();
 	}
 
