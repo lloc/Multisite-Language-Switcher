@@ -583,7 +583,7 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function render_input( $key, $size = '30', $default = '', $readonly = false ) {
 		return sprintf(
-			'<input id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"%4$s/>',
+			'<input type="text" class="regular-text" id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"%4$s/>',
 			$key,
 			esc_attr( ! empty( $this->options->$key ) ? $this->options->$key : $default ),
 			$size,

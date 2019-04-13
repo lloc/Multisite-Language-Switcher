@@ -174,7 +174,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_description() {
 		$obj = $this->get_test();
 
-		$this->expectOutputString( '<input id="description" name="msls[description]" value="" size="40"/>' );
+		$this->expectOutputString( '<input type="text" class="regular-text" id="description" name="msls[description]" value="" size="40"/>' );
 		$obj->description();
 	}
 
