@@ -208,7 +208,7 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'blog_language', __( 'Blog Language', 'multisite-language-switcher' ), array(
 			$this,
 			'blog_language'
-		), __CLASS__, 'language_section' );
+		), __CLASS__, 'language_section', array( 'label_for' => 'blog_language' ) );
 
 		/**
 		 * Lets you add your own field to the language section
@@ -228,7 +228,7 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'display', __( 'Display', 'multisite-language-switcher' ), array(
 			$this,
 			'display'
-		), __CLASS__, 'main_section' );
+		), __CLASS__, 'main_section', array( 'label_for' => 'display' ) );
 		add_settings_field( 'sort_by_description', __( 'Sort output by description', 'multisite-language-switcher' ), array(
 			$this,
 			'sort_by_description'
@@ -244,23 +244,23 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'description', __( 'Description', 'multisite-language-switcher' ), array(
 			$this,
 			'description'
-		), __CLASS__, 'main_section' );
+		), __CLASS__, 'main_section', array( 'label_for' => 'description' ) );
 		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'multisite-language-switcher' ), array(
 			$this,
 			'text_before_output'
-		), __CLASS__, 'main_section' );
+		), __CLASS__, 'main_section', array( 'label_for' => 'before_output' ) );
 		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'multisite-language-switcher' ), array(
 			$this,
 			'text_after_output'
-		), __CLASS__, 'main_section' );
+		), __CLASS__, 'main_section', array( 'label_for' => 'after_output' ) );
 		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'multisite-language-switcher' ), array(
 			$this,
 			'text_before_item'
-		), __CLASS__, 'main_section' );
+		), __CLASS__, 'main_section', array( 'label_for' => 'before_item' ) );
 		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'multisite-language-switcher' ), array(
 			$this,
 			'text_after_item'
-		), __CLASS__, 'main_section' );
+		), __CLASS__, 'main_section', array( 'label_for' => 'after_item' ) );
 		add_settings_field( 'content_filter', __( 'Add hint for available translations', 'multisite-language-switcher' ), array(
 			$this,
 			'content_filter'
@@ -268,7 +268,7 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'content_priority', __( 'Hint priority', 'multisite-language-switcher' ), array(
 			$this,
 			'content_priority'
-		), __CLASS__, 'main_section' );
+		), __CLASS__, 'main_section', array( 'label_for' => 'content_priority' ) );
 
 		/**
 		 * Lets you add your own field to the main section
@@ -292,11 +292,11 @@ class MslsAdmin extends MslsMain {
 		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'multisite-language-switcher' ), array(
 			$this,
 			'text_image_url'
-		), __CLASS__, 'advanced_section' );
+		), __CLASS__, 'advanced_section', array( 'label_for' => 'image_url' ) );
 		add_settings_field( 'reference_user', __( 'Reference user', 'multisite-language-switcher' ), array(
 			$this,
 			'reference_user'
-		), __CLASS__, 'advanced_section' );
+		), __CLASS__, 'advanced_section', array( 'label_for' => 'reference_user' ) );
 		add_settings_field( 'exclude_current_blog', __( 'Exclude this blog from output', 'multisite-language-switcher' ), array(
 			$this,
 			'exclude_current_blog'
@@ -324,7 +324,14 @@ class MslsAdmin extends MslsMain {
 	public function rewrites_section() {
 		foreach ( get_post_types( [ 'public' => true ], 'objects' ) as $key => $object ) {
 			$title = sprintf( __( '%s Slug', 'multisite-language-switcher' ), $object->label );
-			add_settings_field( "rewrite_{$key}", $title, [ $this, "rewrite_{$key}" ], __CLASS__, 'rewrites_section' );
+			add_settings_field(
+				"rewrite_{$key}",
+				$title,
+				[ $this, "rewrite_{$key}" ],
+				__CLASS__,
+				'rewrites_section',
+				array( 'label_for' => "rewrite_{$key}" )
+			);
 		}
 
 		/**
