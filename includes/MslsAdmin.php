@@ -130,7 +130,7 @@ class MslsAdmin extends MslsMain {
 		do_settings_sections( __CLASS__ );
 
 		printf(
-			'<p class="submit"><input name="Submit" type="submit" class="button-primary" value="%s" /></p></form></div>',
+			'<p class="submit"><input name="Submit" type="submit" class="button button-primary" value="%s" /></p></form></div>',
 			( $this->options->is_empty() ? __( 'Configure', 'multisite-language-switcher' ) : __( 'Update', 'multisite-language-switcher' ) )
 		);
 	}
