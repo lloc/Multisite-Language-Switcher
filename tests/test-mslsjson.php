@@ -1,10 +1,6 @@
 <?php
-/**
- * Tests for MslsJson
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @package Msls
- */
+
+namespace lloc\MslsTests;
 
 use lloc\Msls\MslsJson;
 
