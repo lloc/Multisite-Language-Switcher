@@ -8,16 +8,10 @@
 >
     <testsuite name="Internal tests">
         <directory prefix="test-" suffix=".php">./tests/</directory>
-        <directory suffix="Test.php">./tests/</directory>
     </testsuite>
     <filter>
         <whitelist>
             <directory suffix=".php">./includes/</directory>
         </whitelist>
     </filter>
-    <groups>
-        <exclude>
-            <group>external-http</group>
-        </exclude>
-    </groups>
 </phpunit>
