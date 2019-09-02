@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>     &raquo; Compilation errors
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API - Multisite Language Switcher</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/lloc.html">\lloc</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">179</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">1</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+
+            <ul class="side-nav nav nav-list">
+                <li class="nav-header">Navigation</li>
+                                                                                                                                                                                                                                                                                                            <li><a href="#ContentImport/Importers/PostThumbnailImporters.php"><i class="icon-file"></i> ContentImport/Importers/PostThumbnailImporters.php</a></li>
+                                                                                                                                                            <li><a href="#ContentImport/Importers/AttachmentsImporters.php"><i class="icon-file"></i> ContentImport/Importers/AttachmentsImporters.php</a></li>
+                                                                                                                                                                                                                                                                                                                                    <li><a href="#ContentImport/Importers/Importer.php"><i class="icon-file"></i> ContentImport/Importers/Importer.php</a></li>
+                                                                                                                                                                                                                                                                                                                                    <li><a href="#ContentImport/Service.php"><i class="icon-file"></i> ContentImport/Service.php</a></li>
+                                                                                                    <li><a href="#ContentImport/MetaBox.php"><i class="icon-file"></i> ContentImport/MetaBox.php</a></li>
+                                                                                                                                                                                                                    <li><a href="#ContentImport/ImportLogger.php"><i class="icon-file"></i> ContentImport/ImportLogger.php</a></li>
+                                                                                                    <li><a href="#ContentImport/Importers/ImportersFactory.php"><i class="icon-file"></i> ContentImport/Importers/ImportersFactory.php</a></li>
+                                                                                                    <li><a href="#ContentImport/ImportCoordinates.php"><i class="icon-file"></i> ContentImport/ImportCoordinates.php</a></li>
+                                                                                                                                                            <li><a href="#ContentImport/Importers/PostMeta/Duplicating.php"><i class="icon-file"></i> ContentImport/Importers/PostMeta/Duplicating.php</a></li>
+                                                                                                    <li><a href="#ContentImport/Importers/Attachments/Linking.php"><i class="icon-file"></i> ContentImport/Importers/Attachments/Linking.php</a></li>
+                                                                                                    <li><a href="#ContentImport/Importers/BaseImporter.php"><i class="icon-file"></i> ContentImport/Importers/BaseImporter.php</a></li>
+                                                                                                    <li><a href="#ContentImport/Importers/Terms/ShallowDuplicating.php"><i class="icon-file"></i> ContentImport/Importers/Terms/ShallowDuplicating.php</a></li>
+                                                                                                                                                            <li><a href="#ContentImport/ContentImporter.php"><i class="icon-file"></i> ContentImport/ContentImporter.php</a></li>
+                                                                                                                                                            <li><a href="#MslsOptions.php"><i class="icon-file"></i> MslsOptions.php</a></li>
+                                                                                                    <li><a href="#ContentImport/Importers/PostMetaImporters.php"><i class="icon-file"></i> ContentImport/Importers/PostMetaImporters.php</a></li>
+                                                                                                    <li><a href="#ContentImport/Importers/PostFields/Duplicating.php"><i class="icon-file"></i> ContentImport/Importers/PostFields/Duplicating.php</a></li>
+                                                                                                    <li><a href="#ContentImport/Importers/PostThumbnail/Linking.php"><i class="icon-file"></i> ContentImport/Importers/PostThumbnail/Linking.php</a></li>
+                                                                                                                                                                                                                                                                            <li><a href="#ContentImport/Importers/PostFieldsImporters.php"><i class="icon-file"></i> ContentImport/Importers/PostFieldsImporters.php</a></li>
+                                                                                                                                                                                                                                                                                                                                    <li><a href="#ContentImport/AttachmentPathFinder.php"><i class="icon-file"></i> ContentImport/AttachmentPathFinder.php</a></li>
+                                                                                                                                                                                                                                                                            <li><a href="#ContentImport/Importers/Map.php"><i class="icon-file"></i> ContentImport/Importers/Map.php</a></li>
+                                                                                                                                                            <li><a href="#ContentImport/LogWriters/AdminNoticeLogger.php"><i class="icon-file"></i> ContentImport/LogWriters/AdminNoticeLogger.php</a></li>
+                                                                                                                                                                                                                    <li><a href="#index.php"><i class="icon-file"></i> index.php</a></li>
+                                                                                                                                                            <li><a href="#ContentImport/Importers/TermsImporters.php"><i class="icon-file"></i> ContentImport/Importers/TermsImporters.php</a></li>
+                                                                                                    <li><a href="#ContentImport/Relations.php"><i class="icon-file"></i> ContentImport/Relations.php</a></li>
+                                                                                                                                                            <li><a href="#ContentImport/Importers/ImportersBaseFactory.php"><i class="icon-file"></i> ContentImport/Importers/ImportersBaseFactory.php</a></li>
+                                                                                                    <li><a href="#ContentImport/LogWriters/LogWriter.php"><i class="icon-file"></i> ContentImport/LogWriters/LogWriter.php</a></li>
+                                                                                                                                                                                                                                                                                                                                                            </ul>
+        </div>
+
+        <div class="span10 offset2">
+            <ul class="breadcrumb">
+                <li><a href="../"><i class="icon-remove-sign"></i></a><span class="divider">\</span></li>
+                <li>Compilation Errors</li>
+            </ul>
+
+            
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/PostThumbnailImporters.php" id="ContentImport/Importers/PostThumbnailImporters.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/PostThumbnailImporters.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\PostThumbnailImporters</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for property $importers_map</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/AttachmentsImporters.php" id="ContentImport/Importers/AttachmentsImporters.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/AttachmentsImporters.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\AttachmentsImporters</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for property $importers_map</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/Importer.php" id="ContentImport/Importers/Importer.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/Importer.php
+                            <small style="float: right;padding-right: 10px;">6</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>8</td>
+                                        <td>No summary for interface \lloc\Msls\ContentImport\Importers\Importer</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>15</td>
+                                        <td>No summary for method import()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for method set_import_coordinates()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>27</td>
+                                        <td>No summary for method get_logger()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>No summary for method get_relations()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Service.php" id="ContentImport/Service.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Service.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/MetaBox.php" id="ContentImport/MetaBox.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/MetaBox.php
+                            <small style="float: right;padding-right: 10px;">9</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\MetaBox</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>70</td>
+                                        <td>Argument $data is missing from the Docblock of inline_thickbox_url</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>70</td>
+                                        <td>No summary for method inline_thickbox_url()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>83</td>
+                                        <td>No summary for method print_modal_html()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>87</td>
+                                        <td>Argument $echo is missing from the Docblock of inline_thickbox_html</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>87</td>
+                                        <td>Argument $data is missing from the Docblock of inline_thickbox_html</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>87</td>
+                                        <td>No summary for method inline_thickbox_html()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>12</td>
+                                        <td>No summary for property $data</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/ImportLogger.php" id="ContentImport/ImportLogger.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/ImportLogger.php
+                            <small style="float: right;padding-right: 10px;">21</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>9</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\ImportLogger</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>Argument $import_coordinates is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>44</td>
+                                        <td>No summary for method get_data()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>108</td>
+                                        <td>Argument $path is missing from the Docblock of build_nested_array</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>108</td>
+                                        <td>Argument $what is missing from the Docblock of build_nested_array</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>108</td>
+                                        <td>No summary for method build_nested_array()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>127</td>
+                                        <td>No summary for method build_path()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
+                                        <td>Name of argument $key does not match with the DocBlock&#039;s name $message in log_information()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>166</td>
+                                        <td>Argument $message is missing from the Docblock of log_information</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>170</td>
+                                        <td>Argument $where is missing from the Docblock of get_error</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>170</td>
+                                        <td>No summary for method get_error()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>179</td>
+                                        <td>No summary for method get_nested_value()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>191</td>
+                                        <td>Argument $where is missing from the Docblock of get_success</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>191</td>
+                                        <td>No summary for method get_success()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>195</td>
+                                        <td>Argument $key is missing from the Docblock of get_information</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>195</td>
+                                        <td>No summary for method get_information()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for property $levels_delimiter</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>No summary for property $data</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $import_coordinates</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/ImportersFactory.php" id="ContentImport/Importers/ImportersFactory.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/ImportersFactory.php
+                            <small style="float: right;padding-right: 10px;">2</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for interface \lloc\Msls\ContentImport\Importers\ImportersFactory</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/ImportCoordinates.php" id="ContentImport/ImportCoordinates.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/ImportCoordinates.php
+                            <small style="float: right;padding-right: 10px;">9</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\ImportCoordinates</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>14</td>
+                                        <td>No summary for property $source_blog_id</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>18</td>
+                                        <td>No summary for property $source_post_id</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $dest_blog_id</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>No summary for property $dest_post_id</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for property $source_post</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>36</td>
+                                        <td>No summary for property $source_lang</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>41</td>
+                                        <td>No summary for property $dest_lang</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/PostMeta/Duplicating.php" id="ContentImport/Importers/PostMeta/Duplicating.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/PostMeta/Duplicating.php
+                            <small style="float: right;padding-right: 10px;">6</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\PostMeta\Duplicating</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>Argument $data is missing from the Docblock of import</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for method import()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>52</td>
+                                        <td>Argument $meta is missing from the Docblock of filter_post_meta</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>52</td>
+                                        <td>No summary for method filter_post_meta()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/Attachments/Linking.php" id="ContentImport/Importers/Attachments/Linking.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/Attachments/Linking.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $data is missing from the Docblock of import</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for method import()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/BaseImporter.php" id="ContentImport/Importers/BaseImporter.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/BaseImporter.php
+                            <small style="float: right;padding-right: 10px;">14</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>9</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\BaseImporter</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Name of argument $import_coordinates does not match with the DocBlock&#039;s name $logger in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $import_coordinates in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Name of argument $logger does not match with the DocBlock&#039;s name $relations in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $logger in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Argument $relations is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>43</td>
+                                        <td>No summary for method import()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>52</td>
+                                        <td>No summary for method set_import_coordinates()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>59</td>
+                                        <td>No summary for method get_logger()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>66</td>
+                                        <td>No summary for method get_relations()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>14</td>
+                                        <td>No summary for property $import_coordinates</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for property $logger</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for property $relations</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/Terms/ShallowDuplicating.php" id="ContentImport/Importers/Terms/ShallowDuplicating.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/Terms/ShallowDuplicating.php
+                            <small style="float: right;padding-right: 10px;">15</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>38</td>
+                                        <td>Argument $data is missing from the Docblock of import</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>38</td>
+                                        <td>No summary for method import()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>95</td>
+                                        <td>Argument $term is missing from the Docblock of create_local_term</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>95</td>
+                                        <td>Argument $msls_term is missing from the Docblock of create_local_term</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>95</td>
+                                        <td>Argument $dest_lang is missing from the Docblock of create_local_term</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>95</td>
+                                        <td>No summary for method create_local_term()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>118</td>
+                                        <td>Argument $meta is missing from the Docblock of filter_term_meta</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>118</td>
+                                        <td>Argument $term is missing from the Docblock of filter_term_meta</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>118</td>
+                                        <td>No summary for method filter_term_meta()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $object_id is missing from the Docblock of update_object_terms</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $dest_term_id is missing from the Docblock of update_object_terms</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $taxonomy is missing from the Docblock of update_object_terms</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>No summary for method update_object_terms()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $reset_taxonomies</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/ContentImporter.php" id="ContentImport/ContentImporter.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/ContentImporter.php
+                            <small style="float: right;padding-right: 10px;">24</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>57</td>
+                                        <td>No summary for method get_logger()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>64</td>
+                                        <td>No summary for method set_logger()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>71</td>
+                                        <td>No summary for method get_relations()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>78</td>
+                                        <td>No summary for method set_relations()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>145</td>
+                                        <td>Argument $data is missing from the Docblock of pre_flight_check</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>180</td>
+                                        <td>Argument $blog_id is missing from the Docblock of get_the_blog_post_ID</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>180</td>
+                                        <td>No summary for method get_the_blog_post_ID()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>198</td>
+                                        <td>Argument $blog_id is missing from the Docblock of insert_blog_post</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>198</td>
+                                        <td>Argument $data is missing from the Docblock of insert_blog_post</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>198</td>
+                                        <td>No summary for method insert_blog_post()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>220</td>
+                                        <td>Argument $handle is missing from the Docblock of handle</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>220</td>
+                                        <td>No summary for method handle()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>326</td>
+                                        <td>Name of argument $blog_id does not match with the DocBlock&#039;s name $data in update_inserted_blog_post_data()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>326</td>
+                                        <td>Argument $data is missing from the Docblock of update_inserted_blog_post_data</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>326</td>
+                                        <td>Name of argument $data does not match with the DocBlock&#039;s name $post_id in update_inserted_blog_post_data()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>326</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $data in update_inserted_blog_post_data()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>326</td>
+                                        <td>No summary for method update_inserted_blog_post_data()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>336</td>
+                                        <td>Argument $dest_blog_id is missing from the Docblock of redirect_to_blog_post</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>336</td>
+                                        <td>Argument $post_id is missing from the Docblock of redirect_to_blog_post</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>336</td>
+                                        <td>No summary for method redirect_to_blog_post()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for property $main</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for property $logger</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>33</td>
+                                        <td>No summary for property $relations</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="MslsOptions.php" id="MslsOptions.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            MslsOptions.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>319</td>
+                                        <td>No summary for method get_icon()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/PostMetaImporters.php" id="ContentImport/Importers/PostMetaImporters.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/PostMetaImporters.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\PostMetaImporters</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for property $importers_map</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/PostFields/Duplicating.php" id="ContentImport/Importers/PostFields/Duplicating.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/PostFields/Duplicating.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>Argument $data is missing from the Docblock of import</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for method import()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/PostThumbnail/Linking.php" id="ContentImport/Importers/PostThumbnail/Linking.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/PostThumbnail/Linking.php
+                            <small style="float: right;padding-right: 10px;">5</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Argument $data is missing from the Docblock of import</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>No summary for method import()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>122</td>
+                                        <td>Argument $source_post_thumbnail_id is missing from the Docblock of get_attachment_meta</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>122</td>
+                                        <td>No summary for method get_attachment_meta()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/PostFieldsImporters.php" id="ContentImport/Importers/PostFieldsImporters.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/PostFieldsImporters.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\PostFieldsImporters</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for property $importers_map</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/AttachmentPathFinder.php" id="ContentImport/AttachmentPathFinder.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/AttachmentPathFinder.php
+                            <small style="float: right;padding-right: 10px;">14</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\AttachmentPathFinder</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>Argument $sources is missing from the Docblock of filter_srcset</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>Argument $sizeArray is missing from the Docblock of filter_srcset</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>Argument $imageSrc is missing from the Docblock of filter_srcset</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>Argument $imageMeta is missing from the Docblock of filter_srcset</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>Argument $attachmentId is missing from the Docblock of filter_srcset</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for method filter_srcset()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>35</td>
+                                        <td>Argument $attachment_id is missing from the Docblock of has_import_data</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>35</td>
+                                        <td>No summary for method has_import_data()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>56</td>
+                                        <td>Argument $url is missing from the Docblock of filter_attachment_url</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>56</td>
+                                        <td>Argument $attachment_id is missing from the Docblock of filter_attachment_url</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>56</td>
+                                        <td>No summary for method filter_attachment_url()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>76</td>
+                                        <td>No summary for method get_source_post()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/Map.php" id="ContentImport/Importers/Map.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/Map.php
+                            <small style="float: right;padding-right: 10px;">2</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>8</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\Map</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/LogWriters/AdminNoticeLogger.php" id="ContentImport/LogWriters/AdminNoticeLogger.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/LogWriters/AdminNoticeLogger.php
+                            <small style="float: right;padding-right: 10px;">14</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>9</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\LogWriters\AdminNoticeLogger</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>17</td>
+                                        <td>Argument $data is missing from the Docblock of write</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>17</td>
+                                        <td>No summary for method write()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>79</td>
+                                        <td>Argument $section_title is missing from the Docblock of get_section_html</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>79</td>
+                                        <td>Argument $entries is missing from the Docblock of get_section_html</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>79</td>
+                                        <td>Argument $escape_entries is missing from the Docblock of get_section_html</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>79</td>
+                                        <td>No summary for method get_section_html()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>94</td>
+                                        <td>Argument $echo is missing from the Docblock of show_last_log</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>94</td>
+                                        <td>No summary for method show_last_log()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>109</td>
+                                        <td>Argument $import_coordinates is missing from the Docblock of set_import_coordinates</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>109</td>
+                                        <td>No summary for method set_import_coordinates()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>10</td>
+                                        <td>No summary for property $transient</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>15</td>
+                                        <td>No summary for property $import_coordinates</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="index.php" id="index.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            index.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/TermsImporters.php" id="ContentImport/Importers/TermsImporters.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/TermsImporters.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>7</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\TermsImporters</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for property $importers_map</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Relations.php" id="ContentImport/Relations.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Relations.php
+                            <small style="float: right;padding-right: 10px;">7</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>56</td>
+                                        <td>No summary for method get_data()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>69</td>
+                                        <td>No summary for method create_source_to_local()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>82</td>
+                                        <td>No summary for method create_local_to_source()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for property $to_create</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for property $local_options</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for property $import_coordinates</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/Importers/ImportersBaseFactory.php" id="ContentImport/Importers/ImportersBaseFactory.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/Importers/ImportersBaseFactory.php
+                            <small style="float: right;padding-right: 10px;">5</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>8</td>
+                                        <td>No summary for class \lloc\Msls\ContentImport\Importers\ImportersBaseFactory</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>Argument $import_coordinates is missing from the Docblock of make</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for method make()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>100</td>
+                                        <td>No summary for method importers_info()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="ContentImport/LogWriters/LogWriter.php" id="ContentImport/LogWriters/LogWriter.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            ContentImport/LogWriters/LogWriter.php
+                            <small style="float: right;padding-right: 10px;">2</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>6</td>
+                                        <td>No summary for interface \lloc\Msls\ContentImport\LogWriters\LogWriter</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                    </div>
+    </section>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/lloc.html">\lloc</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on March 18th, 2019 at 11:44.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

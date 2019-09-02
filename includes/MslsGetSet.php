@@ -28,7 +28,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * @param string $key
 	 * @param mixed $value
 	 */
-	final public function __set( $key, $value ) {
+	public function __set( $key, $value ) {
 		$this->arr[ $key ] = $value;
 
 		if ( empty( $this->arr[ $key ] ) ) {
@@ -42,7 +42,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * @param string $key
 	 * @return mixed
 	 */
-	final public function __get( $key ) {
+	public function __get( $key ) {
 		return isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : null;
 	}
 
@@ -52,7 +52,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * @param string $key
 	 * @return bool
 	 */
-	final public function __isset( $key ) {
+	public function __isset( $key ) {
 		return isset( $this->arr[ $key ] );
 	}
 
@@ -61,7 +61,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 *
 	 * @param string $key
 	 */
-	final public function __unset( $key ) {
+	public function __unset( $key ) {
 		if ( isset( $this->arr[ $key ] ) ) {
 			unset( $this->arr[ $key ] );
 		}
@@ -113,7 +113,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 *
 	 * @return array
 	 */
-	final public function get_arr() {
+	public function get_arr() {
 		return $this->arr;
 	}
 

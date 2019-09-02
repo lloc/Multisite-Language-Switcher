@@ -1,0 +1,43 @@
+<?php
+
+namespace lloc\MslsTests;
+
+use Brain\Monkey\Functions;
+use lloc\Msls\MslsSqlCacher;
+
+class WP_Test_MslsSqlCacher extends Msls_UnitTestCase {
+
+	public function get_sut() {
+		$wpdb = \Mockery::mock( \WPDB::class );
+		$wpdb->shouldReceive( [
+			'prepare' => '',
+			'get_results' => []
+		] );
+
+		return new MslsSqlCacher( $wpdb, 'MslsSqlCacherTest' );
+	}
+
+	function test_set_params_method() {
+		Functions\when( 'wp_cache_get' )->justReturn( false );
+		Functions\when( 'wp_cache_set' )->justReturn( true );
+
+		$obj = $this->get_sut();
+
+		$this->assertInstanceOf( MslsSqlCacher::class, $obj->set_params( array( 'Cache', 'Test' ) ) );
+		$this->assertInternalType( 'string', $obj->get_key() );
+		$this->assertEquals( 'MslsSqlCacherTest_Cache_Test', $obj->get_key() );
+
+		$this->assertInstanceOf( MslsSqlCacher::class, $obj->set_params( 'Cache_Test' ) );
+		$this->assertInternalType( 'string', $obj->get_key() );
+		$this->assertEquals( 'MslsSqlCacherTest_Cache_Test', $obj->get_key() );
+
+		$sql = $obj->prepare(
+			"SELECT blog_id FROM {$obj->blogs} WHERE blog_id != %d AND site_id = %d",
+			$obj->blogid,
+			$obj->siteid
+		);
+		$this->assertInternalType( 'string', $sql );
+		$this->assertInternalType( 'array', $obj->get_results( $sql ) );
+	}
+
+}

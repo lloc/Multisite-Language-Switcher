@@ -125,6 +125,7 @@ class MslsMain {
 
 	/**
 	 * Checks for the nonce in the INPUT_POST
+	 *
 	 * @return boolean
 	 */
 	public function verify_nonce() {
