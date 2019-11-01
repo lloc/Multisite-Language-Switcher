@@ -215,7 +215,7 @@ class MslsPlugin {
 	/**
 	 * Loads styles and some js if needed
 	 *
-	 * The methiod returns true if JS is loaded or false if not
+	 * The method returns true if JS is loaded or false if not
  	 *
 	 * @return boolean
 	 */
