@@ -36,6 +36,9 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 
 	public function test_create_method() {
 		Functions\when( 'is_admin' )->justReturn( true );
+		Functions\when( 'get_post_types' )->justReturn( [] );
+		Functions\when( 'get_post_type' )->justReturn( 'post' );
+		Functions\when( 'get_option' )->justReturn( [] );
 
 		$this->assertInstanceOf( MslsOptions::class, MslsOptions::create() );
 	}
@@ -111,6 +114,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 
 		Functions\when( 'is_admin' )->justReturn( true );
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
+		Functions\when( 'plugin_dir_path' )->justReturn( __DIR__ . '/../' );
 
 		$obj = $this->get_test();
 
