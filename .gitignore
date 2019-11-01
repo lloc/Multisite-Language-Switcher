@@ -3,5 +3,5 @@ composer.phar
 package-lock.json
 vendor/
 .idea/
-node_modules
+node_modules/
 docs/.vuepress/dist/
