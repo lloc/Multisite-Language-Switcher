@@ -3,6 +3,7 @@
 namespace lloc\MslsTests;
 
 use lloc\Msls\MslsBlog;
+use Brain\Monkey\Functions;
 
 class WP_Test_MslsBlog extends Msls_UnitTestCase {
 
@@ -10,28 +11,31 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 	 * Verify the __get-method
 	 */
 	function test___get_method() {
-		$blog = new stdClass();
+		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
+		$blog = new \stdClass();
 		$blog->userblog_id = 1;
 
 		$obj = new MslsBlog( $blog, 'Test' );
+
 		$this->assertEquals( 1, $obj->userblog_id );
 		$this->assertEquals( 'Test', $obj->get_description() );
-		$this->assertEquals( 'en_US', $obj->get_language() );
-		$this->assertEquals( 'en', $obj->get_alpha2() );
+		$this->assertEquals( 'it_IT', $obj->get_language() );
+		$this->assertEquals( 'it', $obj->get_alpha2() );
 	}
 
 	/**
 	 * Dataprovider
-	 * @return multitype:multitype:number
+	 *
+	 * @return array[]
 	 */
 	public function compareProvider() {
-		return array(
-			array( 0, 0, 0 ),
-			array( 0, 1, -1 ),
-			array( 1, 0, 1 ),
-			array( -1, -2, 1 ),
-			array( -2, -1, -1 )
-		);
+		return [
+			[ 0, 0, 0 ],
+			[ 0, 1, -1 ],
+			[ 1, 0, 1 ],
+			[ -1, -2, 1 ],
+			[ -2, -1, -1 ],
+		];
 	}
 
 	/**

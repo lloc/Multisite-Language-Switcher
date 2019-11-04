@@ -9,10 +9,12 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 
 	protected $admin_url = 'https://example.org/wp-admin/';
 
+	protected $lang = 'de_DE';
+
 	public function get_test( $post ) {
 		return ( new MslsAdminIcon( $post->post_type ) )
 			->set_path()
-			->set_language( 'de_DE' )
+			->set_language( $this->lang )
 			->set_src( '/dev/german_flag.png' )
 			->set_href( $post->ID );
 	}
@@ -133,24 +135,16 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertInternalType( 'string', $obj->get_edit_new() );
 	}
 
-	public function test_path_is_built_using_id_and_language_if_available() {
-		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[0];
+	public function test_set_id() {
+		$obj  = new MslsAdminIcon( 'post' );
 
-		Functions\expect( 'add_query_arg' )->once()->andReturn( 'abc' );
-		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
-		Functions\expect( 'get_admin_url' )->once()->andReturn( $this->admin_url );
-		Functions\expect( 'get_edit_post_link' )->once()->andReturn( 'def' );
-
-		$post = $this->get_post( $post_type );
-		$obj  = $this->get_test( $post );
-
-		$a = $obj->get_edit_new();
-
-		$query = parse_url( $a, PHP_URL_QUERY );
-		parse_str( $query, $query_frags );
-		$this->assertArrayHasKey( 'msls_id', $query_frags );
-		$this->assertEquals( $post, $query_frags['msls_id'] );
-		$this->assertArrayHasKey( 'msls_lang', $query_frags );
-		$this->assertEquals( $lang, $query_frags['msls_lang'] );
+		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_id( 1 ) );
 	}
+
+	public function test_set_origin_language() {
+		$obj  = new MslsAdminIcon( 'post' );
+
+		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_origin_language( 'it_IT' ) );
+	}
+
 }
