@@ -2,6 +2,8 @@
 
 namespace lloc\MslsTests;
 
+use Brain\Monkey\Functions;
+
 use lloc\Msls\MslsOptionsTax;
 
 /**
@@ -9,36 +11,29 @@ use lloc\Msls\MslsOptionsTax;
  */
 class WP_Test_MslsOptionsTax extends Msls_UnitTestCase {
 
-	/**
-	 * Verify the static create-method
-	 */
-	function test_create_method() {
-		$obj = MslsOptionsTax::create();
-		$this->assertInstanceOf( MslsOptionsTax::class, $obj );
-		return $obj;
+	function get_test() {
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
+
+		return new MslsOptionsTax( 0 );
 	}
 
-	/**
-	 * Verify the get_tax_query-method
-	 * @depends test_create_method
-	 */
-	function test_get_tax_query_method( $obj ) {
+	function test_get_tax_query_method() {
+		$obj = $this->get_test();
+
 		$this->assertInternalType( 'string', $obj->get_tax_query() );
 	}
 
-	/**
-	 * Verify the get_postlink-method
-	 * @depends test_create_method
-	 */
-	function test_get_postlink_method( $obj ) {
+	function test_get_postlink_method() {
+		$obj = $this->get_test();
+
+		$this->assertInternalType( 'string', $obj->get_tax_query() );
 		$this->assertInternalType( 'string', $obj->get_postlink( 'de_DE' ) );
 	}
 
-	/**
-	 * Verify the get_current_link-method
-	 * @depends test_create_method
-	 */
-	function test_get_current_link_method( $obj ) {
+	function test_get_current_link_method() {
+		$obj = $this->get_test();
+
+		$this->assertInternalType( 'string', $obj->get_tax_query() );
 		$this->assertInternalType( 'string', $obj->get_current_link() );
 	}
 

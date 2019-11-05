@@ -2,6 +2,8 @@
 
 namespace lloc\MslsTests;
 
+use Brain\Monkey\Functions;
+
 use lloc\Msls\MslsOptionsQueryPostType;
 
 /**
@@ -9,21 +11,24 @@ use lloc\Msls\MslsOptionsQueryPostType;
  */
 class WP_Test_MslsOptionsQueryPostType extends Msls_UnitTestCase {
 
-	/**
-	 * Verify the has_value-method
-	 */
-	function test_has_value_method() {
-		$obj = new MslsOptionsQueryPostType();
-		$this->assertInternalType( 'boolean', $obj->has_value( 'de_DE' ) );
-		return $obj;
+	function get_test() {
+		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+
+		return new MslsOptionsQueryPostType();
 	}
 
-	/**
-	 * Verify the get_current_link-method
-	 * @depends test_has_value_method
-	 */
-	function test_get_current_link_method( $obj ) {
-		$this->assertInternalType( 'string', $obj->get_current_link() );
+	function test_has_value_method() {
+		$obj = $this->get_test();
+
+		$this->assertInternalType( 'boolean', $obj->has_value( 'de_DE' ) );
+	}
+
+	function test_get_current_link_method() {
+		Functions\expect( 'get_post_type_archive_link' )->once()->andReturn( 'https://example.org/queried-posttype' );
+
+		$obj = $this->get_test();
+
+		$this->assertEquals( 'https://example.org/queried-posttype', $obj->get_current_link() );
 	}
 
 }

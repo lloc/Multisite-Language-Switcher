@@ -37,7 +37,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 	function test_the_input_method() {
 		$obj = $this->get_test();
 
-		$tag = new StdClass;
+		$tag = new \stdClass;
 		$tag->term_id = 1;
 
 		$this->assertInternalType( 'boolean', $obj->the_input( $tag, 'test', 'test' ) );

@@ -2,18 +2,30 @@
 
 namespace lloc\MslsTests;
 
+use Brain\Monkey\Functions;
+
 use lloc\Msls\MslsOptionsQueryYear;
 
 class WP_Test_MslsOptionsQueryYear extends Msls_UnitTestCase {
 
-	function test_has_value_method() {
-		$obj = new MslsOptionsQueryYear();
-		$this->assertInternalType( 'boolean', $obj->has_value( 'de_DE' ) );
-		return $obj;
+	function get_test() {
+		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+
+		return new MslsOptionsQueryYear();
 	}
 
-	function test_get_current_link_method( $obj ) {
-		$this->assertInternalType( 'string', $obj->get_current_link() );
+	function test_has_value_method() {
+		$obj = $this->get_test();
+
+		$this->assertInternalType( 'boolean', $obj->has_value( 'de_DE' ) );
+	}
+
+	function test_get_current_link_method() {
+		Functions\expect( 'get_year_link' )->once()->andReturn( 'https://example.org/queried-year' );
+
+		$obj = $this->get_test();
+
+		$this->assertEquals( 'https://example.org/queried-year', $obj->get_current_link() );
 	}
 
 }

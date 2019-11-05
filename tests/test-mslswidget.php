@@ -2,6 +2,8 @@
 
 namespace lloc\MslsTests;
 
+use Brain\Monkey\Functions;
+
 use lloc\Msls\MslsWidget;
 
 class WP_Test_MslsWidget extends Msls_UnitTestCase {
@@ -13,12 +15,23 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 	}
 
 	function test_widget_method() {
+		$arr = [
+			'before_widget' => '',
+			'after_widget'  => '',
+			'before_title'  => '',
+			'after_title'   => '',
+		];
+
+		Functions\expect( 'wp_parse_args' )->once()->andReturn( $arr );
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
+		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
+		Functions\expect( 'get_blogs_of_user' )->once()->andReturn( [] );
+		Functions\expect( 'get_users' )->once()->andReturn( [] );
+
 		$obj = $this->get_sut();
 
 		$this->expectOutputString( 'No available translations found' );
-		$obj->widget( array(), array() );
-
-		return $obj;
+		$obj->widget( [], [] );
 	}
 
 	function test_update_method() {
@@ -29,7 +42,7 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 
 		$result = $obj->update( [ 'title' => 'abc' ], [] );
 		$this->assertEquals( [ 'title' => 'abc' ], $result );
-		
+
 		$result = $obj->update( [ 'title' => 'xyz' ], [ 'title' => 'abc' ] );
 		$this->assertEquals( [ 'title' => 'xyz' ], $result );
 	}
