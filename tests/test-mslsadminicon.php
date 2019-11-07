@@ -11,11 +11,13 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 
 	protected $lang = 'de_DE';
 
+	protected $src = '/dev/german_flag.png';
+
 	public function get_test( $post ) {
 		return ( new MslsAdminIcon( $post->post_type ) )
 			->set_path()
 			->set_language( $this->lang )
-			->set_src( '/dev/german_flag.png' )
+			->set_src( $this->src )
 			->set_href( $post->ID );
 	}
 
@@ -51,7 +53,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$post = $this->get_post( $post_type, 2 );
 		$obj  = $this->get_test( $post );
 
-		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><img alt="de_DE" src="/dev/german_flag.png" /></a>&nbsp;';
+		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -65,7 +67,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$post = $this->get_post( $post_type, 2 );
 		$obj  = $this->get_test( $post );
 
-		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><img alt="de_DE" src="/dev/german_flag.png" /></a>&nbsp;';
+		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -82,7 +84,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_href( 0 ) );
 
-		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><img alt="de_DE" src="/dev/german_flag.png" /></a>&nbsp;', $create_link );
+		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;', $create_link );
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -100,7 +102,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_href( 0 ) );
 
-		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><img alt="de_DE" src="/dev/german_flag.png" /></a>&nbsp;', $create_link );
+		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;', $create_link );
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -115,7 +117,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$post = $this->get_post( $post_type );
 		$obj  = $this->get_test( $post );
 
-		$this->assertEquals( '<img alt="de_DE" src="/dev/german_flag.png" />', $obj->get_img() );
+		$this->assertEquals( '<img alt="de_DE" src="' . $this->src . '" />', $obj->get_img() );
 		$this->assertInternalType( 'string', $obj->get_edit_new() );
 	}
 
@@ -131,7 +133,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$post = $this->get_post( $post_type );
 		$obj  = $this->get_test( $post );
 
-		$this->assertEquals( '<img alt="de_DE" src="/dev/german_flag.png" />', $obj->get_img() );
+		$this->assertEquals( '<img alt="de_DE" src="' . $this->src . '" />', $obj->get_img() );
 		$this->assertInternalType( 'string', $obj->get_edit_new() );
 	}
 

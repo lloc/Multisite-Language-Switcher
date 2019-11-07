@@ -2,6 +2,8 @@
 
 namespace lloc\MslsTests;
 
+use Brain\Monkey\Functions;
+
 use lloc\Msls\MslsOptionsQuery;
 
 /**
@@ -9,20 +11,18 @@ use lloc\Msls\MslsOptionsQuery;
  */
 class WP_Test_MslsOptionsQuery extends Msls_UnitTestCase {
 
-	/**
-	 * Verify the static create-method
-	 */
-	function test_create_method() {
-		$this->assertNull( MslsOptionsQuery::create() );
+	function get_test() {
+		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+
 		return new MslsOptionsQuery();
 	}
 
-	/**
-	 * Verify the get_current_link-method
-	 * @depends test_create_method
-	 */
-	function test_get_current_link_method( $obj ) {
-		$this->assertInternalType( 'string', $obj->get_current_link() );
+	function test_get_current_link_method() {
+		Functions\expect( 'home_url' )->once()->andReturn( 'https://example.org/queried-object' );
+
+		$obj = $this->get_test();
+
+		$this->assertEquals( 'https://example.org/queried-object', $obj->get_current_link() );
 	}
 
 }

@@ -384,7 +384,7 @@ class MslsPlugin {
 	 * @param array $list
 	 * @return array
 	 */
-	public static function get_superglobals( array $list ) {
+	public function get_superglobals( array $list ) {
 		$arr = [];
 
 		foreach ( $list as $var ) {

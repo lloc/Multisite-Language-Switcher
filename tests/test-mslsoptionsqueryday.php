@@ -29,7 +29,6 @@ class WP_Test_MslsOptionsQueryDay extends Msls_UnitTestCase {
 		$obj = $this->get_test();
 
 		$this->assertEquals( 'https://example.org/queried-day', $obj->get_current_link() );
-
 	}
 
 }
