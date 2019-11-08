@@ -2,58 +2,57 @@
 
 namespace lloc\MslsTests;
 
-use lloc\Msls\MslsOutput, lloc\Msls\MslsOptions, lloc\Msls\MslsOptionsPost;
+use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsOutput;
+use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsOptionsPost;
+use Brain\Monkey\Functions;
 
 class WP_Test_MslsOutput extends Msls_UnitTestCase {
 
-	/**
-	 * Verify the static init-method
-	 */
-	function test_init_method() {
-		$obj = MslsOutput::init();
-		$this->assertInstanceOf( MslsOutput::class, $obj );
-		return $obj;
+	function get_test() {
+		$options    = \Mockery::mock( MslsOptions::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( [
+			'has_current_blog' => true,
+			'get_current_blog' => 1,
+			'get_filtered'     => [],
+		] );
+
+		return new MslsOutput( $options, $collection );
 	}
 
-	/**
-	 * Verify the get-method
-	 * @depends test_init_method
-	 */
-	function test_get_method( $obj ) {
+	function test_get_method() {
+		$obj = $this->get_test();
+
 		$this->assertInternalType( 'array', $obj->get( 0 ) );
 	}
 
-	/**
-	 * Verify the __toString-method
-	 * @depends test_init_method
-	 */
-	function test___toString_method( $obj ) {
+	function test___toString_method() {
+		$obj = $this->get_test();
+
 		$this->assertInternalType( 'string', $obj->__toString() );
 		$this->assertInternalType( 'string', strval( $obj ) );
 		$this->assertEquals( $obj->__toString(), strval( $obj ) );
 	}
 
-	/**
-	 * Verify the get_tags-method
-	 * @depends test_init_method
-	 */
-	function test_get_tags_method( $obj ) {
+	function test_get_tags_method() {
+		$obj = $this->get_test();
+
 		$this->assertInternalType( 'array', $obj->get_tags() );
 	}
-	
-	/**
-	 * Verify the set_tags-method
-	 * @depends test_init_method
-	 */
-	function test_set_tags_method( $obj ) {
+
+	function test_set_tags_method() {
+		Functions\expect( 'wp_parse_args' )->once()->andReturn( [] );
+
+		$obj = $this->get_test();
+
 		$this->assertInstanceOf( MslsOutput::class, $obj->set_tags() );
 	}
 
-	/**
-	 * Verify the is_requirements_not_fulfilled-method
-	 * @depends test_init_method
-	 */
-	function test_is_requirements_not_fulfilled_method_with_null( $obj ) {
+	function test_is_requirements_not_fulfilled_method_with_null() {
+		$obj = $this->get_test();
+
 		$test = $obj->is_requirements_not_fulfilled( null, false, 'de_DE' );
 		$this->assertFalse( $test );
 
@@ -61,12 +60,12 @@ class WP_Test_MslsOutput extends Msls_UnitTestCase {
 		$this->assertTrue( $test );
 	}
 
-	/**
-	 * Verify the is_requirements_not_fulfilled-method
-	 * @depends test_init_method
-	 */
-	function test_is_requirements_not_fulfilled_method_with_mslsoptions( $obj ) {
+	function test_is_requirements_not_fulfilled_method_with_mslsoptions() {
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
+
 		$mydata = new MslsOptions();
+
+		$obj = $this->get_test();
 
 		$test = $obj->is_requirements_not_fulfilled( $mydata, false, 'de_DE' );
 		$this->assertFalse( $test );
@@ -75,12 +74,12 @@ class WP_Test_MslsOutput extends Msls_UnitTestCase {
 		$this->assertFalse( $test );
 	}
 
-	/**
-	 * Verify the is_requirements_not_fulfilled-method
-	 * @depends test_init_method
-	 */
-	function test_is_requirements_not_fulfilled_method_with_mslsoptionspost( $obj ) {
+	function test_is_requirements_not_fulfilled_method_with_mslsoptionspost() {
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
+
 		$mydata = new MslsOptionsPost();
+
+		$obj = $this->get_test();
 
 		$test = $obj->is_requirements_not_fulfilled( $mydata, false, 'de_DE' );
 		$this->assertFalse( $test );
