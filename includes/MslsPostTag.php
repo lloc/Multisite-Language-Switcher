@@ -20,7 +20,7 @@ class MslsPostTag extends MslsMain {
 	 * the requested search-term and then die silently
 	 */
 	public static function suggest() {
-		$json = new MslsJson;
+		$json = new MslsJson();
 
 		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
 			switch_to_blog(
@@ -62,6 +62,7 @@ class MslsPostTag extends MslsMain {
 			}
 			restore_current_blog();
 		}
+
 		wp_die( $json->encode() );
 	}
 

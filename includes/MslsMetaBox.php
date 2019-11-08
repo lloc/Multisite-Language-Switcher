@@ -243,11 +243,11 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * @param string $type
-	 * @param string $language
+	 * @param string $msls_id
 	 *
 	 * @return string
 	 */
-	public function render_options( $type, $language ) {
+	public function render_options( $type, $msls_id ) {
 		$options = [];
 
 		$my_query = new \WP_Query( [
@@ -260,17 +260,22 @@ class MslsMetaBox extends MslsMain {
 		] );
 
 		if ( $my_query->have_posts() ) {
-			foreach ( $my_query->posts as $my_id ) {
-				$options[] = sprintf(
-					'<option value="%s" %s>%s</option>',
-					$my_id,
-					selected( $my_id, $language, false ),
-					get_the_title( $my_id )
-				);
+			foreach ( $my_query->posts as $post_id ) {
+				$options[] = $this->render_option( $post_id, $msls_id );
 			}
 		}
 
 		return implode( PHP_EOL, $options );
+	}
+
+	/**
+	 * @param string $post_id
+	 * @param string $msls_id
+	 *
+	 * @return string
+	 */
+	public function render_option( $post_id, $msls_id ) {
+		return sprintf( '<option value="%s" %s>%s</option>', $post_id, selected( $post_id, $msls_id, false ), get_the_title( $post_id ) );
 	}
 
 	/**

@@ -101,11 +101,13 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 		$this->assertInternalType( 'string', $obj->get_order() );
 	}
 
-	/**
-	 * Verify the get_url-method
-	 * @depends test_instance_method
-	 */
-	function test_get_url_method( $obj ) {
+	function test_get_url_method() {
+		defined( 'MSLS_PLUGIN__FILE__' ) || define( 'MSLS_PLUGIN__FILE__', '/wp-content/plugins/multisite-language-switcher/multisite-language-switcher.php' );
+
+		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
+
+		$obj = $this->get_test();
+
 		$this->assertInternalType( 'string', $obj->get_url( '/dev/test' ) );
 	}
 
