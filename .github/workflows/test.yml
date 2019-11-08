@@ -1,4 +1,4 @@
-name: test
+name: Test
 on: [push]
 jobs:
   phpunit:
@@ -9,6 +9,4 @@ jobs:
       - name: Composer dependencies
         run: composer install
       - name: Run Testsuite
-        run: |
-          chmod +x bin/phpunit
-          bin/phpunit
+        run: vendor/bin/phpunit
