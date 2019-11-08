@@ -29,10 +29,10 @@ class MslsMetaBox extends MslsMain {
 				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
 			);
 
-			$args = array(
+			$args = [
 				'post_status'    => get_post_stati( [ 'internal' => '' ] ),
 				'posts_per_page' => 10,
-			);
+			];
 
 			if ( filter_has_var( INPUT_POST, 'post_type' ) ) {
 				$args['post_type'] = sanitize_text_field(
@@ -46,34 +46,52 @@ class MslsMetaBox extends MslsMain {
 				);
 			}
 
+			$json = self::get_suggested_fields( $json, $args );
+		}
+
+		wp_die( $json->encode() );
+	}
+
+	/**
+	 * @param MslsJson $json
+	 * @param Array $args
+	 *
+	 * @return mixed
+	 */
+	public static function get_suggested_fields( $json, $args ) {
+		/**
+		 * Overrides the query-args for the suggest fields in the MetaBox
+		 *
+		 * @param array $args
+		 *
+		 * @since 0.9.9
+		 *
+		 */
+		$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
+
+		$my_query = new \WP_Query( $args );
+		while ( $my_query->have_posts() ) {
+			$my_query->the_post();
+
 			/**
-			 * Overrides the query-args for the suggest fields in the MetaBox
+			 * Manipulates the WP_Post object before using it
+			 *
+			 * @param \WP_Post $post
+			 *
 			 * @since 0.9.9
 			 *
-			 * @param array $args
 			 */
-			$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
+			$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
 
-			$my_query = new \WP_Query( $args );
-			while ( $my_query->have_posts() ) {
-				$my_query->the_post();
-
-				/**
-				 * Manipulates the WP_Post object before using it
-				 * @since 0.9.9
-				 *
-				 * @param \WP_Post $post
-				 */
-				$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
-
-				if ( is_object( $my_query->post ) ) {
-					$json->add( get_the_ID(), get_the_title() );
-				}
+			if ( is_object( $my_query->post ) ) {
+				$json->add( get_the_ID(), get_the_title() );
 			}
-			wp_reset_postdata();
-			restore_current_blog();
 		}
-		wp_die( $json->encode() );
+
+		wp_reset_postdata();
+		restore_current_blog();
+
+		return $json;
 	}
 
 	/**
@@ -84,17 +102,16 @@ class MslsMetaBox extends MslsMain {
 	 * @return MslsMetaBox
 	 */
 	public static function init() {
-		$options    = MslsOptions::instance();
-		$collection = MslsBlogCollection::instance();
-		$obj        = new static( $options, $collection );
-
+		$options = MslsOptions::instance();
 		if ( ! $options->is_excluded() ) {
-			add_action( 'add_meta_boxes', [ $obj, 'add' ] );
-			add_action( 'save_post', [ $obj, 'set' ] );
-			add_action( 'trashed_post', [ $obj, 'delete' ] );
+			add_action( 'add_meta_boxes', [ MslsMetaBox::class, 'add' ] );
+			add_action( 'save_post', [ MslsMetaBox::class, 'set' ] );
+			add_action( 'trashed_post', [ MslsMetaBox::class, 'delete' ] );
 		}
 
-		return $obj;
+		$collection = MslsBlogCollection::instance();
+
+		return new static( $options, $collection );
 	}
 
 	/**
@@ -148,7 +165,7 @@ class MslsMetaBox extends MslsMain {
 
 			$this->maybe_set_linked_post( $mydata );
 
-			$temp   = $post;
+			$temp = $post;
 
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
 
@@ -158,19 +175,20 @@ class MslsMetaBox extends MslsMain {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
+				$src      = MslsOptions::instance()->get_flag_url( $language );
+				$icon     = MslsAdminIcon::create()
+				                         ->set_language( $language )
+				                         ->set_src( $src );
 
-				$icon = MslsAdminIcon::create()
-				                     ->set_language( $language )
-				                     ->set_src( MslsOptions::instance()->get_flag_url( $language ) );
 				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( $mydata->$language );
 				}
 
-				$selects = '';
-				$pto     = get_post_type_object( $type );
+				$selects  = '';
+				$p_object = get_post_type_object( $type );
 
-				if ( $pto->hierarchical ) {
-					$args = array(
+				if ( $p_object->hierarchical ) {
+					$args = [
 						'post_type'         => $type,
 						'selected'          => $mydata->$language,
 						'name'              => 'msls_input_' . $language,
@@ -178,44 +196,23 @@ class MslsMetaBox extends MslsMain {
 						'option_none_value' => 0,
 						'sort_column'       => 'menu_order, post_title',
 						'echo'              => 0,
-					);
+					];
 					/**
 					 * Overrides the args for wp_dropdown_pages when using the HTML select in the MetaBox
-					 * @since 1.0.5
 					 *
 					 * @param array $args
+					 *
+					 * @since 1.0.5
+					 *
 					 */
 					$args = (array) apply_filters( 'msls_meta_box_render_select_hierarchical', $args );
 
 					$selects .= wp_dropdown_pages( $args );
 				} else {
-					$options = '';
-
-					$my_query = new \WP_Query(
-						array(
-							'post_type'      => $type,
-							'post_status'    => get_post_stati( [ 'internal' => '' ] ),
-							'orderby'        => 'title',
-							'order'          => 'ASC',
-							'posts_per_page' => - 1,
-							'fields'         => 'ids',
-						)
-					);
-
-					if ( $my_query->have_posts() ) {
-						foreach ( $my_query->posts as $my_id ) {
-							$options .= sprintf(
-								'<option value="%s" %s>%s</option>',
-								$my_id,
-								selected( $my_id, $mydata->$language, false ),
-								get_the_title( $my_id )
-							);
-						}
-					}
 					$selects .= sprintf(
 						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
 						$language,
-						$options
+						$this->render_options( $type, $mydata->$language )
 					);
 				}
 
@@ -228,11 +225,13 @@ class MslsMetaBox extends MslsMain {
 
 				restore_current_blog();
 			}
+
 			printf(
 				'<ul>%s</ul><input type="submit" class="button-secondary" value="%s"/>',
 				$lis,
 				__( 'Update', 'multisite-language-switcher' )
 			);
+
 			$post = $temp;
 		} else {
 			printf(
@@ -240,6 +239,38 @@ class MslsMetaBox extends MslsMain {
 				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'multisite-language-switcher' )
 			);
 		}
+	}
+
+	/**
+	 * @param string $type
+	 * @param string $language
+	 *
+	 * @return string
+	 */
+	public function render_options( $type, $language ) {
+		$options = [];
+
+		$my_query = new \WP_Query( [
+			'post_type'      => $type,
+			'post_status'    => get_post_stati( [ 'internal' => '' ] ),
+			'orderby'        => 'title',
+			'order'          => 'ASC',
+			'posts_per_page' => - 1,
+			'fields'         => 'ids',
+		] );
+
+		if ( $my_query->have_posts() ) {
+			foreach ( $my_query->posts as $my_id ) {
+				$options[] = sprintf(
+					'<option value="%s" %s>%s</option>',
+					$my_id,
+					selected( $my_id, $language, false ),
+					get_the_title( $my_id )
+				);
+			}
+		}
+
+		return implode( PHP_EOL, $options );
 	}
 
 	/**
@@ -258,8 +289,8 @@ class MslsMetaBox extends MslsMain {
 
 			$this->maybe_set_linked_post( $my_data );
 
-			$temp      = $post;
-			$items     = '';
+			$temp  = $post;
+			$items = '';
 
 			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
 
@@ -301,9 +332,11 @@ class MslsMetaBox extends MslsMain {
 
 			/**
 			 * Returns the input button, return an empty string if you'ld like to hide the button
-			 * @since 1.0.2
 			 *
 			 * @param string $input_button
+			 *
+			 * @since 1.0.2
+			 *
 			 */
 			$input_button = ( string ) apply_filters( 'msls_meta_box_render_input_button', $input_button );
 
@@ -351,7 +384,9 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * Sets the selected element in the data from the `$_GET` superglobal, if any.
+	 *
 	 * @param MslsOptionsPost $mydata
+	 *
 	 * @return MslsOptionsPost
 	 */
 	public function maybe_set_linked_post( MslsOptionsPost $mydata ) {

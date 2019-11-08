@@ -18,7 +18,7 @@ class MslsJson {
 	 * Container
 	 * @var array
 	 */
-	protected $arr = array();
+	protected $arr = [];
 
 	/**
 	 * add

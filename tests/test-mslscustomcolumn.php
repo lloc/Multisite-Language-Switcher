@@ -8,17 +8,14 @@ use lloc\Msls\MslsBlogCollection;
 
 class WP_Test_MslsCustomColumn extends Msls_UnitTestCase {
 
-	public function get_test() {
-		$options    = MslsOptions::instance();
-		$collection = MslsBlogCollection::instance();
-
-		return new MslsCustomColumn( $options, $collection );
-	}
-
 	function test_th() {
-		$obj = $this->get_test();
+		$options    = \Mockery::mock( MslsOptions::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get' )->once()->andReturn( [] );
 
-		$this->assertInternalType( 'array', $obj->th( [] ) );
+		$obj = new MslsCustomColumn( $options, $collection );
+
+		$this->assertEmpty( $obj->th( [] ) );
 	}
 
 }

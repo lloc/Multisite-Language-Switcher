@@ -47,7 +47,7 @@ class MslsCustomColumn extends MslsMain {
 	public function th( $columns ) {
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
-			$arr = array();
+			$arr = [];
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
 				$flag_url = $this->options->get_flag_url( $language );
