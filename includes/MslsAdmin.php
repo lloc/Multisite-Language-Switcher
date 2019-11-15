@@ -369,7 +369,7 @@ class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'reference_user'
 	 */
 	public function reference_user() {
-		$users = array();
+		$users = [];
 
 		foreach ( $this->collection->get_users() as $user ) {
 			$users[ $user->ID ] = $user->user_nicename;

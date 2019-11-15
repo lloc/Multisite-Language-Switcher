@@ -97,7 +97,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	/**
-	 * Gets the description for a blog fro a specific locale
+	 * Gets the description for a blog for a specific locale
 	 *
 	 * @param string $locale
 	 *

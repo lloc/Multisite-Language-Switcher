@@ -289,7 +289,10 @@ class MslsBlogCollection extends MslsRegistryInstance {
 			'orderby' => 'registered',
 			'fields'  => $fields,
 			'number'  => $number,
+			'count_total' => false,
 		];
+
+		$args = (array) apply_filters( 'msls_get_users', $args );
 
 		return get_users( $args );
 	}
