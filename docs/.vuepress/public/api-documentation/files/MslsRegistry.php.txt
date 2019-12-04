@@ -18,7 +18,7 @@ class MslsRegistry {
 	 *
 	 * @var array
 	 */
-	private static $arr = array();
+	private static $arr = [];
 
 	/**
 	 * Instance
@@ -28,26 +28,6 @@ class MslsRegistry {
 	private static $instance;
 
 	/**
-	 * Constructor
-	 *
-	 * Don't call me directly!
-	 *
-	 * @codeCoverageIgnore
-	 */
-	final private function __construct() {
-	}
-
-	/**
-	 * Clone
-	 *
-	 * Don't call me directly!
-	 *
-	 * @codeCoverageIgnore
-	 */
-	final private function __clone() {
-	}
-
-	/**
 	 * Get an object by key
 	 *
 	 * @param string $key
@@ -55,7 +35,7 @@ class MslsRegistry {
 	 * @return mixed
 	 */
 	private function get( $key ) {
-		return ( isset( self::$arr[ $key ] ) ? self::$arr[ $key ] : null );
+		return isset( self::$arr[ $key ] ) ? self::$arr[ $key ] : null;
 	}
 
 	/**

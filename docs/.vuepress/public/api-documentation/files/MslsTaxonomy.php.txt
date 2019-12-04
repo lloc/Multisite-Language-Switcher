@@ -29,7 +29,7 @@ class MslsTaxonomy extends MslsContentTypes {
 			get_taxonomies( [ 'public' => true, '_builtin' => false ], 'names', 'and' )
 		);
 
-		$_request = MslsPlugin::get_superglobals( [ 'taxonomy', 'post_type' ] );
+		$_request = $this->get_superglobals( [ 'taxonomy', 'post_type' ] );
 		if ( '' != $_request['taxonomy'] ) {
 			$this->request   = esc_attr( $_request['taxonomy'] );
 			$this->post_type = esc_attr( $_request['post_type'] );

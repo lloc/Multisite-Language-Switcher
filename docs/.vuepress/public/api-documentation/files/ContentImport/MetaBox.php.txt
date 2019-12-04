@@ -49,7 +49,7 @@ class MetaBox extends MslsRegistryInstance {
 					$this->data = [
 						'msls_import'  => "{$blog}|{$id}",
 					];
-					$output .= sprintf( '<a class="button-primary thickbox" href="%s" title="%s">%s</a>',
+					$output .= sprintf( '<a class="button button-primary thickbox" href="%s" title="%s">%s</a>',
 						$this->inline_thickbox_url( $this->data ),
 						$label,
 						$label
@@ -136,7 +136,7 @@ class MetaBox extends MslsRegistryInstance {
                 <div>
                     <input
                             type="submit"
-                            class="button-primary"
+                            class="button button-primary"
                             value="<?php esc_html_e( 'Import Content', 'multisite-language-switcher' ) ?>"
                     >
                 </div>
@@ -153,3 +153,4 @@ class MetaBox extends MslsRegistryInstance {
 		return $html;
 	}
 }
+
