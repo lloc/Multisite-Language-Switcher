@@ -1,0 +1,12 @@
+name: Test
+on: [push]
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v1
+      - name: Composer dependencies
+        run: composer install
+      - name: Run Testsuite
+        run: vendor/bin/phpunit

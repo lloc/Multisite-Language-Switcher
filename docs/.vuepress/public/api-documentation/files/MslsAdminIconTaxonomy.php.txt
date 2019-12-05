@@ -31,6 +31,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 			$this->type,
 			MslsTaxonomy::instance()->get_post_type()
 		);
+		
 		return $this;
 	}
 

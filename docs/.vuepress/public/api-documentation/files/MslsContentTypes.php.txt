@@ -33,7 +33,8 @@ class MslsContentTypes extends MslsRegistryInstance {
 	 * @return MslsContentTypes
 	 */
 	public static function create() {
-		$_request = MslsPlugin::get_superglobals( [ 'taxonomy' ] );
+		$_request = ( new MslsContentTypes() )->get_superglobals( [ 'taxonomy' ] );
+
 		if ( '' != $_request['taxonomy'] ) {
 			return MslsTaxonomy::instance();
 		}
@@ -82,8 +83,16 @@ class MslsContentTypes extends MslsRegistryInstance {
 	 * @return string
 	 */
 	public function get_request() {
-		return in_array( $this->request, apply_filters('msls_supported_post_types', $this->types) ) 
-			? $this->request : '';
+		$types =  apply_filters('msls_supported_post_types', $this->types );
+
+		return in_array( $this->request, $types ) ? $this->request : '';
+	}
+
+	public function get_superglobals( $arr ) {
+		$options = MslsOptions::instance();
+		$plugin  = new MslsPlugin( $options );
+
+		return $plugin->get_superglobals( $arr );
 	}
 
 }

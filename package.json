@@ -9,6 +9,7 @@
   "devDependencies": {
     "less": "^3.9.0",
     "less-plugin-clean-css": "^1.5.1",
-    "uglify-js": "^3.4.9"
+    "uglify-js": "^3.4.9",
+    "vuepress": "^1.2.0"
   }
 }

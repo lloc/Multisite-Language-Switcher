@@ -11,7 +11,7 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 	public function get_sut() {
 		\Mockery::mock( '\WP_Widget' );
 
-		return new MslsWidget();
+		return \Mockery::mock( MslsWidget::class )->makePartial();
 	}
 
 	function test_widget_method() {

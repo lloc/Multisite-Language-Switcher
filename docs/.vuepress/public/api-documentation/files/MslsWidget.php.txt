@@ -13,16 +13,12 @@ namespace lloc\Msls;
  */
 class MslsWidget extends \WP_Widget {
 
-	const ID_BASE = 'mslswidget';
-
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct(
-			self::ID_BASE,
-			$name = __( 'Multisite Language Switcher', 'multisite-language-switcher' )
-		);
+		$this->id_base = 'mslswidget';
+		$this->name    = __( 'Multisite Language Switcher', 'multisite-language-switcher' );
 	}
 
 	/**

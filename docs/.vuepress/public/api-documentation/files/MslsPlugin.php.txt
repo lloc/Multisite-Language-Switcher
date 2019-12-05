@@ -215,7 +215,7 @@ class MslsPlugin {
 	/**
 	 * Loads styles and some js if needed
 	 *
-	 * The methiod returns true if JS is loaded or false if not
+	 * The method returns true if JS is loaded or false if not
  	 *
 	 * @return boolean
 	 */
@@ -384,7 +384,7 @@ class MslsPlugin {
 	 * @param array $list
 	 * @return array
 	 */
-	public static function get_superglobals( array $list ) {
+	public function get_superglobals( array $list ) {
 		$arr = [];
 
 		foreach ( $list as $var ) {

@@ -156,6 +156,21 @@ You can override the string for the output of the translation hint. *$output* co
 *You can use the following code if you want to remove this filter completely:*
 
     remove_action( 'the_content', 'msls_content_filter' );
+    
+## msls\_get\_users ##
+
+The plugin has a html-select for the reference user which can be the source of slow queries in case of bigger user-tables. You can limit the query like in [WP_User_Query](https://developer.wordpress.org/reference/classes/wp_user_query/prepare_query/). 
+
+    /**
+     * @param array $args
+     * @return array
+     */
+    function my_msls_get_users( $args ) {
+        $args['role'] = 'administrator';
+    }
+    add_filter( 'msls_get_users', 'my_msls_get_users' );
+
+*This will return only users with the role "administrator".*
 
 ## msls\_head\_hreflang ##
 
