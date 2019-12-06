@@ -12,6 +12,11 @@ namespace lloc\Msls;
  * @package Msls
  */
 class MslsAdminIcon {
+	/**
+	 * IconType
+	 * @var string
+	 */
+	protected $iconType = 'action';
 
 	/**
 	 * Language
@@ -89,6 +94,17 @@ class MslsAdminIcon {
 	}
 
 	/**
+	 * Set the icon path
+	 *
+	 * @return MslsAdminIcon
+	 */
+	public function set_icon_type( $iconType ) {
+		$this->iconType = $iconType;
+
+		return $this;
+	}	
+
+	/**
 	 * Set the path by type
 	 *
 	 * @return MslsAdminIcon
@@ -163,19 +179,48 @@ class MslsAdminIcon {
 	 *
 	 * @return string
 	 */
+	/**
+	 * Get link as html-tag
+	 *
+	 * @return string
+	 */
 	public function get_a() {
 		if ( ! empty( $this->href ) ) {
+			$str = __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' );			
 			$href = $this->href;
-			$str  = __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' );
 		}
 		else {
+			$str = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );			
 			$href = $this->get_edit_new();
-			$str  = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
 		}
 
 		$title = sprintf( $str, $this->language );
 
-		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_img() );
+		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_icon() );
+	}
+
+	/**
+	 * Get icon as html-tag
+	 *
+	 * @return string
+	 */
+	public function get_icon() {
+		if( $this->iconType === 'flag' ) {
+			$icon = sprintf( 
+				'<span class="flag-icon flag-icon-%s flag-icon">%s</span>',
+				substr( $this->language, 0, 2 ),
+				// locale_get_display_language( substr( $this->language, 0, 2 ), substr( get_option( 'WPLANG' ), 0, 2 ) ),
+				\Locale::getDisplayLanguage( substr( $this->language, 0, 2 ), get_user_locale() ) 
+			);
+		} else {
+			if ( ! empty( $this->href ) ) {
+				$icon = '<span class="dashicons dashicons-edit"></span>';				
+			} else {
+				$icon = '<span class="dashicons dashicons-plus"></span>';							
+			}	
+		}
+
+		return $icon;
 	}
 
 	/**
