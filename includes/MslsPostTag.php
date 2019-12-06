@@ -160,7 +160,10 @@ class MslsPostTag extends MslsMain {
 
 			printf(
 				$title_format,
-				__( 'Multisite Language Switcher', 'multisite-language-switcher' ),
+				apply_filters( 
+					'msls_term_select_title',
+					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
+				),
 				$type
 			);
 			foreach ( $blogs as $blog ) {
