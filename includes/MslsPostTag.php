@@ -167,8 +167,9 @@ class MslsPostTag extends MslsMain {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$flag_url = $this->options->get_flag_url( $language );
-				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
+				$icon     = MslsAdminIcon::create()
+					->set_language( $language )
+					->set_icon_type( 'flag' );
 
 				$value = $title = '';
 				if ( $my_data->has_value( $language ) ) {
