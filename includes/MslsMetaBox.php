@@ -102,16 +102,17 @@ class MslsMetaBox extends MslsMain {
 	 * @return MslsMetaBox
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+		$obj        = new static( $options, $collection );
+
 		if ( ! $options->is_excluded() ) {
-			add_action( 'add_meta_boxes', [ MslsMetaBox::class, 'add' ] );
-			add_action( 'save_post', [ MslsMetaBox::class, 'set' ] );
-			add_action( 'trashed_post', [ MslsMetaBox::class, 'delete' ] );
+			add_action( 'add_meta_boxes', [ $obj, 'add' ] );
+			add_action( 'save_post', [ $obj, 'set' ] );
+			add_action( 'trashed_post', [ $obj, 'delete' ] );
 		}
 
-		$collection = MslsBlogCollection::instance();
-
-		return new static( $options, $collection );
+		return $obj;
 	}
 
 	/**
