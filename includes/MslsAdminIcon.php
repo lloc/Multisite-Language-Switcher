@@ -206,7 +206,12 @@ class MslsAdminIcon {
 	 */
 	public function get_icon() {
 		if( $this->iconType === 'flag' ) {
-			$icon = '<span class="flag-icon flag-icon-' . substr( $this->language, 0, 2 ) . ' flag-icon"></span>';
+			$icon = sprintf( 
+				'<span class="flag-icon flag-icon-%s flag-icon">%s</span>',
+				substr( $this->language, 0, 2 ),
+				// locale_get_display_language( substr( $this->language, 0, 2 ), substr( get_option( 'WPLANG' ), 0, 2 ) ),
+				\Locale::getDisplayLanguage( substr( $this->language, 0, 2 ), get_user_locale() ) 
+			);
 		} else {
 			if ( ! empty( $this->href ) ) {
 				$icon = '<span class="dashicons dashicons-edit"></span>';				
