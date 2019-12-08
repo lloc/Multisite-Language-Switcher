@@ -160,15 +160,19 @@ class MslsPostTag extends MslsMain {
 
 			printf(
 				$title_format,
-				__( 'Multisite Language Switcher', 'multisite-language-switcher' ),
+				apply_filters( 
+					'msls_term_select_title',
+					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
+				),
 				$type
 			);
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$flag_url = $this->options->get_flag_url( $language );
-				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
+				$icon     = MslsAdminIcon::create()
+					->set_language( $language )
+					->set_icon_type( 'flag' );
 
 				$value = $title = '';
 				if ( $my_data->has_value( $language ) ) {

@@ -122,7 +122,10 @@ class MslsMetaBox extends MslsMain {
 		foreach ( MslsPostType::instance()->get() as $post_type ) {
 			add_meta_box(
 				'msls',
-				__( 'Multisite Language Switcher', 'multisite-language-switcher' ),
+				apply_filters(
+					'msls_metabox_post_select_title',
+					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
+				),
 				[
 					$this,
 					(
@@ -139,7 +142,10 @@ class MslsMetaBox extends MslsMain {
 			if ( MslsOptions::instance()->activate_content_import ) {
 				add_meta_box(
 					'msls-content-import',
-					__( 'Multisite Language Switcher - Import content', 'multisite-language-switcher' ),
+					apply_filters(
+						'msls_metabox_post_import_title',					
+						__( 'Multisite Language Switcher - Import content', 'multisite-language-switcher' )
+					),
 					[
 						ContentImportMetaBox::instance(),
 						'render',
@@ -176,10 +182,9 @@ class MslsMetaBox extends MslsMain {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$src      = MslsOptions::instance()->get_flag_url( $language );
 				$icon     = MslsAdminIcon::create()
 				                         ->set_language( $language )
-				                         ->set_src( $src );
+				                         ->set_icon_type( 'flag' );
 
 				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( $mydata->$language );
@@ -304,8 +309,9 @@ class MslsMetaBox extends MslsMain {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$flag_url = MslsOptions::instance()->get_flag_url( $language );
-				$icon     = MslsAdminIcon::create()->set_language( $language )->set_src( $flag_url );
+				$icon     = MslsAdminIcon::create()
+					->set_language( $language )
+					->set_icon_type( 'flag' );
 
 				$value = $title = '';
 

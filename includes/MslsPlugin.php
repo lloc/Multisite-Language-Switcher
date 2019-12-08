@@ -229,6 +229,13 @@ class MslsPlugin {
 			MSLS_PLUGIN_VERSION
 		);
 
+		wp_enqueue_style(
+			'msls-flags',
+			plugins_url( 'css-flags/css/flag-icon.min.css', MSLS_PLUGIN__FILE__ ),
+			[],
+			MSLS_PLUGIN_VERSION
+		);			
+
 		if ( $this->options->activate_autocomplete ) {
 			wp_enqueue_script(
 				'msls-autocomplete',
