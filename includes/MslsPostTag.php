@@ -35,7 +35,7 @@ class MslsPostTag extends MslsMain {
 			);
 
 			if ( filter_has_var( INPUT_POST, 's' ) ) {
-				$args['s'] = sanitize_text_field(
+				$args['search'] = sanitize_text_field(
 					filter_input( INPUT_POST, 's' )
 				);
 			}
