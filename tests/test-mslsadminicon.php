@@ -53,7 +53,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$post = $this->get_post( $post_type, 2 );
 		$obj  = $this->get_test( $post );
 
-		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;';
+		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><span class="dashicons dashicons-edit"></span></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -67,7 +67,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$post = $this->get_post( $post_type, 2 );
 		$obj  = $this->get_test( $post );
 
-		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;';
+		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><span class="dashicons dashicons-edit"></span></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -84,7 +84,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_href( 0 ) );
 
-		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;', $create_link );
+		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><span class="dashicons dashicons-plus"></span></a>&nbsp;', $create_link );
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -102,7 +102,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_href( 0 ) );
 
-		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;', $create_link );
+		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><span class="dashicons dashicons-plus"></span></a>&nbsp;', $create_link );
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
