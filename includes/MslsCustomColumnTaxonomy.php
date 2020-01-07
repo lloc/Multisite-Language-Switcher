@@ -31,7 +31,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
 			if ( ! empty( $taxonomy ) ) {
 				add_filter( "manage_edit-{$taxonomy}_columns" , [ $obj, 'th' ] );
-				add_action( "manage_{$taxonomy}_custom_column" , [ $obj, 'column_default' ], 10, 3 );
+				add_action( "manage_{$taxonomy}_custom_column" , [ $obj, 'column_default' ], -100, 3 );
 				add_action( "delete_{$taxonomy}", [ $obj, 'delete' ] );
 			}
 		}
