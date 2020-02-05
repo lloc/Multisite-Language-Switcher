@@ -47,7 +47,8 @@ class MslsPlugin {
 		register_activation_hook( MSLS_PLUGIN__FILE__, [ $obj, 'activate' ] );
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			add_action( 'wp_head', [ MslsPlugin::class, 'print_alternate_links' ] );
+			add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
+			add_filter( 'msls_get_output', [ __CLASS__, 'get_output' ] );
 
 			add_action( 'widgets_init', [ $obj, 'init_widget' ] );
 			add_filter( 'the_content', [ $obj, 'content_filter' ] );
@@ -55,8 +56,6 @@ class MslsPlugin {
 			if ( function_exists( 'register_block_type' ) )  {
 				add_action( 'init', [ $obj, 'block_init' ] );
 			}
-
-			add_filter( 'msls_get_output', [ $obj, 'get_output' ] );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
@@ -104,7 +103,7 @@ class MslsPlugin {
 	 *
 	 * @return MslsOutput
 	 */
-	public function get_output() {
+	public static function get_output() {
 		static $obj = null;
 
 		if ( is_null( $obj ) ) {
@@ -117,8 +116,8 @@ class MslsPlugin {
 	/**
 	 * Callback for action wp_head
 	 */
-	public function print_alternate_links() {
-		echo $this->get_output()->get_alternate_links(), PHP_EOL;
+	public static function print_alternate_links() {
+		echo self::get_output()->get_alternate_links(), PHP_EOL;
 	}
 
 	/**
