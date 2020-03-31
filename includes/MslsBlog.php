@@ -93,6 +93,57 @@ class MslsBlog {
 	}
 
 	/**
+	 * @param MslsOptions $options
+	 *
+	 * @return string|null
+	 */
+	public function get_url( $options ) {
+		if ( $this->obj->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() ) {
+			return $options->get_current_link();
+		}
+
+		return $this->get_permalink( $options );
+	}
+
+	/**
+	 * @param MslsOptions $options
+	 *
+	 * @return string|null
+	 */
+	protected function get_permalink( $options ) {
+		$url = null;
+
+		switch_to_blog( $this->obj->userblog_id );
+
+		if ( is_object( $options ) && method_exists( $options, 'has_value' ) && $options->has_value( $this->get_language() ) ) {
+			$url = $options->get_permalink( $this->get_language() );
+		}
+
+		restore_current_blog();
+
+		return $url;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_hreflang() {
+		if ( has_filter( 'msls_head_hreflang' ) ) {
+			/**
+			 * Overrides the hreflang value
+			 *
+			 * @param string $language
+			 *
+			 * @since 0.9.9
+			 */
+			return (string) apply_filters( 'msls_head_hreflang', $this->get_language() );
+		}
+
+		return $this->get_alpha2();
+	}
+
+
+	/**
 	 * Sort objects helper
 	 *
 	 * @param string $a

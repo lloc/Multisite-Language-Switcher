@@ -104,18 +104,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return bool|string
 	 */
 	function get_msls_blog_description( $locale ) {
-		$collection   = \lloc\Msls\MslsBlogCollection::instance();
-		$blog_objects = $collection->get_objects();
+		$blog = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
 
-		if ( $blog_objects ) {
-			foreach ( $blog_objects as $blog ) {
-				if ( $locale === $blog->get_language() ) {
-					return $blog->get_description();
-				}
-			}
-		}
-
-		return false;
+		return $blog->get_description();
 	}
 
 	/**
@@ -126,7 +117,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return string
 	 */
 	function get_msls_permalink( $locale ) {
-		return \lloc\Msls\MslsOptions::create()->get_permalink( $locale );
+		$options = \lloc\Msls\MslsOptions::create();
+		$blog    = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
+
+		return $blog->get_url( $options );
 	}
 
 }
