@@ -3,7 +3,7 @@
 /.github
 /docs
 /legacy-tests
-/node-modules
+/node_modules
 /tests
 .distignore
 .gitignore
