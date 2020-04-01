@@ -1,6 +1,8 @@
 /.wordpress-org
 /.git
 /.github
+/bin
+/build
 /docs
 /legacy-tests
 /node_modules

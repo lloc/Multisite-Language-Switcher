@@ -146,21 +146,35 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	}
 
 	/**
-	 * Gets blog_id by language
+	 * Get blog by language
 	 *
-	 * @param $language
+	 * @param string $language
 	 *
-	 * @return null|string
+	 * @return MslsBlog|null
 	 */
-	public function get_blog_id( $language ) {
-		$blog_id = null;
+	public function get_blog( $language ) {
+		$blog = null;
 
-		foreach ( $this->get_objects() as $blog ) {
-			if ( $language == $blog->get_language() ) {
-				$blog_id = $blog->userblog_id;
+		foreach ( $this->get_objects() as $item ) {
+			if ( $language == $item->get_language() ) {
+				$blog = $item;
 				break;
 			}
 		}
+
+		return apply_filters( 'msls_blog_collection_get_blog', $blog, $language );
+	}
+
+	/**
+	 * Gets blog_id by language
+	 *
+	 * @param string $language
+	 *
+	 * @return string|null
+	 */
+	public function get_blog_id( $language ) {
+		$blog    = $this->get_blog( $language );
+		$blog_id = ! is_null( $blog ) ? $blog->userblog_id : null;
 
 		return apply_filters( 'msls_blog_collection_get_blog_id', $blog_id, $language );
 	}
