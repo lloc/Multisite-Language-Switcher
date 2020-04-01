@@ -1,0 +1,17 @@
+/.wordpress-org
+/.git
+/.github
+/docs
+/legacy-tests
+/node-modules
+/tests
+.distignore
+.gitignore
+.scrutinizer.yml
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpdoc.xml
+phpunit.xml
+setup.sh
