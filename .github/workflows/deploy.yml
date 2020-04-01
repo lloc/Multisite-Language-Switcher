@@ -11,7 +11,7 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v1
       - name: Composer dependencies
-        run: composer install
+        run: composer install --no-dev
       - name: Build
         run: |
             npm install

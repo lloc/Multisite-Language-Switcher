@@ -5,6 +5,7 @@
 /build/
 /docs/
 /tests/
+/legacy-tests/
 /release/
 /multisite-language-switcher/
 /node_modules/
