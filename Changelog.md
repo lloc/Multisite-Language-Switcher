@@ -1,3 +1,9 @@
+## 2.4.0
+
+* Min PHP Version is now 7.0
+* Code enhancements & Bugfixes
+* https://github.com/lloc/Multisite-Language-Switcher/commits/master
+
 ## 2.3.0
 
 ### Feature
