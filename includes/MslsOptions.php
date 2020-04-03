@@ -7,6 +7,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Icon\IconPng;
+
 /**
  * General options class
  * @package Msls
@@ -317,21 +319,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return string
 	 */
 	public function get_icon( $language ) {
-		static $arr = null;
-
-		if ( is_null( $arr ) ) {
-			$arr  = include plugin_dir_path( MSLS_PLUGIN__FILE__ ) . 'flags/flags.php';
-		}
-
-		if ( isset( $arr[ $language ] ) ) {
-			return $arr[ $language ];
-		}
-
-		if ( 5 == strlen( $language ) ) {
-			$language = strtolower( substr( $language, - 2 ) );
-		}
-
-		return $language . '.png';
+		return ( new IconPng() )->get( $language );
 	}
 
 	/**
