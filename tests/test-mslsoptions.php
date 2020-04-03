@@ -102,8 +102,6 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 	}
 
 	function test_get_url_method() {
-		defined( 'MSLS_PLUGIN__FILE__' ) || define( 'MSLS_PLUGIN__FILE__', '/wp-content/plugins/multisite-language-switcher/multisite-language-switcher.php' );
-
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 
 		$obj = $this->get_test();
@@ -112,8 +110,6 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 	}
 
 	function test_get_flag_url_method() {
-		defined( 'MSLS_PLUGIN__FILE__' ) || define( 'MSLS_PLUGIN__FILE__', '/wp-content/plugins/multisite-language-switcher/multisite-language-switcher.php' );
-
 		Functions\when( 'is_admin' )->justReturn( true );
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 		Functions\when( 'plugin_dir_path' )->justReturn( __DIR__ . '/../' );

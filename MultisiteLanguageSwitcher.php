@@ -38,13 +38,8 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	define( 'MSLS_PLUGIN_VERSION', '2.4.2' );
-
-	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
-		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
-	}
-	if ( ! defined( 'MSLS_PLUGIN__FILE__' ) ) {
-		define( 'MSLS_PLUGIN__FILE__', __FILE__ );
-	}
+	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
+	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 
 	lloc\Msls\MslsPlugin::init();
 

@@ -64,8 +64,6 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	}
 
 	function test_is_plugin_active() {
-		defined( 'MSLS_PLUGIN_PATH' ) || define( 'MSLS_PLUGIN_PATH', '/wp-content/plugins/multisite-language-switcher' );
-
 		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
 		Functions\expect( 'get_blog_option' )->once()->andReturn( [] );
 

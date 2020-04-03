@@ -3,7 +3,7 @@
 namespace lloc\Msls\Component\Icon;
 
 use lloc\Msls\Component\Icon;
-
+use lloc\Msls\MslsPlugin;
 /**
  * Class IconPng
  * @package lloc\Msls\Component
@@ -13,8 +13,8 @@ class IconPng extends Icon {
 	/**
 	 * @return string
 	 */
-	protected function path(): string {
-		return plugin_dir_path( MSLS_PLUGIN__FILE__ ) . 'flags/flags.php';
+	protected function get_include(): string {
+		return MslsPlugin::plugin_dir_path( 'flags/flags.php' );
 	}
 
 	/**

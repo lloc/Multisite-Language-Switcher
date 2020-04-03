@@ -3,6 +3,7 @@
 namespace lloc\Msls\Component\Icon;
 
 use lloc\Msls\Component\Icon;
+use lloc\Msls\MslsPlugin;
 
 /**
  * Class IconSvg
@@ -13,8 +14,8 @@ class IconSvg extends Icon {
 	/**
 	 * @return string
 	 */
-	protected function path(): string {
-		return plugin_dir_path( MSLS_PLUGIN__FILE__ ) . 'css-flags/flags.php';
+	protected function get_include(): string {
+		return MslsPlugin::plugin_dir_path( 'css-flags/flags.php' );
 	}
 
 	/**
@@ -27,7 +28,7 @@ class IconSvg extends Icon {
 			return $this->map[ $language ];
 		}
 
-		return $this->maybe( $language, 'flag-icon' );
+		return $this->maybe( $language, 'flag-icon-' );
 	}
 
 }

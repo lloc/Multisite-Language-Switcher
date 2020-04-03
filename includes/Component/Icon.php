@@ -17,7 +17,7 @@ abstract class Icon {
 	 * Icon constructor
 	 */
 	public function __construct() {
-		$this->map = include $this->path();
+		$this->map = include $this->get_include();
 	}
 
 	/**
@@ -38,7 +38,7 @@ abstract class Icon {
 	/**
 	 * @return string
 	 */
-	abstract protected function path(): string;
+	abstract protected function get_include(): string;
 
 	/**
 	 * @param string $language

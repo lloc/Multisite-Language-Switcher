@@ -20,9 +20,6 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	 * Verify the static init-method
 	 */
 	function test_admin_menu_method() {
-		defined( 'MSLS_PLUGIN__FILE__' ) || define( 'MSLS_PLUGIN__FILE__', '/wp-content/plugins/multisite-language-switcher/multisite-language-switcher.php' );
-		defined( 'MSLS_PLUGIN_VERSION' ) || define( 'MSLS_PLUGIN_VERSION', '2.3.0' );
-
 		Functions\when( 'wp_enqueue_style' )->returnArg();
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 
@@ -42,8 +39,6 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	 * Verify the static init_i18n_support-method
 	 */
 	function test_init_i18n_support_method() {
-		defined( 'MSLS_PLUGIN_PATH' ) || define( 'MSLS_PLUGIN_PATH', '/wp-content/plugins/multisite-language-switcher' );
-
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
 
 		$this->assertInternalType( 'boolean', $this->get_test()->init_i18n_support() );

@@ -296,7 +296,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return string
 	 */
 	public function get_url( $dir ) {
-		return esc_url( plugins_url( $dir, MSLS_PLUGIN__FILE__ ) );
+		return esc_url( MslsPlugin::plugins_url( $dir ) );
 	}
 
 	/**

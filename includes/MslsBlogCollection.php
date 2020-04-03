@@ -235,13 +235,14 @@ class MslsBlogCollection extends MslsRegistryInstance {
 			$this->active_plugins = get_site_option( 'active_sitewide_plugins', [] );
 		}
 
-		if ( isset( $this->active_plugins[ MSLS_PLUGIN_PATH ] ) ) {
+		$path = MslsPlugin::path();
+		if ( isset( $this->active_plugins[ $path ] ) ) {
 			return true;
 		}
 
 		$plugins = get_blog_option( $blog_id, 'active_plugins', [] );
 
-		return in_array( MSLS_PLUGIN_PATH, $plugins );
+		return in_array( $path, $plugins );
 	}
 
 	/**
