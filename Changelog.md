@@ -1,3 +1,9 @@
+## 2.4.1
+
+### Bug Fixes
+
+* new **SVG** flags use now the same logic as the PNG flags for getting the right name  
+
 ## 2.4.0
 
 * Min PHP Version is now 7.0
