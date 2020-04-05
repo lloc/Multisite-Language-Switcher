@@ -97,6 +97,7 @@ class MslsOutput extends MslsMain {
 	public function get_alternate_links() {
 		$blogs   = MslsBlogCollection::instance();
 		$options = MslsOptions::create();
+
 		$arr     = [];
 		$default = '';
 

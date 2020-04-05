@@ -113,9 +113,11 @@ class MslsBlog {
 	protected function get_permalink( $options ) {
 		$url = null;
 
+		$is_home = is_front_page();
+
 		switch_to_blog( $this->obj->userblog_id );
 
-		if ( is_object( $options ) && method_exists( $options, 'has_value' ) && $options->has_value( $this->get_language() ) ) {
+		if ( is_object( $options ) && method_exists( $options, 'has_value' ) && ( $is_home || $options->has_value( $this->get_language() ) ) ) {
 			$url = $options->get_permalink( $this->get_language() );
 		}
 
