@@ -18,6 +18,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		Functions\when( 'checked' )->justReturn( '' );
 		Functions\when( 'selected' )->justReturn( '' );
 		Functions\when( 'get_admin_url' )->justReturn( 'wp-admin' );
+		Functions\when( 'get_locale' )->justReturn( 'de_DE' );
 
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( false );
@@ -202,34 +203,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
 		$this->expectOutputRegex( '/^<select id="content_priority" name="msls\[content_priority\]">.*$/' );
 		$obj->content_priority();
-	}
-
-	/**
-	 * Verify the render_checkbox-method
-	 */
-	function test_render_checkbox() {
-		$obj = $this->get_sut();
-
-		$this->assertInternalType( 'string', $obj->render_checkbox( 'test' ) );
-	}
-
-	/**
-	 * Verify the render_input-method
-	 */
-	function test_render_input() {
-		$obj = $this->get_sut();
-
-		$this->assertInternalType( 'string', $obj->render_input( 'test' ) );
-	}
-
-	/**
-	 * Verify the render_select-method
-	 */
-	function test_render_select() {
-		$obj = $this->get_sut();
-
-		$arr = array( 'a', 'b', 'c' );
-		$this->assertInternalType( 'string', $obj->render_select( 'test', $arr ) );
 	}
 
 	/**

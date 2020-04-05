@@ -69,8 +69,23 @@ class MslsAdminIcon {
 	protected $id;
 
 	/**
-	 * Factory method
+	 * Constructor
 	 *
+	 * @param string $type
+	 */
+	public function __construct( $type ) {
+		$this->type = esc_attr( $type );
+		$this->set_path();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->get_a();
+	}
+
+	/**
 	 * @codeCoverageIgnore
 	 *
 	 * @return MslsAdminIcon
@@ -84,16 +99,6 @@ class MslsAdminIcon {
 		}
 
 		return new MslsAdminIcon( $type );
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $type
-	 */
-	public function __construct( $type ) {
-		$this->type = esc_attr( $type );
-		$this->set_path();
 	}
 
 	/**
@@ -161,91 +166,6 @@ class MslsAdminIcon {
 	}
 
 	/**
-	 * Handles the output when object is treated like a string
-	 * @return string
-	 */
-	public function __toString() {
-		return $this->get_a();
-	}
-
-	/**
-	 * Get image as html-tag
-	 *
-	 * @return string
-	 */
-	public function get_img() {
-		return sprintf( '<img alt="%s" src="%s" />', $this->language, $this->src );
-	}
-
-	/**
-	 * Get link as html-tag
-	 *
-	 * @return string
-	 */
-	/**
-	 * Get link as html-tag
-	 *
-	 * @return string
-	 */
-	public function get_a() {
-		if ( ! empty( $this->href ) ) {
-			$str  = __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' );
-			$href = $this->href;
-		} else {
-			$str  = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
-			$href = $this->get_edit_new();
-		}
-
-		$title = sprintf( $str, $this->language );
-
-		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_icon() );
-	}
-
-	/**
-	 * Get icon as html-tag
-	 *
-	 * @return string
-	 */
-	public function get_icon() {
-		if ( 'flag' === $this->iconType ) {
-			$icon = sprintf( '<span class="flag-icon %s">%s</span>',
-				( new IconSvg() )->get( $this->language ),
-				$this->language
-			);
-		} else {
-			if ( ! empty( $this->href ) ) {
-				$icon = '<span class="dashicons dashicons-edit"></span>';
-			} else {
-				$icon = '<span class="dashicons dashicons-plus"></span>';
-			}
-		}
-
-		return $icon;
-	}
-
-	/**
-	 * Creates new admin link
-	 *
-	 * @return string
-	 */
-	public function get_edit_new() {
-		$path = $this->path;
-
-		if ( null !== $this->id && null !== $this->origin_language ) {
-			$path = add_query_arg( [ 'msls_id' => $this->id, 'msls_lang' => $this->origin_language ], $this->path );
-		}
-
-		/**
-		 * Returns custom url of an admin icon link
-		 *
-		 * @param string $path
-		 *
-		 * @since 0.9.9
-		 */
-		return get_admin_url( get_current_blog_id(), (string) apply_filters( 'msls_admin_icon_get_edit_new', $path ) );
-	}
-
-	/**
 	 * Sets the id of the object this icon is for
 	 *
 	 * @param int $id
@@ -269,6 +189,74 @@ class MslsAdminIcon {
 		$this->origin_language = $origin_language;
 
 		return $this;
+	}
+
+	/**
+	 * Get image as html-tag
+	 *
+	 * @return string
+	 */
+	public function get_img() {
+		return sprintf( '<img alt="%s" src="%s" />', $this->language, $this->src );
+	}
+
+	/**
+	 * Get link as html-tag
+	 *
+	 * @return string
+	 */
+	public function get_a(): string {
+		if ( empty( $this->href ) ) {
+			$title = sprintf( __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
+			$href = $this->get_edit_new();
+		} else {
+			$title = sprintf( __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
+			$href  = $this->href;
+		}
+
+		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_icon() );
+	}
+
+	/**
+	 * Get icon as html-tag
+	 *
+	 * @return string
+	 */
+	public function get_icon() {
+		if ( 'flag' === $this->iconType ) {
+			return sprintf( '<span class="flag-icon %s">%s</span>',
+				( new IconSvg() )->get( $this->language ),
+				$this->language
+			);
+		}
+
+		if ( empty( $this->href ) ) {
+			return '<span class="dashicons dashicons-plus"></span>';
+		}
+
+		return '<span class="dashicons dashicons-edit"></span>';
+	}
+
+	/**
+	 * Creates new admin link
+	 *
+	 * @return string
+	 */
+	public function get_edit_new() {
+		$path = $this->path;
+
+		if ( null !== $this->id && null !== $this->origin_language ) {
+			$path = add_query_arg( [ 'msls_id' => $this->id, 'msls_lang' => $this->origin_language ], $this->path );
+		}
+
+		/**
+		 * Returns custom url of an admin icon link
+		 *
+		 * @param string $path
+		 *
+		 * @since 0.9.9
+		 */
+		return get_admin_url( get_current_blog_id(), (string) apply_filters( 'msls_admin_icon_get_edit_new', $path ) );
 	}
 
 }

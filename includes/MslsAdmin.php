@@ -7,6 +7,12 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Input\Checkbox;
+use lloc\Msls\Component\Input\Group;
+use lloc\Msls\Component\Input\Label;
+use lloc\Msls\Component\Input\Text;
+use lloc\Msls\Component\Input\Select;
+
 /**
  * Administration of the options
  * @package Msls
@@ -85,7 +91,9 @@ class MslsAdmin extends MslsMain {
 					return $this->render_rewrite( $parts[1] );
 					break;
 				case 'text':
-					echo $this->render_input( $parts[1] );
+					$key   = $parts[1];
+					$value = ! empty( $this->options->$key ) ? $this->options->$key : '';
+					echo ( new Text( $key, $value ) )->render();
 					break;
 			}
 		}
@@ -347,22 +355,17 @@ class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'blog_language'
 	 */
 	public function blog_language() {
-		echo $this->render_select(
-			'blog_language',
-			$this->options->get_available_languages(),
-			get_option( 'WPLANG', 'en_US' )
-		);
+		$languages = $this->options->get_available_languages();
+		$selected  = get_locale();
+
+		echo ( new Select('blog_language', $languages, $selected ) )->render();
 	}
 
 	/**
 	 * Shows the select-form-field 'display'
 	 */
 	public function display() {
-		echo $this->render_select(
-			'display',
-			MslsLink::get_types_description(),
-			$this->options->display
-		);
+		echo ( new Select('display', MslsLink::get_types_description(), $this->options->display ) )->render();
 	}
 
 	/**
@@ -375,7 +378,7 @@ class MslsAdmin extends MslsMain {
 			$users[ $user->ID ] = $user->user_nicename;
 		}
 
-		echo $this->render_select( 'reference_user', $users, $this->options->reference_user );
+		echo ( new Select( 'reference_user', $users, $this->options->reference_user ) )->render();
 	}
 
 	/**
@@ -385,31 +388,23 @@ class MslsAdmin extends MslsMain {
 	 * input fields in the backend instead of the traditional select-menus.
 	 */
 	public function activate_autocomplete() {
-		printf(
-			'%s %s',
-			$this->render_checkbox( 'activate_autocomplete' ),
-			$this->render_checkbox_label(
-				'activate_autocomplete',
-				__( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' )
-			)
-		);
+		$key   = 'activate_autocomplete';
+		$text  = __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' );
+
+		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
 
 	/**
-	 * render
+	 * Activate content import
 	 *
 	 * You can decide if you want to activate the content import functionality
 	 * in the backend instead of the traditional select-menus.
 	 */
 	public function activate_content_import() {
-		printf(
-			'%s %s',
-			$this->render_checkbox( 'activate_content_import' ),
-			$this->render_checkbox_label(
-				'activate_content_import',
-				__( 'Activate the content import functionality', 'multisite-language-switcher' )
-			)
-		);
+		$key  = 'activate_content_import';
+		$text = __( 'Activate the content import functionality', 'multisite-language-switcher' );
+
+		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
 
 	/**
@@ -419,14 +414,10 @@ class MslsAdmin extends MslsMain {
 	 * the output will be sorted by the language-code.
 	 */
 	public function sort_by_description() {
-		printf(
-			'%s %s',
-			$this->render_checkbox( 'sort_by_description' ),
-			$this->render_checkbox_label(
-				'sort_by_description',
-				__( 'Sort languages by description', 'multisite-language-switcher' )
-			)
-		);
+		$key   = 'sort_by_description';
+		$text  = __( 'Sort languages by description', 'multisite-language-switcher' );
+
+		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
 
 	/**
@@ -436,14 +427,10 @@ class MslsAdmin extends MslsMain {
 	 * plugin will ignore this blog while this option is active.
 	 */
 	public function exclude_current_blog() {
-		printf(
-			'%s %s',
-			$this->render_checkbox( 'exclude_current_blog' ),
-			$this->render_checkbox_label(
-				'exclude_current_blog',
-				__( 'Exclude this blog from output', 'multisite-language-switcher' )
-			)
-		);
+		$key  = 'exclude_current_blog';
+		$text =  __( 'Exclude this blog from output', 'multisite-language-switcher' );
+
+		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
 
 	/**
@@ -453,14 +440,10 @@ class MslsAdmin extends MslsMain {
 	 * translations.
 	 */
 	public function only_with_translation() {
-		printf(
-			'%s %s',
-			$this->render_checkbox( 'only_with_translation' ),
-			$this->render_checkbox_label(
-				'only_with_translation',
-				__( 'Show only links with a translation', 'multisite-language-switcher' )
-			)
-		);
+		$key  = 'only_with_translation';
+		$text = __( 'Show only links with a translation', 'multisite-language-switcher' );
+
+		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
 
 	/**
@@ -470,14 +453,10 @@ class MslsAdmin extends MslsMain {
 	 * link to the current blog.
 	 */
 	public function output_current_blog() {
-		printf(
-			'%s %s',
-			$this->render_checkbox( 'output_current_blog' ),
-			$this->render_checkbox_label(
-				'output_current_blog',
-				__( 'Display link to the current language', 'multisite-language-switcher' )
-			)
-		);
+		$key  = 'output_current_blog';
+		$text = __( 'Display link to the current language', 'multisite-language-switcher' );
+
+		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
 
 	/**
@@ -486,21 +465,17 @@ class MslsAdmin extends MslsMain {
 	 * The language will be used ff there is no description.
 	 */
 	public function description() {
-		echo $this->render_input( 'description', '40' );
+		echo ( new Text('description', $this->options->description, '40' ) )->render();
 	}
 
 	/**
 	 * The output can be placed after the_content
 	 */
 	public function content_filter() {
-		printf(
-			'%s %s',
-			$this->render_checkbox( 'content_filter' ),
-			$this->render_checkbox_label(
-				'content_filter',
-				__( 'Add hint for available translations', 'multisite-language-switcher' )
-			)
-		);
+		$key  = 'content_filter';
+		$text = __( 'Add hint for available translations', 'multisite-language-switcher' );
+
+		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
 
 	/**
@@ -513,13 +488,9 @@ class MslsAdmin extends MslsMain {
 	public function content_priority() {
 		$temp     = array_merge( range( 1, 10 ), [ 20, 50, 100 ] );
 		$arr      = array_combine( $temp, $temp );
-		$selected = (
-		empty( $this->options->content_priority ) ?
-			10 :
-			$this->options->content_priority
-		);
+		$selected = empty( $this->options->content_priority ) ? 10 : $this->options->content_priority;
 
-		echo $this->render_select( 'content_priority', $arr, $selected );
+		echo ( new Select( 'content_priority', $arr, $selected ) )->render();
 	}
 
 	/**
@@ -537,87 +508,7 @@ class MslsAdmin extends MslsMain {
 			$value = $rewrite['slug'];
 		}
 
-		echo $this->render_input( "rewrite_{$key}", 30, $value, true );
-	}
-
-	/**
-	 * Render form-element (checkbox)
-	 *
-	 * @param string $key   Name and ID of the form-element
-	 *
-	 * @return string
-	 */
-	public function render_checkbox( $key ) {
-		return sprintf(
-			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
-			$key,
-			checked( 1, $this->options->$key, false )
-		);
-	}
-
-	/**
-	 * Renders a form checkbox label.
-	 *
-	 * @param string $key   Name and ID of the checkbox.
-	 * @param string $label Label text for the checkbox.
-	 *
-	 * @return string
-	 */
-	public function render_checkbox_label( $key, $label ) {
-		return sprintf(
-			'<label for="%1$s">%2$s</label>',
-			$key,
-			esc_html( $label )
-		);
-	}
-
-	/**
-	 * Render form-element (text-input)
-	 *
-	 * @param string $key Name and ID of the form-element
-	 * @param string $size Size-attribute of the input-field
-	 * @param string $default
-	 * @param bool $readonly
-	 *
-	 * @return string
-	 */
-	public function render_input( $key, $size = '30', $default = '', $readonly = false ) {
-		return sprintf(
-			'<input type="text" class="regular-text" id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"%4$s/>',
-			$key,
-			esc_attr( ! empty( $this->options->$key ) ? $this->options->$key : $default ),
-			$size,
-			$readonly ? ' readonly="readonly"' : ''
-		);
-	}
-
-	/**
-	 * Render form-element (select)
-	 * @uses selected
-	 *
-	 * @param string $key Name and ID of the form-element
-	 * @param array $arr Options as associative array
-	 * @param string $selected Values which should be selected
-	 *
-	 * @return string
-	 */
-	public function render_select( $key, array $arr, $selected = '' ) {
-		$options = [];
-
-		foreach ( $arr as $value => $description ) {
-			$options[] = sprintf(
-				'<option value="%s" %s>%s</option>',
-				$value,
-				selected( $value, $selected, false ),
-				$description
-			);
-		}
-
-		return sprintf(
-			'<select id="%1$s" name="msls[%1$s]">%2$s</select>',
-			$key,
-			implode( '', $options )
-		);
+		echo ( new Text( "rewrite_{$key}", $value, 30, true ) )->render();
 	}
 
 	/**
