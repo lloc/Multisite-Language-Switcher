@@ -33,8 +33,6 @@ class Text implements InputInterface {
 	 * @param string|null $value
 	 * @param string $size
 	 * @param bool $readonly
-	 *
-	 * @return string
 	 */
 	public function __construct( string $key, $value, string $size = '30', bool $readonly = false ) {
 		$this->key      = esc_attr( $key );

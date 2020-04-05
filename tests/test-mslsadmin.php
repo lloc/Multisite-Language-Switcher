@@ -27,27 +27,32 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_description' )->andReturns( 'ABC' );
 		$blog->userblog_id = 1;
-		$blog->blogname = 'abc';
+		$blog->blogname    = 'abc';
 
 		$blogs[] = $blog;
 
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_description' )->andReturns( 'XYZ' );
 		$blog->userblog_id = 2;
-		$blog->blogname = 'xyz';
+		$blog->blogname    = 'xyz';
 
 		$blogs[] = $blog;
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturns( 1 );
 		$collection->shouldReceive( 'get_plugin_active_blogs' )->andReturns( $blogs );
-		$collection->shouldReceive( 'get_users' )->andReturns( [ (object) [ 'ID' => 1, 'user_nicename' => 'realloc' ] ] );
+		$collection->shouldReceive( 'get_users' )->andReturns( [
+			(object) [
+				'ID' => 1,
+				'user_nicename' => 'realloc'
+			]
+		] );
 
 		return new MslsAdmin( $options, $collection );
 	}
 
 	function test_has_problems_no_problem() {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', 'it_IT' ] );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -59,7 +64,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	function test_has_problems_one_language() {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', ] );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );

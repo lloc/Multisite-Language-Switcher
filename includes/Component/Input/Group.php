@@ -45,7 +45,7 @@ class Group implements InputInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		$items = array_map( function( InputInterface $input ) {
+		$items = array_map( function ( InputInterface $input ) {
 			return $input->render();
 		}, $this->arr );
 

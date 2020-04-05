@@ -25,7 +25,7 @@ class Label implements InputInterface {
 	 * @param string $label
 	 */
 	public function __construct( string $key, string $text ) {
-		$this->key   = esc_attr( $key );
+		$this->key  = esc_attr( $key );
 		$this->text = esc_html( $text );
 	}
 

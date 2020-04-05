@@ -1,6 +1,5 @@
 <?php
 
-
 namespace lloc\Msls\Component;
 
 /**
@@ -9,6 +8,9 @@ namespace lloc\Msls\Component;
  */
 interface InputInterface {
 
+	/**
+	 * @return string
+	 */
 	public function render(): string;
 
 }

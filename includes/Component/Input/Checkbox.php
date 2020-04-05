@@ -26,14 +26,14 @@ class Checkbox implements InputInterface {
 	 */
 	public function __construct( string $key, $value ) {
 		$this->key      = esc_attr( $key );
-		$this->selected	= checked( 1, $value, false );
+		$this->selected = checked( 1, $value, false );
 	}
 
 	/**
 	 * @return string
 	 */
 	public function render(): string {
-		return sprintf('<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>', $this->key, $this->selected );
+		return sprintf( '<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>', $this->key, $this->selected );
 	}
 
 }

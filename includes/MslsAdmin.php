@@ -38,9 +38,10 @@ class MslsAdmin extends MslsMain {
 			/**
 			 * Override the capabilities needed for the plugin's settings
 			 *
+			 * @param string $capability
+			 *
 			 * @since 2.0
 			 *
-			 * @param string $capability
 			 */
 			$caps = apply_filters( 'msls_admin_caps', 'manage_options' );
 			if ( current_user_can( $caps ) ) {
@@ -162,7 +163,7 @@ class MslsAdmin extends MslsMain {
 		}
 
 		return (
-			empty( $arr ) ?
+		empty( $arr ) ?
 			'' :
 			sprintf(
 				'<ul class="subsubsub"><li>%s</li></ul>',
@@ -201,9 +202,11 @@ class MslsAdmin extends MslsMain {
 
 		/**
 		 * Lets you add your own settings section
-		 * @since 1.0
 		 *
 		 * @param string $page
+		 *
+		 * @since 1.0
+		 *
 		 */
 		do_action( 'msls_admin_register', __CLASS__ );
 	}
@@ -220,10 +223,12 @@ class MslsAdmin extends MslsMain {
 
 		/**
 		 * Lets you add your own field to the language section
-		 * @since 1.0
 		 *
 		 * @param string $page
 		 * @param string $section
+		 *
+		 * @since 1.0
+		 *
 		 */
 		do_action( 'msls_admin_language_section', __CLASS__, 'language_section' );
 	}
@@ -280,10 +285,12 @@ class MslsAdmin extends MslsMain {
 
 		/**
 		 * Lets you add your own field to the main section
-		 * @since 1.0
 		 *
 		 * @param string $page
 		 * @param string $section
+		 *
+		 * @since 1.0
+		 *
 		 */
 		do_action( 'msls_admin_main_section', __CLASS__, 'main_section' );
 	}
@@ -316,10 +323,12 @@ class MslsAdmin extends MslsMain {
 
 		/**
 		 * Lets you add your own field to the advanced section
-		 * @since 1.0
 		 *
 		 * @param string $page
 		 * @param string $section
+		 *
+		 * @since 1.0
+		 *
 		 */
 		do_action( 'msls_admin_advanced_section', __CLASS__, 'advanced_section' );
 	}
@@ -358,14 +367,14 @@ class MslsAdmin extends MslsMain {
 		$languages = $this->options->get_available_languages();
 		$selected  = get_locale();
 
-		echo ( new Select('blog_language', $languages, $selected ) )->render();
+		echo ( new Select( 'blog_language', $languages, $selected ) )->render();
 	}
 
 	/**
 	 * Shows the select-form-field 'display'
 	 */
 	public function display() {
-		echo ( new Select('display', MslsLink::get_types_description(), $this->options->display ) )->render();
+		echo ( new Select( 'display', MslsLink::get_types_description(), $this->options->display ) )->render();
 	}
 
 	/**
@@ -388,8 +397,8 @@ class MslsAdmin extends MslsMain {
 	 * input fields in the backend instead of the traditional select-menus.
 	 */
 	public function activate_autocomplete() {
-		$key   = 'activate_autocomplete';
-		$text  = __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' );
+		$key  = 'activate_autocomplete';
+		$text = __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' );
 
 		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
@@ -414,8 +423,8 @@ class MslsAdmin extends MslsMain {
 	 * the output will be sorted by the language-code.
 	 */
 	public function sort_by_description() {
-		$key   = 'sort_by_description';
-		$text  = __( 'Sort languages by description', 'multisite-language-switcher' );
+		$key  = 'sort_by_description';
+		$text = __( 'Sort languages by description', 'multisite-language-switcher' );
 
 		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
@@ -428,7 +437,7 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function exclude_current_blog() {
 		$key  = 'exclude_current_blog';
-		$text =  __( 'Exclude this blog from output', 'multisite-language-switcher' );
+		$text = __( 'Exclude this blog from output', 'multisite-language-switcher' );
 
 		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
@@ -465,7 +474,7 @@ class MslsAdmin extends MslsMain {
 	 * The language will be used ff there is no description.
 	 */
 	public function description() {
-		echo ( new Text('description', $this->options->description, '40' ) )->render();
+		echo ( new Text( 'description', $this->options->description, '40' ) )->render();
 	}
 
 	/**
@@ -521,9 +530,11 @@ class MslsAdmin extends MslsMain {
 	public function validate( array $arr ) {
 		/**
 		 * Returns custom filtered input array
-		 * @since 1.0
 		 *
 		 * @param array $arr
+		 *
+		 * @since 1.0
+		 *
 		 */
 		$arr = apply_filters( 'msls_admin_validate', $arr );
 

@@ -40,7 +40,7 @@ class Option implements InputInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		return sprintf( '<option value="%s" %s>%s</option>', $this->key, $this->selected, $this->value );
+		return sprintf( '<option value="%1$s" %2$s>%3$s</option>', $this->key, $this->selected, $this->value );
 	}
 
 }
