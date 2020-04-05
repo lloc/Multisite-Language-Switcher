@@ -1,8 +1,20 @@
-## 2.4.1
+## 2.4.3
+
+### Bug Fixes
+
+* fix for alternate links for hreflang
+
+## 2.4.2
 
 ### Bug Fixes
 
 * new **SVG** flags use now the same logic as the PNG flags for getting the right name  
+
+## 2.4.1
+
+### Bug Fixes
+
+* use of \Locale class removed because it expects PHP Intl installed which seems not the standard case   
 
 ## 2.4.0
 
