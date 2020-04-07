@@ -43,7 +43,7 @@ class MslsPlugin {
 
 		add_action( 'plugins_loaded', [ $obj, 'init_i18n_support' ] );
 
-		register_activation_hook(  self::file(), [ $obj, 'activate' ] );
+		register_activation_hook( self::file(), [ $obj, 'activate' ] );
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
@@ -115,20 +115,14 @@ class MslsPlugin {
 	/**
 	 * @param $wp_admin_bar
 	 */
-	function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
+	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
-			$wp_admin_bar->add_node( [
-				'id'    => 'blog-' . $blog->userblog_id,
-				'title' => $blog->get_title(),
-			] );
+			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $blog->get_title() ] );
 		}
 
 		$blog = $blog_collection->get_current_blog();
-		$wp_admin_bar->add_node( [
-			'id'   => 'site-name',
-			'title' => $blog->get_title(),
-		] );
+		$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title() ] );
 	}
 
 	/**
@@ -370,7 +364,7 @@ class MslsPlugin {
 	 * Activate plugin
 	 */
 	public static function activate() {
-		register_uninstall_hook(  self::file(), [ __CLASS__, 'uninstall' ] );
+		register_uninstall_hook( self::file(), [ __CLASS__, 'uninstall' ] );
 	}
 
 	/**
