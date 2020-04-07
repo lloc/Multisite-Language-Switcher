@@ -28,7 +28,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * Collection of MslsBlog-objects
-	 * @var array
+	 * @var MslsBlog[]
 	 */
 	private $objects = [];
 
@@ -43,6 +43,12 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @var array
 	 */
 	private $active_plugins;
+
+	/**
+	 * Container for hreflang-mapping
+	 * @var array
+	 */
+	private $hreflangmap = [];
 
 	/**
 	 * Constructor
@@ -86,10 +92,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 				);
 
 				if ( false !== $description ) {
-					$this->objects[ $blog->userblog_id ] = new MslsBlog(
-						$blog,
-						$description
-					);
+					$this->objects[ $blog->userblog_id ] = new MslsBlog( $blog, $description );
 				}
 			}
 			uasort( $this->objects, [ MslsBlog::class, $this->objects_order ] );
