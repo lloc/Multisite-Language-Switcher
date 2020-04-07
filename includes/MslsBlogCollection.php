@@ -30,7 +30,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * Collection of MslsBlog-objects
 	 * @var array
 	 */
-	private $objects = array();
+	private $objects = [];
 
 	/**
 	 * Order output by language or description
@@ -127,11 +127,8 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return array
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
-		$blogs = get_blogs_of_user(
-			$options->has_value( 'reference_user' ) ?
-				$options->reference_user :
-				current( $this->get_users( 'ID', 1 ) )
-		);
+		$reference_user = $options->has_value( 'reference_user' ) ? $options->reference_user : current( $this->get_users( 'ID', 1 ) );
+		$blogs          = get_blogs_of_user( $reference_user );
 
 		/**
 		 * @todo Check if this is still useful
@@ -250,9 +247,9 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return array
 	 */
 	public function get_plugin_active_blogs() {
-		$arr = array();
+		$arr = [];
 
-		foreach ( $this->get_objects() as $id => $blog ) {
+		foreach ( $this->get_objects() as $blog ) {
 			if ( $this->is_plugin_active( $blog->userblog_id ) ) {
 				$arr[] = $blog;
 			}

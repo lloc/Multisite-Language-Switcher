@@ -153,23 +153,13 @@ class MslsAdmin extends MslsMain {
 		$arr = [];
 
 		foreach ( $this->collection->get_plugin_active_blogs() as $blog ) {
-			$arr[] = sprintf(
-				'<a href="%s"%s>%s / %s</a>',
-				get_admin_url( $blog->userblog_id, $this->get_options_page_link() ),
-				( $blog->userblog_id == $this->collection->get_current_blog_id() ? ' class="current"' : '' ),
-				$blog->blogname,
-				$blog->get_description()
-			);
+			$admin_url = get_admin_url( $blog->userblog_id, $this->get_options_page_link() );
+			$current   = $blog->userblog_id == $this->collection->get_current_blog_id() ? ' class="current"' : '';
+
+			$arr[] = sprintf( '<a href="%1$s"%2$s>%3$s</a>', $admin_url, $current, $blog->get_title() );
 		}
 
-		return (
-		empty( $arr ) ?
-			'' :
-			sprintf(
-				'<ul class="subsubsub"><li>%s</li></ul>',
-				implode( ' | </li><li>', $arr )
-			)
-		);
+		return empty( $arr ) ? '' : sprintf( '<ul class="subsubsub"><li>%s</li></ul>', implode( ' | </li><li>', $arr ) );
 	}
 
 	/**
@@ -536,14 +526,9 @@ class MslsAdmin extends MslsMain {
 		 * @since 1.0
 		 *
 		 */
-		$arr = apply_filters( 'msls_admin_validate', $arr );
+		$arr = (array) apply_filters( 'msls_admin_validate', $arr );
 
-		$arr['display'] = (
-		isset( $arr['display'] ) ?
-			(int) $arr['display'] :
-			0
-		);
-
+		$arr['display'] = intval( $arr['display'] ?? 0 );
 		if ( isset( $arr['image_url'] ) ) {
 			$arr['image_url'] = rtrim( esc_attr( $arr['image_url'] ), '/' );
 		}

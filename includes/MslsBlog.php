@@ -48,7 +48,7 @@ class MslsBlog {
 	}
 
 	/**
-	 * Get a member of the \StdClass-object by name
+	 * Gets a member of the \StdClass-object by name
 	 *
 	 * The method return <em>null</em> if the requested member does not exists.
 	 *
@@ -61,13 +61,22 @@ class MslsBlog {
 	}
 
 	/**
-	 * Get the description stored in this object
+	 * Gets the description stored in this object
 	 *
 	 * The method returns the stored language if the description is empty.
 	 * @return string
 	 */
-	public function get_description() {
+	public function get_description(): string {
 		return empty( $this->description ) ? $this->get_language() : $this->description;
+	}
+
+	/**
+	 * Gets a customized title for the blog
+	 *
+	 * @return string
+	 */
+	public function get_title(): string {
+		return sprintf( '%1$s (%2$s)', $this->obj->blogname, $this->get_description() );
 	}
 
 	/**

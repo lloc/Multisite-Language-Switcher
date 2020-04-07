@@ -48,6 +48,7 @@ class MslsPlugin {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
 			add_filter( 'msls_get_output', [ __CLASS__, 'get_output' ] );
+			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
 
 			add_action( 'widgets_init', [ $obj, 'init_widget' ] );
 			add_filter( 'the_content', [ $obj, 'content_filter' ] );
@@ -111,6 +112,24 @@ class MslsPlugin {
 		return $obj;
 	}
 
+	/**
+	 * @param $wp_admin_bar
+	 */
+	function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
+		$blog_collection = MslsBlogCollection::instance();
+		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
+			$wp_admin_bar->add_node( [
+				'id'    => 'blog-' . $blog->userblog_id,
+				'title' => $blog->get_title(),
+			] );
+		}
+
+		$blog = $blog_collection->get_current_blog();
+		$wp_admin_bar->add_node( [
+			'id'   => 'site-name',
+			'title' => $blog->get_title(),
+		] );
+	}
 
 	/**
 	 * Callback for action wp_head

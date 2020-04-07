@@ -281,11 +281,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return string
 	 */
 	public function get_order() {
-		return (
-		isset( $this->sort_by_description ) ?
-			'description' :
-			'language'
-		);
+		return  isset( $this->sort_by_description ) ? 'description' : 'language';
 	}
 
 	/**

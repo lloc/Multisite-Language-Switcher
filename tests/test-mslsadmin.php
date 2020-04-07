@@ -25,16 +25,18 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', 'it_IT' ] );
 
 		$blog = \Mockery::mock( MslsBlog::class );
-		$blog->shouldReceive( 'get_description' )->andReturns( 'ABC' );
+		$blog->shouldReceive( 'get_title' )->andReturns( 'abc (DEF)' );
+		$blog->shouldReceive( 'get_description' )->andReturns( 'DEF' );
 		$blog->userblog_id = 1;
 		$blog->blogname    = 'abc';
 
 		$blogs[] = $blog;
 
 		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->shouldReceive( 'get_title' )->andReturns( 'uvw (XYZ)' );
 		$blog->shouldReceive( 'get_description' )->andReturns( 'XYZ' );
 		$blog->userblog_id = 2;
-		$blog->blogname    = 'xyz';
+		$blog->blogname    = 'uvw';
 
 		$blogs[] = $blog;
 
@@ -97,7 +99,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	public function test_subsubsub() {
 		$obj = $this->get_sut();
 
-		$this->assertEquals( '<ul class="subsubsub"><li><a href="wp-admin" class="current">abc / ABC</a> | </li><li><a href="wp-admin">xyz / XYZ</a></li></ul>', $obj->subsubsub() );
+		$this->assertEquals( '<ul class="subsubsub"><li><a href="wp-admin" class="current">abc (DEF)</a> | </li><li><a href="wp-admin">uvw (XYZ)</a></li></ul>', $obj->subsubsub() );
 	}
 
 	/**
