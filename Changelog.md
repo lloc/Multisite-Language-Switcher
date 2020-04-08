@@ -1,3 +1,10 @@
+## 2.4.4
+
+### Features
+
+* the value for **hrefLang** in head is now more specific. It will now return a specific language-code if there are similar locales like 'en_US' and 'en_GB' ('en-US' and 'en-GB' in this case).
+* Sites in the **admin-bar** show now the description-part.
+
 ## 2.4.3
 
 ### Bug Fixes
@@ -24,7 +31,7 @@
 
 ## 2.3.0
 
-### Feature
+### Features
 
 * **New API functions**
     - `get_msls_flag_url( string $language ): string;`
