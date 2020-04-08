@@ -136,25 +136,6 @@ class MslsBlog {
 	}
 
 	/**
-	 * @return string
-	 */
-	public function get_hreflang() {
-		if ( has_filter( 'msls_head_hreflang' ) ) {
-			/**
-			 * Overrides the hreflang value
-			 *
-			 * @param string $language
-			 *
-			 * @since 0.9.9
-			 */
-			return (string) apply_filters( 'msls_head_hreflang', $this->get_language() );
-		}
-
-		return $this->get_alpha2();
-	}
-
-
-	/**
 	 * Sort objects helper
 	 *
 	 * @param string $a
