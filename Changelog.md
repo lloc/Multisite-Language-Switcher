@@ -1,3 +1,9 @@
+## 2.4.5
+
+### Hotfix 
+
+* hotfix for **admin-bar** primary blog could be excluded
+ 
 ## 2.4.4
 
 ### Features
