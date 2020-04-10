@@ -24,7 +24,7 @@ class MslsLanguageArray {
 	 * Constructor
 	 * @param array $arr
 	 */
-	public function __construct( array $arr = array() ) {
+	public function __construct( array $arr = [] ) {
 		foreach ( $arr as $key => $value ) {
 			$this->set( $key, $value );
 		}

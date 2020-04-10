@@ -92,7 +92,7 @@ class MslsCustomFilter extends MslsMain {
 				)
 			);
 
-			$exclude_ids = array();
+			$exclude_ids = [];
 			foreach ( $posts as $post ) {
 				$exclude_ids[] = substr( $post->option_name, 5 );
 			}

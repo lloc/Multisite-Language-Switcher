@@ -122,7 +122,9 @@ class MslsPlugin {
 		}
 
 		$blog = $blog_collection->get_current_blog();
-		$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title() ] );
+		if ( is_object( $blog ) && method_exists( $blog, 'get_title' ) ) {
+			$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title() ] );
+		}
 	}
 
 	/**

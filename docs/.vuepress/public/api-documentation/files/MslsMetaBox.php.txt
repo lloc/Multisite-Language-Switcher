@@ -174,7 +174,7 @@ class MslsMetaBox extends MslsMain {
 
 			$temp = $post;
 
-			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
+			wp_nonce_field( MslsPlugin::path(), 'msls_noncename' );
 
 			$lis = '';
 
@@ -303,7 +303,7 @@ class MslsMetaBox extends MslsMain {
 			$temp  = $post;
 			$items = '';
 
-			wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' );
+			wp_nonce_field( MslsPlugin::path(), 'msls_noncename' );
 
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );

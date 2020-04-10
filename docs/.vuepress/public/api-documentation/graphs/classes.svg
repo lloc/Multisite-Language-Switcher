@@ -64,6 +64,26 @@
 <path fill="none" stroke="#c0c0c0" d="M300,-654C300,-654 626.5,-654 626.5,-654 632.5,-654 638.5,-660 638.5,-666 638.5,-666 638.5,-714 638.5,-714 638.5,-720 632.5,-726 626.5,-726 626.5,-726 300,-726 300,-726 294,-726 288,-720 288,-714 288,-714 288,-666 288,-666 288,-660 294,-654 300,-654"/>
 <text text-anchor="middle" x="463.25" y="-713.2" font-family="Times,serif" font-size="11.00" fill="#c0c0c0">LogWriters</text>
 </g>
+<g id="clust12" class="cluster">
+<title>cluster_\lloc\Msls\Map</title>
+<path fill="none" stroke="#c0c0c0" d="M1238,-1431C1238,-1431 1301,-1431 1301,-1431 1307,-1431 1313,-1437 1313,-1443 1313,-1443 1313,-1491 1313,-1491 1313,-1497 1307,-1503 1301,-1503 1301,-1503 1238,-1503 1238,-1503 1232,-1503 1226,-1497 1226,-1491 1226,-1491 1226,-1443 1226,-1443 1226,-1437 1232,-1431 1238,-1431"/>
+<text text-anchor="middle" x="1269.5" y="-1490.2" font-family="Times,serif" font-size="11.00" fill="#c0c0c0">Map</text>
+</g>
+<g id="clust13" class="cluster">
+<title>cluster_\lloc\Msls\Component</title>
+<path fill="none" stroke="#c0c0c0" d="M960.5,-905C960.5,-905 1309,-905 1309,-905 1315,-905 1321,-911 1321,-917 1321,-917 1321,-1405 1321,-1405 1321,-1411 1315,-1417 1309,-1417 1309,-1417 960.5,-1417 960.5,-1417 954.5,-1417 948.5,-1411 948.5,-1405 948.5,-1405 948.5,-917 948.5,-917 948.5,-911 954.5,-905 960.5,-905"/>
+<text text-anchor="middle" x="1134.75" y="-1404.2" font-family="Times,serif" font-size="11.00" fill="#c0c0c0">Component</text>
+</g>
+<g id="clust14" class="cluster">
+<title>cluster_\lloc\Msls\Component\Icon</title>
+<path fill="none" stroke="#c0c0c0" d="M1241.5,-1263C1241.5,-1263 1297.5,-1263 1297.5,-1263 1303.5,-1263 1309.5,-1269 1309.5,-1275 1309.5,-1275 1309.5,-1377 1309.5,-1377 1309.5,-1383 1303.5,-1389 1297.5,-1389 1297.5,-1389 1241.5,-1389 1241.5,-1389 1235.5,-1389 1229.5,-1383 1229.5,-1377 1229.5,-1377 1229.5,-1275 1229.5,-1275 1229.5,-1269 1235.5,-1263 1241.5,-1263"/>
+<text text-anchor="middle" x="1269.5" y="-1376.2" font-family="Times,serif" font-size="11.00" fill="#c0c0c0">Icon</text>
+</g>
+<g id="clust15" class="cluster">
+<title>cluster_\lloc\Msls\Component\Input</title>
+<path fill="none" stroke="#c0c0c0" d="M1238,-913C1238,-913 1301,-913 1301,-913 1307,-913 1313,-919 1313,-925 1313,-925 1313,-1243 1313,-1243 1313,-1249 1307,-1255 1301,-1255 1301,-1255 1238,-1255 1238,-1255 1232,-1255 1226,-1249 1226,-1243 1226,-1243 1226,-925 1226,-925 1226,-919 1232,-913 1238,-913"/>
+<text text-anchor="middle" x="1269.5" y="-1242.2" font-family="Times,serif" font-size="11.00" fill="#c0c0c0">Input</text>
+</g>
 <!-- \\lloc\\Msls\\ContentImport\\Importers\\PostMeta\\Duplicating -->
 <g id="node1" class="node">
 <title>\\lloc\\Msls\\ContentImport\\Importers\\PostMeta\\Duplicating</title>
@@ -204,7 +224,7 @@
 <text text-anchor="middle" x="565" y="-757.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Map</text>
 </g>
 <!-- \\lloc\\Msls\\MslsRegistryInstance -->
-<g id="node35" class="node">
+<g id="node46" class="node">
 <title>\\lloc\\Msls\\MslsRegistryInstance</title>
 <polygon fill="none" stroke="#000000" points="186.5,-266 34.5,-266 34.5,-230 186.5,-230 186.5,-266"/>
 <text text-anchor="middle" x="110.5" y="-245.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsRegistryInstance</text>
@@ -331,14 +351,129 @@
 <polygon fill="none" stroke="#000000" points="603.5,-320 526.5,-320 526.5,-284 603.5,-284 603.5,-320"/>
 <text text-anchor="middle" x="565" y="-299.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Relations</text>
 </g>
-<!-- \\lloc\\Msls\\MslsOptionsQuery -->
+<!-- \\lloc\\Msls\\Map\\HrefLang -->
 <g id="node25" class="node">
+<title>\\lloc\\Msls\\Map\\HrefLang</title>
+<polygon fill="none" stroke="#000000" points="1305,-1475 1234,-1475 1234,-1439 1305,-1439 1305,-1475"/>
+<text text-anchor="middle" x="1269.5" y="-1454.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">HrefLang</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Icon\\IconPng -->
+<g id="node26" class="node">
+<title>\\lloc\\Msls\\Component\\Icon\\IconPng</title>
+<polygon fill="none" stroke="#000000" points="1301.5,-1361 1237.5,-1361 1237.5,-1325 1301.5,-1325 1301.5,-1361"/>
+<text text-anchor="middle" x="1269.5" y="-1340.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">IconPng</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Icon -->
+<g id="node34" class="node">
+<title>\\lloc\\Msls\\Component\\Icon</title>
+<polygon fill="none" stroke="#000000" points="1054,-1334 970,-1334 970,-1298 1054,-1298 1054,-1334"/>
+<text text-anchor="start" x="978" y="-1319.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">«abstract»</text>
+<text text-anchor="start" x="998" y="-1307.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Icon</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Icon\\IconPng&#45;&gt;\\lloc\\Msls\\Component\\Icon -->
+<g id="edge51" class="edge">
+<title>\\lloc\\Msls\\Component\\Icon\\IconPng&#45;&gt;\\lloc\\Msls\\Component\\Icon</title>
+<path fill="none" stroke="#000000" d="M1237.4081,-1339.635C1194.0553,-1335.0893 1116.2461,-1326.9307 1064.3618,-1321.4904"/>
+<polygon fill="none" stroke="#000000" points="1064.659,-1318.0024 1054.3485,-1320.4404 1063.9289,-1324.9643 1064.659,-1318.0024"/>
+</g>
+<!-- \\lloc\\Msls\\Component\\Icon\\IconSvg -->
+<g id="node27" class="node">
+<title>\\lloc\\Msls\\Component\\Icon\\IconSvg</title>
+<polygon fill="none" stroke="#000000" points="1301.5,-1307 1237.5,-1307 1237.5,-1271 1301.5,-1271 1301.5,-1307"/>
+<text text-anchor="middle" x="1269.5" y="-1286.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">IconSvg</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Icon\\IconSvg&#45;&gt;\\lloc\\Msls\\Component\\Icon -->
+<g id="edge52" class="edge">
+<title>\\lloc\\Msls\\Component\\Icon\\IconSvg&#45;&gt;\\lloc\\Msls\\Component\\Icon</title>
+<path fill="none" stroke="#000000" d="M1237.4081,-1292.365C1194.0553,-1296.9107 1116.2461,-1305.0693 1064.3618,-1310.5096"/>
+<polygon fill="none" stroke="#000000" points="1063.9289,-1307.0357 1054.3485,-1311.5596 1064.659,-1313.9976 1063.9289,-1307.0357"/>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Label -->
+<g id="node28" class="node">
+<title>\\lloc\\Msls\\Component\\Input\\Label</title>
+<polygon fill="none" stroke="#000000" points="1296.5,-1227 1242.5,-1227 1242.5,-1191 1296.5,-1191 1296.5,-1227"/>
+<text text-anchor="middle" x="1269.5" y="-1206.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Label</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\InputInterface -->
+<g id="node35" class="node">
+<title>\\lloc\\Msls\\Component\\InputInterface</title>
+<polygon fill="none" stroke="#000000" points="1067.5,-1092 956.5,-1092 956.5,-1056 1067.5,-1056 1067.5,-1092"/>
+<text text-anchor="middle" x="1012" y="-1071.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">InputInterface</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Label&#45;&gt;\\lloc\\Msls\\Component\\InputInterface -->
+<g id="edge53" class="edge">
+<title>\\lloc\\Msls\\Component\\Input\\Label&#45;&gt;\\lloc\\Msls\\Component\\InputInterface</title>
+<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M1242.2096,-1203.7345C1222.5419,-1199.3696 1195.6711,-1192.2164 1173.5,-1182 1124.2883,-1159.3232 1073.2438,-1122.5785 1042.0452,-1098.3513"/>
+<polygon fill="none" stroke="#000000" points="1044.2005,-1095.5936 1034.1723,-1092.1752 1039.8799,-1101.1012 1044.2005,-1095.5936"/>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Select -->
+<g id="node29" class="node">
+<title>\\lloc\\Msls\\Component\\Input\\Select</title>
+<polygon fill="none" stroke="#000000" points="1298,-1173 1241,-1173 1241,-1137 1298,-1137 1298,-1173"/>
+<text text-anchor="middle" x="1269.5" y="-1152.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Select</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Select&#45;&gt;\\lloc\\Msls\\Component\\InputInterface -->
+<g id="edge54" class="edge">
+<title>\\lloc\\Msls\\Component\\Input\\Select&#45;&gt;\\lloc\\Msls\\Component\\InputInterface</title>
+<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M1240.8292,-1147.3274C1221.6925,-1142.1103 1196.0054,-1134.9229 1173.5,-1128 1140.2253,-1117.7644 1103.3913,-1105.5196 1073.3128,-1095.2798"/>
+<polygon fill="none" stroke="#000000" points="1074.392,-1091.9499 1063.7975,-1092.0307 1072.13,-1098.5744 1074.392,-1091.9499"/>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Option -->
+<g id="node30" class="node">
+<title>\\lloc\\Msls\\Component\\Input\\Option</title>
+<polygon fill="none" stroke="#000000" points="1298,-1119 1241,-1119 1241,-1083 1298,-1083 1298,-1119"/>
+<text text-anchor="middle" x="1269.5" y="-1098.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Option</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Option&#45;&gt;\\lloc\\Msls\\Component\\InputInterface -->
+<g id="edge55" class="edge">
+<title>\\lloc\\Msls\\Component\\Input\\Option&#45;&gt;\\lloc\\Msls\\Component\\InputInterface</title>
+<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M1240.9591,-1098.0074C1201.7786,-1093.8991 1130.1963,-1086.3934 1077.4651,-1080.8643"/>
+<polygon fill="none" stroke="#000000" points="1077.8288,-1077.3833 1067.5183,-1079.8213 1077.0988,-1084.3452 1077.8288,-1077.3833"/>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Checkbox -->
+<g id="node31" class="node">
+<title>\\lloc\\Msls\\Component\\Input\\Checkbox</title>
+<polygon fill="none" stroke="#000000" points="1305,-1065 1234,-1065 1234,-1029 1305,-1029 1305,-1065"/>
+<text text-anchor="middle" x="1269.5" y="-1044.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Checkbox</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Checkbox&#45;&gt;\\lloc\\Msls\\Component\\InputInterface -->
+<g id="edge56" class="edge">
+<title>\\lloc\\Msls\\Component\\Input\\Checkbox&#45;&gt;\\lloc\\Msls\\Component\\InputInterface</title>
+<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M1233.9661,-1050.7259C1193.8239,-1054.935 1127.625,-1061.8762 1077.9471,-1067.0852"/>
+<polygon fill="none" stroke="#000000" points="1077.5093,-1063.6118 1067.9288,-1068.1356 1078.2393,-1070.5736 1077.5093,-1063.6118"/>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Group -->
+<g id="node32" class="node">
+<title>\\lloc\\Msls\\Component\\Input\\Group</title>
+<polygon fill="none" stroke="#000000" points="1296.5,-1011 1242.5,-1011 1242.5,-975 1296.5,-975 1296.5,-1011"/>
+<text text-anchor="middle" x="1269.5" y="-990.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Group</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Group&#45;&gt;\\lloc\\Msls\\Component\\InputInterface -->
+<g id="edge57" class="edge">
+<title>\\lloc\\Msls\\Component\\Input\\Group&#45;&gt;\\lloc\\Msls\\Component\\InputInterface</title>
+<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M1242.2746,-999.541C1222.8739,-1004.4714 1196.3006,-1011.7753 1173.5,-1020 1140.5595,-1031.8824 1134.6329,-1040.6649 1101.5,-1052 1093.8582,-1054.6143 1085.7504,-1057.053 1077.6574,-1059.2837"/>
+<polygon fill="none" stroke="#000000" points="1076.5895,-1055.9459 1067.8255,-1061.8992 1078.3892,-1062.7107 1076.5895,-1055.9459"/>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Text -->
+<g id="node33" class="node">
+<title>\\lloc\\Msls\\Component\\Input\\Text</title>
+<polygon fill="none" stroke="#000000" points="1296.5,-957 1242.5,-957 1242.5,-921 1296.5,-921 1296.5,-957"/>
+<text text-anchor="middle" x="1269.5" y="-936.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">Text</text>
+</g>
+<!-- \\lloc\\Msls\\Component\\Input\\Text&#45;&gt;\\lloc\\Msls\\Component\\InputInterface -->
+<g id="edge58" class="edge">
+<title>\\lloc\\Msls\\Component\\Input\\Text&#45;&gt;\\lloc\\Msls\\Component\\InputInterface</title>
+<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M1242.475,-942.2088C1222.194,-945.6122 1194.436,-952.4631 1173.5,-966 1131.6391,-993.0667 1143.8036,-1025.6306 1101.5,-1052 1094.1007,-1056.6123 1085.7962,-1060.2578 1077.3071,-1063.1392"/>
+<polygon fill="none" stroke="#000000" points="1076.2244,-1059.8103 1067.6827,-1066.0785 1078.269,-1066.505 1076.2244,-1059.8103"/>
+</g>
+<!-- \\lloc\\Msls\\MslsOptionsQuery -->
+<g id="node36" class="node">
 <title>\\lloc\\Msls\\MslsOptionsQuery</title>
-<polygon fill="none" stroke="#000000" points="847.5,-671 722.5,-671 722.5,-635 847.5,-635 847.5,-671"/>
-<text text-anchor="middle" x="785" y="-650.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQuery</text>
+<polygon fill="none" stroke="#000000" points="847.5,-674 722.5,-674 722.5,-638 847.5,-638 847.5,-674"/>
+<text text-anchor="middle" x="785" y="-653.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQuery</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptions -->
-<g id="node43" class="node">
+<g id="node54" class="node">
 <title>\\lloc\\Msls\\MslsOptions</title>
 <polygon fill="none" stroke="#000000" points="610.5,-266 519.5,-266 519.5,-230 610.5,-230 610.5,-266"/>
 <text text-anchor="middle" x="565" y="-245.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptions</text>
@@ -346,53 +481,53 @@
 <!-- \\lloc\\Msls\\MslsOptionsQuery&#45;&gt;\\lloc\\Msls\\MslsOptions -->
 <g id="edge1" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsQuery&#45;&gt;\\lloc\\Msls\\MslsOptions</title>
-<path fill="none" stroke="#000000" d="M779.5126,-634.9713C756.741,-560.2626 670.5449,-278.5701 663.5,-272 651.8323,-261.1185 636.078,-254.9339 620.5939,-251.4843"/>
-<polygon fill="none" stroke="#000000" points="620.9773,-247.9953 610.5033,-249.5905 619.686,-254.8751 620.9773,-247.9953"/>
+<path fill="none" stroke="#000000" d="M779.5149,-637.8295C756.7524,-562.5332 670.5877,-278.6251 663.5,-272 651.8446,-261.1053 636.0939,-254.9169 620.6093,-251.4678"/>
+<polygon fill="none" stroke="#000000" points="620.9917,-247.9786 610.5178,-249.5749 619.7011,-254.8586 620.9917,-247.9786"/>
 </g>
 <!-- \\lloc\\Msls\\MslsAdminIconTaxonomy -->
-<g id="node26" class="node">
+<g id="node37" class="node">
 <title>\\lloc\\Msls\\MslsAdminIconTaxonomy</title>
-<polygon fill="none" stroke="#000000" points="1348.5,-1183 1190.5,-1183 1190.5,-1147 1348.5,-1147 1348.5,-1183"/>
-<text text-anchor="middle" x="1269.5" y="-1162.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsAdminIconTaxonomy</text>
+<polygon fill="none" stroke="#000000" points="1348.5,-874 1190.5,-874 1190.5,-838 1348.5,-838 1348.5,-874"/>
+<text text-anchor="middle" x="1269.5" y="-853.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsAdminIconTaxonomy</text>
 </g>
 <!-- \\lloc\\Msls\\MslsAdminIcon -->
-<g id="node29" class="node">
+<g id="node40" class="node">
 <title>\\lloc\\Msls\\MslsAdminIcon</title>
-<polygon fill="none" stroke="#000000" points="1064,-1183 960,-1183 960,-1147 1064,-1147 1064,-1183"/>
-<text text-anchor="middle" x="1012" y="-1162.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsAdminIcon</text>
+<polygon fill="none" stroke="#000000" points="1064,-874 960,-874 960,-838 1064,-838 1064,-874"/>
+<text text-anchor="middle" x="1012" y="-853.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsAdminIcon</text>
 </g>
 <!-- \\lloc\\Msls\\MslsAdminIconTaxonomy&#45;&gt;\\lloc\\Msls\\MslsAdminIcon -->
 <g id="edge2" class="edge">
 <title>\\lloc\\Msls\\MslsAdminIconTaxonomy&#45;&gt;\\lloc\\Msls\\MslsAdminIcon</title>
-<path fill="none" stroke="#000000" d="M1190.4916,-1165C1153.085,-1165 1109.0588,-1165 1074.0911,-1165"/>
-<polygon fill="none" stroke="#000000" points="1074.0158,-1161.5001 1064.0157,-1165 1074.0157,-1168.5001 1074.0158,-1161.5001"/>
+<path fill="none" stroke="#000000" d="M1190.4916,-856C1153.085,-856 1109.0588,-856 1074.0911,-856"/>
+<polygon fill="none" stroke="#000000" points="1074.0158,-852.5001 1064.0157,-856 1074.0157,-859.5001 1074.0158,-852.5001"/>
 </g>
 <!-- \\lloc\\Msls\\MslsAdmin -->
-<g id="node27" class="node">
+<g id="node38" class="node">
 <title>\\lloc\\Msls\\MslsAdmin</title>
-<polygon fill="none" stroke="#000000" points="1050.5,-428 973.5,-428 973.5,-392 1050.5,-392 1050.5,-428"/>
-<text text-anchor="middle" x="1012" y="-407.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsAdmin</text>
+<polygon fill="none" stroke="#000000" points="1050.5,-377 973.5,-377 973.5,-341 1050.5,-341 1050.5,-377"/>
+<text text-anchor="middle" x="1012" y="-356.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsAdmin</text>
 </g>
 <!-- \\lloc\\Msls\\MslsMain -->
-<g id="node60" class="node">
+<g id="node71" class="node">
 <title>\\lloc\\Msls\\MslsMain</title>
-<polygon fill="none" stroke="#000000" points="820.5,-320 749.5,-320 749.5,-284 820.5,-284 820.5,-320"/>
-<text text-anchor="middle" x="785" y="-299.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsMain</text>
+<polygon fill="none" stroke="#000000" points="820.5,-323 749.5,-323 749.5,-287 820.5,-287 820.5,-323"/>
+<text text-anchor="middle" x="785" y="-302.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsMain</text>
 </g>
 <!-- \\lloc\\Msls\\MslsAdmin&#45;&gt;\\lloc\\Msls\\MslsMain -->
 <g id="edge3" class="edge">
 <title>\\lloc\\Msls\\MslsAdmin&#45;&gt;\\lloc\\Msls\\MslsMain</title>
-<path fill="none" stroke="#000000" d="M973.4179,-401.5333C957.196,-397.1755 938.4312,-391.0574 922.5,-383 886.8056,-364.9471 885.2674,-348.7795 850.5,-329 844.1056,-325.3621 837.1236,-321.9503 830.1777,-318.8575"/>
-<polygon fill="none" stroke="#000000" points="831.358,-315.5557 820.7869,-314.8464 828.6084,-321.9931 831.358,-315.5557"/>
+<path fill="none" stroke="#000000" d="M973.4925,-349.8396C933.9948,-340.4437 872.5657,-325.8306 830.6468,-315.8587"/>
+<polygon fill="none" stroke="#000000" points="831.2375,-312.4016 820.6989,-313.4923 829.6174,-319.2116 831.2375,-312.4016"/>
 </g>
 <!-- \\lloc\\Msls\\MslsLinkImageOnly -->
-<g id="node28" class="node">
+<g id="node39" class="node">
 <title>\\lloc\\Msls\\MslsLinkImageOnly</title>
 <polygon fill="none" stroke="#000000" points="850.5,-212 719.5,-212 719.5,-176 850.5,-176 850.5,-212"/>
 <text text-anchor="middle" x="785" y="-191.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsLinkImageOnly</text>
 </g>
 <!-- \\lloc\\Msls\\MslsLink -->
-<g id="node55" class="node">
+<g id="node66" class="node">
 <title>\\lloc\\Msls\\MslsLink</title>
 <polygon fill="none" stroke="#000000" points="600.5,-212 529.5,-212 529.5,-176 600.5,-176 600.5,-212"/>
 <text text-anchor="middle" x="565" y="-191.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsLink</text>
@@ -404,19 +539,19 @@
 <polygon fill="none" stroke="#000000" points="610.7028,-190.5001 600.7028,-194 610.7028,-197.5001 610.7028,-190.5001"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryMonth -->
-<g id="node30" class="node">
+<g id="node41" class="node">
 <title>\\lloc\\Msls\\MslsOptionsQueryMonth</title>
-<polygon fill="none" stroke="#000000" points="1091,-644 933,-644 933,-608 1091,-608 1091,-644"/>
-<text text-anchor="middle" x="1012" y="-623.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryMonth</text>
+<polygon fill="none" stroke="#000000" points="1091,-593 933,-593 933,-557 1091,-557 1091,-593"/>
+<text text-anchor="middle" x="1012" y="-572.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryMonth</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryMonth&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery -->
 <g id="edge7" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsQueryMonth&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery</title>
-<path fill="none" stroke="#000000" d="M932.9251,-635.4054C908.518,-638.3084 881.7651,-641.4905 857.802,-644.3407"/>
-<polygon fill="none" stroke="#000000" points="857.2344,-640.8835 847.7178,-645.5402 858.0612,-647.8345 857.2344,-640.8835"/>
+<path fill="none" stroke="#000000" d="M949.6808,-593.089C940.5265,-595.9519 931.241,-598.9707 922.5,-602 894.2441,-611.7924 863.202,-623.8673 837.7739,-634.1139"/>
+<polygon fill="none" stroke="#000000" points="836.2752,-630.9447 828.3207,-637.9429 838.9033,-637.4326 836.2752,-630.9447"/>
 </g>
 <!-- \\lloc\\Msls\\MslsContentTypes -->
-<g id="node31" class="node">
+<g id="node42" class="node">
 <title>\\lloc\\Msls\\MslsContentTypes</title>
 <polygon fill="none" stroke="#000000" points="397,-158 272,-158 272,-122 397,-122 397,-158"/>
 <text text-anchor="middle" x="334.5" y="-137.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsContentTypes</text>
@@ -428,37 +563,37 @@
 <polygon fill="none" stroke="#000000" points="146.9461,-221.8621 140.1131,-229.9591 150.504,-227.8905 146.9461,-221.8621"/>
 </g>
 <!-- \\lloc\\Msls\\MslsCustomColumnTaxonomy -->
-<g id="node32" class="node">
+<g id="node43" class="node">
 <title>\\lloc\\Msls\\MslsCustomColumnTaxonomy</title>
 <polygon fill="none" stroke="#000000" points="1359,-482 1180,-482 1180,-446 1359,-446 1359,-482"/>
 <text text-anchor="middle" x="1269.5" y="-461.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsCustomColumnTaxonomy</text>
 </g>
 <!-- \\lloc\\Msls\\MslsCustomColumn -->
-<g id="node49" class="node">
+<g id="node60" class="node">
 <title>\\lloc\\Msls\\MslsCustomColumn</title>
-<polygon fill="none" stroke="#000000" points="1074.5,-374 949.5,-374 949.5,-338 1074.5,-338 1074.5,-374"/>
-<text text-anchor="middle" x="1012" y="-353.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsCustomColumn</text>
+<polygon fill="none" stroke="#000000" points="1074.5,-323 949.5,-323 949.5,-287 1074.5,-287 1074.5,-323"/>
+<text text-anchor="middle" x="1012" y="-302.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsCustomColumn</text>
 </g>
 <!-- \\lloc\\Msls\\MslsCustomColumnTaxonomy&#45;&gt;\\lloc\\Msls\\MslsCustomColumn -->
 <g id="edge9" class="edge">
 <title>\\lloc\\Msls\\MslsCustomColumnTaxonomy&#45;&gt;\\lloc\\Msls\\MslsCustomColumn</title>
-<path fill="none" stroke="#000000" d="M1194.8312,-445.9689C1187.4818,-443.3173 1180.2523,-440.3356 1173.5,-437 1137.6372,-419.2839 1137.1944,-401.0529 1101.5,-383 1095.9875,-380.212 1090.1356,-377.6561 1084.1673,-375.325"/>
-<polygon fill="none" stroke="#000000" points="1085.318,-372.019 1074.7245,-371.8459 1082.8978,-378.5874 1085.318,-372.019"/>
+<path fill="none" stroke="#000000" d="M1188.445,-445.8078C1183.1851,-443.2479 1178.1435,-440.3287 1173.5,-437 1127.5113,-404.033 1147.1763,-365.3984 1101.5,-332 1096.1306,-328.0739 1090.1864,-324.7129 1083.9893,-321.8366"/>
+<polygon fill="none" stroke="#000000" points="1085.3411,-318.6082 1074.7661,-317.9601 1082.6287,-325.0614 1085.3411,-318.6082"/>
 </g>
 <!-- \\lloc\\Msls\\MslsSqlCacher -->
-<g id="node33" class="node">
+<g id="node44" class="node">
 <title>\\lloc\\Msls\\MslsSqlCacher</title>
 <polygon fill="none" stroke="#000000" points="1321.5,-536 1217.5,-536 1217.5,-500 1321.5,-500 1321.5,-536"/>
 <text text-anchor="middle" x="1269.5" y="-515.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsSqlCacher</text>
 </g>
 <!-- \\lloc\\Msls\\MslsWidget -->
-<g id="node34" class="node">
+<g id="node45" class="node">
 <title>\\lloc\\Msls\\MslsWidget</title>
 <polygon fill="none" stroke="#000000" points="1311.5,-212 1227.5,-212 1227.5,-176 1311.5,-176 1311.5,-212"/>
 <text text-anchor="middle" x="1269.5" y="-191.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsWidget</text>
 </g>
 <!-- \\WP_Widget -->
-<g id="node64" class="node">
+<g id="node75" class="node">
 <title>\\WP_Widget</title>
 <ellipse fill="none" stroke="#000000" cx="1012" cy="-18" rx="57.6901" ry="18"/>
 <text text-anchor="middle" x="1012" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#c0c0c0">\WP_Widget</text>
@@ -470,7 +605,7 @@
 <polygon fill="none" stroke="#000000" points="1065.552,-30.8345 1054.9687,-30.3417 1062.9348,-37.3268 1065.552,-30.8345"/>
 </g>
 <!-- \\lloc\\Msls\\MslsBlogCollection -->
-<g id="node36" class="node">
+<g id="node47" class="node">
 <title>\\lloc\\Msls\\MslsBlogCollection</title>
 <polygon fill="none" stroke="#000000" points="403.5,-212 265.5,-212 265.5,-176 403.5,-176 403.5,-212"/>
 <text text-anchor="middle" x="334.5" y="-191.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsBlogCollection</text>
@@ -482,31 +617,31 @@
 <polygon fill="none" stroke="#000000" points="194.439,-224.1644 185.5377,-229.9105 196.0795,-230.9694 194.439,-224.1644"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsTax -->
-<g id="node37" class="node">
+<g id="node48" class="node">
 <title>\\lloc\\Msls\\MslsOptionsTax</title>
-<polygon fill="none" stroke="#000000" points="840.5,-374 729.5,-374 729.5,-338 840.5,-338 840.5,-374"/>
-<text text-anchor="middle" x="785" y="-353.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsTax</text>
+<polygon fill="none" stroke="#000000" points="840.5,-377 729.5,-377 729.5,-341 840.5,-341 840.5,-377"/>
+<text text-anchor="middle" x="785" y="-356.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsTax</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsTax&#45;&gt;\\lloc\\Msls\\MslsOptions -->
 <g id="edge12" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsTax&#45;&gt;\\lloc\\Msls\\MslsOptions</title>
-<path fill="none" stroke="#000000" d="M734.9008,-337.8523C729.5373,-335.1822 724.2951,-332.2288 719.5,-329 690.0419,-309.1642 694.379,-289.5419 663.5,-272 650.4438,-264.583 635.1506,-259.4441 620.5612,-255.8886"/>
-<polygon fill="none" stroke="#000000" points="621.1313,-252.4299 610.6094,-253.6716 619.6091,-259.2624 621.1313,-252.4299"/>
+<path fill="none" stroke="#000000" d="M734.8174,-340.9746C729.4692,-338.282 724.2534,-335.29 719.5,-332 689.5065,-311.2404 694.983,-290.4225 663.5,-272 650.5399,-264.4163 635.2787,-259.2219 620.6893,-255.6664"/>
+<polygon fill="none" stroke="#000000" points="621.2536,-252.2065 610.7329,-253.4575 619.7374,-259.0404 621.2536,-252.2065"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryPostType -->
-<g id="node38" class="node">
+<g id="node49" class="node">
 <title>\\lloc\\Msls\\MslsOptionsQueryPostType</title>
-<polygon fill="none" stroke="#000000" points="1101.5,-590 922.5,-590 922.5,-554 1101.5,-554 1101.5,-590"/>
-<text text-anchor="middle" x="1012" y="-569.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryPostType</text>
+<polygon fill="none" stroke="#000000" points="1101.5,-809 922.5,-809 922.5,-773 1101.5,-773 1101.5,-809"/>
+<text text-anchor="middle" x="1012" y="-788.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryPostType</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryPostType&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery -->
 <g id="edge15" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsQueryPostType&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery</title>
-<path fill="none" stroke="#000000" d="M949.6808,-590.089C940.5265,-592.9519 931.241,-595.9707 922.5,-599 894.2441,-608.7924 863.202,-620.8673 837.7739,-631.1139"/>
-<polygon fill="none" stroke="#000000" points="836.2752,-627.9447 828.3207,-634.9429 838.9033,-634.4326 836.2752,-627.9447"/>
+<path fill="none" stroke="#000000" d="M942.5587,-772.8953C935.6381,-770.253 928.8361,-767.2938 922.5,-764 879.7861,-741.7952 837.2243,-705.6532 811.0193,-681.3644"/>
+<polygon fill="none" stroke="#000000" points="813.1149,-678.5309 803.4298,-674.2356 808.3224,-683.6331 813.1149,-678.5309"/>
 </g>
 <!-- \\lloc\\Msls\\MslsLinkTextImage -->
-<g id="node39" class="node">
+<g id="node50" class="node">
 <title>\\lloc\\Msls\\MslsLinkTextImage</title>
 <polygon fill="none" stroke="#000000" points="850.5,-158 719.5,-158 719.5,-122 850.5,-122 850.5,-158"/>
 <text text-anchor="middle" x="785" y="-137.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsLinkTextImage</text>
@@ -518,7 +653,7 @@
 <polygon fill="none" stroke="#000000" points="609.5802,-179.4536 600.7028,-185.2366 611.2489,-186.2518 609.5802,-179.4536"/>
 </g>
 <!-- \\lloc\\Msls\\MslsPostType -->
-<g id="node40" class="node">
+<g id="node51" class="node">
 <title>\\lloc\\Msls\\MslsPostType</title>
 <polygon fill="none" stroke="#000000" points="614,-104 516,-104 516,-68 614,-68 614,-104"/>
 <text text-anchor="middle" x="565" y="-83.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsPostType</text>
@@ -530,19 +665,19 @@
 <polygon fill="none" stroke="#000000" points="406.1413,-119.6215 397.2033,-125.3103 407.738,-126.437 406.1413,-119.6215"/>
 </g>
 <!-- \\lloc\\Msls\\MslsPlugin -->
-<g id="node41" class="node">
+<g id="node52" class="node">
 <title>\\lloc\\Msls\\MslsPlugin</title>
 <polygon fill="none" stroke="#000000" points="1311.5,-428 1227.5,-428 1227.5,-392 1311.5,-392 1311.5,-428"/>
 <text text-anchor="middle" x="1269.5" y="-407.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsPlugin</text>
 </g>
 <!-- \\lloc\\Msls\\MslsBlog -->
-<g id="node42" class="node">
+<g id="node53" class="node">
 <title>\\lloc\\Msls\\MslsBlog</title>
 <polygon fill="none" stroke="#000000" points="1305,-374 1234,-374 1234,-338 1305,-338 1305,-374"/>
 <text text-anchor="middle" x="1269.5" y="-353.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsBlog</text>
 </g>
 <!-- \\lloc\\Msls\\MslsGetSet -->
-<g id="node59" class="node">
+<g id="node70" class="node">
 <title>\\lloc\\Msls\\MslsGetSet</title>
 <polygon fill="none" stroke="#000000" points="376.5,-266 292.5,-266 292.5,-230 376.5,-230 376.5,-266"/>
 <text text-anchor="middle" x="334.5" y="-245.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsGetSet</text>
@@ -554,43 +689,43 @@
 <polygon fill="none" stroke="#000000" points="386.836,-244.5001 376.836,-248 386.8359,-251.5001 386.836,-244.5001"/>
 </g>
 <!-- \\lloc\\Msls\\MslsMetaBox -->
-<g id="node44" class="node">
+<g id="node55" class="node">
 <title>\\lloc\\Msls\\MslsMetaBox</title>
-<polygon fill="none" stroke="#000000" points="1057.5,-320 966.5,-320 966.5,-284 1057.5,-284 1057.5,-320"/>
-<text text-anchor="middle" x="1012" y="-299.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsMetaBox</text>
+<polygon fill="none" stroke="#000000" points="1057.5,-269 966.5,-269 966.5,-233 1057.5,-233 1057.5,-269"/>
+<text text-anchor="middle" x="1012" y="-248.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsMetaBox</text>
 </g>
 <!-- \\lloc\\Msls\\MslsMetaBox&#45;&gt;\\lloc\\Msls\\MslsMain -->
 <g id="edge27" class="edge">
 <title>\\lloc\\Msls\\MslsMetaBox&#45;&gt;\\lloc\\Msls\\MslsMain</title>
-<path fill="none" stroke="#000000" d="M966.3362,-302C926.8788,-302 870.1445,-302 830.6818,-302"/>
-<polygon fill="none" stroke="#000000" points="830.5409,-298.5001 820.5409,-302 830.5408,-305.5001 830.5409,-298.5001"/>
+<path fill="none" stroke="#000000" d="M966.3362,-261.8627C926.7948,-271.2691 869.903,-284.8028 830.4302,-294.1928"/>
+<polygon fill="none" stroke="#000000" points="829.4594,-290.826 820.5409,-296.5453 831.0794,-297.636 829.4594,-290.826"/>
 </g>
 <!-- \\lloc\\Msls\\MslsJson -->
-<g id="node45" class="node">
+<g id="node56" class="node">
 <title>\\lloc\\Msls\\MslsJson</title>
 <polygon fill="none" stroke="#000000" points="1305,-320 1234,-320 1234,-284 1305,-284 1305,-320"/>
 <text text-anchor="middle" x="1269.5" y="-299.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsJson</text>
 </g>
 <!-- \\lloc\\Msls\\MslsPostTagClassic -->
-<g id="node46" class="node">
+<g id="node57" class="node">
 <title>\\lloc\\Msls\\MslsPostTagClassic</title>
 <polygon fill="none" stroke="#000000" points="1338.5,-266 1200.5,-266 1200.5,-230 1338.5,-230 1338.5,-266"/>
 <text text-anchor="middle" x="1269.5" y="-245.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsPostTagClassic</text>
 </g>
 <!-- \\lloc\\Msls\\MslsPostTag -->
-<g id="node50" class="node">
+<g id="node61" class="node">
 <title>\\lloc\\Msls\\MslsPostTag</title>
-<polygon fill="none" stroke="#000000" points="1057.5,-266 966.5,-266 966.5,-230 1057.5,-230 1057.5,-266"/>
-<text text-anchor="middle" x="1012" y="-245.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsPostTag</text>
+<polygon fill="none" stroke="#000000" points="1057.5,-215 966.5,-215 966.5,-179 1057.5,-179 1057.5,-215"/>
+<text text-anchor="middle" x="1012" y="-194.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsPostTag</text>
 </g>
 <!-- \\lloc\\Msls\\MslsPostTagClassic&#45;&gt;\\lloc\\Msls\\MslsPostTag -->
 <g id="edge28" class="edge">
 <title>\\lloc\\Msls\\MslsPostTagClassic&#45;&gt;\\lloc\\Msls\\MslsPostTag</title>
-<path fill="none" stroke="#000000" d="M1200.4947,-248C1158.9217,-248 1106.6703,-248 1067.731,-248"/>
-<polygon fill="none" stroke="#000000" points="1067.6281,-244.5001 1057.628,-248 1067.628,-251.5001 1067.6281,-244.5001"/>
+<path fill="none" stroke="#000000" d="M1200.4947,-234.3329C1158.9217,-226.0991 1106.6703,-215.7502 1067.731,-208.038"/>
+<polygon fill="none" stroke="#000000" points="1068.1175,-204.5466 1057.628,-206.037 1066.7575,-211.4132 1068.1175,-204.5466"/>
 </g>
 <!-- \\lloc\\Msls\\MslsLinkTextOnly -->
-<g id="node47" class="node">
+<g id="node58" class="node">
 <title>\\lloc\\Msls\\MslsLinkTextOnly</title>
 <polygon fill="none" stroke="#000000" points="847.5,-266 722.5,-266 722.5,-230 847.5,-230 847.5,-266"/>
 <text text-anchor="middle" x="785" y="-245.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsLinkTextOnly</text>
@@ -602,31 +737,31 @@
 <polygon fill="none" stroke="#000000" points="611.2781,-201.7553 600.732,-202.7706 609.6094,-208.5535 611.2781,-201.7553"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsTaxTerm -->
-<g id="node48" class="node">
+<g id="node59" class="node">
 <title>\\lloc\\Msls\\MslsOptionsTaxTerm</title>
-<polygon fill="none" stroke="#000000" points="1081,-536 943,-536 943,-500 1081,-500 1081,-536"/>
-<text text-anchor="middle" x="1012" y="-515.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsTaxTerm</text>
+<polygon fill="none" stroke="#000000" points="1081,-539 943,-539 943,-503 1081,-503 1081,-539"/>
+<text text-anchor="middle" x="1012" y="-518.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsTaxTerm</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsTaxTerm&#45;&gt;\\lloc\\Msls\\MslsOptionsTax -->
 <g id="edge31" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsTaxTerm&#45;&gt;\\lloc\\Msls\\MslsOptionsTax</title>
-<path fill="none" stroke="#000000" d="M942.6958,-502.4791C935.5226,-499.3272 928.628,-495.5425 922.5,-491 876.1556,-456.646 895.1062,-419.5826 850.5,-383 848.9664,-381.7423 847.3662,-380.5359 845.7138,-379.3794"/>
-<polygon fill="none" stroke="#000000" points="847.4225,-376.3203 837.0837,-374.0052 843.7222,-382.2624 847.4225,-376.3203"/>
+<path fill="none" stroke="#000000" d="M942.6958,-505.4791C935.5226,-502.3272 928.628,-498.5425 922.5,-494 876.1556,-459.646 895.1062,-422.5826 850.5,-386 848.9664,-384.7423 847.3662,-383.5359 845.7138,-382.3794"/>
+<polygon fill="none" stroke="#000000" points="847.4225,-379.3203 837.0837,-377.0052 843.7222,-385.2624 847.4225,-379.3203"/>
 </g>
 <!-- \\lloc\\Msls\\MslsCustomColumn&#45;&gt;\\lloc\\Msls\\MslsMain -->
 <g id="edge32" class="edge">
 <title>\\lloc\\Msls\\MslsCustomColumn&#45;&gt;\\lloc\\Msls\\MslsMain</title>
-<path fill="none" stroke="#000000" d="M949.3704,-341.1013C911.7889,-332.1612 864.8254,-320.9893 830.7324,-312.8791"/>
-<polygon fill="none" stroke="#000000" points="831.1282,-309.3756 820.5896,-310.4663 829.5081,-316.1856 831.1282,-309.3756"/>
+<path fill="none" stroke="#000000" d="M949.3704,-305C911.7889,-305 864.8254,-305 830.7324,-305"/>
+<polygon fill="none" stroke="#000000" points="830.5897,-301.5001 820.5896,-305 830.5896,-308.5001 830.5897,-301.5001"/>
 </g>
 <!-- \\lloc\\Msls\\MslsPostTag&#45;&gt;\\lloc\\Msls\\MslsMain -->
 <g id="edge33" class="edge">
 <title>\\lloc\\Msls\\MslsPostTag&#45;&gt;\\lloc\\Msls\\MslsMain</title>
-<path fill="none" stroke="#000000" d="M966.3362,-258.8627C926.7948,-268.2691 869.903,-281.8028 830.4302,-291.1928"/>
-<polygon fill="none" stroke="#000000" points="829.4594,-287.826 820.5409,-293.5453 831.0794,-294.636 829.4594,-287.826"/>
+<path fill="none" stroke="#000000" d="M966.3054,-207.7038C951.914,-211.8805 936.2063,-217.3004 922.5,-224 887.269,-241.2208 884.4745,-255.4165 850.5,-275 844.0186,-278.736 836.9903,-282.3639 830.0244,-285.7302"/>
+<polygon fill="none" stroke="#000000" points="828.1865,-282.7265 820.6215,-290.1442 831.161,-289.0631 828.1865,-282.7265"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsTaxTermCategory -->
-<g id="node51" class="node">
+<g id="node62" class="node">
 <title>\\lloc\\Msls\\MslsOptionsTaxTermCategory</title>
 <polygon fill="none" stroke="#000000" points="1365.5,-590 1173.5,-590 1173.5,-554 1365.5,-554 1365.5,-590"/>
 <text text-anchor="middle" x="1269.5" y="-569.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsTaxTermCategory</text>
@@ -634,23 +769,23 @@
 <!-- \\lloc\\Msls\\MslsOptionsTaxTermCategory&#45;&gt;\\lloc\\Msls\\MslsOptionsTaxTerm -->
 <g id="edge35" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsTaxTermCategory&#45;&gt;\\lloc\\Msls\\MslsOptionsTaxTerm</title>
-<path fill="none" stroke="#000000" d="M1183.3982,-553.9437C1153.71,-547.7178 1120.6111,-540.7767 1091.4765,-534.6669"/>
-<polygon fill="none" stroke="#000000" points="1091.8541,-531.17 1081.3486,-532.543 1090.4174,-538.021 1091.8541,-531.17"/>
+<path fill="none" stroke="#000000" d="M1178.3528,-553.9475C1149.8762,-548.3075 1118.7095,-542.1347 1091.1294,-536.6722"/>
+<polygon fill="none" stroke="#000000" points="1091.6316,-533.2038 1081.1422,-534.6942 1090.2716,-540.0704 1091.6316,-533.2038"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryDay -->
-<g id="node52" class="node">
+<g id="node63" class="node">
 <title>\\lloc\\Msls\\MslsOptionsQueryDay</title>
-<polygon fill="none" stroke="#000000" points="1084.5,-806 939.5,-806 939.5,-770 1084.5,-770 1084.5,-806"/>
-<text text-anchor="middle" x="1012" y="-785.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryDay</text>
+<polygon fill="none" stroke="#000000" points="1084.5,-755 939.5,-755 939.5,-719 1084.5,-719 1084.5,-755"/>
+<text text-anchor="middle" x="1012" y="-734.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryDay</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryDay&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery -->
 <g id="edge36" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsQueryDay&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery</title>
-<path fill="none" stroke="#000000" d="M942.5587,-769.8953C935.6381,-767.253 928.8361,-764.2938 922.5,-761 879.7861,-738.7952 837.2243,-702.6532 811.0193,-678.3644"/>
-<polygon fill="none" stroke="#000000" points="813.1149,-675.5309 803.4298,-671.2356 808.3224,-680.6331 813.1149,-675.5309"/>
+<path fill="none" stroke="#000000" d="M949.6808,-718.911C940.5265,-716.0481 931.241,-713.0293 922.5,-710 894.2441,-700.2076 863.202,-688.1327 837.7739,-677.8861"/>
+<polygon fill="none" stroke="#000000" points="838.9033,-674.5674 828.3207,-674.0571 836.2752,-681.0553 838.9033,-674.5674"/>
 </g>
 <!-- \\lloc\\Msls\\MslsTaxonomy -->
-<g id="node53" class="node">
+<g id="node64" class="node">
 <title>\\lloc\\Msls\\MslsTaxonomy</title>
 <polygon fill="none" stroke="#000000" points="614,-158 516,-158 516,-122 614,-122 614,-158"/>
 <text text-anchor="middle" x="565" y="-137.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsTaxonomy</text>
@@ -662,7 +797,7 @@
 <polygon fill="none" stroke="#000000" points="407.2033,-136.5001 397.2033,-140 407.2032,-143.5001 407.2033,-136.5001"/>
 </g>
 <!-- \\lloc\\Msls\\MslsRegistry -->
-<g id="node54" class="node">
+<g id="node65" class="node">
 <title>\\lloc\\Msls\\MslsRegistry</title>
 <polygon fill="none" stroke="#000000" points="1318.5,-158 1220.5,-158 1220.5,-122 1318.5,-122 1318.5,-158"/>
 <text text-anchor="middle" x="1269.5" y="-137.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsRegistry</text>
@@ -674,40 +809,40 @@
 <polygon fill="none" stroke="#000000" points="385.6419,-232.424 376.7039,-238.1128 387.2387,-239.2394 385.6419,-232.424"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsPost -->
-<g id="node56" class="node">
+<g id="node67" class="node">
 <title>\\lloc\\Msls\\MslsOptionsPost</title>
-<polygon fill="none" stroke="#000000" points="844,-428 726,-428 726,-392 844,-392 844,-428"/>
-<text text-anchor="middle" x="785" y="-407.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsPost</text>
+<polygon fill="none" stroke="#000000" points="844,-431 726,-431 726,-395 844,-395 844,-431"/>
+<text text-anchor="middle" x="785" y="-410.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsPost</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsPost&#45;&gt;\\lloc\\Msls\\MslsOptions -->
 <g id="edge42" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsPost&#45;&gt;\\lloc\\Msls\\MslsOptions</title>
-<path fill="none" stroke="#000000" d="M731.5055,-391.913C727.1893,-389.3018 723.109,-386.3438 719.5,-383 678.9671,-345.4458 706.7671,-306.3684 663.5,-272 651.2899,-262.3012 635.7342,-256.4409 620.6107,-252.924"/>
-<polygon fill="none" stroke="#000000" points="621.2698,-249.4865 610.7744,-250.9345 619.882,-256.3476 621.2698,-249.4865"/>
+<path fill="none" stroke="#000000" d="M731.4674,-394.9539C727.1592,-392.3341 723.0911,-389.3629 719.5,-386 678.2962,-347.4148 707.5144,-307.3455 663.5,-272 651.3417,-262.2363 635.8019,-256.3562 620.6771,-252.8409"/>
+<polygon fill="none" stroke="#000000" points="621.3324,-249.4026 610.8377,-250.8553 619.9477,-256.2643 621.3324,-249.4026"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryYear -->
-<g id="node57" class="node">
+<g id="node68" class="node">
 <title>\\lloc\\Msls\\MslsOptionsQueryYear</title>
-<polygon fill="none" stroke="#000000" points="1088,-752 936,-752 936,-716 1088,-716 1088,-752"/>
-<text text-anchor="middle" x="1012" y="-731.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryYear</text>
+<polygon fill="none" stroke="#000000" points="1088,-701 936,-701 936,-665 1088,-665 1088,-701"/>
+<text text-anchor="middle" x="1012" y="-680.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryYear</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryYear&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery -->
 <g id="edge43" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsQueryYear&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery</title>
-<path fill="none" stroke="#000000" d="M949.6808,-715.911C940.5265,-713.0481 931.241,-710.0293 922.5,-707 894.2441,-697.2076 863.202,-685.1327 837.7739,-674.8861"/>
-<polygon fill="none" stroke="#000000" points="838.9033,-671.5674 828.3207,-671.0571 836.2752,-678.0553 838.9033,-671.5674"/>
+<path fill="none" stroke="#000000" d="M935.7808,-673.9343C910.6496,-670.9451 882.7752,-667.6296 857.8981,-664.6707"/>
+<polygon fill="none" stroke="#000000" points="858.1447,-661.1754 847.8013,-663.4698 857.3179,-668.1264 858.1447,-661.1754"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOutput -->
-<g id="node58" class="node">
+<g id="node69" class="node">
 <title>\\lloc\\Msls\\MslsOutput</title>
-<polygon fill="none" stroke="#000000" points="1054,-212 970,-212 970,-176 1054,-176 1054,-212"/>
-<text text-anchor="middle" x="1012" y="-191.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOutput</text>
+<polygon fill="none" stroke="#000000" points="1054,-485 970,-485 970,-449 1054,-449 1054,-485"/>
+<text text-anchor="middle" x="1012" y="-464.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOutput</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOutput&#45;&gt;\\lloc\\Msls\\MslsMain -->
 <g id="edge45" class="edge">
 <title>\\lloc\\Msls\\MslsOutput&#45;&gt;\\lloc\\Msls\\MslsMain</title>
-<path fill="none" stroke="#000000" d="M969.8403,-203.4455C954.4816,-207.7247 937.2725,-213.5286 922.5,-221 886.8056,-239.0529 885.2674,-255.2205 850.5,-275 844.1056,-278.6379 837.1236,-282.0497 830.1777,-285.1425"/>
-<polygon fill="none" stroke="#000000" points="828.6084,-282.0069 820.7869,-289.1536 831.358,-288.4443 828.6084,-282.0069"/>
+<path fill="none" stroke="#000000" d="M969.6074,-460.4926C953.7066,-456.5139 936.1902,-450.1482 922.5,-440 876.1556,-405.646 895.1062,-368.5826 850.5,-332 844.4148,-327.0094 837.2797,-322.8268 829.9997,-319.3601"/>
+<polygon fill="none" stroke="#000000" points="831.3351,-316.1242 820.7689,-315.3448 828.5428,-322.5432 831.3351,-316.1242"/>
 </g>
 <!-- \\lloc\\Msls\\MslsGetSet&#45;&gt;\\lloc\\Msls\\MslsRegistryInstance -->
 <g id="edge48" class="edge">
@@ -716,34 +851,34 @@
 <polygon fill="none" stroke="#000000" points="196.8981,-244.5001 186.898,-248 196.898,-251.5001 196.8981,-244.5001"/>
 </g>
 <!-- \\lloc\\Msls\\MslsLanguageArray -->
-<g id="node61" class="node">
+<g id="node72" class="node">
 <title>\\lloc\\Msls\\MslsLanguageArray</title>
 <polygon fill="none" stroke="#000000" points="1335,-104 1204,-104 1204,-68 1335,-68 1335,-104"/>
 <text text-anchor="middle" x="1269.5" y="-83.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsLanguageArray</text>
 </g>
 <!-- \\lloc\\Msls\\MslsCustomFilter -->
-<g id="node62" class="node">
+<g id="node73" class="node">
 <title>\\lloc\\Msls\\MslsCustomFilter</title>
-<polygon fill="none" stroke="#000000" points="1074.5,-482 949.5,-482 949.5,-446 1074.5,-446 1074.5,-482"/>
-<text text-anchor="middle" x="1012" y="-461.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsCustomFilter</text>
+<polygon fill="none" stroke="#000000" points="1074.5,-431 949.5,-431 949.5,-395 1074.5,-395 1074.5,-431"/>
+<text text-anchor="middle" x="1012" y="-410.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsCustomFilter</text>
 </g>
 <!-- \\lloc\\Msls\\MslsCustomFilter&#45;&gt;\\lloc\\Msls\\MslsMain -->
 <g id="edge49" class="edge">
 <title>\\lloc\\Msls\\MslsCustomFilter&#45;&gt;\\lloc\\Msls\\MslsMain</title>
-<path fill="none" stroke="#000000" d="M949.1671,-451.1306C939.6981,-447.5146 930.4534,-442.8956 922.5,-437 876.1556,-402.646 895.1062,-365.5826 850.5,-329 844.4148,-324.0094 837.2797,-319.8268 829.9997,-316.3601"/>
-<polygon fill="none" stroke="#000000" points="831.3351,-313.1242 820.7689,-312.3448 828.5428,-319.5432 831.3351,-313.1242"/>
+<path fill="none" stroke="#000000" d="M949.2755,-397.1541C940.0879,-393.9577 930.9001,-390.2484 922.5,-386 886.8056,-367.9471 885.2674,-351.7795 850.5,-332 844.1056,-328.3621 837.1236,-324.9503 830.1777,-321.8575"/>
+<polygon fill="none" stroke="#000000" points="831.358,-318.5557 820.7869,-317.8464 828.6084,-324.9931 831.358,-318.5557"/>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryAuthor -->
-<g id="node63" class="node">
+<g id="node74" class="node">
 <title>\\lloc\\Msls\\MslsOptionsQueryAuthor</title>
-<polygon fill="none" stroke="#000000" points="1094.5,-698 929.5,-698 929.5,-662 1094.5,-662 1094.5,-698"/>
-<text text-anchor="middle" x="1012" y="-677.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryAuthor</text>
+<polygon fill="none" stroke="#000000" points="1094.5,-647 929.5,-647 929.5,-611 1094.5,-611 1094.5,-647"/>
+<text text-anchor="middle" x="1012" y="-626.2" font-family="Courier,monospace" font-size="11.00" fill="#000000">MslsOptionsQueryAuthor</text>
 </g>
 <!-- \\lloc\\Msls\\MslsOptionsQueryAuthor&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery -->
 <g id="edge50" class="edge">
 <title>\\lloc\\Msls\\MslsOptionsQueryAuthor&#45;&gt;\\lloc\\Msls\\MslsOptionsQuery</title>
-<path fill="none" stroke="#000000" d="M929.4056,-670.176C905.8848,-667.3784 880.4472,-664.3528 857.571,-661.6318"/>
-<polygon fill="none" stroke="#000000" points="857.9413,-658.1513 847.5979,-660.4456 857.1145,-665.1023 857.9413,-658.1513"/>
+<path fill="none" stroke="#000000" d="M929.4056,-638.824C905.8848,-641.6216 880.4472,-644.6472 857.571,-647.3682"/>
+<polygon fill="none" stroke="#000000" points="857.1145,-643.8977 847.5979,-648.5544 857.9413,-650.8487 857.1145,-643.8977"/>
 </g>
 </g>
 </svg>

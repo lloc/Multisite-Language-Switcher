@@ -7,6 +7,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Map\HrefLang;
+
 /**
  * Output in the frontend
  * @package Msls
@@ -95,8 +97,10 @@ class MslsOutput extends MslsMain {
 	 * @return string
 	 */
 	public function get_alternate_links() {
-		$blogs   = MslsBlogCollection::instance();
-		$options = MslsOptions::create();
+		$blogs    = MslsBlogCollection::instance();
+		$hreflang = new HrefLang( $blogs );
+		$options  = MslsOptions::create();
+
 		$arr     = [];
 		$default = '';
 
@@ -107,14 +111,13 @@ class MslsOutput extends MslsMain {
 			}
 
 			$description = $blog->get_description();
-			$hreflang    = $blog->get_hreflang();
 
 			$format = '<link rel="alternate" hreflang="%s" href="%s" title="%s" />';
 			if ( '' === $default ) {
 				$default = sprintf( $format, 'x-default', $url, esc_attr( $description ) );
 			}
 
-			$arr[] = sprintf( $format, $hreflang, $url, esc_attr( $description ) );
+			$arr[] = sprintf( $format, $hreflang->get( $blog->get_language() ), $url, esc_attr( $description ) );
 		}
 
 		return 1 === count( $arr ) ? $default : implode( PHP_EOL, $arr );
