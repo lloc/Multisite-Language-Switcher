@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsAdmin
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -15,6 +10,7 @@ use lloc\Msls\Component\Input\Select;
 
 /**
  * Administration of the options
+ *
  * @package Msls
  */
 class MslsAdmin extends MslsMain {
@@ -86,17 +82,26 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function __call( $method, $args ) {
 		$parts = explode( '_', $method, 2 );
-		if ( 2 == count( $parts ) ) {
-			switch ( $parts[0] ) {
-				case 'rewrite':
-					return $this->render_rewrite( $parts[1] );
-					break;
-				case 'text':
-					$key   = $parts[1];
-					$value = ! empty( $this->options->$key ) ? $this->options->$key : '';
-					echo ( new Text( $key, $value ) )->render();
-					break;
-			}
+
+		if ( 'rewrite' === $parts[0] ) {
+			return $this->render_rewrite( $parts[1] );
+		}
+
+		$checkboxes = [
+			'activate_autocomplete'   => __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' ),
+			'activate_content_import' => __( 'Activate the content import functionality', 'multisite-language-switcher' ),
+			'sort_by_description'     => __( 'Sort languages by description', 'multisite-language-switcher' ),
+			'exclude_current_blog'    => __( 'Exclude this blog from output', 'multisite-language-switcher' ),
+			'only_with_translation'   => __( 'Show only links with a translation', 'multisite-language-switcher' ),
+			'output_current_blog'     => __( 'Display link to the current language', 'multisite-language-switcher' ),
+			'content_filter'          => __( 'Add hint for available translations', 'multisite-language-switcher' ),
+		];
+
+		if ( isset ( $checkboxes[ $method ] ) ) {
+			echo ( new Group() )->add( new Checkbox( $method, $this->options->$method ) )->add( new Label( $method, $checkboxes[ $method ] ) )->render();
+		} else {
+			$value = ! empty( $this->options->$method ) ? $this->options->$method : '';
+			echo ( new Text( $method, $value ) )->render();
 		}
 	}
 
@@ -125,7 +130,6 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Render the options-page
-	 * @codeCoverageIgnore
 	 */
 	public function render() {
 		printf(
@@ -164,30 +168,25 @@ class MslsAdmin extends MslsMain {
 
 	/**
 	 * Register the form-elements
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function register() {
 		register_setting( 'msls', 'msls', [ $this, 'validate' ] );
 
-		add_settings_section( 'language_section', __( 'Language Settings', 'multisite-language-switcher' ), array(
-			$this,
-			'language_section'
-		), __CLASS__ );
-		add_settings_section( 'main_section', __( 'Main Settings', 'multisite-language-switcher' ), array(
-			$this,
-			'main_section'
-		), __CLASS__ );
-		add_settings_section( 'advanced_section', __( 'Advanced Settings', 'multisite-language-switcher' ), array(
-			$this,
-			'advanced_section'
-		), __CLASS__ );
+		$sections = [
+			'language_section' => __( 'Language Settings', 'multisite-language-switcher' ),
+			'main_section'     => __( 'Main Settings', 'multisite-language-switcher' ),
+			'advanced_section' => __( 'Advanced Settings', 'multisite-language-switcher' ),
+		];
 
 		global $wp_rewrite;
 		if ( $wp_rewrite->using_permalinks() ) {
-			add_settings_section( 'rewrites_section', __( 'Rewrites Settings', 'multisite-language-switcher' ), array(
-				$this,
-				'rewrites_section'
-			), __CLASS__ );
+			$sections['rewrites_section'] = __( 'Rewrites Settings', 'multisite-language-switcher' );
+		}
+
+		foreach ( $sections as $id => $title ) {
+			add_settings_section( $id, $title, [ $this, $id ], __CLASS__ );
 		}
 
 		/**
@@ -202,152 +201,101 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
-	 * Register the fields in the language_section
-	 * @codeCoverageIgnore
+	 * Registers the fields in the language_section
+	 *
+	 * Returns the number of added fields
+	 *
+	 * @return int
 	 */
-	public function language_section() {
-		add_settings_field( 'blog_language', __( 'Blog Language', 'multisite-language-switcher' ), array(
-			$this,
-			'blog_language'
-		), __CLASS__, 'language_section', array( 'label_for' => 'blog_language' ) );
+	public function language_section(): int {
+		$map = [ 'blog_language' => __( 'Blog Language', 'multisite-language-switcher' ) ];
 
-		/**
-		 * Lets you add your own field to the language section
-		 *
-		 * @param string $page
-		 * @param string $section
-		 *
-		 * @since 1.0
-		 *
-		 */
-		do_action( 'msls_admin_language_section', __CLASS__, 'language_section' );
+		return $this->add_settings_fields( $map, 'language_section' );
 	}
 
 	/**
-	 * Register the fields in the main_section
-	 * @codeCoverageIgnore
+	 * Registers the fields in the main_section
+	 *
+	 * Returns the number of added fields
+	 *
+	 * @return int
 	 */
-	public function main_section() {
-		add_settings_field( 'display', __( 'Display', 'multisite-language-switcher' ), array(
-			$this,
-			'display'
-		), __CLASS__, 'main_section', array( 'label_for' => 'display' ) );
-		add_settings_field( 'sort_by_description', __( 'Sort languages', 'multisite-language-switcher' ), array(
-			$this,
-			'sort_by_description'
-		), __CLASS__, 'main_section' );
-		add_settings_field( 'output_current_blog', __( 'Current language link', 'multisite-language-switcher' ), array(
-			$this,
-			'output_current_blog'
-		), __CLASS__, 'main_section' );
-		add_settings_field( 'only_with_translation', __( 'Translation links', 'multisite-language-switcher' ), array(
-			$this,
-			'only_with_translation'
-		), __CLASS__, 'main_section' );
-		add_settings_field( 'description', __( 'Description', 'multisite-language-switcher' ), array(
-			$this,
-			'description'
-		), __CLASS__, 'main_section', array( 'label_for' => 'description' ) );
-		add_settings_field( 'before_output', __( 'Text/HTML before the list', 'multisite-language-switcher' ), array(
-			$this,
-			'text_before_output'
-		), __CLASS__, 'main_section', array( 'label_for' => 'before_output' ) );
-		add_settings_field( 'after_output', __( 'Text/HTML after the list', 'multisite-language-switcher' ), array(
-			$this,
-			'text_after_output'
-		), __CLASS__, 'main_section', array( 'label_for' => 'after_output' ) );
-		add_settings_field( 'before_item', __( 'Text/HTML before each item', 'multisite-language-switcher' ), array(
-			$this,
-			'text_before_item'
-		), __CLASS__, 'main_section', array( 'label_for' => 'before_item' ) );
-		add_settings_field( 'after_item', __( 'Text/HTML after each item', 'multisite-language-switcher' ), array(
-			$this,
-			'text_after_item'
-		), __CLASS__, 'main_section', array( 'label_for' => 'after_item' ) );
-		add_settings_field( 'content_filter', __( 'Available translations hint', 'multisite-language-switcher' ), array(
-			$this,
-			'content_filter'
-		), __CLASS__, 'main_section' );
-		add_settings_field( 'content_priority', __( 'Hint priority', 'multisite-language-switcher' ), array(
-			$this,
-			'content_priority'
-		), __CLASS__, 'main_section', array( 'label_for' => 'content_priority' ) );
+	public function main_section(): int {
+		$map = [
+			'display'               => __( 'Display', 'multisite-language-switcher' ),
+			'sort_by_description'   => __( 'Sort languages', 'multisite-language-switcher' ),
+			'output_current_blog'   => __( 'Current language link', 'multisite-language-switcher' ),
+			'only_with_translation' => __( 'Translation links', 'multisite-language-switcher' ),
+			'description'           => __( 'Description', 'multisite-language-switcher' ),
+			'before_output'         => __( 'Text/HTML before the list', 'multisite-language-switcher' ),
+			'after_output'          => __( 'Text/HTML after the list', 'multisite-language-switcher' ),
+			'before_item'           => __( 'Text/HTML before each item', 'multisite-language-switcher' ),
+			'after_item'            => __( 'Text/HTML after each item', 'multisite-language-switcher' ),
+			'content_filter'        => __( 'Available translations hint', 'multisite-language-switcher' ),
+			'content_priority'      => __( 'Hint priority', 'multisite-language-switcher' ),
+		];
 
-		/**
-		 * Lets you add your own field to the main section
-		 *
-		 * @param string $page
-		 * @param string $section
-		 *
-		 * @since 1.0
-		 *
-		 */
-		do_action( 'msls_admin_main_section', __CLASS__, 'main_section' );
+		return $this->add_settings_fields( $map, 'main_section' );
 	}
 
 	/**
-	 * Register the fields in the advanced_section
-	 * @codeCoverageIgnore
+	 * Registers the fields in the advanced_section
+	 *
+	 * Returns the number of added fields
+	 *
+	 * @return int
 	 */
-	public function advanced_section() {
-		add_settings_field( 'activate_autocomplete', __( 'Autocomplete', 'multisite-language-switcher' ), array(
-			$this,
-			'activate_autocomplete'
-		), __CLASS__, 'advanced_section' );
-		add_settings_field( 'image_url', __( 'Custom URL for flag-images', 'multisite-language-switcher' ), array(
-			$this,
-			'text_image_url'
-		), __CLASS__, 'advanced_section', array( 'label_for' => 'image_url' ) );
-		add_settings_field( 'reference_user', __( 'Reference user', 'multisite-language-switcher' ), array(
-			$this,
-			'reference_user'
-		), __CLASS__, 'advanced_section', array( 'label_for' => 'reference_user' ) );
-		add_settings_field( 'exclude_current_blog', __( 'Exclude blog', 'multisite-language-switcher' ), array(
-			$this,
-			'exclude_current_blog'
-		), __CLASS__, 'advanced_section' );
-		add_settings_field( 'activate_content_import', __( 'Content import', 'multisite-language-switcher' ), array(
-			$this,
-			'activate_content_import'
-		), __CLASS__, 'advanced_section' );
+	public function advanced_section(): int {
+		$map = [
+			'activate_autocomplete'   => __( 'Autocomplete', 'multisite-language-switcher' ),
+			'image_url'               => __( 'Custom URL for flag-images', 'multisite-language-switcher' ),
+			'reference_user'          => __( 'Reference user', 'multisite-language-switcher' ),
+			'exclude_current_blog'    => __( 'Exclude blog', 'multisite-language-switcher' ),
+			'activate_content_import' => __( 'Content import', 'multisite-language-switcher' ),
+		];
 
-		/**
-		 * Lets you add your own field to the advanced section
-		 *
-		 * @param string $page
-		 * @param string $section
-		 *
-		 * @since 1.0
-		 *
-		 */
-		do_action( 'msls_admin_advanced_section', __CLASS__, 'advanced_section' );
+		return $this->add_settings_fields( $map, 'advanced_section' );
 	}
 
 	/**
-	 * Register the fields in the rewrites_section
-	 * @since 1.1
-	 * @codeCoverageIgnore
+	 * Registers the fields in the rewrites_section
+	 *
+	 * Returns the number of added fields
+	 *
+	 * @return int
 	 */
-	public function rewrites_section() {
+	public function rewrites_section(): int {
+		$map = [];
 		foreach ( get_post_types( [ 'public' => true ], 'objects' ) as $key => $object ) {
-			$title = sprintf( __( '%s Slug', 'multisite-language-switcher' ), $object->label );
-			add_settings_field(
-				"rewrite_{$key}",
-				$title,
-				[ $this, "rewrite_{$key}" ],
-				__CLASS__,
-				'rewrites_section',
-				array( 'label_for' => "rewrite_{$key}" )
-			);
+			$map["rewrite_{$key}"] = sprintf( __( '%s Slug', 'multisite-language-switcher' ), $object->label );
+		}
+
+		return $this->add_settings_fields( $map, 'rewrites_section' );
+	}
+
+	/**
+	 * @param array $map
+	 * @param string $section
+	 *
+	 * @return int
+	 */
+	protected function add_settings_fields( array $map, string $section ): int {
+		foreach ( $map as $id => $title ) {
+			add_settings_field( $id, $title, [ $this, $id ], __CLASS__, $section, [ 'label_for' => $id ] );
 		}
 
 		/**
-		 * Lets you add your own field to the rewrites section
+		 * Lets you add your own field to the section
 		 *
 		 * @param string $page
 		 * @param string $section
+		 *
+		 * @since 2.4.4
+		 *
 		 */
-		do_action( 'msls_admin_rewrites_section', __CLASS__, 'rewrites_section' );
+		do_action( "msls_admin_{$section}", __CLASS__, $section );
+
+		return count( $map );
 	}
 
 	/**
@@ -381,100 +329,12 @@ class MslsAdmin extends MslsMain {
 	}
 
 	/**
-	 * render
-	 *
-	 * You can decide if you want to activate the experimental autocomplete
-	 * input fields in the backend instead of the traditional select-menus.
-	 */
-	public function activate_autocomplete() {
-		$key  = 'activate_autocomplete';
-		$text = __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' );
-
-		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
-	}
-
-	/**
-	 * Activate content import
-	 *
-	 * You can decide if you want to activate the content import functionality
-	 * in the backend instead of the traditional select-menus.
-	 */
-	public function activate_content_import() {
-		$key  = 'activate_content_import';
-		$text = __( 'Activate the content import functionality', 'multisite-language-switcher' );
-
-		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
-	}
-
-	/**
-	 * Show sort_by_description-field
-	 *
-	 * You can decide that the output will be sorted by the description. If not
-	 * the output will be sorted by the language-code.
-	 */
-	public function sort_by_description() {
-		$key  = 'sort_by_description';
-		$text = __( 'Sort languages by description', 'multisite-language-switcher' );
-
-		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
-	}
-
-	/**
-	 * Exclude the current blog
-	 *
-	 * You can exclude a blog explicitly. All your settings will be safe but the
-	 * plugin will ignore this blog while this option is active.
-	 */
-	public function exclude_current_blog() {
-		$key  = 'exclude_current_blog';
-		$text = __( 'Exclude this blog from output', 'multisite-language-switcher' );
-
-		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
-	}
-
-	/**
-	 * Show only a link  if a translation is available
-	 *
-	 * Some user requested this feature. Shows only links to available
-	 * translations.
-	 */
-	public function only_with_translation() {
-		$key  = 'only_with_translation';
-		$text = __( 'Show only links with a translation', 'multisite-language-switcher' );
-
-		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
-	}
-
-	/**
-	 * Show a link to the current blog
-	 *
-	 * Some user requested this feature. If active the plugin will place also a
-	 * link to the current blog.
-	 */
-	public function output_current_blog() {
-		$key  = 'output_current_blog';
-		$text = __( 'Display link to the current language', 'multisite-language-switcher' );
-
-		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
-	}
-
-	/**
 	 * The description for the current blog
 	 *
 	 * The language will be used ff there is no description.
 	 */
 	public function description() {
 		echo ( new Text( 'description', $this->options->description, '40' ) )->render();
-	}
-
-	/**
-	 * The output can be placed after the_content
-	 */
-	public function content_filter() {
-		$key  = 'content_filter';
-		$text = __( 'Add hint for available translations', 'multisite-language-switcher' );
-
-		echo ( new Group() )->add( new Checkbox( $key, $this->options->$key ) )->add( new Label( $key, $text ) )->render();
 	}
 
 	/**
