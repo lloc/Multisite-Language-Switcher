@@ -22,7 +22,7 @@ class Label implements InputInterface {
 
 	/**
 	 * @param string $key
-	 * @param string $label
+	 * @param string $text
 	 */
 	public function __construct( string $key, string $text ) {
 		$this->key  = esc_attr( $key );

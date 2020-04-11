@@ -54,7 +54,7 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * @param MslsJson $json
-	 * @param Array $args
+	 * @param array $args
 	 *
 	 * @return mixed
 	 */

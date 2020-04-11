@@ -118,7 +118,9 @@ class MslsPlugin {
 	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
-			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $blog->get_title() ] );
+			$title = '<div class="blavatar"></div>' . $blog->get_title();
+
+			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $title ] );
 		}
 
 		$blog = $blog_collection->get_current_blog();

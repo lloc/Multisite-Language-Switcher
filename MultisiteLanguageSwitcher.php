@@ -48,7 +48,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @package Msls
 	 *
-	 * @param array $arr
+	 * @param array $attr
 	 *
 	 * @return string
 	 */
