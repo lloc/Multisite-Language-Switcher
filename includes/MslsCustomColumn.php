@@ -28,16 +28,38 @@ class MslsCustomColumn extends MslsMain {
 
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
-
+			
 			if ( ! empty( $post_type ) ) {
 				add_filter( "manage_{$post_type}_posts_columns", [ $obj, 'th' ] );
 				add_action( "manage_{$post_type}_posts_custom_column", [ $obj, 'td' ], 10, 2 );
+				add_action( "manage_edit-{$post_type}_sortable_columns", [ $obj, 'sortable_cols' ], 10, 2 );
+				
 				add_action( 'trashed_post', [ $obj, 'delete' ] );
 			}
 		}
 
 		return $obj;
 	}
+	
+	/**
+	* Table header- Sorting
+	* @param array $columns
+	* @return array
+	*/
+	public function sortable_cols( $columns ) {
+		$blogs = $this->collection->get();
+		if ( $blogs ) {
+			$blogs = $this->collection->get();
+			foreach ( $blogs as $blog ) {
+				$language = $blog->get_language();
+				$col_name = 'mslcol_' . $language;
+				$columns[$col_name] = $col_name;
+			}
+		}
+		return $columns;
+	}
+	
+	
 
 	/**
 	 * Table header
@@ -45,8 +67,9 @@ class MslsCustomColumn extends MslsMain {
 	 * @return array
 	 */
 	public function th( $columns ) {
+		
 		$blogs = $this->collection->get();
-		if ( $blogs ) {
+		if ( $blogs ) {		
 			$arr = [];
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
@@ -59,9 +82,11 @@ class MslsCustomColumn extends MslsMain {
 					$icon->set_origin_language( 'it_IT' );
 				}
 
-				$arr[] = $icon->get_icon();
+				/* $arr[] = $icon->get_icon(); */
+				$sep_colname = 'mslcol_' . $blog->get_language();
+				$columns[$sep_colname] =  $icon->get_icon();
 			}
-			$columns['mslscol'] = implode( '&nbsp;', $arr );
+			/* $columns['mslscol'] = implode( '&nbsp;', $arr ); */
 		}
 
 		return $columns;
@@ -76,9 +101,15 @@ class MslsCustomColumn extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function td( $column_name, $item_id ) {
-		if ( 'mslscol' == $column_name ) {
+	
+		// Check for msl column name
+		$msl_pos = strpos($column_name, 'mslcol_');
+		if ( $msl_pos == 0 ) {
 			$blogs           = $this->collection->get();
 			$origin_language = MslsBlogCollection::get_blog_language();
+			// Filter out the language 
+			$columns_language = substr($column_name, strlen('mslcol_'), strlen($column_name));
+			// print_r($columns_language);
 			if ( $blogs ) {
 				$mydata = MslsOptions::create( $item_id );
 				foreach ( $blogs as $blog ) {
@@ -96,8 +127,12 @@ class MslsCustomColumn extends MslsMain {
 					if ( $mydata->has_value( $language ) ) {
 						$icon->set_href( $mydata->$language );
 					}
-	
-					echo $icon->get_a();
+					
+					// Print only thye corresponding flag
+					if (strcmp($blog->get_language(), $columns_language) == 0 ) {
+						echo $icon->get_a();
+					}
+					
 
 					restore_current_blog();
 				}
