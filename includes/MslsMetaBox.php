@@ -215,7 +215,6 @@ class MslsMetaBox extends MslsMain {
 
 					$selects .= wp_dropdown_pages( $args );
 				} else {
-					// Here 
 					$selects .= sprintf(
 						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
 						$language,
@@ -291,7 +290,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
 	 */
-	public function render_input( $echo = false ) {
+	public function render_input( $echo = true ) {
 		$blogs = $this->collection->get();
 		
 
