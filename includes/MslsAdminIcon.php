@@ -160,8 +160,9 @@ class MslsAdminIcon {
 	 * @return MslsAdminIcon
 	 */
 	public function set_href( $id ) {
+		//foreach ($id as $idx) {
 		$this->href = get_edit_post_link( $id );
-
+		//}
 		return $this;
 	}
 
@@ -216,6 +217,23 @@ class MslsAdminIcon {
 
 		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_icon() );
 	}
+	
+	/**
+	 * Get link as html-tag
+	 *
+	 * @return string
+	 */
+	public function get_ab($id): string {
+		if ( empty( $this->href ) ) {
+			$title = sprintf( __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
+			$href = $this->get_edit_new();
+		} else {
+			$title = sprintf( __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
+			$href  = $this->href[$id];
+		}
+
+		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_icon() );
+	}
 
 	/**
 	 * Get icon as html-tag
@@ -245,8 +263,7 @@ class MslsAdminIcon {
 	public function get_edit_new() {
 		$path = $this->path;
 
-		if ( null !== $this->id && null !== $this->origin_language ) {
-			$path = add_query_arg( [ 'msls_id' => $this->id, 'msls_lang' => $this->origin_language ], $this->path );
+			$path = add_query_arg( [ 'msls_id' => implode(',', $this->id), 'msls_lang' => implode(',', $this->origin_language) ], $this->path ); 
 		}
 
 		/**
