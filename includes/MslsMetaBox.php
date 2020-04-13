@@ -124,7 +124,7 @@ class MslsMetaBox extends MslsMain {
 				'msls',
 				apply_filters(
 					'msls_metabox_post_select_title',
-					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
+					__( 'Multisite Language SwitcherYO', 'multisite-language-switcher' )
 				),
 				[
 					$this,
@@ -172,6 +172,7 @@ class MslsMetaBox extends MslsMain {
 
 			$this->maybe_set_linked_post( $mydata );
 
+			print_r('aaaaa');
 			$temp = $post;
 
 			wp_nonce_field( MslsPlugin::path(), 'msls_noncename' );
@@ -302,6 +303,8 @@ class MslsMetaBox extends MslsMain {
 
 			$temp  = $post;
 			$items = '';
+			
+			print_r('aaaaa')
 
 			wp_nonce_field( MslsPlugin::path(), 'msls_noncename' );
 
