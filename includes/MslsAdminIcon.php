@@ -218,7 +218,7 @@ class MslsAdminIcon {
 		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_icon() );
 	}
 	
-	/**
+		/**
 	 * Get link as html-tag
 	 *
 	 * @return string
@@ -263,6 +263,7 @@ class MslsAdminIcon {
 	public function get_edit_new() {
 		$path = $this->path;
 
+		if ( null !== $this->id && null !== $this->origin_language ) {
 			$path = add_query_arg( [ 'msls_id' => implode(',', $this->id), 'msls_lang' => implode(',', $this->origin_language) ], $this->path ); 
 		}
 
