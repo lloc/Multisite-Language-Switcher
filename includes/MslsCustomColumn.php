@@ -153,28 +153,29 @@ class MslsCustomColumn extends MslsMain {
 					$lang = $blog->get_language();
 					
 					// Set as nothing
-					$obj_id = -1; 
-					
+					$obj_id = null; 
+					$term = null;
+					 
 					// Handle Terms
 					if ($mydata instanceof MslsOptionsTaxTerm){
 						
 						$temp = get_term( $mydata->$lang, $mydata->base  );
-					
-						if (!is_wp_error( $temp )){ 
-							$obj_id = $temp->term_id;
+						
+						if (!empty($temp) && !is_wp_error($temp)){ 
+							$obj_id = $temp->term_id; 
 						}
 					}
 					
 					// Handle Posts
 					if ($mydata instanceof MslsOptionsPost){
-						$temp = get_post( $mydata->$lang );
-						if (!is_wp_error( $temp )){ 
+						$temp = get_post( $mydata->$lang );						
+						if (!empty($temp) && !is_wp_error($term)){ 
 							$obj_id = $temp->ID;
 						}
 					}
 
 					// Do not store empty records 
-					if ( strcmp($blog->get_language(), $origin_language) != 0 && $obj_id != $item_id) { 
+					if ( strcmp($blog->get_language(), $origin_language) != 0 && $obj_id != $item_id && $obj_id != null) { 
 						$ids[] = $obj_id;
 						$langs[] = $blog->get_language();
 					}
