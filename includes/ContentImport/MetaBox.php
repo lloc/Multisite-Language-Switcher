@@ -11,6 +11,7 @@ use lloc\Msls\MslsRegistryInstance;
 
 class MetaBox extends MslsRegistryInstance {
 	protected $data = [];
+	protected $language = [];
 
 	/**
 	 * Renders the content import metabox.
@@ -30,6 +31,7 @@ class MetaBox extends MslsRegistryInstance {
 		}, array_keys( $languages ) ) );
 		$has_translation = count( $available ) >= 1;
 
+		
 		if ( $has_input || $has_translation ) {
 			add_thickbox();
 			$label_template = __( 'Import content from %s', 'multisite-language-switcher' );
@@ -39,6 +41,7 @@ class MetaBox extends MslsRegistryInstance {
 					'multisite-language-switcher' )
 			                   . '</legend>';
 			foreach ( $languages as $language => $label ) {
+				
 				$id    = $mydata->{$language};
 				$blog  = $blogs->get_blog_id( $language );
 				$label = sprintf( $label_template, $label );
@@ -47,11 +50,14 @@ class MetaBox extends MslsRegistryInstance {
 					$blog = $blogs->get_blog_id( $language );
 				}
 				if ( null !== $id ) {
-					$this->data = [
-						'msls_import'  => "{$blog}|{$id}",
+					$t_data =  [
+						'msls_import_' . $language  => "{$blog}|{$id}",
 					];
-					$output .= sprintf( '<a class="button button-primary thickbox" href="%s" title="%s">%s</a>',
-						$this->inline_thickbox_url( $this->data ),
+					$this->data[] = $t_data;
+					$this->language[] = $language;
+					
+					$output .= sprintf( '<a class="button button-primary thickbox" href="%s" title="%s">%s</a><br>',
+						$this->inline_thickbox_url( $t_data, $language ),
 						$label,
 						$label
 					);
@@ -68,89 +74,103 @@ class MetaBox extends MslsRegistryInstance {
 		echo $output;
 	}
 
-	protected function inline_thickbox_url( array $data = [] ) {
+	protected function inline_thickbox_url( array $data = [], $language ) {
 		$args = array_merge( [
 			'modal'    => true,
 			'width'    => 770, // meh, just a guess on *most* devices
 			'height'   => 770,
-			'inlineId' => 'msls-import-dialog-' . str_replace( '|', '-', $data['msls_import'] ),
+			'inlineId' => 'msls-import-dialog-' . str_replace( '|', '-', $data['msls_import_' . $language] ),
 		], $data );
-
+		
+		
 		return esc_url(
-			'#TB_inline' . add_query_arg( $args, '' )
+			'#TB_inline_' . $language . add_query_arg( $args, '' )
 		);
+		
 	}
 
 	public function print_modal_html() {
-		echo $this->inline_thickbox_html( true, $this->data );
+		echo $this->inline_thickbox_html( true, $this->data, $this->language );
 	}
 
-	protected function inline_thickbox_html( $echo = true, array $data = [] ) {
-		if ( ! isset( $data['msls_import'] ) ) {
-			return '';
+	protected function inline_thickbox_html( $echo = true, array $data_arr = [], $language_arr = []  ) {
+		
+		
+		// Attach information about other existing translations to the form
+		$postmeta 		= array_reduce($data_arr, 'array_merge', array());
+		//$site_ids 		= implode(',', $language_ar);
+		$site_langs 	= implode(',', $postmeta);
+		
+		foreach ( $language_arr as $idx => $language ) {
+			$data = $data_arr[$idx];
+			
+			if ( ! isset( $data['msls_import_' . $language] ) ) {
+				return '';
+			}
+
+			$slug = str_replace( '|', '-', $data['msls_import_' . $language] );
+			ob_start();	
+			?>
+			<div style="display: none;" id="msls-import-dialog-<?php echo esc_attr( $slug ) ?>">
+				<h3><?php esc_html_e( 'Select what should be imported and how', 'multisite-language-switcher' ) ?></h3>
+
+				<form action="<?php echo add_query_arg( [] ) ?>" method="post">
+					<?php wp_nonce_field( MslsPlugin::path(), 'msls_noncename' ); ?>
+
+					<?php foreach ( $data as $key => $value ) : ?>
+						<input type="hidden" name="msls_import" value="<?php echo esc_attr( $value ) ?>">
+					<?php endforeach; ?>
+					
+					<?php /* Data about other translation links */  ?>
+					<input type="hidden" name="msls_relations" value="<?php echo esc_attr(  $site_langs ) ?>">
+					
+
+					<?php /** @var ImportersFactory $factory */
+					foreach ( Map::instance()->factories() as $slug => $factory ) : ?>
+						<?php $details = $factory->details() ?>
+						<h4><?php echo esc_html( $details->name ) ?></h4>
+						<?php if ( empty( $details->importers ) ) : ?>
+							<p><?php esc_html_e( 'No importers available for this type of content.', 'multisite-language-switcher' ) ?></p>
+						<?php else: ?>
+							<ul>
+								<li>
+									<label>
+										<input type="radio" name="msls_importers[<?php echo esc_attr( $details->slug ) ?>]">
+										<?php esc_html_e( 'Off - Do not import this type of content in the destination post.', 'multisite-language-switcher' ) ?>
+									</label>
+								</li>
+								<?php foreach ( $details->importers as $importer_slug => $importer_info ) : ?>
+									<li>
+										<label>
+											<input type="radio" name="msls_importers[<?php echo esc_attr( $details->slug ) ?>]"
+												   value="<?php echo esc_attr( $importer_slug ) ?>"
+												<?php checked( $details->selected, $importer_slug ) ?>
+											>
+											<?php echo( esc_html( sprintf( '%s -  %s', $importer_info->name, $importer_info->description ) ) ) ?>
+										</label>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+					<?php endforeach; ?>
+
+					<div>
+						<input
+								type="submit"
+								class="button button-primary"
+								value="<?php esc_html_e( 'Import Content', 'multisite-language-switcher' ) ?>"
+						>
+					</div>
+				</form>
+			</div>
+			
+			<?php
+			$html = ob_get_clean();
+			
+			if ( $echo ) {
+				echo $html;
+			}
 		}
-
-		$slug = str_replace( '|', '-', $data['msls_import'] );
-
-		ob_start();
-		?>
-        <div style="display: none;" id="msls-import-dialog-<?php echo esc_attr( $slug ) ?>">
-            <h3><?php esc_html_e( 'Select what should be imported and how', 'multisite-language-switcher' ) ?></h3>
-
-            <form action="<?php echo add_query_arg( [] ) ?>" method="post">
-
-				<?php wp_nonce_field( MslsPlugin::path(), 'msls_noncename' ); ?>
-
-				<?php foreach ( $data as $key => $value ) : ?>
-                    <input type="hidden" name="<?php echo esc_attr( $key ) ?>" value="<?php echo esc_attr( $value ) ?>">
-				<?php endforeach; ?>
-
-				<?php /** @var ImportersFactory $factory */
-				foreach ( Map::instance()->factories() as $slug => $factory ) : ?>
-					<?php $details = $factory->details() ?>
-                    <h4><?php echo esc_html( $details->name ) ?></h4>
-					<?php if ( empty( $details->importers ) ) : ?>
-                        <p><?php esc_html_e( 'No importers available for this type of content.', 'multisite-language-switcher' ) ?></p>
-					<?php else: ?>
-                        <ul>
-                            <li>
-                                <label>
-                                    <input type="radio" name="msls_importers[<?php echo esc_attr( $details->slug ) ?>]">
-									<?php esc_html_e( 'Off - Do not import this type of content in the destination post.', 'multisite-language-switcher' ) ?>
-                                </label>
-                            </li>
-							<?php foreach ( $details->importers as $importer_slug => $importer_info ) : ?>
-                                <li>
-                                    <label>
-                                        <input type="radio" name="msls_importers[<?php echo esc_attr( $details->slug ) ?>]"
-                                               value="<?php echo esc_attr( $importer_slug ) ?>"
-											<?php checked( $details->selected, $importer_slug ) ?>
-                                        >
-										<?php echo( esc_html( sprintf( '%s -  %s', $importer_info->name, $importer_info->description ) ) ) ?>
-                                    </label>
-                                </li>
-							<?php endforeach; ?>
-                        </ul>
-					<?php endif; ?>
-				<?php endforeach; ?>
-
-                <div>
-                    <input
-                            type="submit"
-                            class="button button-primary"
-                            value="<?php esc_html_e( 'Import Content', 'multisite-language-switcher' ) ?>"
-                    >
-                </div>
-            </form>
-        </div>
-
-		<?php
-		$html = ob_get_clean();
-
-		if ( $echo ) {
-			echo $html;
-		}
-
-		return $html;
+		//return $html;
 	}
 }

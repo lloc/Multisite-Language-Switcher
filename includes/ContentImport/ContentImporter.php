@@ -90,13 +90,22 @@ class ContentImporter extends MslsRegistryInstance {
 		if ( ! $this->pre_flight_check() || false === $sources = $this->parse_sources() ) {
 			return $data;
 		}
+		
 
 		list( $source_blog_id, $source_post_id ) = $sources;
-
+		
+		
+		
+		// Handle relations between posts 
+		$relations = [];
+		$relations = $this->parse_relations();
+		
+		
 		if ( $source_blog_id === get_current_blog_id() ) {
 			return $data;
 		}
-
+		
+		
 		$source_lang  = MslsBlogCollection::get_blog_language( $source_blog_id );
 		$dest_blog_id = get_current_blog_id();
 		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
@@ -127,13 +136,15 @@ class ContentImporter extends MslsRegistryInstance {
 
 		$import_coordinates->parse_importers_from_request();
 
-		$data = $this->import_content( $import_coordinates, $data );
+		$data = $this->import_content( $import_coordinates, $data, $relations );
 
 		if ( $this->has_created_post ) {
 			$this->update_inserted_blog_post_data($dest_blog_id, $dest_post_id, $data );
-			$this->redirect_to_blog_post( $dest_blog_id, $dest_post_id );
+			
 		}
 
+		$this->redirect_to_blog_post( $dest_blog_id, $dest_post_id, $relations );
+		
 		return $data;
 	}
 
@@ -175,6 +186,26 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 
 		return array_map( 'intval', $import_data );
+	}
+	
+	
+	/**
+	 * Parses the source blog and post IDs from the $_POST array validating them.
+	 *
+	 * @return array|bool
+	 */
+	public function parse_relations() {
+		if ( ! isset( $_POST['msls_relations'] ) ) {
+			return false;
+		}
+
+		$import_rels = array_filter( explode( ',', trim(  $_POST['msls_relations'] )) );
+	
+		if ( count( $import_rels ) < 1 ) {
+			return false;
+		}
+
+		return $import_rels;
 	}
 
 	protected function get_the_blog_post_ID( $blog_id ) {
@@ -238,7 +269,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 *
 	 * @return array An array of modified post fields.
 	 */
-	public function import_content( ImportCoordinates $import_coordinates, array $post_fields = [] ) {
+	public function import_content( ImportCoordinates $import_coordinates, array $post_fields = []) {
 		if ( ! $import_coordinates->validate() ) {
 			return $post_fields;
 		}
@@ -278,10 +309,13 @@ class ContentImporter extends MslsRegistryInstance {
 		$this->logger    = $this->logger ?: new ImportLogger( $import_coordinates );
 		$this->relations = $this->relations ?: new Relations( $import_coordinates );
 
+		
 		if ( ! empty( $importers ) && is_array( $importers ) ) {
 			$source_post_id = $import_coordinates->source_post_id;
 			$dest_lang      = $import_coordinates->dest_lang;
 			$dest_post_id   = $import_coordinates->dest_post_id;
+			
+
 			$this->relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
 
 			foreach ( $importers as $key => $importer ) {
@@ -305,6 +339,7 @@ class ContentImporter extends MslsRegistryInstance {
 		 * @param Relations $relations
 		 */
 		do_action( 'msls_content_import_after_import', $import_coordinates, $this->logger, $this->relations );
+		
 
 		/**
 		 * Filters the data after the import ran.
@@ -333,11 +368,44 @@ class ContentImporter extends MslsRegistryInstance {
 		return $data;
 	}
 
-	protected function redirect_to_blog_post( $dest_blog_id, $post_id ) {
+	protected function redirect_to_blog_post( $dest_blog_id, $post_id, array $relations = [] ) {
+		
+		
 		switch_to_blog( $dest_blog_id );
-		$edit_post_link = html_entity_decode( get_edit_post_link( $post_id ) );
+		
+		$path = get_edit_post_link( $post_id );
+		
+		// add relations to other languages
+		if (count($relations) > 0) {
+					
+			// Add relations to other langs
+			foreach ($relations as $ext_rel) {
+				$ext_rel = explode('|', $ext_rel);
+				list( $relation_blog_id, $relation_post_id ) = $ext_rel;
+				
+				// Check if relations are valid WP posts 
+				switch_to_blog( $relation_blog_id );
+				$relation_post = get_post( $relation_post_id );
+				$relation_languages[] =  MslsBlogCollection::get_blog_language( $relation_blog_id );
+				restore_current_blog();
+
+				if ( ! $relation_post instanceof \WP_Post ) {
+					continue;
+				}
+				
+				// Add verified ids 
+				$relation_ids[] = $relation_post_id;
+			}
+			
+			if ( null !== $relation_ids && null !== $relation_languages ) {
+				$path = add_query_arg( [ 'msls_id' => implode(',', $relation_ids), 'msls_lang' => implode(',', $relation_languages) ], $path );
+			}	
+			
+		
+		}
+		
+		$edit_post_link = html_entity_decode( $path );
 		wp_redirect( $edit_post_link );
-		die();
 	}
 
 	/**

@@ -210,43 +210,55 @@ class MslsPostTag extends MslsMain {
 		}
 	}
 
-	/**
-	 * Sets the selected element in the data from the `$_GET` superglobal, if any.
-	 *
-	 * @param MslsOptionsTax $mydata
-	 *
-	 * @return MslsOptionsTax
-	 */
+
 	public function maybe_set_linked_term( MslsOptionsTax $mydata ) {
 		if ( ! isset( $_GET['msls_id'], $_GET['msls_lang'] ) ) {
 			return $mydata;
 		}
 
-		$origin_lang = trim( $_GET['msls_lang'] );
-
-		if ( isset( $mydata->{$origin_lang} ) ) {
+		// Extract all languages into arrays
+		$all_langs = explode(',',trim( $_GET['msls_lang'] ));
+		$all_ids = explode(',',trim( $_GET['msls_id'] ));
+		
+		// Check if eq sizes
+		if (  sizeof($all_langs) != sizeof($all_ids) ) { 
 			return $mydata;
 		}
+		
+		// Loop over languages to set cross-linking between translations
+		foreach ($all_langs as $indx => $lang) {
+			
+			// Check if language source already exist 
+			// if there's an existing reference - skip the post 
+			if ( isset( $mydata->{$lang} ) ) {
+				continue;
+			}
+				
+			// Get ID for each language
+			$origin_term_id[$indx] = (int) $all_ids[$indx];
+			$origin_blog_id[$indx] = $this->collection->get_blog_id(  $lang );
+			
+			// Skip if there's no proper record
+			if ( null === $origin_blog_id[$indx] ) {
+				continue;
+			}
+			
+			// Get post info for each language
+			switch_to_blog( $origin_blog_id[$indx] );
+			$origin_term = get_term( $origin_term_id[$indx], $mydata->base );
+			restore_current_blog();
 
-		$origin_term_id = (int) $_GET['msls_id'];
-
-		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
-
-		if ( null === $origin_blog_id ) {
-			return $mydata;
+			// Skip loop if there's no proper post 
+			if ( ! $origin_term instanceof \WP_Term ) {
+				continue;
+			}	
+			
+			// Create link between original post for the language
+			$mydata->{$lang} = $origin_term_id[$indx];
+			
 		}
-
-		switch_to_blog( $origin_blog_id );
-		$origin_term = get_term( $origin_term_id, $mydata->base );
-		restore_current_blog();
-
-		if ( ! $origin_term instanceof \WP_Term ) {
-			return $mydata;
-		}
-
-		$mydata->{$origin_lang} = $origin_term_id;
-
 		return $mydata;
 	}
-
 }
+
+
