@@ -1,3 +1,9 @@
+## 2.4.6
+
+### Bug fix
+
+* Notice in HrefLang object
+
 ## 2.4.5
 
 ### Hotfix 

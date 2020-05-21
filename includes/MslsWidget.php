@@ -66,7 +66,7 @@ class MslsWidget extends \WP_Widget {
 			);
 		}
 
-		echo $args['before_widget'], $title, $content, $args['after_widget']; // xss ok
+		echo $args['before_widget'], $title, $content, $args['after_widget'];
 	}
 
 	/**
