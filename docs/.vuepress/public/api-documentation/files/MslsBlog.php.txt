@@ -48,7 +48,7 @@ class MslsBlog {
 	}
 
 	/**
-	 * Get a member of the \StdClass-object by name
+	 * Gets a member of the \StdClass-object by name
 	 *
 	 * The method return <em>null</em> if the requested member does not exists.
 	 *
@@ -61,13 +61,22 @@ class MslsBlog {
 	}
 
 	/**
-	 * Get the description stored in this object
+	 * Gets the description stored in this object
 	 *
 	 * The method returns the stored language if the description is empty.
 	 * @return string
 	 */
-	public function get_description() {
+	public function get_description(): string {
 		return empty( $this->description ) ? $this->get_language() : $this->description;
+	}
+
+	/**
+	 * Gets a customized title for the blog
+	 *
+	 * @return string
+	 */
+	public function get_title(): string {
+		return sprintf( '%1$s (%2$s)', $this->obj->blogname, $this->get_description() );
 	}
 
 	/**
@@ -90,6 +99,40 @@ class MslsBlog {
 		$language = $this->get_language();
 
 		return substr( $language, 0, 2 );
+	}
+
+	/**
+	 * @param MslsOptions $options
+	 *
+	 * @return string|null
+	 */
+	public function get_url( $options ) {
+		if ( $this->obj->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() ) {
+			return $options->get_current_link();
+		}
+
+		return $this->get_permalink( $options );
+	}
+
+	/**
+	 * @param MslsOptions $options
+	 *
+	 * @return string|null
+	 */
+	protected function get_permalink( $options ) {
+		$url = null;
+
+		$is_home = is_front_page();
+
+		switch_to_blog( $this->obj->userblog_id );
+
+		if ( is_object( $options ) && method_exists( $options, 'has_value' ) && ( $is_home || $options->has_value( $this->get_language() ) ) ) {
+			$url = $options->get_permalink( $this->get_language() );
+		}
+
+		restore_current_blog();
+
+		return $url;
 	}
 
 	/**

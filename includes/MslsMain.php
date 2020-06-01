@@ -131,7 +131,7 @@ class MslsMain {
 	public function verify_nonce() {
 		return (
 			filter_has_var( INPUT_POST, 'msls_noncename' ) &&
-			wp_verify_nonce( filter_input( INPUT_POST, 'msls_noncename' ), MSLS_PLUGIN_PATH )
+			wp_verify_nonce( filter_input( INPUT_POST, 'msls_noncename' ), MslsPlugin::path() )
 		);
 	}
 

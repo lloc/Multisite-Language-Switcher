@@ -1,6 +1,49 @@
+## 2.4.6
+
+### Bug fix
+
+* Notice in HrefLang object
+
+## 2.4.5
+
+### Hotfix 
+
+* hotfix for **admin-bar** primary blog could be excluded
+ 
+## 2.4.4
+
+### Features
+
+* the value for **hrefLang** in head is now more specific. It will now return a specific language-code if there are similar locales like 'en_US' and 'en_GB' ('en-US' and 'en-GB' in this case).
+* Sites in the **admin-bar** show now the description-part.
+
+## 2.4.3
+
+### Bug Fixes
+
+* fix for alternate links for hreflang
+
+## 2.4.2
+
+### Bug Fixes
+
+* new **SVG** flags use now the same logic as the PNG flags for getting the right name  
+
+## 2.4.1
+
+### Bug Fixes
+
+* use of \Locale class removed because it expects PHP Intl installed which seems not the standard case   
+
+## 2.4.0
+
+* Min PHP Version is now 7.0
+* Code enhancements & Bugfixes
+* https://github.com/lloc/Multisite-Language-Switcher/commits/master
+
 ## 2.3.0
 
-### Feature
+### Features
 
 * **New API functions**
     - `get_msls_flag_url( string $language ): string;`

@@ -21,26 +21,28 @@ class MslsJson {
 	protected $arr = [];
 
 	/**
-	 * add
+	 * Adds a value label pair to the internal class container
+	 *
 	 * @param int $value
 	 * @param string $label
+	 *
 	 * @return MslsJson
 	 */
 	public function add( $value, $label ) {
-		$this->arr[] = array(
-			'value' => (int) $value,
-			'label' => (string) $label,
-		);
+		$this->arr[] = [
+			'value' => intval( $value ),
+			'label' => strval( $label ),
+		];
+
 		return $this;
 	}
 
 	/**
-	 * compare
+	 * Compare the item with the key "label" of the array $a and the array $b
 	 *
-	 * Compare the item with the key "label" of the array $a and the
-	 * array $b
 	 * @param array $a
 	 * @param array $b
+	 *
 	 * @return int
 	 */
 	public static function compare( array $a, array $b ) {
@@ -48,12 +50,11 @@ class MslsJson {
 	}
 
 	/**
-	 * get
-	 *
 	 * Get the array container sorted by label
+	 *
 	 * @return array
 	 */
-	public function get() {
+	public function get(): array {
 		$arr = $this->arr;
 
 		usort( $arr, [ __CLASS__, 'compare' ] );
@@ -62,20 +63,17 @@ class MslsJson {
 	}
 
 	/**
-	 * encode
-	 *
 	 * Encodes object and returns it as a json-string
+	 *
 	 * @return string
 	 */
-	public function encode() {
+	public function encode(): string {
 		return json_encode( $this->get() );
 	}
 
 	/**
-	 * __toString
-	 *
 	 * Return the encoded object as a string using the encode-method
-	 * @uses encode
+	 *
 	 * @return string
 	 */
 	public function __toString() {

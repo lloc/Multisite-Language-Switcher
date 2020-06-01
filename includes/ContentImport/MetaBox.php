@@ -6,6 +6,7 @@ use lloc\Msls\ContentImport\Importers\ImportersFactory;
 use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptionsPost;
+use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsRegistryInstance;
 
 class MetaBox extends MslsRegistryInstance {
@@ -98,7 +99,7 @@ class MetaBox extends MslsRegistryInstance {
 
             <form action="<?php echo add_query_arg( [] ) ?>" method="post">
 
-				<?php wp_nonce_field( MSLS_PLUGIN_PATH, 'msls_noncename' ); ?>
+				<?php wp_nonce_field( MslsPlugin::path(), 'msls_noncename' ); ?>
 
 				<?php foreach ( $data as $key => $value ) : ?>
                     <input type="hidden" name="<?php echo esc_attr( $key ) ?>" value="<?php echo esc_attr( $value ) ?>">

@@ -8,6 +8,7 @@ use lloc\Msls\MslsAdmin;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
+use Mockery\Mock;
 
 class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
@@ -18,35 +19,43 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		Functions\when( 'checked' )->justReturn( '' );
 		Functions\when( 'selected' )->justReturn( '' );
 		Functions\when( 'get_admin_url' )->justReturn( 'wp-admin' );
+		Functions\when( 'get_locale' )->justReturn( 'de_DE' );
 
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( false );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', 'it_IT' ] );
 
 		$blog = \Mockery::mock( MslsBlog::class );
-		$blog->shouldReceive( 'get_description' )->andReturns( 'ABC' );
+		$blog->shouldReceive( 'get_title' )->andReturns( 'abc (DEF)' );
+		$blog->shouldReceive( 'get_description' )->andReturns( 'DEF' );
 		$blog->userblog_id = 1;
-		$blog->blogname = 'abc';
+		$blog->blogname    = 'abc';
 
 		$blogs[] = $blog;
 
 		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->shouldReceive( 'get_title' )->andReturns( 'uvw (XYZ)' );
 		$blog->shouldReceive( 'get_description' )->andReturns( 'XYZ' );
 		$blog->userblog_id = 2;
-		$blog->blogname = 'xyz';
+		$blog->blogname    = 'uvw';
 
 		$blogs[] = $blog;
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturns( 1 );
 		$collection->shouldReceive( 'get_plugin_active_blogs' )->andReturns( $blogs );
-		$collection->shouldReceive( 'get_users' )->andReturns( [ (object) [ 'ID' => 1, 'user_nicename' => 'realloc' ] ] );
+		$collection->shouldReceive( 'get_users' )->andReturns( [
+			(object) [
+				'ID' => 1,
+				'user_nicename' => 'realloc'
+			]
+		] );
 
 		return new MslsAdmin( $options, $collection );
 	}
 
 	function test_has_problems_no_problem() {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', 'it_IT' ] );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -58,7 +67,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	function test_has_problems_one_language() {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', ] );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -91,12 +100,9 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	public function test_subsubsub() {
 		$obj = $this->get_sut();
 
-		$this->assertEquals( '<ul class="subsubsub"><li><a href="wp-admin" class="current">abc / ABC</a> | </li><li><a href="wp-admin">xyz / XYZ</a></li></ul>', $obj->subsubsub() );
+		$this->assertEquals( '<ul class="subsubsub"><li><a href="wp-admin" class="current">abc (DEF)</a> | </li><li><a href="wp-admin">uvw (XYZ)</a></li></ul>', $obj->subsubsub() );
 	}
 
-	/**
-	 * Verify the blog_language-method
-	 */
 	function test_blog_language() {
 		$obj = $this->get_sut();
 
@@ -104,9 +110,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->blog_language();
 	}
 
-	/**
-	 * Verify the display-method
-	 */
 	function test_display() {
 		$obj = $this->get_sut();
 
@@ -114,9 +117,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->display();
 	}
 
-	/**
-	 * Verify the reference_user-method
-	 */
 	function test_reference_user() {
 		$obj = $this->get_sut();
 
@@ -124,9 +124,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->reference_user();
 	}
 
-	/**
-	 * Verify the activate_autocomplete-method
-	 */
 	function test_activate_autocomplete() {
 		$obj = $this->get_sut();
 
@@ -134,9 +131,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->activate_autocomplete();
 	}
 
-	/**
-	 * Verify the sort_by_description-method
-	 */
 	function test_sort_by_description() {
 		$obj = $this->get_sut();
 
@@ -144,9 +138,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->sort_by_description();
 	}
 
-	/**
-	 * Verify the exclude_current_blog-method
-	 */
+
 	function test_exclude_current_blog() {
 		$obj = $this->get_sut();
 
@@ -154,9 +146,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->exclude_current_blog();
 	}
 
-	/**
-	 * Verify the only_with_translation-method
-	 */
 	function test_only_with_translation() {
 		$obj = $this->get_sut();
 
@@ -164,9 +153,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->only_with_translation();
 	}
 
-	/**
-	 * Verify the output_current_blog-method
-	 */
 	function test_output_current_blog() {
 		$obj = $this->get_sut();
 
@@ -174,9 +160,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->output_current_blog();
 	}
 
-	/**
-	 * Verify the description-method
-	 */
 	function test_description() {
 		$obj = $this->get_sut();
 
@@ -184,9 +167,70 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->description();
 	}
 
-	/**
-	 * Verify the content_filter-method
-	 */
+	function test_before_output() {
+		$obj = $this->get_sut();
+
+		$this->expectOutputString( '<input type="text" class="regular-text" id="before_output" name="msls[before_output]" value="" size="30"/>' );
+		$obj->before_output();
+	}
+
+	function test_after_output() {
+		$obj = $this->get_sut();
+
+		$this->expectOutputString( '<input type="text" class="regular-text" id="after_output" name="msls[after_output]" value="" size="30"/>' );
+		$obj->after_output();
+	}
+
+	function test_before_item() {
+		$obj = $this->get_sut();
+
+		$this->expectOutputString( '<input type="text" class="regular-text" id="before_item" name="msls[before_item]" value="" size="30"/>' );
+		$obj->before_item();
+	}
+
+	function test_after_item() {
+		$obj = $this->get_sut();
+
+		$this->expectOutputString( '<input type="text" class="regular-text" id="after_item" name="msls[after_item]" value="" size="30"/>' );
+		$obj->after_item();
+	}
+
+	function test_rewrite_tizio() {
+		$obj = $this->get_sut();
+
+		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type->rewrite = false;
+
+		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
+
+		$this->expectOutputString( '<input type="text" class="regular-text" id="rewrite_tizio" name="msls[rewrite_tizio]" value="" size="30" readonly="readonly"/>' );
+		$obj->rewrite_tizio( 'tizio' );
+	}
+
+	function test_rewrite_pinko() {
+		$obj = $this->get_sut();
+
+		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type->rewrite = true;
+
+		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
+
+		$this->expectOutputString( '<input type="text" class="regular-text" id="rewrite_pinko" name="msls[rewrite_pinko]" value="pinko" size="30" readonly="readonly"/>' );
+		$obj->rewrite_pinko( 'pinko' );
+	}
+
+	function test_rewrite_pallino() {
+		$obj = $this->get_sut();
+
+		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type->rewrite = [ 'slug' => 'pallino_slug' ];
+
+		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
+
+		$this->expectOutputString( '<input type="text" class="regular-text" id="rewrite_pallino" name="msls[rewrite_pallino]" value="pallino_slug" size="30" readonly="readonly"/>' );
+		$obj->rewrite_pallino( 'pallino' );
+	}
+
 	function test_content_filter() {
 		$obj = $this->get_sut();
 
@@ -194,9 +238,6 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->content_filter();
 	}
 
-	/**
-	 * Verify the content_priority-method
-	 */
 	function test_content_priority() {
 		$obj = $this->get_sut();
 
@@ -204,54 +245,71 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj->content_priority();
 	}
 
-	/**
-	 * Verify the render_checkbox-method
-	 */
-	function test_render_checkbox() {
-		$obj = $this->get_sut();
-
-		$this->assertInternalType( 'string', $obj->render_checkbox( 'test' ) );
-	}
-
-	/**
-	 * Verify the render_input-method
-	 */
-	function test_render_input() {
-		$obj = $this->get_sut();
-
-		$this->assertInternalType( 'string', $obj->render_input( 'test' ) );
-	}
-
-	/**
-	 * Verify the render_select-method
-	 */
-	function test_render_select() {
-		$obj = $this->get_sut();
-
-		$arr = array( 'a', 'b', 'c' );
-		$this->assertInternalType( 'string', $obj->render_select( 'test', $arr ) );
-	}
-
-	/**
-	 * Verify the validate-method
-	 */
 	function test_validate() {
 		$obj = $this->get_sut();
 
-		$arr = array();
-		$this->assertEquals( array( 'display' => 0 ), $obj->validate( $arr ) );
-		$arr = array( 'image_url' => '/test/', 'display' => '1' );
-		$this->assertEquals( array( 'image_url' => '/test', 'display' => 1 ), $obj->validate( $arr ) );
+		$arr = [];
+		$this->assertEquals( [ 'display' => 0 ], $obj->validate( $arr ) );
+		$arr = [ 'image_url' => '/test/', 'display' => '1' ];
+		$this->assertEquals( [ 'image_url' => '/test', 'display' => 1 ], $obj->validate( $arr ) );
 	}
 
-	/**
-	 * Verify the set_blog_language-method
-	 */
 	function test_set_blog_language() {
 		$obj = $this->get_sut();
 
-		$arr = array( 'abc' => true, 'blog_language' => 'it_IT' );
-		$this->assertEquals( array( 'abc' => true ), $obj->set_blog_language( $arr ) );
+		$arr = [ 'abc' => true, 'blog_language' => 'it_IT' ];
+		$this->assertEquals( [ 'abc' => true ], $obj->set_blog_language( $arr ) );
+	}
+
+	function test_render() {
+		$obj = $this->get_sut();
+
+		Functions\when( 'settings_fields' )->returnArg();
+		Functions\when( 'do_settings_sections' )->returnArg();
+
+		$this->expectOutputRegex( '/^<div class="wrap"><div class="icon32" id="icon-options-general"><br\/><\/div><h1>Multisite Language Switcher Options<\/h1>.*$/' );
+		$obj->render();
+	}
+
+	function test_language_section() {
+		$obj = $this->get_sut();
+
+		Functions\when( 'add_settings_field' )->returnArg();
+
+		$this->assertEquals( 1, $obj->language_section() );
+	}
+
+	function test_main_section() {
+		$obj = $this->get_sut();
+
+		Functions\when( 'add_settings_field' )->returnArg();
+
+		$this->assertEquals( 11, $obj->main_section() );
+	}
+
+	function test_advanced_section() {
+		$obj = $this->get_sut();
+
+		Functions\when( 'add_settings_field' )->returnArg();
+
+		$this->assertEquals( 5, $obj->advanced_section() );
+	}
+
+	function test_rewrites_section() {
+		$obj = $this->get_sut();
+
+		foreach ( [ 'post' => 'Post', 'page' => 'Page' ] as $name => $label ) {
+			$post_type = \Mockery::mock( \WP_Post_Type::class );
+			$post_type->name  = $name;
+			$post_type->label = $label;
+
+			$post_types[ $name ] = $post_type;
+		}
+
+		Functions\when( 'get_post_types' )->justReturn( $post_types );
+		Functions\when( 'add_settings_field' )->returnArg();
+
+		$this->assertEquals( 2, $obj->rewrites_section() );
 	}
 
 }

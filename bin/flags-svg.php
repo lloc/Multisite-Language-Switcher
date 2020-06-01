@@ -29,55 +29,55 @@
  */
 $content = file_get_contents( 'build/translations.json' );
 $json    = json_decode( $content );
-$glob    = glob( 'flags/*.png' );
+$glob    = glob( 'css-flags/flags/4x3/*.svg' );
 $exceptions = [
-	'el'  => 'gr.png',
-	'et'  => 'ee.png',
-	'ja'  => 'jp.png',
-	'uk'  => 'ua.png',
-	'ca'  => 'catalonia.png',
-	'eo'  => 'europeanunion.png',
-	'cy'  => 'wales.png',
-	'gd'  => 'scotland.png',
-	'af'  => 'za.png',
-	'ar'  => 'arableague.png',
-	'ary' => 'ma.png',
-	'as'  => 'in.png',
-	'az'  => 'az.png',
-	'azb' => 'az.png',
-	'bo'  => 'cn.png',
-	'bel' => 'by.png',
-	'ceb' => 'ph.png',
-	'dzo' => 'bt.png',
-	'eu'  => 'es.png',
-	'fi'  => 'fi.png',
-	'fur' => 'it.png',
-	'gu'  => 'in.png',
-	'haz' => 'af.png',
-	'hr'  => 'hr.png',
-	'hy'  => 'am.png',
-	'kab' => 'dz.png',
-	'kk'  => 'kz.png',
-	'km'  => 'kh.png',
-	'ckb' => 'iq.png',
-	'lo'  => 'la.png',
-	'lv'  => 'lv.png',
-	'mn'  => 'mn.png',
-	'mr'  => 'in.png',
-	'oci' => 'catalonia.png',
-	'ps'  => 'af.png',
+	'ca'  => 'es-ca',
+	'eo'  => 'eu',
+	'cy'  => 'gb-ls',
+	'gd'  => 'gb-sct',
+	'af'  => 'za',
+	'el'  => 'gr',
+	'et'  => 'ee',
+	'ja'  => 'jp',
+	'uk'  => 'ua',
+	'as'  => 'in',
+	'az'  => 'az',
+	'bo'  => 'cn',
+	'eu'  => 'es',
+	'fi'  => 'fi',
+	'gu'  => 'in',
+	'hr'  => 'hr',
+	'hy'  => 'am',
+	'kk'  => 'kz',
+	'km'  => 'kh',
+	'lo'  => 'la',
+	'lv'  => 'lv',
+	'mn'  => 'mn',
+	'mr'  => 'in',
+	'ps'  => 'af',
+	'sq'  => 'al',
+	'te'  => 'in',
+	'th'  => 'th',
+	'tl'  => 'ph',
+	'ur'  => 'pk',
+	'vi'  => 'vn',
+	'ary' => 'ma',
+	'azb' => 'az',
+	'bel' => 'by',
+	'ceb' => 'ph',
+	'dzo' => 'bt',
+	'fur' => 'it',
+	'haz' => 'af',
+	'kab' => 'dz',
+	'ckb' => 'iq',
+	'oci' => 'es-ca',
 	'rhg' => '', // Rohingya
-	'sq'  => 'al.png',
-	'sah' => 'ru.png',
-	'skr' => 'pk.png',
-	'sql' => 'al.png',
-	'szl' => 'pl.png',
-	'te'  => 'in.png',
-	'th'  => 'th.png',
-	'tl'  => 'ph.png',
-	'tah' => 'pf.png',
-	'ur'  => 'pk.png',
-	'vi'  => 'vn.png',
+	'sah' => 'ru',
+	'skr' => 'pk',
+	'sql' => 'al',
+	'szl' => 'pl',
+	'tah' => 'pf',
+
 ];
 
 $icons = $not_found = [];
@@ -94,30 +94,29 @@ if ( isset( $json->translations ) ) {
 		if ( isset( $exceptions[ $item->language ] ) ) {
 			$icons[ $item->language ] = $exceptions[ $item->language ];
 		} elseif ( 5 <= strlen( $item->language ) ) {
-			$icons[ $item->language ] = strtolower( substr( $item->language, -2 ) ) . '.png';
+			$icons[ $item->language ] = strtolower( substr( $item->language, -2 ) );
 		} else {
 			printf( "// Unhandled language: %s (%s)\n", $item->language, $item->english_name );
 		}
 	}
 }
 
-
-echo 'return $flags = [', PHP_EOL;
+echo 'return $className = [', PHP_EOL;
 
 foreach ( array_filter ( $icons ) as $key => $value ) {
-	$needle = "flags/{$value}";
+	$needle = "css-flags/flags/4x3/{$value}.svg";
 	$index  = array_search( $needle, $glob );
 	if ( $index !== false ) {
 		unset( $glob[ $index ] );
 	}
-	echo sprintf("    '%s' => '%s',", $key, $value ), PHP_EOL;
+	echo sprintf("    '%s' => 'flag-icon-%s',", $key, $value ), PHP_EOL;
 }
 
 echo '];', PHP_EOL, PHP_EOL;
 
 $count = count( $glob );
 if ( $count > 0 ) {
-	echo '/**', PHP_EOL, " * {$count} unused icons in flags/", PHP_EOL, ' * ', PHP_EOL;
+	echo '/**', PHP_EOL, " * {$count} unused icons in css-flags/flags/4x3/", PHP_EOL, ' * ', PHP_EOL;
 
 	array_walk( $glob, function( &$item ) {
 		$item = substr( $item, 6 );

@@ -4,7 +4,7 @@
 Plugin Name: Multisite Language Switcher
 Plugin URI: http://msls.co/
 Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
-Version: 2.3.0
+Version: 2.4.6
 Author: Dennis Ploetner
 Author URI: http://lloc.de/
 Text Domain: multisite-language-switcher
@@ -37,14 +37,9 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
  * @author Dennis Ploetner <re@lloc.de>
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '2.3.0' );
-
-	if ( ! defined( 'MSLS_PLUGIN_PATH' ) ) {
-		define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
-	}
-	if ( ! defined( 'MSLS_PLUGIN__FILE__' ) ) {
-		define( 'MSLS_PLUGIN__FILE__', __FILE__ );
-	}
+	define( 'MSLS_PLUGIN_VERSION', '2.4.6' );
+	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
+	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 
 	lloc\Msls\MslsPlugin::init();
 
@@ -53,7 +48,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @package Msls
 	 *
-	 * @param array $arr
+	 * @param array $attr
 	 *
 	 * @return string
 	 */
@@ -104,18 +99,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return bool|string
 	 */
 	function get_msls_blog_description( $locale ) {
-		$collection   = \lloc\Msls\MslsBlogCollection::instance();
-		$blog_objects = $collection->get_objects();
+		$blog = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
 
-		if ( $blog_objects ) {
-			foreach ( $blog_objects as $blog ) {
-				if ( $locale === $blog->get_language() ) {
-					return $blog->get_description();
-				}
-			}
-		}
-
-		return false;
+		return $blog->get_description();
 	}
 
 	/**
@@ -126,7 +112,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return string
 	 */
 	function get_msls_permalink( $locale ) {
-		return \lloc\Msls\MslsOptions::create()->get_permalink( $locale );
+		$options = \lloc\Msls\MslsOptions::create();
+		$blog    = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
+
+		return $blog->get_url( $options );
 	}
 
 }

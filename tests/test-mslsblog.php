@@ -14,13 +14,15 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
 		$blog = new \stdClass();
 		$blog->userblog_id = 1;
+		$blog->blogname    = 'Test';
 
-		$obj = new MslsBlog( $blog, 'Test' );
+		$obj = new MslsBlog( $blog, 'Italiano' );
 
 		$this->assertEquals( 1, $obj->userblog_id );
-		$this->assertEquals( 'Test', $obj->get_description() );
+		$this->assertEquals( 'Italiano', $obj->get_description() );
 		$this->assertEquals( 'it_IT', $obj->get_language() );
 		$this->assertEquals( 'it', $obj->get_alpha2() );
+		$this->assertEquals( 'Test (Italiano)', $obj->get_title() );
 	}
 
 	/**

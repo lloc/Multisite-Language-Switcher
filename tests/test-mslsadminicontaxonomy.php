@@ -48,7 +48,7 @@ class WP_Test_MslsAdminIconTaxonomy extends Msls_UnitTestCase {
 		$obj = $this->get_test();
 
 		$this->assertInstanceOf( MslsAdminIconTaxonomy::class, $obj->set_href( 42 ) );
-		$value = '<a title="Edit the translation in the de_DE-blog" href="get-edit-post-link"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;';
+		$value = '<a title="Edit the translation in the de_DE-blog" href="get-edit-post-link"><span class="dashicons dashicons-edit"></span></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -63,7 +63,7 @@ class WP_Test_MslsAdminIconTaxonomy extends Msls_UnitTestCase {
 
 		$this->assertInstanceOf( MslsAdminIconTaxonomy::class, $obj->set_href( 0 ) );
 
-		$value = '<a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><img alt="de_DE" src="' . $this->src . '" /></a>&nbsp;';
+		$value = '<a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="dashicons dashicons-plus"></span></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
