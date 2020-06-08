@@ -23,7 +23,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		Functions\when( 'wp_enqueue_style' )->returnArg();
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 
-		$this->assertInternalType( 'boolean', $this->get_test()->admin_menu() );
+		$this->assertIsBool( $this->get_test()->admin_menu() );
 	}
 
 	/**
@@ -32,7 +32,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	function test_init_widget_method() {
 		Functions\when( 'register_widget' )->justReturn( true );
 
-		$this->assertInternalType( 'boolean', $this->get_test()->init_widget() );
+		$this->assertIsBool( $this->get_test()->init_widget() );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	function test_init_i18n_support_method() {
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
 
-		$this->assertInternalType( 'boolean', $this->get_test()->init_i18n_support() );
+		$this->assertIsBool( $this->get_test()->init_i18n_support() );
 	}
 
 	/**
@@ -58,7 +58,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	function test_uninstall_method() {
 		Functions\when( 'delete_option' )->justReturn( false );
 
-		$this->assertInternalType( 'boolean', $this->get_test()->uninstall() );
+		$this->assertIsBool( $this->get_test()->uninstall() );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	function test_cleanup_method() {
 		Functions\when( 'delete_option' )->justReturn( false );
 
-		$this->assertInternalType( 'boolean', MslsPlugin::cleanup() );
+		$this->assertIsBool( MslsPlugin::cleanup() );
 	}
 
 }

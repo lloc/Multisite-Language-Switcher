@@ -16,7 +16,7 @@ class WP_Test_MslsOptionsTaxTermCategory extends Msls_UnitTestCase {
 
 		$obj = new MslsOptionsTaxTermCategory( 0 );
 
-		$this->assertInternalType( 'string', $obj->get_postlink( '' ) );
+		$this->assertIsSTring( $obj->get_postlink( '' ) );
 	}
 
 }

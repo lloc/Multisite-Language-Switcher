@@ -17,7 +17,7 @@ class WP_Test_MslsOptionsQueryAuthor extends Msls_UnitTestCase {
 	function test_has_value_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'boolean', $obj->has_value( 'de_DE' ) );
+		$this->assertIsBool( $obj->has_value( 'de_DE' ) );
 	}
 
 	function test_get_current_link_method() {

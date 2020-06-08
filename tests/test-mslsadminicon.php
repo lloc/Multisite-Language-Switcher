@@ -118,7 +118,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$obj  = $this->get_test( $post );
 
 		$this->assertEquals( '<img alt="de_DE" src="' . $this->src . '" />', $obj->get_img() );
-		$this->assertInternalType( 'string', $obj->get_edit_new() );
+		$this->assertIsSTring( $obj->get_edit_new() );
 	}
 
 
@@ -134,7 +134,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$obj  = $this->get_test( $post );
 
 		$this->assertEquals( '<img alt="de_DE" src="' . $this->src . '" />', $obj->get_img() );
-		$this->assertInternalType( 'string', $obj->get_edit_new() );
+		$this->assertIsSTring( $obj->get_edit_new() );
 	}
 
 	public function test_set_id() {

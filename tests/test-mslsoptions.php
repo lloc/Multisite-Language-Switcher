@@ -19,19 +19,19 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 	public function test_is_main_page_method() {
 		Functions\when( 'is_front_page' )->justReturn( true );
 
-		$this->assertInternalType( 'boolean', MslsOptions::is_main_page() );
+		$this->assertIsBool( MslsOptions::is_main_page() );
 	}
 
 	public function test_is_tax_page_method() {
 		Functions\when( 'is_category' )->justReturn( true );
 
-		$this->assertInternalType( 'boolean', MslsOptions::is_tax_page() );
+		$this->assertIsBool( MslsOptions::is_tax_page() );
 	}
 
 	public function test_is_query_page_method() {
 		Functions\when( 'is_date' )->justReturn( true );
 
-		$this->assertInternalType( 'boolean', MslsOptions::is_query_page() );
+		$this->assertIsBool( MslsOptions::is_query_page() );
 	}
 
 	public function test_create_method() {
@@ -47,9 +47,9 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 		$obj = $this->get_test();
 
 		$this->assertNull( $obj->get_arg( 0 ) );
-		$this->assertInternalType( 'string', $obj->get_arg( 0, '' ) );
-		$this->assertInternalType( 'float', $obj->get_arg( 0, 1.1 ) );
-		$this->assertInternalType( 'array', $obj->get_arg( 0, array() ) );
+		$this->assertIsSTring( $obj->get_arg( 0, '' ) );
+		$this->assertIsFloat( $obj->get_arg( 0, 1.1 ) );
+		$this->assertIsArray( $obj->get_arg( 0, array() ) );
 	}
 
 	function test_set_method() {
@@ -67,38 +67,38 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 	function test_get_permalink_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_permalink( 'de_DE' ) );
+		$this->assertIsSTring( $obj->get_permalink( 'de_DE' ) );
 	}
 
 	function test_get_postlink_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_postlink( 'de_DE' ) );
+		$this->assertIsSTring( $obj->get_postlink( 'de_DE' ) );
 		$this->assertEquals( '', $obj->get_postlink( 'de_DE' ) );
 	}
 
 	function test_get_current_link_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_current_link() );
+		$this->assertIsSTring( $obj->get_current_link() );
 	}
 
 	function test_is_excluded_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'boolean', $obj->is_excluded() );
+		$this->assertIsBool( $obj->is_excluded() );
 	}
 
 	function test_is_content_filter_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'boolean', $obj->is_content_filter() );
+		$this->assertIsBool( $obj->is_content_filter() );
 	}
 
 	function test_get_order_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_order() );
+		$this->assertIsSTring( $obj->get_order() );
 	}
 
 	function test_get_url_method() {
@@ -106,7 +106,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_url( '/dev/test' ) );
+		$this->assertIsSTring( $obj->get_url( '/dev/test' ) );
 	}
 
 	function test_get_flag_url_method() {
@@ -116,7 +116,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_flag_url( 'de_DE' ) );
+		$this->assertIsSTring( $obj->get_flag_url( 'de_DE' ) );
 	}
 
 	function test_get_available_languages_method() {
@@ -124,7 +124,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get_available_languages() );
+		$this->assertIsArray( $obj->get_available_languages() );
 	}
 
 }

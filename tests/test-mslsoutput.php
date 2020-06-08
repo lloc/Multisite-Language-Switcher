@@ -25,21 +25,21 @@ class WP_Test_MslsOutput extends Msls_UnitTestCase {
 	function test_get_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get( 0 ) );
+		$this->assertIsArray( $obj->get( 0 ) );
 	}
 
 	function test___toString_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->__toString() );
-		$this->assertInternalType( 'string', strval( $obj ) );
+		$this->assertIsSTring( $obj->__toString() );
+		$this->assertIsSTring( strval( $obj ) );
 		$this->assertEquals( $obj->__toString(), strval( $obj ) );
 	}
 
 	function test_get_tags_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get_tags() );
+		$this->assertIsArray( $obj->get_tags() );
 	}
 
 	function test_set_tags_method() {
