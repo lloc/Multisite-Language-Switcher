@@ -1,7 +1,6 @@
 @select-width: 226px;
 div#msls.postbox {
 	label {
-		width: 16px;
 		margin-right: 6px;
 	}
 	select {
@@ -18,10 +17,9 @@ select.msls-translations {
             align-items: center;
             label {
                 display: flex;
-                flex-grow: .1;
             }
             input.msls_title, select{
-                flex-grow: .9;
+                flex-grow: 1;
             }
         }
 	}
@@ -32,8 +30,91 @@ select.msls-translations {
     margin: 1em auto;
   }
 }
+
 .flag-icon {
-    height: 1em;
+    width: 1.3333em !important;
+    height: 1em !important;
+    vertical-align: middle;
     overflow: hidden;
+    line-height: 1 !important;
     color: transparent;
+}
+
+.msls-icon-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;   
+
+    &.flag {
+        min-width: 36px;        
+    } 
+
+    &.label {
+        min-width: 48px;        
+    }     
+
+    label & {
+        text-align: left;
+    }
+}
+
+.language-badge,
+#wpadminbar .language-badge,
+#wpadminbar * .language-badge {
+    display: inline-block;
+    min-width: 32px;
+    height: auto;
+    padding: 4px 6px;
+    white-space: nowrap;
+
+    font-size: 10px;
+    line-height: 1;    
+    text-align: center;    
+
+    background-color: currentColor;
+    border-radius: 9px;
+
+    user-select: none;
+
+    & > span {
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 1px;
+
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 1;
+        text-transform: uppercase;
+        color: #fff;
+        text-align: center;
+        line-height: 1;       
+
+        &:nth-child( 2 ) {
+            opacity: 0.5;
+        }
+    }  
+}
+
+.column-mslscol .language-badge {
+    margin: 0 1px !important;
+}  
+
+#wpadminbar .language-badge,
+#wpadminbar * .language-badge {
+    position: relative;
+    top: -1px;
+
+    // margin-left: 4px;
+    // margin-right: 4px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    background-color: transparent;
+    border: 1px currentColor solid;
+
+    & > span {
+        color: currentColor;        
+    }
 }

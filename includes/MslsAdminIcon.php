@@ -8,6 +8,7 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Component\Icon\IconSvg;
+use lloc\Msls\Component\Icon\IconLabel;
 
 /**
  * Handles the icon links in the backend
@@ -229,6 +230,13 @@ class MslsAdminIcon {
 				$this->language
 			);
 		}
+
+		if ( 'label' === $this->iconType ) {
+			return sprintf( '<span class="language-badge %s">%s</span>',
+				$this->language,
+				( new IconLabel() )->get( $this->language )
+			);
+		}		
 
 		if ( empty( $this->href ) ) {
 			return '<span class="dashicons dashicons-plus"></span>';

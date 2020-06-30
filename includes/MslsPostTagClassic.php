@@ -68,8 +68,13 @@ class MslsPostTagClassic extends MslsPostTag {
 
 		$language = $blog->get_language();
 		$icon     = MslsAdminIcon::create()
-			->set_language( $language )
-			->set_icon_type( 'flag' );
+			->set_language( $language );
+
+		if( $this->options->admin_display === 'label' ) {
+			$icon->set_icon_type( 'label' );
+		} else {
+			$icon->set_icon_type( 'flag' );			
+		}
 		$options  = '';
 		$terms    = get_terms( $type, [ 'hide_empty' => 0 ] );
 
