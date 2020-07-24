@@ -49,13 +49,13 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 		$this->assertNull( $obj->get_arg( 0 ) );
 		$this->assertIsSTring( $obj->get_arg( 0, '' ) );
 		$this->assertIsFloat( $obj->get_arg( 0, 1.1 ) );
-		$this->assertIsArray( $obj->get_arg( 0, array() ) );
+		$this->assertIsArray( $obj->get_arg( 0, [] ) );
 	}
 
 	function test_set_method() {
 		$obj = $this->get_test();
 
-		$this->assertTrue( $obj->set( array() ) );
+		$this->assertTrue( $obj->set( [] ) );
 		$this->assertTrue( $obj->set( array( 'temp' => 'abc' ) ) );
 		$this->assertFalse( $obj->set( 'Test' ) );
 		$this->assertFalse( $obj->set( 1 ) );

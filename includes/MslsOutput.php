@@ -134,7 +134,7 @@ class MslsOutput extends MslsMain {
 
 		$arr = $this->get( $display, $filter, $exists );
 		if ( empty( $arr ) ) {
-			return '';
+			return apply_filters( 'msls_output_no_translation_found', '' );
 		}
 
 		$tags = $this->get_tags();

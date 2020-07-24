@@ -5,3 +5,4 @@ vendor/
 .idea/
 node_modules/
 docs/.vuepress/dist/
+.phpunit.result.cache
