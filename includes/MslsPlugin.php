@@ -116,6 +116,10 @@ class MslsPlugin {
 	 * @param $wp_admin_bar
 	 */
 	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
+		if( ! is_super_admin() || ! is_admin_bar_showing() ) {
+			return;
+		}
+
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
 			$title = '<div class="blavatar"></div>' . $blog->get_title();
