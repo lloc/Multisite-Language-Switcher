@@ -1,6 +1,12 @@
 ## 2.4.7
 
-### Bug fix
+### Hotfix 
+
+* hotfix call to get_super_admin() is to early
+
+## 2.4.7
+
+### Bug fixes
 
 * docs updated for the possibility to remove action for alternative output in hreflang
 * admin bar output is now exclusive for super admins

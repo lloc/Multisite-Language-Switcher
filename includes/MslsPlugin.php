@@ -47,18 +47,17 @@ class MslsPlugin {
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			add_filter( 'msls_get_output', [ __CLASS__, 'get_output' ] );
-			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
 
 			add_action( 'widgets_init', [ $obj, 'init_widget' ] );
 			add_filter( 'the_content', [ $obj, 'content_filter' ] );
 
-			if( is_super_admin() || is_admin_bar_showing() ) {
-				add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
-			}
+			add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
 
 			if ( function_exists( 'register_block_type' ) ) {
 				add_action( 'init', [ $obj, 'block_init' ] );
 			}
+
+			add_action( 'init', [ $obj, 'admin_bar_init' ] );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
@@ -207,6 +206,7 @@ class MslsPlugin {
 
 	/**
 	 * Register block and shortcode.
+	 * @return bool
 	 */
 	public function block_init() {
 		if ( ! $this->options->is_excluded() ) {
@@ -226,6 +226,19 @@ class MslsPlugin {
 			] );
 
 			add_shortcode( 'sc_msls_widget', $callback );
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function admin_bar_init() {
+		if ( is_admin_bar_showing() && is_super_admin() ) {
+			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
 
 			return true;
 		}
