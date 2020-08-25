@@ -1,3 +1,10 @@
+## 2.4.7
+
+### Bug fix
+
+* docs updated for the possibility to remove action for alternative output in hreflang
+* admin bar output is now exclusive for super admins
+
 ## 2.4.6
 
 ### Bug fix
