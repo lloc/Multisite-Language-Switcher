@@ -46,12 +46,15 @@ class MslsPlugin {
 		register_activation_hook( self::file(), [ $obj, 'activate' ] );
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
 			add_filter( 'msls_get_output', [ __CLASS__, 'get_output' ] );
 			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
 
 			add_action( 'widgets_init', [ $obj, 'init_widget' ] );
 			add_filter( 'the_content', [ $obj, 'content_filter' ] );
+
+			if( is_super_admin() || is_admin_bar_showing() ) {
+				add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
+			}
 
 			if ( function_exists( 'register_block_type' ) ) {
 				add_action( 'init', [ $obj, 'block_init' ] );
@@ -116,10 +119,6 @@ class MslsPlugin {
 	 * @param $wp_admin_bar
 	 */
 	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
-		if( ! is_super_admin() || ! is_admin_bar_showing() ) {
-			return;
-		}
-
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
 			$title = '<div class="blavatar"></div>' . $blog->get_title();
