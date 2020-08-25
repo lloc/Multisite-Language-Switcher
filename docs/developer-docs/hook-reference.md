@@ -190,7 +190,7 @@ The plugin creates automatically [hreflang annotations](https://support.google.c
 
 *You can use the following code if you want to remove these tags completely:*
 
-    remove_action( 'wp_head', [ lloc\Msls\MslsPlugin::class, 'print_alternate_links' ] );
+    remove_action( 'wp_head', [ \lloc\Msls\MslsPlugin::class, 'print_alternate_links' ] );
 
 ## msls\_link\_create ##
 
