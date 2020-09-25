@@ -90,9 +90,10 @@ class MslsPlugin {
 			}
 		} else {
 			add_action( 'admin_notices', function () {
-				self::message_handler(
-					__( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'multisite-language-switcher' )
-				);
+				$href = 'https://wordpress.org/support/article/create-a-network/';
+				$msg  = sprintf( __( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="%s">this post</a> if you don\'t know the meaning.', 'multisite-language-switcher' ), $href );
+
+				self::message_handler( $msg );
 			} );
 		}
 
