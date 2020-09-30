@@ -1,3 +1,9 @@
+## 2.4.9
+
+### Bug fix 
+
+* Language codes of formal languages map now to the correct flag (de_DE_formal -> de, de_CH_formal -> ch, nl_NL_formal -> nl)
+
 ## 2.4.8
 
 ### Hotfix 
