@@ -114,7 +114,7 @@ class MslsAdmin extends MslsMain {
 
 		if ( $this->options->is_empty() ) {
 			$message = sprintf(
-				__( 'Multisite Language Switcher is almost ready. You must complete the configuration process</a>.' ),
+				__( '<strong>Multisite Language Switcher</strong> is almost ready. You must complete the configuration process</a>.' ),
 				esc_url( admin_url( $this->get_options_page_link() ) )
 			);
 		} elseif ( 1 == count( $this->options->get_available_languages() ) ) {
