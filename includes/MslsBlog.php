@@ -127,8 +127,8 @@ class MslsBlog {
 		switch_to_blog( $this->obj->userblog_id );
 
 		if ( is_object( $options ) && method_exists( $options, 'has_value' ) && ( $is_home || $options->has_value( $this->get_language() ) ) ) {
-			$url = apply_filters('mlsl_blog_permalink', $options->get_permalink( $this->get_language() ), $this);
-        }
+			$url = apply_filters( 'mlsl_blog_get_permalink', $options->get_permalink( $this->get_language() ), $this );
+		}
 
 		restore_current_blog();
 
