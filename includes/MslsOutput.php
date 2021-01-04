@@ -105,7 +105,6 @@ class MslsOutput extends MslsMain {
 		$default = '';
 
 		foreach ( $blogs->get_objects() as $blog ) {
-
 			$url = apply_filters( 'mlsl_output_get_alternate_links', $blog->get_url( $options ), $blog );
 
 			if ( is_null( $url ) ) {

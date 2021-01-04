@@ -390,6 +390,20 @@ You can configure the output-tags in the admin settings of the plugin but you ca
 
 *This would override completely the configuration without looking for existing values.*
 
+## msls\_output\_no\_translation\_found
+
+The translation hint in posts will have no output when no translation was found. You can change this behaviour  
+
+    /**
+     * @param string $text
+     * @return array
+     */
+    function my_msls_output_no_translation_found( $text ) {       
+        return __( 'There is no translation for this content!' );
+    }
+    add_filter( 'msls_output_no_translation_found', 'my_msls_output_no_translation_found' );
+
+
 ## msls\_widget\_alternative\_content
 
 The widget will output "No available translations found" if you set "Show only links with a translation" in the plugin options and if there is no translation available. You can override the output-string:
