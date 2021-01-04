@@ -1,3 +1,9 @@
+## 2.4.10
+
+### Features
+
+* Filters added to control output of alternate url and blog-permalink url of blog-specific hreflang tags
+
 ## 2.4.9
 
 ### Bug fix 
