@@ -103,6 +103,7 @@ class MslsOutput extends MslsMain {
 
 		$arr     = [];
 		$default = '';
+        $defaultLocale = apply_filters('mlsl_output_x_default_locale', null);
 
 		foreach ( $blogs->get_objects() as $blog ) {
 			$url = apply_filters( 'mlsl_output_get_alternate_links', $blog->get_url( $options ), $blog );
@@ -114,14 +115,14 @@ class MslsOutput extends MslsMain {
 			$description = $blog->get_description();
 
 			$format = '<link rel="alternate" hreflang="%s" href="%s" title="%s" />';
-			if ( '' === $default ) {
-				$default = sprintf( $format, 'x-default', $url, esc_attr( $description ) );
+            if ( '' === $default || $blog->get_language() === $defaultLocale ) {
+                $default = sprintf( $format, 'x-default', $url, esc_attr( $description ) );
 			}
 
 			$arr[] = sprintf( $format, $hreflang->get( $blog->get_language() ), $url, esc_attr( $description ) );
 		}
 
-		return 1 === count( $arr ) ? $default : implode( PHP_EOL, $arr );
+        return 1 === count( $arr ) ? $default : implode( PHP_EOL, $arr ) . (is_null($defaultLocale) ? '' : $default);
 	}
 
 	/**
