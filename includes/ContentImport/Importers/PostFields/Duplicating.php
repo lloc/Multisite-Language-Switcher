@@ -3,6 +3,7 @@
 namespace lloc\Msls\ContentImport\Importers\PostFields;
 
 use lloc\Msls\ContentImport\Importers\BaseImporter;
+use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;
 
 /**
  * Class Duplicating
@@ -12,6 +13,7 @@ use lloc\Msls\ContentImport\Importers\BaseImporter;
  * @package lloc\Msls\ContentImport\Importers\PostFields
  */
 class Duplicating extends BaseImporter {
+	use WithRequestPostAttributes;
 
 	const TYPE = 'duplicating';
 
@@ -29,6 +31,9 @@ class Duplicating extends BaseImporter {
 	}
 
 	public function import( array $data ) {
+		// Set the post type reading it from the request payload, if not possible, use the default one.
+		$data['post_type'] = $this->read_post_type_from_request( 'post' );
+
 		$source_post = $this->import_coordinates->source_post;
 
 		foreach ( $this->filter_fields() as $field ) {
