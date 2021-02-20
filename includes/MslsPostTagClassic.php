@@ -76,6 +76,7 @@ class MslsPostTagClassic extends MslsPostTag {
 		if ( $mydata->has_value( $language ) ) {
 			$icon->set_href( $mydata->$language );
 		}
+		
 
 		if ( ! empty( $terms ) ) {
 			foreach ( $terms as $term ) {
@@ -125,4 +126,6 @@ class MslsPostTagClassic extends MslsPostTag {
 		}
 		return false;
 	}
+	
+	
 }
