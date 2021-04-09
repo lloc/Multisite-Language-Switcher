@@ -1,7 +1,7 @@
 ﻿=== Multisite Language Switcher ===
 
 Contributors: realloc, lucatume
-Donate link: http://www.greenpeace.org/international/
+Donate link: https://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, localization
 Requires at least: 3.6.1
 Tested up to: 5.7
