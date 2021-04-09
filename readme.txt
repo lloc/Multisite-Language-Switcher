@@ -6,7 +6,7 @@ Tags: multilingual, multisite, language, switcher, localization
 Requires at least: 3.6.1
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 2.4.10
+Stable tag: 2.4.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

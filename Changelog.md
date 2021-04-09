@@ -1,3 +1,10 @@
+## 2.4.11
+
+### Bug fixes
+
+* Content importer
+* Flags regenerated (CSS and PNG)
+
 ## 2.4.10
 
 ### Features
