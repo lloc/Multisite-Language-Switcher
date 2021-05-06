@@ -6,7 +6,7 @@
   "homepage": "http://msls.co",
   "require": {
     "php": ">=7.0",
-    "composer/installers": "~1.10.0"
+    "composer/installers": "~1.11.0"
   },
   "require-dev": {
     "phpunit/phpunit": ">=7",
