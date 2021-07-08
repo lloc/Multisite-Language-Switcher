@@ -183,8 +183,13 @@ class MslsMetaBox extends MslsMain {
 
 				$language = $blog->get_language();
 				$icon     = MslsAdminIcon::create()
-				                         ->set_language( $language )
-				                         ->set_icon_type( 'flag' );
+				                         ->set_language( $language );
+
+				if( $this->options->admin_display === 'label' ) {
+				    $icon->set_icon_type( 'label' );
+				} else {
+				    $icon->set_icon_type( 'flag' );					
+				}
 
 				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( $mydata->$language );
@@ -223,10 +228,11 @@ class MslsMetaBox extends MslsMain {
 				}
 
 				$lis .= sprintf(
-					'<li><label for="msls_input_%s">%s</label>%s</li>',
+					'<li><label for="msls_input_%s msls-icon-wrapper %4$s">%s</label>%s</li>',
 					$language,
 					$icon,
-					$selects
+					$selects,
+					esc_attr( $this->options->admin_display )
 				);
 
 				restore_current_blog();
@@ -310,8 +316,13 @@ class MslsMetaBox extends MslsMain {
 
 				$language = $blog->get_language();
 				$icon     = MslsAdminIcon::create()
-					->set_language( $language )
-					->set_icon_type( 'flag' );
+					->set_language( $language );
+
+				if( $this->options->admin_display === 'label' ) {
+					$icon->set_icon_type( 'label' );
+				} else {
+					$icon->set_icon_type( 'flag' );
+				}
 
 				$value = $title = '';
 
@@ -322,8 +333,8 @@ class MslsMetaBox extends MslsMain {
 				}
 
 				$items .= sprintf(
-					'<li>
-					<label for="msls_title_%1$s">%2$s</label>
+					'<li class="">
+					<label for="msls_title_%1$s msls-icon-wrapper %6$s">%2$s</label>
 					<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
 					<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
 					</li>',
@@ -331,7 +342,8 @@ class MslsMetaBox extends MslsMain {
 					$icon,
 					$language,
 					$value,
-					$title
+					$title,
+					esc_attr( $this->options->admin_display )
 				);
 
 				restore_current_blog();

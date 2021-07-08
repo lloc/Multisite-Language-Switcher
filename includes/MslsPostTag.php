@@ -171,8 +171,12 @@ class MslsPostTag extends MslsMain {
 
 				$language = $blog->get_language();
 				$icon     = MslsAdminIcon::create()
-					->set_language( $language )
-					->set_icon_type( 'flag' );
+								->set_language( $language );
+				if( $this->options->admin_display === 'label' ) {
+					$icon->set_icon_type( 'label' );
+				} else {
+					$icon->set_icon_type( 'flag' );
+				}
 
 				$value = $title = '';
 				if ( $my_data->has_value( $language ) ) {

@@ -223,6 +223,7 @@ class MslsAdmin extends MslsMain {
 	public function main_section(): int {
 		$map = [
 			'display'               => __( 'Display', 'multisite-language-switcher' ),
+			'admin_display'         => __( 'Admin Display', 'multisite-language-switcher' ),
 			'sort_by_description'   => __( 'Sort languages', 'multisite-language-switcher' ),
 			'output_current_blog'   => __( 'Current language link', 'multisite-language-switcher' ),
 			'only_with_translation' => __( 'Translation links', 'multisite-language-switcher' ),
@@ -313,6 +314,13 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function display() {
 		echo ( new Select( 'display', MslsLink::get_types_description(), $this->options->display ) )->render();
+	}
+
+	/**
+	 * Shows the select-form-field 'admin_display'
+	 */
+	public function admin_display() {
+		echo ( new Select( 'admin_display', array( 'flag' => __( 'Flag', 'multisite-language-switcher' ), 'label' => __( 'Label', 'multisite-language-switcher' ) ), $this->options->admin_display ) )->render();
 	}
 
 	/**
