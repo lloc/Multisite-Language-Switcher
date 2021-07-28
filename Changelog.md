@@ -1,3 +1,7 @@
+## 2.4.12
+
+* Flags regenerated (CSS and PNG)
+
 ## 2.4.11
 
 ### Bug fixes
