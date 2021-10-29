@@ -3,6 +3,7 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
+use Brain\Monkey\Filters;
 
 use lloc\Msls\Map\HrefLang;
 use lloc\Msls\MslsBlog;
@@ -46,6 +47,15 @@ class WP_Test_HrefLang extends Msls_UnitTestCase {
 		$this->assertEquals( 'es', $obj->get( 'es_ES' ) );
 		$this->assertEquals( 'cat', $obj->get( 'cat' ) );
 		$this->assertEquals( 'en-GB', $obj->get( 'en_GB' ) );
+		$this->assertEquals( 'en-US', $obj->get( 'en_US' ) );
+	}
+
+	public function test_get_has_filter() {
+		$obj = $this->get_sut();
+
+		Functions\when( 'has_filter' )->justReturn( true );
+		Filters\expectApplied('msls_head_hreflang')->once()->with( 'en_US')->andReturn( 'en-US' );
+
 		$this->assertEquals( 'en-US', $obj->get( 'en_US' ) );
 	}
 
