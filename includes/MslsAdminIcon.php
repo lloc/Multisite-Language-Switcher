@@ -224,7 +224,7 @@ class MslsAdminIcon {
 	 */
 	public function get_icon() {
 		if ( 'flag' === $this->iconType ) {
-			return sprintf( '<span class="flag-icon %s">%s</span>',
+			return ! is_string( $this->language ) ? '' : sprintf( '<span class="flag-icon %s">%s</span>',
 				( new IconSvg() )->get( $this->language ),
 				$this->language
 			);

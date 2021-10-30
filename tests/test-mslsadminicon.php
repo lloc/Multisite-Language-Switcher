@@ -149,4 +149,34 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_origin_language( 'it_IT' ) );
 	}
 
+	public function test_set_icon_type() {
+		$obj  = new MslsAdminIcon( 'post' );
+
+		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_icon_type( 'flag' ) );
+	}
+
+	public function test_get_icon() {
+		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 1 ) . '/' );
+
+		$obj  = new MslsAdminIcon( 'post' );
+		$obj->set_icon_type( 'flag' );
+
+		$this->assertEquals( '', $obj->get_icon() );
+
+		$obj->set_language( 'de_DE' );
+
+		$this->assertEquals( '<span class="flag-icon flag-icon-de">de_DE</span>', $obj->get_icon() );
+	}
+
+	public function test_get_edit_new() {
+		$obj  = new MslsAdminIcon( 'post' );
+		$obj->set_id( 123 );
+		$obj->set_origin_language( 'de_DE' );
+
+		Functions\expect( 'add_query_arg' )->once()->andReturn( '' );
+		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
+		Functions\expect( 'get_admin_url' )->once()->andReturn( 'fake-url' );
+
+		$this->assertEquals( 'fake-url', $obj->get_edit_new() );
+	}
 }
