@@ -2,38 +2,18 @@
 
 namespace lloc\MslsTests;
 
+use Brain\Monkey\Functions;
 use lloc\Msls\MslsContentTypes;
+use lloc\Msls\MslsPostType;
 
 class WP_Test_MslsContentTypes extends Msls_UnitTestCase {
 
-	public function test_is_post_type() {
-		$obj = new MslsContentTypes();
+	public function test_create() {
+		Functions\expect('get_post_types' )->twice()->andReturn( [] );
 
-		$this->assertEquals( false, $obj->is_post_type() );
-	}
+		$obj = MslsContentTypes::create();
 
-	public function test_is_taxonomy() {
-		$obj = new MslsContentTypes();
-
-		$this->assertEquals( false, $obj->is_taxonomy() );
-	}
-
-	public function test_acl_request() {
-		$obj = new MslsContentTypes();
-
-		$this->assertEquals( '', $obj->acl_request() );
-	}
-
-	public function test_get() {
-		$obj = new MslsContentTypes();
-
-		$this->assertEquals( [], $obj->get() );
-	}
-
-	public function test_get_request() {
-		$obj = new MslsContentTypes();
-
-		$this->assertEquals( '', $obj->get_request() );
+		$this->assertInstanceOf( MslsPostType::class, $obj );
 	}
 
 }
