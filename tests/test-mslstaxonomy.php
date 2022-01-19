@@ -9,7 +9,7 @@ use lloc\Msls\MslsOptions;
 
 class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 
-	protected function get_test() {
+	public function get_test() {
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 		Functions\when( 'get_option' )->justReturn( [] );
 
@@ -23,7 +23,7 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	function test_acl_request_included() {
+	public function test_acl_request_included() {
 		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnFalse();
@@ -43,7 +43,7 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	function test_acl_request_excluded() {
+	public function test_acl_request_excluded() {
 		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnTrue();
@@ -51,11 +51,11 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 		$this->assertEquals( '', $this->get_test()->acl_request() );
 	}
 	
-	function test_get_post_type() {
+	public function test_get_post_type() {
 		$this->assertEquals( '', $this->get_test()->get_post_type() );
 	}
 
-	function test_is_post_type() {
+	public function test_is_post_type() {
 		$this->assertFalse( $this->get_test()->is_post_type() );
 	}
 
