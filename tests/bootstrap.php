@@ -8,6 +8,11 @@ use Brain\Monkey\Functions;
 
 class Msls_UnitTestCase extends TestCase {
 
+	/**
+	 * @var SUT object
+	 */
+	protected $test;
+
 	protected function setUp(): void {
 		parent::setUp();
 		Monkey\setUp();
