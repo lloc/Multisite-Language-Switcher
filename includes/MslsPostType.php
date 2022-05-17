@@ -43,7 +43,7 @@ class MslsPostType extends MslsContentTypes {
 		$request   = MslsPlugin::get_superglobals( [ 'post_type' ] );
 		$post_type = esc_attr( $request['post_type'] ) ?? 'post';
 
-		return in_array( $post_type, $this->get() ) ? $request : '';
+		return in_array( $post_type, $this->get() ) ? $post_type : '';
 	}
 
 	/**

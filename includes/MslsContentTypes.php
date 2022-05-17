@@ -78,6 +78,7 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 
 	/**
 	 * Gets the request if it is an allowed content type
+	 *
 	 * @return string
 	 */
 	abstract public function get_request(): string;

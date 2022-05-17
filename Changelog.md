@@ -1,4 +1,4 @@
-## 2.5.2
+## 2.5.3
 
 * Secondary buttons from MetaBoxes removed
 * Flags refreshed
