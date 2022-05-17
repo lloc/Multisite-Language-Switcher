@@ -1,3 +1,9 @@
+## 2.5
+
+* Secondary buttons from MetaBoxes removed
+* Flags refreshed
+* Tested with 5.9
+
 ## 2.4.12
 
 * Flags regenerated (CSS and PNG)

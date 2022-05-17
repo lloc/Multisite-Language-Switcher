@@ -152,7 +152,8 @@ class MslsMetaBox extends MslsMain {
 					],
 					$post_type,
 					'side',
-					'high' );
+					'high'
+				);
 				add_action( 'admin_footer', [ ContentImportMetaBox::instance(), 'print_modal_html' ] );
 			}
 		}
@@ -232,11 +233,7 @@ class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
-			printf(
-				'<ul>%s</ul><input type="submit" class="button-secondary" value="%s"/>',
-				$lis,
-				__( 'Update', 'multisite-language-switcher' )
-			);
+			printf( '<ul>%s</ul>', $lis );
 
 			$post = $temp;
 		} else {
@@ -337,29 +334,12 @@ class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
-			$input_button = sprintf(
-				'<input type="submit" class="button-secondary clear" value="%s"/>',
-				__( 'Update', 'multisite-language-switcher' )
-			);
-
-			/**
-			 * Returns the input button, return an empty string if you'ld like to hide the button
-			 *
-			 * @param string $input_button
-			 *
-			 * @since 1.0.2
-			 *
-			 */
-			$input_button = ( string ) apply_filters( 'msls_meta_box_render_input_button', $input_button );
-
 			printf(
 				'<ul>%s</ul>
 				<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-				<input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>
-				%s',
+				<input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
 				$items,
-				$post_type,
-				$input_button
+				$post_type
 			);
 
 			$post = $temp;
