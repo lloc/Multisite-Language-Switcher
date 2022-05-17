@@ -35,11 +35,7 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 	public static function create() {
 		$_request = MslsPlugin::get_superglobals( [ 'taxonomy' ] );
 
-		if ( '' != $_request['taxonomy'] ) {
-			return MslsTaxonomy::instance();
-		}
-
-		return MslsPostType::instance();
+		return '' != $_request['taxonomy'] ? MslsTaxonomy::instance() : MslsPostType::instance();
 	}
 
 	/**
