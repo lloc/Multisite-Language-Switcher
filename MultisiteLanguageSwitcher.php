@@ -2,12 +2,12 @@
 /**
  * Multisite Language Switcher Plugin
  *
- * @copyright Copyright (C) 2011-2020, Dennis Ploetner, re@lloc.de
+ * @copyright Copyright (C) 2011-2022, Dennis Ploetner, re@lloc.de
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2 or later
  * @wordpress-plugin
  *
  * Plugin Name: Multisite Language Switcher
- * Version: 2.4.12
+ * Version: 2.5
  * Plugin URI: http://msls.co/
  * Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
  * Author: Dennis Ploetner
@@ -40,7 +40,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
  * @author Dennis Ploetner <re@lloc.de>
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '2.4.12' );
+	define( 'MSLS_PLUGIN_VERSION', '2.5' );
 	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 

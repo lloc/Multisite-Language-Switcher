@@ -22,7 +22,6 @@ class WP_Test_MslsAdminIconTaxonomy extends Msls_UnitTestCase {
 		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://example.org/added-args' );
 		Functions\expect( 'get_query_var' )->once()->andReturn( 'post_tag' );
 		Functions\expect( 'get_taxonomies' )->once()->andReturn( [] );
-		Functions\expect( 'get_option' )->once()->andReturn( [] );
 
 		$obj = $this->get_test();
 
