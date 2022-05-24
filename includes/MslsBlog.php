@@ -57,7 +57,7 @@ class MslsBlog {
 	 * @return mixed|null
 	 */
 	final public function __get( $key ) {
-		return isset( $this->obj->$key ) ? $this->obj->$key : null;
+		return $this->obj->$key ?? null;
 	}
 
 	/**

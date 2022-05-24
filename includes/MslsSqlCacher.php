@@ -109,7 +109,7 @@ class MslsSqlCacher {
 	 * @return mixed
 	 */
 	public function __get( $key ) {
-		return ( isset( $this->db->$key ) ? $this->db->$key : null );
+		return $this->db->$key ?? null;
 	}
 
 	/**

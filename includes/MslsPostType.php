@@ -7,8 +7,6 @@
 
 namespace lloc\Msls;
 
-use phpDocumentor\Reflection\Types\Parent_;
-
 /**
  * Content types: Post types (Pages, Posts, ...)
  * @package Msls
@@ -30,7 +28,7 @@ class MslsPostType extends MslsContentTypes {
 	public static function get(): array {
 		$types = array_merge(
 			[ 'post', 'page' ], // we don't need attachment, revision or nav_menu_item here
-			get_post_types( [ 'public' => true, '_builtin' => false ], 'names', 'and' )
+			get_post_types( [ 'public' => true, '_builtin' => false ] )
 		);
 
 		return (array) apply_filters( 'msls_supported_post_types', $types );

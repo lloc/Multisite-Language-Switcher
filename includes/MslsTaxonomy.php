@@ -35,7 +35,7 @@ class MslsTaxonomy extends MslsContentTypes {
 	public static function get(): array {
 		$types = array_merge(
 			[ 'category', 'post_tag' ], // no 'post_link' here
-			get_taxonomies( [ 'public' => true, '_builtin' => false ], 'names', 'and' )
+			get_taxonomies( [ 'public' => true, '_builtin' => false ] )
 		);
 
 		return (array) apply_filters( 'msls_supported_taxonomies', $types );
