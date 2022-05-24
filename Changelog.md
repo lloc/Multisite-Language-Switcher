@@ -1,3 +1,8 @@
+## 2.5.5
+
+* WordPress 6.0 tested
+* Improvements in code quality
+
 ## 2.5.4
 
 * Secondary buttons from MetaBoxes removed
