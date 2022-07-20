@@ -120,6 +120,10 @@ class MslsOutput extends MslsMain {
 
 			$arr[] = sprintf( $format, $hreflang->get( $blog->get_language() ), $url, esc_attr( $description ) );
 		}
+		
+		$arr = ( 1 === count( $arr ) ) ? $default : $arr;
+		
+		$arr = apply_filters( 'mlsl_output_hreflang', $arr );
 
 		return 1 === count( $arr ) ? $default : implode( PHP_EOL, $arr );
 	}
