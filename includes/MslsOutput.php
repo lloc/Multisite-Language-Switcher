@@ -121,7 +121,13 @@ class MslsOutput extends MslsMain {
 			$arr[] = sprintf( $format, $hreflang->get( $blog->get_language() ), $url, esc_attr( $description ) );
 		}
 
-		return 1 === count( $arr ) ? $default : implode( PHP_EOL, $arr );
+		if ( 1 === count( $arr ) ) {
+		    return apply_filters( 'mlsl_output_get_alternate_links_default', $default );
+		}
+
+		$arr = (array) apply_filters( 'mlsl_output_get_alternate_links_arr', $arr );
+
+		return implode( PHP_EOL,  $arr );
 	}
 
 	/**
