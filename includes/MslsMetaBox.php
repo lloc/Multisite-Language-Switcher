@@ -193,7 +193,6 @@ class MslsMetaBox extends MslsMain {
 
 				$selects  = '';
 				$p_object = get_post_type_object( $type );
-
 				if ( $p_object->hierarchical ) {
 					$args = [
 						'post_type'         => $type,
@@ -204,6 +203,7 @@ class MslsMetaBox extends MslsMain {
 						'sort_column'       => 'menu_order, post_title',
 						'echo'              => 0,
 					];
+					
 					/**
 					 * Overrides the args for wp_dropdown_pages when using the HTML select in the MetaBox
 					 *
@@ -216,6 +216,7 @@ class MslsMetaBox extends MslsMain {
 
 					$selects .= wp_dropdown_pages( $args );
 				} else {
+					// Here 
 					$selects .= sprintf(
 						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
 						$language,
@@ -229,7 +230,8 @@ class MslsMetaBox extends MslsMain {
 					$icon,
 					$selects
 				);
-
+				
+				
 				restore_current_blog();
 			}
 
@@ -286,9 +288,12 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
 	 */
-	public function render_input( $echo = true ) {
+	public function render_input( $echo = false ) {
 		$blogs = $this->collection->get();
+		
 
+		
+		
 		if ( $blogs ) {
 			global $post;
 
@@ -386,30 +391,47 @@ class MslsMetaBox extends MslsMain {
 			return $mydata;
 		}
 
-		$origin_lang = trim( $_GET['msls_lang'] );
-
-		if ( isset( $mydata->{$origin_lang} ) ) {
+		// Extract all languages into arrays
+		$all_langs = explode(',',trim( $_GET['msls_lang'] ));
+		$all_ids = explode(',',trim( $_GET['msls_id'] ));
+		
+		// Check if eq sizes
+		if (  sizeof($all_langs) != sizeof($all_ids) ) { 
 			return $mydata;
 		}
-
-		$origin_post_id = (int) $_GET['msls_id'];
-
-		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
-
-		if ( null === $origin_blog_id ) {
-			return $mydata;
+		
+		// Loop over languages to set cross-linking between translations
+		foreach ($all_langs as $indx => $lang) {
+			
+			// Check if language source already exist 
+			// if there's an existing reference - skip the post 
+			if ( isset( $mydata->{$lang} ) ) {
+				continue;
+			}
+				
+			// Get ID for each language
+			$origin_post_id[$indx] = (int) $all_ids[$indx];
+			$origin_blog_id[$indx] = $this->collection->get_blog_id(  $lang );
+			
+			// Skip if there's no proper record
+			if ( null === $origin_blog_id[$indx] ) {
+				continue;
+			}
+			
+			// Get post info for each language
+			switch_to_blog( $origin_blog_id );
+			$origin_post = get_post( $origin_post_id[$indx] );
+			restore_current_blog();
+			
+			// Skip loop if there's no proper post 
+			if ( ! $origin_post instanceof \WP_Post ) {
+				continue;
+			}	
+			
+			// Create link between original post for the language
+			$mydata->{$lang} = $origin_post_id[$indx];
+			
 		}
-
-		switch_to_blog( $origin_blog_id );
-		$origin_post = get_post( $origin_post_id );
-		restore_current_blog();
-
-		if ( ! $origin_post instanceof \WP_Post ) {
-			return $mydata;
-		}
-
-		$mydata->{$origin_lang} = $origin_post_id;
-
 		return $mydata;
 	}
 }

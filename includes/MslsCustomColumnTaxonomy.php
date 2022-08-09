@@ -32,11 +32,31 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 			if ( ! empty( $taxonomy ) ) {
 				add_filter( "manage_edit-{$taxonomy}_columns" , [ $obj, 'th' ] );
 				add_action( "manage_{$taxonomy}_custom_column" , [ $obj, 'column_default' ], -100, 3 );
+				add_filter( "manage_edit-{$taxonomy}_sortable_columns", [ $obj, 'sortable_cols' ]);
 				add_action( "delete_{$taxonomy}", [ $obj, 'delete' ] );
 			}
 		}
 
 		return $obj;
+	}
+	
+	
+	/**
+	* Table header- Sorting
+	* @param array $columns
+	* @return array
+	*/
+	public function sortable_cols( $columns ) {
+		$blogs = $this->collection->get();
+		if ( $blogs ) {
+			$blogs = $this->collection->get();
+			foreach ( $blogs as $blog ) {
+				$language = $blog->get_language();
+				$col_name = 'mslcol_' . $language;
+				$columns[$col_name] = $col_name;
+			}
+		}
+		return $columns;
 	}
 
 	/**

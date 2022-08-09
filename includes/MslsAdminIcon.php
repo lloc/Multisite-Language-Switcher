@@ -160,8 +160,9 @@ class MslsAdminIcon {
 	 * @return MslsAdminIcon
 	 */
 	public function set_href( $id ) {
+		//foreach ($id as $idx) {
 		$this->href = get_edit_post_link( $id );
-
+		//}
 		return $this;
 	}
 
@@ -246,7 +247,7 @@ class MslsAdminIcon {
 		$path = $this->path;
 
 		if ( null !== $this->id && null !== $this->origin_language ) {
-			$path = add_query_arg( [ 'msls_id' => $this->id, 'msls_lang' => $this->origin_language ], $this->path );
+			$path = add_query_arg( [ 'msls_id' => implode(',', $this->id), 'msls_lang' => implode(',', $this->origin_language) ], $this->path ); 
 		}
 
 		/**

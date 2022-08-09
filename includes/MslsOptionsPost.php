@@ -31,6 +31,7 @@ class MslsOptionsPost extends MslsOptions {
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
+		
 		if ( ! $this->has_value( $language ) ) {
 			return '';
 		}
