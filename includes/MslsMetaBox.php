@@ -183,7 +183,7 @@ class MslsMetaBox extends MslsMain {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create()
+				$icon     = MslsAdminIcon::create( $type )
 				                         ->set_language( $language )
 				                         ->set_icon_type( 'flag' );
 
