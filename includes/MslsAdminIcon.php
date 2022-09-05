@@ -90,10 +90,12 @@ class MslsAdminIcon {
 	 *
 	 * @return MslsAdminIcon
 	 */
-	public static function create() {
+	public static function create($type = null) {
 		$obj = MslsContentTypes::create();
 
-		$type = $obj->get_request();
+		if(!$type) {
+            $type = $obj->get_request();
+        }
 		if ( $obj->is_taxonomy() ) {
 			return new MslsAdminIconTaxonomy( $type );
 		}
