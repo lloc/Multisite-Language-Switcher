@@ -1,3 +1,8 @@
+## 2.5.6
+
+* Fix #184 - use type of post and not only request (props @arnowelzel)
+* Adding filters for customizing the "hreflang" output in the page header (props @jacksoggetto) 
+
 ## 2.5.5
 
 * WordPress 6.0 tested
