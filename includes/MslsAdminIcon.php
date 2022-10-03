@@ -73,7 +73,7 @@ class MslsAdminIcon {
 	 *
 	 * @param string $type
 	 */
-	public function __construct( string $type ) {
+	public function __construct( ?string $type ) {
 		$this->type = esc_attr( $type );
 		$this->set_path();
 	}

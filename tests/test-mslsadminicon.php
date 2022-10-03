@@ -137,6 +137,14 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertIsSTring( $obj->get_edit_new() );
 	}
 
+	public function test_set_id_with_null_constructor() {
+		Functions\expect( 'add_query_arg' )->once();
+
+		$obj  = new MslsAdminIcon( null );
+
+		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_id( 1 ) );
+	}
+
 	public function test_set_id() {
 		$obj  = new MslsAdminIcon( 'post' );
 
