@@ -1,3 +1,7 @@
+## 2.5.7
+
+* Fix #192 MslsCustomColumn/MslsAdminIcon fatal error (props @nelgmo)
+
 ## 2.5.6
 
 * Fix #184 - use type of post and not only request (props @arnowelzel)
