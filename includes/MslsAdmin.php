@@ -15,6 +15,8 @@ use lloc\Msls\Component\Input\Select;
  */
 class MslsAdmin extends MslsMain {
 
+	public const MAX_REFERENCE_USERS = 100;
+
 	/**
 	 * Factory
 	 *
@@ -321,8 +323,18 @@ class MslsAdmin extends MslsMain {
 	public function reference_user() {
 		$users = [];
 
-		foreach ( $this->collection->get_users() as $user ) {
+		foreach ( ( array ) apply_filters( 'msls_reference_users', $this->collection->get_users() ) as $user ) {
 			$users[ $user->ID ] = $user->user_nicename;
+		}
+
+		if ( count( $users ) > self::MAX_REFERENCE_USERS ) {
+			$users = array_slice( $users, 0, self::MAX_REFERENCE_USERS, true );
+
+			$message = sprintf(
+				__( 'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %s users. Please, use the hook "msls_reference_users" to filter the result before!', 'multisite-language-switcher' ),
+				self::MAX_REFERENCE_USERS
+			);
+			trigger_error( $message );
 		}
 
 		echo ( new Select( 'reference_user', $users, $this->options->reference_user ) )->render();

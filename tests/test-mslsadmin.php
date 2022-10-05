@@ -12,7 +12,7 @@ use Mockery\Mock;
 
 class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
-	public function get_sut() {
+	public function get_sut( $users = [] ) {
 		Functions\when( 'get_option' )->justReturn( [] );
 		Functions\when( 'update_option' )->justReturn( true );
 		Functions\when( 'get_current_blog_id' )->justReturn( 1 );
@@ -40,16 +40,19 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$blog->blogname    = 'uvw';
 
 		$blogs[] = $blog;
+		if ( empty( $users ) ) {
+			$users = [
+				(object) [
+					'ID'            => 1,
+					'user_nicename' => 'realloc'
+				]
+			];
+		}
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturns( 1 );
 		$collection->shouldReceive( 'get_plugin_active_blogs' )->andReturns( $blogs );
-		$collection->shouldReceive( 'get_users' )->andReturns( [
-			(object) [
-				'ID' => 1,
-				'user_nicename' => 'realloc'
-			]
-		] );
+		$collection->shouldReceive( 'get_users' )->andReturns( $users );
 
 		return new MslsAdmin( $options, $collection );
 	}
@@ -118,6 +121,20 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	function test_reference_user() {
+		$users = [];
+		$too_much = MslsAdmin::MAX_REFERENCE_USERS + 1;
+		for( $i = 1; $i <= $too_much; $i++ ) {
+			$users[] = (object) [ 'ID' => $i, 'user_nicename' => 'realloc' ];
+		};
+
+		$obj  = $this->get_sut( $users );
+
+		$this->expectNotice();
+		$this->expectNoticeMessage( 'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of 100 users. Please, use the hook "msls_reference_users" to filter the result before!' );
+		$obj->reference_user();
+	}
+
+	function test_reference_user_over_max() {
 		$obj = $this->get_sut();
 
 		$this->expectOutputRegex( '/^<select id="reference_user" name="msls\[reference_user\]">.*$/' );
@@ -198,7 +215,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_tizio() {
 		$obj = $this->get_sut();
 
-		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = false;
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -210,7 +227,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_pinko() {
 		$obj = $this->get_sut();
 
-		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = true;
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -222,7 +239,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_pallino() {
 		$obj = $this->get_sut();
 
-		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = [ 'slug' => 'pallino_slug' ];
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -299,7 +316,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj = $this->get_sut();
 
 		foreach ( [ 'post' => 'Post', 'page' => 'Page' ] as $name => $label ) {
-			$post_type = \Mockery::mock( \WP_Post_Type::class );
+			$post_type        = \Mockery::mock( \WP_Post_Type::class );
 			$post_type->name  = $name;
 			$post_type->label = $label;
 
