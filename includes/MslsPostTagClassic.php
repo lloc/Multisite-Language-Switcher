@@ -17,7 +17,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * Add the input fields to the add-screen of the taxonomies
 	 * @param \StdClass $tag
 	 */
-	public function add_input( $tag ) {
+	public function add_input( $tag ): void {
 		$title_format = '<h3>%s</h3>';
 
 		$item_format = '<label for="msls_input_%1$s">%2$s</label>
@@ -35,7 +35,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * Add the input fields to the edit-screen of the taxonomies
 	 * @param \StdClass $tag
 	 */
-	public function edit_input( $tag ) {
+	public function edit_input( $tag ): void {
 		$title_format = '<tr>
 			<th colspan="2">
 			<strong>%s</strong>
@@ -57,13 +57,14 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Prints options inputs
+	 *
 	 * @uses selected
 	 * @param MslsBlog $blog
 	 * @param string $type
 	 * @param MslsOptionsTax $mydata
 	 * @param string $item_format
 	 */
-	public function print_option( MslsBlog $blog, $type, MslsOptionsTax $mydata, $item_format ) {
+	public function print_option( MslsBlog $blog, string $type, MslsOptionsTax $mydata, string $item_format ): void {
 		switch_to_blog( $blog->userblog_id );
 
 		$language = $blog->get_language();
@@ -71,7 +72,7 @@ class MslsPostTagClassic extends MslsPostTag {
 			->set_language( $language )
 			->set_icon_type( 'flag' );
 		$options  = '';
-		$terms    = get_terms( $type, [ 'hide_empty' => 0 ] );
+		$terms    = get_terms( [ 'taxonomy' => $type, 'hide_empty' => false ] );
 
 		if ( $mydata->has_value( $language ) ) {
 			$icon->set_href( $mydata->$language );
@@ -96,6 +97,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	/**
 	 * Print the input fields
 	 * Returns true if the blogcollection is not empty
+	 *
 	 * @param \StdClass $tag
 	 * @param string $title_format
 	 * @param string $item_format
@@ -103,8 +105,9 @@ class MslsPostTagClassic extends MslsPostTag {
 	 */
 	public function the_input( $tag, $title_format, $item_format ) {
 		$blogs = $this->collection->get();
-		if ( $blogs ) {
-			$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
+
+		if ( ! empty( $blogs ) ) {
+			$term_id = is_object( $tag ) ? $tag->term_id : 0;
 			$mydata  = MslsOptionsTax::create( $term_id );
 			$type    = MslsContentTypes::create()->get_request();
 
@@ -121,8 +124,10 @@ class MslsPostTagClassic extends MslsPostTag {
 			foreach ( $blogs as $blog ) {
 				$this->print_option( $blog, $type, $mydata, $item_format );
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 }

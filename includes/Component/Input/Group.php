@@ -12,7 +12,7 @@ use lloc\Msls\Component\InputInterface;
 class Group implements InputInterface {
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	protected $arr = [];
 

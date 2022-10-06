@@ -30,7 +30,7 @@ class MslsTaxonomy extends MslsContentTypes {
 
 	/**
 	 * @uses get_post_types
-	 * @return array
+	 * @return string[]
 	 */
 	public static function get(): array {
 		$types = array_merge(

@@ -9,7 +9,7 @@ namespace lloc\Msls\Component;
 abstract class Icon {
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	protected $map;
 
