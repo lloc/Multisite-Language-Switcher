@@ -18,10 +18,10 @@ class Select implements InputInterface {
 
 	/**
 	 * @param string $key Name and ID of the form-element
-	 * @param array $arr Options as associative array
-	 * @param string|null $selected Values which should be selected
+	 * @param string[] $arr Options as associative array
+	 * @param ?string $selected Values which should be selected
 	 */
-	public function __construct( string $key, array $arr, $selected = null ) {
+	public function __construct( string $key, array $arr, ?string $selected = null ) {
 		$this->key = esc_attr( $key );
 
 		$this->options = new Group( '' );

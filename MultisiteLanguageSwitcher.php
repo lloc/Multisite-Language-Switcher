@@ -51,11 +51,11 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @package Msls
 	 *
-	 * @param array $attr
+	 * @param mixed $attr
 	 *
 	 * @return string
 	 */
-	function get_the_msls( $attr ) {
+	function get_the_msls( $attr ): string {
 		$arr = is_array( $attr ) ? $attr : [];
 		$obj = apply_filters( 'msls_get_output', null );
 
@@ -77,9 +77,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @package Msls
 	 * @uses get_the_msls
 	 *
-	 * @param array $arr
+	 * @param string[] $arr
 	 */
-	function the_msls( array $arr = [] ) {
+	function the_msls( array $arr = [] ): void {
 		echo get_the_msls( $arr );
 	}
 
@@ -90,7 +90,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @return string
 	 */
-	function get_msls_flag_url( $locale ) {
+	function get_msls_flag_url( string $locale ): string {
 		return ( new \lloc\Msls\MslsOptions )->get_flag_url( $locale );
 	}
 
@@ -99,9 +99,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @param string $locale
 	 *
-	 * @return bool|string
+	 * @return string
 	 */
-	function get_msls_blog_description( $locale ) {
+	function get_msls_blog_description( string $locale ): string {
 		$blog = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
 
 		return $blog->get_description();
