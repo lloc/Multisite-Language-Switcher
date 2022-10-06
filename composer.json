@@ -50,7 +50,8 @@
   ],
   "config": {
     "allow-plugins": {
-      "composer/installers": true
+      "composer/installers": true,
+      "phpstan/extension-installer": true
     }
   }
 }
