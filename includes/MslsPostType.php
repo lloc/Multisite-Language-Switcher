@@ -22,9 +22,9 @@ class MslsPostType extends MslsContentTypes {
 	}
 
 	/**
+	 * @return string[]
 	 * @uses get_post_types
 	 *
-	 * @return string[]
 	 */
 	public static function get(): array {
 		$types = array_merge(
@@ -47,9 +47,10 @@ class MslsPostType extends MslsContentTypes {
 
 	/**
 	 * Check for post_type
+	 *
 	 * @return bool
 	 */
-	public function is_post_type() {
+	public function is_post_type(): bool {
 		return true;
 	}
 

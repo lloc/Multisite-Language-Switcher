@@ -18,4 +18,14 @@ class WP_Test_MslsCustomColumn extends Msls_UnitTestCase {
 		$this->assertEmpty( $obj->th( [] ) );
 	}
 
+	function test_td() {
+		$options    = \Mockery::mock( MslsOptions::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get' )->once()->andReturn( [] );
+
+		$obj = new MslsCustomColumn( $options, $collection );
+
+		$this->assertEmpty( $obj->th( [] ) );
+	}
+
 }

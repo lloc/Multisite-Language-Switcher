@@ -41,8 +41,8 @@ class MslsCustomColumn extends MslsMain {
 
 	/**
 	 * Table header
-	 * @param array $columns
-	 * @return array
+	 * @param string[] $columns
+	 * @return string[]
 	 */
 	public function th( $columns ) {
 		$blogs = $this->collection->get();
@@ -72,10 +72,8 @@ class MslsCustomColumn extends MslsMain {
 	 *
 	 * @param string $column_name
 	 * @param int $item_id
-	 *
-	 * @codeCoverageIgnore
 	 */
-	public function td( $column_name, $item_id ) {
+	public function td( string $column_name, int $item_id ): void {
 		if ( 'mslscol' == $column_name ) {
 			$blogs           = $this->collection->get();
 			$origin_language = MslsBlogCollection::get_blog_language();

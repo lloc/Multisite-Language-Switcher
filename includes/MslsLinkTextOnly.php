@@ -20,10 +20,9 @@ class MslsLinkTextOnly extends MslsLink {
 	protected $format_string = '{txt}';
 
 	/**
-	 * Get the description
 	 * @return string
 	 */
-	public static function get_description() {
+	public static function get_description(): string {
 		return __( 'Description only', 'multisite-language-switcher' );
 	}
 

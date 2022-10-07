@@ -123,7 +123,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	/**
 	 * Gets the list of the blogs of the reference user
 	 * The first available user of the blog will be used if there is no
-	 * refrence user configured
+	 * reference user configured
 	 *
 	 * @param MslsOptions $options
 	 *
@@ -174,7 +174,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 */
 	public function get_blog_id( $language ) {
 		$blog    = $this->get_blog( $language );
-		$blog_id = ! is_null( $blog ) ? $blog->userblog_id : null;
+		$blog_id = ( $blog instanceof MslsBlog ) ? $blog->userblog_id : null;
 
 		return apply_filters( 'msls_blog_collection_get_blog_id', $blog_id, $language );
 	}

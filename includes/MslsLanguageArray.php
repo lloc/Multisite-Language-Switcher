@@ -16,13 +16,13 @@ class MslsLanguageArray {
 
 	/**
 	 * Generic container
-	 * @var array
+	 * @var array<string, int>
 	 */
 	protected $arr;
 
 	/**
 	 * Constructor
-	 * @param array $arr
+	 * @param array<string, int> $arr
 	 */
 	public function __construct( array $arr = [] ) {
 		foreach ( $arr as $key => $value ) {
@@ -34,38 +34,45 @@ class MslsLanguageArray {
 	 * Set a key-value-pair
 	 * - $key must be a string of length >= 2
 	 * - $value must be an integer > 0
+	 *
 	 * @param string $key
-	 * @param mixed $value
+	 * @param int $value
+	 *
 	 * @return MslsLanguageArray
 	 */
-	public function set( $key, $value ) {
-		$value = (int) $value;
+	public function set( string $key, int $value ): MslsLanguageArray {
 		if ( 2 <= strlen( $key ) && 0 < $value ) {
 			$this->arr[ $key ] = $value;
 		}
+
 		return $this;
 	}
 
 
 	/**
 	 * Get the value of the element with the specified key
+	 *
 	 * @param string $key
 	 * @return int
 	 */
-	public function get_val( $key ) {
+	public function get_val( string $key ): int {
 		return $this->arr[ $key ] ?? 0;
 	}
 
 	/**
 	 * Get the filtered array without the specified element
+	 *
 	 * @param string $key
-	 * @return array
+	 *
+	 * @return array<string, int>
 	 */
-	public function get_arr( $key = '' ) {
+	public function get_arr( string $key = '' ) {
 		$arr = $this->arr;
+
 		if ( isset( $arr[ $key ] ) ) {
 			unset( $arr[ $key ] );
 		}
+
 		return $arr;
 	}
 

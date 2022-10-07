@@ -69,15 +69,14 @@ class MslsOptionsTax extends MslsOptions {
 	}
 
 	/**
-	 * Get the queried taxonomy
 	 * @return string
 	 */
-    public function get_tax_query() {
+    public function get_tax_query(): string {
         global $wp_query;
 
         if ( function_exists('is_woocommerce' ) ) {
             if ( is_woocommerce() && isset( $wp_query->tax_query->queries[1]['taxonomy'] ) ) {
-                    return $wp_query->tax_query->queries[1]['taxonomy'];
+                return $wp_query->tax_query->queries[1]['taxonomy'];
             }
         } elseif ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
             return $wp_query->tax_query->queries[0]['taxonomy'];
@@ -87,27 +86,20 @@ class MslsOptionsTax extends MslsOptions {
     }
 
 	/**
-	 * Get postlink
-	 *
 	 * @param string $language
 	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ) {
-		$url = '';
-
-		if ( $this->has_value( $language ) ) {
-			$url = $this->get_term_link( (int) $this->__get( $language ) );
-		}
+	public function get_postlink( string $language ): string {
+		$url = $this->has_value( $language ) ? $this->get_term_link( (int) $this->__get( $language ) ) : '';
 
 		return apply_filters( 'check_url', $url, $this );
 	}
 
 	/**
-	 * Get current link
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return $this->get_term_link( $this->get_arg( 0, 0 ) );
 	}
 

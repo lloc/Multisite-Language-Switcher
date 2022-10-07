@@ -16,12 +16,12 @@ use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
 class MslsMetaBox extends MslsMain {
 
 	/**
-	 * Suggest
+	 * Echoes a JSON-ified array of posts of the given post-type and
+	 * the requested search-term and then dies silently
 	 *
-	 * Echo a JSON-ified array of posts of the given post-type and
-	 * the requested search-term and then die silently
+	 * @return void
 	 */
-	public static function suggest() {
+	public static function suggest(): void {
 		$json = new MslsJson;
 
 		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
@@ -54,13 +54,13 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * @param MslsJson $json
-	 * @param array $args
+	 * @param string[] $args
 	 *
-	 * @return mixed
+	 * @return MslsJson
 	 */
-	public static function get_suggested_fields( $json, $args ) {
+	public static function get_suggested_fields( MslsJson $json, array $args ): MslsJson {
 		/**
-		 * Overrides the query-args for the suggest fields in the MetaBox
+		 * Overrides the query-args for suggested fields in the MetaBox
 		 *
 		 * @param array $args
 		 *
@@ -101,7 +101,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @return MslsMetaBox
 	 */
-	public static function init() {
+	public static function init(): MslsMetaBox {
 		$options    = MslsOptions::instance();
 		$collection = MslsBlogCollection::instance();
 		$obj        = new static( $options, $collection );
@@ -118,7 +118,7 @@ class MslsMetaBox extends MslsMain {
 	/**
 	 * Add
 	 */
-	public function add() {
+	public function add(): void {
 		foreach ( MslsPostType::instance()->get() as $post_type ) {
 			add_meta_box(
 				'msls',
@@ -126,14 +126,7 @@ class MslsMetaBox extends MslsMain {
 					'msls_metabox_post_select_title',
 					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
 				),
-				[
-					$this,
-					(
-					MslsOptions::instance()->activate_autocomplete ?
-						'render_input' :
-						'render_select'
-					),
-				],
+				[ $this, ( MslsOptions::instance()->activate_autocomplete ? 'render_input' : 'render_select' ) ],
 				$post_type,
 				'side',
 				'high'
@@ -146,14 +139,12 @@ class MslsMetaBox extends MslsMain {
 						'msls_metabox_post_import_title',					
 						__( 'Multisite Language Switcher - Import content', 'multisite-language-switcher' )
 					),
-					[
-						ContentImportMetaBox::instance(),
-						'render',
-					],
+					[ ContentImportMetaBox::instance(), 'render' ],
 					$post_type,
 					'side',
 					'high'
 				);
+
 				add_action( 'admin_footer', [ ContentImportMetaBox::instance(), 'print_modal_html' ] );
 			}
 		}
@@ -163,7 +154,7 @@ class MslsMetaBox extends MslsMain {
 	 * Render the classic select-box
 	 * @uses selected
 	 */
-	public function render_select() {
+	public function render_select(): void {
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			global $post;
@@ -250,7 +241,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function render_options( $type, $msls_id ) {
+	public function render_options( string $type, string $msls_id ) {
 		$options = [];
 
 		$my_query = new \WP_Query( [
@@ -282,11 +273,9 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * Render the suggest input-field
-	 *
-	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
+	 * @return void
 	 */
-	public function render_input( $echo = true ) {
+	public function render_input(): void {
 		$blogs = $this->collection->get();
 
 		if ( $blogs ) {
@@ -352,11 +341,9 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * Set
-	 *
 	 * @param int $post_id
 	 */
-	public function set( $post_id ) {
+	public function set( $post_id ): void {
 		if ( $this->is_autosave( $post_id ) || ! $this->verify_nonce() ) {
 			return;
 		}
@@ -381,7 +368,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @return MslsOptionsPost
 	 */
-	public function maybe_set_linked_post( MslsOptionsPost $mydata ) {
+	public function maybe_set_linked_post( MslsOptionsPost $mydata ): MslsOptionsPost {
 		if ( ! isset( $_GET['msls_id'], $_GET['msls_lang'] ) ) {
 			return $mydata;
 		}
@@ -412,4 +399,5 @@ class MslsMetaBox extends MslsMain {
 
 		return $mydata;
 	}
+
 }

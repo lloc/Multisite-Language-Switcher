@@ -43,14 +43,14 @@ class MslsLink extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public static function get_description() {
+	public static function get_description(): string {
 		return __( 'Flag and description', 'multisite-language-switcher' );
 	}
 
 	/**
 	 * Gets an array with all link descriptions
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public static function get_types_description() {
 		$types = [];

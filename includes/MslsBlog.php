@@ -120,8 +120,7 @@ class MslsBlog {
 	 * @return string|null
 	 */
 	protected function get_permalink( $options ) {
-		$url = null;
-
+		$url     = null;
 		$is_home = is_front_page();
 
 		switch_to_blog( $this->obj->userblog_id );
@@ -136,14 +135,12 @@ class MslsBlog {
 	}
 
 	/**
-	 * Sort objects helper
-	 *
 	 * @param string $a
 	 * @param string $b
 	 *
 	 * @return int
 	 */
-	public static function _cmp( $a, $b ) {
+	public static function _cmp( string $a, string $b ): int {
 		if ( $a == $b ) {
 			return 0;
 		}

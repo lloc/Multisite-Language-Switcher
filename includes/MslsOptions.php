@@ -26,43 +26,36 @@ use lloc\Msls\Component\Icon\IconPng;
 class MslsOptions extends MslsGetSet {
 
 	/**
-	 * Args
-	 * @var array
+	 * @var string[]
 	 */
 	protected $args;
 
 	/**
-	 * Name
 	 * @var string
 	 */
 	protected $name;
 
 	/**
-	 * Exists
 	 * @var bool
 	 */
 	protected $exists = false;
 
 	/**
-	 * Separator
 	 * @var string
 	 */
 	protected $sep = '';
 
 	/**
-	 * Autoload
 	 * @var string
 	 */
 	protected $autoload = 'yes';
 
 	/**
-	 * Available languages
-	 * @var array
+	 * @var string[]
 	 */
 	private $available_languages;
 
 	/**
-	 * Rewrite with front
 	 * @var bool
 	 */
 	public $with_front;
@@ -137,7 +130,8 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Gets an element of arg by index
-	 * The returning value is casted to the type of $retval or will be the
+	 *
+	 * The returning value will be cast to the type of $retval or will be the exact
 	 * value of $retval if nothing is set at this index.
 	 *
 	 * @param int $idx
@@ -146,20 +140,18 @@ class MslsOptions extends MslsGetSet {
 	 * @return mixed
 	 */
 	public function get_arg( $idx, $val = null ) {
-		$arg = isset( $this->args[ $idx ] ) ? $this->args[ $idx ] : $val;
+		$arg = $this->args[ $idx ] ?? $val;
 		settype( $arg, gettype( $val ) );
 
 		return $arg;
 	}
 
 	/**
-	 * Save
-	 *
 	 * @param mixed $arr
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function save( $arr ) {
+	public function save( $arr ): void {
 		$this->delete();
 		if ( $this->set( $arr ) ) {
 			$arr = $this->get_arr();
@@ -170,10 +162,9 @@ class MslsOptions extends MslsGetSet {
 	}
 
 	/**
-	 * Delete
 	 * @codeCoverageIgnore
 	 */
-	public function delete() {
+	public function delete(): void {
 		$this->reset();
 		if ( $this->exists ) {
 			delete_option( $this->name );
@@ -181,13 +172,11 @@ class MslsOptions extends MslsGetSet {
 	}
 
 	/**
-	 * Set
-	 *
 	 * @param mixed $arr
 	 *
 	 * @return bool
 	 */
-	public function set( $arr ) {
+	public function set( $arr ): bool {
 		if ( ! is_array( $arr ) ) {
 			return false;
 		}
@@ -216,13 +205,15 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_permalink( $language ) {
+	public function get_permalink( $language ): string {
 		/**
 		 * Filters the url by language
-		 * @since 0.9.8
 		 *
 		 * @param string $postlink
 		 * @param string $language
+		 *
+		 * @since 0.9.8
+		 *
 		 */
 		$postlink = (string) apply_filters(
 			'msls_options_get_permalink',
@@ -240,7 +231,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ) {
+	public function get_postlink( string $language ): string {
 		return '';
 	}
 
@@ -248,40 +239,36 @@ class MslsOptions extends MslsGetSet {
 	 * Get the queried taxonomy
 	 * @return string
 	 */
-	public function get_tax_query() {
+	public function get_tax_query(): string {
 		return '';
 	}
 
 	/**
-	 * Get current link
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return home_url( '/' );
 	}
 
 	/**
-	 * Is excluded
 	 * @return bool
 	 */
-	public function is_excluded() {
+	public function is_excluded(): bool {
 		return isset( $this->exclude_current_blog );
 	}
 
 	/**
-	 * Is content
 	 * @return bool
 	 */
-	public function is_content_filter() {
+	public function is_content_filter(): bool {
 		return isset( $this->content_filter );
 	}
 
 	/**
-	 * Get order
 	 * @return string
 	 */
-	public function get_order() {
-		return  isset( $this->sort_by_description ) ? 'description' : 'language';
+	public function get_order(): string {
+		return isset( $this->sort_by_description ) ? 'description' : 'language';
 	}
 
 	/**
@@ -291,12 +278,11 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_url( $dir ) {
+	public function get_url( $dir ): string {
 		return esc_url( MslsPlugin::plugins_url( $dir ) );
 	}
 
 	/**
-	 * Returns slug for a post type
 	 * @param string $post_type
 	 *
 	 * @return string
@@ -305,8 +291,8 @@ class MslsOptions extends MslsGetSet {
 		$key = "rewrite_{$post_type}";
 
 		error_log( $key );
-		
-		return isset( $this->$key ) ? $this->$key : '';
+
+		return $this->$key ?? '';
 	}
 
 	/**
@@ -314,7 +300,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_icon( $language ) {
+	public function get_icon( $language ): string {
 		return ( new IconPng() )->get( $language );
 	}
 
@@ -334,9 +320,11 @@ class MslsOptions extends MslsGetSet {
 
 		/**
 		 * Override the path to the flag-icons
-		 * @since 0.9.9
 		 *
 		 * @param string $url
+		 *
+		 * @since 0.9.9
+		 *
 		 */
 		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
 
@@ -344,10 +332,12 @@ class MslsOptions extends MslsGetSet {
 
 		/**
 		 * Use your own filename for the flag-icon
-		 * @since 1.0.3
 		 *
 		 * @param string $icon
 		 * @param string $language
+		 *
+		 * @since 1.0.3
+		 *
 		 */
 		$icon = (string) apply_filters( 'msls_options_get_flag_icon', $icon, $language );
 
@@ -357,11 +347,12 @@ class MslsOptions extends MslsGetSet {
 	/**
 	 * Get all available languages
 	 *
-	 * @uses get_available_languages
+	 * @return string[]
+	 *
 	 * @uses format_code_lang
-	 * @return array
+	 * @uses get_available_languages
 	 */
-	public function get_available_languages() {
+	public function get_available_languages(): array {
 		if ( empty( $this->available_languages ) ) {
 			$this->available_languages = [
 				'en_US' => __( 'American English', 'multisite-language-switcher' ),
@@ -373,9 +364,11 @@ class MslsOptions extends MslsGetSet {
 
 			/**
 			 * Returns custom filtered available languages
-			 * @since 1.0
 			 *
 			 * @param array $available_languages
+			 *
+			 * @since 1.0
+			 *
 			 */
 			$this->available_languages = (array) apply_filters(
 				'msls_options_get_available_languages',
@@ -394,7 +387,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public static function check_for_blog_slug( $url, $options ) {
+	public static function check_for_blog_slug( string $url, MslsOptions $options ): string {
 		if ( empty( $url ) || ! is_string( $url ) ) {
 			return '';
 		}

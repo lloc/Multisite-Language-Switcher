@@ -58,7 +58,7 @@ class MslsMain {
 	 *
 	 * @param mixed $message
 	 */
-	public function debugger( $message ) {
+	public function debugger( $message ): void {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				$message = print_r( $message, true );
@@ -72,9 +72,9 @@ class MslsMain {
 	 *
 	 * @param int $object_id
 	 *
-	 * @return array
+	 * @return array<string, int>
 	 */
-	public function get_input_array( $object_id ) {
+	public function get_input_array( int $object_id ): array {
 		$arr = [];
 
 		$current_blog = $this->collection->get_current_blog();
@@ -99,12 +99,13 @@ class MslsMain {
 
 	/**
 	 * Prepare input key/value-pair
-	 * @param $key
-	 * @param $value
 	 *
-	 * @return array
+	 * @param string $key
+	 * @param string $value
+	 *
+	 * @return array<int, string|int>
 	 */
-	protected function get_input_value( $key, $value ) {
+	protected function get_input_value( $key, $value ): array {
 		if ( false === strpos( $key, 'msls_input_' ) || empty( $value ) ) {
 			return [ '', 0 ];
 		}
@@ -142,26 +143,24 @@ class MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function delete( $object_id ) {
+	public function delete( $object_id ): void {
 		$this->save( $object_id, MslsOptionsPost::class );
 	}
 
 	/**
-	 * Save
-	 *
 	 * @param int $object_id
 	 * @param string $class
 	 *
 	 * @codeCoverageIgnore
 	 */
-	protected function save( $object_id, $class ) {
+	protected function save( int $object_id, string $class ): void {
 		if ( has_action( 'msls_main_save' ) ) {
 			/**
 			 * Calls completely customized save-routine
 			 * @since 0.9.9
 			 *
 			 * @param int $object_id
-			 * @param string Classname
+			 * @param string $class
 			 */
 			do_action( 'msls_main_save', $object_id, $class );
 

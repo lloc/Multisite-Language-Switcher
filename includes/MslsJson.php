@@ -15,8 +15,7 @@ namespace lloc\Msls;
 class MslsJson {
 
 	/**
-	 * Container
-	 * @var array
+	 * @var array<int, array<string, int|string>>
 	 */
 	protected $arr = [];
 
@@ -28,10 +27,10 @@ class MslsJson {
 	 *
 	 * @return MslsJson
 	 */
-	public function add( $value, $label ) {
+	public function add( ?int $value, string $label ): MslsJson {
 		$this->arr[] = [
-			'value' => intval( $value ),
-			'label' => strval( $label ),
+			'value' => $value ?? 0,
+			'label' => $label,
 		];
 
 		return $this;
@@ -40,8 +39,8 @@ class MslsJson {
 	/**
 	 * Compare the item with the key "label" of the array $a and the array $b
 	 *
-	 * @param array $a
-	 * @param array $b
+	 * @param string[] $a
+	 * @param string[] $b
 	 *
 	 * @return int
 	 */
@@ -52,7 +51,7 @@ class MslsJson {
 	/**
 	 * Get the array container sorted by label
 	 *
-	 * @return array
+	 * @return array<int, array<string, int|string>>
 	 */
 	public function get(): array {
 		$arr = $this->arr;

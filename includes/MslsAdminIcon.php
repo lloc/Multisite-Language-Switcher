@@ -14,56 +14,48 @@ use lloc\Msls\Component\Icon\IconSvg;
  * @package Msls
  */
 class MslsAdminIcon {
+
 	/**
-	 * IconType
 	 * @var string
 	 */
 	protected $iconType = 'action';
 
 	/**
-	 * Language
 	 * @var string
 	 */
 	protected $language;
 
 	/**
-	 * Origin Language
 	 * @var string
 	 */
 	public $origin_language;
 
 	/**
-	 * Source
 	 * @var string
 	 */
 	protected $src;
 
 	/**
-	 * URL
 	 * @var string
 	 */
 	protected $href;
 
 	/**
-	 * Blog id
 	 * @var int
 	 */
 	protected $blog_id;
 
 	/**
-	 * Type
 	 * @var string
 	 */
 	protected $type;
 
 	/**
-	 * Path
 	 * @var string
 	 */
 	protected $path = 'post-new.php';
 
 	/**
-	 * The current object ID
 	 * @var int
 	 */
 	protected $id;
@@ -88,16 +80,17 @@ class MslsAdminIcon {
 	/**
 	 * @codeCoverageIgnore
 	 *
-	 * @param null $type
+	 * @param string $type
 	 *
-	 * @return MslsAdminIcon|MslsAdminIconTaxonomy
+	 * @return MslsAdminIcon
 	 */
-	public static function create( $type = null ) {
+	public static function create( ?string $type = null ): MslsAdminIcon {
 		$obj = MslsContentTypes::create();
 
 		if ( ! $type ) {
 			$type = $obj->get_request();
 		}
+
 		if ( $obj->is_taxonomy() ) {
 			return new MslsAdminIconTaxonomy( $type );
 		}
@@ -108,7 +101,7 @@ class MslsAdminIcon {
 	/**
 	 * Set the icon path
 	 *
-	 * @param $iconType
+	 * @param string $iconType
 	 *
 	 * @return MslsAdminIcon
 	 */

@@ -20,10 +20,9 @@ class MslsLinkImageOnly extends MslsLink {
 	protected $format_string = '<img src="{src}" alt="{alt}"/>';
 
 	/**
-	 * Get the description
 	 * @return string
 	 */
-	public static function get_description() {
+	public static function get_description(): string {
 		return __( 'Flag only', 'multisite-language-switcher' );
 	}
 

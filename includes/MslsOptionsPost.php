@@ -26,11 +26,11 @@ class MslsOptionsPost extends MslsOptions {
 	protected $autoload = 'no';
 
 	/**
-	 * Get postlink
 	 * @param string $language
+	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ) {
+	public function get_postlink( string $language ): string {
 		if ( ! $this->has_value( $language ) ) {
 			return '';
 		}
@@ -45,21 +45,13 @@ class MslsOptionsPost extends MslsOptions {
 			$this->with_front = ! empty( $post_object->rewrite['with_front'] );
 		}
 
-		global $current_site;
-		$blog_id = MslsBlogCollection::instance()->get_blog_id( $language );
-		if ( $current_site->blog_id != $blog_id ) {
-			$option = get_blog_option( $blog_id, 'msls' );
-			//error_log( print_r( $option, true ) );
-		}
-
 		return apply_filters( 'check_url', get_permalink( $post ), $this );
 	}
 
 	/**
-	 * Get current link
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return (string) get_permalink( $this->get_arg( 0, 0 ) );
 	}
 

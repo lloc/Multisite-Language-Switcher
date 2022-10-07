@@ -58,9 +58,10 @@ class MslsTaxonomy extends MslsContentTypes {
 
 	/**
 	 * Check for taxonomy
+	 *
 	 * @return bool
 	 */
-	public function is_taxonomy() {
+	public function is_taxonomy(): bool {
 		return true;
 	}
 
@@ -72,7 +73,7 @@ class MslsTaxonomy extends MslsContentTypes {
 	 *
 	 * @return string
 	 */
-	public function acl_request() {
+	public function acl_request(): string {
 		if ( ! MslsOptions::instance()->is_excluded() ) {
 			$request = $this->get_request();
 
@@ -90,7 +91,7 @@ class MslsTaxonomy extends MslsContentTypes {
 	 *
 	 * @return string
 	 */
-	public function get_post_type() {
+	public function get_post_type(): string {
 		return $this->post_type;
 	}
 

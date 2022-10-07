@@ -116,9 +116,9 @@ class MslsPlugin {
 	}
 
 	/**
-	 * @param $wp_admin_bar
+	 * @param \WP_Admin_Bar $wp_admin_bar
 	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
+	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
 			$title = '<div class="blavatar"></div>' . $blog->get_title();
@@ -135,7 +135,7 @@ class MslsPlugin {
 	/**
 	 * Callback for action wp_head
 	 */
-	public static function print_alternate_links() {
+	public static function print_alternate_links(): void {
 		echo self::get_output()->get_alternate_links(), PHP_EOL;
 	}
 
@@ -166,9 +166,8 @@ class MslsPlugin {
 	 *
 	 * @return string
 	 */
-	function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-		$obj    = MslsOutput::init();
-		$links  = $obj->get( 1, true, true );
+	function filter_string( $pref = '<p id="msls">', $post = '</p>' ): string {
+		$links  = MslsOutput::init()->get( 1, true, true );
 		$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
 
 		if ( has_filter( 'msls_filter_string' ) ) {
@@ -182,8 +181,6 @@ class MslsPlugin {
 			 */
 			$output = apply_filters( 'msls_filter_string', $output, $links );
 		} else {
-			$output = '';
-
 			if ( count( $links ) > 1 ) {
 				$last   = array_pop( $links );
 				$output = sprintf(
@@ -384,7 +381,7 @@ class MslsPlugin {
 	/**
 	 * Activate plugin
 	 */
-	public static function activate() {
+	public static function activate(): void {
 		register_uninstall_hook( self::file(), [ __CLASS__, 'uninstall' ] );
 	}
 
@@ -448,11 +445,11 @@ class MslsPlugin {
 	/**
 	 * Get specific vars from $_POST and $_GET in a safe way
 	 *
-	 * @param array $list
+	 * @param string[] $list
 	 *
-	 * @return array
+	 * @return string[]
 	 */
-	public static function get_superglobals( array $list ) {
+	public static function get_superglobals( array $list ): array {
 		$arr = [];
 
 		foreach ( $list as $var ) {

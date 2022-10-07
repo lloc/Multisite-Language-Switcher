@@ -18,7 +18,7 @@ class MslsGetSet extends MslsRegistryInstance {
 
 	/**
 	 * Generic container for all properties of an instance
-	 * @var array $arr
+	 * @var array<string, mixed> $arr
 	 */
 	protected $arr = [];
 
@@ -28,7 +28,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * @param string $key
 	 * @param mixed $value
 	 */
-	public function __set( $key, $value ) {
+	public function __set( string $key, $value ): void {
 		$this->arr[ $key ] = $value;
 
 		if ( empty( $this->arr[ $key ] ) ) {
@@ -42,7 +42,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * @param string $key
 	 * @return mixed
 	 */
-	public function __get( $key ) {
+	public function __get( string $key ) {
 		return $this->arr[ $key ] ?? null;
 	}
 
@@ -52,7 +52,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * @param string $key
 	 * @return bool
 	 */
-	public function __isset( $key ) {
+	public function __isset( string $key ): bool {
 		return isset( $this->arr[ $key ] );
 	}
 
@@ -61,7 +61,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 *
 	 * @param string $key
 	 */
-	public function __unset( $key ) {
+	public function __unset( string $key ) {
 		if ( isset( $this->arr[ $key ] ) ) {
 			unset( $this->arr[ $key ] );
 		}
@@ -72,14 +72,14 @@ class MslsGetSet extends MslsRegistryInstance {
 	 *
 	 * @return MslsGetSet
 	 */
-	public function reset() {
+	public function reset(): MslsGetSet {
 		$this->arr = [];
 
 		return $this;
 	}
 
 	/**
-	 * Checks if the array has an non empty item with the specified key name.
+	 * Checks if the array has a non-empty item with the specified key name.
 	 *
 	 * This is method is similar to the overloaded __isset-method since
 	 * __set cleans empty properties but I use for example
@@ -90,12 +90,13 @@ class MslsGetSet extends MslsRegistryInstance {
 	 *
 	 *     isset( $obj->$temp )
 	 *
-	 * which is the same but in my opinion a little bit ugly.
+	 * which is the same but in my opinion a bit ugly.
 	 *
 	 * @param string $key
+	 *
 	 * @return bool
 	 */
-	public function has_value( $key ) {
+	public function has_value( string $key ): bool {
 		return ! empty( $this->arr[ $key ] );
 	}
 
@@ -104,16 +105,16 @@ class MslsGetSet extends MslsRegistryInstance {
 	 *
 	 * @return bool
 	 */
-	public function is_empty() {
+	public function is_empty(): bool {
 		return empty( $this->arr );
 	}
 
 	/**
 	 * Gets the complete properties-container as an array.
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
-	public function get_arr() {
+	public function get_arr(): array {
 		return $this->arr;
 	}
 

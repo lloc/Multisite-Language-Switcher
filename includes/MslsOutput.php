@@ -17,7 +17,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Holds the format for the output
-	 * @var array $tags
+	 * @var string[] $tags
 	 */
 	protected $tags;
 
@@ -28,11 +28,12 @@ class MslsOutput extends MslsMain {
 	 * @param bool $filter
 	 * @param bool $exists
 	 *
-	 * @return array
+	 * @return string[]
+	 *
 	 * @uses MslsLink
 	 * @uses MslsOptions
 	 */
-	public function get( $display, $filter = false, $exists = false ) {
+	public function get( $display, $filter = false, $exists = false ): array {
 		$arr = [];
 
 		$blogs = $this->collection->get_filtered( $filter );
@@ -153,9 +154,10 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Gets tags for the output
-	 * @return array
+	 *
+	 * @return string[]
 	 */
-	public function get_tags() {
+	public function get_tags(): array {
 		if ( empty( $this->tags ) ) {
 			$this->tags = [
 				'before_item'   => $this->options->before_item,
@@ -181,7 +183,7 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Sets tags for the output
 	 *
-	 * @param array $arr
+	 * @param string[] $arr
 	 *
 	 * @return MslsOutput
 	 */

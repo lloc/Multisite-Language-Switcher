@@ -16,10 +16,10 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Suggest
 	 *
-	 * Echo a JSON-ified array of posts of the given post-type and
+	 * Echoes a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
-	public static function suggest() {
+	public static function suggest(): void {
 		$json = new MslsJson();
 
 		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
@@ -27,12 +27,13 @@ class MslsPostTag extends MslsMain {
 				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
 			);
 
-			$args = array(
+			$args = [
+				'taxonomy'   => sanitize_text_field( filter_input( INPUT_POST, 'post_type' ) ),
 				'orderby'    => 'name',
 				'order'      => 'ASC',
 				'number'     => 10,
 				'hide_empty' => 0,
-			);
+			];
 
 			if ( filter_has_var( INPUT_POST, 's' ) ) {
 				$args['search'] = sanitize_text_field(
@@ -41,18 +42,22 @@ class MslsPostTag extends MslsMain {
 			}
 
 			/**
-			 * Overrides the query-args for the suggest fields
-			 * @since 0.9.9
+			 * Overrides the query-args for the suggested fields
+			 *
 			 * @param array $args
+			 *
+			 * @since 0.9.9
 			 */
 			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
 
-			foreach ( get_terms( sanitize_text_field( filter_input( INPUT_POST, 'post_type' ) ), $args ) as $term ) {
+			foreach ( get_terms( $args ) as $term ) {
 
 				/**
 				 * Manipulates the term object before using it
-				 * @since 0.9.9
+				 *
 				 * @param \StdClass $term
+				 *
+				 * @since 0.9.9
 				 */
 				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
 
@@ -73,20 +78,19 @@ class MslsPostTag extends MslsMain {
 	 *
 	 * @return MslsPostTag
 	 */
-	public static function init() {
+	public static function init(): MslsPostTag {
 		$options    = MslsOptions::instance();
 		$collection = MslsBlogCollection::instance();
 
-		if ( $options->activate_autocomplete	) {
-			$obj = new static( $options, $collection );
-		}
-		else {
+		if ( $options->activate_autocomplete ) {
+			$obj = new self( $options, $collection );
+		} else {
 			$obj = new MslsPostTagClassic( $options, $collection );
 		}
 
 		$taxonomy = MslsContentTypes::create()->acl_request();
 		if ( '' != $taxonomy ) {
-			add_action( "{$taxonomy}_add_form_fields",  [ $obj, 'add_input' ] );
+			add_action( "{$taxonomy}_add_form_fields", [ $obj, 'add_input' ] );
 			add_action( "{$taxonomy}_edit_form_fields", [ $obj, 'edit_input' ] );
 			add_action( "edited_{$taxonomy}", [ $obj, 'set' ] );
 			add_action( "create_{$taxonomy}", [ $obj, 'set' ] );
@@ -98,9 +102,9 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
 	 *
-	 * @param \StdClass $tag
+	 * @param mixed $tag
 	 */
-	public function add_input( $tag ) {
+	public function add_input( $tag ): void {
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
@@ -116,9 +120,10 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
-	 * @param \StdClass $tag
+	 *
+	 * @param mixed $tag
 	 */
-	public function edit_input( $tag ) {
+	public function edit_input( $tag ): void {
 		$title_format = '<tr>
 			<th colspan="2">
 			<strong>%s</strong>
@@ -141,26 +146,27 @@ class MslsPostTag extends MslsMain {
 	}
 
 	/**
-	 * Print the input fields
 	 * Returns true if the blogcollection is not empty
-	 * @param \StdClass $tag
+	 *
+	 * @param mixed $tag
 	 * @param string $title_format
 	 * @param string $item_format
+	 *
 	 * @return boolean
 	 */
-	public function the_input( $tag, $title_format, $item_format ) {
-		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
+	public function the_input( $tag, string $title_format, string $item_format ): bool {
+		$term_id = $tag->term_id ?? 0;
 		$blogs   = $this->collection->get();
 		if ( $blogs ) {
 			$my_data = MslsOptionsTax::create( $term_id );
 
 			$this->maybe_set_linked_term( $my_data );
 
-			$type    = MslsContentTypes::create()->get_request();
+			$type = MslsContentTypes::create()->get_request();
 
 			printf(
 				$title_format,
-				apply_filters( 
+				apply_filters(
 					'msls_term_select_title',
 					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
 				),
@@ -171,8 +177,8 @@ class MslsPostTag extends MslsMain {
 
 				$language = $blog->get_language();
 				$icon     = MslsAdminIcon::create()
-					->set_language( $language )
-					->set_icon_type( 'flag' );
+				                         ->set_language( $language )
+				                         ->set_icon_type( 'flag' );
 
 				$value = $title = '';
 				if ( $my_data->has_value( $language ) ) {
@@ -194,17 +200,21 @@ class MslsPostTag extends MslsMain {
 				);
 				restore_current_blog();
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
 	 * Set calls the save method if taxonomy is set
+	 *
 	 * @param int $term_id
- 	 * @codeCoverageIgnore
+	 *
+	 * @codeCoverageIgnore
 	 */
-	public function set( $term_id ) {
+	public function set( int $term_id ): void {
 		if ( MslsContentTypes::create()->acl_request() ) {
 			$this->save( $term_id, MslsOptionsTax::class );
 		}
@@ -223,7 +233,6 @@ class MslsPostTag extends MslsMain {
 		}
 
 		$origin_lang = trim( $_GET['msls_lang'] );
-
 		if ( isset( $mydata->{$origin_lang} ) ) {
 			return $mydata;
 		}
@@ -231,12 +240,11 @@ class MslsPostTag extends MslsMain {
 		$origin_term_id = (int) $_GET['msls_id'];
 
 		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
-
 		if ( null === $origin_blog_id ) {
 			return $mydata;
 		}
 
-		switch_to_blog( $origin_blog_id );
+		switch_to_blog( intval( $origin_blog_id ) );
 		$origin_term = get_term( $origin_term_id, $mydata->base );
 		restore_current_blog();
 

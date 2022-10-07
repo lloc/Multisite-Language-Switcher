@@ -16,7 +16,7 @@ class MslsWidget extends \WP_Widget {
 	public $id_base = 'mslswidget';
 
 	/**
-	 * Constructor
+	 * @codeCoverageIgnore
 	 */
 	public function __construct() {
 		parent::__construct( 
@@ -31,12 +31,12 @@ class MslsWidget extends \WP_Widget {
 	/**
 	 * Output of the widget in the frontend
 	 *
-	 * @param array $args
-	 * @param array $instance
+	 * @param string[] $args
+	 * @param string[] $instance
 	 *
-	 * @user MslsOutput
+	 * @uses MslsOutput
 	 */
-	public function widget( $args, $instance ) {
+	public function widget( $args, $instance ): void {
 		$args = wp_parse_args(
 			$args,
 			[
@@ -48,12 +48,7 @@ class MslsWidget extends \WP_Widget {
 		);
 
 		/** This filter is documented in wp-includes/default-widgets.php */
-		$title = apply_filters(
-			'widget_title',
-			( $instance['title'] ?? '' ),
-			$instance,
-			$this->id_base
-		);
+		$title = apply_filters( 'widget_title', $instance['title'] ?? '', $instance, $this->id_base );
 		if ( $title ) {
 			$title = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
 		}
@@ -72,10 +67,10 @@ class MslsWidget extends \WP_Widget {
 	/**
 	 * Update widget in the backend
 	 *
-	 * @param array $new_instance
-	 * @param array $old_instance
+	 * @param string[] $new_instance
+	 * @param string[] $old_instance
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
@@ -90,11 +85,11 @@ class MslsWidget extends \WP_Widget {
 	/**
 	 * Display an input-form in the backend
 	 *
-	 * @param array $instance
+	 * @param string[] $instance
 	 *
-	 * @codeCoverageIgnore
+	 * @return string
 	 */
-	public function form( $instance ) {
+	public function form( $instance ): string {
 		printf(
 			'<p><label for="%1$s">%2$s:</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p>',
 			$this->get_field_id( 'title' ),
@@ -102,6 +97,8 @@ class MslsWidget extends \WP_Widget {
 			$this->get_field_name( 'title' ),
 			( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' )
 		);
+
+		return 'noform';
 	}
 
 }

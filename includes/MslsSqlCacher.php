@@ -48,8 +48,6 @@ class MslsSqlCacher {
 	protected $params;
 
 	/**
-	 * Constructor
-	 *
 	 * @param \wpdb $db
 	 * @param string $caller
 	 */
@@ -59,9 +57,7 @@ class MslsSqlCacher {
 	}
 
 	/**
-	 * Factory
-	 *
-	 * @uses \WPDB $wpdb
+	 * @codeCoverageIgnore
 	 *
 	 * @param string $caller
 	 *

@@ -15,7 +15,8 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
-	 * @param \StdClass $tag
+	 *
+	 * @param mixed $tag
 	 */
 	public function add_input( $tag ): void {
 		$title_format = '<h3>%s</h3>';
@@ -33,7 +34,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
-	 * @param \StdClass $tag
+	 * @param mixed $tag
 	 */
 	public function edit_input( $tag ): void {
 		$title_format = '<tr>
@@ -95,19 +96,19 @@ class MslsPostTagClassic extends MslsPostTag {
 	}
 
 	/**
-	 * Print the input fields
-	 * Returns true if the blogcollection is not empty
+	 * Returns true if the blog-collection is not empty
 	 *
-	 * @param \StdClass $tag
+	 * @param mixed $tag
 	 * @param string $title_format
 	 * @param string $item_format
+	 *
 	 * @return boolean
 	 */
-	public function the_input( $tag, $title_format, $item_format ) {
+	public function the_input( $tag, string $title_format, string $item_format ): bool {
 		$blogs = $this->collection->get();
 
 		if ( ! empty( $blogs ) ) {
-			$term_id = is_object( $tag ) ? $tag->term_id : 0;
+			$term_id = $tag->term_id ?? 0;
 			$mydata  = MslsOptionsTax::create( $term_id );
 			$type    = MslsContentTypes::create()->get_request();
 

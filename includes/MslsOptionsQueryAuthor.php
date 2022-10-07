@@ -18,9 +18,10 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	 * Check if the array has an non empty item which has $language as a key
 	 *
 	 * @param string $language
+	 *
 	 * @return bool
 	 */
-	public function has_value( $language ) {
+	public function has_value( string $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
 
@@ -35,11 +36,9 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	}
 
 	/**
-	 * Get current link
-	 *
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return get_author_posts_url( $this->get_arg( 0, 0 ) );
 	}
 
