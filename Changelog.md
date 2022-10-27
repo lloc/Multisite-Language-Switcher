@@ -1,3 +1,9 @@
+## 2.5.8
+
+* Avoid notice on Appearance > Widgets admin page
+* Language files reviewed
+* Legacy tests removed
+
 ## 2.5.7
 
 * Fix #192 MslsCustomColumn/MslsAdminIcon fatal error (props @nelgmo)
