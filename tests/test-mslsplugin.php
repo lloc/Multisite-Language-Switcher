@@ -11,7 +11,7 @@ use Mockery\Mock;
 
 class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 
-	function get_test() {
+	public function get_test() {
 		global $wpdb;
 
 		$wpdb = \Mockery::mock( \WPDB::class );
@@ -24,20 +24,20 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		return new MslsPlugin( $options );
 	}
 
-	function test_admin_menu() {
+	public function test_admin_menu() {
 		Functions\when( 'wp_enqueue_style' )->returnArg();
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 
 		$this->assertIsBool( $this->get_test()->admin_menu() );
 	}
 
-	function test_init_widget_true() {
+	public function test_init_widget_true() {
 		Functions\when( 'register_widget' )->justReturn( true );
 
 		$this->assertTrue( $this->get_test()->init_widget() );
 	}
 
-	function test_init_widget_false() {
+	public function test_init_widget_false() {
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
@@ -46,7 +46,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		$this->assertFalse( $plugin->init_widget() );
 	}
 
-	function test_block_render_empty() {
+	public function test_block_render_empty() {
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
@@ -55,7 +55,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		$this->assertEquals( '', $plugin->block_render() );
 	}
 
-	function test_block_render_output() {
+	public function test_block_render_output() {
 		$expected = 'Booh!';
 
 		Functions\when( 'register_widget' )->justReturn( true );
@@ -64,36 +64,49 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		$this->assertEquals( $expected, $this->get_test()->block_render() );
 	}
 
-	function test_init_i18n_support() {
+	public function test_init_i18n_support() {
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
 
 		$this->assertIsBool( $this->get_test()->init_i18n_support() );
 	}
 
-	function test_message_handler() {
+	public function test_message_handler() {
 		$this->expectOutputString( '<div id="msls-warning" class="error"><p>Test</p></div>' );
 		MslsPlugin::message_handler( 'Test' );
 	}
 
-	function test_uninstall() {
+	public function test_uninstall() {
 		Functions\when( 'delete_option' )->justReturn( false );
 
 		$this->assertFalse( $this->get_test()->uninstall() );
 	}
 
-	function test_cleanup_true() {
+	public function test_cleanup_true() {
 		Functions\when( 'delete_option' )->justReturn( true );
 
 		$this->assertTrue( $this->get_test()->uninstall() );
 	}
 
-	function test_activate() {
+	public function test_activate() {
 		$expected = 'register_unistall_hook called';
 
 		Functions\when( 'register_uninstall_hook' )->justEcho( $expected );
 
 		$this->expectOutputString( $expected );
 		MslsPlugin::activate();
+	}
+
+	public function test_admin_bar_init_hidden(): void {
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturn( false );
+
+		$this->assertFalse( $this->get_test()->admin_bar_init() );
+	}
+
+	public function test_admin_bar_init_shown(): void {
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturn( true );
+		Functions\expect( 'is_super_admin' )->once()->andReturn( true );
+
+		$this->assertTrue( $this->get_test()->admin_bar_init() );
 	}
 
 }
