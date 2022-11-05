@@ -3,11 +3,9 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
-
-use lloc\Msls\MslsOutput;
+use Brain\Monkey\Filters;
 use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsOptions;
-use Mockery\Mock;
 
 class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 
@@ -107,6 +105,73 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		Functions\expect( 'is_super_admin' )->once()->andReturn( true );
 
 		$this->assertTrue( $this->get_test()->admin_bar_init() );
+	}
+
+	public function test_block_init_excluded() {
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->andReturn( true );
+
+		$plugin = new MslsPlugin( $options );
+
+		$this->assertFalse( $plugin->block_init() );
+	}
+
+	public function test_block_init_not_excluded() {
+		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
+
+		Functions\expect( 'wp_register_script' )->once();
+		Functions\expect( 'register_block_type' )->once();
+		Functions\expect( 'add_shortcode' )->once();
+
+		$this->assertTrue( $this->get_test()->block_init() );
+	}
+
+	public function test_content_filter_front_page() {
+		Functions\expect( 'is_front_page' )->once()->andReturn( true );
+
+		$this->assertEquals( '', $this->get_test()->content_filter( '' ) );
+	}
+
+	public function test_content_filter_not_singular() {
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_singular' )->once()->andReturn( false );
+
+		$this->assertEquals( '', $this->get_test()->content_filter( '' ) );
+	}
+
+	public function test_content_filter_singular() {
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_singular' )->once()->andReturn( true );
+		Functions\expect( 'get_current_blog_id' )->andReturn( 1 );
+		Functions\expect( 'get_users' )->andReturn( [] );
+		Functions\expect( 'get_blogs_of_user' )->andReturn( [] );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_content_filter' )->andReturn( true );
+
+		$plugin = new MslsPlugin( $options );
+
+		$this->assertEquals( '', $plugin->content_filter( '' ) );
+	}
+
+	public function test_filter_string_has_filter() {
+		Functions\expect( 'get_current_blog_id' )->andReturn( 1 );
+		Functions\expect( 'get_users' )->andReturn( [] );
+		Functions\expect( 'get_blogs_of_user' )->andReturn( [] );
+		Functions\expect( 'has_filter' )->with( 'msls_filter_string' )->andReturn( true );
+
+		$this->get_test()->filter_string();
+
+		$this->assertTrue( Filters\applied( 'msls_filter_string' ) > 0 );
+	}
+
+	public function test_filter_string_no_filter() {
+		Functions\expect( 'get_current_blog_id' )->andReturn( 1 );
+		Functions\expect( 'get_users' )->andReturn( [] );
+		Functions\expect( 'get_blogs_of_user' )->andReturn( [] );
+		Functions\expect( 'has_filter' )->with( 'msls_filter_string' )->andReturn( false );
+
+		$this->assertEquals( '', $this->get_test()->filter_string() );
 	}
 
 }
