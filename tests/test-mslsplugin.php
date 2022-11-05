@@ -174,4 +174,19 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		$this->assertEquals( '', $this->get_test()->filter_string() );
 	}
 
+	public function test_adminbar() {
+		$adminbar = \Mockery::mock( \WP_Admin_Bar::class );
+
+		$this->assertEquals( 0, $this->get_test()->update_adminbar( $adminbar ) );
+	}
+
+	public function test_print_alternate_links() {
+		Functions\when( 'is_admin' )->justReturn( false );
+		Functions\when( 'is_front_page' )->justReturn( true );
+		Functions\when( 'get_option' )->justReturn( [] );
+
+		$this->expectOutputString( PHP_EOL );
+		$this->get_test()->print_alternate_links();
+	}
+
 }

@@ -119,19 +119,27 @@ class MslsPlugin {
 
 	/**
 	 * @param \WP_Admin_Bar $wp_admin_bar
+	 *
+	 * @return int
 	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
+	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): int {
+		$nodes_added = 0;
+
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
 			$title = '<div class="blavatar"></div>' . $blog->get_title();
 
 			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $title ] );
+			$nodes_added++;
 		}
 
 		$blog = $blog_collection->get_current_blog();
 		if ( is_object( $blog ) && method_exists( $blog, 'get_title' ) ) {
 			$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title() ] );
+			$nodes_added++;
 		}
+
+		return $nodes_added;
 	}
 
 	/**
