@@ -24,9 +24,9 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 
 		Functions\expect( 'wp_parse_args' )->once()->andReturn( $arr );
 		Functions\expect( 'get_option' )->andReturn( [] );
-		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
-		Functions\expect( 'get_blogs_of_user' )->once()->andReturn( [] );
-		Functions\expect( 'get_users' )->once()->andReturn( [] );
+		Functions\expect( 'get_current_blog_id' )->andReturn( 1 );
+		Functions\expect( 'get_blogs_of_user' )->andReturn( [] );
+		Functions\expect( 'get_users' )->andReturn( [] );
 
 		$obj = $this->get_sut();
 

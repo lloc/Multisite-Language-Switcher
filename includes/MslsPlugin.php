@@ -33,9 +33,9 @@ class MslsPlugin {
 	/**
 	 * Factory
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @return MslsPlugin
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public static function init() {
 		$options = MslsOptions::instance();
@@ -101,11 +101,13 @@ class MslsPlugin {
 	}
 
 	/**
-	 * Gets MslsOutput object
+	 * Gets MslsOutput instance
 	 *
 	 * @return MslsOutput
+	 *
+	 * @codeCoverageIgnore
 	 */
-	public static function get_output() {
+	public static function get_output(): MslsOutput {
 		static $obj = null;
 
 		if ( is_null( $obj ) ) {
@@ -116,26 +118,34 @@ class MslsPlugin {
 	}
 
 	/**
-	 * @param $wp_admin_bar
+	 * @param \WP_Admin_Bar $wp_admin_bar
+	 *
+	 * @return int
 	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
+	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): int {
+		$nodes_added = 0;
+
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
 			$title = '<div class="blavatar"></div>' . $blog->get_title();
 
 			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $title ] );
+			$nodes_added++;
 		}
 
 		$blog = $blog_collection->get_current_blog();
 		if ( is_object( $blog ) && method_exists( $blog, 'get_title' ) ) {
 			$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title() ] );
+			$nodes_added++;
 		}
+
+		return $nodes_added;
 	}
 
 	/**
 	 * Callback for action wp_head
 	 */
-	public static function print_alternate_links() {
+	public static function print_alternate_links(): void {
 		echo self::get_output()->get_alternate_links(), PHP_EOL;
 	}
 
@@ -146,7 +156,7 @@ class MslsPlugin {
 	 *
 	 * @return string
 	 */
-	function content_filter( $content ) {
+	function content_filter( string $content ): string {
 		if ( ! is_front_page() && is_singular() ) {
 			$options = $this->options;
 
@@ -159,17 +169,18 @@ class MslsPlugin {
 	}
 
 	/**
-	 * Create filterstring for msls_content_filter()
+	 * Create filter-string for msls_content_filter()
 	 *
 	 * @param string $pref
 	 * @param string $post
 	 *
 	 * @return string
 	 */
-	function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
+	function filter_string( string $pref = '<p id="msls">', string $post = '</p>' ): string {
 		$obj    = MslsOutput::init();
 		$links  = $obj->get( 1, true, true );
-		$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
+		$format = __( 'This post is also available in %s.', 'multisite-language-switcher' );
+		$output = '';
 
 		if ( has_filter( 'msls_filter_string' ) ) {
 			/**
@@ -180,14 +191,12 @@ class MslsPlugin {
 			 *
 			 * @since 1.0
 			 */
-			$output = apply_filters( 'msls_filter_string', $output, $links );
+			$output = apply_filters( 'msls_filter_string', $format, $links );
 		} else {
-			$output = '';
-
 			if ( count( $links ) > 1 ) {
 				$last   = array_pop( $links );
 				$output = sprintf(
-					$output,
+					$format,
 					sprintf(
 						__( '%s and %s', 'multisite-language-switcher' ),
 						implode( ', ', $links ),
@@ -195,10 +204,7 @@ class MslsPlugin {
 					)
 				);
 			} elseif ( 1 == count( $links ) ) {
-				$output = sprintf(
-					$output,
-					$links[0]
-				);
+				$output = sprintf( $format, $links[0] );
 			}
 		}
 
@@ -209,21 +215,21 @@ class MslsPlugin {
 	 * Register block and shortcode.
 	 * @return bool
 	 */
-	public function block_init() {
+	public function block_init(): bool {
 		if ( ! $this->options->is_excluded() ) {
 			$handle   = 'msls-widget-block';
 			$callback = [ $this, 'block_render' ];
 
 			global $pagenow;
-            		$toLoad = [ 'wp-blocks', 'wp-element', 'wp-components' ];
-            		if ( $pagenow === 'widgets.php' ) $toLoad[] = 'wp-edit-widgets';
-            		else $toLoad[] = 'wp-editor';
 
-            		wp_register_script(
-                		$handle,
-                		self::plugins_url( 'js/msls-widget-block.js' ),
-                		$toLoad
-            		);
+			$toLoad   = [ 'wp-blocks', 'wp-element', 'wp-components' ];
+			$toLoad[] = $pagenow === 'widgets.php' ? 'wp-edit-widgets' : 'wp-editor';
+
+			wp_register_script(
+				$handle,
+				self::plugins_url( 'js/msls-widget-block.js' ),
+				$toLoad
+			);
 
 			register_block_type( 'lloc/msls-widget-block', [
 				'attributes'      => [ 'title' => [ 'type' => 'string' ] ],
@@ -242,7 +248,7 @@ class MslsPlugin {
 	/**
 	 * @return bool
 	 */
-	public function admin_bar_init() {
+	public function admin_bar_init(): bool {
 		if ( is_admin_bar_showing() && is_super_admin() ) {
 			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
 
@@ -257,9 +263,9 @@ class MslsPlugin {
 	 *
 	 * The method returns true if JS is loaded or false if not
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public function admin_menu() {
+	public function admin_menu(): bool {
 		$ver     = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
 		$postfix = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
@@ -342,7 +348,7 @@ class MslsPlugin {
 	 *
 	 * @return string
 	 */
-	public function block_render() {
+	public function block_render(): string {
 		if ( ! $this->init_widget() ) {
 			return '';
 		}
@@ -360,9 +366,9 @@ class MslsPlugin {
 	 * The method should be executed always on init because we have some
 	 * translatable string in the frontend too.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public function init_i18n_support() {
+	public function init_i18n_support(): bool {
 		return load_plugin_textdomain( 'multisite-language-switcher', false, self::dirname( '/languages/' ) );
 	}
 
@@ -374,9 +380,9 @@ class MslsPlugin {
 	 * @param string $message
 	 * @param string $css_class
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public static function message_handler( $message, $css_class = 'error' ) {
+	public static function message_handler( string $message, string $css_class = 'error' ): bool {
 		if ( ! empty( $message ) ) {
 			printf( '<div id="msls-warning" class="%s"><p>%s</p></div>', $css_class, $message );
 
@@ -389,7 +395,7 @@ class MslsPlugin {
 	/**
 	 * Activate plugin
 	 */
-	public static function activate() {
+	public static function activate(): void {
 		register_uninstall_hook( self::file(), [ __CLASS__, 'uninstall' ] );
 	}
 
@@ -397,11 +403,11 @@ class MslsPlugin {
 	 * Uninstall plugin
 	 *
 	 * The plugin data in all blogs of the current network will be
-	 * deleted after the uninstall procedure.
+	 * deleted after the uninstallation procedure.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public static function uninstall() {
+	public static function uninstall(): bool {
 		/**
 		 * We want to be sure that the user has not deactivated the
 		 * multisite because we need to use switch_to_blog and
@@ -434,9 +440,9 @@ class MslsPlugin {
 	 * Removes all values of the current blogs which are stored in the
 	 * options-table and returns true if it was successful.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
-	public static function cleanup() {
+	public static function cleanup(): bool {
 		if ( delete_option( 'msls' ) ) {
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
 			$sql   = $cache->prepare(
@@ -453,11 +459,11 @@ class MslsPlugin {
 	/**
 	 * Get specific vars from $_POST and $_GET in a safe way
 	 *
-	 * @param array $list
+	 * @param array<string, mixed> $list
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
-	public static function get_superglobals( array $list ) {
+	public static function get_superglobals( array $list ): array {
 		$arr = [];
 
 		foreach ( $list as $var ) {
