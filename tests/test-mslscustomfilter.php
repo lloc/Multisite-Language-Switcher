@@ -13,7 +13,7 @@ class WP_Test_MslsCustomFilter extends Msls_UnitTestCase {
 		$options    = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
-		$collection->shouldReceive( 'get' )->once()->andReturn( [] );
+		$collection->shouldReceive( 'get' )->andReturn( [] );
 
 		$query      = \Mockery::mock( 'WP_Query' );
 
