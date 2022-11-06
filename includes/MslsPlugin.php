@@ -459,7 +459,7 @@ class MslsPlugin {
 	/**
 	 * Get specific vars from $_POST and $_GET in a safe way
 	 *
-	 * @param array<string, mixed> $list
+	 * @param string[] $list
 	 *
 	 * @return array<string, mixed>
 	 */
