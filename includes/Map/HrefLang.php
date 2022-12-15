@@ -11,7 +11,7 @@ use lloc\Msls\MslsBlogCollection;
 class HrefLang {
 
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected $map = [];
 

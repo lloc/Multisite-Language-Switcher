@@ -53,13 +53,10 @@ class MslsOptionsQuery extends MslsOptions {
 				get_queried_object_id()
 			);
 		}
-		elseif ( is_post_type_archive() ) {
-			return new MslsOptionsQueryPostType(
-				get_query_var( 'post_type' )
-			);
-		}
 
-		return null;
+		return new MslsOptionsQueryPostType(
+			get_query_var( 'post_type' )
+		);
 	}
 
 	/**
