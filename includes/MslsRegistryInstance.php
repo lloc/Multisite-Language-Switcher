@@ -17,7 +17,7 @@ class MslsRegistryInstance {
 	/**
 	 * Gets or creates an instance of the called class
 	 *
-	 * @return static
+	 * @return mixed
 	 */
 	public static function instance() {
 		$class = get_called_class();

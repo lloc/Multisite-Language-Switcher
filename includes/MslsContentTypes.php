@@ -21,7 +21,7 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 
 	/**
 	 * Types
-	 * @var array
+	 * @var array<string, mixed>
 	 */
 	protected $types = [];
 
@@ -32,7 +32,7 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 	 *
 	 * @return MslsContentTypes
 	 */
-	public static function create() {
+	public static function create(): MslsContentTypes {
 		$_request = MslsPlugin::get_superglobals( [ 'taxonomy' ] );
 
 		return '' != $_request['taxonomy'] ? MslsTaxonomy::instance() : MslsPostType::instance();
@@ -42,7 +42,7 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 	 * Check for post_type
 	 * @return bool
 	 */
-	public function is_post_type() {
+	public function is_post_type(): bool {
 		return false;
 	}
 
@@ -50,7 +50,7 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 	 * Check for taxonomy
 	 * @return bool
 	 */
-	public function is_taxonomy() {
+	public function is_taxonomy(): bool {
 		return false;
 	}
 
@@ -62,13 +62,14 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 	 *
 	 * @return string
 	 */
-	public function acl_request() {
+	public function acl_request(): string {
 		return '';
 	}
 
 	/**
 	 * Getter
-	 * @return array
+	 *
+	 * @return array<string,mixed>
 	 */
 	abstract public static function get(): array;
 

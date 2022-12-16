@@ -47,9 +47,10 @@ class MslsPostType extends MslsContentTypes {
 
 	/**
 	 * Check for post_type
+	 *
 	 * @return bool
 	 */
-	public function is_post_type() {
+	public function is_post_type(): bool {
 		return true;
 	}
 
