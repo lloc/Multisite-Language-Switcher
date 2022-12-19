@@ -10,7 +10,9 @@ namespace lloc\Msls;
 
 /**
  * Link type: Image and text
+ *
  * @package Msls
+ *
  * @property string $txt
  * @property string $src
  * @property string $alt
@@ -29,7 +31,7 @@ class MslsLink extends MslsGetSet {
 	 *
 	 * @return string[]
 	 */
-	public static function get_types() {
+	public static function get_types(): array {
 		return [
 			MslsLink::class,
 			MslsLinkTextOnly::class,
@@ -50,9 +52,9 @@ class MslsLink extends MslsGetSet {
 	/**
 	 * Gets an array with all link descriptions
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
-	public static function get_types_description() {
+	public static function get_types_description(): array {
 		$types = [];
 
 		foreach ( self::get_types() as $key => $class ) {
@@ -71,7 +73,7 @@ class MslsLink extends MslsGetSet {
 	 *
 	 * @return MslsLink
 	 */
-	public static function create( $display ) {
+	public static function create( int $display ): self {
 		if ( has_filter( 'msls_link_create' ) ) {
 			/**
 			 * Returns custom MslsLink-Object

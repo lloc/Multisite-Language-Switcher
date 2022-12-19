@@ -16,15 +16,16 @@ class MslsJson {
 
 	/**
 	 * Container
-	 * @var array
+	 *
+	 * @var array<int, array<string, int|string>>
 	 */
 	protected $arr = [];
 
 	/**
 	 * Adds a value label pair to the internal class container
 	 *
-	 * @param int $value
-	 * @param string $label
+	 * @param mixed $value
+	 * @param mixed $label
 	 *
 	 * @return MslsJson
 	 */
@@ -40,8 +41,8 @@ class MslsJson {
 	/**
 	 * Compare the item with the key "label" of the array $a and the array $b
 	 *
-	 * @param array $a
-	 * @param array $b
+	 * @param array<string, int|string> $a
+	 * @param array<string, int|string> $b
 	 *
 	 * @return int
 	 */
@@ -52,7 +53,7 @@ class MslsJson {
 	/**
 	 * Get the array container sorted by label
 	 *
-	 * @return array
+	 * @return array<int, array<string, int|string>>
 	 */
 	public function get(): array {
 		$arr = $this->arr;
