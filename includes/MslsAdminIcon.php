@@ -88,7 +88,7 @@ class MslsAdminIcon {
 	/**
 	 * @codeCoverageIgnore
 	 *
-	 * @param null $type
+	 * @param mixed $type
 	 *
 	 * @return MslsAdminIcon|MslsAdminIconTaxonomy
 	 */
@@ -108,11 +108,11 @@ class MslsAdminIcon {
 	/**
 	 * Set the icon path
 	 *
-	 * @param $iconType
+	 * @param string $iconType
 	 *
 	 * @return MslsAdminIcon
 	 */
-	public function set_icon_type( $iconType ): MslsAdminIcon {
+	public function set_icon_type( string $iconType ): MslsAdminIcon {
 		$this->iconType = $iconType;
 
 		return $this;
