@@ -63,9 +63,10 @@ class MslsOptionsQuery extends MslsOptions {
 	 * Get postlink
 	 *
 	 * @param string $language
+	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ) {
+	public function get_postlink( string $language ): string {
 		if ( $this->has_value( $language ) ) {
 			$link = $this->get_current_link();
 			if ( ! empty( $link ) ) {

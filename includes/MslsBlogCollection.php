@@ -172,7 +172,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @return string|null
 	 */
-	public function get_blog_id( $language ) {
+	public function get_blog_id( string $language ): ?string {
 		$blog    = $this->get_blog( $language );
 		$blog_id = ! is_null( $blog ) ? $blog->userblog_id : null;
 
@@ -296,9 +296,9 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @param string $fields
 	 * @param int|string $number
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
-	public function get_users( $fields = 'all', $number = '' ) {
+	public function get_users( string $fields = 'all', $number = '' ): array {
 		$args = [
 			'blog_id' => $this->current_blog_id,
 			'orderby' => 'registered',

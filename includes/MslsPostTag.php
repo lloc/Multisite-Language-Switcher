@@ -19,20 +19,20 @@ class MslsPostTag extends MslsMain {
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
-	public static function suggest() {
+	public static function suggest(): void {
 		$json = new MslsJson();
 
 		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
-			switch_to_blog(
-				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
-			);
+			$blog_id = filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT );
 
-			$args = array(
+			switch_to_blog( $blog_id );
+
+			$args = [
 				'orderby'    => 'name',
 				'order'      => 'ASC',
 				'number'     => 10,
-				'hide_empty' => 0,
-			);
+				'hide_empty' => false,
+			];
 
 			if ( filter_has_var( INPUT_POST, 's' ) ) {
 				$args['search'] = sanitize_text_field(
@@ -40,15 +40,20 @@ class MslsPostTag extends MslsMain {
 				);
 			}
 
+			if ( filter_has_var( INPUT_POST, 'post_type' ) ) {
+				$args['taxonomy'] = sanitize_text_field(
+					filter_input( INPUT_POST, 'post_type' )
+				);
+			}
+
 			/**
-			 * Overrides the query-args for the suggest fields
+			 * Overrides the query-args for the suggestion fields
 			 * @since 0.9.9
 			 * @param array $args
 			 */
 			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
 
-			foreach ( get_terms( sanitize_text_field( filter_input( INPUT_POST, 'post_type' ) ), $args ) as $term ) {
-
+			foreach ( get_terms( $args ) as $term ) {
 				/**
 				 * Manipulates the term object before using it
 				 * @since 0.9.9
@@ -60,6 +65,7 @@ class MslsPostTag extends MslsMain {
 					$json->add( $term->term_id, $term->name );
 				}
 			}
+
 			restore_current_blog();
 		}
 
@@ -100,7 +106,7 @@ class MslsPostTag extends MslsMain {
 	 *
 	 * @param \StdClass $tag
 	 */
-	public function add_input( $tag ) {
+	public function add_input( $tag ): void {
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
@@ -118,7 +124,7 @@ class MslsPostTag extends MslsMain {
 	 * Add the input fields to the edit-screen of the taxonomies
 	 * @param \StdClass $tag
 	 */
-	public function edit_input( $tag ) {
+	public function edit_input( $tag ): void {
 		$title_format = '<tr>
 			<th colspan="2">
 			<strong>%s</strong>
@@ -128,7 +134,7 @@ class MslsPostTag extends MslsMain {
 			</tr>';
 
 		$item_format = '<tr class="form-field">
-			<th scope="row" valign="top">
+			<th scope="row" vertical-align="top">
 			<label for="msls_title_%1$s">%2$s</label>
 			</th>
 			<td>
@@ -142,14 +148,18 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Print the input fields
-	 * Returns true if the blogcollection is not empty
-	 * @param \StdClass $tag
+	 *
+	 * Returns true if the blog collection is not empty
+	 *
+	 * @param mixed $tag
 	 * @param string $title_format
 	 * @param string $item_format
+	 *
 	 * @return boolean
 	 */
-	public function the_input( $tag, $title_format, $item_format ) {
+	public function the_input( $tag, string $title_format, string $item_format ): bool {
 		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
+
 		$blogs   = $this->collection->get();
 		if ( $blogs ) {
 			$my_data = MslsOptionsTax::create( $term_id );
@@ -202,9 +212,10 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Set calls the save method if taxonomy is set
 	 * @param int $term_id
- 	 * @codeCoverageIgnore
+	 *
+ 	 * @return void
 	 */
-	public function set( $term_id ) {
+	public function set( int $term_id ): void {
 		if ( MslsContentTypes::create()->acl_request() ) {
 			$this->save( $term_id, MslsOptionsTax::class );
 		}
@@ -217,26 +228,24 @@ class MslsPostTag extends MslsMain {
 	 *
 	 * @return MslsOptionsTax
 	 */
-	public function maybe_set_linked_term( MslsOptionsTax $mydata ) {
+	public function maybe_set_linked_term( MslsOptionsTax $mydata ): MslsOptionsTax {
 		if ( ! isset( $_GET['msls_id'], $_GET['msls_lang'] ) ) {
-			return $mydata;
-		}
-
-		$origin_lang = trim( $_GET['msls_lang'] );
-
-		if ( isset( $mydata->{$origin_lang} ) ) {
 			return $mydata;
 		}
 
 		$origin_term_id = (int) $_GET['msls_id'];
 
-		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
+		$origin_lang = trim( $_GET['msls_lang'] );
+		if ( isset( $mydata->{$origin_lang} ) ) {
+			return $mydata;
+		}
 
+		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
 		if ( null === $origin_blog_id ) {
 			return $mydata;
 		}
 
-		switch_to_blog( $origin_blog_id );
+		switch_to_blog( (int) $origin_blog_id );
 		$origin_term = get_term( $origin_term_id, $mydata->base );
 		restore_current_blog();
 

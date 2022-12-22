@@ -20,7 +20,7 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
 	 * @param string $language
 	 * @return bool
 	 */
-	public function has_value( $language ) {
+	public function has_value( $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
 
@@ -40,7 +40,7 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
 	 *
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return get_month_link( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ) );
 	}
 

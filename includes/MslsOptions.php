@@ -146,7 +146,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return mixed
 	 */
 	public function get_arg( $idx, $val = null ) {
-		$arg = isset( $this->args[ $idx ] ) ? $this->args[ $idx ] : $val;
+		$arg = $this->args[ $idx ] ?? $val;
 		settype( $arg, gettype( $val ) );
 
 		return $arg;
@@ -171,9 +171,12 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Delete
+	 *
 	 * @codeCoverageIgnore
+	 *
+	 * @return void
 	 */
-	public function delete() {
+	public function delete(): void {
 		$this->reset();
 		if ( $this->exists ) {
 			delete_option( $this->name );
@@ -216,7 +219,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_permalink( $language ) {
+	public function get_permalink( string $language ): string {
 		/**
 		 * Filters the url by language
 		 * @since 0.9.8
@@ -240,7 +243,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ) {
+	public function get_postlink( string $language ): string {
 		return '';
 	}
 
@@ -248,7 +251,7 @@ class MslsOptions extends MslsGetSet {
 	 * Get the queried taxonomy
 	 * @return string
 	 */
-	public function get_tax_query() {
+	public function get_tax_query(): string {
 		return '';
 	}
 
@@ -256,7 +259,7 @@ class MslsOptions extends MslsGetSet {
 	 * Get current link
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return home_url( '/' );
 	}
 
@@ -264,7 +267,7 @@ class MslsOptions extends MslsGetSet {
 	 * Is excluded
 	 * @return bool
 	 */
-	public function is_excluded() {
+	public function is_excluded(): bool {
 		return isset( $this->exclude_current_blog );
 	}
 
@@ -272,7 +275,7 @@ class MslsOptions extends MslsGetSet {
 	 * Is content
 	 * @return bool
 	 */
-	public function is_content_filter() {
+	public function is_content_filter(): bool {
 		return isset( $this->content_filter );
 	}
 
@@ -280,7 +283,7 @@ class MslsOptions extends MslsGetSet {
 	 * Get order
 	 * @return string
 	 */
-	public function get_order() {
+	public function get_order(): string {
 		return  isset( $this->sort_by_description ) ? 'description' : 'language';
 	}
 
@@ -291,22 +294,23 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_url( $dir ) {
+	public function get_url( string $dir ): string {
 		return esc_url( MslsPlugin::plugins_url( $dir ) );
 	}
 
 	/**
 	 * Returns slug for a post type
+	 *
 	 * @param string $post_type
 	 *
 	 * @return string
 	 */
-	public function get_slug( $post_type ) {
+	public function get_slug( string $post_type ): string {
 		$key = "rewrite_{$post_type}";
 
 		error_log( $key );
 		
-		return isset( $this->$key ) ? $this->$key : '';
+		return $this->$key ?? '';
 	}
 
 	/**
@@ -314,7 +318,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_icon( $language ) {
+	public function get_icon( string $language ): string {
 		return ( new IconPng() )->get( $language );
 	}
 
@@ -325,7 +329,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public function get_flag_url( $language ) {
+	public function get_flag_url( string $language ): string {
 		if ( ! is_admin() && isset( $this->image_url ) ) {
 			$url = $this->__get( 'image_url' );
 		} else {
@@ -359,9 +363,10 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @uses get_available_languages
 	 * @uses format_code_lang
-	 * @return array
+	 *
+	 * @return array<string, string>
 	 */
-	public function get_available_languages() {
+	public function get_available_languages(): array {
 		if ( empty( $this->available_languages ) ) {
 			$this->available_languages = [
 				'en_US' => __( 'American English', 'multisite-language-switcher' ),

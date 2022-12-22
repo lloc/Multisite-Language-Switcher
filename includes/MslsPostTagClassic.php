@@ -98,12 +98,13 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * Print the input fields
 	 * Returns true if the blogcollection is not empty
 	 *
-	 * @param \StdClass $tag
+	 * @param mixed $tag
 	 * @param string $title_format
 	 * @param string $item_format
+	 *
 	 * @return boolean
 	 */
-	public function the_input( $tag, $title_format, $item_format ) {
+	public function the_input( $tag, string $title_format, string $item_format ): bool {
 		$blogs = $this->collection->get();
 
 		if ( ! empty( $blogs ) ) {

@@ -82,7 +82,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * Checks if the array has an non empty item with the specified key name.
 	 *
 	 * This is method is similar to the overloaded __isset-method since
-	 * __set cleans empty properties but I use for example
+	 * __set cleans empty properties, but I use for example
 	 *
 	 *     $obj->has_value( $temp )
 	 *
@@ -90,7 +90,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 *
 	 *     isset( $obj->$temp )
 	 *
-	 * which is the same but in my opinion a little bit ugly.
+	 * which is the same but in my opinion a bit ugly.
 	 *
 	 * @param string $key
 	 * @return bool

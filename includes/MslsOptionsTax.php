@@ -72,7 +72,7 @@ class MslsOptionsTax extends MslsOptions {
 	 * Get the queried taxonomy
 	 * @return string
 	 */
-    public function get_tax_query() {
+    public function get_tax_query(): string {
         global $wp_query;
 
         if ( function_exists('is_woocommerce' ) ) {
@@ -93,7 +93,7 @@ class MslsOptionsTax extends MslsOptions {
 	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ) {
+	public function get_postlink( $language ): string {
 		$url = '';
 
 		if ( $this->has_value( $language ) ) {
@@ -107,7 +107,7 @@ class MslsOptionsTax extends MslsOptions {
 	 * Get current link
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return $this->get_term_link( $this->get_arg( 0, 0 ) );
 	}
 
@@ -118,7 +118,7 @@ class MslsOptionsTax extends MslsOptions {
 	 *
 	 * @return string
 	 */
-	public function get_term_link( $term_id ) {
+	public function get_term_link( $term_id ): string {
 		if ( ! empty( $term_id ) ) {
 			$taxonomy = $this->get_tax_query();
 			if ( ! empty( $taxonomy ) ) {

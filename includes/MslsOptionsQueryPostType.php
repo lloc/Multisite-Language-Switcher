@@ -15,12 +15,12 @@ namespace lloc\Msls;
 class MslsOptionsQueryPostType extends MslsOptionsQuery {
 
 	/**
-	 * Check if the array has an non empty item which has $language as a key
+	 * Check if the array has a non-empty item which has $language as a key
 	 *
 	 * @param string $language
 	 * @return bool
 	 */
-	public function has_value( $language ) {
+	public function has_value( $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
 			$this->arr[ $language ] = get_post_type_object( $this->get_arg( 0, '' ) );
 		}
@@ -32,7 +32,7 @@ class MslsOptionsQueryPostType extends MslsOptionsQuery {
 	 *
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return (string) get_post_type_archive_link( $this->get_arg( 0, '' ) );
 	}
 
