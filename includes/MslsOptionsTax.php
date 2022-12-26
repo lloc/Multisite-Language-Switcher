@@ -75,10 +75,8 @@ class MslsOptionsTax extends MslsOptions {
     public function get_tax_query(): string {
         global $wp_query;
 
-        if ( function_exists('is_woocommerce' ) ) {
-            if ( is_woocommerce() && isset( $wp_query->tax_query->queries[1]['taxonomy'] ) ) {
-                    return $wp_query->tax_query->queries[1]['taxonomy'];
-            }
+        if ( function_exists('is_woocommerce' ) && is_woocommerce() && isset( $wp_query->tax_query->queries[1]['taxonomy'] ) ) {
+            return $wp_query->tax_query->queries[1]['taxonomy'];
         } elseif ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
             return $wp_query->tax_query->queries[0]['taxonomy'];
         }
@@ -93,7 +91,7 @@ class MslsOptionsTax extends MslsOptions {
 	 *
 	 * @return string
 	 */
-	public function get_postlink( $language ): string {
+	public function get_postlink( string $language ): string {
 		$url = '';
 
 		if ( $this->has_value( $language ) ) {

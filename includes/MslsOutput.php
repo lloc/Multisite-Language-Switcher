@@ -17,7 +17,8 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Holds the format for the output
-	 * @var array $tags
+	 *
+	 * @var array<string, string> $tags
 	 */
 	protected $tags;
 
@@ -28,9 +29,7 @@ class MslsOutput extends MslsMain {
 	 * @param bool $filter
 	 * @param bool $exists
 	 *
-	 * @return array
-	 * @uses MslsLink
-	 * @uses MslsOptions
+	 * @return string[]
 	 */
 	public function get( $display, $filter = false, $exists = false ) {
 		$arr = [];
@@ -153,9 +152,10 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Gets tags for the output
-	 * @return array
+	 *
+	 * @return array<string, string>
 	 */
-	public function get_tags() {
+	public function get_tags(): array {
 		if ( empty( $this->tags ) ) {
 			$this->tags = [
 				'before_item'   => $this->options->before_item,
@@ -181,11 +181,11 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Sets tags for the output
 	 *
-	 * @param array $arr
+	 * @param array<string, string> $arr
 	 *
 	 * @return MslsOutput
 	 */
-	public function set_tags( array $arr = [] ) {
+	public function set_tags( array $arr = [] ): MslsOutput {
 		$this->tags = wp_parse_args( $this->get_tags(), $arr );
 
 		return $this;

@@ -159,7 +159,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function save( $arr ) {
+	public function save( $arr ): void {
 		$this->delete();
 		if ( $this->set( $arr ) ) {
 			$arr = $this->get_arr();
