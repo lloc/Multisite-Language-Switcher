@@ -10,21 +10,22 @@ namespace lloc\Msls;
 /**
  * Handling of existing/not existing translations in the backend 
  * listings of various taxonomies
+ *
  * @package Msls
  */
-class MslsCustomColumnTaxonomy extends MslsCustomColumn {
+class MslsCustomColumnTaxonomy extends MslsCustomColumn implements HookInterface {
 
 	/**
 	 * Factory
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @return MslsCustomColumnTaxonomy
+	 * @return HookInterface
 	 */
-	public static function init() {
+	public static function init(): HookInterface {
 		$options    = MslsOptions::instance();
 		$collection = MslsBlogCollection::instance();
-		$obj        = new static( $options, $collection );
+		$obj        = new self( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			$taxonomy = MslsTaxonomy::instance()->get_request();
@@ -45,8 +46,10 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @param string $deprecated
 	 * @param string $column_name
 	 * @param int $item_id
+	 *
+	 * @return void
 	 */
-	public function column_default( $deprecated, $column_name, $item_id ) {
+	public function column_default( string $deprecated, string $column_name, int $item_id ): void {
 		$this->td( $column_name, $item_id );
 	}
 
@@ -56,8 +59,10 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @codeCoverageIgnore
 	 *
 	 * @param int $object_id
+	 *
+	 * @return void
 	 */
-	public function delete( $object_id ) {
+	public function delete( $object_id ): void {
 		$this->save( $object_id, MslsOptionsTax::class );
 	}
 

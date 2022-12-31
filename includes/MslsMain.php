@@ -12,7 +12,7 @@ namespace lloc\Msls;
  *
  * @package Msls
  */
-class MslsMain {
+class MslsMain implements HookInterface {
 
 	/**
 	 * Instance of options
@@ -34,7 +34,7 @@ class MslsMain {
 	 * @param MslsOptions $options
 	 * @param MslsBlogCollection $collection
 	 */
-	public function __construct( MslsOptions $options, MslsBlogCollection $collection ) {
+	final public function __construct( MslsOptions $options, MslsBlogCollection $collection ) {
 		$this->options    = $options;
 		$this->collection = $collection;
 	}
@@ -44,9 +44,9 @@ class MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @return static
+	 * @return HookInterface
 	 */
-	public static function init() {
+	public static function init(): HookInterface {
 		$options    = MslsOptions::instance();
 		$collection = MslsBlogCollection::instance();
 
@@ -57,8 +57,10 @@ class MslsMain {
 	 * Prints a message in the error log if WP_DEBUG is true
 	 *
 	 * @param mixed $message
+	 *
+	 * @return void
 	 */
-	public function debugger( $message ) {
+	public function debugger( $message ): void {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				$message = print_r( $message, true );
@@ -72,9 +74,9 @@ class MslsMain {
 	 *
 	 * @param int $object_id
 	 *
-	 * @return array
+	 * @return array<string, int>
 	 */
-	public function get_input_array( $object_id ) {
+	public function get_input_array( $object_id ): array {
 		$arr = [];
 
 		$current_blog = $this->collection->get_current_blog();
@@ -99,12 +101,12 @@ class MslsMain {
 
 	/**
 	 * Prepare input key/value-pair
-	 * @param $key
-	 * @param $value
+	 * @param string $key
+	 * @param mixed $value
 	 *
-	 * @return array
+	 * @return array<string|int>
 	 */
-	protected function get_input_value( $key, $value ) {
+	protected function get_input_value( $key, $value ): array {
 		if ( false === strpos( $key, 'msls_input_' ) || empty( $value ) ) {
 			return [ '', 0 ];
 		}
@@ -119,7 +121,7 @@ class MslsMain {
 	 *
 	 * @return bool
 	 */
-	public function is_autosave( $post_id ) {
+	public function is_autosave( int $post_id ): bool {
 		return ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id );
 	}
 
@@ -128,7 +130,7 @@ class MslsMain {
 	 *
 	 * @return boolean
 	 */
-	public function verify_nonce() {
+	public function verify_nonce(): bool {
 		return (
 			filter_has_var( INPUT_POST, 'msls_noncename' ) &&
 			wp_verify_nonce( filter_input( INPUT_POST, 'msls_noncename' ), MslsPlugin::path() )
@@ -142,7 +144,7 @@ class MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function delete( $object_id ) {
+	public function delete( int $object_id ): void {
 		$this->save( $object_id, MslsOptionsPost::class );
 	}
 
@@ -152,16 +154,18 @@ class MslsMain {
 	 * @param int $object_id
 	 * @param string $class
 	 *
+	 * @return void
+	 *
 	 * @codeCoverageIgnore
 	 */
-	protected function save( $object_id, $class ) {
+	protected function save( int $object_id, string $class ): void {
 		if ( has_action( 'msls_main_save' ) ) {
 			/**
 			 * Calls completely customized save-routine
 			 * @since 0.9.9
 			 *
 			 * @param int $object_id
-			 * @param string Classname
+			 * @param string $class Classname
 			 */
 			do_action( 'msls_main_save', $object_id, $class );
 

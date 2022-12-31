@@ -12,19 +12,19 @@ namespace lloc\Msls;
  * Adding custom filter to posts/pages table.
  * @package Msls
  */
-class MslsCustomFilter extends MslsMain {
+class MslsCustomFilter extends MslsMain implements HookInterface {
 
 	/**
 	 * Init
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @return MslsCustomFilter
+	 * @return HookInterface
 	 */
-	public static function init() {
+	public static function init(): HookInterface {
 		$options    = MslsOptions::instance();
 		$collection = MslsBlogCollection::instance();
-		$obj        = new static( $options, $collection );
+		$obj        = new self( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();

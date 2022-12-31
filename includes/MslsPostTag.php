@@ -14,6 +14,35 @@ namespace lloc\Msls;
 class MslsPostTag extends MslsMain {
 
 	/**
+	 * Init
+	 *
+	 * @codeCoverageIgnore
+	 *
+	 * @return MslsPostTag
+	 */
+	public static function init(): HookInterface {
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+
+		if ( $options->activate_autocomplete	) {
+			$obj = new self( $options, $collection );
+		}
+		else {
+			$obj = new MslsPostTagClassic( $options, $collection );
+		}
+
+		$taxonomy = MslsContentTypes::create()->acl_request();
+		if ( '' != $taxonomy ) {
+			add_action( "{$taxonomy}_add_form_fields",  [ $obj, 'add_input' ] );
+			add_action( "{$taxonomy}_edit_form_fields", [ $obj, 'edit_input' ] );
+			add_action( "edited_{$taxonomy}", [ $obj, 'set' ] );
+			add_action( "create_{$taxonomy}", [ $obj, 'set' ] );
+		}
+
+		return $obj;
+	}
+
+	/**
 	 * Suggest
 	 *
 	 * Echo a JSON-ified array of posts of the given post-type and
@@ -70,35 +99,6 @@ class MslsPostTag extends MslsMain {
 		}
 
 		wp_die( $json->encode() );
-	}
-
-	/**
-	 * Init
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @return MslsPostTag
-	 */
-	public static function init() {
-		$options    = MslsOptions::instance();
-		$collection = MslsBlogCollection::instance();
-
-		if ( $options->activate_autocomplete	) {
-			$obj = new static( $options, $collection );
-		}
-		else {
-			$obj = new MslsPostTagClassic( $options, $collection );
-		}
-
-		$taxonomy = MslsContentTypes::create()->acl_request();
-		if ( '' != $taxonomy ) {
-			add_action( "{$taxonomy}_add_form_fields",  [ $obj, 'add_input' ] );
-			add_action( "{$taxonomy}_edit_form_fields", [ $obj, 'edit_input' ] );
-			add_action( "edited_{$taxonomy}", [ $obj, 'set' ] );
-			add_action( "create_{$taxonomy}", [ $obj, 'set' ] );
-		}
-
-		return $obj;
 	}
 
 	/**

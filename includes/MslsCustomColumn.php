@@ -8,23 +8,23 @@
 namespace lloc\Msls;
 
 /**
- * Handling of existing/not existing translations in the backend listings of
- * various post types
+ * Handling of existing/not existing translations in the backend listings of various post types
+ *
  * @package Msls
  */
-class MslsCustomColumn extends MslsMain {
+class MslsCustomColumn extends MslsMain implements HookInterface {
 
 	/**
 	 * Factory
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @return MslsCustomColumn
+	 * @return HookInterface
 	 */
-	public static function init() {
+	public static function init(): HookInterface {
 		$options    = MslsOptions::instance();
 		$collection = MslsBlogCollection::instance();
-		$obj        = new static( $options, $collection );
+		$obj        = new self( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
@@ -41,13 +41,17 @@ class MslsCustomColumn extends MslsMain {
 
 	/**
 	 * Table header
-	 * @param array $columns
-	 * @return array
+	 *
+	 * @param array<string, string> $columns
+	 *
+	 * @return array<string, string>
 	 */
-	public function th( $columns ) {
+	public function th( array $columns ): array {
 		$blogs = $this->collection->get();
+
 		if ( $blogs ) {
 			$arr = [];
+
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
 
@@ -61,6 +65,7 @@ class MslsCustomColumn extends MslsMain {
 
 				$arr[] = $icon->get_icon();
 			}
+
 			$columns['mslscol'] = implode( '&nbsp;', $arr );
 		}
 
@@ -73,10 +78,12 @@ class MslsCustomColumn extends MslsMain {
 	 * @param string $column_name
 	 * @param int $item_id
 	 *
+	 * @return void
+	 *
 	 * @codeCoverageIgnore
 	 */
-	public function td( $column_name, $item_id ) {
-		if ( 'mslscol' == $column_name ) {
+	public function td( string $column_name, int $item_id ): void {
+		if ( 'mslscol' === $column_name ) {
 			$blogs           = $this->collection->get();
 			$origin_language = MslsBlogCollection::get_blog_language();
 			if ( $blogs ) {

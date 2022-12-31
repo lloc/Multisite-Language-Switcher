@@ -13,7 +13,28 @@ use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
  * Meta box for the edit mode of the (custom) post types
  * @package Msls
  */
-class MslsMetaBox extends MslsMain {
+class MslsMetaBox extends MslsMain implements HookInterface {
+
+	/**
+	 * Init
+	 *
+	 * @codeCoverageIgnore
+	 *
+	 * @return HookInterface
+	 */
+	public static function init(): HookInterface {
+		$options    = MslsOptions::instance();
+		$collection = MslsBlogCollection::instance();
+		$obj        = new self( $options, $collection );
+
+		if ( ! $options->is_excluded() ) {
+			add_action( 'add_meta_boxes', [ $obj, 'add' ] );
+			add_action( 'save_post', [ $obj, 'set' ] );
+			add_action( 'trashed_post', [ $obj, 'delete' ] );
+		}
+
+		return $obj;
+	}
 
 	/**
 	 * Suggest
@@ -21,7 +42,7 @@ class MslsMetaBox extends MslsMain {
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
-	public static function suggest() {
+	public static function suggest(): void {
 		$json = new MslsJson;
 
 		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
@@ -60,7 +81,7 @@ class MslsMetaBox extends MslsMain {
 	 */
 	public static function get_suggested_fields( $json, $args ) {
 		/**
-		 * Overrides the query-args for the suggest fields in the MetaBox
+		 * Overrides the query-args for suggest fields in MetaBox
 		 *
 		 * @param array $args
 		 *
@@ -92,27 +113,6 @@ class MslsMetaBox extends MslsMain {
 		restore_current_blog();
 
 		return $json;
-	}
-
-	/**
-	 * Init
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @return MslsMetaBox
-	 */
-	public static function init() {
-		$options    = MslsOptions::instance();
-		$collection = MslsBlogCollection::instance();
-		$obj        = new static( $options, $collection );
-
-		if ( ! $options->is_excluded() ) {
-			add_action( 'add_meta_boxes', [ $obj, 'add' ] );
-			add_action( 'save_post', [ $obj, 'set' ] );
-			add_action( 'trashed_post', [ $obj, 'delete' ] );
-		}
-
-		return $obj;
 	}
 
 	/**

@@ -17,6 +17,9 @@ class WP_Test_MslsCustomColumnTaxonomy extends Msls_UnitTestCase {
 		$obj = new MslsCustomColumnTaxonomy( $options, $collection );
 
 		$this->assertEmpty( $obj->th( [] ) );
+
+		$this->expectOutputString( '' );
+		$obj->column_default( '', 'test', 1 );
 	}
 
 }

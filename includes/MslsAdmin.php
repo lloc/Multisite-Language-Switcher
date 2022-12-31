@@ -13,7 +13,7 @@ use lloc\Msls\Component\Input\Select;
  *
  * @package Msls
  */
-class MslsAdmin extends MslsMain {
+class MslsAdmin extends MslsMain implements HookInterface {
 
 	public const MAX_REFERENCE_USERS = 100;
 
@@ -22,14 +22,14 @@ class MslsAdmin extends MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @return MslsAdmin
+	 * @return HookInterface
 	 */
-	public static function init() {
+	public static function init(): HookInterface {
 		if ( ! ( $obj = MslsRegistry::get_object( __CLASS__ ) ) ) {
 			$options    = MslsOptions::instance();
 			$collection = MslsBlogCollection::instance();
 
-			$obj = new static( $options, $collection );
+			$obj = new self( $options, $collection );
 
 			MslsRegistry::set_object( __CLASS__, $obj );
 

@@ -11,6 +11,7 @@ use lloc\Msls\Map\HrefLang;
 
 /**
  * Output in the frontend
+ *
  * @package Msls
  */
 class MslsOutput extends MslsMain {
