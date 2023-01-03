@@ -11,7 +11,9 @@ use lloc\Msls\Component\Icon\IconPng;
 
 /**
  * General options class
+ *
  * @package Msls
+ *
  * @property bool $activate_autocomplete
  * @property int $display
  * @property int $reference_user
@@ -26,50 +28,41 @@ use lloc\Msls\Component\Icon\IconPng;
 class MslsOptions extends MslsGetSet {
 
 	/**
-	 * Args
-	 * @var array
+	 * @var array<int, mixed>
 	 */
 	protected $args;
 
 	/**
-	 * Name
 	 * @var string
 	 */
 	protected $name;
 
 	/**
-	 * Exists
 	 * @var bool
 	 */
 	protected $exists = false;
 
 	/**
-	 * Separator
 	 * @var string
 	 */
 	protected $sep = '';
 
 	/**
-	 * Autoload
 	 * @var string
 	 */
 	protected $autoload = 'yes';
 
 	/**
-	 * Available languages
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private $available_languages;
 
 	/**
-	 * Rewrite with front
 	 * @var bool
 	 */
 	public $with_front;
 
 	/**
-	 * Factory method
-	 *
 	 * @codeCoverageIgnore
 	 *
 	 * @param int $id
@@ -137,7 +130,8 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Gets an element of arg by index
-	 * The returning value is casted to the type of $retval or will be the
+	 *
+	 * The returning value is cast to the type of $retval or will be the
 	 * value of $retval if nothing is set at this index.
 	 *
 	 * @param int $idx

@@ -1,26 +1,20 @@
 <?php
-/**
- * MslsOptionsTax
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
  * Taxonomy options
+ *
  * @package Msls
  */
 class MslsOptionsTax extends MslsOptions {
 
 	/**
-	 * Separator
 	 * @var string
 	 */
 	protected $sep = '_term_';
 
 	/**
-	 * Autoload
 	 * @var string
 	 */
 	protected $autoload = 'no';

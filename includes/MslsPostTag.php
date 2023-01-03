@@ -122,6 +122,7 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
+	 *
 	 * @param \StdClass $tag
 	 */
 	public function edit_input( $tag ): void {
