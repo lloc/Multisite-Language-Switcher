@@ -1,14 +1,10 @@
 <?php
-/**
- * MslsContentTypes
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
  * Supported content types
+ *
  * @package Msls
  */
 abstract class MslsContentTypes extends MslsRegistryInstance {

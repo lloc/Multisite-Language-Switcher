@@ -27,7 +27,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	/**
 	 * Check and correct URL
 	 *
-	 * @param string $url
+	 * @param mixed $url
 	 * @param MslsOptionsTaxTerm $options
 	 * @return string
 	 */

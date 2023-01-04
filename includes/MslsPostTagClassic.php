@@ -15,16 +15,12 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
-	 * @param \StdClass $tag
+	 *
+	 * @param mixed $tag
 	 */
 	public function add_input( $tag ): void {
 		$title_format = '<h3>%s</h3>';
-
-		$item_format = '<label for="msls_input_%1$s">%2$s</label>
-			<select class="msls-translations" name="msls_input_%1$s">
-			<option value=""></option>
-			%3$s
-			</select>';
+		$item_format  = '<label for="msls_input_%1$s">%2$s</label><select class="msls-translations" name="msls_input_%1$s"><option value=""></option>%3$s</select>';
 
 		echo '<div class="form-field">';
 		$this->the_input( $tag, $title_format, $item_format );
@@ -33,24 +29,12 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
-	 * @param \StdClass $tag
+	 *
+	 * @param mixed $tag
 	 */
 	public function edit_input( $tag ): void {
-		$title_format = '<tr>
-			<th colspan="2">
-			<strong>%s</strong>
-			</th>
-			</tr>';
-
-		$item_format = '<tr class="form-field">
-			<th scope="row" valign="top">
-			<label for="msls_input_%1$s">%2$s</label></th>
-			<td>
-			<select class="msls-translations" name="msls_input_%1$s">
-			<option value=""></option>
-			%3$s
-			</select></td>
-			</tr>';
+		$title_format = '<tr><th colspan="2"><strong>%s</strong></th></tr>';
+		$item_format  = '<tr class="form-field"><th scope="row" vertical-align="top"><label for="msls_input_%1$s">%2$s</label></th><td><select class="msls-translations" name="msls_input_%1$s"><option value=""></option>%3$s</select></td></tr>';
 
 		$this->the_input( $tag, $title_format, $item_format );
 	}
@@ -96,7 +80,8 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Print the input fields
-	 * Returns true if the blogcollection is not empty
+	 *
+	 * Returns true if the blog-collection is not empty, false otherwise
 	 *
 	 * @param mixed $tag
 	 * @param string $title_format
@@ -107,28 +92,28 @@ class MslsPostTagClassic extends MslsPostTag {
 	public function the_input( $tag, string $title_format, string $item_format ): bool {
 		$blogs = $this->collection->get();
 
-		if ( ! empty( $blogs ) ) {
-			$term_id = is_object( $tag ) ? $tag->term_id : 0;
-			$mydata  = MslsOptionsTax::create( $term_id );
-			$type    = MslsContentTypes::create()->get_request();
-
-			$this->maybe_set_linked_term( $mydata );
-
-			printf(
-				$title_format,
-				apply_filters(
-					'msls_term_select_title',
-					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
-				)
-			);
-
-			foreach ( $blogs as $blog ) {
-				$this->print_option( $blog, $type, $mydata, $item_format );
-			}
-
-			return true;
+		if ( empty( $blogs ) ) {
+			return false;
 		}
 
-		return false;
+		$term_id = $tag->term_id ?? 0;
+		$mydata  = MslsOptionsTax::create( $term_id );
+		$type    = MslsContentTypes::create()->get_request();
+
+		$this->maybe_set_linked_term( $mydata );
+
+		printf(
+			$title_format,
+			apply_filters(
+				'msls_term_select_title',
+				__( 'Multisite Language Switcher', 'multisite-language-switcher' )
+			)
+		);
+
+		foreach ( $blogs as $blog ) {
+			$this->print_option( $blog, $type, $mydata, $item_format );
+		}
+
+		return true;
 	}
 }
