@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsOptions
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -25,7 +20,7 @@ use lloc\Msls\Component\Icon\IconPng;
  * @property string $before_output
  * @property string $after_output
  */
-class MslsOptions extends MslsGetSet {
+class MslsOptions extends MslsGetSet implements OptionsInterface {
 
 	/**
 	 * @var array<int, mixed>
@@ -251,6 +246,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Get current link
+	 *
 	 * @return string
 	 */
 	public function get_current_link(): string {

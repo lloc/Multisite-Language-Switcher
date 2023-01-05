@@ -34,7 +34,7 @@ class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 			'get_admin_url' => '/admin_url',
 		] );
 
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 
 		$map = [ 'de_DE', 'en_US' ];
 

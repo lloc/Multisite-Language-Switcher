@@ -13,18 +13,21 @@ class MslsBlog {
 
 	/**
 	 * WordPress generates such an object
+	 *
 	 * @var \StdClass
 	 */
 	private $obj;
 
 	/**
 	 * Language-code eg. de_DE
+	 *
 	 * @var string
 	 */
 	private $language;
 
 	/**
 	 * Description eg. Deutsch
+	 *
 	 * @var string
 	 */
 	private $description;
@@ -32,11 +35,11 @@ class MslsBlog {
 	/**
 	 * Constructor
 	 *
-	 * @param \StdClass $obj
-	 * @param string $description
+	 * @param ?\stdClass $obj
+	 * @param ?string $description
 	 */
-	public function __construct( $obj, $description ) {
-		if ( is_object( $obj ) ) {
+	public function __construct( ?\stdClass $obj, ?string $description ) {
+		if ( ! is_null( $obj ) ) {
 			$this->obj      = $obj;
 			$this->language = MslsBlogCollection::get_blog_language( $this->obj->userblog_id );
 		}
@@ -83,7 +86,7 @@ class MslsBlog {
 	 *
 	 * @return string
 	 */
-	public function get_language( $default = 'en_US' ) {
+	public function get_language( string $default = 'en_US' ): string {
 		return empty( $this->language ) ? $default : $this->language;
 	}
 
@@ -92,44 +95,44 @@ class MslsBlog {
 	 *
 	 * @return string
 	 */
-	public function get_alpha2() {
+	public function get_alpha2(): string {
 		$language = $this->get_language();
 
 		return substr( $language, 0, 2 );
 	}
 
 	/**
-	 * @param MslsOptions $options
+	 * @param mixed $options
 	 *
-	 * @return string|null
+	 * @return ?string
 	 */
 	public function get_url( $options ) {
 		if ( $this->obj->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() ) {
-			return $options->get_current_link();
+			return $options instanceof OptionsInterface ? $options->get_current_link() : null;
 		}
 
 		return $this->get_permalink( $options );
 	}
 
 	/**
-	 * @param MslsOptions $options
+	 * @param mixed $options
 	 *
-	 * @return string|null
+	 * @return ?string
 	 */
 	protected function get_permalink( $options ) {
-		$url = null;
+		if ( $options instanceof OptionsInterface ) {
+			$is_home = is_front_page();
 
-		$is_home = is_front_page();
+			switch_to_blog( $this->obj->userblog_id );
 
-		switch_to_blog( $this->obj->userblog_id );
+			if ( $is_home || $options->has_value( $this->get_language() ) ) {
+				$url = (string) apply_filters( 'msls_blog_get_permalink', $options->get_permalink( $this->get_language() ), $this );
+			}
 
-		if ( is_object( $options ) && method_exists( $options, 'has_value' ) && ( $is_home || $options->has_value( $this->get_language() ) ) ) {
-			$url = apply_filters( 'mlsl_blog_get_permalink', $options->get_permalink( $this->get_language() ), $this );
+			restore_current_blog();
 		}
 
-		restore_current_blog();
-
-		return $url;
+		return $url ?? null;
 	}
 
 	/**

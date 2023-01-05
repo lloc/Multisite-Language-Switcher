@@ -175,17 +175,22 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	}
 
 	public function test_adminbar() {
-		$adminbar = \Mockery::mock( \WP_Admin_Bar::class );
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+		Functions\expect( 'get_blog_option' )->once()->andReturn( [] );
 
-		$this->assertEquals( 0, $this->get_test()->update_adminbar( $adminbar ) );
+		$adminbar = \Mockery::mock( \WP_Admin_Bar::class );
+		$adminbar->shouldReceive( 'add_node' );
+
+		$this->assertEquals( 1, $this->get_test()->update_adminbar( $adminbar ) );
 	}
 
 	public function test_print_alternate_links() {
-		Functions\when( 'is_admin' )->justReturn( false );
-		Functions\when( 'is_front_page' )->justReturn( true );
-		Functions\when( 'get_option' )->justReturn( [] );
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( true );
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
+		Functions\expect( 'home_url' )->once()->andReturn( '/home_url' );
 
-		$this->expectOutputString( PHP_EOL );
+		$this->expectOutputString( '<link rel="alternate" hreflang="x-default" href="/home_url" title="1" />' . PHP_EOL );
 		$this->get_test()->print_alternate_links();
 	}
 
