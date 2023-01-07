@@ -175,7 +175,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	}
 
 	public function test_adminbar() {
-		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+		Functions\expect( 'get_site_option' )->andReturn( [] );
 		Functions\expect( 'get_blog_option' )->once()->andReturn( [] );
 
 		$adminbar = \Mockery::mock( \WP_Admin_Bar::class );

@@ -7,6 +7,11 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Settings\ActiveSidewidePlugins;
+use lloc\Msls\Settings\BlogActivePlugins;
+use lloc\Msls\Settings\BlogLanguage;
+use lloc\Msls\Settings\BlogDescription;
+
 /**
  * Collection of blog-objects
  *
@@ -40,9 +45,10 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * Active plugins in the whole network
-	 * @var array
+	 *
+	 * @var ?bool
 	 */
-	private $active_plugins;
+	private $active_sidewide = null;
 
 	/**
 	 * Container for hreflang-mapping
@@ -95,6 +101,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 					$this->objects[ $blog->userblog_id ] = new MslsBlog( $blog, $description );
 				}
 			}
+
 			uasort( $this->objects, [ MslsBlog::class, $this->objects_order ] );
 		}
 	}
@@ -103,21 +110,13 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * Returns the description of an configured blog or false if it is not configured
 	 *
 	 * @param int $blog_id
+	 *
 	 * @param string|bool $description
 	 *
 	 * @return string|bool
 	 */
 	public static function get_configured_blog_description( $blog_id, $description = false ) {
-		if ( false != $description ) {
-			return $description;
-		}
-
-		$temp = get_blog_option( $blog_id, 'msls' );
-		if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
-			return $temp['description'];
-		}
-
-		return false;
+		return false !== $description ? $description : ( new BlogDescription( $blog_id ) )->get();
 	}
 
 	/**
@@ -150,9 +149,9 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @param string $language
 	 *
-	 * @return MslsBlog|null
+	 * @return ?MslsBlog
 	 */
-	public function get_blog( $language ) {
+	public function get_blog( string $language ) {
 		$blog = null;
 
 		foreach ( $this->get_objects() as $item ) {
@@ -226,39 +225,27 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	/**
 	 * Is plugin active in the blog with that blog_id
 	 *
-	 * @param int $blog_id
+	 * @param MslsBlog $blog
 	 *
 	 * @return bool
 	 */
-	public function is_plugin_active( $blog_id ) {
-		if ( ! is_array( $this->active_plugins ) ) {
-			$this->active_plugins = get_site_option( 'active_sitewide_plugins', [] );
-		}
-
+	public function is_plugin_active( MslsBlog $blog ): bool {
 		$path = MslsPlugin::path();
-		if ( isset( $this->active_plugins[ $path ] ) ) {
-			return true;
+
+		if ( is_null( $this->active_sidewide ) ) {
+			$this->active_sidewide = ( new ActiveSidewidePlugins() )->is_active( $path );
 		}
 
-		$plugins = get_blog_option( $blog_id, 'active_plugins', [] );
-
-		return in_array( $path, $plugins );
+		return $this->active_sidewide || ( new BlogActivePlugins( $blog->userblog_id ) )->is_active( $path );
 	}
 
 	/**
 	 * Gets only blogs where the plugin is active
-	 * @return array
+	 *
+	 * @return MslsBlog[]
 	 */
-	public function get_plugin_active_blogs() {
-		$arr = [];
-
-		foreach ( $this->get_objects() as $blog ) {
-			if ( $this->is_plugin_active( $blog->userblog_id ) ) {
-				$arr[] = $blog;
-			}
-		}
-
-		return $arr;
+	public function get_plugin_active_blogs(): array {
+		return array_filter( $this->get_objects(), [ $this, 'is_plugin_active' ] );
 	}
 
 	/**
@@ -282,12 +269,8 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @return MslsBlog[]
 	 */
-	public function get_filtered( $filter = false ) {
-		if ( ! $filter && $this->current_blog_output ) {
-			return $this->get_objects();
-		}
-
-		return $this->get();
+	public function get_filtered( bool $filter = false ): array {
+		return ! $filter && $this->current_blog_output  ? $this->get_objects() : $this->get();
 	}
 
 	/**
@@ -315,19 +298,13 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	/**
 	 * Returns a specific blog language.
 	 *
-	 * @param int $blog_id
-	 * @param string $default
+	 * @param ?int $blog_id
+	 * @param string $fallback
 	 *
 	 * @return string
 	 */
-	public static function get_blog_language( $blog_id = null, $default = 'en_US' ) {
-		if ( null === $blog_id ) {
-			$blog_id = get_current_blog_id();
-		}
-
-		$language = ( string ) get_blog_option( $blog_id, 'WPLANG' );
-
-		return '' !== $language ? $language : $default;
+	public static function get_blog_language( ?int $blog_id = null, string $fallback = 'en_US' ) {
+		return ( new BlogLanguage( $blog_id ?? get_current_blog_id() ) )->get( $fallback );
 	}
 
 }

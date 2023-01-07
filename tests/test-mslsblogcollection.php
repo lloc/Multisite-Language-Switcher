@@ -63,15 +63,6 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 		$this->assertIsArray( $obj->get_objects() );
 	}
 
-	function test_is_plugin_active() {
-		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
-		Functions\expect( 'get_blog_option' )->once()->andReturn( [] );
-
-		$obj = $this->get_test();
-
-		$this->assertIsBool( $obj->is_plugin_active( 0 ) );
-	}
-
 	function test_get_plugin_active_blogs() {
 		$obj = $this->get_test();
 

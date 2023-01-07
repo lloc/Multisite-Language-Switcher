@@ -2,6 +2,7 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Settings\PermalinkStructure;
 use lloc\Msls\Component\Icon\IconPng;
 
 /**
@@ -246,7 +247,6 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 
 	/**
 	 * Get current link
-	 *
 	 * @return string
 	 */
 	public function get_current_link(): string {
@@ -389,7 +389,7 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	 *
 	 * @return string
 	 */
-	public static function check_for_blog_slug( $url, $options ) {
+	public static function check_for_blog_slug( $url, $options ): string {
 		if ( empty( $url ) || ! is_string( $url ) ) {
 			return '';
 		}
@@ -399,21 +399,9 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 			return $url;
 		}
 
-		$count = 1;
-		$url   = str_replace( home_url(), '', $url, $count );
-
 		global $current_site;
-		$permalink_structure = get_blog_option( $current_site->blog_id, 'permalink_structure' );
-		if ( $permalink_structure ) {
-			list( $needle, ) = explode( '/%', $permalink_structure, 2 );
 
-			$url = str_replace( $needle, '', $url );
-			if ( is_main_site() && $options->with_front ) {
-				$url = "{$needle}{$url}";
-			}
-		}
-
-		return home_url( $url );
+		return ( new PermalinkStructure( $current_site->blog_id ) )->get_home_url( $url, $options->with_front );
 	}
 
 }
