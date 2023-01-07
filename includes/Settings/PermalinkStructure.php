@@ -23,16 +23,18 @@ class PermalinkStructure extends BlogOption {
 	 * @return string
 	 */
 	public function get_home_url( string $url, bool $with_front = false ): string {
+		if ( ! $this->option ) {
+			return $url;
+		}
+
 		$count = 1;
 		$url   = str_replace( home_url(), '', $url, $count );
 
-		if ( $this->option ) {
-			list( $needle, ) = explode( '/%', $this->option, 2 );
+		list( $needle, ) = explode( '/%', $this->option, 2 );
 
-			$url = str_replace( $needle, '', $url );
-			if ( is_main_site() && $with_front ) {
-				$url = "{$needle}{$url}";
-			}
+		$url = str_replace( $needle, '', $url );
+		if ( is_main_site() && $with_front ) {
+			$url = "{$needle}{$url}";
 		}
 
 		return home_url( $url );
