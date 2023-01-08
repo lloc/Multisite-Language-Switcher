@@ -5,6 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 
 use lloc\Msls\MslsOptions;
+use stdClass;
 
 class WP_Test_MslsOptions extends Msls_UnitTestCase {
 
@@ -61,7 +62,7 @@ class WP_Test_MslsOptions extends Msls_UnitTestCase {
 		$this->assertFalse( $obj->set( 1 ) );
 		$this->assertFalse( $obj->set( 1.1 ) );
 		$this->assertFalse( $obj->set( null ) );
-		$this->assertFalse( $obj->set( new \stdClass() ) );
+		$this->assertFalse( $obj->set( new stdClass() ) );
 	}
 
 	function test_get_permalink_method() {

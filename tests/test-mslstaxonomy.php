@@ -6,6 +6,8 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsTaxonomy;
 use lloc\Msls\MslsOptions;
+use Mockery;
+use stdClass;
 
 class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 
@@ -24,13 +26,13 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_acl_request_included() {
-		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
+		$mock = Mockery::mock( 'overload:' . MslsOptions::class );
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnFalse();
 
-		$cap = new \stdClass();
+		$cap = new stdClass();
 		$cap->manage_terms = 'manage_categories';
-		$taxonomy = new \stdClass();
+		$taxonomy = new stdClass();
 		$taxonomy->cap = $cap;
 
 		Functions\when('get_taxonomy' )->justReturn( $taxonomy );
@@ -44,7 +46,7 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_acl_request_excluded() {
-		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
+		$mock = Mockery::mock( 'overload:' . MslsOptions::class );
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnTrue();
 
@@ -68,7 +70,7 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_get_request() {
-		$plugin = \Mockery::mock( 'alias:' . MslsPlugin::class );
+		$plugin = Mockery::mock( 'alias:' . MslsPlugin::class );
 		$plugin->shouldReceive( 'get_superglobals' )->andReturn( [ 'taxonomy' => 'abc' ] );
 
 		$this->assertEquals( 'abc', $this->get_test()->get_request() );

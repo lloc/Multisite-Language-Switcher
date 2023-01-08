@@ -3,6 +3,7 @@
 namespace lloc\Msls\ContentImport;
 
 use lloc\Msls\MslsRegistryInstance;
+use WP_Post;
 
 class AttachmentPathFinder extends MslsRegistryInstance {
 
@@ -71,12 +72,12 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 	 * @param int $attachment_id
 	 * @param array $msls_imported
 	 *
-	 * @return \WP_Post|false
+	 * @return WP_Post|false
 	 */
 	protected function get_source_post( $attachment_id, $msls_imported ) {
 		$source_post = get_blog_post( $msls_imported['blog'], $msls_imported['post'] );
 
-		if ( empty( $source_post ) || ! $source_post instanceof \WP_Post ) {
+		if ( empty( $source_post ) || ! $source_post instanceof WP_Post ) {
 			delete_post_meta( $attachment_id, self::LINKED );
 
 			return false;

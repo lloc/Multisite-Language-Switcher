@@ -5,6 +5,9 @@ namespace lloc\Msls\ContentImport\Importers\Terms;
 use lloc\Msls\ContentImport\Importers\BaseImporter;
 use lloc\Msls\MslsOptionsTax;
 use lloc\Msls\MslsOptionsTaxTerm;
+use stdClass;
+use WP_Error;
+use WP_Term;
 
 /**
  * Class ShallowDuplicating
@@ -25,7 +28,7 @@ class ShallowDuplicating extends BaseImporter {
 	/**
 	 * Returns an array of information about the importer.
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public static function info() {
 		return (object) [
@@ -52,7 +55,7 @@ class ShallowDuplicating extends BaseImporter {
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
-		/** @var \WP_Term $term */
+		/** @var WP_Term $term */
 		foreach ( $source_terms as $term ) {
 			// is there a translation for the term in this blog?
 			$msls_term    = $msls_terms[ $term->term_id ];
@@ -80,7 +83,7 @@ class ShallowDuplicating extends BaseImporter {
 				$added = $this->update_object_terms( $dest_post_id, $dest_term_id, $term->taxonomy );
 			}
 
-			if ( $added instanceof \WP_Error ) {
+			if ( $added instanceof WP_Error ) {
 				$this->logger->log_error( "term/added/{$term->taxonomy}", array( $term->name => $term->term_id ) );
 			} else {
 				$this->logger->log_success( "term/added/{$term->taxonomy}", array( $term->name => $term->term_id ) );
@@ -92,11 +95,11 @@ class ShallowDuplicating extends BaseImporter {
 		return $data;
 	}
 
-	protected function create_local_term( \WP_Term $term, MslsOptionsTax $msls_term, $dest_lang ) {
+	protected function create_local_term( WP_Term $term, MslsOptionsTax $msls_term, $dest_lang ) {
 		$meta         = get_term_meta( $term->term_id );
 		$dest_term_id = wp_create_term( $term->name, $term->taxonomy );
 
-		if ( $dest_term_id instanceof \WP_Error ) {
+		if ( $dest_term_id instanceof WP_Error ) {
 			$this->logger->log_error( "term/created/{$term->taxonomy}", [ $term->name ] );
 
 			return false;
@@ -115,12 +118,12 @@ class ShallowDuplicating extends BaseImporter {
 		return $dest_term_id;
 	}
 
-	protected function filter_term_meta( array $meta, \WP_Term $term ) {
+	protected function filter_term_meta( array $meta, WP_Term $term ) {
 		/**
 		 * Filters the list of term meta that should not be imported for a term.
 		 *
 		 * @param array $blacklist
-		 * @param \WP_Term $term
+		 * @param WP_Term $term
 		 * @param array $meta
 		 * @param ImportCoordinates $import_coordinates
 		 */

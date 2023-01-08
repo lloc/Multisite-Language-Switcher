@@ -8,6 +8,8 @@
 
 namespace lloc\Msls;
 
+use WP_Query;
+
 /**
  * Adding custom filter to posts/pages table.
  * @package Msls
@@ -67,11 +69,11 @@ class MslsCustomFilter extends MslsMain implements HookInterface {
 	/**
 	 * Executes filter, excludes translated posts from WP_Query
 	 *
-	 * @param \WP_Query $query
+	 * @param WP_Query $query
 	 *
-	 * @return bool|\WP_Query
+	 * @return bool|WP_Query
 	 */
-	public function execute_filter( \WP_Query $query ) {
+	public function execute_filter( WP_Query $query ) {
 		$blogs = $this->collection->get();
 
 		if ( ! filter_has_var( INPUT_GET, 'msls_filter' ) ) {

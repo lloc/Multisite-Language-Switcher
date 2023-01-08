@@ -6,6 +6,8 @@ use lloc\Msls\MslsPostTag;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
 use Brain\Monkey\Functions;
+use Mockery;
+use stdClass;
 
 /**
  * WP_Test_MslsPostTag
@@ -15,8 +17,8 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 	function get_test() {
 		Functions\when( 'get_option' )->justReturn( [] );
 
-		$options    = \Mockery::mock( MslsOptions::class );
-		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$options    = Mockery::mock( MslsOptions::class );
+		$collection = Mockery::mock( MslsBlogCollection::class );
 
 		$collection->shouldReceive( 'get' )->once()->andReturn( [] );
 
@@ -38,7 +40,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 	function test_the_input_method() {
 		$obj = $this->get_test();
 
-		$tag = new \stdClass;
+		$tag = new stdClass;
 		$tag->term_id = 1;
 
 		$this->assertIsBool( $obj->the_input( $tag, 'test', 'test' ) );

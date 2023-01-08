@@ -30,6 +30,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsOptions;
+
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require __DIR__ . '/vendor/autoload.php';
 }
@@ -91,7 +94,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return string
 	 */
 	function get_msls_flag_url( string $locale ): string {
-		return ( new \lloc\Msls\MslsOptions )->get_flag_url( $locale );
+		return ( new MslsOptions )->get_flag_url( $locale );
 	}
 
 	/**
@@ -102,7 +105,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return string
 	 */
 	function get_msls_blog_description( string $locale ): string {
-		$blog = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
+		$blog = MslsBlogCollection::instance()->get_blog( $locale );
 
 		return $blog->get_description();
 	}
@@ -115,8 +118,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return string
 	 */
 	function get_msls_permalink( $locale ) {
-		$options = \lloc\Msls\MslsOptions::create();
-		$blog    = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
+		$options = MslsOptions::create();
+		$blog    = MslsBlogCollection::instance()->get_blog( $locale );
 
 		return $blog->get_url( $options );
 	}

@@ -4,6 +4,8 @@ namespace lloc\Msls\ContentImport\Importers\PostThumbnail;
 
 use lloc\Msls\ContentImport\AttachmentPathFinder;
 use lloc\Msls\ContentImport\Importers\BaseImporter;
+use stdClass;
+use WP_Post;
 
 /**
  * Class Linking
@@ -19,7 +21,7 @@ class Linking extends BaseImporter {
 	/**
 	 * Returns an array of information about the importer.
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public static function info() {
 		return (object) [
@@ -38,7 +40,7 @@ class Linking extends BaseImporter {
 
 		$source_post_thumbnail_id         = (int) get_post_thumbnail_id( $source_post_id );
 		$source_post_thumbnail_attachment = get_post( $source_post_thumbnail_id );
-		$source_post_thumbnail_meta       = $source_post_thumbnail_attachment instanceof \WP_Post ?
+		$source_post_thumbnail_meta       = $source_post_thumbnail_attachment instanceof WP_Post ?
 			$this->get_attachment_meta( $source_post_thumbnail_id )
 			: false;
 
@@ -52,7 +54,7 @@ class Linking extends BaseImporter {
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
-		if ( $source_post_thumbnail_attachment instanceof \WP_Post ) {
+		if ( $source_post_thumbnail_attachment instanceof WP_Post ) {
 			// in some instances the folder sep. `/` might be duplicated, we de-duplicate it
 			array_walk( $source_upload_dir, function ( &$entry ) {
 				$entry = str_replace( '//', '/', $entry );
@@ -79,7 +81,7 @@ class Linking extends BaseImporter {
 
 			$found             = get_posts( $existing_criteria );
 
-			if ( $found && $found[0] instanceof \WP_Post ) {
+			if ( $found && $found[0] instanceof WP_Post ) {
 				$dest_post_thumbnail_id = $found[0]->ID;
 				$this->logger->log_success( 'post-thumbnail/existing', $dest_post_thumbnail_id );
 			} else {

@@ -4,6 +4,7 @@ namespace lloc\Msls\ContentImport\Importers\PostFields;
 
 use lloc\Msls\ContentImport\Importers\BaseImporter;
 use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;
+use stdClass;
 
 /**
  * Class Duplicating
@@ -20,7 +21,7 @@ class Duplicating extends BaseImporter {
 	/**
 	 * Returns an array of information about the importer.
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public static function info() {
 		return (object) [

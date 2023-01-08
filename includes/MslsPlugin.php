@@ -7,6 +7,9 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\ContentImport\Service;
+use WP_Admin_Bar;
+
 /**
  * Provides functionalities for general hooks and activation/deactivation
  *
@@ -59,7 +62,7 @@ class MslsPlugin {
 
 			add_action( 'init', [ $obj, 'admin_bar_init' ] );
 
-			\lloc\Msls\ContentImport\Service::instance()->register();
+			Service::instance()->register();
 
 			if ( is_admin() ) {
 				add_action( 'admin_menu', [ $obj, 'admin_menu' ] );
@@ -118,11 +121,11 @@ class MslsPlugin {
 	}
 
 	/**
-	 * @param \WP_Admin_Bar $wp_admin_bar
+	 * @param WP_Admin_Bar $wp_admin_bar
 	 *
 	 * @return int
 	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): int {
+	public static function update_adminbar( WP_Admin_Bar $wp_admin_bar ): int {
 		$nodes_added = 0;
 
 		$blog_collection = MslsBlogCollection::instance();

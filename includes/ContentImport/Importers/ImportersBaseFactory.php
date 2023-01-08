@@ -4,6 +4,8 @@ namespace lloc\Msls\ContentImport\Importers;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\MslsRegistryInstance;
+use RuntimeException;
+use stdClass;
 
 abstract class ImportersBaseFactory extends MslsRegistryInstance implements ImportersFactory {
 
@@ -24,7 +26,7 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 	public function make( ImportCoordinates $import_coordinates ) {
 		if ( static::TYPE === self::TYPE ) {
 			// this is a developer-land exception, no need to localize it
-			throw new \RuntimeException( 'Importers factories should define their own type' );
+			throw new RuntimeException( 'Importers factories should define their own type' );
 		}
 
 		$type = static::TYPE;
@@ -66,7 +68,7 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 	/**
 	 * Returns the factory details.
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public function details() {
 		return (object) [

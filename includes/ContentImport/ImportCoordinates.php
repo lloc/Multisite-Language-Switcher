@@ -3,6 +3,7 @@
 namespace lloc\Msls\ContentImport;
 
 use lloc\Msls\MslsBlogCollection;
+use WP_Post;
 
 class ImportCoordinates {
 
@@ -26,7 +27,7 @@ class ImportCoordinates {
 	public $dest_post_id;
 
 	/**
-	 * @var \WP_Post
+	 * @var WP_Post
 	 */
 	public $source_post;
 
@@ -58,7 +59,7 @@ class ImportCoordinates {
 		if ( ! get_blog_post( $this->dest_blog_id, $this->dest_post_id ) ) {
 			return false;
 		}
-		if ( ! $this->source_post instanceof \WP_Post ) {
+		if ( ! $this->source_post instanceof WP_Post ) {
 			return false;
 		}
 

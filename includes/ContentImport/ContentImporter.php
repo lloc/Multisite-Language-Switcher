@@ -9,6 +9,7 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMain;
 use lloc\Msls\MslsOptionsPost;
 use lloc\Msls\MslsRegistryInstance;
+use WP_Post;
 
 /**
  * Class ContentImporter
@@ -47,35 +48,35 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * ContentImporter constructor.
 	 *
-	 * @param \lloc\Msls\MslsMain|null $main
+	 * @param MslsMain|null $main
 	 */
 	public function __construct( MslsMain $main = null ) {
 		$this->main = $main ?: MslsMain::init();
 	}
 
 	/**
-	 * @return \lloc\Msls\ContentImport\ImportLogger
+	 * @return ImportLogger
 	 */
 	public function get_logger() {
 		return $this->logger;
 	}
 
 	/**
-	 * @param \lloc\Msls\ContentImport\ImportLogger $logger
+	 * @param ImportLogger $logger
 	 */
 	public function set_logger( $logger ) {
 		$this->logger = $logger;
 	}
 
 	/**
-	 * @return \lloc\Msls\ContentImport\Relations
+	 * @return Relations
 	 */
 	public function get_relations() {
 		return $this->relations;
 	}
 
 	/**
-	 * @param \lloc\Msls\ContentImport\Relations $relations
+	 * @param Relations $relations
 	 */
 	public function set_relations( $relations ) {
 		$this->relations = $relations;
@@ -113,7 +114,7 @@ class ContentImporter extends MslsRegistryInstance {
 		$source_post = get_post( $source_post_id );
 		restore_current_blog();
 
-		if ( ! $source_post instanceof \WP_Post ) {
+		if ( ! $source_post instanceof WP_Post ) {
 			return $data;
 		}
 

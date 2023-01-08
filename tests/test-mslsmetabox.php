@@ -6,6 +6,7 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMetaBox;
 use lloc\Msls\MslsOptions;
 use Brain\Monkey\Functions;
+use Mockery;
 
 /**
  * WP_Test_MslsMetaBox
@@ -13,8 +14,8 @@ use Brain\Monkey\Functions;
 class WP_Test_MslsMetaBox extends Msls_UnitTestCase {
 
 	function get_test() {
-		$options    = \Mockery::mock( MslsOptions::class );
-		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$options    = Mockery::mock( MslsOptions::class );
+		$collection = Mockery::mock( MslsBlogCollection::class );
 
 		return new MslsMetaBox( $options, $collection );
 	}

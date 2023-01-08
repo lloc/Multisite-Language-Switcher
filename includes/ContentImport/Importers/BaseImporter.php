@@ -5,6 +5,7 @@ namespace lloc\Msls\ContentImport\Importers;
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\ImportLogger;
 use lloc\Msls\ContentImport\Relations;
+use stdClass;
 
 class BaseImporter implements Importer {
 
@@ -70,9 +71,9 @@ class BaseImporter implements Importer {
 	/**
 	 * Returns an array of information about the importer.
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public static function info() {
-		return new \stdClass();
+		return new stdClass();
 	}
 }

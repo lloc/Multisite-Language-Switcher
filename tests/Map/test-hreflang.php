@@ -8,6 +8,7 @@ use Brain\Monkey\Filters;
 use lloc\Msls\Map\HrefLang;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
+use Mockery;
 
 class WP_Test_HrefLang extends Msls_UnitTestCase {
 
@@ -23,7 +24,7 @@ class WP_Test_HrefLang extends Msls_UnitTestCase {
 		];
 
 		foreach ( $map as $locale => $alpha2 ) {
-			$blog = \Mockery::mock( MslsBlog::class );
+			$blog = Mockery::mock( MslsBlog::class );
 			$blog->shouldReceive( [
 				'get_alpha2'   => $alpha2,
 				'get_language' => $locale,
@@ -32,7 +33,7 @@ class WP_Test_HrefLang extends Msls_UnitTestCase {
 			$blogs[] = $blog;
 		}
 
-		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection = Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
 
 		return new HrefLang( $collection );

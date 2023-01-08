@@ -8,6 +8,8 @@
 
 namespace lloc\Msls;
 
+use wpdb;
+
 /**
  * Wrapper to avoid direct SQL without caching
  *
@@ -50,10 +52,10 @@ class MslsSqlCacher {
 	/**
 	 * Constructor
 	 *
-	 * @param \wpdb $db
+	 * @param wpdb $db
 	 * @param string $caller
 	 */
-	public function __construct( \wpdb $db, string $caller ) {
+	public function __construct( wpdb $db, string $caller ) {
 		$this->db     = $db;
 		$this->caller = $caller;
 	}

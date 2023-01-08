@@ -3,6 +3,7 @@
 namespace lloc\Msls\ContentImport\Importers\Attachments;
 
 use lloc\Msls\ContentImport\Importers\BaseImporter;
+use stdClass;
 
 /**
  * Class Linking
@@ -18,7 +19,7 @@ class Linking extends BaseImporter {
 	/**
 	 * Returns an array of information about the importer.
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public static function info() {
 		return (object) [

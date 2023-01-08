@@ -7,6 +7,8 @@
 
 namespace lloc\Msls;
 
+use DateTime;
+
 /**
  * OptionsQueryDay
  *
@@ -22,7 +24,7 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 */
 	public function has_value( $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			$date  = new \DateTime();
+			$date  = new DateTime();
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
 
 			$this->arr[ $language ] = $cache->get_var(

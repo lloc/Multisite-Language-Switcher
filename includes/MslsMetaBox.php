@@ -8,6 +8,8 @@
 namespace lloc\Msls;
 
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
+use WP_Post;
+use WP_Query;
 
 /**
  * Meta box for the edit mode of the (custom) post types
@@ -90,14 +92,14 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 		 */
 		$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
 
-		$my_query = new \WP_Query( $args );
+		$my_query = new WP_Query( $args );
 		while ( $my_query->have_posts() ) {
 			$my_query->the_post();
 
 			/**
 			 * Manipulates the WP_Post object before using it
 			 *
-			 * @param \WP_Post $post
+			 * @param WP_Post $post
 			 *
 			 * @since 0.9.9
 			 *
@@ -253,7 +255,7 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 	public function render_options( $type, $msls_id ) {
 		$options = [];
 
-		$my_query = new \WP_Query( [
+		$my_query = new WP_Query( [
 			'post_type'      => $type,
 			'post_status'    => get_post_stati( [ 'internal' => '' ] ),
 			'orderby'        => 'title',
@@ -404,7 +406,7 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 		$origin_post = get_post( $origin_post_id );
 		restore_current_blog();
 
-		if ( ! $origin_post instanceof \WP_Post ) {
+		if ( ! $origin_post instanceof WP_Post ) {
 			return $mydata;
 		}
 

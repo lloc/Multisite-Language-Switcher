@@ -6,6 +6,7 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
 
 use Brain\Monkey\Functions;
+use Mockery;
 
 /**
  * WP_Test_MslsBlogCollection
@@ -37,7 +38,7 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	}
 
 	function test_get_blogs_of_reference_user() {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'has_value' )->andReturn( true );
 
 		$obj = $this->get_test();

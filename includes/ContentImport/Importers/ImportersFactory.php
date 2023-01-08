@@ -9,7 +9,7 @@ interface ImportersFactory {
 	/**
 	 * Builds the Importer that should be used depending on the import coordinates.
 	 *
-	 * @param \lloc\Msls\ContentImport\ImportCoordinates $import_coordinates
+	 * @param ImportCoordinates $import_coordinates
 	 *
 	 * @return Importer
 	 */

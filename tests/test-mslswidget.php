@@ -5,13 +5,14 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 
 use lloc\Msls\MslsWidget;
+use Mockery;
 
 class WP_Test_MslsWidget extends Msls_UnitTestCase {
 
 	public function get_sut() {
-		\Mockery::mock( '\WP_Widget' );
+		Mockery::mock( '\WP_Widget' );
 
-		return \Mockery::mock( MslsWidget::class )->makePartial();
+		return Mockery::mock( MslsWidget::class )->makePartial();
 	}
 
 	function test_widget_method() {

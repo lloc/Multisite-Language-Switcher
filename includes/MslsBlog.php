@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use stdClass;
+
 /**
  * Internal representation of a blog
  *
@@ -14,7 +16,7 @@ class MslsBlog {
 	/**
 	 * WordPress generates such an object
 	 *
-	 * @var \StdClass
+	 * @var StdClass
 	 */
 	private $obj;
 
@@ -35,10 +37,10 @@ class MslsBlog {
 	/**
 	 * Constructor
 	 *
-	 * @param ?\stdClass $obj
+	 * @param ?stdClass $obj
 	 * @param ?string $description
 	 */
-	public function __construct( ?\stdClass $obj, ?string $description ) {
+	public function __construct( ?stdClass $obj, ?string $description ) {
 		if ( ! is_null( $obj ) ) {
 			$this->obj      = $obj;
 			$this->language = MslsBlogCollection::get_blog_language( $this->obj->userblog_id );

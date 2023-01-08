@@ -4,6 +4,7 @@ namespace lloc\MslsTests;
 
 use lloc\Msls\MslsAdminIcon;
 use Brain\Monkey\Functions;
+use Mockery;
 
 class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 
@@ -22,7 +23,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 	}
 
 	public function get_post( $post_type, $id = 0 ) {
-		$post = \Mockery::mock( '\WP_Post' );
+		$post = Mockery::mock( '\WP_Post' );
 		$post->ID = $id;
 		$post->post_type = $post_type;
 		$post->post_author = $this->get_user();
@@ -31,7 +32,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 	}
 
 	public function get_user() {
-		$user = \Mockery::mock( '\WP_User' );
+		$user = Mockery::mock( '\WP_User' );
 		$user->ID   = 1;
 		$user->role = 'editor';
 

@@ -7,18 +7,19 @@ use lloc\Msls\MslsMain;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
 use Brain\Monkey\Functions;
+use Mockery;
 
 class WP_Test_MslsMain extends Msls_UnitTestCase {
 
 	public function get_sut() {
 		Functions\when( 'get_options' )->justReturn( [] );
 
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options    = Mockery::mock( MslsOptions::class );
 
-		$blog = \Mockery::mock( MslsBlog::class );
+		$blog = Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 
-		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection = Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blog );
 
 		return new MslsMain( $options, $collection );

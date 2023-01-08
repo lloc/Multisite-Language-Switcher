@@ -7,11 +7,13 @@
 
 namespace lloc\Msls;
 
+use WP_Widget;
+
 /**
  * The standard widget of the Multisite Language Switcher
  * @package Msls
  */
-class MslsWidget extends \WP_Widget {
+class MslsWidget extends WP_Widget {
 
 	public $id_base = 'mslswidget';
 

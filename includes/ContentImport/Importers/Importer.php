@@ -4,6 +4,7 @@ namespace lloc\Msls\ContentImport\Importers;
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\ImportLogger;
 use lloc\Msls\ContentImport\Relations;
+use stdClass;
 
 interface Importer {
 
@@ -34,7 +35,7 @@ interface Importer {
 	/**
 	 * Returns an array of information about the importer.
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public static function info(  );
 }

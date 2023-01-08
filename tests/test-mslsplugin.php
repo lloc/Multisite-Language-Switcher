@@ -6,17 +6,20 @@ use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
 use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsOptions;
+use Mockery;
+use WP_Admin_Bar;
+use WPDB;
 
 class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 
 	public function get_test() {
 		global $wpdb;
 
-		$wpdb = \Mockery::mock( \WPDB::class );
+		$wpdb = Mockery::mock( WPDB::class );
 		$wpdb->shouldReceive( 'prepare' )->andReturnArg( 0 );
 		$wpdb->shouldReceive( 'query' )->andReturn( true );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 
 		return new MslsPlugin( $options );
@@ -36,7 +39,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	}
 
 	public function test_init_widget_false() {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
 		$plugin = new MslsPlugin( $options );
@@ -45,7 +48,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	}
 
 	public function test_block_render_empty() {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
 		$plugin = new MslsPlugin( $options );
@@ -108,7 +111,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	}
 
 	public function test_block_init_excluded() {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
 		$plugin = new MslsPlugin( $options );
@@ -146,7 +149,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		Functions\expect( 'get_users' )->andReturn( [] );
 		Functions\expect( 'get_blogs_of_user' )->andReturn( [] );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_content_filter' )->andReturn( true );
 
 		$plugin = new MslsPlugin( $options );
@@ -178,7 +181,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		Functions\expect( 'get_site_option' )->andReturn( [] );
 		Functions\expect( 'get_blog_option' )->once()->andReturn( [] );
 
-		$adminbar = \Mockery::mock( \WP_Admin_Bar::class );
+		$adminbar = Mockery::mock( WP_Admin_Bar::class );
 		$adminbar->shouldReceive( 'add_node' );
 
 		$this->assertEquals( 1, $this->get_test()->update_adminbar( $adminbar ) );

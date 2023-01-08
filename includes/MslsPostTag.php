@@ -7,6 +7,9 @@
 
 namespace lloc\Msls;
 
+use StdClass;
+use WP_Term;
+
 /**
  * Post Tag
  * @package Msls
@@ -86,7 +89,7 @@ class MslsPostTag extends MslsMain {
 				/**
 				 * Manipulates the term object before using it
 				 * @since 0.9.9
-				 * @param \StdClass $term
+				 * @param StdClass $term
 				 */
 				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
 
@@ -104,7 +107,7 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
 	 *
-	 * @param \StdClass $tag
+	 * @param StdClass $tag
 	 */
 	public function add_input( $tag ): void {
 		$title_format = '<h3>%s</h3>
@@ -123,7 +126,7 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
 	 *
-	 * @param \StdClass $tag
+	 * @param StdClass $tag
 	 */
 	public function edit_input( $tag ): void {
 		$title_format = '<tr>
@@ -250,7 +253,7 @@ class MslsPostTag extends MslsMain {
 		$origin_term = get_term( $origin_term_id, $mydata->base );
 		restore_current_blog();
 
-		if ( ! $origin_term instanceof \WP_Term ) {
+		if ( ! $origin_term instanceof WP_Term ) {
 			return $mydata;
 		}
 

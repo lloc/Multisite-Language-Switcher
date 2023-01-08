@@ -3,6 +3,7 @@
 namespace lloc\Msls\ContentImport\Importers\PostMeta;
 
 use lloc\Msls\ContentImport\Importers\BaseImporter;
+use stdClass;
 
 class Duplicating extends BaseImporter {
 
@@ -11,7 +12,7 @@ class Duplicating extends BaseImporter {
 	/**
 	 * Returns an array of information about the importer.
 	 *
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public static function info() {
 		return (object) [
