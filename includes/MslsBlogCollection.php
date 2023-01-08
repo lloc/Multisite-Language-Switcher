@@ -51,12 +51,6 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	private $active_sidewide = null;
 
 	/**
-	 * Container for hreflang-mapping
-	 * @var array
-	 */
-	private $hreflangmap = [];
-
-	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -126,9 +120,9 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @param MslsOptions $options
 	 *
-	 * @return array
+	 * @return object[]
 	 */
-	public function get_blogs_of_reference_user( MslsOptions $options ) {
+	public function get_blogs_of_reference_user( MslsOptions $options ): array {
 		$reference_user = $options->has_value( 'reference_user' ) ? $options->reference_user : current( $this->get_users( 'ID', 1 ) );
 		$blogs          = get_blogs_of_user( $reference_user );
 
