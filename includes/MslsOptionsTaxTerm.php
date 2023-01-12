@@ -29,6 +29,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 *
 	 * @param mixed $url
 	 * @param MslsOptionsTaxTerm $options
+	 *
 	 * @return string
 	 */
 	public function check_base( $url, $options ) {
@@ -36,33 +37,43 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 			return $url;
 		}
 
+		$search  = '/' . self::get_base_defined( $options->get_tax_query(), $options->base_defined ) . '/';
+		$replace = '/' . self::get_base_option( $options->base_option, $options->base_defined ) . '/';
+
+		return $search != $replace ? str_replace( $search, $replace, $url ): $url;
+	}
+
+	/**
+	 * @param string $tax_query_name
+	 * @param string $default
+	 *
+	 * @return string
+	 */
+	public static function get_base_defined( string $tax_query_name, string $default ): string {
 		global $wp_rewrite;
 
-		$base_defined = $options->base_defined;
-
-		$permastruct = $wp_rewrite->get_extra_permastruct( $options->get_tax_query() );
-		if ( $permastruct ) {
-			$permastruct = explode( '/', $permastruct );
-			end( $permastruct );
-			$permastruct = prev( $permastruct );
-			if ( false !== $permastruct ) {
-				$base_defined = $permastruct;
-			}
+		$permastruct = $wp_rewrite ? $wp_rewrite->get_extra_permastruct( $tax_query_name ) : false;
+		if ( ! $permastruct ) {
+			return $default;
 		}
 
-		$base_option = get_option( $options->base_option );
-		if ( empty( $base_option ) ) {
-			$base_option = $options->base_defined;
-		}
+		$permastruct = explode( '/', $permastruct );
+		end( $permastruct );
+		$permastruct = prev( $permastruct );
 
-		if ( $base_defined != $base_option ) {
-			$search  = '/' . $base_defined . '/';
-			$replace = '/' . $base_option . '/';
-			$count   = 1;
-			$url     = str_replace( $search, $replace, $url, $count );
-		}
+		return ! $permastruct ? $default : $permastruct;
+	}
 
-		return $url;
+	/**
+	 * @param string $option_name
+	 * @param string $default
+	 *
+	 * @return string
+	 */
+	public static function get_base_option( string $option_name, string $default ): string {
+		$base_option = get_option( $option_name );
+
+		return empty( $base_option ) ? $default : $base_option;
 	}
 
 }
