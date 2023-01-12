@@ -52,7 +52,7 @@ class MslsOptionsTax extends MslsOptions {
 		}
 
 		if ( $req ) {
-			add_filter( 'check_url', [ $options, 'check_base' ], 9, 2 );
+			add_filter( 'check_url', [ $options, 'check_base' ], 9 );
 		} else {
 			global $wp_rewrite;
 

@@ -32,7 +32,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 *
 	 * @return string
 	 */
-	public function check_base( $url, $options ) {
+	public static function check_base( $url, $options ) {
 		if ( ! is_string( $url ) || empty( $url ) ) {
 			return $url;
 		}
