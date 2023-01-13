@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsGetSet
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 

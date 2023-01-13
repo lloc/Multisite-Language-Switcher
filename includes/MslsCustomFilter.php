@@ -1,10 +1,4 @@
 <?php
-/**
- * MslsCustomFilter
- * @author Maciej Czerpiński <contact@speccode.com>
- * @contributor Dennis Ploetner <re@lloc.de>
- * @since 0.9.9
- */
 
 namespace lloc\Msls;
 
@@ -12,6 +6,7 @@ use WP_Query;
 
 /**
  * Adding custom filter to posts/pages table.
+ *
  * @package Msls
  */
 class MslsCustomFilter extends MslsMain implements HookInterface {
@@ -41,27 +36,32 @@ class MslsCustomFilter extends MslsMain implements HookInterface {
 
 	/**
 	 * Echo's select tag with list of blogs
-	 * @uses selected
+	 *
+	 * @return void
 	 */
-	public function add_filter() {
-		$id = (
-		filter_has_var( INPUT_GET, 'msls_filter' ) ?
-			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ) :
-			''
-		);
+	public function add_filter(): void {
+		$id = '';
+
+		if ( filter_has_var( INPUT_GET, 'msls_filter' ) ) {
+			$id = filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT );
+		}
 
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			echo '<select name="msls_filter" id="msls_filter">';
 			echo '<option value="">' . esc_html( __( 'Show all blogs', 'multisite-language-switcher' ) ) . '</option>';
+
 			foreach ( $blogs as $blog ) {
+				$label = sprintf( __( 'Not translated in the %s-blog', 'multisite-language-switcher' ), $blog->get_description() );
+
 				printf(
 					'<option value="%d" %s>%s</option>',
 					$blog->userblog_id,
 					selected( $id, $blog->userblog_id, false ),
-					sprintf( __( 'Not translated in the %s-blog', 'multisite-language-switcher' ), $blog->get_description() )
+					$label
 				);
 			}
+
 			echo '</select>';
 		}
 	}
@@ -74,14 +74,13 @@ class MslsCustomFilter extends MslsMain implements HookInterface {
 	 * @return bool|WP_Query
 	 */
 	public function execute_filter( WP_Query $query ) {
-		$blogs = $this->collection->get();
-
 		if ( ! filter_has_var( INPUT_GET, 'msls_filter' ) ) {
 			return false;
 		}
 
 		$id = filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT );
 
+		$blogs = $this->collection->get();
 		if ( isset( $blogs[ $id ] ) ) {
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
 
