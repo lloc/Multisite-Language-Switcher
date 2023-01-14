@@ -5,35 +5,50 @@ namespace lloc\MslsTests;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsCustomFilter;
 use lloc\Msls\MslsOptions;
-use Mockery;
-use Mockery\Mock;
+use function Patchwork\always;
+use function Patchwork\redefine;
 
 class WP_Test_MslsCustomFilter extends Msls_UnitTestCase {
 
-	public function test_add_filter() {
-		$options    = Mockery::mock( MslsOptions::class );
+	public function setUp(): void {
+		parent::setUp();
 
-		$collection = Mockery::mock( MslsBlogCollection::class );
-		$collection->shouldReceive( 'get' )->andReturn( [] );
+		redefine( 'filter_has_var', always( true ) );
+		redefine( 'filter_input', always( 1 ) );
 
-		$obj        = new MslsCustomFilter( $options, $collection );
+	}
+
+	public function get_sut( $blogs = [] ): MslsCustomFilter {
+		$options    = \Mockery::mock( MslsOptions::class );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get' )->andReturn( $blogs );
+
+		return new MslsCustomFilter( $options, $collection );
+	}
+
+	public function test_add_filter_no_blogs() {
+		$sut = $this->get_sut();
 
 		$this->expectOutputString( '' );
 
-		$obj->add_filter();
+		$sut->add_filter();
+	}
+
+	public function test_add_filter_with_blogs() {
+		$sut = $this->get_sut();
+
+		$this->expectOutputString( '' );
+
+		$sut->add_filter();
 	}
 
 	function test_execute_filter() {
-		$options    = Mockery::mock( MslsOptions::class );
+		$sut = $this->get_sut();
 
-		$collection = Mockery::mock( MslsBlogCollection::class );
-		$collection->shouldReceive( 'get' )->andReturn( [] );
+		$query = \Mockery::mock( 'WP_Query' );
 
-		$query      = Mockery::mock( 'WP_Query' );
-
-		$obj        = new MslsCustomFilter( $options, $collection );
-
-		$this->assertFalse( $obj->execute_filter( $query ) );
+		$this->assertFalse( $sut->execute_filter( $query ) );
 	}
 
 }
