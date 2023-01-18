@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsOptionsQueryMonth
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -15,16 +10,17 @@ namespace lloc\Msls;
 class MslsOptionsQueryMonth extends MslsOptionsQuery {
 
 	/**
-	 * Check if the array has an non empty item which has $language as a key
+	 * Check if the array has a non-empty item which has $language as a key
 	 *
-	 * @param string $language
+	 * @param string $key
+	 *
 	 * @return bool
 	 */
-	public function has_value( $language ): bool {
-		if ( ! isset( $this->arr[ $language ] ) ) {
+	public function has_value( string $key ): bool {
+		if ( ! isset( $this->arr[ $key ] ) ) {
 			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
 
-			$this->arr[ $language ] = $cache->get_var(
+			$this->arr[ $key ] = $cache->get_var(
 				$cache->prepare(
 					"SELECT count(ID) FROM {$cache->posts} WHERE YEAR(post_date) = %d AND MONTH(post_date) = %d AND post_status = 'publish'",
 					$this->get_arg( 0, 0 ),
@@ -32,7 +28,7 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
 				)
 			);
 		}
-		return (bool) $this->arr[ $language ];
+		return (bool) $this->arr[ $key ];
 	}
 
 	/**

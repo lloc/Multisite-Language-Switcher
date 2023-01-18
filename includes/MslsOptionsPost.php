@@ -40,7 +40,7 @@ class MslsOptionsPost extends MslsOptions {
 			return '';
 		}
 
-		if ( is_null( $this->with_front ) ) {
+		if ( ! isset( $this->with_front ) ) {
 			$post_object      = get_post_type_object( $post->post_type );
 			$this->with_front = ! empty( $post_object->rewrite['with_front'] );
 		}

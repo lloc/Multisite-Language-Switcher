@@ -127,17 +127,17 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	/**
 	 * Gets an element of arg by index
 	 *
-	 * The returning value is cast to the type of $retval or will be the
-	 * value of $retval if nothing is set at this index.
+	 * The returning value is cast to the type of $default or will be the
+	 * value of $default if nothing is set at this index.
 	 *
-	 * @param int $idx
-	 * @param mixed $val
+	 * @param int $index
+	 * @param mixed $default
 	 *
 	 * @return mixed
 	 */
-	public function get_arg( $idx, $val = null ) {
-		$arg = $this->args[ $idx ] ?? $val;
-		settype( $arg, gettype( $val ) );
+	public function get_arg( int $index, $default = null ) {
+		$arg = $this->args[ $index ] ?? $default;
+		settype( $arg, gettype( $default ) );
 
 		return $arg;
 	}

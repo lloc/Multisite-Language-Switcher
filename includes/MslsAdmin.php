@@ -80,13 +80,15 @@ class MslsAdmin extends MslsMain implements HookInterface {
 	 * @param string $method
 	 * @param mixed $args
 	 *
-	 * @return mixed
+	 * @return void
 	 */
-	public function __call( $method, $args ) {
+	public function __call( string $method, $args ) {
 		$parts = explode( '_', $method, 2 );
 
 		if ( 'rewrite' === $parts[0] ) {
-			return $this->render_rewrite( $parts[1] );
+			$this->render_rewrite( $parts[1] );
+
+			return;
 		}
 
 		$checkboxes = [
@@ -132,8 +134,10 @@ class MslsAdmin extends MslsMain implements HookInterface {
 
 	/**
 	 * Render the options-page
+	 *
+	 * @return void
 	 */
-	public function render() {
+	public function render(): void {
 		printf(
 			'<div class="wrap"><div class="icon32" id="icon-options-general"><br/></div><h1>%s</h1>%s<br class="clear"/><form action="options.php" method="post"><p>%s</p>',
 			__( 'Multisite Language Switcher Options', 'multisite-language-switcher' ),
@@ -172,8 +176,10 @@ class MslsAdmin extends MslsMain implements HookInterface {
 	 * Register the form-elements
 	 *
 	 * @codeCoverageIgnore
+	 *
+	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		register_setting( 'msls', 'msls', [ $this, 'validate' ] );
 
 		$sections = [
@@ -276,7 +282,7 @@ class MslsAdmin extends MslsMain implements HookInterface {
 	}
 
 	/**
-	 * @param array $map
+	 * @param array<string, string> $map
 	 * @param string $section
 	 *
 	 * @return int
@@ -302,8 +308,10 @@ class MslsAdmin extends MslsMain implements HookInterface {
 
 	/**
 	 * Shows the select-form-field 'blog_language'
+	 *
+	 * @return void
 	 */
-	public function blog_language() {
+	public function blog_language(): void {
 		$languages = $this->options->get_available_languages();
 		$selected  = get_locale();
 
@@ -312,15 +320,19 @@ class MslsAdmin extends MslsMain implements HookInterface {
 
 	/**
 	 * Shows the select-form-field 'display'
+	 *
+	 * @return void
 	 */
-	public function display() {
-		echo ( new Select( 'display', MslsLink::get_types_description(), $this->options->display ) )->render();
+	public function display(): void {
+		echo ( new Select( 'display', MslsLink::get_types_description(), strval( $this->options->display ) ) )->render();
 	}
 
 	/**
 	 * Shows the select-form-field 'reference_user'
+	 *
+	 * @return void
 	 */
-	public function reference_user() {
+	public function reference_user(): void {
 		$users = [];
 
 		foreach ( ( array ) apply_filters( 'msls_reference_users', $this->collection->get_users() ) as $user ) {
@@ -337,15 +349,17 @@ class MslsAdmin extends MslsMain implements HookInterface {
 			trigger_error( $message );
 		}
 
-		echo ( new Select( 'reference_user', $users, $this->options->reference_user ) )->render();
+		echo ( new Select( 'reference_user', $users, strval( $this->options->reference_user ) ) )->render();
 	}
 
 	/**
 	 * The description for the current blog
 	 *
 	 * The language will be used ff there is no description.
+	 *
+	 * @return void
 	 */
-	public function description() {
+	public function description(): void {
 		echo ( new Text( 'description', $this->options->description, '40' ) )->render();
 	}
 
@@ -355,41 +369,46 @@ class MslsAdmin extends MslsMain implements HookInterface {
 	 * Default is 10. But may be there are other plugins active and you run into
 	 * trouble. So you can decide a higher (from 1) or a lower (to 100) priority
 	 * for the output
+	 *
+	 * @return void
 	 */
-	public function content_priority() {
-		$temp     = array_merge( range( 1, 10 ), [ 20, 50, 100 ] );
+	public function content_priority(): void {
+		$temp     = array_map('strval', array_merge( range( 1, 10 ), [ 20, 50, 100 ] ) );
 		$arr      = array_combine( $temp, $temp );
 		$selected = empty( $this->options->content_priority ) ? 10 : $this->options->content_priority;
 
-		echo ( new Select( 'content_priority', $arr, $selected ) )->render();
+		echo ( new Select( 'content_priority', $arr, strval( $selected ) ) )->render();
 	}
 
 	/**
 	 * Rewrites slugs for registered post types
 	 *
 	 * @param string $key
+	 *
+	 * @return void
 	 */
-	public function render_rewrite( $key ) {
+	public function render_rewrite( string $key ): void {
 		$rewrite = get_post_type_object( $key )->rewrite;
 
 		$value = '';
-		if ( true === $rewrite ) {
-			$value = $key;
-		} elseif ( ! empty( $rewrite['slug'] ) ) {
+		if ( ! empty( $rewrite['slug'] ) ) {
 			$value = $rewrite['slug'];
 		}
+		elseif ( ! empty( $rewrite ) ) {
+			$value = $key;
+		}
 
-		echo ( new Text( "rewrite_{$key}", $value, 30, true ) )->render();
+		echo ( new Text( "rewrite_{$key}", $value, '30', true ) )->render();
 	}
 
 	/**
 	 * Validates input before saving it
 	 *
-	 * @param array $arr Values of the submitted form
+	 * @param array<string, string> $arr Values of the submitted form
 	 *
-	 * @return array Validated input
+	 * @return array<string, string> Validated input
 	 */
-	public function validate( array $arr ) {
+	public function validate( array $arr ): array {
 		/**
 		 * Returns custom filtered input array
 		 *
@@ -411,11 +430,11 @@ class MslsAdmin extends MslsMain implements HookInterface {
 	/**
 	 * Filter which sets the global blog language
 	 *
-	 * @param array $arr
+	 * @param array<string, string> $arr
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
-	public function set_blog_language( array $arr ) {
+	public function set_blog_language( array $arr ): array {
 		if ( isset( $arr['blog_language'] ) ) {
 			$blog_language = ( 'en_US' === $arr['blog_language'] ) ? '' : $arr['blog_language'];
 			update_option( 'WPLANG', $blog_language );
