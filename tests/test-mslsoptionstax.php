@@ -17,7 +17,7 @@ class WP_Test_MslsOptionsTax extends Msls_UnitTestCase {
 		return new MslsOptionsTax( 0 );
 	}
 
-	function test_get_tax_query_method() {
+	function test_get_tax_query() {
 		$obj = $this->get_test();
 
 		$this->assertIsSTring( $obj->get_tax_query() );

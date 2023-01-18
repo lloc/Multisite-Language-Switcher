@@ -64,6 +64,7 @@ class MslsOptionsTax extends MslsOptions {
 
 	/**
 	 * Get the queried taxonomy
+	 *
 	 * @return string
 	 */
     public function get_tax_query(): string {
@@ -106,22 +107,25 @@ class MslsOptionsTax extends MslsOptions {
 	/**
 	 * Wraps the call to get_term_link
 	 *
-	 * @param int $term_id
+	 * @param mixed $term_id
 	 *
 	 * @return string
 	 */
 	public function get_term_link( $term_id ): string {
-		if ( ! empty( $term_id ) ) {
-			$taxonomy = $this->get_tax_query();
-			if ( ! empty( $taxonomy ) ) {
-				$link = get_term_link( $term_id, $taxonomy );
-				if ( ! is_wp_error( $link ) ) {
-					return $link;
-				}
-			}
+		$term_id = intval( $term_id );
+
+		if ( $term_id <= 0 ) {
+			return '';
 		}
 
-		return '';
+		$taxonomy = $this->get_tax_query();
+		if ( empty( $taxonomy ) ) {
+			return '';
+		}
+
+		$link = get_term_link( $term_id, $taxonomy );
+
+		return ! is_wp_error( $link ) ? $link : '';
 	}
 
 }
