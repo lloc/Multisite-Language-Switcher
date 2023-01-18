@@ -79,8 +79,6 @@ class MslsCustomColumn extends MslsMain implements HookInterface {
 	 * @param int $item_id
 	 *
 	 * @return void
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function td( string $column_name, int $item_id ): void {
 		if ( 'mslscol' === $column_name ) {

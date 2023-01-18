@@ -11,18 +11,30 @@ use lloc\Msls\MslsOptionsQuery;
  */
 class WP_Test_MslsOptionsQuery extends Msls_UnitTestCase {
 
-	function get_test() {
+	public function test_get_current_link_method(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+		Functions\expect( 'home_url' )->once()->andReturnFirstArg();
 
-		return new MslsOptionsQuery();
+		$sut = new MslsOptionsQuery();
+
+		$this->assertEquals( '/', $sut->get_current_link() );
 	}
 
-	function test_get_current_link_method() {
-		Functions\expect( 'home_url' )->once()->andReturn( 'https://example.org/queried-object' );
+	public function test_get_existing_postlink() {
+		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+		Functions\expect( 'home_url' )->once()->andReturnFirstArg();
 
-		$obj = $this->get_test();
+		$sut = new MslsOptionsQuery();
 
-		$this->assertEquals( 'https://example.org/queried-object', $obj->get_current_link() );
+		$this->assertEquals( '/', $sut->get_postlink( 'de_DE' ) );
+	}
+
+	public function test_get_non_existing_postlink() {
+		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+
+		$sut = new MslsOptionsQuery();
+
+		$this->assertEquals( '', $sut->get_postlink( 'it_IT' ) );
 	}
 
 }

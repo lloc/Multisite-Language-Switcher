@@ -8,8 +8,6 @@ use lloc\Msls\MslsPostTagClassic;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
 use Brain\Monkey\Functions;
-use Mockery;
-use stdClass;
 
 class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 
@@ -36,18 +34,18 @@ class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 			'get_admin_url' => '/admin_url',
 		] );
 
-		$options = Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 
 		$map = [ 'de_DE', 'en_US' ];
 
 		foreach ( $map as $locale ) {
-			$blog = Mockery::mock( MslsBlog::class );
+			$blog = \Mockery::mock( MslsBlog::class );
 			$blog->shouldReceive( ['get_language' => $locale ] );
 
 			$blogs[] = $blog;
 		}
 
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( $blogs );
 
 		return new MslsPostTagClassic( $options, $collection );
@@ -70,12 +68,12 @@ class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 	}
 
 	public function test_print_option() {
-		$blog = Mockery::mock( MslsBlog::class );
+		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
 
 		$type = 'abc';
 
-		$mydata = Mockery::mock( MslsOptionsTax::class );
+		$mydata = \Mockery::mock( MslsOptionsTax::class );
 		$mydata->shouldReceive( 'has_value' )->with( 'de_DE' )->andReturn( true );
 		$mydata->de_DE = 1;
 
@@ -88,13 +86,13 @@ class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 	}
 
 	public function test_the_input_false() {
-		$options    = Mockery::mock( MslsOptions::class );
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$options    = \Mockery::mock( MslsOptions::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 
 		$collection->shouldReceive( 'get' )->andReturn( [] );
 
 		$sut = new MslsPostTagClassic( $options, $collection );
-		$this->assertFalse( $sut->the_input( ( new stdClass() ), 'test', 'test' ) );
+		$this->assertFalse( $sut->the_input( null, 'test', 'test' ) );
 	}
 
 }

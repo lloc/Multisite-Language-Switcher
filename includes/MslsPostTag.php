@@ -67,15 +67,11 @@ class MslsPostTag extends MslsMain {
 			];
 
 			if ( filter_has_var( INPUT_POST, 's' ) ) {
-				$args['search'] = sanitize_text_field(
-					filter_input( INPUT_POST, 's' )
-				);
+				$args['search'] = sanitize_text_field( filter_input( INPUT_POST, 's' ) );
 			}
 
 			if ( filter_has_var( INPUT_POST, 'post_type' ) ) {
-				$args['taxonomy'] = sanitize_text_field(
-					filter_input( INPUT_POST, 'post_type' )
-				);
+				$args['taxonomy'] = sanitize_text_field( filter_input( INPUT_POST, 'post_type' ) );
 			}
 
 			/**
@@ -107,16 +103,11 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
 	 *
-	 * @param StdClass $tag
+	 * @param mixed $tag
 	 */
 	public function add_input( $tag ): void {
-		$title_format = '<h3>%s</h3>
-			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
-
-		$item_format = '<label for="msls_title_%1$s">%2$s</label>
-			<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>';
+		$title_format = '<h3>%s</h3><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
+		$item_format  = '<label for="msls_title_%1$s">%2$s</label><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>';
 
 		echo '<div class="form-field">';
 		$this->the_input( $tag, $title_format, $item_format );
@@ -126,26 +117,11 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
 	 *
-	 * @param StdClass $tag
+	 * @param mixed $tag
 	 */
 	public function edit_input( $tag ): void {
-		$title_format = '<tr>
-			<th colspan="2">
-			<strong>%s</strong>
-			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
-			</th>
-			</tr>';
-
-		$item_format = '<tr class="form-field">
-			<th scope="row" vertical-align="top">
-			<label for="msls_title_%1$s">%2$s</label>
-			</th>
-			<td>
-			<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
-			</td>
-			</tr>';
+		$title_format = '<tr><th colspan="2"><strong>%s</strong><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/></th></tr>';
+		$item_format  = '<tr class="form-field"><th scope="row" vertical-align="top"><label for="msls_title_%1$s">%2$s</label></th><td><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/></td></tr>';
 
 		$this->the_input( $tag, $title_format, $item_format );
 	}
@@ -162,67 +138,74 @@ class MslsPostTag extends MslsMain {
 	 * @return boolean
 	 */
 	public function the_input( $tag, string $title_format, string $item_format ): bool {
-		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
+		$blogs = $this->collection->get();
+		if ( empty( $blogs ) ) {
+			return false;
+		}
 
-		$blogs   = $this->collection->get();
-		if ( $blogs ) {
-			$my_data = MslsOptionsTax::create( $term_id );
+		$term_id = $tag->term_id ?? 0;
+		$my_data = MslsOptionsTax::create( $term_id );
 
-			$this->maybe_set_linked_term( $my_data );
+		$this->maybe_set_linked_term( $my_data );
 
-			$type    = MslsContentTypes::create()->get_request();
+		$type = MslsContentTypes::create()->get_request();
+
+		printf(
+			$title_format,
+			apply_filters(
+				'msls_term_select_title',
+				__( 'Multisite Language Switcher', 'multisite-language-switcher' )
+			),
+			$type
+		);
+
+		foreach ( $blogs as $blog ) {
+			switch_to_blog( $blog->userblog_id );
+
+			$language = $blog->get_language();
+			$icon     = MslsAdminIcon::create()
+				->set_language( $language )
+				->set_icon_type( 'flag' );
+
+			$value = $title = '';
+			if ( $my_data->has_value( $language ) ) {
+				$term = get_term( $my_data->$language, $type );
+				if ( is_object( $term ) ) {
+					$icon->set_href( $my_data->$language );
+					$value = $my_data->$language;
+					$title = $term->name;
+				}
+			}
 
 			printf(
-				$title_format,
-				apply_filters( 
-					'msls_term_select_title',
-					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
-				),
-				$type
+				$item_format,
+				$blog->userblog_id,
+				$icon,
+				$language,
+				$value,
+				$title
 			);
-			foreach ( $blogs as $blog ) {
-				switch_to_blog( $blog->userblog_id );
 
-				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create()
-					->set_language( $language )
-					->set_icon_type( 'flag' );
-
-				$value = $title = '';
-				if ( $my_data->has_value( $language ) ) {
-					$term = get_term( $my_data->$language, $type );
-					if ( is_object( $term ) ) {
-						$icon->set_href( $my_data->$language );
-						$value = $my_data->$language;
-						$title = $term->name;
-					}
-				}
-
-				printf(
-					$item_format,
-					$blog->userblog_id,
-					$icon,
-					$language,
-					$value,
-					$title
-				);
-				restore_current_blog();
-			}
-			return true;
+			restore_current_blog();
 		}
-		return false;
+
+		return true;
 	}
 
 	/**
 	 * Set calls the save method if taxonomy is set
 	 * @param int $term_id
 	 *
- 	 * @return void
+ 	 * @return bool
 	 */
-	public function set( int $term_id ): void {
-		if ( MslsContentTypes::create()->acl_request() ) {
-			$this->save( $term_id, MslsOptionsTax::class );
+	public function set( int $term_id ): bool {
+		if ( ! MslsContentTypes::create()->acl_request() ) {
+			return false;
 		}
+
+		$this->save( $term_id, MslsOptionsTax::class );
+
+		return true;
 	}
 
 	/**

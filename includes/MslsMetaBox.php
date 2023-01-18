@@ -120,7 +120,7 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 	/**
 	 * Add
 	 */
-	public function add() {
+	public function add(): void {
 		foreach ( MslsPostType::instance()->get() as $post_type ) {
 			add_meta_box(
 				'msls',
@@ -163,9 +163,8 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 
 	/**
 	 * Render the classic select-box
-	 * @uses selected
 	 */
-	public function render_select() {
+	public function render_select(): void {
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			global $post;
