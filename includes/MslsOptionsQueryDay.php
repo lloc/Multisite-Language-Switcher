@@ -20,18 +20,16 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 */
 	public function has_value( string $key ): bool {
 		if ( ! isset( $this->arr[ $key ] ) ) {
-			$date  = new DateTime();
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
+			$args = [
+				'posts_per_page' => - 1,
+				'post_status'    => 'publish',
+				'date_query'     => $this->get_date_query(),
+			];
 
-			$this->arr[ $key ] = $cache->get_var(
-				$cache->prepare(
-					"SELECT count(ID) FROM {$cache->posts} WHERE DATE(post_date) = %s AND post_status = 'publish'",
-					$date->setDate( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ), $this->get_arg( 2, 0 ) )->format( 'Y-m-d' )
-				)
-			);
+			$this->arr[ $key ] = ( new PostCounter( $args ) )->get();
 		}
 
-		return (bool) $this->arr[ $key ];
+		return boolval( $this->arr[ $key ] );
 	}
 
 	/**
@@ -40,7 +38,20 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link(): string {
-		return get_day_link( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ), $this->get_arg( 2, 0 ) );
+		$date_query = $this->get_date_query();
+
+		return get_day_link( $date_query['year'], $date_query['month'], $date_query['day'] );
+	}
+
+	/**
+	 * @return array<string, int>
+	 */
+	public function get_date_query(): array {
+		return [
+			'year'  => $this->get_arg( 0, 0 ),
+			'month' => $this->get_arg( 1, 0 ),
+			'day'   => $this->get_arg( 2, 0 ),
+		];
 	}
 
 }

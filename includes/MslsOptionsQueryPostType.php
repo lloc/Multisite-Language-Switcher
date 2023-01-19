@@ -18,9 +18,10 @@ class MslsOptionsQueryPostType extends MslsOptionsQuery {
 	 */
 	public function has_value( string $key ): bool {
 		if ( ! isset( $this->arr[ $key ] ) ) {
-			$this->arr[ $key ] = get_post_type_object( $this->get_arg( 0, '' ) );
+			$this->arr[ $key ] = get_post_type_object( $this->get_post_type() );
 		}
-		return (bool) $this->arr[ $key ];
+
+		return boolval( $this->arr[ $key ] );
 	}
 
 	/**
@@ -29,7 +30,14 @@ class MslsOptionsQueryPostType extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link(): string {
-		return (string) get_post_type_archive_link( $this->get_arg( 0, '' ) );
+		return strval( get_post_type_archive_link( $this->get_post_type() ) );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_post_type(): string {
+		return $this->get_arg( 0, '' );
 	}
 
 }

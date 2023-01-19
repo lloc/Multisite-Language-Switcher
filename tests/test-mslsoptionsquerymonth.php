@@ -8,24 +8,28 @@ use lloc\Msls\MslsOptionsQueryMonth;
 
 class WP_Test_MslsOptionsQueryMonth extends Msls_UnitTestCase {
 
-	function get_test() {
-		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+	public function get_sut(): MslsOptionsQueryMonth {
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
 
-		return new MslsOptionsQueryMonth();
+		return new MslsOptionsQueryMonth( 1998, 12 );
 	}
 
-	function test_has_value_method() {
-		$obj = $this->get_test();
-
-		$this->assertIsBool( $obj->has_value( 'de_DE' ) );
+	public function test_has_value(): void {
+		// PostCounter will return 0 because WP_Query doesn't exist during tests
+		$this->assertFalse( $this->get_sut()->has_value( 'de_DE' ) );
 	}
 
-	function test_get_current_link_method() {
-		Functions\expect( 'get_month_link' )->once()->andReturn( 'https://example.org/queried-month' );
+	public function test_get_current_link_method(): void {
+		$expected = 'https://example.org/queried-month';
+		Functions\expect( 'get_month_link' )->once()->andReturn( $expected );
 
-		$obj = $this->get_test();
+		$this->assertEquals( $expected, $this->get_sut()->get_current_link() );
+	}
 
-		$this->assertEquals( 'https://example.org/queried-month', $obj->get_current_link() );
+	public function test_get_date_query(): void {
+		$expected = [ 'year' => 1998, 'month' => 12 ];
+
+		$this->assertEquals( $expected, $this->get_sut()->get_date_query() );
 	}
 
 }

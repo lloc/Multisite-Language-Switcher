@@ -8,25 +8,23 @@ use lloc\Msls\MslsOptionsQueryAuthor;
 
 class WP_Test_MslsOptionsQueryAuthor extends Msls_UnitTestCase {
 
-	function get_test() {
-		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+	public function get_sut(): MslsOptionsQueryAuthor {
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
 
-		return new MslsOptionsQueryAuthor();
+		return new MslsOptionsQueryAuthor( 1 );
 	}
 
-	function test_has_value_method() {
-		$obj = $this->get_test();
-
-		$this->assertIsBool( $obj->has_value( 'de_DE' ) );
+	public function test_has_value(): void {
+		// PostCounter will return 0 because WP_Query doesn't exist during tests
+		$this->assertFalse( $this->get_sut()->has_value( 'de_DE' ) );
 	}
 
-	function test_get_current_link_method() {
-		Functions\expect( 'get_author_posts_url' )->once()->andReturn( 'https://example.org/queried-author' );
+	public function test_get_current_link_method(): void {
+		$expected = 'https://example.org/queried-author';
 
-		$obj = $this->get_test();
+		Functions\expect( 'get_author_posts_url' )->once()->andReturn( $expected );
 
-		$this->assertEquals( 'https://example.org/queried-author', $obj->get_current_link() );
-
+		$this->assertEquals( $expected, $this->get_sut()->get_current_link() );
 	}
 
 }

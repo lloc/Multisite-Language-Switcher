@@ -8,24 +8,28 @@ use lloc\Msls\MslsOptionsQueryYear;
 
 class WP_Test_MslsOptionsQueryYear extends Msls_UnitTestCase {
 
-	function get_test() {
-		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+	public function get_sut(): MslsOptionsQueryYear {
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
 
-		return new MslsOptionsQueryYear();
+		return new MslsOptionsQueryYear( 1998 );
 	}
 
-	function test_has_value_method() {
-		$obj = $this->get_test();
-
-		$this->assertIsBool( $obj->has_value( 'de_DE' ) );
+	public function test_has_value(): void {
+		// PostCounter will return 0 because WP_Query doesn't exist during tests
+		$this->assertFalse( $this->get_sut()->has_value( 'de_DE' ) );
 	}
 
-	function test_get_current_link_method() {
-		Functions\expect( 'get_year_link' )->once()->andReturn( 'https://example.org/queried-year' );
+	public function test_get_current_link(): void {
+		$expected = 'https://example.org/queried-year';
 
-		$obj = $this->get_test();
+		Functions\expect( 'get_year_link' )->once()->andReturn( $expected );
 
-		$this->assertEquals( 'https://example.org/queried-year', $obj->get_current_link() );
+		$this->assertEquals( $expected, $this->get_sut()->get_current_link() );
 	}
 
+	public function test_get_date_query(): void {
+		$expected = [ 'year' => 1998 ];
+
+		$this->assertEquals( $expected, $this->get_sut()->get_date_query() );
+	}
 }

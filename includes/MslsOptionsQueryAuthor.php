@@ -18,14 +18,13 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	 */
 	public function has_value( string $key ): bool {
 		if ( ! isset( $this->arr[ $key ] ) ) {
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
+			$args = [
+				'posts_per_page' => - 1,
+				'post_status'    => 'publish',
+				'author'         => $this->get_author_id(),
+			];
 
-			$this->arr[ $key ] = $cache->get_var(
-				$cache->prepare(
-					"SELECT count(ID) FROM {$cache->posts} WHERE post_author = %d AND post_status = 'publish'",
-					$this->get_arg( 0, 0 )
-				)
-			);
+			$this->arr[ $key ] = ( new PostCounter( $args ) )->get();
 		}
 
 		return (bool) $this->arr[ $key ];
@@ -37,7 +36,14 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link(): string {
-		return get_author_posts_url( $this->get_arg( 0, 0 ) );
+		return get_author_posts_url( $this->get_author_id() );
+	}
+
+	/**
+	 * @return int
+	 */
+	public function get_author_id(): int {
+		return $this->get_arg( 0, 0 );
 	}
 
 }

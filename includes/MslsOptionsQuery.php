@@ -2,6 +2,7 @@
 
 namespace lloc\Msls;
 
+
 /**
  * OptionsQuery
  *
@@ -68,6 +69,7 @@ class MslsOptionsQuery extends MslsOptions {
 				return apply_filters( 'check_url', $link, $this );
 			}
 		}
+
 		return '';
 	}
 

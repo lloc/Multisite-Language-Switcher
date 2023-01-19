@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use _PHPStan_bcbc46924\Nette\Utils\DateTime;
+
 /**
  * OptionsQueryMonth
  *
@@ -18,17 +20,16 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
 	 */
 	public function has_value( string $key ): bool {
 		if ( ! isset( $this->arr[ $key ] ) ) {
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
+			$args = [
+				'posts_per_page' => - 1,
+				'post_status'    => 'publish',
+				'date_query'     => $this->get_date_query(),
+			];
 
-			$this->arr[ $key ] = $cache->get_var(
-				$cache->prepare(
-					"SELECT count(ID) FROM {$cache->posts} WHERE YEAR(post_date) = %d AND MONTH(post_date) = %d AND post_status = 'publish'",
-					$this->get_arg( 0, 0 ),
-					$this->get_arg( 1, 0 )
-				)
-			);
+			$this->arr[ $key ] = ( new PostCounter( $args ) )->get();
 		}
-		return (bool) $this->arr[ $key ];
+
+		return boolval( $this->arr[ $key ] );
 	}
 
 	/**
@@ -37,7 +38,19 @@ class MslsOptionsQueryMonth extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link(): string {
-		return get_month_link( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ) );
+		$date_query = $this->get_date_query();
+
+		return get_month_link( $date_query[ 'year'], $date_query['month'] );
+	}
+
+	/**
+	 * @return array<string, int>
+	 */
+	public function get_date_query(): array {
+		return [
+			'year'  => $this->get_arg( 0, 0 ),
+			'month' => $this->get_arg( 1, 0 ),
+		];
 	}
 
 }
