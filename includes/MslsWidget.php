@@ -19,6 +19,8 @@ class MslsWidget extends WP_Widget {
 
 	/**
 	 * Constructor
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function __construct() {
 		parent::__construct( 
@@ -36,7 +38,7 @@ class MslsWidget extends WP_Widget {
 	 * @param array $args
 	 * @param array $instance
 	 *
-	 * @user MslsOutput
+	 * @return void
 	 */
 	public function widget( $args, $instance ) {
 		$args = wp_parse_args(
@@ -94,7 +96,7 @@ class MslsWidget extends WP_Widget {
 	 *
 	 * @param array $instance
 	 *
-	 * @codeCoverageIgnore
+	 * @return void
 	 */
 	public function form( $instance ) {
 		printf(
