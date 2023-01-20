@@ -11,30 +11,35 @@ use lloc\Msls\MslsOptionsTax;
  */
 class WP_Test_MslsOptionsTax extends Msls_UnitTestCase {
 
-	function get_test() {
-		Functions\expect( 'get_option' )->once()->andReturn( [] );
+	public function setUp(): void {
+		parent::setUp();
 
-		return new MslsOptionsTax( 0 );
+		Functions\when( 'get_option' )->justReturn( [ 'de_DE' => 42 ] );
 	}
 
-	function test_get_tax_query() {
-		$obj = $this->get_test();
+	public function test_get_tax_query(): void {
+		$obj = new MslsOptionsTax( 1 );
 
-		$this->assertIsSTring( $obj->get_tax_query() );
+		$this->assertEquals( '', $obj->get_tax_query() );
 	}
 
-	function test_get_postlink_method() {
-		$obj = $this->get_test();
+	public function test_get_postlink_method(): void {
+		$obj = new MslsOptionsTax( 1 );
 
-		$this->assertIsSTring( $obj->get_tax_query() );
-		$this->assertIsSTring( $obj->get_postlink( 'de_DE' ) );
+		$this->assertEquals( '', $obj->get_postlink( 'de_DE' ) );
 	}
 
-	function test_get_current_link_method() {
-		$obj = $this->get_test();
+	public function current_link_data_provider(): array {
+		return [ [ '', 0 ], [ '', 42 ] ];
+	}
 
-		$this->assertIsSTring( $obj->get_tax_query() );
-		$this->assertIsSTring( $obj->get_current_link() );
+	/**
+	 * @dataProvider current_link_data_provider
+	 */
+	public function test_get_current_link( string $expected, int $object_id ): void {
+		$obj = new MslsOptionsTax( $object_id );
+
+		$this->assertEquals( $expected, $obj->get_current_link() );
 	}
 
 }
