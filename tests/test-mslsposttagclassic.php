@@ -23,7 +23,7 @@ class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 			'get_queried_object_id' => 1,
 			'is_admin' => true,
 			'get_option' => [ 'exists' => true ],
-			'get_post_types' => [ 'exists' => true ],
+			'get_post_types' => [],
 			'switch_to_blog' => true,
 			'restore_current_blog' => true,
 			'get_terms' => $terms,
