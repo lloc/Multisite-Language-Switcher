@@ -58,15 +58,23 @@ class MslsMain implements HookInterface {
 	 *
 	 * @param mixed $message
 	 *
-	 * @return void
+	 * @return bool
 	 */
-	public function debugger( $message ): void {
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
-			if ( is_array( $message ) || is_object( $message ) ) {
-				$message = print_r( $message, true );
-			}
-			error_log( 'MSLS Debug: ' . $message );
+	public function debugger( $message ): bool {
+		return defined( 'WP_DEBUG' ) && WP_DEBUG === true && $this->error_log( $message );
+	}
+
+	/**
+	 * @param mixed $message
+	 *
+	 * @return bool
+	 */
+	public function error_log( $message ): bool {
+		if ( is_array( $message ) || is_object( $message ) ) {
+			$message = json_encode( $message );
 		}
+
+		return error_log( sprintf( 'MSLS Debug: %s', $message ) );
 	}
 
 	/**

@@ -9,43 +9,67 @@ use Mockery;
 
 class WP_Test_MslsWidget extends Msls_UnitTestCase {
 
+	public function setUp(): void {
+		parent::setUp();
+
+		$arr = [
+			'before_widget' => '<div>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>',
+		];
+
+		Functions\stubs( [
+			'wp_parse_args'       => $arr,
+			'get_option'          => [],
+			'get_current_blog_id' => 1,
+			'get_blogs_of_user'   => [],
+			'get_users'           => [],
+		] );
+	}
+
 	public function get_sut() {
 		Mockery::mock( '\WP_Widget' );
 
-		return Mockery::mock( MslsWidget::class )->makePartial();
+		$widget = Mockery::mock( MslsWidget::class )->makePartial();
+		$widget->shouldReceive( 'get_field_name' )->andReturn( 'test_field_name' );
+		$widget->shouldReceive( 'get_field_id' )->andReturn( 'test_field_id' );
+
+		return $widget;
 	}
 
-	function test_widget_method() {
-		$arr = [
-			'before_widget' => '',
-			'after_widget'  => '',
-			'before_title'  => '',
-			'after_title'   => '',
-		];
+	function test_widget(): void {
+		$expected = '<div><h3>Test</h3>No available translations found</div>';
 
-		Functions\expect( 'wp_parse_args' )->once()->andReturn( $arr );
-		Functions\expect( 'get_option' )->andReturn( [] );
-		Functions\expect( 'get_current_blog_id' )->andReturn( 1 );
-		Functions\expect( 'get_blogs_of_user' )->andReturn( [] );
-		Functions\expect( 'get_users' )->andReturn( [] );
+		$this->expectOutputString( $expected );
 
-		$obj = $this->get_sut();
-
-		$this->expectOutputString( 'No available translations found' );
-		$obj->widget( [], [] );
+		$this->get_sut()->widget( [], [ 'title' => 'Test' ] );
 	}
 
-	function test_update_method() {
-		$obj = $this->get_sut();
+	function test_update_empty_empty(): void {
+		$result = $this->get_sut()->update( [], [] );
 
-		$result = $obj->update( [], [] );
 		$this->assertEquals( [], $result );
+	}
 
-		$result = $obj->update( [ 'title' => 'abc' ], [] );
-		$this->assertEquals( [ 'title' => 'abc' ], $result );
+	function test_update_string_empty(): void {
+		$result = $this->get_sut()->update( [ 'title' => 'Test' ], [] );
 
-		$result = $obj->update( [ 'title' => 'xyz' ], [ 'title' => 'abc' ] );
+		$this->assertEquals( [ 'title' => 'Test' ], $result );
+	}
+
+	function test_update_string_string(): void {
+		$result = $this->get_sut()->update( [ 'title' => 'xyz' ], [ 'title' => 'Test' ] );
+
 		$this->assertEquals( [ 'title' => 'xyz' ], $result );
+	}
+
+	function test_form(): void {
+		$expected = '<p><label for="test_field_id">Title:</label> <input class="widefat" id="test_field_id" name="test_field_name" type="text" value="" /></p>';
+
+		$this->expectOutputString( $expected );
+
+		$this->get_sut()->form( [] );
 	}
 
 }
