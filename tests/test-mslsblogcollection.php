@@ -2,90 +2,94 @@
 
 namespace lloc\MslsTests;
 
+use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
 
 use Brain\Monkey\Functions;
-use Mockery;
 
 /**
  * WP_Test_MslsBlogCollection
  */
 class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 
-	function get_test() {
-		Functions\expect( 'get_users' )->atLeast()->once()->andReturn( [] );
-		Functions\expect( 'get_blogs_of_user' )->atLeast()->once()->andReturn( [] );
-		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
+	public function setUp(): void {
+		parent::setUp();
 
-		return new MslsBlogCollection();
+		Functions\stubs( [
+			'get_users' => [],
+			'get_blogs_of_user' => [],
+			'get_current_blog_id' => 1
+		] );
 	}
 
-	function test_get_configured_blog_description_not_empty() {
+	public function test_get_configured_blog_description_not_empty(): void {
 		Functions\expect( 'get_option' )->andReturn( [] );
 
-		$obj = $this->get_test();
-
-		$this->assertEquals( 'Test', $obj->get_configured_blog_description( 0, 'Test' ) );
+		$this->assertEquals( 'Test', ( new MslsBlogCollection() )->get_configured_blog_description( 0, 'Test' ) );
 	}
 
-	function test_get_configured_blog_description_empty() {
+	public function test_get_configured_blog_description_empty(): void {
 		Functions\expect( 'get_blog_option' )->once()->andReturnNull();
 
-		$obj = $this->get_test();
-
-		$this->assertEquals( false, $obj->get_configured_blog_description( 0, false ) );
+		$this->assertEquals( false, ( new MslsBlogCollection() )->get_configured_blog_description( 0, false ) );
 	}
 
-	function test_get_blogs_of_reference_user() {
-		$options = Mockery::mock( MslsOptions::class );
+	public function test_get_blogs_of_reference_user(): void {
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'has_value' )->andReturn( true );
 
-		$obj = $this->get_test();
-
-		$this->assertIsArray( $obj->get_blogs_of_reference_user( $options ) );
+		$this->assertIsArray( ( new MslsBlogCollection() )->get_blogs_of_reference_user( $options ) );
 	}
 
-	function test_get_current_blog_id() {
-		$obj = $this->get_test();
-
-		$this->assertIsInt( $obj->get_current_blog_id() );
+	public function test_get_blog(): void {
+		$this->assertNull( ( new MslsBlogCollection() )->get_blog( 'de_DE' ) );
 	}
 
-	function test_has_current_blog() {
-		$obj = $this->get_test();
-
-		$this->assertIsBool( $obj->has_current_blog() );
+	public function test_get_blog_id(): void {
+		$this->assertNull( ( new MslsBlogCollection() )->get_blog_id( 'de_DE' ) );
 	}
 
-	function test_get_objects() {
-		$obj = $this->get_test();
-
-		$this->assertIsArray( $obj->get_objects() );
+	public function test_get_current_blog_id(): void {
+		$this->assertIsInt( ( new MslsBlogCollection() )->get_current_blog_id() );
 	}
 
-	function test_get_plugin_active_blogs() {
-		$obj = $this->get_test();
+	public function test_is_current_blog_true(): void {
+		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->userblog_id = 1;
 
-		$this->assertIsArray( $obj->get_plugin_active_blogs() );
+		$this->assertTrue( ( new MslsBlogCollection() )->is_current_blog( $blog ) );
 	}
 
-	function test_get() {
-		$obj = $this->get_test();
+	public function test_is_current_blog_false(): void {
+		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->userblog_id = 2;
 
-		$this->assertIsArray( $obj->get() );
+		$this->assertFalse( ( new MslsBlogCollection() )->is_current_blog( $blog ) );
 	}
 
-	function test_get_filtered() {
-		$obj = $this->get_test();
-
-		$this->assertIsArray( $obj->get_filtered() );
+	public function test_has_current_blog(): void {
+		$this->assertIsBool( ( new MslsBlogCollection() )->has_current_blog() );
 	}
 
-	function test_get_users() {
-		$obj = $this->get_test();
+	public function test_get_objects(): void {
+		$this->assertIsArray( ( new MslsBlogCollection() )->get_objects() );
+	}
 
-		$this->assertIsArray( $obj->get_users() );
+	public function test_get_plugin_active_blogs(): void {
+		$this->assertIsArray( ( new MslsBlogCollection() )->get_plugin_active_blogs() );
+	}
+
+	public function test_get(): void {
+		$this->assertIsArray( ( new MslsBlogCollection() )->get() );
+	}
+
+	public function test_get_filtered(): void {
+		$this->assertIsArray( ( new MslsBlogCollection() )->get_filtered() );
+	}
+
+	public function test_get_users(): void {
+		$this->assertIsArray( ( new MslsBlogCollection() )->get_users() );
 	}
 
 }
