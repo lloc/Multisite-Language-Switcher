@@ -69,7 +69,7 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 
 		$this->expectOutputString( $expected );
 
-		$this->get_sut()->form( [] );
+		$this->assertEquals( 'mslsform', $this->get_sut()->form( [] ) );
 	}
 
 }

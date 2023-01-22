@@ -96,9 +96,9 @@ class MslsWidget extends WP_Widget {
 	 *
 	 * @param array $instance
 	 *
-	 * @return void
+	 * @return string
 	 */
-	public function form( $instance ) {
+	public function form( $instance ): string {
 		printf(
 			'<p><label for="%1$s">%2$s:</label> <input class="widefat" id="%1$s" name="%3$s" type="text" value="%4$s" /></p>',
 			$this->get_field_id( 'title' ),
@@ -106,6 +106,8 @@ class MslsWidget extends WP_Widget {
 			$this->get_field_name( 'title' ),
 			( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' )
 		);
+
+		return 'mslsform';
 	}
 
 }
