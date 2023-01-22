@@ -7,6 +7,8 @@ use lloc\Msls\MslsPostTag;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
 use Brain\Monkey\Functions;
+use function Patchwork\always;
+use function Patchwork\redefine;
 
 /**
  * WP_Test_MslsPostTag
@@ -49,15 +51,39 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( $blogs );
 
+
 		return new MslsPostTag( $options, $collection );
+	}
+	/**
+	 * Verify the static suggest-method
+	 */
+	function test_suggest(): void {
+		$terms = [
+			(object) [
+				'term_id' => 123,
+				'name' => 'pinko',
+			]
+		];
+
+		Functions\expect( 'wp_die' );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'sanitize_text_field' )->andReturnFirstArg();
+		Functions\expect( 'get_terms' )->once()->andReturn( $terms );
+
+		redefine( 'filter_has_var', always( true ) );
+		redefine( 'filter_input', always( '' ) );
+
+		$this->assertNull( MslsPostTag::suggest() );
 	}
 
 	/**
 	 * Verify the static suggest-method
 	 */
-	function test_suggest_method() {
+	function test_suggest_method_no_filter_vars() {
 		Functions\expect( 'wp_die' );
 
+		redefine( 'filter_has_var', always( false ) );
 
 		$this->assertNull( MslsPostTag::suggest() );
 	}
