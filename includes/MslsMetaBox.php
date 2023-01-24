@@ -102,7 +102,7 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 		 * @since 0.9.9
 		 *
 		 */
-		$posts = (array) apply_filters( 'msls_meta_box_suggest_post', ( new PostQuery( $args ) )->get_posts() );
+		$posts = (array) apply_filters( 'msls_meta_box_suggest_post', ( new PostQuery( $args ) )->get_titles() );
 
 		foreach ( $posts as $id => $title ) {
 			$json->add( $id, $title );

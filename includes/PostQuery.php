@@ -2,6 +2,9 @@
 
 namespace lloc\Msls;
 
+/**
+ * @package Msls
+ */
 class PostQuery {
 
 	/**
@@ -19,6 +22,8 @@ class PostQuery {
 	}
 
 	/**
+	 * Returns number of posts captured with the actual query
+	 *
 	 * @return int
 	 */
 	public function has_posts(): int {
@@ -26,9 +31,11 @@ class PostQuery {
 	}
 
 	/**
+	 * Returns an array that contains the ids of posts as key and titles as value of the current query
+	 *
 	 * @return array<int, string>
 	 */
-	public function get_posts(): array {
+	public function get_titles(): array {
 		$posts = [];
 		if ( ! $this->has_posts() ) {
 			return $posts;
