@@ -24,7 +24,7 @@ class MslsOptionsQueryYear extends MslsOptionsQuery {
 				'date_query'     => $this->get_date_query(),
 			];
 
-			$this->arr[ $key ] = ( new PostCounter( $args ) )->get();
+			$this->arr[ $key ] = ( new PostQuery( $args ) )->has_posts();
 		}
 
 		return boolval( $this->arr[ $key ] );

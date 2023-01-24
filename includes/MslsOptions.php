@@ -289,21 +289,6 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	}
 
 	/**
-	 * Returns slug for a post type
-	 *
-	 * @param string $post_type
-	 *
-	 * @return string
-	 */
-	public function get_slug( string $post_type ): string {
-		$key = "rewrite_{$post_type}";
-
-		error_log( $key );
-		
-		return $this->$key ?? '';
-	}
-
-	/**
 	 * @param string $language
 	 *
 	 * @return string

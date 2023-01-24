@@ -24,7 +24,7 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 				'author'         => $this->get_author_id(),
 			];
 
-			$this->arr[ $key ] = ( new PostCounter( $args ) )->get();
+			$this->arr[ $key ] = ( new PostQuery( $args ) )->has_posts();
 		}
 
 		return (bool) $this->arr[ $key ];

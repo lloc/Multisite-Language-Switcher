@@ -70,6 +70,8 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 			}
 
 			$json = self::get_suggested_fields( $json, $args );
+
+			restore_current_blog();
 		}
 
 		wp_die( $json->encode() );
@@ -77,11 +79,11 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 
 	/**
 	 * @param MslsJson $json
-	 * @param array $args
+	 * @param array<string, mixed> $args
 	 *
 	 * @return mixed
 	 */
-	public static function get_suggested_fields( $json, $args ) {
+	public static function get_suggested_fields( MslsJson $json, $args ): MslsJson {
 		/**
 		 * Overrides the query-args for suggest fields in MetaBox
 		 *
@@ -90,29 +92,21 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 		 * @since 0.9.9
 		 *
 		 */
-		$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
+		$args  = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
 
-		$my_query = new WP_Query( $args );
-		while ( $my_query->have_posts() ) {
-			$my_query->the_post();
+		/**
+		 * Manipulates the WP_Post object before using it
+		 *
+		 * @param array<int, string> $post
+		 *
+		 * @since 0.9.9
+		 *
+		 */
+		$posts = (array) apply_filters( 'msls_meta_box_suggest_post', ( new PostQuery( $args ) )->get_posts() );
 
-			/**
-			 * Manipulates the WP_Post object before using it
-			 *
-			 * @param WP_Post $post
-			 *
-			 * @since 0.9.9
-			 *
-			 */
-			$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
-
-			if ( is_object( $my_query->post ) ) {
-				$json->add( get_the_ID(), get_the_title() );
-			}
+		foreach ( $posts as $id => $title ) {
+			$json->add( $id, $title );
 		}
-
-		wp_reset_postdata();
-		restore_current_blog();
 
 		return $json;
 	}
