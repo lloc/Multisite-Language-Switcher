@@ -78,16 +78,20 @@ class MslsPostTag extends MslsMain {
 			 */
 			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
 
-			foreach ( get_terms( $args ) as $term ) {
-				/**
-				 * Manipulates the term object before using it
-				 * @since 0.9.9
-				 * @param StdClass $term
-				 */
-				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
-
-				if ( is_object( $term ) ) {
-					$json->add( $term->term_id, $term->name );
+			$terms = get_terms( $args );
+			if ( is_array( $terms ) ) {
+				foreach ( $terms as $term ) {
+					/**
+					 * Manipulates the term object before using it
+					 *
+					 * @since 0.9.9
+					 *
+					 * @param object $term
+					 */
+					$term = apply_filters( 'msls_post_tag_suggest_term', $term );
+					if ( $term instanceof \WP_Term ) {
+						$json->add( $term->term_id, $term->name );
+					}
 				}
 			}
 

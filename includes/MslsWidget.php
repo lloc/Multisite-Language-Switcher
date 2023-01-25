@@ -17,7 +17,7 @@ class MslsWidget extends WP_Widget {
 
 	public $id_base = 'mslswidget';
 
-	public const FORM_NAME = 'mslsform';
+	public const FORMNAME = 'mslsform';
 
 	/**
 	 * Constructor
@@ -105,7 +105,7 @@ class MslsWidget extends WP_Widget {
 			$title
 		);
 
-		return self::FORM_NAME;
+		return self::FORMNAME;
 	}
 
 }
