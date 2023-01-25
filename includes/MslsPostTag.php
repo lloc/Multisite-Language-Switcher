@@ -7,9 +7,6 @@
 
 namespace lloc\Msls;
 
-use StdClass;
-use WP_Term;
-
 /**
  * Post Tag
  * @package Msls
@@ -236,7 +233,7 @@ class MslsPostTag extends MslsMain {
 		$origin_term = get_term( $origin_term_id, $mydata->base );
 		restore_current_blog();
 
-		if ( ! $origin_term instanceof WP_Term ) {
+		if ( ! $origin_term instanceof \WP_Term ) {
 			return $mydata;
 		}
 

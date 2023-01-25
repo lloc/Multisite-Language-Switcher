@@ -81,7 +81,7 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 	 * @param MslsJson $json
 	 * @param array<string, mixed> $args
 	 *
-	 * @return mixed
+	 * @return MslsJson
 	 */
 	public static function get_suggested_fields( MslsJson $json, $args ): MslsJson {
 		/**
@@ -245,7 +245,7 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 	 *
 	 * @return string
 	 */
-	public function render_options( $type, $msls_id ) {
+	public function render_options( string $type, string $msls_id ): string {
 		$options = [];
 
 		$my_query = new WP_Query( [
@@ -272,16 +272,16 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 	 *
 	 * @return string
 	 */
-	public function render_option( $post_id, $msls_id ) {
+	public function render_option( string $post_id, string $msls_id ): string {
 		return sprintf( '<option value="%s" %s>%s</option>', $post_id, selected( $post_id, $msls_id, false ), get_the_title( $post_id ) );
 	}
 
 	/**
-	 * Render the suggest input-field
+	 * Render a suggest input-field
 	 *
 	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
 	 */
-	public function render_input( $echo = true ) {
+	public function render_input() {
 		$blogs = $this->collection->get();
 
 		if ( $blogs ) {
@@ -347,26 +347,21 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 	}
 
 	/**
-	 * Set
-	 *
 	 * @param int $post_id
+	 *
+	 * @return void
 	 */
-	public function set( $post_id ) {
+	public function set( int $post_id ): void {
 		if ( $this->is_autosave( $post_id ) || ! $this->verify_nonce() ) {
 			return;
 		}
 
-		$capability = (
-		'page' == filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING ) ?
-			'edit_page' :
-			'edit_post'
-		);
+		$post_type  = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING );
+		$capability = 'page' == $post_type ? 'edit_page' : 'edit_post';
 
-		if ( ! current_user_can( $capability, $post_id ) ) {
-			return;
+		if ( current_user_can( $capability, $post_id ) ) {
+			$this->save( $post_id, MslsOptionsPost::class );
 		}
-
-		$this->save( $post_id, MslsOptionsPost::class );
 	}
 
 	/**

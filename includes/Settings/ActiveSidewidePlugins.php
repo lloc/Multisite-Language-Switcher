@@ -2,11 +2,13 @@
 
 namespace lloc\Msls\Settings;
 
-
+/**
+ * @package Msls
+ */
 class ActiveSidewidePlugins {
 
 	/**
-	 * @var array
+	 * @var array<string, mixed>
 	 */
 	protected $option;
 
