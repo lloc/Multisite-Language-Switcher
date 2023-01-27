@@ -54,7 +54,7 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	private $available_languages;
 
 	/**
-	 * @var bool
+	 * @var ?bool
 	 */
 	public $with_front;
 

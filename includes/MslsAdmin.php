@@ -61,16 +61,16 @@ class MslsAdmin extends MslsMain implements HookInterface {
 	 *
 	 * @return string
 	 */
-	public function get_menu_slug() {
+	public function get_menu_slug(): string {
 		return 'MslsAdmin';
 	}
 
 	/**
-	 * Get's the link for the switcher-settings in the wp-admin
+	 * Gets the link for the switcher-settings in the wp-admin
 	 *
 	 * @return string
 	 */
-	public function get_options_page_link() {
+	public function get_options_page_link(): string {
 		return sprintf( '/options-general.php?page=%s', $this->get_menu_slug() );
 	}
 
@@ -111,9 +111,10 @@ class MslsAdmin extends MslsMain implements HookInterface {
 
 	/**
 	 * There is something wrong? Here comes the message...
+	 *
 	 * @return bool
 	 */
-	public function has_problems() {
+	public function has_problems(): bool {
 		$message = '';
 
 		if ( $this->options->is_empty() ) {
@@ -157,9 +158,10 @@ class MslsAdmin extends MslsMain implements HookInterface {
 
 	/**
 	 * Create a submenu which contains links to all blogs of the current user
+	 *
 	 * @return string
 	 */
-	public function subsubsub() {
+	public function subsubsub(): string {
 		$arr = [];
 
 		foreach ( $this->collection->get_plugin_active_blogs() as $blog ) {

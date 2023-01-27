@@ -1,18 +1,12 @@
 <?php
-/**
- * MslsMetaBox
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
-use WP_Post;
-use WP_Query;
 
 /**
  * Meta box for the edit mode of the (custom) post types
+ *
  * @package Msls
  */
 class MslsMetaBox extends MslsMain implements HookInterface {
@@ -248,7 +242,7 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 	public function render_options( string $type, string $msls_id ): string {
 		$options = [];
 
-		$my_query = new WP_Query( [
+		$query = new PostQuery( [
 			'post_type'      => $type,
 			'post_status'    => get_post_stati( [ 'internal' => '' ] ),
 			'orderby'        => 'title',
@@ -257,31 +251,29 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 			'fields'         => 'ids',
 		] );
 
-		if ( $my_query->have_posts() ) {
-			foreach ( $my_query->posts as $post_id ) {
-				$options[] = $this->render_option( $post_id, $msls_id );
-			}
+		foreach ( $query->get_IDs() as $post_id ) {
+			$options[] = $this->render_option( $post_id, $msls_id );
 		}
 
 		return implode( PHP_EOL, $options );
 	}
 
 	/**
-	 * @param string $post_id
+	 * @param int $post_id
 	 * @param string $msls_id
 	 *
 	 * @return string
 	 */
-	public function render_option( string $post_id, string $msls_id ): string {
-		return sprintf( '<option value="%s" %s>%s</option>', $post_id, selected( $post_id, $msls_id, false ), get_the_title( $post_id ) );
+	public function render_option( int $post_id, string $msls_id ): string {
+		return sprintf( '<option value="%d" %s>%s</option>', $post_id, selected( $post_id, $msls_id, false ), get_the_title( $post_id ) );
 	}
 
 	/**
 	 * Render a suggest input-field
 	 *
-	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
+	 * @return void
 	 */
-	public function render_input() {
+	public function render_input(): void {
 		$blogs = $this->collection->get();
 
 		if ( $blogs ) {
@@ -385,7 +377,6 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 		$origin_post_id = (int) $_GET['msls_id'];
 
 		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
-
 		if ( null === $origin_blog_id ) {
 			return $mydata;
 		}
@@ -394,7 +385,7 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 		$origin_post = get_post( $origin_post_id );
 		restore_current_blog();
 
-		if ( ! $origin_post instanceof WP_Post ) {
+		if ( ! $origin_post instanceof \WP_Post ) {
 			return $mydata;
 		}
 

@@ -145,7 +145,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @return ?MslsBlog
 	 */
-	public function get_blog( string $language ) {
+	public function get_blog( string $language ): ?MslsBlog {
 		$blog = null;
 
 		foreach ( $this->get_objects() as $item ) {
@@ -163,11 +163,11 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @param string $language
 	 *
-	 * @return string|null
+	 * @return ?int
 	 */
-	public function get_blog_id( string $language ): ?string {
+	public function get_blog_id( string $language ): ?int {
 		$blog    = $this->get_blog( $language );
-		$blog_id = ! is_null( $blog ) ? $blog->userblog_id : null;
+		$blog_id = ! is_null( $blog ) ? $blog->userblog_id : 0;
 
 		return apply_filters( 'msls_blog_collection_get_blog_id', $blog_id, $language );
 	}

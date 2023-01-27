@@ -22,8 +22,10 @@ class MslsGetSet extends MslsRegistryInstance {
 	 *
 	 * @param string $key
 	 * @param mixed $value
+	 *
+	 * @return void
 	 */
-	public function __set( $key, $value ) {
+	public function __set( string $key, $value ): void {
 		$this->arr[ $key ] = $value;
 
 		if ( empty( $this->arr[ $key ] ) ) {
