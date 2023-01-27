@@ -233,7 +233,7 @@ class MslsPostTag extends MslsMain {
 			return $mydata;
 		}
 
-		switch_to_blog( (int) $origin_blog_id );
+		switch_to_blog( $origin_blog_id );
 		$origin_term = get_term( $origin_term_id, $mydata->base );
 		restore_current_blog();
 

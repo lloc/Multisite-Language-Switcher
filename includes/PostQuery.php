@@ -53,4 +53,13 @@ class PostQuery {
 
 		return $posts;
 	}
+
+	/**
+	 * Returns an array that contains the ids of posts as values
+	 *
+	 * @return int[]
+	 */
+	public function get_IDs(): array {
+		return $this->has_posts() ? $this->query->posts : [];
+	}
 }
