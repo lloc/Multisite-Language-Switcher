@@ -280,9 +280,9 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 			global $post;
 
 			$post_type = get_post_type( $post->ID );
-			$my_data   = new MslsOptionsPost( $post->ID );
+			$mydata   = new MslsOptionsPost( $post->ID );
 
-			$this->maybe_set_linked_post( $my_data );
+			$this->maybe_set_linked_post( $mydata );
 
 			$temp  = $post;
 			$items = '';
@@ -299,9 +299,9 @@ class MslsMetaBox extends MslsMain implements HookInterface {
 
 				$value = $title = '';
 
-				if ( $my_data->has_value( $language ) ) {
-					$icon->set_href( $my_data->$language );
-					$value = $my_data->$language;
+				if ( $mydata->has_value( $language ) ) {
+					$icon->set_href( $mydata->$language );
+					$value = $mydata->$language;
 					$title = get_the_title( $value );
 				}
 

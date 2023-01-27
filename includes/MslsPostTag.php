@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsPostTag
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -145,9 +140,9 @@ class MslsPostTag extends MslsMain {
 		}
 
 		$term_id = $tag->term_id ?? 0;
-		$my_data = MslsOptionsTax::create( $term_id );
+		$mydata = MslsOptionsTax::create( $term_id );
 
-		$this->maybe_set_linked_term( $my_data );
+		$this->maybe_set_linked_term( $mydata );
 
 		$type = MslsContentTypes::create()->get_request();
 
@@ -169,11 +164,11 @@ class MslsPostTag extends MslsMain {
 				->set_icon_type( 'flag' );
 
 			$value = $title = '';
-			if ( $my_data->has_value( $language ) ) {
-				$term = get_term( $my_data->$language, $type );
+			if ( $mydata->has_value( $language ) ) {
+				$term = get_term( $mydata->$language, $type );
 				if ( is_object( $term ) ) {
-					$icon->set_href( $my_data->$language );
-					$value = $my_data->$language;
+					$icon->set_href( $mydata->$language );
+					$value = $mydata->$language;
 					$title = $term->name;
 				}
 			}
@@ -194,7 +189,7 @@ class MslsPostTag extends MslsMain {
 	}
 
 	/**
-	 * Set calls the save method if taxonomy is set
+	 * Set calls the save $type = MslsContentTypes::create()->get_request();method if taxonomy is set
 	 * @param int $term_id
 	 *
  	 * @return bool
@@ -233,8 +228,10 @@ class MslsPostTag extends MslsMain {
 			return $mydata;
 		}
 
+		$type = MslsContentTypes::create()->get_request();
+
 		switch_to_blog( $origin_blog_id );
-		$origin_term = get_term( $origin_term_id, $mydata->base );
+		$origin_term = get_term( $origin_term_id, $type );
 		restore_current_blog();
 
 		if ( ! $origin_term instanceof \WP_Term ) {
