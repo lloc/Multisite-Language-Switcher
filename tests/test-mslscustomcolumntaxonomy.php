@@ -3,16 +3,14 @@
 namespace lloc\MslsTests;
 
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsCustomColumn;
 use lloc\Msls\MslsCustomColumnTaxonomy;
 use lloc\Msls\MslsOptions;
-use Mockery;
 
 class WP_Test_MslsCustomColumnTaxonomy extends Msls_UnitTestCase {
 
 	function test_th() {
-		$options    = Mockery::mock( MslsOptions::class );
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$options    = \Mockery::mock( MslsOptions::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( [] );
 
 		$obj = new MslsCustomColumnTaxonomy( $options, $collection );

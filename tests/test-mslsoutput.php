@@ -7,13 +7,12 @@ use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOptionsPost;
 use Brain\Monkey\Functions;
-use Mockery;
 
 class WP_Test_MslsOutput extends Msls_UnitTestCase {
 
 	function get_test() {
-		$options    = Mockery::mock( MslsOptions::class );
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$options    = \Mockery::mock( MslsOptions::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( [
 			'has_current_blog' => true,
 			'get_current_blog' => 1,

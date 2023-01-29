@@ -8,9 +8,6 @@ use lloc\Msls\MslsAdmin;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
-use Mockery;
-use Mockery\Mock;
-use WP_Post_Type;
 
 class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
@@ -23,11 +20,11 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		Functions\when( 'get_admin_url' )->justReturn( 'wp-admin' );
 		Functions\when( 'get_locale' )->justReturn( 'de_DE' );
 
-		$options = Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( false );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', 'it_IT' ] );
 
-		$blog = Mockery::mock( MslsBlog::class );
+		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_title' )->andReturns( 'abc (DEF)' );
 		$blog->shouldReceive( 'get_description' )->andReturns( 'DEF' );
 		$blog->userblog_id = 1;
@@ -35,7 +32,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
 		$blogs[] = $blog;
 
-		$blog = Mockery::mock( MslsBlog::class );
+		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_title' )->andReturns( 'uvw (XYZ)' );
 		$blog->shouldReceive( 'get_description' )->andReturns( 'XYZ' );
 		$blog->userblog_id = 2;
@@ -51,7 +48,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 			];
 		}
 
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturns( 1 );
 		$collection->shouldReceive( 'get_plugin_active_blogs' )->andReturns( $blogs );
 		$collection->shouldReceive( 'get_users' )->andReturns( $users );
@@ -60,10 +57,10 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	function test_has_problems_no_problem() {
-		$options = Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', 'it_IT' ] );
 
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( false );
 
 		$obj = new MslsAdmin( $options, $collection );
@@ -72,10 +69,10 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	}
 
 	function test_has_problems_one_language() {
-		$options = Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', ] );
 
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( false );
 
 		$obj = new MslsAdmin( $options, $collection );
@@ -90,10 +87,10 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		Functions\when( 'get_current_blog_id' )->justReturn( 1 );
 		Functions\when( 'admin_url' )->justReturn( '' );
 
-		$options = Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( true );
 
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 
 		$obj = new MslsAdmin( $options, $collection );
 
@@ -217,7 +214,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_tizio() {
 		$obj = $this->get_sut();
 
-		$post_type          = Mockery::mock( WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = false;
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -229,7 +226,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_pinko() {
 		$obj = $this->get_sut();
 
-		$post_type          = Mockery::mock( WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = true;
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -241,7 +238,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_pallino() {
 		$obj = $this->get_sut();
 
-		$post_type          = Mockery::mock( WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = [ 'slug' => 'pallino_slug' ];
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -318,7 +315,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj = $this->get_sut();
 
 		foreach ( [ 'post' => 'Post', 'page' => 'Page' ] as $name => $label ) {
-			$post_type        = Mockery::mock( WP_Post_Type::class );
+			$post_type        = \Mockery::mock( \WP_Post_Type::class );
 			$post_type->name  = $name;
 			$post_type->label = $label;
 

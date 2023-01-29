@@ -5,8 +5,6 @@ namespace lloc\MslsTests;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsOptions;
 use Brain\Monkey\Functions;
-use Mockery;
-use stdClass;
 
 class WP_Test_MslsBlog extends Msls_UnitTestCase {
 
@@ -19,7 +17,7 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 	public function test___get() {
 		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
 
-		$blog = new stdClass();
+		$blog = new \stdClass();
 		$blog->userblog_id = 1;
 		$blog->blogname    = 'Test';
 
@@ -33,7 +31,7 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 	}
 
 	public function test_get_url_current_link() {
-		$blog = new stdClass();
+		$blog = new \stdClass();
 		$blog->userblog_id = 1;
 		$blog->blogname    = 'Test';
 
@@ -44,14 +42,14 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 
 		$obj = new MslsBlog( $blog, 'Italiano' );
 
-		$options = Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_current_link' )->once()->andReturn( '/current_link' );
 
 		$this->assertEquals( '/current_link', $obj->get_url( $options ) );
 	}
 
 	public function test_get_url_get_parmalink_is_frontpage() {
-		$blog = new stdClass();
+		$blog = new \stdClass();
 		$blog->userblog_id = 2;
 		$blog->blogname    = 'Test';
 
@@ -62,7 +60,7 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 
 		$obj = new MslsBlog( $blog, 'Italiano' );
 
-		$options = Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_permalink' )->once()->andReturn( '/permalink' );
 
 		$this->assertEquals( '/permalink', $obj->get_url( $options ) );

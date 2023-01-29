@@ -8,56 +8,70 @@ use Brain\Monkey\Filters;
 use lloc\Msls\Map\HrefLang;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use Mockery;
 
 class WP_Test_HrefLang extends Msls_UnitTestCase {
 
-	public function get_sut() {
-		$map = [
-			'de_DE'        => 'de',
-			'de_DE_formal' => 'de',
-			'fr_FR'        => 'fr',
-			'es_ES'        => 'es',
-			'cat'          => 'cat',
-			'en_US'        => 'en',
-			'en_GB'        => 'en',
+	/**
+	 * @return \string[][]
+	 */
+	public function data_provider(): array {
+		return [
+			[ 'de-DE', 'de_DE' ],
+			[ 'de-DE', 'de_DE_formal' ],
+			[ 'fr', 'fr_FR' ],
+			[ 'es', 'es_ES' ],
+			[ 'cat', 'cat' ],
+			[ 'en-GB', 'en_GB' ],
+			[ 'en-US', 'en_US' ],
 		];
+	}
 
-		foreach ( $map as $locale => $alpha2 ) {
-			$blog = Mockery::mock( MslsBlog::class );
+	public function get_sut(): HrefLang {
+		foreach ( $this->data_provider() as $codes ) {
+			$blog = \Mockery::mock( MslsBlog::class );
 			$blog->shouldReceive( [
-				'get_alpha2'   => $alpha2,
-				'get_language' => $locale,
+				'get_alpha2'   => $codes[0],
+				'get_language' => $codes[1],
 			] );
 
 			$blogs[] = $blog;
 		}
 
-		$collection = Mockery::mock( MslsBlogCollection::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
 
 		return new HrefLang( $collection );
 	}
 
-	public function test_get() {
+	/**
+ 	 * @dataProvider data_provider
+	 *
+	 * @param string $expected
+	 * @param string $language
+	 *
+	 * @return void
+	 */
+	public function test_get( string $expected, string $language ): void {
 		$obj = $this->get_sut();
 
-		$this->assertEquals( 'de-DE', $obj->get( 'de_DE' ) );
-		$this->assertEquals( 'de-DE', $obj->get( 'de_DE_formal' ) );
-		$this->assertEquals( 'fr', $obj->get( 'fr_FR' ) );
-		$this->assertEquals( 'es', $obj->get( 'es_ES' ) );
-		$this->assertEquals( 'cat', $obj->get( 'cat' ) );
-		$this->assertEquals( 'en-GB', $obj->get( 'en_GB' ) );
-		$this->assertEquals( 'en-US', $obj->get( 'en_US' ) );
+		$this->assertEquals( $expected, $obj->get( $language ) );
 	}
 
-	public function test_get_has_filter() {
+	/**
+	 * @dataProvider data_provider
+	 *
+	 * @param string $expected
+	 * @param string $language
+	 *
+	 * @return void
+	 */
+	public function test_get_has_filter( string $expected, string $language ): void {
 		$obj = $this->get_sut();
 
 		Functions\when( 'has_filter' )->justReturn( true );
-		Filters\expectApplied('msls_head_hreflang')->once()->with( 'en_US')->andReturn( 'en-US' );
+		Filters\expectApplied('msls_head_hreflang')->once()->with( $language )->andReturn( $expected );
 
-		$this->assertEquals( 'en-US', $obj->get( 'en_US' ) );
+		$this->assertEquals( $expected, $obj->get( $language ) );
 	}
 
 }
