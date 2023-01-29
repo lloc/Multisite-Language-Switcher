@@ -5,7 +5,6 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 
 use lloc\Msls\MslsWidget;
-use Mockery;
 
 class WP_Test_MslsWidget extends Msls_UnitTestCase {
 
@@ -29,9 +28,9 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 	}
 
 	public function get_sut() {
-		Mockery::mock( '\WP_Widget' );
+		\Mockery::mock( '\WP_Widget' );
 
-		$widget = Mockery::mock( MslsWidget::class )->makePartial();
+		$widget = \Mockery::mock( MslsWidget::class )->makePartial();
 		$widget->shouldReceive( 'get_field_name' )->andReturn( 'test_field_name' );
 		$widget->shouldReceive( 'get_field_id' )->andReturn( 'test_field_id' );
 

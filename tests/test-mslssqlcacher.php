@@ -4,13 +4,11 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsSqlCacher;
-use Mockery;
-use WPDB;
 
 class WP_Test_MslsSqlCacher extends Msls_UnitTestCase {
 
 	public function get_sut() {
-		$wpdb = Mockery::mock( WPDB::class );
+		$wpdb = \Mockery::mock( \WPDB::class );
 		$wpdb->shouldReceive( [
 			'prepare' => '',
 			'get_results' => []
