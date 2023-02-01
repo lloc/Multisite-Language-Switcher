@@ -20,7 +20,7 @@ class Service extends MslsRegistryInstance {
 	 *
 	 * @return bool Whether the content import functionality support classes where hooked or not.
 	 */
-	public function register() {
+	public function register(): bool {
 		if ( ! MslsOptions::instance()->activate_content_import ) {
 			return false;
 		}
@@ -34,8 +34,10 @@ class Service extends MslsRegistryInstance {
 	 * Hooks the filters and actions for this service provider.
 	 *
 	 * Differently from the `register` method this method will not check for options to hook.
+	 *
+	 * @return void
 	 */
-	public function hook() {
+	public function hook(): void {
 		add_action( 'load-post.php', function () {
 			return ContentImporter::instance()->handle_import();
 		} );
@@ -56,8 +58,5 @@ class Service extends MslsRegistryInstance {
 		add_filter( 'wp_calculate_image_srcset', function ( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
 			return AttachmentPathFinder::instance()->filter_srcset( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId );
 		}, 99, 5 );
-
-		if ( is_admin() ) {
-		}
 	}
 }

@@ -190,18 +190,17 @@ class MslsPostTag extends MslsMain {
 
 	/**
 	 * Set calls the save $type = MslsContentTypes::create()->get_request();method if taxonomy is set
+	 *
 	 * @param int $term_id
 	 *
- 	 * @return bool
+ 	 * @return void
 	 */
-	public function set( int $term_id ): bool {
+	public function set( int $term_id ): void {
 		if ( ! MslsContentTypes::create()->acl_request() ) {
-			return false;
+			return;
 		}
 
 		$this->save( $term_id, MslsOptionsTax::class );
-
-		return true;
 	}
 
 	/**

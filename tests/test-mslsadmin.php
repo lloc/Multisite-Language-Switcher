@@ -65,7 +65,9 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
 		$obj = new MslsAdmin( $options, $collection );
 
-		$this->assertFalse( $obj->has_problems() );
+		$this->expectOutputString( '' );
+
+		$obj->show_problems();
 	}
 
 	function test_has_problems_one_language() {
@@ -79,7 +81,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
 		$this->expectOutputRegex( '/^<div id="msls-warning" class="updated fade"><p>.*$/' );
 
-		$this->assertTrue( $obj->has_problems() );
+		$obj->show_problems();
 	}
 
 	function test_has_problems_is_empty() {
@@ -96,7 +98,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
 		$this->expectOutputRegex( '/^<div id="msls-warning" class="updated fade"><p>.*$/' );
 
-		$this->assertTrue( $obj->has_problems() );
+		$obj->show_problems();
 	}
 
 	public function test_subsubsub() {
