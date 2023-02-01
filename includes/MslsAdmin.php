@@ -47,7 +47,7 @@ class MslsAdmin extends MslsMain implements HookInterface {
 				add_options_page( $title, $title, 'manage_options', $obj->get_menu_slug(), [ $obj, 'render' ] );
 
 				add_action( 'admin_init', [ $obj, 'register' ] );
-				add_action( 'admin_notices', [ $obj, 'has_problems' ] );
+				add_action( 'admin_notices', [ $obj, 'show_problems' ] );
 
 				add_filter( 'msls_admin_validate', [ $obj, 'set_blog_language' ] );
 			}
@@ -114,7 +114,7 @@ class MslsAdmin extends MslsMain implements HookInterface {
 	 *
 	 * @return void
 	 */
-	public function has_problems(): void {
+	public function show_problems(): void {
 		$message = '';
 
 		if ( $this->options->is_empty() ) {
