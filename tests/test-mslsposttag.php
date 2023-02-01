@@ -116,6 +116,6 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 	}
 
 	public function test_set(): void {
-		$this->assertFalse( $this->get_sut()->set( 1 ) );
+		$this->assertNull( $this->get_sut()->set( 1 ) );
 	}
 }
