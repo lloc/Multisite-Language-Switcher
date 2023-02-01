@@ -7,3 +7,4 @@ phpunit.xml.bak
 docs/.vuepress/dist/
 node_modules/
 vendor/
+coverage/
