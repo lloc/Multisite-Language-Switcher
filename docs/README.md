@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /banner-1544x500.png
+heroImage: /images/banner-1544x500.png
 heroText: Multisite Language Switcher
 tagline: Simple, powerful and easy to use
 actionText: Get Started →

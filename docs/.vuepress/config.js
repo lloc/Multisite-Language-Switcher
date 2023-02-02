@@ -3,11 +3,11 @@ module.exports = {
   description: 'Simple, powerful and easy to use',
   serviceWorker: true,
   head: [
-    [ 'link', { rel: 'icon', href: '/favicon.png' } ]
+    [ 'link', { rel: 'icon', href: '/images/icon-128x128.png' } ]
   ],
   ga: 'UA-1058133-32',
   themeConfig: {
-    logo: '/logo.png',
+    logo: '/images/icon-256x256.png',
     lastUpdated: 'Last Updated',
     repo: 'lloc/multisite-language-switcher',
     repoLabel: 'Github Repository',
