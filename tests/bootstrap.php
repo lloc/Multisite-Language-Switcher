@@ -15,6 +15,7 @@ class Msls_UnitTestCase extends TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
+
 		Monkey\setUp();
 
 		Functions\when( 'esc_html' )->returnArg();

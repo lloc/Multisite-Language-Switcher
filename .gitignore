@@ -8,3 +8,4 @@ docs/.vuepress/dist/
 docs/.vuepress/public/api-documentation
 node_modules/
 vendor/
+coverage/

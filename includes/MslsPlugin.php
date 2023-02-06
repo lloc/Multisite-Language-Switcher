@@ -216,9 +216,9 @@ class MslsPlugin {
 
 	/**
 	 * Register block and shortcode.
-	 * @return bool
+	 * @return void
 	 */
-	public function block_init(): bool {
+	public function block_init(): void {
 		if ( ! $this->options->is_excluded() ) {
 			$handle   = 'msls-widget-block';
 			$callback = [ $this, 'block_render' ];
@@ -241,24 +241,16 @@ class MslsPlugin {
 			] );
 
 			add_shortcode( 'sc_msls_widget', $callback );
-
-			return true;
 		}
-
-		return false;
 	}
 
 	/**
-	 * @return bool
+	 * @return void
 	 */
-	public function admin_bar_init(): bool {
+	public function admin_bar_init(): void {
 		if ( is_admin_bar_showing() && is_super_admin() ) {
 			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
-
-			return true;
 		}
-
-		return false;
 	}
 
 	/**
@@ -266,9 +258,9 @@ class MslsPlugin {
 	 *
 	 * The method returns true if JS is loaded or false if not
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function admin_menu(): bool {
+	public function admin_menu(): void {
 		$ver     = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
 		$postfix = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
@@ -277,11 +269,7 @@ class MslsPlugin {
 
 		if ( $this->options->activate_autocomplete ) {
 			wp_enqueue_script( 'msls-autocomplete', self::plugins_url( "js/msls{$postfix}.js" ), [ 'jquery-ui-autocomplete' ], $ver );
-
-			return true;
 		}
-
-		return false;
 	}
 
 	/**
@@ -334,16 +322,12 @@ class MslsPlugin {
 	 *
 	 * The widget will only be registered if the current blog is not
 	 * excluded in the configuration of the plugin.
-	 * @return boolean
+	 * @return void
 	 */
-	public function init_widget() {
+	public function init_widget(): void {
 		if ( ! $this->options->is_excluded() ) {
 			register_widget( MslsWidget::class );
-
-			return true;
 		}
-
-		return false;
 	}
 
 	/**
@@ -352,15 +336,10 @@ class MslsPlugin {
 	 * @return string
 	 */
 	public function block_render(): string {
-		if ( ! $this->init_widget() ) {
-			return '';
-		}
-
 		ob_start();
 		the_widget( MslsWidget::class );
-		$output = ob_get_clean();
 
-		return $output;
+		return ob_get_clean();
 	}
 
 	/**
@@ -369,10 +348,10 @@ class MslsPlugin {
 	 * The method should be executed always on init because we have some
 	 * translatable string in the frontend too.
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function init_i18n_support(): bool {
-		return load_plugin_textdomain( 'multisite-language-switcher', false, self::dirname( '/languages/' ) );
+	public function init_i18n_support(): void {
+		load_plugin_textdomain( 'multisite-language-switcher', false, self::dirname( '/languages/' ) );
 	}
 
 	/**
