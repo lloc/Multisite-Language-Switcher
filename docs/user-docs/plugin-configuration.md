@@ -12,7 +12,7 @@ The default downloaded version of WordPress includes only one language. Make sur
 
 See the following articles:
 
--  [​Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language)​
+-  [Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language)​
 -  and [WordPress in your language](http://codex.wordpress.org/WordPress_in_Your_Language)​
 
 ## Activate the plugin
@@ -30,9 +30,9 @@ So far the plugin installation follows the usual procedure. In a practical way, 
 
 The plugin settings are rather simple (in the **Administration Menu -> Settings -> Multisite Language Switcher**). You need to activate the plugin once in each blog : click « Save » at the bottom of the settings even if you haven't changed anything yet. It's the only way for the plugin to offer the necessary flexibility, regarding each language for example.
 
-![Plugin settings](/settings.png)
+![Plugin settings](/language-settings.png)
 
-You'll see here, similar to the mentioned options page before,  a select-menu that shows you the language set for the current website.
+You'll see also, similar to the mentioned options page in the general settings before, a select-menu that shows you the language set for the current website.
 
 ## Main settings
 
@@ -61,7 +61,7 @@ This option will show only existing translations. *Otherwise there will be a lin
 
 This value will be used in the title-attribute of the images and in the text-links. 
 
-![Main settings](/main-settings.png)
+![Main settings](/images/main-settings.png)
 
 ### Text/HTML fields
 
@@ -77,7 +77,7 @@ You can decide which priority the plugin should apply for the translation hints.
 
 ## Advanced settings
 
-![Advanced settings](/advanced-settings.png)
+![Advanced settings](/iamges/advanced-settings.png)
 
 ### Activate experimental autocomplete inputs
 
