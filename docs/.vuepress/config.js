@@ -23,7 +23,7 @@ module.exports = {
       },
       {
         text: 'API documentation',
-        link: '/api-documentation/',
+        link: 'https://msls.co/api-documentation/',
       }
     ],
     sidebar: [
