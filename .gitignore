@@ -4,6 +4,7 @@ composer.phar
 package-lock.json
 phpunit.xml.bak
 .idea/
+assets/
 docs/.vuepress/dist/
 docs/.vuepress/public/api-documentation
 node_modules/
