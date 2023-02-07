@@ -30,7 +30,7 @@ So far the plugin installation follows the usual procedure. In a practical way, 
 
 The plugin settings are rather simple (in the **Administration Menu -> Settings -> Multisite Language Switcher**). You need to activate the plugin once in each blog : click « Save » at the bottom of the settings even if you haven't changed anything yet. It's the only way for the plugin to offer the necessary flexibility, regarding each language for example.
 
-![Plugin settings](/language-settings.png)
+![Plugin settings](/images/language-settings.png)
 
 You'll see also, similar to the mentioned options page in the general settings before, a select-menu that shows you the language set for the current website.
 
@@ -77,7 +77,7 @@ You can decide which priority the plugin should apply for the translation hints.
 
 ## Advanced settings
 
-![Advanced settings](/iamges/advanced-settings.png)
+![Advanced settings](/images/advanced-settings.png)
 
 ### Activate experimental autocomplete inputs
 
