@@ -1,3 +1,9 @@
+## 2.6.0
+
+* Code quality improvements
+* Tests added
+* Bugfixing
+
 ## 2.5.8
 
 * Avoid notice on Appearance > Widgets admin page
