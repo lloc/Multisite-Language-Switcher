@@ -81,7 +81,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 				$description = false;
 				if ( $blog->userblog_id == $this->current_blog_id ) {
 					$description = $options->description;
-				} elseif ( ! $this->is_plugin_active( $blog->userblog_id ) ) {
+				} elseif ( ! $this->is_plugin_active( $blog ) ) {
 					continue;
 				}
 
