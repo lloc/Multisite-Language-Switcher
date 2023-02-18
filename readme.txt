@@ -9,6 +9,7 @@ Requires PHP: 7.1
 Stable tag: 2.5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+GitHub Plugin URI: lloc/Multisite-Language-Switcher
 
 A simple, powerful and easy to use plugin that will help you to manage multilingual content in a multisite WordPress installation. 
 

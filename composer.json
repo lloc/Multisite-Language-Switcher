@@ -30,7 +30,6 @@
   "scripts": {
     "test": "phpunit",
     "coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html coverage",
-    "documentation": "bin/documentation.sh",
     "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
     "flags-png": "php bin/flags-png.php > flags/flags.php",
     "flags-svg": "php bin/flags-svg.php > css/flags.php",
