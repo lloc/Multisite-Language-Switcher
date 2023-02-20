@@ -219,18 +219,19 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	/**
 	 * Is plugin active in the blog with that blog_id
 	 *
-	 * @param MslsBlog $blog
+	 * @param \stdClass|MslsBlog $blog
 	 *
 	 * @return bool
 	 */
-	public function is_plugin_active( MslsBlog $blog ): bool {
-		$path = MslsPlugin::path();
+	public function is_plugin_active( $blog ): bool {
+		$path    = MslsPlugin::path();
+		$blog_id = $blog->userblog_id ?? 0;
 
 		if ( is_null( $this->active_sidewide ) ) {
 			$this->active_sidewide = ( new ActiveSidewidePlugins() )->is_active( $path );
 		}
 
-		return $this->active_sidewide || ( new BlogActivePlugins( $blog->userblog_id ) )->is_active( $path );
+		return $this->active_sidewide || ( new BlogActivePlugins( $blog_id ) )->is_active( $path );
 	}
 
 	/**
