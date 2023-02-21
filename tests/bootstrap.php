@@ -9,7 +9,7 @@ use Brain\Monkey\Functions;
 class Msls_UnitTestCase extends TestCase {
 
 	/**
-	 * @var SUT object
+	 * @var object $test SUT
 	 */
 	protected $test;
 
