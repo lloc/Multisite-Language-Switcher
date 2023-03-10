@@ -5,8 +5,7 @@ package-lock.json
 phpunit.xml.bak
 .idea/
 assets/
-docs/.vuepress/dist/
-docs/.vuepress/public/api-documentation
+docs/
 node_modules/
 vendor/
 coverage/
