@@ -32,10 +32,9 @@ class Duplicating extends BaseImporter {
 	}
 
 	public function import( array $data ) {
-		// Set the post type reading it from the request payload, if not possible, use the default one.
-		$data['post_type'] = $this->read_post_type_from_request( 'post' );
-
 		$source_post = $this->import_coordinates->source_post;
+		// Set the post type same as source post, or reading it from the request payload, if not possible, use the default one.
+		$data['post_type'] = empty( $source_post->post_type ) ? $this->read_post_type_from_request( 'post' ) : $source_post->post_type;
 
 		foreach ( $this->filter_fields() as $field ) {
 			$value          = $source_post->{$field};
