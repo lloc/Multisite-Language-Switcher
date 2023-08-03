@@ -129,8 +129,17 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
 		$obj  = $this->get_sut( $users );
 
-		$this->expectNotice();
-		$this->expectNoticeMessage( 'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of 100 users. Please, use the hook "msls_reference_users" to filter the result before!' );
+		set_error_handler(
+			static function ( $errno, $errstr ) {
+				restore_error_handler();
+				throw new \Exception( $errstr, $errno );
+			},
+			E_ALL
+		);
+
+		$this->expectException( \Exception::class );
+		$this->expectExceptionMessage( 'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of 100 users. Please, use the hook "msls_reference_users" to filter the result before!' );
+
 		$obj->reference_user();
 	}
 
