@@ -74,7 +74,7 @@ class MslsPlugin {
 				add_action( 'load-edit-tags.php', [ MslsPostTag::class, 'init' ] );
 
 				if ( filter_has_var( INPUT_POST, 'action' ) ) {
-					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
+					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 					if ( 'add-tag' === $action ) {
 						add_action( 'admin_init', [ MslsPostTag::class, 'init' ] );
