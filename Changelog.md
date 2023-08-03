@@ -1,3 +1,8 @@
+## 2.5.9
+
+* Compatibility issue with E_NOTICE and PHPUnit 10
+* Compatibility issue with PHP 8.1 regarding FILTER_SANITIZE_STRING
+
 ## 2.5.8
 
 * Avoid notice on Appearance > Widgets admin page
