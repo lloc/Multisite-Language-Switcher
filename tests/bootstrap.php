@@ -9,7 +9,9 @@ use Brain\Monkey\Functions;
 class Msls_UnitTestCase extends TestCase {
 
 	/**
-	 * @var SUT object
+	 * Instance of the class to test
+	 *
+	 * @var object $test
 	 */
 	protected $test;
 
@@ -24,6 +26,8 @@ class Msls_UnitTestCase extends TestCase {
 	}
 
 	protected function tearDown(): void {
+		restore_error_handler();
+
 		Monkey\tearDown();
 		parent::tearDown();
 	}
