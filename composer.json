@@ -27,12 +27,12 @@
     }
   },
   "scripts": {
-    "test": "phpunit",
-    "coverage": "phpunit --coverage-html docs/.vuepress/public/coverage",
+    "test": "vendor/bin/phpunit",
+    "coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html coverage",
+    "analyze": "vendor/bin/phpstan analyze",
     "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
     "flags-png": "php bin/flags-png.php > flags/flags.php",
-    "flags-svg": "php bin/flags-svg.php > css/flags.php",
-    "analyze": "vendor/bin/phpstan analyze"
+    "flags-svg": "php bin/flags-svg.php > css/flags.php"
   },
   "authors": [
     {
