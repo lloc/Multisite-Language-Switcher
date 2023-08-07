@@ -8,7 +8,6 @@ use lloc\Msls\MslsAdmin;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
-use Mockery\Mock;
 
 class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
