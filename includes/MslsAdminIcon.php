@@ -88,21 +88,18 @@ class MslsAdminIcon {
 	/**
 	 * @codeCoverageIgnore
 	 *
-	 * @param null $type
+	 * @param ?string $type
 	 *
 	 * @return MslsAdminIcon|MslsAdminIconTaxonomy
 	 */
-	public static function create( $type = null ) {
+	public static function create( ?string $type = null ) {
 		$obj = MslsContentTypes::create();
 
 		if ( ! $type ) {
 			$type = $obj->get_request();
 		}
-		if ( $obj->is_taxonomy() ) {
-			return new MslsAdminIconTaxonomy( $type );
-		}
 
-		return new MslsAdminIcon( $type );
+		return $obj->is_taxonomy() ? new MslsAdminIconTaxonomy( $type ) : new MslsAdminIcon( $type );
 	}
 
 	/**
