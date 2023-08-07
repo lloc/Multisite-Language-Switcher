@@ -14,10 +14,10 @@ class WP_Test_MslsCustomColumn extends Msls_UnitTestCase {
 		Functions\expect( 'get_the_ID' )->twice()->andReturnValues( [ 1, 2 ] );
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 1 ) . '/' );
 
-		$options = \Mockery::mock( MslsOptions::class );
-		$obj     = new MslsCustomColumn( $options, $this->getBlogsCollection() );
-
+		$options  = \Mockery::mock( MslsOptions::class );
+		$obj      = new MslsCustomColumn( $options, $this->getBlogsCollection() );
 		$expected = [ 'mslscol' => '<span class="flag-icon flag-icon-de">de_DE</span>&nbsp;<span class="flag-icon flag-icon-us">en_US</span>' ];
+
 		$this->assertEquals( $expected, $obj->th( [] ) );
 	}
 
