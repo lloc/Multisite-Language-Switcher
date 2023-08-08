@@ -32,6 +32,6 @@ trait WithRequestPostAttributes {
 			return $default;
 		}
 
-		return filter_var( $_REQUEST['post_type'], FILTER_SANITIZE_STRING ) ?: 'post';
+		return filter_var( $_REQUEST['post_type'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ?: 'post';
 	}
 }
