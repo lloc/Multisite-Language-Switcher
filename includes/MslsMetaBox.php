@@ -361,11 +361,8 @@ class MslsMetaBox extends MslsMain {
 			return;
 		}
 
-		$capability = (
-		'page' == filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING ) ?
-			'edit_page' :
-			'edit_post'
-		);
+		$post_type  = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$capability = 'page' === $post_type ? 'edit_page' : 'edit_post';
 
 		if ( ! current_user_can( $capability, $post_id ) ) {
 			return;
