@@ -14,7 +14,9 @@
     "phpstan/phpstan": "^1.8",
     "szepeviktor/phpstan-wordpress": "^1.1",
     "phpstan/extension-installer": "^1.1",
-    "antecedent/patchwork": "~2.1.19"
+    "antecedent/patchwork": "~2.1.19",
+    "squizlabs/php_codesniffer": "^3.7",
+    "phpcompatibility/php-compatibility": "^9.3"
   },
   "autoload": {
     "psr-4": {
@@ -30,6 +32,7 @@
     "test": "vendor/bin/phpunit",
     "coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html coverage",
     "analyze": "vendor/bin/phpstan analyze",
+    "php81": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1",
     "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
     "flags-png": "php bin/flags-png.php > flags/flags.php",
     "flags-svg": "php bin/flags-svg.php > css/flags.php"

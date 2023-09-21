@@ -1,3 +1,8 @@
+## 2.5.11
+
+* CodeSniffer installed for compatibility check with PHP 8.1
+* CSS/SVG Flags refreshed
+
 ## 2.5.10
 
 * WordPress 6.3 tested
