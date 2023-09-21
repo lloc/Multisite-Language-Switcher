@@ -181,7 +181,7 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Sets tags for the output
 	 *
-	 * @param array $arr
+	 * @param string[] $arr
 	 *
 	 * @return MslsOutput
 	 */
