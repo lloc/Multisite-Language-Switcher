@@ -171,4 +171,27 @@ class MslsBlog {
 		return self::_cmp( $a->get_description(), $b->get_description() );
 	}
 
+	/**
+	 * @return string
+	 */
+	public function get_blavatar(): string {
+		$blavatar_html   = '<div class="blavatar"></div>';
+		$show_site_icons = apply_filters( 'wp_admin_bar_show_site_icons', true );
+
+		switch_to_blog( $this->obj->userblog_id );
+
+		if ( true === $show_site_icons && has_site_icon( $this->obj->userblog_id ) ) {
+			$blavatar_html = sprintf(
+				'<img class="blavatar" src="%s" srcset="%s 2x" alt="" width="16" height="16"%s />',
+				esc_url( get_site_icon_url( 16 ) ),
+				esc_url( get_site_icon_url( 32 ) ),
+				( wp_lazy_loading_enabled( 'img', 'site_icon_in_toolbar' ) ? ' loading="lazy"' : '' )
+			);
+		}
+
+		restore_current_blog();
+
+		return $blavatar_html;
+	}
+
 }
