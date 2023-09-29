@@ -117,11 +117,13 @@ class MslsPlugin {
 
 	/**
 	 * @param $wp_admin_bar
+	 *
+	 * @return void
 	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
+	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
-			$title = '<div class="blavatar"></div>' . $blog->get_title();
+			$title = $blog->get_blavatar() . $blog->get_title();
 
 			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $title ] );
 		}
