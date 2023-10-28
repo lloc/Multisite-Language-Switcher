@@ -118,7 +118,7 @@ class MslsOutput extends MslsMain {
 				$default = sprintf( $format, 'x-default', $url, esc_attr( $description ) );
 			}
 
-			$arr[] = sprintf( $format, $hreflang->get( $blog->get_language() ), $url, esc_attr( $description ) );
+			$arr[] = sprintf( $format, $hreflang->get( $blog->get_language(), $blog->userblog_id ), $url, esc_attr( $description ) );
 		}
 
 		if ( 1 === count( $arr ) ) {

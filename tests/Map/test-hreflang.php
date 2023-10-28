@@ -22,12 +22,14 @@ class WP_Test_HrefLang extends Msls_UnitTestCase {
 			'en_GB'        => 'en',
 		];
 
+		$i = 1;
 		foreach ( $map as $locale => $alpha2 ) {
 			$blog = \Mockery::mock( MslsBlog::class );
 			$blog->shouldReceive( [
-				'get_alpha2'   => $alpha2,
 				'get_language' => $locale,
+				'get_alpha2'   => $alpha2,
 			] );
+			$blog->userblog_id = $i++;
 
 			$blogs[] = $blog;
 		}
@@ -41,22 +43,26 @@ class WP_Test_HrefLang extends Msls_UnitTestCase {
 	public function test_get() {
 		$obj = $this->get_sut();
 
-		$this->assertEquals( 'de-DE', $obj->get( 'de_DE' ) );
-		$this->assertEquals( 'de-DE', $obj->get( 'de_DE_formal' ) );
-		$this->assertEquals( 'fr', $obj->get( 'fr_FR' ) );
-		$this->assertEquals( 'es', $obj->get( 'es_ES' ) );
-		$this->assertEquals( 'cat', $obj->get( 'cat' ) );
-		$this->assertEquals( 'en-GB', $obj->get( 'en_GB' ) );
-		$this->assertEquals( 'en-US', $obj->get( 'en_US' ) );
+		Functions\expect( 'has_filter' )->with( 'msls_head_hreflang' )->times( 8 )->andReturn( false );
+
+		$this->assertEquals( 'de-DE', $obj->get( 'de_DE', 1 ) );
+		$this->assertEquals( 'de-DE', $obj->get( 'de_DE_formal', 2 ) );
+		$this->assertEquals( 'fr', $obj->get( 'fr_FR', 3 ) );
+		$this->assertEquals( 'es', $obj->get( 'es_ES', 4 ) );
+		$this->assertEquals( 'cat', $obj->get( 'cat', 5 ) );
+		$this->assertEquals( 'en-US', $obj->get( 'en_US', 6 ) );
+		$this->assertEquals( 'en-GB', $obj->get( 'en_GB', 7 ) );
+
+		$this->assertEquals( 'en_US', $obj->get( 'en_US', 8 ) );
 	}
 
 	public function test_get_has_filter() {
 		$obj = $this->get_sut();
 
-		Functions\when( 'has_filter' )->justReturn( true );
-		Filters\expectApplied('msls_head_hreflang')->once()->with( 'en_US')->andReturn( 'en-US' );
+		Functions\expect( 'has_filter' )->with( 'msls_head_hreflang' )->once()->andReturn( true );
+		Filters\expectApplied('msls_head_hreflang')->with( 'en_US')->once()->andReturn( 'en-US' );
 
-		$this->assertEquals( 'en-US', $obj->get( 'en_US' ) );
+		$this->assertEquals( 'en-US', $obj->get( 'en_US', 8 ) );
 	}
 
 }
