@@ -33,7 +33,7 @@ class HrefLang {
 	/**
 	 * @param MslsBlogCollection $blogs
 	 *
-	 * @return array
+	 * @return array<string,array<int,string>>
 	 */
 	public static function map_languages_from( MslsBlogCollection $blogs ): array {
 		$map = [];
