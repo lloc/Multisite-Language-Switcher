@@ -1,3 +1,10 @@
+## 2.6.0
+
+* WordPress 6.4 tested
+* Set PHP 7.4 as minimum requirement
+* Set WordPress 5.6 as minimum requirement
+* Blavatar fix 
+
 ## 2.5.11
 
 * CodeSniffer installed for compatibility check with PHP 8.1

@@ -3,10 +3,10 @@
 Contributors: realloc, lucatume
 Donate link: https://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, localization
-Requires at least: 4.5.0
-Tested up to: 6.3
-Requires PHP: 7.1
-Stable tag: 2.5.11
+Requires at least: 5.3
+Tested up to: 6.4
+Requires PHP: 7.4
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
