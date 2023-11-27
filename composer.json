@@ -5,7 +5,7 @@
   "license": "GPL-2.0-or-later",
   "homepage": "http://msls.co",
   "require": {
-    "php": ">=7.1.0",
+    "php": ">=7.4",
     "composer/installers": "~1.12.0"
   },
   "require-dev": {

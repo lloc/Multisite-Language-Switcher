@@ -9,14 +9,25 @@ use lloc\Msls\MslsOptions;
 
 class WP_Test_MslsCustomColumnTaxonomy extends Msls_UnitTestCase {
 
-	function test_th() {
+	public function test_th(): void {
 		$options    = \Mockery::mock( MslsOptions::class );
+
 		$collection = \Mockery::mock( MslsBlogCollection::class );
-		$collection->shouldReceive( 'get' )->once()->andReturn( [] );
+		$collection->shouldReceive( 'get' )->andReturn( [] )->once();
 
 		$obj = new MslsCustomColumnTaxonomy( $options, $collection );
 
 		$this->assertEmpty( $obj->th( [] ) );
+	}
+
+	public function test_column_default(): void {
+		$options    = \Mockery::mock( MslsOptions::class );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+
+		( new MslsCustomColumnTaxonomy( $options, $collection ) )->column_default( '', 'test', 0 );
+
+		$this->expectOutputString( '' );
 	}
 
 }
