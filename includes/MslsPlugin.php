@@ -46,16 +46,18 @@ class MslsPlugin {
 		register_activation_hook( self::file(), [ $obj, 'activate' ] );
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
 			add_filter( 'msls_get_output', [ __CLASS__, 'get_output' ] );
-			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
 
 			add_action( 'widgets_init', [ $obj, 'init_widget' ] );
 			add_filter( 'the_content', [ $obj, 'content_filter' ] );
 
+			add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
+
 			if ( function_exists( 'register_block_type' ) ) {
 				add_action( 'init', [ $obj, 'block_init' ] );
 			}
+
+			add_action( 'init', [ $obj, 'admin_bar_init' ] );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
@@ -72,7 +74,7 @@ class MslsPlugin {
 				add_action( 'load-edit-tags.php', [ MslsPostTag::class, 'init' ] );
 
 				if ( filter_has_var( INPUT_POST, 'action' ) ) {
-					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
+					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 					if ( 'add-tag' === $action ) {
 						add_action( 'admin_init', [ MslsPostTag::class, 'init' ] );
@@ -88,9 +90,10 @@ class MslsPlugin {
 			}
 		} else {
 			add_action( 'admin_notices', function () {
-				self::message_handler(
-					__( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'multisite-language-switcher' )
-				);
+				$href = 'https://wordpress.org/support/article/create-a-network/';
+				$msg  = sprintf( __( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="%s">this post</a> if you don\'t know the meaning.', 'multisite-language-switcher' ), $href );
+
+				self::message_handler( $msg );
 			} );
 		}
 
@@ -114,11 +117,13 @@ class MslsPlugin {
 
 	/**
 	 * @param $wp_admin_bar
+	 *
+	 * @return void
 	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
+	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
-			$title = '<div class="blavatar"></div>' . $blog->get_title();
+			$title = $blog->get_blavatar() . $blog->get_title();
 
 			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $title ] );
 		}
@@ -204,17 +209,23 @@ class MslsPlugin {
 
 	/**
 	 * Register block and shortcode.
+	 * @return bool
 	 */
 	public function block_init() {
 		if ( ! $this->options->is_excluded() ) {
 			$handle   = 'msls-widget-block';
 			$callback = [ $this, 'block_render' ];
 
-			wp_register_script(
-				$handle,
-				self::plugins_url( 'js/msls-widget-block.js' ),
-				[ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ]
-			);
+			global $pagenow;
+            		$toLoad = [ 'wp-blocks', 'wp-element', 'wp-components' ];
+            		if ( $pagenow === 'widgets.php' ) $toLoad[] = 'wp-edit-widgets';
+            		else $toLoad[] = 'wp-editor';
+
+            		wp_register_script(
+                		$handle,
+                		self::plugins_url( 'js/msls-widget-block.js' ),
+                		$toLoad
+            		);
 
 			register_block_type( 'lloc/msls-widget-block', [
 				'attributes'      => [ 'title' => [ 'type' => 'string' ] ],
@@ -223,6 +234,19 @@ class MslsPlugin {
 			] );
 
 			add_shortcode( 'sc_msls_widget', $callback );
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function admin_bar_init() {
+		if ( is_admin_bar_showing() && is_super_admin() ) {
+			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
 
 			return true;
 		}
@@ -435,7 +459,7 @@ class MslsPlugin {
 	 *
 	 * @return array
 	 */
-	public function get_superglobals( array $list ) {
+	public static function get_superglobals( array $list ) {
 		$arr = [];
 
 		foreach ( $list as $var ) {

@@ -42,25 +42,25 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get_blogs_of_reference_user( $options ) );
+		$this->assertIsArray( $obj->get_blogs_of_reference_user( $options ) );
 	}
 
 	function test_get_current_blog_id() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'integer', $obj->get_current_blog_id() );
+		$this->assertIsInt( $obj->get_current_blog_id() );
 	}
 
 	function test_has_current_blog() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'boolean', $obj->has_current_blog() );
+		$this->assertIsBool( $obj->has_current_blog() );
 	}
 
 	function test_get_objects() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get_objects() );
+		$this->assertIsArray( $obj->get_objects() );
 	}
 
 	function test_is_plugin_active() {
@@ -69,31 +69,31 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'boolean', $obj->is_plugin_active( 0 ) );
+		$this->assertIsBool( $obj->is_plugin_active( 0 ) );
 	}
 
 	function test_get_plugin_active_blogs() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get_plugin_active_blogs() );
+		$this->assertIsArray( $obj->get_plugin_active_blogs() );
 	}
 
 	function test_get() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get() );
+		$this->assertIsArray( $obj->get() );
 	}
 
 	function test_get_filtered() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get_filtered() );
+		$this->assertIsArray( $obj->get_filtered() );
 	}
 
 	function test_get_users() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'array', $obj->get_users() );
+		$this->assertIsArray( $obj->get_users() );
 	}
 
 }

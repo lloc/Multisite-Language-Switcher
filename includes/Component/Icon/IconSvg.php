@@ -11,11 +11,13 @@ use lloc\Msls\MslsPlugin;
  */
 class IconSvg extends Icon {
 
+	const FLAGS_FILE = 'css-flags/flags.php';
+
 	/**
 	 * @return string
 	 */
 	protected function get_include(): string {
-		return MslsPlugin::plugin_dir_path( 'css-flags/flags.php' );
+		return MslsPlugin::plugin_dir_path( self::FLAGS_FILE );
 	}
 
 	/**
@@ -24,11 +26,7 @@ class IconSvg extends Icon {
 	 * @return string
 	 */
 	public function get( string $language ): string {
-		if ( isset( $this->map[ $language ] ) ) {
-			return $this->map[ $language ];
-		}
-
-		return $this->maybe( $language, 'flag-icon-' );
+			return $this->map[ $language ] ?? $this->maybe( $language, 'flag-icon-' );
 	}
 
 }

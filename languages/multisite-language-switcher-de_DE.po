@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2015-12-16 11:29+0100\n"
-"PO-Revision-Date: 2015-12-16 11:30+0100\n"
+"POT-Creation-Date: 2022-10-27 15:51+0200\n"
+"PO-Revision-Date: 2022-10-27 15:51+0200\n"
 "Last-Translator: Dennis Ploetner <dennis.ploetner@drivek.com>\n"
 "Language-Team: Dennis Ploetner <re@lloc.de>\n"
-"Language: German (de_DE)\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,66 +15,207 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.4\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPath-1: ..\n"
+"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-SearchPath-0: languages\n"
+"X-Poedit-SearchPath-1: .\n"
+"X-Poedit-SearchPathExcluded-0: vendor\n"
 
-#: ../MultisiteLanguageSwitcher.php:160
-#, php-format
-msgid "This post is also available in %s."
-msgstr "Der Artikel ist auch in %s verfügbar."
-
-#: ../MultisiteLanguageSwitcher.php:177
-#, php-format
-msgid "%s and %s"
-msgstr "%s und %s"
-
-#: ../MultisiteLanguageSwitcher.php:285
-msgid ""
-"The Multisite Language Switcher needs the activation of the multisite-"
-"feature for working properly. Please read <a onclick=\"window.open(this."
-"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
-"\">this post</a> if you don't know the meaning."
+#: includes/ContentImport/Importers/Attachments/Linking.php:26
+#: includes/ContentImport/Importers/PostThumbnail/Linking.php:27
+msgid "Linking"
 msgstr ""
-"Der Multisite Language Switcher benötigt die Installation einer "
-"funktionierenden Multisite. Bitte lese <a onclick=\"window.open(this.href); "
-"return false;\" href=\"http://codex.wordpress.org/Create_A_Network\">diesen "
-"(englischsprachigen) Artikel</a>, wenn Du nicht weißt, was damit gemeint ist."
 
-#: ../includes/MslsLinkTextOnly.php:25
-msgid "Description only"
-msgstr "Nur Beschreibung"
+#: includes/ContentImport/Importers/Attachments/Linking.php:27
+msgid ""
+"Links the media attachments from the source post to the destination post; "
+"media attachments are not duplicated."
+msgstr ""
 
-#: ../includes/MslsPostTag.php:150 ../includes/MslsPostTagClassic.php:116
-#: ../includes/MslsWidget.php:20 ../includes/MslsAdmin.php:22
-#: ../includes/MslsMetaBox.php:97
+#: includes/ContentImport/Importers/Attachments/Linking.php:34
+msgid ""
+"Post attachments were left in place in the source blog and linked in the "
+"destination post."
+msgstr ""
+
+#: includes/ContentImport/Importers/AttachmentsImporters.php:23
+msgid "Image Attachments"
+msgstr ""
+
+#: includes/ContentImport/Importers/PostFields/Duplicating.php:28
+#: includes/ContentImport/Importers/PostMeta/Duplicating.php:19
+msgid "Duplicating"
+msgstr ""
+
+#: includes/ContentImport/Importers/PostFields/Duplicating.php:29
+msgid "Copies the source post fields to the destination."
+msgstr ""
+
+#: includes/ContentImport/Importers/PostFieldsImporters.php:23
+msgid "Post Fields"
+msgstr ""
+
+#: includes/ContentImport/Importers/PostMeta/Duplicating.php:20
+msgid "Copies the source post meta to the destination."
+msgstr ""
+
+#: includes/ContentImport/Importers/PostMetaImporters.php:23
+msgid "Meta Fields"
+msgstr ""
+
+#: includes/ContentImport/Importers/PostThumbnail/Linking.php:28
+msgid ""
+"Links the featured image from the source post to the destination post; the "
+"image is not duplicated."
+msgstr ""
+
+#: includes/ContentImport/Importers/PostThumbnailImporters.php:23
+msgid "Featured Image"
+msgstr ""
+
+#: includes/ContentImport/Importers/Terms/ShallowDuplicating.php:33
+msgid "Shallow Duplicating"
+msgstr ""
+
+#: includes/ContentImport/Importers/Terms/ShallowDuplicating.php:34
+msgid ""
+"Shallow (one level deep) duplication or assignment of the source post "
+"taxonomy terms to the destnation post."
+msgstr ""
+
+#: includes/ContentImport/Importers/TermsImporters.php:23
+msgid "Taxonomy Terms"
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:18
+#, fuzzy
+#| msgid "Multisite Language Switcher Options"
+msgid "Multisite Language Switcher last import report"
+msgstr "Multisite Language Switcher"
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:20
+#, php-format
+msgid "From post %d on site %d to post %d on site %d"
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:27
+msgid "General information"
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:33
+msgid "Details"
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:38
+msgid "The following post fields have been set: "
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:42
+msgid "The following post meta have been set: "
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:46
+msgid "Terms have been assigned to the post for the following taxonomies: "
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:50
+msgid "The post thumbnail has been set."
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:57
+msgid "Errors:"
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:63
+msgid ""
+"There were issues creating or assigning terms for the following taxonomies: "
+msgstr ""
+
+#: includes/ContentImport/LogWriters/AdminNoticeLogger.php:67
+msgid "The post thumbnail could not be created or set."
+msgstr ""
+
+#: includes/ContentImport/MetaBox.php:35
+#, php-format
+msgid "Import content from %s"
+msgstr ""
+
+#: includes/ContentImport/MetaBox.php:38
+msgid ""
+"Warning! This will override and replace all the post content with the "
+"content from the source post!"
+msgstr ""
+
+#: includes/ContentImport/MetaBox.php:63
+msgid ""
+"No translated versions linked to this post: import content functionality is "
+"disabled."
+msgstr ""
+
+#: includes/ContentImport/MetaBox.php:98
+msgid "Select what should be imported and how"
+msgstr ""
+
+#: includes/ContentImport/MetaBox.php:113
+msgid "No importers available for this type of content."
+msgstr ""
+
+#: includes/ContentImport/MetaBox.php:119
+msgid "Off - Do not import this type of content in the destination post."
+msgstr ""
+
+#: includes/ContentImport/MetaBox.php:141
+msgid "Import Content"
+msgstr ""
+
+#: includes/MslsAdmin.php:46 includes/MslsMetaBox.php:127
+#: includes/MslsPostTag.php:171 includes/MslsPostTagClassic.php:121
+#: includes/MslsWidget.php:26
 msgid "Multisite Language Switcher"
 msgstr "Multisite Language Switcher"
 
-#: ../includes/MslsWidget.php:54
-msgid "No available translations found"
-msgstr "Keine Übersetzungen verfügbar"
+#: includes/MslsAdmin.php:93
+msgid "Activate experimental autocomplete inputs"
+msgstr ""
+"Experimentelle automatische Vervollständigung in den Eingabefeldern des "
+"Plugins aktivieren"
 
-#: ../includes/MslsWidget.php:83
-msgid "Title"
-msgstr "Titel"
+#: includes/MslsAdmin.php:94
+msgid "Activate the content import functionality"
+msgstr ""
 
-#: ../includes/MslsLinkImageOnly.php:25
-msgid "Flag only"
-msgstr "Nur Flagge"
+#: includes/MslsAdmin.php:95
+#, fuzzy
+#| msgid "Sort output by description"
+msgid "Sort languages by description"
+msgstr "Ausgabe nach Beschreibung sortieren"
 
-#: ../includes/MslsAdminIcon.php:147
+#: includes/MslsAdmin.php:96
+msgid "Exclude this blog from output"
+msgstr "Dieses Blog bei der Ausgabe ausschließen"
+
+#: includes/MslsAdmin.php:97
+msgid "Show only links with a translation"
+msgstr "Nur Links mit Übersetzung anzeigen"
+
+#: includes/MslsAdmin.php:98
+msgid "Display link to the current language"
+msgstr "Link zur aktuellen Sprache anzeigen"
+
+#: includes/MslsAdmin.php:99
+msgid "Add hint for available translations"
+msgstr "Hinweis unter Post anzeigen, wenn Übersetzung verfügbar"
+
+#: includes/MslsAdmin.php:119
 #, php-format
-msgid "Edit the translation in the %s-blog"
-msgstr "Übersetzung im %s-Blog bearbeiten"
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
+"Der Multisite Language Switcher ist fast einsatzbereit. Du musst nur noch <a "
+"href=\"%s\">die Konfiguration abschließen</a>."
 
-#: ../includes/MslsAdminIcon.php:154
-#, php-format
-msgid "Create a new translation in the %s-blog"
-msgstr "Neue Übersetzung im %s-Blog anlegen"
-
-#: ../includes/MslsAdmin.php:44
+#: includes/MslsAdmin.php:124
 #, php-format
 msgid ""
 "There are no language files installed. You can <a href=\"%s\">manually "
@@ -85,122 +226,170 @@ msgstr ""
 "entsprechenden Dateien händisch kopieren</a> oder <a href=\"%s\">ein Plugin "
 "benutzen</a>, das Sprachen automatisch installieren kann."
 
-#: ../includes/MslsAdmin.php:51
-#, php-format
-msgid ""
-"Multisite Language Switcher is almost ready. You must <a href=\"%s"
-"\">complete the configuration process</a>."
-msgstr ""
-"Der Multisite Language Switcher ist fast einsatzbereit. Du musst nur noch <a "
-"href=\"%s\">die Konfiguration abschließen</a>."
-
-#: ../includes/MslsAdmin.php:66
+#: includes/MslsAdmin.php:139
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher"
 
-#: ../includes/MslsAdmin.php:68
+#: includes/MslsAdmin.php:141
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 "Um eine ausreichende Flexibilität gewährleisten zu können, muss das Plugin "
 "für jedes Blog einzeln konfiguriert werden."
 
-#: ../includes/MslsAdmin.php:76
+#: includes/MslsAdmin.php:149
 msgid "Configure"
 msgstr "Konfigurieren"
 
-#: ../includes/MslsAdmin.php:76 ../includes/MslsMetaBox.php:207
-#: ../includes/MslsMetaBox.php:267
+#: includes/MslsAdmin.php:149
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: ../includes/MslsAdmin.php:115
+#: includes/MslsAdmin.php:180
 msgid "Language Settings"
 msgstr "Einstellungen zur Sprache"
 
-#: ../includes/MslsAdmin.php:116
+#: includes/MslsAdmin.php:181
 msgid "Main Settings"
 msgstr "Allgemeine Einstellungen"
 
-#: ../includes/MslsAdmin.php:117
+#: includes/MslsAdmin.php:182
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
 
-#: ../includes/MslsAdmin.php:132
+#: includes/MslsAdmin.php:187
+#, fuzzy
+#| msgid "Main Settings"
+msgid "Rewrites Settings"
+msgstr "Allgemeine Einstellungen"
+
+#: includes/MslsAdmin.php:213
 msgid "Blog Language"
 msgstr "Sprache des Blogs"
 
-#: ../includes/MslsAdmin.php:133
-msgid "Admin Language"
-msgstr "Sprache des Adminbereiches"
-
-#: ../includes/MslsAdmin.php:149
+#: includes/MslsAdmin.php:227
 msgid "Display"
 msgstr "Anzeige"
 
-#: ../includes/MslsAdmin.php:150
-msgid "Sort output by description"
-msgstr "Ausgabe nach Beschreibung sortieren"
+#: includes/MslsAdmin.php:228
+#, fuzzy
+#| msgid "Blog Language"
+msgid "Sort languages"
+msgstr "Sprache des Blogs"
 
-#: ../includes/MslsAdmin.php:151
-msgid "Display link to the current language"
-msgstr "Link zur aktuellen Sprache anzeigen"
+#: includes/MslsAdmin.php:229
+msgid "Current language link"
+msgstr ""
 
-#: ../includes/MslsAdmin.php:152
-msgid "Show only links with a translation"
-msgstr "Nur Links mit Übersetzung anzeigen"
+#: includes/MslsAdmin.php:230
+msgid "Translation links"
+msgstr ""
 
-#: ../includes/MslsAdmin.php:153
+#: includes/MslsAdmin.php:231
 msgid "Description"
 msgstr "Beschreibung"
 
-#: ../includes/MslsAdmin.php:154
+#: includes/MslsAdmin.php:232
 msgid "Text/HTML before the list"
 msgstr "Text/HTML vor der Liste"
 
-#: ../includes/MslsAdmin.php:155
+#: includes/MslsAdmin.php:233
 msgid "Text/HTML after the list"
 msgstr "Text/HTML nach der Liste"
 
-#: ../includes/MslsAdmin.php:156
+#: includes/MslsAdmin.php:234
 msgid "Text/HTML before each item"
 msgstr "Text/HTML vor jedem Element"
 
-#: ../includes/MslsAdmin.php:157
+#: includes/MslsAdmin.php:235
 msgid "Text/HTML after each item"
 msgstr "Text/HTML nach jedem Element"
 
-#: ../includes/MslsAdmin.php:158
-msgid "Add hint for available translations"
-msgstr "Hinweis unter Post anzeigen, wenn Übersetzung verfügbar"
+#: includes/MslsAdmin.php:236
+#, fuzzy
+#| msgid "No available translations found"
+msgid "Available translations hint"
+msgstr "Keine Übersetzungen verfügbar"
 
-#: ../includes/MslsAdmin.php:159
+#: includes/MslsAdmin.php:237
 msgid "Hint priority"
 msgstr "Priorität des Hinweises"
 
-#: ../includes/MslsAdmin.php:175
-msgid "Activate experimental autocomplete inputs"
+#: includes/MslsAdmin.php:252
+msgid "Autocomplete"
 msgstr ""
-"Experimentelle automatische Vervollständigung in den Eingabefeldern des "
-"Plugins aktivieren"
 
-#: ../includes/MslsAdmin.php:176
+#: includes/MslsAdmin.php:253
 msgid "Custom URL for flag-images"
 msgstr "Alternativer URL der Flaggen"
 
-#: ../includes/MslsAdmin.php:177
+#: includes/MslsAdmin.php:254
 msgid "Reference user"
 msgstr "Referenzbenutzer"
 
-#: ../includes/MslsAdmin.php:178
-msgid "Exclude this blog from output"
-msgstr "Dieses Blog bei der Ausgabe ausschließen"
+#: includes/MslsAdmin.php:255
+msgid "Exclude blog"
+msgstr ""
 
-#: ../includes/MslsLink.php:44
+#: includes/MslsAdmin.php:256
+msgid "Content import"
+msgstr ""
+
+#: includes/MslsAdmin.php:272
+#, php-format
+msgid "%s Slug"
+msgstr ""
+
+#: includes/MslsAdmin.php:334
+#, php-format
+msgid ""
+"Multisite Language Switcher: Collection for reference user has been "
+"truncated because it exceeded the maximum of %s users. Please, use the hook "
+"\"msls_reference_users\" to filter the result before!"
+msgstr ""
+
+#: includes/MslsAdminIcon.php:209
+#, php-format
+msgid "Create a new translation in the %s-blog"
+msgstr "Neue Übersetzung im %s-Blog anlegen"
+
+#: includes/MslsAdminIcon.php:212
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "Übersetzung im %s-Blog bearbeiten"
+
+#: includes/MslsCustomFilter.php:54
+msgid "Show all blogs"
+msgstr "Zeige alle Blogs"
+
+#: includes/MslsCustomFilter.php:60
+#, php-format
+msgid "Not translated in the %s-blog"
+msgstr "Im %s-Blog nicht übersetzt"
+
+#: includes/MslsLink.php:47
 msgid "Flag and description"
 msgstr "Flagge und Beschreibung"
 
-#: ../includes/MslsMetaBox.php:213 ../includes/MslsMetaBox.php:292
+#: includes/MslsLinkImageOnly.php:26
+msgid "Flag only"
+msgstr "Nur Flagge"
+
+#: includes/MslsLinkTextImage.php:26
+msgid "Description and flag"
+msgstr "Beschreibung und Flagge"
+
+#: includes/MslsLinkTextOnly.php:26
+msgid "Description only"
+msgstr "Nur Beschreibung"
+
+#: includes/MslsMetaBox.php:140
+#, fuzzy
+#| msgid "Multisite Language Switcher Options"
+msgid "Multisite Language Switcher - Import content"
+msgstr "Multisite Language Switcher"
+
+#: includes/MslsMetaBox.php:233 includes/MslsMetaBox.php:338
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -208,19 +397,45 @@ msgstr ""
 "Du solltest wenigstens ein weiteres Blog in einer anderen Sprache anlegen, "
 "um einen Mehrwert durch das Plugin zu erhalten!"
 
-#: ../includes/MslsLinkTextImage.php:25
-msgid "Description and flag"
-msgstr "Beschreibung und Flagge"
-
-#: ../includes/MslsOptions.php:327
+#: includes/MslsOptions.php:358
 msgid "American English"
 msgstr "Amerikanisches Englisch"
 
-#: ../includes/MslsCustomFilter.php:46
-msgid "Show all blogs"
-msgstr "Zeige alle Blogs"
+#: includes/MslsPlugin.php:94
+#, fuzzy, php-format
+#| msgid ""
+#| "The Multisite Language Switcher needs the activation of the multisite-"
+#| "feature for working properly. Please read <a onclick=\"window.open(this."
+#| "href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
+#| "\">this post</a> if you don't know the meaning."
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"%s\">this post</a> if you don't know the "
+"meaning."
+msgstr ""
+"Der Multisite Language Switcher benötigt die Installation einer "
+"funktionierenden Multisite. Bitte lese <a onclick=\"window.open(this.href); "
+"return false;\" href=\"http://codex.wordpress.org/Create_A_Network\">diesen "
+"(englischsprachigen) Artikel</a>, wenn Du nicht weißt, was damit gemeint ist."
 
-#: ../includes/MslsCustomFilter.php:52
+#: includes/MslsPlugin.php:171
 #, php-format
-msgid "Not translated in the %s-blog"
-msgstr "Im %s-Blog nicht übersetzt"
+msgid "This post is also available in %s."
+msgstr "Der Artikel ist auch in %s verfügbar."
+
+#: includes/MslsPlugin.php:189
+#, php-format
+msgid "%s and %s"
+msgstr "%s und %s"
+
+#: includes/MslsWidget.php:60
+msgid "No available translations found"
+msgstr "Keine Übersetzungen verfügbar"
+
+#: includes/MslsWidget.php:96
+msgid "Title"
+msgstr "Titel"
+
+#~ msgid "Admin Language"
+#~ msgstr "Sprache des Adminbereiches"

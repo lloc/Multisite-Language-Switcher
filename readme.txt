@@ -1,12 +1,12 @@
 ﻿=== Multisite Language Switcher ===
 
 Contributors: realloc, lucatume
-Donate link: http://www.greenpeace.org/international/
-Tags: multilingual, multisite, language, switcher, international, localization, i18n
-Requires at least: 3.6.1
-Tested up to: 5.4
-Requires PHP: 7.0
-Stable tag: 2.4.6
+Donate link: https://www.greenpeace.org/international/
+Tags: multilingual, multisite, language, switcher, localization
+Requires at least: 5.3
+Tested up to: 6.4
+Requires PHP: 7.4
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

@@ -53,7 +53,7 @@ class MslsLanguageArray {
 	 * @return int
 	 */
 	public function get_val( $key ) {
-		return( isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : 0 );
+		return $this->arr[ $key ] ?? 0;
 	}
 
 	/**

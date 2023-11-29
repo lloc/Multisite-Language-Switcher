@@ -1,14 +1,10 @@
 <?php
-/**
- * MslsBlog
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
  * Internal representation of a blog
+ *
  * @property int $userblog_id
  * @package Msls
  */
@@ -59,7 +55,7 @@ class MslsBlog {
 	 * @return mixed|null
 	 */
 	final public function __get( $key ) {
-		return isset( $this->obj->$key ) ? $this->obj->$key : null;
+		return $this->obj->$key ?? null;
 	}
 
 	/**
@@ -137,7 +133,7 @@ class MslsBlog {
 		switch_to_blog( $this->obj->userblog_id );
 
 		if ( is_object( $options ) && method_exists( $options, 'has_value' ) && ( $is_home || $options->has_value( $this->get_language() ) ) ) {
-			$url = $options->get_permalink( $this->get_language() );
+			$url = apply_filters( 'mlsl_blog_get_permalink', $options->get_permalink( $this->get_language() ), $this );
 		}
 
 		restore_current_blog();
@@ -183,6 +179,29 @@ class MslsBlog {
 	 */
 	public static function description( MslsBlog $a, MslsBlog $b ) {
 		return self::_cmp( $a->get_description(), $b->get_description() );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_blavatar(): string {
+		$blavatar_html   = '<div class="blavatar"></div>';
+		$show_site_icons = apply_filters( 'wp_admin_bar_show_site_icons', true );
+
+		switch_to_blog( $this->obj->userblog_id );
+
+		if ( true === $show_site_icons && has_site_icon( $this->obj->userblog_id ) ) {
+			$blavatar_html = sprintf(
+				'<img class="blavatar" src="%s" srcset="%s 2x" alt="" width="16" height="16"%s />',
+				esc_url( get_site_icon_url( 16 ) ),
+				esc_url( get_site_icon_url( 32 ) ),
+				( wp_lazy_loading_enabled( 'img', 'site_icon_in_toolbar' ) ? ' loading="lazy"' : '' )
+			);
+		}
+
+		restore_current_blog();
+
+		return $blavatar_html;
 	}
 
 }

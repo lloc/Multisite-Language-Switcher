@@ -4,17 +4,20 @@ namespace lloc\Msls\Component\Icon;
 
 use lloc\Msls\Component\Icon;
 use lloc\Msls\MslsPlugin;
+
 /**
  * Class IconPng
  * @package lloc\Msls\Component
  */
 class IconPng extends Icon {
 
+	const FLAGS_FILE = 'flags/flags.php';
+
 	/**
 	 * @return string
 	 */
 	protected function get_include(): string {
-		return MslsPlugin::plugin_dir_path( 'flags/flags.php' );
+		return MslsPlugin::plugin_dir_path( self::FLAGS_FILE );
 	}
 
 	/**
@@ -23,11 +26,7 @@ class IconPng extends Icon {
 	 * @return string
 	 */
 	public function get( string $language ): string {
-		if ( isset( $this->map[ $language ] ) ) {
-			return $this->map[ $language ];
-		}
-
-		return $this->maybe( $language, '', '.png' );
+		return $this->map[ $language ] ?? $this->maybe( $language, '', '.png' );
 	}
 
 }

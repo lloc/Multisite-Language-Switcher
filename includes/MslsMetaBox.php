@@ -152,7 +152,8 @@ class MslsMetaBox extends MslsMain {
 					],
 					$post_type,
 					'side',
-					'high' );
+					'high'
+				);
 				add_action( 'admin_footer', [ ContentImportMetaBox::instance(), 'print_modal_html' ] );
 			}
 		}
@@ -182,17 +183,16 @@ class MslsMetaBox extends MslsMain {
 				switch_to_blog( $blog->userblog_id );
 
 				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create()
-				                         ->set_language( $language );
+				$icon     = MslsAdminIcon::create()->set_language( $language );
 
-				if( $this->options->admin_display === 'label' ) {
+				if ( $this->options->admin_display === 'label' ) {
 				    $icon->set_icon_type( 'label' );
 				} else {
 				    $icon->set_icon_type( 'flag' );					
 				}
 
 				if ( $mydata->has_value( $language ) ) {
-					$icon->set_href( $mydata->$language );
+          $icon->set_href( $mydata->$language );
 				}
 
 				$selects  = '';
@@ -238,11 +238,7 @@ class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
-			printf(
-				'<ul>%s</ul><input type="submit" class="button-secondary" value="%s"/>',
-				$lis,
-				__( 'Update', 'multisite-language-switcher' )
-			);
+			printf( '<ul>%s</ul>', $lis );
 
 			$post = $temp;
 		} else {
@@ -349,29 +345,12 @@ class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
-			$input_button = sprintf(
-				'<input type="submit" class="button-secondary clear" value="%s"/>',
-				__( 'Update', 'multisite-language-switcher' )
-			);
-
-			/**
-			 * Returns the input button, return an empty string if you'ld like to hide the button
-			 *
-			 * @param string $input_button
-			 *
-			 * @since 1.0.2
-			 *
-			 */
-			$input_button = ( string ) apply_filters( 'msls_meta_box_render_input_button', $input_button );
-
 			printf(
 				'<ul>%s</ul>
 				<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-				<input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>
-				%s',
+				<input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
 				$items,
-				$post_type,
-				$input_button
+				$post_type
 			);
 
 			$post = $temp;
@@ -393,11 +372,8 @@ class MslsMetaBox extends MslsMain {
 			return;
 		}
 
-		$capability = (
-		'page' == filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING ) ?
-			'edit_page' :
-			'edit_post'
-		);
+		$post_type  = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$capability = 'page' === $post_type ? 'edit_page' : 'edit_post';
 
 		if ( ! current_user_can( $capability, $post_id ) ) {
 			return;

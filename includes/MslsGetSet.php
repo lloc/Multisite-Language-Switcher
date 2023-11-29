@@ -43,7 +43,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * @return mixed
 	 */
 	public function __get( $key ) {
-		return isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : null;
+		return $this->arr[ $key ] ?? null;
 	}
 
 	/**

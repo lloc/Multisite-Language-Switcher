@@ -23,43 +23,37 @@ class MslsOptionsQuery extends MslsOptions {
 	/**
 	 * Factory method
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @param int $id This parameter is unused here
 	 *
-	 * @return MslsOptionsQuery
+	 * @return MslsOptionsQuery|null
 	 */
 	public static function create( $id = 0 ) {
+		$query = null;
+
 		if ( is_day() ) {
-			return new MslsOptionsQueryDay(
+			$query = new MslsOptionsQueryDay(
 				get_query_var( 'year' ),
 				get_query_var( 'monthnum' ),
 				get_query_var( 'day' )
 			);
 		}
 		elseif ( is_month() ) {
-			return new MslsOptionsQueryMonth(
+			$query =  new MslsOptionsQueryMonth(
 				get_query_var( 'year' ),
 				get_query_var( 'monthnum' )
 			);
 		}
 		elseif ( is_year() ) {
-			return new MslsOptionsQueryYear(
-				get_query_var( 'year' )
-			);
+			$query =  new MslsOptionsQueryYear( get_query_var( 'year' ) );
 		}
 		elseif ( is_author() ) {
-			return new MslsOptionsQueryAuthor(
-				get_queried_object_id()
-			);
+			$query =  new MslsOptionsQueryAuthor( get_queried_object_id() );
 		}
 		elseif ( is_post_type_archive() ) {
-			return new MslsOptionsQueryPostType(
-				get_query_var( 'post_type' )
-			);
+			$query =  new MslsOptionsQueryPostType( get_query_var( 'post_type' ) );
 		}
 
-		return null;
+		return $query;
 	}
 
 	/**
@@ -75,6 +69,7 @@ class MslsOptionsQuery extends MslsOptions {
 				return apply_filters( 'check_url', $link, $this );
 			}
 		}
+
 		return '';
 	}
 
