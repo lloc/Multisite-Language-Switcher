@@ -11,7 +11,7 @@ namespace lloc\Msls;
  * Supported content types
  * @package Msls
  */
-class MslsContentTypes extends MslsRegistryInstance {
+abstract class MslsContentTypes extends MslsRegistryInstance {
 
 	/**
 	 * Request
@@ -28,18 +28,14 @@ class MslsContentTypes extends MslsRegistryInstance {
 	/**
 	 * Factory method
 	 *
-	 * @codeCoverageIgnore
+	 * @codeCoverageIgnoreMslsContentTypes
 	 *
 	 * @return MslsContentTypes
 	 */
 	public static function create() {
-		$_request = ( new MslsContentTypes() )->get_superglobals( [ 'taxonomy' ] );
+		$_request = MslsPlugin::get_superglobals( [ 'taxonomy' ] );
 
-		if ( '' != $_request['taxonomy'] ) {
-			return MslsTaxonomy::instance();
-		}
-
-		return MslsPostType::instance();
+		return '' != $_request['taxonomy'] ? MslsTaxonomy::instance() : MslsPostType::instance();
 	}
 
 	/**
@@ -74,25 +70,13 @@ class MslsContentTypes extends MslsRegistryInstance {
 	 * Getter
 	 * @return array
 	 */
-	public function get() {
-		return (array) apply_filters('msls_supported_post_types', $this->types);
-	}
+	abstract public static function get(): array;
 
 	/**
 	 * Gets the request if it is an allowed content type
+	 *
 	 * @return string
 	 */
-	public function get_request() {
-		$types =  apply_filters('msls_supported_post_types', $this->types );
-
-		return in_array( $this->request, $types ) ? $this->request : '';
-	}
-
-	public function get_superglobals( $arr ) {
-		$options = MslsOptions::instance();
-		$plugin  = new MslsPlugin( $options );
-
-		return $plugin->get_superglobals( $arr );
-	}
+	abstract public function get_request(): string;
 
 }

@@ -19,7 +19,7 @@ class WP_Test_MslsOptionsPost extends Msls_UnitTestCase {
 
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_postlink( 'de_DE' ) );
+		$this->assertIsSTring( $obj->get_postlink( 'de_DE' ) );
 	}
 
 	function test_get_current_link_method() {

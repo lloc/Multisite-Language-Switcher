@@ -13,7 +13,7 @@ class WP_Test_MslsOptionsTaxTerm extends Msls_UnitTestCase {
 
 		$obj = new MslsOptionsTaxTerm( 0 );
 
-		$this->assertInternalType( 'string', $obj->get_postlink( '' ) );
+		$this->assertIsSTring( $obj->get_postlink( '' ) );
 	}
 
 }

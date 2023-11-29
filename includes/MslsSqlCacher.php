@@ -50,10 +50,10 @@ class MslsSqlCacher {
 	/**
 	 * Constructor
 	 *
-	 * @param \WPDB $db
-	 * @param $caller
+	 * @param \wpdb $db
+	 * @param string $caller
 	 */
-	public function __construct( \WPDB $db, $caller ) {
+	public function __construct( \wpdb $db, string $caller ) {
 		$this->db     = $db;
 		$this->caller = $caller;
 	}
@@ -67,7 +67,7 @@ class MslsSqlCacher {
 	 *
 	 * @return MslsSqlCacher
 	 */
-	public static function init( $caller ) {
+	public static function init( string $caller ): self {
 		global $wpdb;
 
 		return new self( $wpdb, $caller );
@@ -80,7 +80,7 @@ class MslsSqlCacher {
 	 *
 	 * @return MslsSqlCacher
 	 */
-	public function set_params( $params ) {
+	public function set_params( $params ): self {
 		$this->params = $params;
 
 		return $this;
@@ -92,11 +92,7 @@ class MslsSqlCacher {
 	 * @return string
 	 */
 	public function get_key() {
-		$params = (
-		is_array( $this->params ) ?
-			implode( '_', $this->params ) :
-			$this->params
-		);
+		$params = is_array( $this->params ) ? implode( '_', $this->params ) : $this->params;
 
 		return $this->caller . '_' . $params;
 	}
@@ -109,14 +105,14 @@ class MslsSqlCacher {
 	 * @return mixed
 	 */
 	public function __get( $key ) {
-		return ( isset( $this->db->$key ) ? $this->db->$key : null );
+		return $this->db->$key ?? null;
 	}
 
 	/**
 	 * Call a method of the db-object with the needed args and cache the result
 	 *
 	 * @param string $method
-	 * @param array $args
+	 * @param string[] $args
 	 *
 	 * @return mixed
 	 */

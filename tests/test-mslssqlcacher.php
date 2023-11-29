@@ -24,11 +24,11 @@ class WP_Test_MslsSqlCacher extends Msls_UnitTestCase {
 		$obj = $this->get_sut();
 
 		$this->assertInstanceOf( MslsSqlCacher::class, $obj->set_params( array( 'Cache', 'Test' ) ) );
-		$this->assertInternalType( 'string', $obj->get_key() );
+		$this->assertIsSTring( $obj->get_key() );
 		$this->assertEquals( 'MslsSqlCacherTest_Cache_Test', $obj->get_key() );
 
 		$this->assertInstanceOf( MslsSqlCacher::class, $obj->set_params( 'Cache_Test' ) );
-		$this->assertInternalType( 'string', $obj->get_key() );
+		$this->assertIsSTring( $obj->get_key() );
 		$this->assertEquals( 'MslsSqlCacherTest_Cache_Test', $obj->get_key() );
 
 		$sql = $obj->prepare(
@@ -36,8 +36,8 @@ class WP_Test_MslsSqlCacher extends Msls_UnitTestCase {
 			$obj->blogid,
 			$obj->siteid
 		);
-		$this->assertInternalType( 'string', $sql );
-		$this->assertInternalType( 'array', $obj->get_results( $sql ) );
+		$this->assertIsSTring( $sql );
+		$this->assertIsArray( $obj->get_results( $sql ) );
 	}
 
 }

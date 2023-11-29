@@ -1,13 +1,22 @@
 {
   "name": "lloc/multisite-language-switcher",
   "description": "Multisite Language Switcher",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "homepage": "http://msls.co",
   "require": {
-    "php": ">=5.6",
-    "composer/installers": "~1.0.6"
+    "php": ">=7.4",
+    "composer/installers": "~1.12.0"
   },
   "require-dev": {
-    "phpunit/phpunit": ">=5.7 <7",
-    "brain/monkey": "2.*"
+    "phpunit/phpunit": "~9.6",
+    "brain/monkey": "2.*",
+    "phpstan/phpstan": "^1.8",
+    "szepeviktor/phpstan-wordpress": "^1.1",
+    "phpstan/extension-installer": "^1.1",
+    "antecedent/patchwork": "~2.1.19",
+    "squizlabs/php_codesniffer": "^3.7",
+    "phpcompatibility/php-compatibility": "^9.3"
   },
   "autoload": {
     "psr-4": {
@@ -20,10 +29,13 @@
     }
   },
   "scripts": {
-    "test": "phpunit",
-    "coverage": "phpunit --coverage-html docs/.vuepress/public/coverage",
+    "test": "vendor/bin/phpunit",
+    "coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html coverage",
+    "analyze": "vendor/bin/phpstan analyze",
+    "php81": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1",
     "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
-    "flags": "php bin/flags.php > flags/flags.php"
+    "flags-png": "php bin/flags-png.php > flags/flags.php",
+    "flags-svg": "php bin/flags-svg.php > css/flags.php"
   },
   "authors": [
     {
@@ -37,11 +49,12 @@
     "multisite",
     "language",
     "switcher",
-    "international",
-    "localization",
-    "i18n"
+    "localization"
   ],
-  "type": "wordpress-plugin",
-  "license": "GPL-2.0-or-later",
-  "homepage": "http://msls.co"
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "phpstan/extension-installer": true
+    }
+  }
 }

@@ -16,7 +16,7 @@ class MslsRegistry {
 	/**
 	 * Generic container
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private static $arr = [];
 
@@ -35,7 +35,7 @@ class MslsRegistry {
 	 * @return mixed
 	 */
 	private function get( $key ) {
-		return isset( self::$arr[ $key ] ) ? self::$arr[ $key ] : null;
+		return self::$arr[ $key ] ?? null;
 	}
 
 	/**
@@ -44,7 +44,7 @@ class MslsRegistry {
 	 * @param string $key
 	 * @param mixed $instance
 	 */
-	private function set( $key, $instance ) {
+	private function set( string $key, $instance ): void {
 		self::$arr[ $key ] = $instance;
 	}
 
@@ -53,7 +53,7 @@ class MslsRegistry {
 	 *
 	 * @return MslsRegistry
 	 */
-	public static function instance() {
+	public static function instance(): self {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -78,7 +78,7 @@ class MslsRegistry {
 	 * @param string $key
 	 * @param mixed $instance
 	 */
-	public static function set_object( $key, $instance ) {
+	public static function set_object( string $key, $instance ): void {
 		self::instance()->set( $key, $instance );
 	}
 

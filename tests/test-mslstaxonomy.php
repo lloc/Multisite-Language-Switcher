@@ -3,29 +3,27 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
+use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsTaxonomy;
 use lloc\Msls\MslsOptions;
 
 class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 
-	public function get_sut() {
-		Functions\when('get_taxonomies' )->justReturn( [] );
-		Functions\expect('get_query_var' )->once()->with( 'taxonomy' )->andReturn( 'category' );
+	public function get_test() {
+		Functions\when( 'apply_filters' )->returnArg( 2 );
+		Functions\when( 'get_option' )->justReturn( [] );
+
+		Functions\expect('get_taxonomies' )->atLeast()->once()->andReturn( [] );
+		Functions\expect('get_query_var' )->with( 'taxonomy' )->andReturn( 'category' );
 
 		return new MslsTaxonomy();
-	}
-
-	public function test_is_taxonomy() {
-		$obj = $this->get_sut();
-
-		$this->assertTrue( $obj->is_taxonomy() );
 	}
 
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	function test_acl_request_included() {
+	public function test_acl_request_included() {
 		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnFalse();
@@ -38,29 +36,42 @@ class WP_Test_MslsTaxonomy extends Msls_UnitTestCase {
 		Functions\when('get_taxonomy' )->justReturn( $taxonomy );
 		Functions\when('current_user_can' )->justReturn( true );
 
-		$obj = $this->get_sut();
-
-		$this->assertEquals( 'category', $obj->acl_request() );
+		$this->assertEquals( 'category', $this->get_test()->acl_request() );
 	}
 
 	/**
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	function test_acl_request_excluded() {
+	public function test_acl_request_excluded() {
 		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnTrue();
 
-		$obj = $this->get_sut();
-
-		$this->assertEquals( '', $obj->acl_request() );
+		$this->assertEquals( '', $this->get_test()->acl_request() );
 	}
 	
-	function test_get_post_type() {
-		$obj = $this->get_sut();
+	public function test_get_post_type() {
+		$this->assertEquals( '', $this->get_test()->get_post_type() );
+	}
 
-		$this->assertEquals( '', $obj->get_post_type() );
+	public function test_is_post_type() {
+		$this->assertFalse( $this->get_test()->is_post_type() );
+	}
+
+	public function test_is_taxonomy() {
+		$this->assertTrue( $this->get_test()->is_taxonomy() );
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_get_request() {
+		$plugin = \Mockery::mock( 'alias:' . MslsPlugin::class );
+		$plugin->shouldReceive( 'get_superglobals' )->andReturn( [ 'taxonomy' => 'abc' ] );
+
+		$this->assertEquals( 'abc', $this->get_test()->get_request() );
 	}
 
 }

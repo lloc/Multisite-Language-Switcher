@@ -43,7 +43,7 @@ class HrefLang {
 	protected function get_hreflang( string $language ): string {
 		$parts = explode( '_', $this->map[ $language ] ?? $language );
 
-		return 1 == $parts ? $parts[0] : $parts[0] . '-' . $parts[1];
+		return 1 === count( $parts ) ? $parts[0] : $parts[0] . '-' . $parts[1];
 	}
 
 	/**

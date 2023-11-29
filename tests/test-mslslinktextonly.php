@@ -10,7 +10,7 @@ class WP_Test_MslsLinkTextOnly extends Msls_UnitTestCase {
 	function test_get_description_method() {
 		Functions\when( '__' )->returnArg();
 
-		$this->assertInternalType( 'string', MslsLinkTextOnly::get_description() );
+		$this->assertIsSTring( MslsLinkTextOnly::get_description() );
 	}
 
 }

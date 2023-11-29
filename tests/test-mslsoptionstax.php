@@ -20,21 +20,21 @@ class WP_Test_MslsOptionsTax extends Msls_UnitTestCase {
 	function test_get_tax_query_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_tax_query() );
+		$this->assertIsSTring( $obj->get_tax_query() );
 	}
 
 	function test_get_postlink_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_tax_query() );
-		$this->assertInternalType( 'string', $obj->get_postlink( 'de_DE' ) );
+		$this->assertIsSTring( $obj->get_tax_query() );
+		$this->assertIsSTring( $obj->get_postlink( 'de_DE' ) );
 	}
 
 	function test_get_current_link_method() {
 		$obj = $this->get_test();
 
-		$this->assertInternalType( 'string', $obj->get_tax_query() );
-		$this->assertInternalType( 'string', $obj->get_current_link() );
+		$this->assertIsSTring( $obj->get_tax_query() );
+		$this->assertIsSTring( $obj->get_current_link() );
 	}
 
 }

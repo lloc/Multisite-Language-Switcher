@@ -4,6 +4,7 @@ namespace lloc\Msls\ContentImport;
 
 use lloc\Msls\ContentImport\Importers\Importer;
 use lloc\Msls\ContentImport\Importers\Map;
+use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMain;
 use lloc\Msls\MslsOptionsPost;
@@ -17,6 +18,7 @@ use lloc\Msls\MslsRegistryInstance;
  * @package lloc\Msls\ContentImport
  */
 class ContentImporter extends MslsRegistryInstance {
+	use WithRequestPostAttributes;
 
 	/**
 	 * @var MslsMain
@@ -192,7 +194,12 @@ class ContentImporter extends MslsRegistryInstance {
 			return (int) $_REQUEST['post'];
 		}
 
-		return $this->insert_blog_post( $blog_id, [ 'post_title' => 'MSLS Content Import Draft - ' . date( 'Y-m-d H:i:s' ) ] );
+		$data = [
+			'post_type'  => $this->read_post_type_from_request( 'post' ),
+			'post_title' => 'MSLS Content Import Draft - ' . date( 'Y-m-d H:i:s' )
+		];
+
+		return $this->insert_blog_post( $blog_id, $data );
 	}
 
 	protected function insert_blog_post( $blog_id, array $data = [] ) {

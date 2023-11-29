@@ -21,28 +21,30 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 
 	/**
 	 * Set href
-	 * @uses get_edit_term_link() 
+	 *
 	 * @param int $id
+	 *
 	 * @return MslsAdminIconTaxonomy
+	 * @uses get_edit_term_link()
 	 */
-	public function set_href( $id ) {
+	public function set_href( int $id ): MslsAdminIcon {
 		$this->href = get_edit_term_link(
 			$id,
 			$this->type,
 			MslsTaxonomy::instance()->get_post_type()
 		);
-		
+
 		return $this;
 	}
 
 	/**
 	 * Set the path by type
 	 *
+	 * @return MslsAdminIconTaxonomy
 	 * @uses add_query_arg()
 	 *
-	 * @return MslsAdminIconTaxonomy
 	 */
-	public function set_path() {
+	public function set_path(): MslsAdminIcon {
 		$args      = [ 'taxonomy' => $this->type ];
 		$post_type = MslsTaxonomy::instance()->get_post_type();
 

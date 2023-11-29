@@ -27,7 +27,7 @@ class WP_Test_MslsMain extends Msls_UnitTestCase {
 	function test_get_input_array() {
 		$obj = $this->get_sut();
 
-		$this->assertInternalType( 'array', $obj->get_input_array( 0 ) );
+		$this->assertIsArray( $obj->get_input_array( 0 ) );
 	}
 
 	function test_is_autosave_method() {
@@ -35,7 +35,7 @@ class WP_Test_MslsMain extends Msls_UnitTestCase {
 
 		$obj = $this->get_sut();
 
-		$this->assertInternalType( 'boolean', $obj->is_autosave( 0 ) );
+		$this->assertIsBool( $obj->is_autosave( 0 ) );
 	}
 
 	function test_verify_nonce_method() {

@@ -50,7 +50,7 @@ class MslsWidget extends \WP_Widget {
 		/** This filter is documented in wp-includes/default-widgets.php */
 		$title = apply_filters(
 			'widget_title',
-			( isset( $instance['title'] ) ? $instance['title'] : '' ),
+			( $instance['title'] ?? '' ),
 			$instance,
 			$this->id_base
 		);
@@ -66,7 +66,7 @@ class MslsWidget extends \WP_Widget {
 			);
 		}
 
-		echo $args['before_widget'], $title, $content, $args['after_widget']; // xss ok
+		echo $args['before_widget'], $title, $content, $args['after_widget'];
 	}
 
 	/**

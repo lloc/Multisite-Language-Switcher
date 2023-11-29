@@ -105,7 +105,8 @@ class MslsOutput extends MslsMain {
 		$default = '';
 
 		foreach ( $blogs->get_objects() as $blog ) {
-			$url = $blog->get_url( $options );
+			$url = apply_filters( 'mlsl_output_get_alternate_links', $blog->get_url( $options ), $blog );
+
 			if ( is_null( $url ) ) {
 				continue;
 			}
@@ -120,7 +121,13 @@ class MslsOutput extends MslsMain {
 			$arr[] = sprintf( $format, $hreflang->get( $blog->get_language() ), $url, esc_attr( $description ) );
 		}
 
-		return 1 === count( $arr ) ? $default : implode( PHP_EOL, $arr );
+		if ( 1 === count( $arr ) ) {
+		    return apply_filters( 'mlsl_output_get_alternate_links_default', $default );
+		}
+
+		$arr = (array) apply_filters( 'mlsl_output_get_alternate_links_arr', $arr );
+
+		return implode( PHP_EOL,  $arr );
 	}
 
 	/**
@@ -134,7 +141,7 @@ class MslsOutput extends MslsMain {
 
 		$arr = $this->get( $display, $filter, $exists );
 		if ( empty( $arr ) ) {
-			return '';
+			return apply_filters( 'msls_output_no_translation_found', '' );
 		}
 
 		$tags = $this->get_tags();
@@ -174,7 +181,7 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Sets tags for the output
 	 *
-	 * @param array $arr
+	 * @param string[] $arr
 	 *
 	 * @return MslsOutput
 	 */

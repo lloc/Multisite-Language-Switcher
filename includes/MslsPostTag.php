@@ -103,7 +103,7 @@ class MslsPostTag extends MslsMain {
 	public function add_input( $tag ) {
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-			<input type="hidden" name="msls_action" id="msls_action" type="text" value="suggest_terms"/>';
+			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
 
 		$item_format = '<label for="msls_title_%1$s">%2$s</label>
 			<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
@@ -123,7 +123,7 @@ class MslsPostTag extends MslsMain {
 			<th colspan="2">
 			<strong>%s</strong>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-			<input type="hidden" name="msls_action" id="msls_action" type="text" value="suggest_terms"/>
+			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
 			</th>
 			</tr>';
 
@@ -171,8 +171,12 @@ class MslsPostTag extends MslsMain {
 
 				$language = $blog->get_language();
 				$icon     = MslsAdminIcon::create()
-					->set_language( $language )
-					->set_icon_type( 'flag' );
+								->set_language( $language );
+				if( $this->options->admin_display === 'label' ) {
+					$icon->set_icon_type( 'label' );
+				} else {
+					$icon->set_icon_type( 'flag' );
+				}
 
 				$value = $title = '';
 				if ( $my_data->has_value( $language ) ) {

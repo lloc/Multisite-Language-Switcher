@@ -24,18 +24,36 @@ class MslsTaxonomy extends MslsContentTypes {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->types = array_merge(
+		$this->types = self::get();
+		$this->request = $this->get_request();
+	}
+
+	/**
+	 * @uses get_post_types
+	 * @return string[]
+	 */
+	public static function get(): array {
+		$types = array_merge(
 			[ 'category', 'post_tag' ], // no 'post_link' here
-			get_taxonomies( [ 'public' => true, '_builtin' => false ], 'names', 'and' )
+			get_taxonomies( [ 'public' => true, '_builtin' => false ] )
 		);
 
-		$_request = $this->get_superglobals( [ 'taxonomy', 'post_type' ] );
-		if ( '' != $_request['taxonomy'] ) {
-			$this->request   = esc_attr( $_request['taxonomy'] );
-			$this->post_type = esc_attr( $_request['post_type'] );
-		} else {
-			$this->request = get_query_var( 'taxonomy' );
+		return (array) apply_filters( 'msls_supported_taxonomies', $types );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_request(): string {
+		$request = MslsPlugin::get_superglobals( [ 'taxonomy', 'post_type' ] );
+
+		if ( ! empty( $request['taxonomy'] ) ) {
+			$this->post_type = esc_attr( $request['post_type'] ?? '' );
+
+			return esc_attr( $request['taxonomy'] );
 		}
+
+		return get_query_var( 'taxonomy' );
 	}
 
 	/**
@@ -64,7 +82,7 @@ class MslsTaxonomy extends MslsContentTypes {
 			}
 		}
 
-		return '';
+		return parent::acl_request();
 	}
 
 	/**

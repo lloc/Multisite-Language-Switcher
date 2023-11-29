@@ -41,7 +41,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 		$tag = new \stdClass;
 		$tag->term_id = 1;
 
-		$this->assertInternalType( 'boolean', $obj->the_input( $tag, 'test', 'test' ) );
+		$this->assertIsBool( $obj->the_input( $tag, 'test', 'test' ) );
 	}
 
 }

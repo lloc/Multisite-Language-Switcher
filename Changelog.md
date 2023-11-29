@@ -1,3 +1,93 @@
+## 2.6.0
+
+* WordPress 6.4 tested
+* Set PHP 7.4 as minimum requirement
+* Set WordPress 5.6 as minimum requirement
+* Blavatar fix 
+
+## 2.5.11
+
+* CodeSniffer installed for compatibility check with PHP 8.1
+* CSS/SVG Flags refreshed
+
+## 2.5.10
+
+* WordPress 6.3 tested
+* Compatibility issue with PHP 8.1 regarding FILTER_SANITIZE_STRING
+
+## 2.5.9
+
+* Compatibility issue with E_NOTICE and PHPUnit 10
+
+## 2.5.8
+
+* Avoid notice on Appearance > Widgets admin page
+* Language files reviewed
+* Legacy tests removed
+
+## 2.5.7
+
+* Fix #192 MslsCustomColumn/MslsAdminIcon fatal error (props @nelgmo)
+
+## 2.5.6
+
+* Fix #184 - use type of post and not only request (props @arnowelzel)
+* Adding filters for customizing the "hreflang" output in the page header (props @jacksoggetto) 
+
+## 2.5.5
+
+* WordPress 6.0 tested
+* Improvements in code quality
+
+## 2.5.4
+
+* Secondary buttons from MetaBoxes removed
+* Flags refreshed
+* Tested with 5.9
+* Bugfix for request
+
+## 2.4.12
+
+* Flags regenerated (CSS and PNG)
+
+## 2.4.11
+
+### Bug fixes
+
+* Content importer
+* Flags regenerated (CSS and PNG)
+
+## 2.4.10
+
+### Features
+
+* Filters added to control output of alternate url and blog-permalink url of blog-specific hreflang tags
+
+## 2.4.9
+
+### Bug fix 
+
+* Language codes of formal languages map now to the correct flag (de_DE_formal -> de, de_CH_formal -> ch, nl_NL_formal -> nl)
+
+## 2.4.8
+
+### Hotfix 
+
+* hotfix call to get_super_admin() is to early
+
+## 2.4.7
+
+### Bug fixes
+
+* docs updated for the possibility to remove action for alternative output in hreflang
+* admin bar output is now exclusive for super admins
+
+## 2.4.6
+
+### Bug fix
+
+* Notice in HrefLang object
+
 ## 2.4.5
 
 ### Hotfix 
