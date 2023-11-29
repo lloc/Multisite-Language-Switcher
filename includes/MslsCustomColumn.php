@@ -47,21 +47,28 @@ class MslsCustomColumn extends MslsMain {
 	public function th( $columns ) {
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
-			$arr = [];
+			$html;
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
 
 				$icon = new MslsAdminIcon( null );
-				$icon->set_language( $language )->set_icon_type( 'flag' );
+				$icon->set_language( $language );
+				if( $this->options->admin_display === 'label' ) {
+					$icon->set_icon_type( 'label' );
+				} else {
+					$icon->set_icon_type( 'flag' );					
+				}
 
 				if ( $post_id = get_the_ID() ) {
 					$icon->set_id( $post_id );
 					$icon->set_origin_language( 'it_IT' );
 				}
 
-				$arr[] = $icon->get_icon();
+				$html .= '<span class="msls-icon-wrapper ' . esc_attr( $this->options->admin_display ) . '">';
+				$html .= $icon->get_icon();
+				$html .= '</span>';
 			}
-			$columns['mslscol'] = implode( '&nbsp;', $arr );
+			$columns['mslscol'] = $html;
 		}
 
 		return $columns;
@@ -97,7 +104,9 @@ class MslsCustomColumn extends MslsMain {
 						$icon->set_href( $mydata->$language );
 					}
 	
-					echo $icon->get_a();
+					echo '<span class="msls-icon-wrapper ' . esc_attr( $this->options->admin_display ) . '">';
+					echo $icon->get_a(); 
+					echo '</span>';
 
 					restore_current_blog();
 				}

@@ -40,6 +40,8 @@ class MslsBlog {
 			$this->language = MslsBlogCollection::get_blog_language( $this->obj->userblog_id );
 		}
 
+		$this->options    = MslsOptions::instance();		
+
 		$this->description = (string) $description;
 	}
 
@@ -72,7 +74,15 @@ class MslsBlog {
 	 * @return string
 	 */
 	public function get_title(): string {
-		return sprintf( '%1$s (%2$s)', $this->obj->blogname, $this->get_description() );
+		$icon = new MslsAdminIcon( null );
+		$icon->set_language( $this->language );
+		if( $this->options->admin_display === 'label' ) {
+			$icon->set_icon_type( 'label' );
+		} else {
+			$icon->set_icon_type( 'flag' );			
+		}
+
+		return sprintf( '%1$s %2$s', $this->obj->blogname, '<span class="msls-icon-wrapper flag">' . $icon->get_icon() . '</span>' );
 	}
 
 	/**

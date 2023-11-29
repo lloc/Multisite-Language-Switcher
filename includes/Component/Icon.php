@@ -17,7 +17,9 @@ abstract class Icon {
 	 * Icon constructor
 	 */
 	public function __construct() {
-		$this->map = include $this->get_include();
+		if( $this->get_include() ) {
+			$this->map = include $this->get_include();
+		}
 	}
 
 	/**
