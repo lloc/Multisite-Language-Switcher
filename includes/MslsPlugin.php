@@ -121,16 +121,18 @@ class MslsPlugin {
 	 * @return void
 	 */
 	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
+		$icon_type = MslsAdminIcon::TYPE_LABEL === MslsOptions::instance()->admin_display ? MslsAdminIcon::TYPE_LABEL : MslsAdminIcon::TYPE_FLAG;
+
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
-			$title = $blog->get_blavatar() . $blog->get_title();
+			$title = $blog->get_blavatar() . $blog->get_title( $icon_type );
 
 			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $title ] );
 		}
 
 		$blog = $blog_collection->get_current_blog();
 		if ( is_object( $blog ) && method_exists( $blog, 'get_title' ) ) {
-			$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title() ] );
+			$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title( $icon_type ) ] );
 		}
 	}
 
@@ -148,7 +150,7 @@ class MslsPlugin {
 	 *
 	 * @return string
 	 */
-	function content_filter( $content ) {
+	public function content_filter( $content ) {
 		if ( ! is_front_page() && is_singular() ) {
 			$options = $this->options;
 

@@ -232,25 +232,28 @@ class MslsAdminIcon {
 	 * @return string
 	 */
 	public function get_icon(): string {
-		if ( 'flag' === $this->iconType ) {
-            return sprintf( '<span class="flag-icon %s">%s</span>',
-				( new IconSvg() )->get( $this->language ),
-				$this->language
-			);
+		if ( ! $this->language ) {
+			return '';
 		}
 
-		if ( 'label' === $this->iconType ) {
-			return sprintf( '<span class="language-badge %s">%s</span>',
-				$this->language,
-				( new IconLabel() )->get( $this->language )
-			);
-		}		
-
-		if ( empty( $this->href ) ) {
-			return '<span class="dashicons dashicons-plus"></span>';
+		switch ( $this->iconType ) {
+			case MslsAdminIcon::TYPE_FLAG:
+				$icon = sprintf( '<span class="flag-icon %s">%s</span>',
+					( new IconSvg() )->get( $this->language ),
+					$this->language
+				);
+				break;
+			case MslsAdminIcon::TYPE_LABEL:
+				$icon = sprintf( '<span class="language-badge %s">%s</span>',
+					$this->language,
+					( new IconLabel() )->get( $this->language )
+				);
+				break;
+			default:
+				$icon = sprintf( '<span class="dashicons %s"></span>', empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit' );
 		}
 
-		return '<span class="dashicons dashicons-edit"></span>';
+		return $icon;
 	}
 
 	/**

@@ -164,7 +164,7 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 	}
 
 	public function test_get_icon() {
-		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 1 ) . '/' );
+		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
 		$obj  = new MslsAdminIcon( 'post' );
 		$obj->set_icon_type( 'flag' );

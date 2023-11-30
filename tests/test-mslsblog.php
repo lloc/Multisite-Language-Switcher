@@ -12,6 +12,8 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 	 */
 	function test___get_method() {
 		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
+		Functions\expect( 'add_query_arg' )->once()->andReturn( 'https://example.org/added-args' );
+		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
 		$blog = new \stdClass();
 		$blog->userblog_id = 1;
@@ -23,7 +25,7 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 		$this->assertEquals( 'Italiano', $obj->get_description() );
 		$this->assertEquals( 'it_IT', $obj->get_language() );
 		$this->assertEquals( 'it', $obj->get_alpha2() );
-		$this->assertEquals( 'Test (Italiano)', $obj->get_title() );
+		$this->assertEquals( 'Test <span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-it">it_IT</span></span>', $obj->get_title() );
 	}
 
 	/**
