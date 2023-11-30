@@ -228,16 +228,7 @@ class MslsAdminIcon {
 	 */
 	public function get_icon(): string {
 		if ( 'flag' === $this->iconType ) {
-			/**
-			* Use your own filename for the flag-icon
-			* @since 2.6.1
-			*
-			* @param MslsAdminIcon $icon
-			* @param string $language
-			*/
-			$icon = apply_filters( 'msls_options_admin_get_flag_icon', $this, $this->language );
-
-      return sprintf( '<span class="flag-icon %s">%s</span>',
+			return ! is_string( $this->language ) ? '' : sprintf( '<span class="flag-icon %s">%s</span>',
 				( new IconSvg() )->get( $this->language ),
 				$this->language
 			);
