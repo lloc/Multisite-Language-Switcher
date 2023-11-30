@@ -156,13 +156,14 @@ class MslsAdmin extends MslsMain {
 	 * @return string
 	 */
 	public function subsubsub() {
-		$arr = [];
+		$icon_type = $this->options->get_icon_type();
 
+		$arr = [];
 		foreach ( $this->collection->get_plugin_active_blogs() as $blog ) {
 			$admin_url = get_admin_url( $blog->userblog_id, $this->get_options_page_link() );
 			$current   = $blog->userblog_id == $this->collection->get_current_blog_id() ? ' class="current"' : '';
 
-			$arr[] = sprintf( '<a href="%1$s"%2$s>%3$s</a>', $admin_url, $current, $blog->get_title() );
+			$arr[] = sprintf( '<a href="%1$s"%2$s>%3$s</a>', $admin_url, $current, $blog->get_title( $icon_type ) );
 		}
 
 		return empty( $arr ) ? '' : sprintf( '<ul class="subsubsub"><li>%s</li></ul>', implode( ' | </li><li>', $arr ) );

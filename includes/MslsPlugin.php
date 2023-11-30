@@ -121,7 +121,7 @@ class MslsPlugin {
 	 * @return void
 	 */
 	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
-		$icon_type = MslsAdminIcon::TYPE_LABEL === MslsOptions::instance()->admin_display ? MslsAdminIcon::TYPE_LABEL : MslsAdminIcon::TYPE_FLAG;
+		$icon_type = MslsOptions::instance()->get_icon_type();
 
 		$blog_collection = MslsBlogCollection::instance();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
