@@ -12,6 +12,7 @@ class WP_Test_MslsBlog extends Msls_UnitTestCase {
 	 */
 	function test___get_method() {
 		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
+
 		$blog = new \stdClass();
 		$blog->userblog_id = 1;
 		$blog->blogname    = 'Test';

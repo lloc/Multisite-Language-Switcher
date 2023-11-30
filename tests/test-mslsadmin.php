@@ -309,7 +309,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
 		Functions\when( 'add_settings_field' )->returnArg();
 
-		$this->assertEquals( 11, $obj->main_section() );
+		$this->assertEquals( 12, $obj->main_section() );
 	}
 
 	function test_advanced_section() {

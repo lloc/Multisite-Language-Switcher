@@ -16,7 +16,7 @@ class WP_Test_MslsCustomColumn extends Msls_UnitTestCase {
 
 		$options  = \Mockery::mock( MslsOptions::class );
 		$obj      = new MslsCustomColumn( $options, $this->getBlogsCollection() );
-		$expected = [ 'mslscol' => '<span class="flag-icon flag-icon-de">de_DE</span>&nbsp;<span class="flag-icon flag-icon-us">en_US</span>' ];
+		$expected = [ 'mslscol' => '<span class="msls-icon-wrapper "><span class="flag-icon flag-icon-de">de_DE</span></span><span class="msls-icon-wrapper "><span class="flag-icon flag-icon-us">en_US</span></span>' ];
 
 		$this->assertEquals( $expected, $obj->th( [] ) );
 	}

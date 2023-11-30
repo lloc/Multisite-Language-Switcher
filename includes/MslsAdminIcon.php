@@ -15,6 +15,7 @@ use lloc\Msls\Component\Icon\IconLabel;
  * @package Msls
  */
 class MslsAdminIcon {
+
 	/**
 	 * IconType
 	 * @var string
@@ -68,6 +69,10 @@ class MslsAdminIcon {
 	 * @var int
 	 */
 	protected $id;
+
+	const TYPE_FLAG  = 'flag';
+
+	const TYPE_LABEL = 'label';
 
 	/**
 	 * Constructor
@@ -228,7 +233,7 @@ class MslsAdminIcon {
 	 */
 	public function get_icon(): string {
 		if ( 'flag' === $this->iconType ) {
-			return ! is_string( $this->language ) ? '' : sprintf( '<span class="flag-icon %s">%s</span>',
+            return sprintf( '<span class="flag-icon %s">%s</span>',
 				( new IconSvg() )->get( $this->language ),
 				$this->language
 			);
