@@ -23,6 +23,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( false );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', 'it_IT' ] );
+		$options->shouldReceive( 'get_icon_type' )->andReturns( 'flag' );
 
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_title' )->andReturns( 'abc (DEF)' );
