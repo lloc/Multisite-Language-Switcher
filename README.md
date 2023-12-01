@@ -10,7 +10,7 @@ Run `composer install --no-dev` if you plan to use the repository anyways.
 
 A simple, powerful and easy to use plugin that will add 
 multilingual support to a WordPress 
-[multisite](http://codex.wordpress.org/Create_A_Network) 
+[multisite](https://wordpress.org/documentation/article/create-a-network/) 
 installation, i.e. multiple subdomains or folders (if you need to 
 set up multiple sites across multiple domains, you'll also want to 
 use the
