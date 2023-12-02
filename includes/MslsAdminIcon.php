@@ -17,55 +17,48 @@ use lloc\Msls\Component\Icon\IconLabel;
 class MslsAdminIcon {
 
 	/**
-	 * IconType
 	 * @var string
 	 */
-	protected $iconType = 'action';
+	protected $icon_type = 'action';
 
 	/**
-	 * Language
 	 * @var string
 	 */
 	protected $language;
 
 	/**
-	 * Origin Language
 	 * @var string
 	 */
 	public $origin_language;
 
 	/**
-	 * Source
 	 * @var string
 	 */
 	protected $src;
 
 	/**
-	 * URL
 	 * @var string
 	 */
 	protected $href;
 
 	/**
-	 * Blog id
 	 * @var int
 	 */
 	protected $blog_id;
 
 	/**
-	 * Type
 	 * @var string
 	 */
 	protected $type;
 
 	/**
-	 * Path
 	 * @var string
 	 */
 	protected $path = 'post-new.php';
 
 	/**
 	 * The current object ID
+	 *
 	 * @var int
 	 */
 	protected $id;
@@ -111,12 +104,12 @@ class MslsAdminIcon {
 	/**
 	 * Set the icon path
 	 *
-	 * @param $iconType
+	 * @param $icon_type
 	 *
 	 * @return MslsAdminIcon
 	 */
-	public function set_icon_type( $iconType ): MslsAdminIcon {
-		$this->iconType = $iconType;
+	public function set_icon_type( $icon_type ): MslsAdminIcon {
+		$this->icon_type = $icon_type;
 
 		return $this;
 	}
@@ -236,7 +229,7 @@ class MslsAdminIcon {
 			return '';
 		}
 
-		switch ( $this->iconType ) {
+		switch ( $this->icon_type ) {
 			case MslsAdminIcon::TYPE_FLAG:
 				$icon = sprintf( '<span class="flag-icon %s">%s</span>',
 					( new IconSvg() )->get( $this->language ),

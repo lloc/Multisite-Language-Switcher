@@ -163,7 +163,32 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_icon_type( 'flag' ) );
 	}
 
-	public function test_get_icon() {
+	public function icon_type_provider() {
+		return [
+			[ 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ],
+			[ 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>'],
+			[ null, 'fr_FR', '<span class="dashicons dashicons-plus"></span>' ],
+			[ null, null, '' ],
+		];
+	}
+
+	/**
+	 * @dataProvider icon_type_provider
+	 */
+	public function test_get_icon_flag( $icon_type, $language, $expected ) {
+		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
+
+		$obj  = new MslsAdminIcon( 'post' );
+		$obj->set_icon_type( $icon_type );
+
+		if ( ! is_null( $language ) ) {
+			$obj->set_language( $language );
+		}
+
+		$this->assertEquals( $expected, $obj->get_icon() );
+	}
+
+	public function test_get_icon_label() {
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
 		$obj  = new MslsAdminIcon( 'post' );
