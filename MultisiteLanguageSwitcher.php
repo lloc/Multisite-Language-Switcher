@@ -121,4 +121,12 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		return $blog->get_url( $options );
 	}
 
+	/**
+	 * Gets the MslsBlogCollection instance
+	 *
+	 * @return \lloc\Msls\MslsBlogCollection
+	 */
+	function msls_blog_collection(): \lloc\Msls\MslsBlogCollection {
+		return \lloc\Msls\MslsBlogCollection::instance();
+	}
 }

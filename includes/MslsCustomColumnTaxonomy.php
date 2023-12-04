@@ -23,7 +23,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 */
 	public static function init() {
 		$options    = MslsOptions::instance();
-		$collection = MslsBlogCollection::instance();
+		$collection = msls_blog_collection();
 		$obj        = new static( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {

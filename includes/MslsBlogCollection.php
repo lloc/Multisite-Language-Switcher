@@ -7,6 +7,8 @@
 
 namespace lloc\Msls;
 
+use const Patchwork\CodeManipulation\Actions\RedefinitionOfNew\publicizeConstructors;
+
 /**
  * Collection of blog-objects
  *

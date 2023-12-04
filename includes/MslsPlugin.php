@@ -123,7 +123,7 @@ class MslsPlugin {
 	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
 		$icon_type = MslsOptions::instance()->get_icon_type();
 
-		$blog_collection = MslsBlogCollection::instance();
+		$blog_collection = msls_blog_collection();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
 			$title = $blog->get_blavatar() . $blog->get_title( $icon_type );
 

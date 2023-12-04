@@ -24,7 +24,7 @@ class MetaBox extends MslsRegistryInstance {
 		$input_lang      = isset( $_GET['msls_lang'] ) ? $_GET['msls_lang'] : null;
 		$input_id        = isset( $_GET['msls_id'] ) ? $_GET['msls_id'] : null;
 		$has_input       = null !== $input_lang && null !== $input_id;
-		$blogs           = MslsBlogCollection::instance();
+		$blogs           = msls_blog_collection();
 		$available       = array_filter( array_map( function ( $lang ) use ( $mydata ) {
 			return $mydata->{$lang};
 		}, array_keys( $languages ) ) );
