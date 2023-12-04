@@ -4,6 +4,7 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 
+use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsWidget;
 
 class WP_Test_MslsWidget extends Msls_UnitTestCase {
@@ -14,27 +15,28 @@ class WP_Test_MslsWidget extends Msls_UnitTestCase {
 		return \Mockery::mock( MslsWidget::class )->makePartial();
 	}
 
-	function test_widget_method() {
+	function test_widget() {
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( [] );
+
 		$arr = [
-			'before_widget' => '',
-			'after_widget'  => '',
-			'before_title'  => '',
-			'after_title'   => '',
+			'before_widget' => '<div>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>',
 		];
 
 		Functions\expect( 'wp_parse_args' )->once()->andReturn( $arr );
 		Functions\expect( 'get_option' )->andReturn( [] );
-		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
-		Functions\expect( 'get_blogs_of_user' )->once()->andReturn( [] );
-		Functions\expect( 'get_users' )->once()->andReturn( [] );
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
 
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( 'No available translations found' );
-		$obj->widget( [], [] );
+		$this->expectOutputString( '<div><h3>Test</h3>No available translations found</div>' );
+		$obj->widget( [], [ 'title' => 'Test' ] );
 	}
 
-	function test_update_method() {
+	function test_update() {
 		$obj = $this->get_sut();
 
 		$result = $obj->update( [], [] );

@@ -107,7 +107,7 @@ class MslsBlog {
 	 * @return string|null
 	 */
 	public function get_url( $options ) {
-		if ( $this->obj->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() ) {
+		if ( $this->obj->userblog_id == msls_blog_collection()->get_current_blog_id() ) {
 			return $options->get_current_link();
 		}
 

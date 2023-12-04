@@ -97,7 +97,7 @@ class MslsOutput extends MslsMain {
 	 * @return string
 	 */
 	public function get_alternate_links() {
-		$blogs    = MslsBlogCollection::instance();
+		$blogs    = msls_blog_collection();
 		$hreflang = new HrefLang( $blogs );
 		$options  = MslsOptions::create();
 

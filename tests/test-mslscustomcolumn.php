@@ -2,6 +2,7 @@
 
 namespace lloc\MslsTests;
 
+use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsCustomColumn;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
@@ -15,7 +16,23 @@ class WP_Test_MslsCustomColumn extends Msls_UnitTestCase {
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 1 ) . '/' );
 
 		$options  = \Mockery::mock( MslsOptions::class );
-		$obj      = new MslsCustomColumn( $options, $this->getBlogsCollection() );
+
+		foreach (  [ 'de_DE' => 'de', 'en_US' => 'en' ] as $locale => $alpha2 ) {
+			$blog = \Mockery::mock( MslsBlog::class );
+			$blog->shouldReceive( [
+				'get_alpha2'   => $alpha2,
+				'get_language' => $locale,
+			] );
+
+			$blogs[] = $blog;
+		}
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
+		$collection->shouldReceive( 'get' )->andReturn( $blogs );
+		$collection->shouldReceive( 'get_current_blog_id' )->andReturn( 1 );
+
+		$obj      = new MslsCustomColumn( $options, $collection );
 		$expected = [ 'mslscol' => '<span class="msls-icon-wrapper "><span class="flag-icon flag-icon-de">de_DE</span></span><span class="msls-icon-wrapper "><span class="flag-icon flag-icon-us">en_US</span></span>' ];
 
 		$this->assertEquals( $expected, $obj->th( [] ) );
@@ -23,6 +40,7 @@ class WP_Test_MslsCustomColumn extends Msls_UnitTestCase {
 
 	function test_th_empty() {
 		$options    = \Mockery::mock( MslsOptions::class );
+
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->once()->andReturn( [] );
 

@@ -48,7 +48,7 @@ class MslsMain {
 	 */
 	public static function init() {
 		$options    = MslsOptions::instance();
-		$collection = MslsBlogCollection::instance();
+		$collection = msls_blog_collection();
 
 		return new static( $options, $collection );
 	}
@@ -169,7 +169,7 @@ class MslsMain {
 		}
 
 		if ( ! $this->collection->has_current_blog() ) {
-			$this->debugger( 'MslsBlogCollection::instance()->has_current_blog returns false.' );
+			$this->debugger( 'BlogCollection returns false when calling has_current_blog.' );
 
 			return;
 		}
