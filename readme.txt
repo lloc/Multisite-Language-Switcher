@@ -16,7 +16,7 @@ A simple, powerful and easy to use plugin that will help you to manage multiling
 
 A simple, powerful and easy to use plugin that will add multilingual support to a WordPress [multisite](https://wordpress.org/documentation/article/create-a-network/) 
 installation, i.e. multiple subdomains or folders (if you need to set up multiple sites across multiple domains, you'll also want to use the [WordPress MU 
-Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/) plugin as well - as long as the domains are all hosted on the same server.).
+Domain Mapping](http://wordpress.org/plugins/wordpress-mu-domain-mapping/) plugin as well - as long as the domains are all hosted on the same server.).
 
 The Multisite Language Switcher enables you to manage translations of posts, pages, custom post types, categories, tags and custom taxonomies.
 
