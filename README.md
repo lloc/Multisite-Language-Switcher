@@ -14,7 +14,7 @@ multilingual support to a WordPress
 installation, i.e. multiple subdomains or folders (if you need to 
 set up multiple sites across multiple domains, you'll also want to 
 use the
-[WordPress MU Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/)
+[WordPress MU Domain Mapping](http://wordpress.org/plugins/wordpress-mu-domain-mapping/)
 plugin as well - as long as the domains are all hosted on the 
 same server.).
 
