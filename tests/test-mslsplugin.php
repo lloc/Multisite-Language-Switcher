@@ -19,7 +19,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	/**
 	 * Verify the static init-method
 	 */
-	function test_admin_menu_method() {
+	function test_admin_menu(): void {
 		Functions\when( 'wp_enqueue_style' )->returnArg();
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 
@@ -29,7 +29,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	/**
 	 * Verify the static init_widget-method
 	 */
-	function test_init_widget_method() {
+	function test_init_widget(): void {
 		Functions\when( 'register_widget' )->justReturn( true );
 
 		$this->assertIsBool( $this->get_test()->init_widget() );
@@ -38,7 +38,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	/**
 	 * Verify the static init_i18n_support-method
 	 */
-	function test_init_i18n_support_method() {
+	function test_init_i18n_support(): void {
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
 
 		$this->assertIsBool( $this->get_test()->init_i18n_support() );
@@ -47,15 +47,16 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	/**
 	 * Verify the static message_handler-method
 	 */
-	function test_message_handler_method() {
+	function test_message_handler(): void {
 		$this->expectOutputString( '<div id="msls-warning" class="error"><p>Test</p></div>' );
+
 		MslsPlugin::message_handler( 'Test' );
 	}
 
 	/**
 	 * Verify the static uninstall-method
 	 */
-	function test_uninstall_method() {
+	function test_uninstall(): void {
 		Functions\when( 'delete_option' )->justReturn( false );
 
 		$this->assertIsBool( $this->get_test()->uninstall() );
@@ -64,7 +65,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	/**
 	 * Verify the static cleanup-method
 	 */
-	function test_cleanup_method() {
+	function test_cleanup(): void {
 		Functions\when( 'delete_option' )->justReturn( false );
 
 		$this->assertIsBool( MslsPlugin::cleanup() );

@@ -2,8 +2,6 @@
 
 namespace lloc\MslsTests;
 
-use lloc\Msls\MslsBlog;
-use lloc\Msls\MslsBlogCollection;
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;

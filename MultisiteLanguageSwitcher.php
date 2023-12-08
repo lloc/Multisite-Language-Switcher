@@ -101,24 +101,41 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @return string
 	 */
-	function get_msls_blog_description( string $locale ): string {
-		$blog = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
+	function get_msls_blog_description( string $locale, string $default = '' ): string {
+		$blog = msls_blog( $locale );
 
-		return $blog->get_description();
+		return $blog ? $blog->get_description() : $default;
 	}
 
 	/**
 	 * Gets the permalink for a translation of the current post in a given language
 	 *
 	 * @param string $locale
+	 * @param string $default
 	 *
 	 * @return string
 	 */
-	function get_msls_permalink( $locale ) {
-		$options = \lloc\Msls\MslsOptions::create();
-		$blog    = \lloc\Msls\MslsBlogCollection::instance()->get_blog( $locale );
+	function get_msls_permalink( string $locale, string $default = '' ): string {
+		$url  = null;
+		$blog = msls_blog( $locale );
 
-		return $blog->get_url( $options );
+		if ( $blog ) {
+			$options = \lloc\Msls\MslsOptions::create();
+			$url     = $blog->get_url( $options );
+		}
+
+		return $url ?? $default;
+	}
+
+	/**
+	 * Gets a blog by locale
+	 *
+	 * @param string $locale
+	 *
+	 * @return \lloc\Msls\MslsBlog|null
+	 */
+	function msls_blog( string $locale ): ?\lloc\Msls\MslsBlog {
+		return msls_blog_collection()->get_blog( $locale );
 	}
 
 	/**
@@ -129,4 +146,5 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	function msls_blog_collection(): \lloc\Msls\MslsBlogCollection {
 		return \lloc\Msls\MslsBlogCollection::instance();
 	}
+
 }
