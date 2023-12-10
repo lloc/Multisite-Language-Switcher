@@ -23,27 +23,31 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 		$b = \Mockery::mock( MslsBlog::class );
 		$b->userblog_id = 2;
 
+		$c = \Mockery::mock( MslsBlog::class );
+		$c->userblog_id = 3;
+
 		Functions\expect( 'get_current_blog_id' )->atLeast( 1 )->andReturn( 1 );
 		Functions\expect( 'get_users' )->atLeast()->once()->andReturn( [] );
-		Functions\expect( 'get_blogs_of_user' )->atLeast()->once()->andReturn( [ $a, $b ] );
-		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+		Functions\expect( 'get_blogs_of_user' )->atLeast()->once()->andReturn( [ $a, $b, $c ] );
 
-		Functions\expect( 'get_option' )->andReturn( [] );
+		Functions\expect( 'get_option' )->andReturn( [ 'output_current_blog' => true ] );
 
 		Functions\expect( 'get_blog_option' )->atLeast( 1 )->andReturnUsing( function( $blog_id, $option ) {
 			$wplang = [
 				1 => 'de_DE',
 				2 => 'it_IT',
+				3 => 'fr_FR',
 			];
 
 			$msls = [
 				1 => [ 'description' => 'Deutsch' ],
 				2 => [ 'description' => 'Italiano' ],
+				3 => [ 'description' => 'Français' ],
 			];
 
 			switch( $option ) {
 				case 'active_plugins':
-					$value = in_array( $blog_id, [ 1, 2 ] ) ? ['multisite-language-switcher/MultisiteLanguageSwitcher.php' ] : [];
+					$value = in_array( $blog_id, [ 1, 2 ] ) ? [ 'multisite-language-switcher/MultisiteLanguageSwitcher.php' ] : [];
 					break;
 				case 'WPLANG':
 					$value = $wplang[ $blog_id ] ?? false;
@@ -58,15 +62,22 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	}
 
 	public function test_get_configured_blog_description_empty(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertEquals( 'Test', $obj->get_configured_blog_description( 0, 'Test' ) );
+
 		$this->assertEquals( 'Deutsch', $obj->get_configured_blog_description( 1 ) );
 		$this->assertEquals( 'Italiano', $obj->get_configured_blog_description( 2 ) );
-		$this->assertFalse( $obj->get_configured_blog_description( 3 ) );
+		$this->assertEquals( 'Français', $obj->get_configured_blog_description( 3 ) );
+
+		$this->assertFalse( $obj->get_configured_blog_description( 4 ) );
 	}
 
 	public function test_get_blogs_of_reference_user(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'has_value' )->andReturn( true );
 
@@ -76,18 +87,24 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	}
 
 	public function test_get_current_blog_id(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertIsInt( $obj->get_current_blog_id() );
 	}
 
 	public function test_has_current_blog(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertIsBool( $obj->has_current_blog() );
 	}
 
 	public function test_is_current_blog_true(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$blog = \Mockery::mock( MslsBlog::class );
@@ -97,6 +114,8 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	}
 
 	public function test_is_current_blog_false(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$blog = \Mockery::mock( MslsBlog::class );
@@ -106,60 +125,94 @@ class WP_Test_MslsBlogCollection extends Msls_UnitTestCase {
 	}
 
 	public function test_get_objects(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertIsArray( $obj->get_objects() );
 	}
 
-	public function test_is_plugin_active(): void {
+	public function test_is_plugin_active_networkwide(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [ 'multisite-language-switcher/MultisiteLanguageSwitcher.php' => 'Multisite Language Switcher' ] );
+
 		$obj = new MslsBlogCollection();
 
-		$this->assertIsBool( $obj->is_plugin_active( 0 ) );
+		$this->assertTrue( $obj->is_plugin_active( 4 ) );
+	}
+
+	public function test_is_plugin_active(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
+		$obj = new MslsBlogCollection();
+
+		$this->assertTrue( $obj->is_plugin_active( 1 ) );
+		$this->assertTrue( $obj->is_plugin_active( 2 ) );
+
+		$this->assertFalse( $obj->is_plugin_active( 3 ) );
 	}
 
 	public function test_get_plugin_active_blogs(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertIsArray( $obj->get_plugin_active_blogs() );
 	}
 
 	public function test_get(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertIsArray( $obj->get() );
 	}
 
 	public function test_get_filtered(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertIsArray( $obj->get_filtered() );
+		$this->assertIsArray( $obj->get_filtered( true ) );
 	}
 
 	public function test_get_users(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertIsArray( $obj->get_users() );
 	}
 
 	public function test_get_current_blog(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertInstanceOf( MslsBlog::class, $obj->get_current_blog() );
 	}
 
 	public function test_get_blog_language(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertEquals( 'de_DE', $obj->get_blog_language( 1 ) );
 		$this->assertEquals( 'it_IT', $obj->get_blog_language( 2 ) );
+		$this->assertEquals( 'fr_FR', $obj->get_blog_language( 3 ) );
 
 		$this->assertEquals( 'de_DE', $obj->get_blog_language() );
 	}
 
 	public function test_get_blog_id(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( [] );
+
 		$obj = new MslsBlogCollection();
 
 		$this->assertEquals( 1, $obj->get_blog_id( 'de_DE' ) );
 		$this->assertEquals( 2, $obj->get_blog_id( 'it_IT' ) );
+
+		$this->assertNull( $obj->get_blog_id( 'fr_FR' ) );
 	}
+
 }

@@ -13,10 +13,11 @@ use lloc\Msls\Component\Icon\IconPng;
  * General options class
  * @package Msls
  * @property bool $activate_autocomplete
+ * @property bool output_current_blog
  * @property int $display
- * @property string $admin_display
  * @property int $reference_user
  * @property int $content_priority
+ * @property string $admin_display
  * @property string $admin_language
  * @property string $description
  * @property string $before_item
