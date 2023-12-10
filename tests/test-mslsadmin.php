@@ -116,8 +116,15 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_display() {
 		$obj = $this->get_sut();
 
-		$this->expectOutputRegex( '/^<select id="display" name="msls\[display\]">.*$/' );
+		$this->expectOutputString( '<select id="display" name="msls[display]"><option value="0" >Flag and description</option><option value="1" >Description only</option><option value="2" >Flag only</option><option value="3" >Description and flag</option></select>' );
 		$obj->display();
+	}
+
+	function test_admin_display() {
+		$obj = $this->get_sut();
+
+		$this->expectOutputString( '<select id="admin_display" name="msls[admin_display]"><option value="flag" >Flag</option><option value="label" >Label</option></select>' );
+		$obj->admin_display();
 	}
 
 	function test_reference_user() {
