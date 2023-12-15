@@ -72,6 +72,7 @@ class MslsPlugin {
 
 				add_action( 'load-edit-tags.php', [ MslsCustomColumnTaxonomy::class, 'init' ] );
 				add_action( 'load-edit-tags.php', [ MslsPostTag::class, 'init' ] );
+				add_action( 'load-term.php', [ MslsPostTag::class, 'init' ] );
 
 				if ( filter_has_var( INPUT_POST, 'action' ) ) {
 					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
