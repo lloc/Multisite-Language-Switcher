@@ -58,11 +58,12 @@ class MslsMain {
 	 *
 	 * @param mixed $message
 	 */
-	public function debugger( $message ) {
+	public function debugger( $message ): void {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				$message = print_r( $message, true );
 			}
+
 			error_log( 'MSLS Debug: ' . $message );
 		}
 	}
