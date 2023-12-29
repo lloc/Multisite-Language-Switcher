@@ -1,3 +1,10 @@
+## 2.6.1
+
+* Fixes in code and documentation
+* New API function `msls_blog( string $locale ): ?MslsBlog;`
+* New API function `msls_blog_collection(): MslsBlogCollection;`
+* Text labels of languages in the backend
+ 
 ## 2.6.0
 
 * WordPress 6.4 tested
