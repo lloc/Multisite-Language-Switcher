@@ -43,7 +43,7 @@ class MslsPostTagClassic extends MslsPostTag {
 			</tr>';
 
 		$item_format = '<tr class="form-field">
-			<th scope="row" valign="top">
+			<th scope="row">
 			<label for="msls_input_%1$s">%2$s</label></th>
 			<td>
 			<select class="msls-translations" name="msls_input_%1$s">

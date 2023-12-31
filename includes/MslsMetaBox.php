@@ -187,7 +187,7 @@ class MslsMetaBox extends MslsMain {
 				$icon     = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $iconType );
 
 				if ( $mydata->has_value( $language ) ) {
-          $icon->set_href( $mydata->$language );
+                    $icon->set_href( $mydata->$language );
 				}
 
 				$selects  = '';
@@ -203,6 +203,7 @@ class MslsMetaBox extends MslsMain {
 						'sort_column'       => 'menu_order, post_title',
 						'echo'              => 0,
 					];
+
 					/**
 					 * Overrides the args for wp_dropdown_pages when using the HTML select in the MetaBox
 					 *
