@@ -1,3 +1,7 @@
+## 2.6.2
+
+* CSS fix for fields in meta-boxes
+
 ## 2.6.1
 
 * Fixes in code and documentation
