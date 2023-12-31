@@ -1,15 +1,18 @@
 @select-width: 226px;
+
 div#msls.postbox {
 	label {
 		margin-right: 6px;
 	}
-	select {
+    input.msls_title, select {
 		width: 100%;
 	}
 }
+
 select.msls-translations {
 	width: @select-width;
 }
+
 #msls.postbox {
 	.inside {
         li {
@@ -18,7 +21,7 @@ select.msls-translations {
             label {
                 display: flex;
             }
-            input.msls_title, select{
+            input.msls_title, select {
                 flex-grow: 1;
             }
         }
@@ -26,9 +29,9 @@ select.msls-translations {
 }
 
 #msls-content-import {
-  .button-primary {
-    margin: 1em auto;
-  }
+    .button-primary {
+        margin: 1em auto;
+    }
 }
 
 .flag-icon {
