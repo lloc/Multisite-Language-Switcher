@@ -29,7 +29,7 @@ class MslsTaxonomy extends MslsContentTypes {
 	}
 
 	/**
-	 * @uses get_post_types
+	 * @uses get_taxonomies
 	 * @return string[]
 	 */
 	public static function get(): array {
