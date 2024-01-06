@@ -1,6 +1,7 @@
 <?php
 /**
  * MslsPostTag
+ *
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
@@ -9,6 +10,7 @@ namespace lloc\Msls;
 
 /**
  * Post Tag
+ *
  * @package Msls
  */
 class MslsPostTag extends MslsMain {
@@ -27,12 +29,12 @@ class MslsPostTag extends MslsMain {
 				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
 			);
 
-			$args = array(
+			$args = [
 				'orderby'    => 'name',
 				'order'      => 'ASC',
 				'number'     => 10,
 				'hide_empty' => 0,
-			);
+			];
 
 			if ( filter_has_var( INPUT_POST, 's' ) ) {
 				$args['search'] = sanitize_text_field(
@@ -69,20 +71,13 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Init
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @return MslsPostTag
 	 */
 	public static function init() {
 		$options    = MslsOptions::instance();
 		$collection = msls_blog_collection();
-
-		if ( $options->activate_autocomplete	) {
-			$obj = new static( $options, $collection );
-		}
-		else {
-			$obj = new MslsPostTagClassic( $options, $collection );
-		}
+		$class      = $options->activate_autocomplete ? MslsPostTag::class : MslsPostTagClassic::class;
+		$obj        = new $class( $options, $collection );
 
 		$taxonomy = MslsContentTypes::create()->acl_request();
 		if ( '' != $taxonomy ) {
@@ -98,9 +93,13 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
 	 *
-	 * @param \StdClass $tag
+	 * @param string $taxonomy
 	 */
-	public function add_input( $tag ) {
+	public function add_input( string $taxonomy ): void {
+		if ( did_action( "{$taxonomy}_add_form_fields" ) !== 1 ) {
+			return;
+		}
+
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
@@ -110,15 +109,20 @@ class MslsPostTag extends MslsMain {
 			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>';
 
 		echo '<div class="form-field">';
-		$this->the_input( $tag, $title_format, $item_format );
+		$this->the_input( $taxonomy, $title_format, $item_format );
 		echo '</div>';
 	}
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
-	 * @param \StdClass $tag
+	 *
+	 * @param string $taxonomy
 	 */
-	public function edit_input( $tag ) {
+	public function edit_input( string $taxonomy ): void {
+		if ( did_action( "{$taxonomy}_edit_form_fields" ) !== 1 ) {
+			return;
+		}
+
 		$title_format = '<tr>
 			<th colspan="2">
 			<strong>%s</strong>
@@ -128,7 +132,7 @@ class MslsPostTag extends MslsMain {
 			</tr>';
 
 		$item_format = '<tr class="form-field">
-			<th scope="row" valign="top">
+			<th scope="row">
 			<label for="msls_title_%1$s">%2$s</label>
 			</th>
 			<td>
@@ -137,15 +141,18 @@ class MslsPostTag extends MslsMain {
 			</td>
 			</tr>';
 
-		$this->the_input( $tag, $title_format, $item_format );
+		$this->the_input( $taxonomy, $title_format, $item_format );
 	}
 
 	/**
 	 * Print the input fields
+	 *
 	 * Returns true if the blogcollection is not empty
-	 * @param \StdClass $tag
+	 *
+	 * @param mixed $tag
 	 * @param string $title_format
 	 * @param string $item_format
+	 *
 	 * @return boolean
 	 */
 	public function the_input( $tag, $title_format, $item_format ) {
@@ -156,7 +163,7 @@ class MslsPostTag extends MslsMain {
 
 			$this->maybe_set_linked_term( $my_data );
 
-			$type    = MslsContentTypes::create()->get_request();
+			$type = MslsContentTypes::create()->get_request();
 
 			printf(
 				$title_format,
@@ -166,17 +173,13 @@ class MslsPostTag extends MslsMain {
 				),
 				$type
 			);
+
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
-				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create()
-								->set_language( $language );
-				if( $this->options->admin_display === 'label' ) {
-					$icon->set_icon_type( 'label' );
-				} else {
-					$icon->set_icon_type( 'flag' );
-				}
+				$language  = $blog->get_language();
+				$icon_type = $this->options->get_icon_type();
+				$icon      = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $icon_type );
 
 				$value = $title = '';
 				if ( $my_data->has_value( $language ) ) {
@@ -188,23 +191,20 @@ class MslsPostTag extends MslsMain {
 					}
 				}
 
-				printf(
-					$item_format,
-					$blog->userblog_id,
-					$icon,
-					$language,
-					$value,
-					$title
-				);
+				printf( $item_format, $blog->userblog_id, $icon, $language, $value, $title );
+
 				restore_current_blog();
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
 	 * Set calls the save method if taxonomy is set
+	 *
 	 * @param int $term_id
  	 * @codeCoverageIgnore
 	 */

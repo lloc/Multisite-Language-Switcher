@@ -220,15 +220,16 @@ class MslsPlugin {
 			$callback = [ $this, 'block_render' ];
 
 			global $pagenow;
-            		$toLoad = [ 'wp-blocks', 'wp-element', 'wp-components' ];
-            		if ( $pagenow === 'widgets.php' ) $toLoad[] = 'wp-edit-widgets';
-            		else $toLoad[] = 'wp-editor';
 
-            		wp_register_script(
-                		$handle,
-                		self::plugins_url( 'js/msls-widget-block.js' ),
-                		$toLoad
-            		);
+            $toLoad = [ 'wp-blocks', 'wp-element', 'wp-components' ];
+            if ( $pagenow === 'widgets.php' ) $toLoad[] = 'wp-edit-widgets';
+            else $toLoad[] = 'wp-editor';
+
+            wp_register_script(
+                $handle,
+                self::plugins_url( 'js/msls-widget-block.js' ),
+                $toLoad
+            );
 
 			register_block_type( 'lloc/msls-widget-block', [
 				'attributes'      => [ 'title' => [ 'type' => 'string' ] ],

@@ -19,13 +19,9 @@ class MslsWidget extends \WP_Widget {
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct( 
-			$this->id_base, 
-			apply_filters(
-				'msls_widget_title',
-				__( 'Multisite Language Switcher', 'multisite-language-switcher' ) 
-			)
-		);
+		$name = apply_filters('msls_widget_title', __( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
+
+		parent::__construct( $this->id_base, $name, [ 'show_instance_in_rest' => true ] );
 	}
 
 	/**

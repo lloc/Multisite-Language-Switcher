@@ -13,7 +13,7 @@ class Msls_UnitTestCase extends TestCase {
 	 *
 	 * @var object $test
 	 */
-	protected $test;
+	protected object $test;
 
 	protected function setUp(): void {
 		parent::setUp();
