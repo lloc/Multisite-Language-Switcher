@@ -8,16 +8,22 @@
 namespace lloc\Msls;
 
 /**
- * Post Tag Clasic
+ * Post Tag Classic
+ *
  * @package Msls
  */
 class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
-	 * @param \StdClass $tag
+	 *
+	 * @param string $taxonomy
 	 */
-	public function add_input( $tag ): void {
+	public function add_input( string $taxonomy ): void {
+		if ( did_action( "{$taxonomy}_add_form_fields" ) !== 1 ) {
+			return;
+		}
+
 		$title_format = '<h3>%s</h3>';
 
 		$item_format = '<label for="msls_input_%1$s">%2$s</label>
@@ -27,15 +33,20 @@ class MslsPostTagClassic extends MslsPostTag {
 			</select>';
 
 		echo '<div class="form-field">';
-		$this->the_input( $tag, $title_format, $item_format );
+		$this->the_input( $taxonomy, $title_format, $item_format );
 		echo '</div>';
 	}
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
-	 * @param \StdClass $tag
+	 *
+	 * @param string $taxonomy
 	 */
-	public function edit_input( $tag ): void {
+	public function edit_input( string $taxonomy ): void {
+		if ( did_action( "{$taxonomy}_edit_form_fields" ) !== 1 ) {
+			return;
+		}
+
 		$title_format = '<tr>
 			<th colspan="2">
 			<strong>%s</strong>
@@ -52,7 +63,7 @@ class MslsPostTagClassic extends MslsPostTag {
 			</select></td>
 			</tr>';
 
-		$this->the_input( $tag, $title_format, $item_format );
+		$this->the_input( $taxonomy, $title_format, $item_format );
 	}
 
 	/**
@@ -67,22 +78,16 @@ class MslsPostTagClassic extends MslsPostTag {
 	public function print_option( MslsBlog $blog, string $type, MslsOptionsTax $mydata, string $item_format ): void {
 		switch_to_blog( $blog->userblog_id );
 
-		$language = $blog->get_language();
-		$icon     = MslsAdminIcon::create()
-			->set_language( $language );
-
-		if( $this->options->admin_display === 'label' ) {
-			$icon->set_icon_type( 'label' );
-		} else {
-			$icon->set_icon_type( 'flag' );			
-		}
-		$options  = '';
-		$terms    = get_terms( [ 'taxonomy' => $type, 'hide_empty' => false ] );
+		$language  = $blog->get_language();
+		$icon_type = $this->options->get_icon_type();
+		$icon      = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $icon_type );
 
 		if ( $mydata->has_value( $language ) ) {
 			$icon->set_href( $mydata->$language );
 		}
 
+		$options  = '';
+		$terms    = get_terms( [ 'taxonomy' => $type, 'hide_empty' => false ] );
 		if ( ! empty( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$options .= sprintf(
@@ -103,7 +108,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * Print the input fields
 	 * Returns true if the blogcollection is not empty
 	 *
-	 * @param \StdClass $tag
+	 * @param mixed $tag
 	 * @param string $title_format
 	 * @param string $item_format
 	 * @return boolean
