@@ -33,16 +33,17 @@ class MslsPostTagClassic extends MslsPostTag {
 			</select>';
 
 		echo '<div class="form-field">';
-		$this->the_input( $taxonomy, $title_format, $item_format );
+		$this->the_input( null, $title_format, $item_format );
 		echo '</div>';
 	}
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
 	 *
+	 * @param \WP_Term $tag
 	 * @param string $taxonomy
 	 */
-	public function edit_input( string $taxonomy ): void {
+	public function edit_input( \WP_Term $tag, string $taxonomy ): void {
 		if ( did_action( "{$taxonomy}_edit_form_fields" ) !== 1 ) {
 			return;
 		}

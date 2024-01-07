@@ -71,6 +71,8 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Init
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @return MslsPostTag
 	 */
 	public static function init() {
@@ -82,7 +84,7 @@ class MslsPostTag extends MslsMain {
 		$taxonomy = MslsContentTypes::create()->acl_request();
 		if ( '' != $taxonomy ) {
 			add_action( "{$taxonomy}_add_form_fields",  [ $obj, 'add_input' ] );
-			add_action( "{$taxonomy}_edit_form_fields", [ $obj, 'edit_input' ] );
+			add_action( "{$taxonomy}_edit_form_fields", [ $obj, 'edit_input' ], 10, 2 );
 			add_action( "edited_{$taxonomy}", [ $obj, 'set' ] );
 			add_action( "create_{$taxonomy}", [ $obj, 'set' ] );
 		}
@@ -109,16 +111,17 @@ class MslsPostTag extends MslsMain {
 			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>';
 
 		echo '<div class="form-field">';
-		$this->the_input( $taxonomy, $title_format, $item_format );
+		$this->the_input( null, $title_format, $item_format );
 		echo '</div>';
 	}
 
 	/**
 	 * Add the input fields to the edit-screen of the taxonomies
 	 *
+	 * @param \WP_Term $tag
 	 * @param string $taxonomy
 	 */
-	public function edit_input( string $taxonomy ): void {
+	public function edit_input( \WP_Term $tag, string $taxonomy ): void {
 		if ( did_action( "{$taxonomy}_edit_form_fields" ) !== 1 ) {
 			return;
 		}
@@ -141,7 +144,7 @@ class MslsPostTag extends MslsMain {
 			</td>
 			</tr>';
 
-		$this->the_input( $taxonomy, $title_format, $item_format );
+		$this->the_input( $tag, $title_format, $item_format );
 	}
 
 	/**
@@ -149,14 +152,14 @@ class MslsPostTag extends MslsMain {
 	 *
 	 * Returns true if the blogcollection is not empty
 	 *
-	 * @param mixed $tag
+	 * @param ?\WP_Term $tag
 	 * @param string $title_format
 	 * @param string $item_format
 	 *
 	 * @return boolean
 	 */
-	public function the_input( $tag, $title_format, $item_format ) {
-		$term_id = ( is_object( $tag ) ? $tag->term_id : 0 );
+	public function the_input( ?\WP_Term $tag, $title_format, $item_format ) {
+		$term_id = $tag->term_id ?? 0;
 		$blogs   = $this->collection->get();
 		if ( $blogs ) {
 			$my_data = MslsOptionsTax::create( $term_id );
@@ -191,9 +194,9 @@ class MslsPostTag extends MslsMain {
 					}
 				}
 
-				printf( $item_format, $blog->userblog_id, $icon, $language, $value, $title );
-
 				restore_current_blog();
+
+				printf( $item_format, $blog->userblog_id, $icon, $language, $value, $title );
 			}
 
 			return true;

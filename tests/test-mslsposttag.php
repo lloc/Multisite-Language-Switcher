@@ -35,9 +35,7 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( $blogs );
 
-		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
-
-		$this->test = MslsPostTag::init();
+		$this->test = new MslsPostTag( $options, $collection );
 	}
 
 	/**
@@ -64,30 +62,33 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 		$output = '<tr>
 			<th colspan="2">
 			<strong>Multisite Language Switcher</strong>
+			<input type="hidden" name="msls_post_type" id="msls_post_type" value="post"/>
+			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
 			</th>
 			</tr><tr class="form-field">
 			<th scope="row">
-			<label for="msls_input_de_DE"><a title="Create a new translation in the de_DE-blog" href="/wp-admin/edit-tags.php"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label></th>
+			<label for="msls_title_"><a title="Create a new translation in the de_DE-blog" href="/wp-admin/edit-tags.php"><span class="language-badge de_DE"><span>de</span><span>DE</span></span></a>&nbsp;</label>
+			</th>
 			<td>
-			<select class="msls-translations" name="msls_input_de_DE">
-			<option value=""></option>
-			
-			</select></td>
+			<input type="hidden" id="msls_id_" name="msls_input_de_DE" value=""/>
+			<input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/>
+			</td>
 			</tr><tr class="form-field">
 			<th scope="row">
-			<label for="msls_input_en_US"><a title="Create a new translation in the en_US-blog" href="/wp-admin/edit-tags.php"><span class="flag-icon flag-icon-us">en_US</span></a>&nbsp;</label></th>
+			<label for="msls_title_"><a title="Create a new translation in the en_US-blog" href="/wp-admin/edit-tags.php"><span class="language-badge en_US"><span>en</span><span>US</span></span></a>&nbsp;</label>
+			</th>
 			<td>
-			<select class="msls-translations" name="msls_input_en_US">
-			<option value=""></option>
-			
-			</select></td>
+			<input type="hidden" id="msls_id_" name="msls_input_en_US" value=""/>
+			<input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/>
+			</td>
 			</tr>';
 
 		self::expectOutputString( $output );
 
-		$this->test->edit_input( 'test' );
-	}
+		$tag = \Mockery::mock( \WP_Term::class );
 
+		$this->test->edit_input( $tag, 'test' );
+	}
 
 	public function test_add_input_second_call() {
 		Functions\expect( 'did_action' )->andReturn( 2 );
@@ -98,11 +99,13 @@ class WP_Test_MslsPostTag extends Msls_UnitTestCase {
 	}
 
 	public function test_edit_input_second_call() {
+		$tag = \Mockery::mock( \WP_Term::class );
+
 		Functions\expect( 'did_action' )->andReturn( 2 );
 
 		self::expectOutputString( '' );
 
-		$this->test->edit_input( 'test' );
+		$this->test->edit_input( $tag, 'test' );
 	}
 
 }
