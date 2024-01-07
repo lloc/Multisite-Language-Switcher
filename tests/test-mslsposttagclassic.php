@@ -86,23 +86,8 @@ class WP_Test_MslsPostTagClassic extends Msls_UnitTestCase {
 		$tag = \Mockery::mock( \WP_Term::class );
 
 		$this->test->edit_input( $tag, 'test' );
-	}
 
-	public function test_add_input_second_call() {
-		Functions\expect( 'did_action' )->andReturn( 2 );
-
-		self::expectOutputString( '' );
-
-		$this->test->add_input( 'test' );
-	}
-
-	public function test_edit_input_second_call() {
-		$tag = \Mockery::mock( \WP_Term::class );
-
-		Functions\expect( 'did_action' )->andReturn( 2 );
-
-		self::expectOutputString( '' );
-
+		// second call should not output anything
 		$this->test->edit_input( $tag, 'test' );
 	}
 

@@ -44,8 +44,10 @@ class MslsPostTag extends MslsMain {
 
 			/**
 			 * Overrides the query-args for the suggest fields
-			 * @since 0.9.9
+			 *
 			 * @param array $args
+			 *
+			 * @since 0.9.9
 			 */
 			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
 
@@ -53,8 +55,10 @@ class MslsPostTag extends MslsMain {
 
 				/**
 				 * Manipulates the term object before using it
-				 * @since 0.9.9
+				 *
 				 * @param \StdClass $term
+				 *
+				 * @since 0.9.9
 				 */
 				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
 
@@ -83,7 +87,7 @@ class MslsPostTag extends MslsMain {
 
 		$taxonomy = MslsContentTypes::create()->acl_request();
 		if ( '' != $taxonomy ) {
-			add_action( "{$taxonomy}_add_form_fields",  [ $obj, 'add_input' ] );
+			add_action( "{$taxonomy}_add_form_fields", [ $obj, 'add_input' ] );
 			add_action( "{$taxonomy}_edit_form_fields", [ $obj, 'edit_input' ], 10, 2 );
 			add_action( "edited_{$taxonomy}", [ $obj, 'set' ] );
 			add_action( "create_{$taxonomy}", [ $obj, 'set' ] );
@@ -98,10 +102,6 @@ class MslsPostTag extends MslsMain {
 	 * @param string $taxonomy
 	 */
 	public function add_input( string $taxonomy ): void {
-		if ( did_action( "{$taxonomy}_add_form_fields" ) !== 1 ) {
-			return;
-		}
-
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
@@ -122,10 +122,6 @@ class MslsPostTag extends MslsMain {
 	 * @param string $taxonomy
 	 */
 	public function edit_input( \WP_Term $tag, string $taxonomy ): void {
-		if ( did_action( "{$taxonomy}_edit_form_fields" ) !== 1 ) {
-			return;
-		}
-
 		$title_format = '<tr>
 			<th colspan="2">
 			<strong>%s</strong>
@@ -158,24 +154,24 @@ class MslsPostTag extends MslsMain {
 	 *
 	 * @return boolean
 	 */
-	public function the_input( ?\WP_Term $tag, $title_format, $item_format ) {
-		$term_id = $tag->term_id ?? 0;
-		$blogs   = $this->collection->get();
+	public function the_input( ?\WP_Term $tag, string $title_format, string $item_format ): bool {
+		static $count = 0;
+
+		if ( $count > 0 ) {
+			return false;
+		}
+
+		$count ++;
+
+		$blogs = $this->collection->get();
 		if ( $blogs ) {
-			$my_data = MslsOptionsTax::create( $term_id );
+			$term_id = $tag->term_id ?? 0;
+			$mydata  = MslsOptionsTax::create( $term_id );
+			$type    = MslsContentTypes::create()->get_request();
 
-			$this->maybe_set_linked_term( $my_data );
+			$this->maybe_set_linked_term( $mydata );
 
-			$type = MslsContentTypes::create()->get_request();
-
-			printf(
-				$title_format,
-				apply_filters( 
-					'msls_term_select_title',
-					__( 'Multisite Language Switcher', 'multisite-language-switcher' )
-				),
-				$type
-			);
+			printf( $title_format, $this->get_select_title(), $type );
 
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
@@ -185,18 +181,18 @@ class MslsPostTag extends MslsMain {
 				$icon      = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $icon_type );
 
 				$value = $title = '';
-				if ( $my_data->has_value( $language ) ) {
-					$term = get_term( $my_data->$language, $type );
+				if ( $mydata->has_value( $language ) ) {
+					$term = get_term( $mydata->$language, $type );
 					if ( is_object( $term ) ) {
-						$icon->set_href( $my_data->$language );
-						$value = $my_data->$language;
+						$icon->set_href( $mydata->$language );
+						$value = $mydata->$language;
 						$title = $term->name;
 					}
 				}
 
-				restore_current_blog();
-
 				printf( $item_format, $blog->userblog_id, $icon, $language, $value, $title );
+
+				restore_current_blog();
 			}
 
 			return true;
@@ -209,7 +205,8 @@ class MslsPostTag extends MslsMain {
 	 * Set calls the save method if taxonomy is set
 	 *
 	 * @param int $term_id
- 	 * @codeCoverageIgnore
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function set( $term_id ) {
 		if ( MslsContentTypes::create()->acl_request() ) {
@@ -254,6 +251,15 @@ class MslsPostTag extends MslsMain {
 		$mydata->{$origin_lang} = $origin_term_id;
 
 		return $mydata;
+	}
+
+	/**
+	 * Get the title for the select field
+	 *
+	 * @return string
+	 */
+	protected function get_select_title(): string {
+		return apply_filters( 'msls_term_select_title', __( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
 	}
 
 }
