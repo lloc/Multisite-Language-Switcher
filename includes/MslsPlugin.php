@@ -62,7 +62,7 @@ class MslsPlugin {
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
 			if ( is_admin() ) {
-				add_action( 'admin_menu', [ $obj, 'admin_menu' ] );
+				add_action( 'admin_enqueue_scripts', [ $obj, 'custom_enqueue' ] );
 
 				add_action( 'admin_menu', [ MslsAdmin::class, 'init' ] );
 				add_action( 'load-post.php', [ MslsMetaBox::class, 'init' ] );
@@ -265,7 +265,7 @@ class MslsPlugin {
 	 *
 	 * @return boolean
 	 */
-	public function admin_menu() {
+	public function custom_enqueue() {
 		$ver     = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
 		$postfix = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
