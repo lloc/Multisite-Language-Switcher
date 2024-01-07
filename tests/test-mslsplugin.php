@@ -23,7 +23,7 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		Functions\when( 'wp_enqueue_style' )->returnArg();
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 
-		$this->assertIsBool( $this->get_test()->admin_menu() );
+		$this->assertIsBool( $this->get_test()->custom_enqueue() );
 	}
 
 	/**
