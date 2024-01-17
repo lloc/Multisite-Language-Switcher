@@ -1,3 +1,8 @@
+## 2.6.3
+
+- Style loading in admin_bar reviewed
+- Prevention of double output in taxonomy edit-screens
+
 ## 2.6.2
 
 * CSS fix for fields in meta-boxes
