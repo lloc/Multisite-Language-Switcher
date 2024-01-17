@@ -59,6 +59,7 @@ class MslsPlugin {
 
 			add_action( 'init', [ $obj, 'admin_bar_init' ] );
 			add_action( 'admin_enqueue_scripts', [ $obj, 'custom_enqueue' ] );
+			add_action( 'wp_enqueue_scripts', [ $obj, 'custom_enqueue' ] );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
