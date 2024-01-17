@@ -10,6 +10,7 @@ use lloc\Msls\MslsOptions;
 class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 
 	function test_admin_menu_without_autocomplete(): void {
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
 		Functions\expect( 'wp_enqueue_style' )->twice();
 		Functions\expect( 'plugins_url' )->twice()->andReturn( 'https://lloc.de/wp-content/plugins' );
 
@@ -21,11 +22,13 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	}
 
 	function test_admin_menu_with_autocomplete(): void {
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
 		Functions\expect( 'wp_enqueue_style' )->twice();
 		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://lloc.de/wp-content/plugins' );
 		Functions\expect( 'wp_enqueue_script' )->once();
 
 		$options = \Mockery::mock( MslsOptions::class );
+
 		$options->activate_autocomplete = true;
 
 		$test = new MslsPlugin( $options );
@@ -33,7 +36,18 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		$this->assertTrue( $test->custom_enqueue() );
 	}
 
-	function test_init_widget_not_excluded(): void {
+	function test_admin_menu_admin_bar_not_showing(): void {
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnFalse();
+
+		$options = \Mockery::mock( MslsOptions::class );
+
+		$options->activate_autocomplete = true;
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertFalse( $test->custom_enqueue() );
+	}
+		function test_init_widget_not_excluded(): void {
 		Functions\expect( 'register_widget' )->once();
 
 		$options = \Mockery::mock( MslsOptions::class );
