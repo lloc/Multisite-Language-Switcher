@@ -61,9 +61,11 @@ class MslsPlugin {
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
-			if ( is_admin() ) {
+			if ( is_admin() || is_admin_bar_showing() ) {
 				add_action( 'admin_enqueue_scripts', [ $obj, 'custom_enqueue' ] );
+			}
 
+			if ( is_admin() ) {
 				add_action( 'admin_menu', [ MslsAdmin::class, 'init' ] );
 				add_action( 'load-post.php', [ MslsMetaBox::class, 'init' ] );
 				add_action( 'load-post-new.php', [ MslsMetaBox::class, 'init' ] );
@@ -261,7 +263,7 @@ class MslsPlugin {
 	/**
 	 * Loads styles and some js if needed
 	 *
-	 * The method returns true if JS is loaded or false if not
+	 * The method returns true if the autocomplete-option is activated, false otherwise.
 	 *
 	 * @return boolean
 	 */
