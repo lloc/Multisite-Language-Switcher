@@ -33,18 +33,24 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 		$this->assertTrue( $test->custom_enqueue() );
 	}
 
-	/**
-	 * Verify the static init_widget-method
-	 */
-	function test_init_widget(): void {
-		Functions\when( 'register_widget' )->justReturn( true );
+	function test_init_widget_not_excluded(): void {
+		Functions\expect( 'register_widget' )->once();
 
 		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->andReturn( false );
+		$options->shouldReceive( 'is_excluded' )->andReturnFalse();
 
 		$test = new MslsPlugin( $options );
 
-		$this->assertIsBool( $test->init_widget() );
+		$this->assertTrue( $test->init_widget() );
+	}
+
+	function test_init_widget_excluded(): void {
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->andReturnTrue();
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertFalse( $test->init_widget() );
 	}
 
 	/**
