@@ -9,30 +9,48 @@ use lloc\Msls\MslsOptions;
 
 class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 
-	function get_test() {
+	function test_admin_menu_without_autocomplete(): void {
+		Functions\expect( 'wp_enqueue_style' )->twice();
+		Functions\expect( 'plugins_url' )->twice()->andReturn( 'https://lloc.de/wp-content/plugins' );
+
 		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 
-		return new MslsPlugin( $options );
+		$test = new MslsPlugin( $options );
+
+		$this->assertFalse( $test->custom_enqueue() );
 	}
 
-	/**
-	 * Verify the static init-method
-	 */
-	function test_admin_menu(): void {
-		Functions\when( 'wp_enqueue_style' )->returnArg();
-		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
+	function test_admin_menu_with_autocomplete(): void {
+		Functions\expect( 'wp_enqueue_style' )->twice();
+		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://lloc.de/wp-content/plugins' );
+		Functions\expect( 'wp_enqueue_script' )->once();
 
-		$this->assertIsBool( $this->get_test()->custom_enqueue() );
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->activate_autocomplete = true;
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertTrue( $test->custom_enqueue() );
 	}
 
-	/**
-	 * Verify the static init_widget-method
-	 */
-	function test_init_widget(): void {
-		Functions\when( 'register_widget' )->justReturn( true );
+	function test_init_widget_not_excluded(): void {
+		Functions\expect( 'register_widget' )->once();
 
-		$this->assertIsBool( $this->get_test()->init_widget() );
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->andReturnFalse();
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertTrue( $test->init_widget() );
+	}
+
+	function test_init_widget_excluded(): void {
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->andReturnTrue();
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertFalse( $test->init_widget() );
 	}
 
 	/**
@@ -41,7 +59,12 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	function test_init_i18n_support(): void {
 		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
 
-		$this->assertIsBool( $this->get_test()->init_i18n_support() );
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->andReturn( false );
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertIsBool( $test->init_i18n_support() );
 	}
 
 	/**
@@ -59,7 +82,12 @@ class WP_Test_MslsPlugin extends Msls_UnitTestCase {
 	function test_uninstall(): void {
 		Functions\when( 'delete_option' )->justReturn( false );
 
-		$this->assertIsBool( $this->get_test()->uninstall() );
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->andReturn( false );
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertIsBool( $test->uninstall() );
 	}
 
 	/**
