@@ -72,19 +72,18 @@ class MslsOptionsTax extends MslsOptions {
 	 * Get the queried taxonomy
 	 * @return string
 	 */
-    public function get_tax_query() {
-        global $wp_query;
+	public function get_tax_query() {
+		global $wp_query;
 
-        if ( function_exists('is_woocommerce' ) ) {
-            if ( is_woocommerce() && isset( $wp_query->tax_query->queries[1]['taxonomy'] ) ) {
-                    return $wp_query->tax_query->queries[1]['taxonomy'];
-            }
-        } elseif ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
-            return $wp_query->tax_query->queries[0]['taxonomy'];
-        }
+		if ( class_exists( 'WooCommerce' ) && is_woocommerce() && isset( $wp_query->tax_query->queries[1]['taxonomy'] ) ) {
+			return $wp_query->tax_query->queries[1]['taxonomy'];
+		}
+		elseif ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
+			return $wp_query->tax_query->queries[0]['taxonomy'];
+		}
 
-        return parent::get_tax_query();
-    }
+		return parent::get_tax_query();
+	}
 
 	/**
 	 * Get postlink
