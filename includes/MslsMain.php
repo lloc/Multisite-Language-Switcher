@@ -48,7 +48,7 @@ class MslsMain {
 	 */
 	public static function init() {
 		$options    = MslsOptions::instance();
-		$collection = MslsBlogCollection::instance();
+		$collection = msls_blog_collection();
 
 		return new static( $options, $collection );
 	}
@@ -58,11 +58,12 @@ class MslsMain {
 	 *
 	 * @param mixed $message
 	 */
-	public function debugger( $message ) {
+	public function debugger( $message ): void {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				$message = print_r( $message, true );
 			}
+
 			error_log( 'MSLS Debug: ' . $message );
 		}
 	}
@@ -169,7 +170,7 @@ class MslsMain {
 		}
 
 		if ( ! $this->collection->has_current_blog() ) {
-			$this->debugger( 'MslsBlogCollection::instance()->has_current_blog returns false.' );
+			$this->debugger( 'BlogCollection returns false when calling has_current_blog.' );
 
 			return;
 		}

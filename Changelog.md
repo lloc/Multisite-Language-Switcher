@@ -1,3 +1,71 @@
+## 2.6.3
+
+- Style loading in admin_bar reviewed
+- Prevention of double output in taxonomy edit-screens
+
+## 2.6.2
+
+* CSS fix for fields in meta-boxes
+
+## 2.6.1
+
+* Fixes in code and documentation
+* New API function `msls_blog( string $locale ): ?MslsBlog;`
+* New API function `msls_blog_collection(): MslsBlogCollection;`
+* Text labels of languages in the backend
+ 
+## 2.6.0
+
+* WordPress 6.4 tested
+* Set PHP 7.4 as minimum requirement
+* Set WordPress 5.6 as minimum requirement
+* Blavatar fix 
+
+## 2.5.11
+
+* CodeSniffer installed for compatibility check with PHP 8.1
+* CSS/SVG Flags refreshed
+
+## 2.5.10
+
+* WordPress 6.3 tested
+* Compatibility issue with PHP 8.1 regarding FILTER_SANITIZE_STRING
+
+## 2.5.9
+
+* Compatibility issue with E_NOTICE and PHPUnit 10
+
+## 2.5.8
+
+* Avoid notice on Appearance > Widgets admin page
+* Language files reviewed
+* Legacy tests removed
+
+## 2.5.7
+
+* Fix #192 MslsCustomColumn/MslsAdminIcon fatal error (props @nelgmo)
+
+## 2.5.6
+
+* Fix #184 - use type of post and not only request (props @arnowelzel)
+* Adding filters for customizing the "hreflang" output in the page header (props @jacksoggetto) 
+
+## 2.5.5
+
+* WordPress 6.0 tested
+* Improvements in code quality
+
+## 2.5.4
+
+* Secondary buttons from MetaBoxes removed
+* Flags refreshed
+* Tested with 5.9
+* Bugfix for request
+
+## 2.4.12
+
+* Flags regenerated (CSS and PNG)
+
 ## 2.4.11
 
 ### Bug fixes

@@ -5,6 +5,10 @@
       <directory suffix=".php">./includes/</directory>
     </include>
   </coverage>
+  <php>
+    <const name="MSLS_PLUGIN_PATH" value="multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
+    <const name="WP_DEBUG" value="true"/>
+  </php>
   <testsuite name="Internal tests">
     <directory prefix="test-" suffix=".php">./tests/</directory>
   </testsuite>

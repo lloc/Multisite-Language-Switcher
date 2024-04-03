@@ -1,14 +1,10 @@
 <?php
-/**
- * MslsBlog
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
  * Internal representation of a blog
+ *
  * @property int $userblog_id
  * @package Msls
  */
@@ -57,7 +53,7 @@ class MslsBlog {
 	 * @return mixed|null
 	 */
 	final public function __get( $key ) {
-		return isset( $this->obj->$key ) ? $this->obj->$key : null;
+		return $this->obj->$key ?? null;
 	}
 
 	/**
@@ -73,10 +69,14 @@ class MslsBlog {
 	/**
 	 * Gets a customized title for the blog
 	 *
+	 * @param string $icon_type
+	 *
 	 * @return string
 	 */
-	public function get_title(): string {
-		return sprintf( '%1$s (%2$s)', $this->obj->blogname, $this->get_description() );
+	public function get_title( string $icon_type = 'flag' ): string {
+		$icon = ( new MslsAdminIcon( null ) )->set_language( $this->language )->set_icon_type( $icon_type );
+
+		return sprintf( '%1$s %2$s', $this->obj->blogname, '<span class="msls-icon-wrapper flag">' . $icon->get_icon() . '</span>' );
 	}
 
 	/**
@@ -107,7 +107,7 @@ class MslsBlog {
 	 * @return string|null
 	 */
 	public function get_url( $options ) {
-		if ( $this->obj->userblog_id == MslsBlogCollection::instance()->get_current_blog_id() ) {
+		if ( $this->obj->userblog_id == msls_blog_collection()->get_current_blog_id() ) {
 			return $options->get_current_link();
 		}
 
@@ -173,6 +173,29 @@ class MslsBlog {
 	 */
 	public static function description( MslsBlog $a, MslsBlog $b ) {
 		return self::_cmp( $a->get_description(), $b->get_description() );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_blavatar(): string {
+		$blavatar_html   = '<div class="blavatar"></div>';
+		$show_site_icons = apply_filters( 'wp_admin_bar_show_site_icons', true );
+
+		switch_to_blog( $this->obj->userblog_id );
+
+		if ( true === $show_site_icons && has_site_icon( $this->obj->userblog_id ) ) {
+			$blavatar_html = sprintf(
+				'<img class="blavatar" src="%s" srcset="%s 2x" alt="" width="16" height="16"%s />',
+				esc_url( get_site_icon_url( 16 ) ),
+				esc_url( get_site_icon_url( 32 ) ),
+				( wp_lazy_loading_enabled( 'img', 'site_icon_in_toolbar' ) ? ' loading="lazy"' : '' )
+			);
+		}
+
+		restore_current_blog();
+
+		return $blavatar_html;
 	}
 
 }

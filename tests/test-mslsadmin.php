@@ -8,11 +8,10 @@ use lloc\Msls\MslsAdmin;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
-use Mockery\Mock;
 
 class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
-	public function get_sut() {
+	public function get_sut( $users = [] ) {
 		Functions\when( 'get_option' )->justReturn( [] );
 		Functions\when( 'update_option' )->justReturn( true );
 		Functions\when( 'get_current_blog_id' )->justReturn( 1 );
@@ -24,6 +23,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( false );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( [ 'de_DE', 'it_IT' ] );
+		$options->shouldReceive( 'get_icon_type' )->andReturns( 'flag' );
 
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_title' )->andReturns( 'abc (DEF)' );
@@ -40,16 +40,19 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$blog->blogname    = 'uvw';
 
 		$blogs[] = $blog;
+		if ( empty( $users ) ) {
+			$users = [
+				(object) [
+					'ID'            => 1,
+					'user_nicename' => 'realloc'
+				]
+			];
+		}
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturns( 1 );
 		$collection->shouldReceive( 'get_plugin_active_blogs' )->andReturns( $blogs );
-		$collection->shouldReceive( 'get_users' )->andReturns( [
-			(object) [
-				'ID' => 1,
-				'user_nicename' => 'realloc'
-			]
-		] );
+		$collection->shouldReceive( 'get_users' )->andReturns( $users );
 
 		return new MslsAdmin( $options, $collection );
 	}
@@ -113,11 +116,41 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_display() {
 		$obj = $this->get_sut();
 
-		$this->expectOutputRegex( '/^<select id="display" name="msls\[display\]">.*$/' );
+		$this->expectOutputString( '<select id="display" name="msls[display]"><option value="0" >Flag and description</option><option value="1" >Description only</option><option value="2" >Flag only</option><option value="3" >Description and flag</option></select>' );
 		$obj->display();
 	}
 
+	function test_admin_display() {
+		$obj = $this->get_sut();
+
+		$this->expectOutputString( '<select id="admin_display" name="msls[admin_display]"><option value="flag" >Flag</option><option value="label" >Label</option></select>' );
+		$obj->admin_display();
+	}
+
 	function test_reference_user() {
+		$users = [];
+		$too_much = MslsAdmin::MAX_REFERENCE_USERS + 1;
+		for( $i = 1; $i <= $too_much; $i++ ) {
+			$users[] = (object) [ 'ID' => $i, 'user_nicename' => 'realloc' ];
+		};
+
+		$obj  = $this->get_sut( $users );
+
+		set_error_handler(
+			static function ( $errno, $errstr ) {
+				restore_error_handler();
+				throw new \Exception( $errstr, $errno );
+			},
+			E_ALL
+		);
+
+		$this->expectException( \Exception::class );
+		$this->expectExceptionMessage( 'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of 100 users. Please, use the hook "msls_reference_users" to filter the result before!' );
+
+		$obj->reference_user();
+	}
+
+	function test_reference_user_over_max() {
 		$obj = $this->get_sut();
 
 		$this->expectOutputRegex( '/^<select id="reference_user" name="msls\[reference_user\]">.*$/' );
@@ -198,7 +231,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_tizio() {
 		$obj = $this->get_sut();
 
-		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = false;
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -210,7 +243,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_pinko() {
 		$obj = $this->get_sut();
 
-		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = true;
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -222,7 +255,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 	function test_rewrite_pallino() {
 		$obj = $this->get_sut();
 
-		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = [ 'slug' => 'pallino_slug' ];
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
@@ -284,7 +317,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 
 		Functions\when( 'add_settings_field' )->returnArg();
 
-		$this->assertEquals( 11, $obj->main_section() );
+		$this->assertEquals( 12, $obj->main_section() );
 	}
 
 	function test_advanced_section() {
@@ -299,7 +332,7 @@ class WP_Test_MslsAdmin extends Msls_UnitTestCase {
 		$obj = $this->get_sut();
 
 		foreach ( [ 'post' => 'Post', 'page' => 'Page' ] as $name => $label ) {
-			$post_type = \Mockery::mock( \WP_Post_Type::class );
+			$post_type        = \Mockery::mock( \WP_Post_Type::class );
 			$post_type->name  = $name;
 			$post_type->label = $label;
 

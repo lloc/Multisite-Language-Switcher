@@ -6,18 +6,16 @@ use lloc\Msls\Component\Icon;
 use lloc\Msls\MslsPlugin;
 
 /**
- * Class IconPng
+ * Class IconLabel
  * @package lloc\Msls\Component
  */
-class IconPng extends Icon {
-
-	const FLAGS_FILE = 'flags/flags.php';
+class IconLabel extends Icon {
 
 	/**
 	 * @return string
 	 */
 	protected function get_include(): string {
-		return MslsPlugin::plugin_dir_path( self::FLAGS_FILE );
+		return '';
 	}
 
 	/**
@@ -26,7 +24,11 @@ class IconPng extends Icon {
 	 * @return string
 	 */
 	public function get( string $language ): string {
-		return $this->map[ $language ] ?? $this->maybe( $language, '', '.png' );
+		// if ( isset( $this->map[ $language ] ) ) {
+		// 	return $this->map[ $language ];
+		// }
+
+		return '<span>' . implode( '</span><span>', explode( '_', $language ) ) . '</span>';
 	}
 
 }

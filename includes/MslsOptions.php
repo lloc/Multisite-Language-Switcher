@@ -13,9 +13,11 @@ use lloc\Msls\Component\Icon\IconPng;
  * General options class
  * @package Msls
  * @property bool $activate_autocomplete
+ * @property bool output_current_blog
  * @property int $display
  * @property int $reference_user
  * @property int $content_priority
+ * @property string $admin_display
  * @property string $admin_language
  * @property string $description
  * @property string $before_item
@@ -419,6 +421,15 @@ class MslsOptions extends MslsGetSet {
 		}
 
 		return home_url( $url );
+	}
+
+	/**
+	 * Get the icon type by the settings saved in admin_display
+	 *
+	 * @return string
+	 */
+	public function get_icon_type(): string {
+		return MslsAdminIcon::TYPE_LABEL === $this->admin_display ? MslsAdminIcon::TYPE_LABEL : MslsAdminIcon::TYPE_FLAG;
 	}
 
 }

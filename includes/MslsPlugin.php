@@ -58,12 +58,12 @@ class MslsPlugin {
 			}
 
 			add_action( 'init', [ $obj, 'admin_bar_init' ] );
+			add_action( 'admin_enqueue_scripts', [ $obj, 'custom_enqueue' ] );
+			add_action( 'wp_enqueue_scripts', [ $obj, 'custom_enqueue' ] );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
 			if ( is_admin() ) {
-				add_action( 'admin_menu', [ $obj, 'admin_menu' ] );
-
 				add_action( 'admin_menu', [ MslsAdmin::class, 'init' ] );
 				add_action( 'load-post.php', [ MslsMetaBox::class, 'init' ] );
 				add_action( 'load-post-new.php', [ MslsMetaBox::class, 'init' ] );
@@ -72,9 +72,10 @@ class MslsPlugin {
 
 				add_action( 'load-edit-tags.php', [ MslsCustomColumnTaxonomy::class, 'init' ] );
 				add_action( 'load-edit-tags.php', [ MslsPostTag::class, 'init' ] );
+				add_action( 'load-term.php', [ MslsPostTag::class, 'init' ] );
 
 				if ( filter_has_var( INPUT_POST, 'action' ) ) {
-					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
+					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 					if ( 'add-tag' === $action ) {
 						add_action( 'admin_init', [ MslsPostTag::class, 'init' ] );
@@ -117,18 +118,22 @@ class MslsPlugin {
 
 	/**
 	 * @param $wp_admin_bar
+	 *
+	 * @return void
 	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
-		$blog_collection = MslsBlogCollection::instance();
+	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
+		$icon_type = MslsOptions::instance()->get_icon_type();
+
+		$blog_collection = msls_blog_collection();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
-			$title = '<div class="blavatar"></div>' . $blog->get_title();
+			$title = $blog->get_blavatar() . $blog->get_title( $icon_type );
 
 			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $title ] );
 		}
 
 		$blog = $blog_collection->get_current_blog();
 		if ( is_object( $blog ) && method_exists( $blog, 'get_title' ) ) {
-			$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title() ] );
+			$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title( $icon_type ) ] );
 		}
 	}
 
@@ -146,7 +151,7 @@ class MslsPlugin {
 	 *
 	 * @return string
 	 */
-	function content_filter( $content ) {
+	public function content_filter( $content ) {
 		if ( ! is_front_page() && is_singular() ) {
 			$options = $this->options;
 
@@ -214,11 +219,17 @@ class MslsPlugin {
 			$handle   = 'msls-widget-block';
 			$callback = [ $this, 'block_render' ];
 
-			wp_register_script(
-				$handle,
-				self::plugins_url( 'js/msls-widget-block.js' ),
-				[ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ]
-			);
+			global $pagenow;
+
+            $toLoad = [ 'wp-blocks', 'wp-element', 'wp-components' ];
+            if ( $pagenow === 'widgets.php' ) $toLoad[] = 'wp-edit-widgets';
+            else $toLoad[] = 'wp-editor';
+
+            wp_register_script(
+                $handle,
+                self::plugins_url( 'js/msls-widget-block.js' ),
+                $toLoad
+            );
 
 			register_block_type( 'lloc/msls-widget-block', [
 				'attributes'      => [ 'title' => [ 'type' => 'string' ] ],
@@ -250,11 +261,15 @@ class MslsPlugin {
 	/**
 	 * Loads styles and some js if needed
 	 *
-	 * The method returns true if JS is loaded or false if not
+	 * The method returns true if the autocomplete-option is activated, false otherwise.
 	 *
 	 * @return boolean
 	 */
-	public function admin_menu() {
+	public function custom_enqueue() {
+		if ( ! is_admin_bar_showing() ) {
+			return false;
+		}
+
 		$ver     = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
 		$postfix = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
@@ -452,7 +467,7 @@ class MslsPlugin {
 	 *
 	 * @return array
 	 */
-	public function get_superglobals( array $list ) {
+	public static function get_superglobals( array $list ) {
 		$arr = [];
 
 		foreach ( $list as $var ) {

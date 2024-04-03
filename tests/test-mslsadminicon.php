@@ -137,6 +137,14 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertIsSTring( $obj->get_edit_new() );
 	}
 
+	public function test_set_id_with_null_constructor() {
+		Functions\expect( 'add_query_arg' )->once();
+
+		$obj  = new MslsAdminIcon( null );
+
+		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_id( 1 ) );
+	}
+
 	public function test_set_id() {
 		$obj  = new MslsAdminIcon( 'post' );
 
@@ -149,4 +157,59 @@ class WP_Test_MslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_origin_language( 'it_IT' ) );
 	}
 
+	public function test_set_icon_type() {
+		$obj  = new MslsAdminIcon( 'post' );
+
+		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_icon_type( 'flag' ) );
+	}
+
+	public function icon_type_provider() {
+		return [
+			[ 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ],
+			[ 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>'],
+			[ null, 'fr_FR', '<span class="dashicons dashicons-plus"></span>' ],
+			[ null, null, '' ],
+		];
+	}
+
+	/**
+	 * @dataProvider icon_type_provider
+	 */
+	public function test_get_icon_flag( $icon_type, $language, $expected ) {
+		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
+
+		$obj  = new MslsAdminIcon( 'post' );
+		$obj->set_icon_type( $icon_type );
+
+		if ( ! is_null( $language ) ) {
+			$obj->set_language( $language );
+		}
+
+		$this->assertEquals( $expected, $obj->get_icon() );
+	}
+
+	public function test_get_icon_label() {
+		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
+
+		$obj  = new MslsAdminIcon( 'post' );
+		$obj->set_icon_type( 'flag' );
+
+		$this->assertEquals( '', $obj->get_icon() );
+
+		$obj->set_language( 'de_DE' );
+
+		$this->assertEquals( '<span class="flag-icon flag-icon-de">de_DE</span>', $obj->get_icon() );
+	}
+
+	public function test_get_edit_new() {
+		$obj  = new MslsAdminIcon( 'post' );
+		$obj->set_id( 123 );
+		$obj->set_origin_language( 'de_DE' );
+
+		Functions\expect( 'add_query_arg' )->once()->andReturn( '' );
+		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
+		Functions\expect( 'get_admin_url' )->once()->andReturn( 'fake-url' );
+
+		$this->assertEquals( 'fake-url', $obj->get_edit_new() );
+	}
 }

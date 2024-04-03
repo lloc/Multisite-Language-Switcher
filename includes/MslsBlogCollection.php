@@ -7,6 +7,8 @@
 
 namespace lloc\Msls;
 
+use const Patchwork\CodeManipulation\Actions\RedefinitionOfNew\publicizeConstructors;
+
 /**
  * Collection of blog-objects
  *
@@ -100,7 +102,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	}
 
 	/**
-	 * Returns the description of an configured blog or false if it is not configured
+	 * Returns the description of a configured blog or false if it is not configured
 	 *
 	 * @param int $blog_id
 	 * @param string|bool $description
@@ -108,13 +110,13 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return string|bool
 	 */
 	public static function get_configured_blog_description( $blog_id, $description = false ) {
-		if ( false != $description ) {
+		if ( $description ) {
 			return $description;
 		}
 
 		$temp = get_blog_option( $blog_id, 'msls' );
 		if ( is_array( $temp ) && empty( $temp['exclude_current_blog'] ) ) {
-			return $temp['description'];
+			return $temp['description'] ?? '';
 		}
 
 		return false;

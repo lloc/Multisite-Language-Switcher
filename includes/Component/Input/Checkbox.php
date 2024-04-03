@@ -22,9 +22,9 @@ class Checkbox implements InputInterface {
 
 	/**
 	 * @param string $key
-	 * @param string|null $value
+	 * @param string $value
 	 */
-	public function __construct( string $key, $value ) {
+	public function __construct( string $key, ?string $value ) {
 		$this->key      = esc_attr( $key );
 		$this->selected = checked( 1, $value, false );
 	}

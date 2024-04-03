@@ -3,10 +3,10 @@
 Contributors: realloc, lucatume
 Donate link: https://www.greenpeace.org/international/
 Tags: multilingual, multisite, language, switcher, localization
-Requires at least: 3.6.1
-Tested up to: 5.7
-Requires PHP: 7.0
-Stable tag: 2.4.11
+Requires at least: 5.3
+Tested up to: 6.4
+Requires PHP: 7.4
+Stable tag: 2.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,9 +14,9 @@ A simple, powerful and easy to use plugin that will help you to manage multiling
 
 == Description ==
 
-A simple, powerful and easy to use plugin that will add multilingual support to a WordPress [multisite](http://codex.wordpress.org/Create_A_Network) 
+A simple, powerful and easy to use plugin that will add multilingual support to a WordPress [multisite](https://wordpress.org/documentation/article/create-a-network/) 
 installation, i.e. multiple subdomains or folders (if you need to set up multiple sites across multiple domains, you'll also want to use the [WordPress MU 
-Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/) plugin as well - as long as the domains are all hosted on the same server.).
+Domain Mapping](http://wordpress.org/plugins/wordpress-mu-domain-mapping/) plugin as well - as long as the domains are all hosted on the same server.).
 
 The Multisite Language Switcher enables you to manage translations of posts, pages, custom post types, categories, tags and custom taxonomies.
 

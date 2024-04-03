@@ -19,13 +19,9 @@ class MslsWidget extends \WP_Widget {
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct( 
-			$this->id_base, 
-			apply_filters(
-				'msls_widget_title',
-				__( 'Multisite Language Switcher', 'multisite-language-switcher' ) 
-			)
-		);
+		$name = apply_filters('msls_widget_title', __( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
+
+		parent::__construct( $this->id_base, $name, [ 'show_instance_in_rest' => true ] );
 	}
 
 	/**
@@ -37,33 +33,25 @@ class MslsWidget extends \WP_Widget {
 	 * @user MslsOutput
 	 */
 	public function widget( $args, $instance ) {
-		$args = wp_parse_args(
-			$args,
-			[
-				'before_widget' => '',
-				'after_widget'  => '',
-				'before_title'  => '',
-				'after_title'   => '',
-			]
-		);
+		$default = [
+			'before_widget' => '',
+			'after_widget'  => '',
+			'before_title'  => '',
+			'after_title'   => '',
+		];
+
+		$args = wp_parse_args( $args, $default );
 
 		/** This filter is documented in wp-includes/default-widgets.php */
-		$title = apply_filters(
-			'widget_title',
-			( isset( $instance['title'] ) ? $instance['title'] : '' ),
-			$instance,
-			$this->id_base
-		);
+		$title = apply_filters( 'widget_title', $instance['title'] ?? '', $instance, $this->id_base );
 		if ( $title ) {
 			$title = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
 		}
 
 		$content = MslsOutput::init()->__toString();
-		if ( '' == $content ) {
-			$content = apply_filters(
-				'msls_widget_alternative_content',
-				__( 'No available translations found', 'multisite-language-switcher' )
-			);
+		if ( '' === $content ) {
+			$text    = __( 'No available translations found', 'multisite-language-switcher' );
+			$content = apply_filters( 'msls_widget_alternative_content', $text );
 		}
 
 		echo $args['before_widget'], $title, $content, $args['after_widget'];

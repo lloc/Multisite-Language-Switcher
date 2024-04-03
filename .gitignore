@@ -1,9 +1,9 @@
-.phpunit.result.cache
 composer.lock
 composer.phar
 package-lock.json
 phpunit.xml.bak
 .idea/
-docs/.vuepress/dist/
+.phpunit.result.cache
+coverage/
 node_modules/
 vendor/
