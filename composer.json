@@ -25,7 +25,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "lloc\\Msls\\": "tests/"
+      "lloc\\MslsTests\\": "tests/"
     }
   },
   "scripts": {

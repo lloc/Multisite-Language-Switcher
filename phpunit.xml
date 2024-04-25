@@ -10,6 +10,6 @@
     <const name="WP_DEBUG" value="true"/>
   </php>
   <testsuite name="Internal tests">
-    <directory prefix="test-" suffix=".php">./tests/</directory>
+    <directory prefix="Test" suffix=".php">./tests/</directory>
   </testsuite>
 </phpunit>
