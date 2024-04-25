@@ -11,7 +11,7 @@ use lloc\Msls\MslsBlogCollection;
 
 class TestMslsAdmin extends MslsUnitTestCase {
 
-    public function get_sut( array $users = [] ): MslsAdmin {
+	public function get_sut( array $users = [] ): MslsAdmin {
 		Functions\when( 'get_option' )->justReturn( [] );
 		Functions\when( 'update_option' )->justReturn( true );
 		Functions\when( 'get_current_blog_id' )->justReturn( 1 );
@@ -103,7 +103,10 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	public function test_subsubsub(): void {
 		$obj = $this->get_sut();
 
-		$this->assertEquals( '<ul class="subsubsub"><li><a href="wp-admin" class="current">abc (DEF)</a> | </li><li><a href="wp-admin">uvw (XYZ)</a></li></ul>', $obj->subsubsub() );
+		$this->assertEquals(
+			'<ul class="subsubsub"><li><a href="wp-admin" class="current">abc (DEF)</a> | </li><li><a href="wp-admin">uvw (XYZ)</a></li></ul>',
+			$obj->subsubsub()
+		);
 	}
 
 	public function test_blog_language(): void {
@@ -116,25 +119,29 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	public function test_display(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<select id="display" name="msls[display]"><option value="0" >Flag and description</option><option value="1" >Description only</option><option value="2" >Flag only</option><option value="3" >Description and flag</option></select>' );
+		$this->expectOutputString(
+			'<select id="display" name="msls[display]"><option value="0" >Flag and description</option><option value="1" >Description only</option><option value="2" >Flag only</option><option value="3" >Description and flag</option></select>'
+		);
 		$obj->display();
 	}
 
 	public function test_admin_display(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<select id="admin_display" name="msls[admin_display]"><option value="flag" >Flag</option><option value="label" >Label</option></select>' );
+		$this->expectOutputString(
+			'<select id="admin_display" name="msls[admin_display]"><option value="flag" >Flag</option><option value="label" >Label</option></select>'
+		);
 		$obj->admin_display();
 	}
 
 	public function test_reference_user(): void {
-		$users = [];
+		$users    = [];
 		$too_much = MslsAdmin::MAX_REFERENCE_USERS + 1;
-		for( $i = 1; $i <= $too_much; $i++ ) {
+		for ( $i = 1; $i <= $too_much; $i ++ ) {
 			$users[] = (object) [ 'ID' => $i, 'user_nicename' => 'realloc' ];
 		}
 
-		$obj  = $this->get_sut( $users );
+		$obj = $this->get_sut( $users );
 
 		set_error_handler(
 			static function ( $errno, $errstr ) {
@@ -145,7 +152,9 @@ class TestMslsAdmin extends MslsUnitTestCase {
 		);
 
 		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of 100 users. Please, use the hook "msls_reference_users" to filter the result before!' );
+		$this->expectExceptionMessage(
+			'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of 100 users. Please, use the hook "msls_reference_users" to filter the result before!'
+		);
 
 		$obj->reference_user();
 	}
@@ -160,14 +169,18 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	public function test_activate_autocomplete(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" /> <label for="activate_autocomplete">Activate experimental autocomplete inputs</label>' );
+		$this->expectOutputString(
+			'<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" /> <label for="activate_autocomplete">Activate experimental autocomplete inputs</label>'
+		);
 		$obj->activate_autocomplete();
 	}
 
 	public function test_sort_by_description(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" /> <label for="sort_by_description">Sort languages by description</label>' );
+		$this->expectOutputString(
+			'<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" /> <label for="sort_by_description">Sort languages by description</label>'
+		);
 		$obj->sort_by_description();
 	}
 
@@ -175,56 +188,72 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	public function test_exclude_current_blog(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" /> <label for="exclude_current_blog">Exclude this blog from output</label>' );
+		$this->expectOutputString(
+			'<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" /> <label for="exclude_current_blog">Exclude this blog from output</label>'
+		);
 		$obj->exclude_current_blog();
 	}
 
 	function test_only_with_translation(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" /> <label for="only_with_translation">Show only links with a translation</label>' );
+		$this->expectOutputString(
+			'<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" /> <label for="only_with_translation">Show only links with a translation</label>'
+		);
 		$obj->only_with_translation();
 	}
 
 	function test_output_current_blog(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" /> <label for="output_current_blog">Display link to the current language</label>' );
+		$this->expectOutputString(
+			'<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" /> <label for="output_current_blog">Display link to the current language</label>'
+		);
 		$obj->output_current_blog();
 	}
 
 	function test_description(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="text" class="regular-text" id="description" name="msls[description]" value="" size="40"/>' );
+		$this->expectOutputString(
+			'<input type="text" class="regular-text" id="description" name="msls[description]" value="" size="40"/>'
+		);
 		$obj->description();
 	}
 
 	function test_before_output(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="text" class="regular-text" id="before_output" name="msls[before_output]" value="" size="30"/>' );
+		$this->expectOutputString(
+			'<input type="text" class="regular-text" id="before_output" name="msls[before_output]" value="" size="30"/>'
+		);
 		$obj->before_output();
 	}
 
 	function test_after_output(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="text" class="regular-text" id="after_output" name="msls[after_output]" value="" size="30"/>' );
+		$this->expectOutputString(
+			'<input type="text" class="regular-text" id="after_output" name="msls[after_output]" value="" size="30"/>'
+		);
 		$obj->after_output();
 	}
 
 	function test_before_item(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="text" class="regular-text" id="before_item" name="msls[before_item]" value="" size="30"/>' );
+		$this->expectOutputString(
+			'<input type="text" class="regular-text" id="before_item" name="msls[before_item]" value="" size="30"/>'
+		);
 		$obj->before_item();
 	}
 
 	function test_after_item(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="text" class="regular-text" id="after_item" name="msls[after_item]" value="" size="30"/>' );
+		$this->expectOutputString(
+			'<input type="text" class="regular-text" id="after_item" name="msls[after_item]" value="" size="30"/>'
+		);
 		$obj->after_item();
 	}
 
@@ -236,7 +265,9 @@ class TestMslsAdmin extends MslsUnitTestCase {
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
 
-		$this->expectOutputString( '<input type="text" class="regular-text" id="rewrite_tizio" name="msls[rewrite_tizio]" value="" size="30" readonly="readonly"/>' );
+		$this->expectOutputString(
+			'<input type="text" class="regular-text" id="rewrite_tizio" name="msls[rewrite_tizio]" value="" size="30" readonly="readonly"/>'
+		);
 		$obj->rewrite_tizio( 'tizio' );
 	}
 
@@ -248,7 +279,9 @@ class TestMslsAdmin extends MslsUnitTestCase {
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
 
-		$this->expectOutputString( '<input type="text" class="regular-text" id="rewrite_pinko" name="msls[rewrite_pinko]" value="pinko" size="30" readonly="readonly"/>' );
+		$this->expectOutputString(
+			'<input type="text" class="regular-text" id="rewrite_pinko" name="msls[rewrite_pinko]" value="pinko" size="30" readonly="readonly"/>'
+		);
 		$obj->rewrite_pinko( 'pinko' );
 	}
 
@@ -260,14 +293,18 @@ class TestMslsAdmin extends MslsUnitTestCase {
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
 
-		$this->expectOutputString( '<input type="text" class="regular-text" id="rewrite_pallino" name="msls[rewrite_pallino]" value="pallino_slug" size="30" readonly="readonly"/>' );
+		$this->expectOutputString(
+			'<input type="text" class="regular-text" id="rewrite_pallino" name="msls[rewrite_pallino]" value="pallino_slug" size="30" readonly="readonly"/>'
+		);
 		$obj->rewrite_pallino( 'pallino' );
 	}
 
 	function test_content_filter(): void {
 		$obj = $this->get_sut();
 
-		$this->expectOutputString( '<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" /> <label for="content_filter">Add hint for available translations</label>' );
+		$this->expectOutputString(
+			'<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" /> <label for="content_filter">Add hint for available translations</label>'
+		);
 		$obj->content_filter();
 	}
 
@@ -300,7 +337,9 @@ class TestMslsAdmin extends MslsUnitTestCase {
 		Functions\when( 'settings_fields' )->returnArg();
 		Functions\when( 'do_settings_sections' )->returnArg();
 
-		$this->expectOutputRegex( '/^<div class="wrap"><div class="icon32" id="icon-options-general"><br\/><\/div><h1>Multisite Language Switcher Options<\/h1>.*$/' );
+		$this->expectOutputRegex(
+			'/^<div class="wrap"><div class="icon32" id="icon-options-general"><br\/><\/div><h1>Multisite Language Switcher Options<\/h1>.*$/'
+		);
 		$obj->render();
 	}
 

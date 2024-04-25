@@ -20,7 +20,7 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 		Functions\expect( 'is_admin' )->andReturn( true );
 		Functions\expect( 'get_post_types' )->andReturn( [ 'post', 'page' ] );
 
-		foreach (  [ 'de_DE', 'en_US' ] as $locale ) {
+		foreach ( [ 'de_DE', 'en_US' ] as $locale ) {
 			$blog = \Mockery::mock( MslsBlog::class );
 			$blog->shouldReceive( [
 				'get_language' => $locale,

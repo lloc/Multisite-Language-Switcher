@@ -15,9 +15,9 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 		Functions\expect( 'get_the_ID' )->twice()->andReturnValues( [ 1, 2 ] );
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 1 ) . '/' );
 
-		$options  = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 
-		foreach (  [ 'de_DE' => 'de', 'en_US' => 'en' ] as $locale => $alpha2 ) {
+		foreach ( [ 'de_DE' => 'de', 'en_US' => 'en' ] as $locale => $alpha2 ) {
 			$blog = \Mockery::mock( MslsBlog::class );
 			$blog->shouldReceive( [
 				'get_alpha2'   => $alpha2,
@@ -39,7 +39,7 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 	}
 
 	function test_th_empty() {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->once()->andReturn( [] );

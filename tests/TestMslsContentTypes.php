@@ -9,7 +9,7 @@ use lloc\Msls\MslsPostType;
 class TestMslsContentTypes extends MslsUnitTestCase {
 
 	public function test_create() {
-		Functions\expect('get_post_types' )->twice()->andReturn( [] );
+		Functions\expect( 'get_post_types' )->twice()->andReturn( [] );
 
 		$obj = MslsContentTypes::create();
 

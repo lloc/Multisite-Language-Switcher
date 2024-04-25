@@ -47,7 +47,8 @@ class TestMslsPlugin extends MslsUnitTestCase {
 
 		$this->assertFalse( $test->custom_enqueue() );
 	}
-		function test_init_widget_not_excluded(): void {
+
+	function test_init_widget_not_excluded(): void {
 		Functions\expect( 'register_widget' )->once();
 
 		$options = \Mockery::mock( MslsOptions::class );

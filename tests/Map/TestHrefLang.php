@@ -13,7 +13,7 @@ use lloc\Msls\MslsBlogCollection;
 class TestHrefLang extends MslsUnitTestCase {
 
 	protected function setUp(): void {
-        parent::setUp();
+		parent::setUp();
 
 		$map = [
 			'de_DE'        => 'de',
@@ -53,7 +53,7 @@ class TestHrefLang extends MslsUnitTestCase {
 
 	public function test_get_has_filter(): void {
 		Functions\when( 'has_filter' )->justReturn( true );
-		Filters\expectApplied('msls_head_hreflang')->once()->with( 'en_US')->andReturn( 'en-US' );
+		Filters\expectApplied( 'msls_head_hreflang' )->once()->with( 'en_US' )->andReturn( 'en-US' );
 
 		$this->assertEquals( 'en-US', $this->test->get( 'en_US' ) );
 	}

@@ -18,7 +18,7 @@ class TestMslsJson extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $obj->get() );
 	}
 
-	public function test___toString(): void  {
+	public function test___toString(): void {
 		$obj = ( new MslsJson() )->add( null, 'Test 3' )->add( '2', 'Test 2' )->add( 1, 'Test 1' );
 
 		$expected = '[{"value":1,"label":"Test 1"},{"value":2,"label":"Test 2"},{"value":0,"label":"Test 3"}]';

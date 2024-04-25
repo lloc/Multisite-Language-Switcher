@@ -10,7 +10,7 @@ use lloc\Msls\MslsOptions;
 class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 
 	public function test_th(): void {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( [] )->once();
@@ -21,7 +21,7 @@ class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 	}
 
 	public function test_column_default(): void {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 

@@ -26,7 +26,6 @@ class TestMslsOptionsQueryAuthor extends MslsUnitTestCase {
 		$obj = $this->get_test();
 
 		$this->assertEquals( 'https://example.org/queried-author', $obj->get_current_link() );
-
 	}
 
 }

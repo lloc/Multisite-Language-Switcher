@@ -10,7 +10,7 @@ class TestMslsSqlCacher extends MslsUnitTestCase {
 	public function get_sut(): MslsSqlCacher {
 		$wpdb = \Mockery::mock( \WPDB::class );
 		$wpdb->shouldReceive( [
-			'prepare' => '',
+			'prepare'     => '',
 			'get_results' => []
 		] );
 

@@ -20,7 +20,9 @@ class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
 		Functions\expect( 'get_query_var' )->once()->andReturn( 'post_tag' );
 		Functions\expect( 'get_taxonomies' )->once()->andReturn( [] );
 
-		$obj = ( new MslsAdminIconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(  self::IMAGE_SRC );
+		$obj = ( new MslsAdminIconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(
+			self::IMAGE_SRC
+		);
 
 		$expected = sprintf( '<img alt="de_DE" src="%s" />', self::IMAGE_SRC );
 
@@ -33,7 +35,9 @@ class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
 		Functions\expect( 'get_admin_url' )->once()->andReturn( $admin_url );
 		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
 
-		$obj = ( new MslsAdminIconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(  self::IMAGE_SRC );
+		$obj = ( new MslsAdminIconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(
+			self::IMAGE_SRC
+		);
 
 		$this->assertEquals( $admin_url, $obj->get_edit_new() );
 	}
@@ -41,7 +45,9 @@ class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
 	public function test_set_href(): void {
 		Functions\expect( 'get_edit_term_link' )->once()->andReturn( 'get-edit-post-link' );
 
-		$obj = ( new MslsAdminIconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(  self::IMAGE_SRC );
+		$obj = ( new MslsAdminIconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(
+			self::IMAGE_SRC
+		);
 
 		$this->assertInstanceOf( MslsAdminIconTaxonomy::class, $obj->set_href( 42 ) );
 
@@ -56,7 +62,9 @@ class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_term_link' )->once()->andReturn( '' );
 		Functions\expect( 'get_admin_url' )->twice()->andReturn( 'admin-url-empty' );
 
-		$obj = ( new MslsAdminIconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(  self::IMAGE_SRC );
+		$obj = ( new MslsAdminIconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(
+			self::IMAGE_SRC
+		);
 
 		$this->assertInstanceOf( MslsAdminIconTaxonomy::class, $obj->set_href( 0 ) );
 

@@ -12,9 +12,9 @@ use lloc\Msls\MslsOptionsTax;
 class TestMslsOptionsTax extends MslsUnitTestCase {
 
 	protected function setUp(): void {
-        parent::setUp();
+		parent::setUp();
 
-        Functions\expect( 'get_option' )->once()->andReturn( [] );
+		Functions\expect( 'get_option' )->once()->andReturn( [] );
 
 		$this->test = new MslsOptionsTax( 0 );
 	}

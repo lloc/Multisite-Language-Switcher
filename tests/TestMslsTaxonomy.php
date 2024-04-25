@@ -13,8 +13,8 @@ class TestMslsTaxonomy extends MslsUnitTestCase {
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 		Functions\when( 'get_option' )->justReturn( [] );
 
-		Functions\expect('get_taxonomies' )->atLeast()->once()->andReturn( [] );
-		Functions\expect('get_query_var' )->with( 'taxonomy' )->andReturn( 'category' );
+		Functions\expect( 'get_taxonomies' )->atLeast()->once()->andReturn( [] );
+		Functions\expect( 'get_query_var' )->with( 'taxonomy' )->andReturn( 'category' );
 
 		return new MslsTaxonomy();
 	}
@@ -28,13 +28,13 @@ class TestMslsTaxonomy extends MslsUnitTestCase {
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnFalse();
 
-		$cap = new \stdClass();
+		$cap               = new \stdClass();
 		$cap->manage_terms = 'manage_categories';
-		$taxonomy = new \stdClass();
-		$taxonomy->cap = $cap;
+		$taxonomy          = new \stdClass();
+		$taxonomy->cap     = $cap;
 
-		Functions\when('get_taxonomy' )->justReturn( $taxonomy );
-		Functions\when('current_user_can' )->justReturn( true );
+		Functions\when( 'get_taxonomy' )->justReturn( $taxonomy );
+		Functions\when( 'current_user_can' )->justReturn( true );
 
 		$this->assertEquals( 'category', $this->get_test()->acl_request() );
 	}
@@ -50,7 +50,7 @@ class TestMslsTaxonomy extends MslsUnitTestCase {
 
 		$this->assertEquals( '', $this->get_test()->acl_request() );
 	}
-	
+
 	public function test_get_post_type(): void {
 		$this->assertEquals( '', $this->get_test()->get_post_type() );
 	}

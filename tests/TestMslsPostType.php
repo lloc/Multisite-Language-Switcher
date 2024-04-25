@@ -10,8 +10,8 @@ class TestMslsPostType extends MslsUnitTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		Functions\when('get_post_types' )->justReturn( [] );
-		Functions\when('get_post_type' )->justReturn( [] );
+		Functions\when( 'get_post_types' )->justReturn( [] );
+		Functions\when( 'get_post_type' )->justReturn( [] );
 
 		$this->test = new MslsPostType();
 	}

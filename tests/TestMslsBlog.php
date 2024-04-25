@@ -13,7 +13,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
-		$blog = new \stdClass();
+		$blog              = new \stdClass();
 		$blog->userblog_id = 1;
 		$blog->blogname    = 'Test';
 
@@ -88,7 +88,10 @@ class TestMslsBlog extends MslsUnitTestCase {
 	public function test_get_title(): void {
 		Functions\expect( 'add_query_arg' )->once()->andReturn( 'https://example.org/added-args' );
 
-		$this->assertEquals( 'Test <span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-it">it_IT</span></span>', $this->get_blog()->get_title() );
+		$this->assertEquals(
+			'Test <span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-it">it_IT</span></span>',
+			$this->get_blog()->get_title()
+		);
 	}
 
 	/**
@@ -99,17 +102,17 @@ class TestMslsBlog extends MslsUnitTestCase {
 	public function compareProvider() {
 		return [
 			[ 0, 0, 0 ],
-			[ 0, 1, -1 ],
+			[ 0, 1, - 1 ],
 			[ 1, 0, 1 ],
-			[ -1, -2, 1 ],
-			[ -2, -1, -1 ],
+			[ - 1, - 2, 1 ],
+			[ - 2, - 1, - 1 ],
 		];
 	}
 
 	/**
 	 * Verify the _cmp-method
-     * @dataProvider compareProvider
-     */
+	 * @dataProvider compareProvider
+	 */
 	public function test__cmp_method( int $a, int $b, int $expected ): void {
 		$this->assertEquals( $expected, MslsBlog::_cmp( $a, $b ) );
 
@@ -144,7 +147,10 @@ class TestMslsBlog extends MslsUnitTestCase {
 		Functions\expect( 'get_site_icon_url' )->twice()->andReturn( 'https://example.org/icons/abc.png' );
 		Functions\expect( 'wp_lazy_loading_enabled' )->once()->andReturn( true );
 
-		$this->assertEquals( '<img class="blavatar" src="https://example.org/icons/abc.png" srcset="https://example.org/icons/abc.png 2x" alt="" width="16" height="16" loading="lazy" />', $this->get_blog()->get_blavatar() );
+		$this->assertEquals(
+			'<img class="blavatar" src="https://example.org/icons/abc.png" srcset="https://example.org/icons/abc.png 2x" alt="" width="16" height="16" loading="lazy" />',
+			$this->get_blog()->get_blavatar()
+		);
 	}
 
 	public function test_get_blavatar(): void {
@@ -154,7 +160,10 @@ class TestMslsBlog extends MslsUnitTestCase {
 		Functions\expect( 'get_site_icon_url' )->twice()->andReturn( 'https://example.org/icons/abc.png' );
 		Functions\expect( 'wp_lazy_loading_enabled' )->once()->andReturn( false );
 
-		$this->assertEquals( '<img class="blavatar" src="https://example.org/icons/abc.png" srcset="https://example.org/icons/abc.png 2x" alt="" width="16" height="16" />', $this->get_blog()->get_blavatar() );
+		$this->assertEquals(
+			'<img class="blavatar" src="https://example.org/icons/abc.png" srcset="https://example.org/icons/abc.png 2x" alt="" width="16" height="16" />',
+			$this->get_blog()->get_blavatar()
+		);
 	}
 
 }

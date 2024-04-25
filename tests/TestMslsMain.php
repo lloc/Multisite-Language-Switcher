@@ -13,7 +13,7 @@ class TestMslsMain extends MslsUnitTestCase {
 	public function get_sut(): MslsMain {
 		Functions\when( 'get_options' )->justReturn( [] );
 
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
 
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
@@ -46,26 +46,26 @@ class TestMslsMain extends MslsUnitTestCase {
 
 	public function test_debugger_string(): void {
 		$capture = tmpfile();
-		$backup = ini_set('error_log', stream_get_meta_data( $capture )['uri']);
+		$backup  = ini_set( 'error_log', stream_get_meta_data( $capture )['uri'] );
 
 		$obj = $this->get_sut();
 		$obj->debugger( 'Test' );
 
 		$this->assertStringContainsString( 'MSLS Debug: Test', stream_get_contents( $capture ) );
 
-		ini_set('error_log', $backup);
+		ini_set( 'error_log', $backup );
 	}
 
 	public function test_debugger_object(): void {
 		$capture = tmpfile();
-		$backup = ini_set('error_log', stream_get_meta_data( $capture )['uri']);
+		$backup  = ini_set( 'error_log', stream_get_meta_data( $capture )['uri'] );
 
 		$obj = $this->get_sut();
 		$obj->debugger( (object) [ 'test' => 'msls' ] );
 
 		$this->assertStringContainsString( '[test] => msls', stream_get_contents( $capture ) );
 
-		ini_set('error_log', $backup);
+		ini_set( 'error_log', $backup );
 	}
 
 }

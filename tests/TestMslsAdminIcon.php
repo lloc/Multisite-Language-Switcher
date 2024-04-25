@@ -22,16 +22,16 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 	}
 
 	public function get_post( $post_type, $id = 0 ): \WP_Post {
-		$post = \Mockery::mock( '\WP_Post' );
-		$post->ID = $id;
-		$post->post_type = $post_type;
+		$post              = \Mockery::mock( '\WP_Post' );
+		$post->ID          = $id;
+		$post->post_type   = $post_type;
 		$post->post_author = $this->get_user();
 
 		return $post;
 	}
 
 	public function get_user(): \WP_User {
-		$user = \Mockery::mock( '\WP_User' );
+		$user       = \Mockery::mock( '\WP_User' );
 		$user->ID   = 1;
 		$user->role = 'editor';
 
@@ -40,8 +40,16 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 
 	public static function get_post_type(): array {
 		return [
-			[ 'post', 'http://example.org/wp-admin/post-new.php',                'http://example.org/wp-admin/post.php?post=2&amp;action=edit' ],
-			[ 'page', 'http://example.org/wp-admin/post-new.php?post_type=page', 'http://example.org/wp-admin/post.php?post=2&amp;action=edit' ]
+			[
+				'post',
+				'http://example.org/wp-admin/post-new.php',
+				'http://example.org/wp-admin/post.php?post=2&amp;action=edit'
+			],
+			[
+				'page',
+				'http://example.org/wp-admin/post-new.php?post_type=page',
+				'http://example.org/wp-admin/post.php?post=2&amp;action=edit'
+			]
 		];
 	}
 
@@ -84,7 +92,10 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_href( 0 ) );
 
-		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><span class="dashicons dashicons-plus"></span></a>&nbsp;', $create_link );
+		$value = sprintf(
+			'<a title="Create a new translation in the de_DE-blog" href="%s"><span class="dashicons dashicons-plus"></span></a>&nbsp;',
+			$create_link
+		);
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -102,7 +113,10 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_href( 0 ) );
 
-		$value = sprintf( '<a title="Create a new translation in the de_DE-blog" href="%s"><span class="dashicons dashicons-plus"></span></a>&nbsp;', $create_link );
+		$value = sprintf(
+			'<a title="Create a new translation in the de_DE-blog" href="%s"><span class="dashicons dashicons-plus"></span></a>&nbsp;',
+			$create_link
+		);
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
@@ -140,25 +154,25 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 	public function test_set_id_with_null_constructor(): void {
 		Functions\expect( 'add_query_arg' )->once();
 
-		$obj  = new MslsAdminIcon( null );
+		$obj = new MslsAdminIcon( null );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_id( 1 ) );
 	}
 
 	public function test_set_id(): void {
-		$obj  = new MslsAdminIcon( 'post' );
+		$obj = new MslsAdminIcon( 'post' );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_id( 1 ) );
 	}
 
 	public function test_set_origin_language(): void {
-		$obj  = new MslsAdminIcon( 'post' );
+		$obj = new MslsAdminIcon( 'post' );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_origin_language( 'it_IT' ) );
 	}
 
 	public function test_set_icon_type(): void {
-		$obj  = new MslsAdminIcon( 'post' );
+		$obj = new MslsAdminIcon( 'post' );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_icon_type( 'flag' ) );
 	}
@@ -166,7 +180,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 	public function icon_type_provider(): array {
 		return [
 			[ 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ],
-			[ 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>'],
+			[ 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>' ],
 			[ null, 'fr_FR', '<span class="dashicons dashicons-plus"></span>' ],
 			[ null, null, '' ],
 		];
@@ -178,7 +192,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 	public function test_get_icon_flag( ?string $icon_type, ?string $language, string $expected ): void {
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
-		$obj  = new MslsAdminIcon( 'post' );
+		$obj = new MslsAdminIcon( 'post' );
 		$obj->set_icon_type( $icon_type );
 
 		if ( ! is_null( $language ) ) {
@@ -191,7 +205,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 	public function test_get_icon_label(): void {
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
-		$obj  = new MslsAdminIcon( 'post' );
+		$obj = new MslsAdminIcon( 'post' );
 		$obj->set_icon_type( 'flag' );
 
 		$this->assertEquals( '', $obj->get_icon() );
@@ -202,7 +216,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 	}
 
 	public function test_get_edit_new(): void {
-		$obj  = new MslsAdminIcon( 'post' );
+		$obj = new MslsAdminIcon( 'post' );
 		$obj->set_id( 123 );
 		$obj->set_origin_language( 'de_DE' );
 
