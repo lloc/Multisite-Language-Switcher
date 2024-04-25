@@ -8,7 +8,7 @@ use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOptionsPost;
 use Brain\Monkey\Functions;
 
-class TestMslsOutput extends Msls_UnitTestCase {
+class TestMslsOutput extends MslsUnitTestCase {
 
 	function get_test() {
 		$options    = \Mockery::mock( MslsOptions::class );

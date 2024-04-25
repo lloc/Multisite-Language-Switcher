@@ -1,18 +1,20 @@
 <?php
 
-namespace lloc\Map\MslsTests;
+namespace lloc\MslsTests\Map;
 
 use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
 
-use lloc\MslsTests\Msls_UnitTestCase;
+use lloc\MslsTests\MslsUnitTestCase;
 use lloc\Msls\Map\HrefLang;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 
-class TestHrefLang extends Msls_UnitTestCase {
+class TestHrefLang extends MslsUnitTestCase {
 
-	public function get_sut() {
+	protected function setUp(): void {
+        parent::setUp();
+
 		$map = [
 			'de_DE'        => 'de',
 			'de_DE_formal' => 'de',
@@ -36,28 +38,24 @@ class TestHrefLang extends Msls_UnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
 
-		return new HrefLang( $collection );
+		$this->test = new HrefLang( $collection );
 	}
 
-	public function test_get() {
-		$obj = $this->get_sut();
-
-		$this->assertEquals( 'de-DE', $obj->get( 'de_DE' ) );
-		$this->assertEquals( 'de-DE', $obj->get( 'de_DE_formal' ) );
-		$this->assertEquals( 'fr', $obj->get( 'fr_FR' ) );
-		$this->assertEquals( 'es', $obj->get( 'es_ES' ) );
-		$this->assertEquals( 'cat', $obj->get( 'cat' ) );
-		$this->assertEquals( 'en-GB', $obj->get( 'en_GB' ) );
-		$this->assertEquals( 'en-US', $obj->get( 'en_US' ) );
+	public function test_get(): void {
+		$this->assertEquals( 'de-DE', $this->test->get( 'de_DE' ) );
+		$this->assertEquals( 'de-DE', $this->test->get( 'de_DE_formal' ) );
+		$this->assertEquals( 'fr', $this->test->get( 'fr_FR' ) );
+		$this->assertEquals( 'es', $this->test->get( 'es_ES' ) );
+		$this->assertEquals( 'cat', $this->test->get( 'cat' ) );
+		$this->assertEquals( 'en-GB', $this->test->get( 'en_GB' ) );
+		$this->assertEquals( 'en-US', $this->test->get( 'en_US' ) );
 	}
 
-	public function test_get_has_filter() {
-		$obj = $this->get_sut();
-
+	public function test_get_has_filter(): void {
 		Functions\when( 'has_filter' )->justReturn( true );
 		Filters\expectApplied('msls_head_hreflang')->once()->with( 'en_US')->andReturn( 'en-US' );
 
-		$this->assertEquals( 'en-US', $obj->get( 'en_US' ) );
+		$this->assertEquals( 'en-US', $this->test->get( 'en_US' ) );
 	}
 
 }

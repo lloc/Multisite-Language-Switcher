@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 
-class Msls_UnitTestCase extends TestCase {
+class MslsUnitTestCase extends TestCase {
 
 	/**
 	 * Instance of the class to test

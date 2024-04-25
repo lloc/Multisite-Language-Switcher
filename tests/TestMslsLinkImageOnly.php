@@ -5,9 +5,9 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsLinkImageOnly;
 
-class TestMslsLinkImageOnly extends Msls_UnitTestCase {
+class TestMslsLinkImageOnly extends MslsUnitTestCase {
 
-	function test_get_description_method() {
+	public function test_get_description_method(): void {
 		Functions\when( '__' )->returnArg();
 
 		$this->assertIsSTring( MslsLinkImageOnly::get_description() );

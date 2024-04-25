@@ -7,7 +7,7 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
 
-class TestMslsBlog extends Msls_UnitTestCase {
+class TestMslsBlog extends MslsUnitTestCase {
 
 	public function get_blog(): MslsBlog {
 		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
@@ -110,7 +110,7 @@ class TestMslsBlog extends Msls_UnitTestCase {
 	 * Verify the _cmp-method
      * @dataProvider compareProvider
      */
-	public function test__cmp_method( $a, $b, $expected ): void {
+	public function test__cmp_method( int $a, int $b, int $expected ): void {
 		$this->assertEquals( $expected, MslsBlog::_cmp( $a, $b ) );
 
 		$obj = new MslsBlog( null, null );

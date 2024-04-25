@@ -5,7 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsPostType;
 
-class TestMslsPostType extends Msls_UnitTestCase {
+class TestMslsPostType extends MslsUnitTestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -16,11 +16,11 @@ class TestMslsPostType extends Msls_UnitTestCase {
 		$this->test = new MslsPostType();
 	}
 
-	function test_is_post_type() {
+	public function test_is_post_type(): void {
 		$this->assertTrue( $this->test->is_post_type() );
 	}
 
-	function test_acl_request() {
+	public function test_acl_request(): void {
 		$this->assertEquals( '', $this->test->acl_request() );
 	}
 

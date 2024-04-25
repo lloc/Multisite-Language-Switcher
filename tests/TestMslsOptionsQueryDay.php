@@ -9,7 +9,7 @@ use lloc\Msls\MslsOptionsQueryDay;
 /**
  * TestMslsOptionsQueryDay
  */
-class TestMslsOptionsQueryDay extends Msls_UnitTestCase {
+class TestMslsOptionsQueryDay extends MslsUnitTestCase {
 
 	function get_test() {
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );

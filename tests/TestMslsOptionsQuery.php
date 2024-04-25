@@ -9,7 +9,7 @@ use lloc\Msls\MslsOptionsQuery;
 /**
  * TestMslsOptionsQuery
  */
-class TestMslsOptionsQuery extends Msls_UnitTestCase {
+class TestMslsOptionsQuery extends MslsUnitTestCase {
 
 	public function test_create(): void {
 		Functions\expect( 'is_day' )->once()->andReturn( false );

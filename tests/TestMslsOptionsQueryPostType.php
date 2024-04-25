@@ -9,7 +9,7 @@ use lloc\Msls\MslsOptionsQueryPostType;
 /**
  * TestMslsOptionsQueryPostType
  */
-class TestMslsOptionsQueryPostType extends Msls_UnitTestCase {
+class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 
 	function get_test() {
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );

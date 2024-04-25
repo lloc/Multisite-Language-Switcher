@@ -10,16 +10,16 @@ use Brain\Monkey\Functions;
 /**
  * TestMslsMetaBox
  */
-class TestMslsMetaBox extends Msls_UnitTestCase {
+class TestMslsMetaBox extends MslsUnitTestCase {
 
-	function get_test() {
+	function get_test(): MslsMetaBox {
 		$options    = \Mockery::mock( MslsOptions::class );
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 
 		return new MslsMetaBox( $options, $collection );
 	}
 
-	function test_render_option_selected() {
+	public function test_render_option_selected(): void {
 		Functions\expect( 'selected' )->once()->andReturn( 'selected="selected"' );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
 
@@ -28,7 +28,7 @@ class TestMslsMetaBox extends Msls_UnitTestCase {
 		$this->assertEquals( '<option value="1" selected="selected">Test</option>', $obj->render_option( 1, 1 ) );
 	}
 
-	function test_render_option_not_selected() {
+	public function test_render_option_not_selected(): void {
 		Functions\expect( 'selected' )->once()->andReturn( '' );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
 

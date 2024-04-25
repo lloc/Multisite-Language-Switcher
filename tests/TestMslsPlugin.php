@@ -7,7 +7,7 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsOptions;
 
-class TestMslsPlugin extends Msls_UnitTestCase {
+class TestMslsPlugin extends MslsUnitTestCase {
 
 	function test_admin_menu_without_autocomplete(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();

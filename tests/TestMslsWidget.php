@@ -3,19 +3,18 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
-
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsWidget;
 
-class TestMslsWidget extends Msls_UnitTestCase {
+class TestMslsWidget extends MslsUnitTestCase {
 
-	public function get_sut() {
+	public function get_sut(): MslsWidget {
 		\Mockery::mock( '\WP_Widget' );
 
 		return \Mockery::mock( MslsWidget::class )->makePartial();
 	}
 
-	function test_widget() {
+	public function test_widget(): void {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( [] );
 
@@ -36,7 +35,7 @@ class TestMslsWidget extends Msls_UnitTestCase {
 		$obj->widget( [], [ 'title' => 'Test' ] );
 	}
 
-	function test_update() {
+	public function test_update(): void {
 		$obj = $this->get_sut();
 
 		$result = $obj->update( [], [] );

@@ -4,14 +4,14 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 
-use lloc\Msls\MslsOptionsQueryAuthor;
+use lloc\Msls\MslsOptionsQueryMonth;
 
-class TestMslsOptionsQueryAuthor extends Msls_UnitTestCase {
+class TestMslsOptionsQueryMonth extends MslsUnitTestCase {
 
 	function get_test() {
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
 
-		return new MslsOptionsQueryAuthor();
+		return new MslsOptionsQueryMonth();
 	}
 
 	function test_has_value_method() {
@@ -21,12 +21,11 @@ class TestMslsOptionsQueryAuthor extends Msls_UnitTestCase {
 	}
 
 	function test_get_current_link_method() {
-		Functions\expect( 'get_author_posts_url' )->once()->andReturn( 'https://example.org/queried-author' );
+		Functions\expect( 'get_month_link' )->once()->andReturn( 'https://example.org/queried-month' );
 
 		$obj = $this->get_test();
 
-		$this->assertEquals( 'https://example.org/queried-author', $obj->get_current_link() );
-
+		$this->assertEquals( 'https://example.org/queried-month', $obj->get_current_link() );
 	}
 
 }

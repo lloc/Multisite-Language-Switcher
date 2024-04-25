@@ -5,12 +5,12 @@ namespace lloc\MslsTests;
 use lloc\Msls\MslsAdminIconTaxonomy;
 use Brain\Monkey\Functions;
 
-class TestMslsAdminIconTaxonomy extends Msls_UnitTestCase {
+class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
 
 	const LANGUAGE = 'de_DE';
 	const IMAGE_SRC = '/dev/german_flag.png';
 
-	public function setUp(): void {
+	protected function setUp(): void {
 		parent::setUp();
 
 		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://example.org/added-args' );

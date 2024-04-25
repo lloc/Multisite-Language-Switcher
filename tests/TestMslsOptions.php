@@ -6,9 +6,9 @@ use Brain\Monkey\Functions;
 
 use lloc\Msls\MslsOptions;
 
-class TestMslsOptions extends Msls_UnitTestCase {
+class TestMslsOptions extends MslsUnitTestCase {
 
-	public function get_test() {
+	public function get_test(): MslsOptions {
 		Functions\when( 'home_url' )->justReturn( 'https://lloc.de' );
 		Functions\when( 'get_option' )->justReturn( [] );
 		Functions\when( 'update_option' )->justReturn( true );
@@ -16,25 +16,25 @@ class TestMslsOptions extends Msls_UnitTestCase {
 		return new MslsOptions();
 	}
 
-	public function test_is_main_page_method() {
+	public function test_is_main_page_method(): void {
 		Functions\when( 'is_front_page' )->justReturn( true );
 
 		$this->assertIsBool( MslsOptions::is_main_page() );
 	}
 
-	public function test_is_tax_page_method() {
+	public function test_is_tax_page_method(): void {
 		Functions\when( 'is_category' )->justReturn( true );
 
 		$this->assertIsBool( MslsOptions::is_tax_page() );
 	}
 
-	public function test_is_query_page_method() {
+	public function test_is_query_page_method(): void {
 		Functions\when( 'is_date' )->justReturn( true );
 
 		$this->assertIsBool( MslsOptions::is_query_page() );
 	}
 
-	public function test_create_method() {
+	public function test_create_method(): void {
 		Functions\when( 'is_admin' )->justReturn( true );
 		Functions\when( 'get_post_types' )->justReturn( [] );
 		Functions\when( 'get_post_type' )->justReturn( 'post' );
@@ -43,7 +43,7 @@ class TestMslsOptions extends Msls_UnitTestCase {
 		$this->assertInstanceOf( MslsOptions::class, MslsOptions::create() );
 	}
 
-	public function test_get_arg_method() {
+	public function test_get_arg_method(): void {
 		$obj = $this->get_test();
 
 		$this->assertNull( $obj->get_arg( 0 ) );
@@ -52,7 +52,7 @@ class TestMslsOptions extends Msls_UnitTestCase {
 		$this->assertIsArray( $obj->get_arg( 0, [] ) );
 	}
 
-	function test_set_method() {
+	function test_set_method(): void {
 		$obj = $this->get_test();
 
 		$this->assertTrue( $obj->set( [] ) );
@@ -64,44 +64,44 @@ class TestMslsOptions extends Msls_UnitTestCase {
 		$this->assertFalse( $obj->set( new \stdClass() ) );
 	}
 
-	function test_get_permalink_method() {
+	function test_get_permalink_method(): void {
 		$obj = $this->get_test();
 
 		$this->assertIsSTring( $obj->get_permalink( 'de_DE' ) );
 	}
 
-	function test_get_postlink_method() {
+	function test_get_postlink_method(): void {
 		$obj = $this->get_test();
 
 		$this->assertIsSTring( $obj->get_postlink( 'de_DE' ) );
 		$this->assertEquals( '', $obj->get_postlink( 'de_DE' ) );
 	}
 
-	function test_get_current_link_method() {
+	function test_get_current_link_method(): void {
 		$obj = $this->get_test();
 
 		$this->assertIsSTring( $obj->get_current_link() );
 	}
 
-	function test_is_excluded_method() {
+	function test_is_excluded_method(): void {
 		$obj = $this->get_test();
 
 		$this->assertIsBool( $obj->is_excluded() );
 	}
 
-	function test_is_content_filter_method() {
+	function test_is_content_filter_method(): void {
 		$obj = $this->get_test();
 
 		$this->assertIsBool( $obj->is_content_filter() );
 	}
 
-	function test_get_order_method() {
+	function test_get_order_method(): void {
 		$obj = $this->get_test();
 
 		$this->assertIsSTring( $obj->get_order() );
 	}
 
-	function test_get_url_method() {
+	function test_get_url_method(): void {
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 
 		$obj = $this->get_test();
@@ -109,7 +109,7 @@ class TestMslsOptions extends Msls_UnitTestCase {
 		$this->assertIsSTring( $obj->get_url( '/dev/test' ) );
 	}
 
-	function test_get_flag_url_method() {
+	function test_get_flag_url_method(): void {
 		Functions\when( 'is_admin' )->justReturn( true );
 		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
 		Functions\when( 'plugin_dir_path' )->justReturn( __DIR__ . '/../' );
@@ -119,7 +119,7 @@ class TestMslsOptions extends Msls_UnitTestCase {
 		$this->assertIsSTring( $obj->get_flag_url( 'de_DE' ) );
 	}
 
-	function test_get_available_languages_method() {
+	function test_get_available_languages_method(): void {
 		Functions\when( 'get_available_languages' )->justReturn( [] );
 
 		$obj = $this->get_test();

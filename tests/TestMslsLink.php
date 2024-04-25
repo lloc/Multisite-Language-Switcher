@@ -5,7 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsLink;
 
-class TestMslsLink extends Msls_UnitTestCase {
+class TestMslsLink extends MslsUnitTestCase {
 
 	public function test_get_types() {
 		$this->assertCount( 4, MslsLink::get_types() );

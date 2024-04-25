@@ -8,7 +8,7 @@ use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
 use Brain\Monkey\Functions;
 
-class TestMslsCustomColumn extends Msls_UnitTestCase {
+class TestMslsCustomColumn extends MslsUnitTestCase {
 
 	function test_th() {
 		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://example.org/added-args' );

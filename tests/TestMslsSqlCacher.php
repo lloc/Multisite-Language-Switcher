@@ -5,9 +5,9 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsSqlCacher;
 
-class TestMslsSqlCacher extends Msls_UnitTestCase {
+class TestMslsSqlCacher extends MslsUnitTestCase {
 
-	public function get_sut() {
+	public function get_sut(): MslsSqlCacher {
 		$wpdb = \Mockery::mock( \WPDB::class );
 		$wpdb->shouldReceive( [
 			'prepare' => '',
@@ -17,7 +17,7 @@ class TestMslsSqlCacher extends Msls_UnitTestCase {
 		return new MslsSqlCacher( $wpdb, 'MslsSqlCacherTest' );
 	}
 
-	function test_set_params_method() {
+	public function test_set_params_method(): void {
 		Functions\when( 'wp_cache_get' )->justReturn( false );
 		Functions\when( 'wp_cache_set' )->justReturn( true );
 

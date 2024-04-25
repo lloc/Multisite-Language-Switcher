@@ -4,7 +4,7 @@ namespace lloc\MslsTests;
 
 use lloc\Msls\MslsGetSet;
 
-class TestMslsGetSet extends Msls_UnitTestCase {
+class TestMslsGetSet extends MslsUnitTestCase {
 
 	public function test_unset() {
 		$obj = new MslsGetSet();

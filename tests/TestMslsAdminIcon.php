@@ -5,15 +5,15 @@ namespace lloc\MslsTests;
 use lloc\Msls\MslsAdminIcon;
 use Brain\Monkey\Functions;
 
-class TestMslsAdminIcon extends Msls_UnitTestCase {
+class TestMslsAdminIcon extends MslsUnitTestCase {
 
-	protected $admin_url = 'https://example.org/wp-admin/';
+	protected string $admin_url = 'https://example.org/wp-admin/';
 
-	protected $lang = 'de_DE';
+	protected string $lang = 'de_DE';
 
-	protected $src = '/dev/german_flag.png';
+	protected string $src = '/dev/german_flag.png';
 
-	public function get_test( $post ) {
+	public function get_test( $post ): MslsAdminIcon {
 		return ( new MslsAdminIcon( $post->post_type ) )
 			->set_path()
 			->set_language( $this->lang )
@@ -21,7 +21,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 			->set_href( $post->ID );
 	}
 
-	public function get_post( $post_type, $id = 0 ) {
+	public function get_post( $post_type, $id = 0 ): \WP_Post {
 		$post = \Mockery::mock( '\WP_Post' );
 		$post->ID = $id;
 		$post->post_type = $post_type;
@@ -30,7 +30,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		return $post;
 	}
 
-	public function get_user() {
+	public function get_user(): \WP_User {
 		$user = \Mockery::mock( '\WP_User' );
 		$user->ID   = 1;
 		$user->role = 'editor';
@@ -38,14 +38,14 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		return $user;
 	}
 
-	public static function get_post_type() {
+	public static function get_post_type(): array {
 		return [
 			[ 'post', 'http://example.org/wp-admin/post-new.php',                'http://example.org/wp-admin/post.php?post=2&amp;action=edit' ],
 			[ 'page', 'http://example.org/wp-admin/post-new.php?post_type=page', 'http://example.org/wp-admin/post.php?post=2&amp;action=edit' ]
 		];
 	}
 
-	function test_get_a_not_empty_post() {
+	public function test_get_a_not_empty_post(): void {
 		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[0];
 
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
@@ -58,7 +58,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertEquals( $value, $obj->__toString() );
 	}
 
-	function test_get_a_not_empty_page() {
+	public function test_get_a_not_empty_page(): void {
 		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[1];
 
 		Functions\expect( 'add_query_arg' )->twice()->andReturn( $edit_link );
@@ -72,7 +72,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertEquals( $value, $obj->__toString() );
 	}
 
-	public function test_get_a_empty_post() {
+	public function test_get_a_empty_post(): void {
 		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[0];
 
 		Functions\expect( 'get_current_blog_id' )->twice()->andReturn( 1 );
@@ -89,7 +89,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertEquals( $value, $obj->__toString() );
 	}
 
-	public function test_get_a_empty_page() {
+	public function test_get_a_empty_page(): void {
 		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[1];
 
 		Functions\expect( 'get_current_blog_id' )->twice()->andReturn( 1 );
@@ -107,7 +107,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertEquals( $value, $obj->__toString() );
 	}
 
-	public function test_get_img_post() {
+	public function test_get_img_post(): void {
 		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[0];
 
 		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
@@ -122,7 +122,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 	}
 
 
-	public function test_get_img_post_page() {
+	public function test_get_img_post_page(): void {
 		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[1];
 
 		Functions\expect( 'add_query_arg' )->twice()->andReturn( $edit_link );
@@ -137,7 +137,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertIsSTring( $obj->get_edit_new() );
 	}
 
-	public function test_set_id_with_null_constructor() {
+	public function test_set_id_with_null_constructor(): void {
 		Functions\expect( 'add_query_arg' )->once();
 
 		$obj  = new MslsAdminIcon( null );
@@ -145,25 +145,25 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_id( 1 ) );
 	}
 
-	public function test_set_id() {
+	public function test_set_id(): void {
 		$obj  = new MslsAdminIcon( 'post' );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_id( 1 ) );
 	}
 
-	public function test_set_origin_language() {
+	public function test_set_origin_language(): void {
 		$obj  = new MslsAdminIcon( 'post' );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_origin_language( 'it_IT' ) );
 	}
 
-	public function test_set_icon_type() {
+	public function test_set_icon_type(): void {
 		$obj  = new MslsAdminIcon( 'post' );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_icon_type( 'flag' ) );
 	}
 
-	public function icon_type_provider() {
+	public function icon_type_provider(): array {
 		return [
 			[ 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ],
 			[ 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>'],
@@ -175,7 +175,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 	/**
 	 * @dataProvider icon_type_provider
 	 */
-	public function test_get_icon_flag( $icon_type, $language, $expected ) {
+	public function test_get_icon_flag( ?string $icon_type, ?string $language, string $expected ): void {
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
 		$obj  = new MslsAdminIcon( 'post' );
@@ -188,7 +188,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertEquals( $expected, $obj->get_icon() );
 	}
 
-	public function test_get_icon_label() {
+	public function test_get_icon_label(): void {
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
 		$obj  = new MslsAdminIcon( 'post' );
@@ -201,7 +201,7 @@ class TestMslsAdminIcon extends Msls_UnitTestCase {
 		$this->assertEquals( '<span class="flag-icon flag-icon-de">de_DE</span>', $obj->get_icon() );
 	}
 
-	public function test_get_edit_new() {
+	public function test_get_edit_new(): void {
 		$obj  = new MslsAdminIcon( 'post' );
 		$obj->set_id( 123 );
 		$obj->set_origin_language( 'de_DE' );

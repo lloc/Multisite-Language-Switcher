@@ -7,9 +7,9 @@ use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsTaxonomy;
 use lloc\Msls\MslsOptions;
 
-class TestMslsTaxonomy extends Msls_UnitTestCase {
+class TestMslsTaxonomy extends MslsUnitTestCase {
 
-	public function get_test() {
+	public function get_test(): MslsTaxonomy {
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 		Functions\when( 'get_option' )->justReturn( [] );
 
@@ -23,7 +23,7 @@ class TestMslsTaxonomy extends Msls_UnitTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_acl_request_included() {
+	public function test_acl_request_included(): void {
 		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnFalse();
@@ -43,7 +43,7 @@ class TestMslsTaxonomy extends Msls_UnitTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_acl_request_excluded() {
+	public function test_acl_request_excluded(): void {
 		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
 		$mock->shouldReceive( 'instance' )->andReturnSelf();
 		$mock->shouldReceive( 'is_excluded' )->andReturnTrue();
@@ -51,15 +51,15 @@ class TestMslsTaxonomy extends Msls_UnitTestCase {
 		$this->assertEquals( '', $this->get_test()->acl_request() );
 	}
 	
-	public function test_get_post_type() {
+	public function test_get_post_type(): void {
 		$this->assertEquals( '', $this->get_test()->get_post_type() );
 	}
 
-	public function test_is_post_type() {
+	public function test_is_post_type(): void {
 		$this->assertFalse( $this->get_test()->is_post_type() );
 	}
 
-	public function test_is_taxonomy() {
+	public function test_is_taxonomy(): void {
 		$this->assertTrue( $this->get_test()->is_taxonomy() );
 	}
 
@@ -67,7 +67,7 @@ class TestMslsTaxonomy extends Msls_UnitTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_request() {
+	public function test_get_request(): void {
 		$plugin = \Mockery::mock( 'alias:' . MslsPlugin::class );
 		$plugin->shouldReceive( 'get_superglobals' )->andReturn( [ 'taxonomy' => 'abc' ] );
 

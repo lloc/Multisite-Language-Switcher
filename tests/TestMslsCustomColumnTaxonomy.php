@@ -7,7 +7,7 @@ use lloc\Msls\MslsCustomColumn;
 use lloc\Msls\MslsCustomColumnTaxonomy;
 use lloc\Msls\MslsOptions;
 
-class TestMslsCustomColumnTaxonomy extends Msls_UnitTestCase {
+class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 
 	public function test_th(): void {
 		$options    = \Mockery::mock( MslsOptions::class );

@@ -6,9 +6,9 @@ use Brain\Monkey\Functions;
 
 use lloc\Msls\MslsOptionsTaxTerm;
 
-class TestMslsOptionsTaxTerm extends Msls_UnitTestCase {
+class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 
-	function test_object() {
+	public function test_object(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( [] );
 
 		$obj = new MslsOptionsTaxTerm( 0 );

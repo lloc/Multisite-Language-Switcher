@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsContentTypes;
 use lloc\Msls\MslsPostType;
 
-class TestMslsContentTypes extends Msls_UnitTestCase {
+class TestMslsContentTypes extends MslsUnitTestCase {
 
 	public function test_create() {
 		Functions\expect('get_post_types' )->twice()->andReturn( [] );

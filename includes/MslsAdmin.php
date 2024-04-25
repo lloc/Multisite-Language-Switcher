@@ -11,6 +11,17 @@ use lloc\Msls\Component\Input\Select;
 /**
  * Administration of the options
  *
+ * @method activate_autocomplete(): void
+ * @method sort_by_description(): void
+ * @method exclude_current_blog(): void
+ * @method only_with_translation(): void
+ * @method output_current_blog(): void
+ * @method before_output(): void
+ * @method after_output(): void
+ * @method before_item(): void
+ * @method after_item(): void
+ * @method content_filter(): void
+ *
  * @package Msls
  */
 class MslsAdmin extends MslsMain {

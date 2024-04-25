@@ -8,9 +8,9 @@ use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsBlogCollection;
 use Brain\Monkey\Functions;
 
-class TestMslsMain extends Msls_UnitTestCase {
+class TestMslsMain extends MslsUnitTestCase {
 
-	public function get_sut() {
+	public function get_sut(): MslsMain {
 		Functions\when( 'get_options' )->justReturn( [] );
 
 		$options    = \Mockery::mock( MslsOptions::class );

@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 
 use lloc\Msls\MslsOptionsPost;
 
-class TestMslsOptionsPost extends Msls_UnitTestCase {
+class TestMslsOptionsPost extends MslsUnitTestCase {
 
 	public function get_test() {
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );

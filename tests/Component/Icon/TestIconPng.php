@@ -1,14 +1,14 @@
 <?php
 
-namespace lloc\Msls\Component\Icon\MslsTests;
+namespace lloc\MslsTests\Component\Icon;
 
 use Brain\Monkey\Functions;
-use lloc\MslsTests\Msls_UnitTestCase;
+use lloc\MslsTests\MslsUnitTestCase;
 use lloc\Msls\Component\Icon\IconPng;
 
-class TestIconPng extends Msls_UnitTestCase {
+class TestIconPng extends MslsUnitTestCase {
 
-	public function test_get() {
+	public function test_get(): void {
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 3 ) . '/' );
 
 		$obj = new IconPng();

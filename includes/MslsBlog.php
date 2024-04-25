@@ -31,7 +31,7 @@ class MslsBlog {
 	/**
 	 * Constructor
 	 *
-	 * @param \StdClass $obj
+	 * @param ?\StdClass $obj
 	 * @param string $description
 	 */
 	public function __construct( $obj, $description ) {
