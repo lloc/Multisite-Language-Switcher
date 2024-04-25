@@ -143,7 +143,7 @@ class MslsMetaBox extends MslsMain {
 				add_meta_box(
 					'msls-content-import',
 					apply_filters(
-						'msls_metabox_post_import_title',					
+						'msls_metabox_post_import_title',
 						__( 'Multisite Language Switcher - Import content', 'multisite-language-switcher' )
 					),
 					[
@@ -187,7 +187,7 @@ class MslsMetaBox extends MslsMain {
 				$icon     = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $iconType );
 
 				if ( $mydata->has_value( $language ) ) {
-                    $icon->set_href( $mydata->$language );
+					$icon->set_href( $mydata->$language );
 				}
 
 				$selects  = '';
@@ -240,7 +240,8 @@ class MslsMetaBox extends MslsMain {
 		} else {
 			printf(
 				'<p>%s</p>',
-				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'multisite-language-switcher' )
+				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!',
+					'multisite-language-switcher' )
 			);
 		}
 	}
@@ -279,7 +280,10 @@ class MslsMetaBox extends MslsMain {
 	 * @return string
 	 */
 	public function render_option( $post_id, $msls_id ) {
-		return sprintf( '<option value="%s" %s>%s</option>', $post_id, selected( $post_id, $msls_id, false ), get_the_title( $post_id ) );
+		return sprintf( '<option value="%s" %s>%s</option>',
+			$post_id,
+			selected( $post_id, $msls_id, false ),
+			get_the_title( $post_id ) );
 	}
 
 	/**
@@ -308,9 +312,9 @@ class MslsMetaBox extends MslsMain {
 
 				$language = $blog->get_language();
 				$icon     = MslsAdminIcon::create()
-					->set_language( $language );
+				                         ->set_language( $language );
 
-				if( $this->options->admin_display === 'label' ) {
+				if ( $this->options->admin_display === 'label' ) {
 					$icon->set_icon_type( 'label' );
 				} else {
 					$icon->set_icon_type( 'flag' );
@@ -353,7 +357,8 @@ class MslsMetaBox extends MslsMain {
 		} else {
 			printf(
 				'<p>%s</p>',
-				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!', 'multisite-language-switcher' )
+				__( 'You should define at least another blog in a different language in order to have some benefit from this plugin!',
+					'multisite-language-switcher' )
 			);
 		}
 	}

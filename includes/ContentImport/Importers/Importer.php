@@ -1,4 +1,5 @@
 <?php
+
 namespace lloc\Msls\ContentImport\Importers;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
@@ -36,5 +37,5 @@ interface Importer {
 	 *
 	 * @return \stdClass
 	 */
-	public static function info(  );
+	public static function info();
 }

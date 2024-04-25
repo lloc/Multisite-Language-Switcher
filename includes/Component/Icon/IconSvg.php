@@ -26,7 +26,7 @@ class IconSvg extends Icon {
 	 * @return string
 	 */
 	public function get( string $language ): string {
-			return $this->map[ $language ] ?? $this->maybe( $language, 'flag-icon-' );
+		return $this->map[ $language ] ?? $this->maybe( $language, 'flag-icon-' );
 	}
 
 }

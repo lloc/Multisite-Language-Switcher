@@ -19,8 +19,8 @@ class PostFieldsImporters extends ImportersBaseFactory {
 	 */
 	public function details() {
 		return (object) [
-			'slug' => static::TYPE,
-			'name' => __( 'Post Fields', 'multisite-language-switcher' ),
+			'slug'      => static::TYPE,
+			'name'      => __( 'Post Fields', 'multisite-language-switcher' ),
 			'importers' => $this->importers_info(),
 			'selected'  => $this->selected(),
 		];

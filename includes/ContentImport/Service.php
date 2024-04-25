@@ -53,9 +53,16 @@ class Service extends MslsRegistryInstance {
 		add_filter( 'wp_get_attachment_url', function ( $url, $post_id ) {
 			return AttachmentPathFinder::instance()->filter_attachment_url( $url, $post_id );
 		}, 99, 2 );
-		add_filter( 'wp_calculate_image_srcset', function ( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
-			return AttachmentPathFinder::instance()->filter_srcset( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId );
-		}, 99, 5 );
+		add_filter( 'wp_calculate_image_srcset',
+			function ( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
+				return AttachmentPathFinder::instance()->filter_srcset( $sources,
+					$sizeArray,
+					$imageSrc,
+					$imageMeta,
+					$attachmentId );
+			},
+			99,
+			5 );
 
 		if ( is_admin() ) {
 		}

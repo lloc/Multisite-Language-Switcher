@@ -52,7 +52,6 @@ class Text implements InputInterface {
 			$this->size,
 			$this->readonly
 		);
-
 	}
 
 }

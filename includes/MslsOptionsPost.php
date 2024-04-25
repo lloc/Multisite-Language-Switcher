@@ -27,7 +27,9 @@ class MslsOptionsPost extends MslsOptions {
 
 	/**
 	 * Get postlink
+	 *
 	 * @param string $language
+	 *
 	 * @return string
 	 */
 	public function get_postlink( $language ) {

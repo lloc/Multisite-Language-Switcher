@@ -52,7 +52,6 @@ class MslsPostTag extends MslsMain {
 			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
 
 			foreach ( get_terms( sanitize_text_field( filter_input( INPUT_POST, 'post_type' ) ), $args ) as $term ) {
-
 				/**
 				 * Manipulates the term object before using it
 				 *
@@ -259,7 +258,8 @@ class MslsPostTag extends MslsMain {
 	 * @return string
 	 */
 	protected function get_select_title(): string {
-		return apply_filters( 'msls_term_select_title', __( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
+		return apply_filters( 'msls_term_select_title',
+			__( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
 	}
 
 }

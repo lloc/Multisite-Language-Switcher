@@ -70,9 +70,11 @@ class MslsBlogCollection extends MslsRegistryInstance {
 		if ( ! $options->is_excluded() ) {
 			/**
 			 * Returns custom filtered blogs of the blogs_collection
-			 * @since 0.9.8
 			 *
 			 * @param array $blogs_collection
+			 *
+			 * @since 0.9.8
+			 *
 			 */
 			$blogs_collection = (array) apply_filters(
 				'msls_blog_collection_construct',
@@ -132,7 +134,8 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return array
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
-		$reference_user = $options->has_value( 'reference_user' ) ? $options->reference_user : current( $this->get_users( 'ID', 1 ) );
+		$reference_user = $options->has_value( 'reference_user' ) ? $options->reference_user : current( $this->get_users( 'ID',
+			1 ) );
 		$blogs          = get_blogs_of_user( $reference_user );
 
 		/**
@@ -302,10 +305,10 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 */
 	public function get_users( $fields = 'all', $number = '' ) {
 		$args = [
-			'blog_id' => $this->current_blog_id,
-			'orderby' => 'registered',
-			'fields'  => $fields,
-			'number'  => $number,
+			'blog_id'     => $this->current_blog_id,
+			'orderby'     => 'registered',
+			'fields'      => $fields,
+			'number'      => $number,
 			'count_total' => false,
 		];
 

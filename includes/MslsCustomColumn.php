@@ -41,7 +41,9 @@ class MslsCustomColumn extends MslsMain {
 
 	/**
 	 * Table header
+	 *
 	 * @param array $columns
+	 *
 	 * @return array
 	 */
 	public function th( $columns ) {
@@ -53,10 +55,10 @@ class MslsCustomColumn extends MslsMain {
 
 				$icon = new MslsAdminIcon( null );
 				$icon->set_language( $language );
-				if( $this->options->admin_display === 'label' ) {
+				if ( $this->options->admin_display === 'label' ) {
 					$icon->set_icon_type( 'label' );
 				} else {
-					$icon->set_icon_type( 'flag' );					
+					$icon->set_icon_type( 'flag' );
 				}
 
 				if ( $post_id = get_the_ID() ) {
@@ -103,9 +105,9 @@ class MslsCustomColumn extends MslsMain {
 					if ( $mydata->has_value( $language ) ) {
 						$icon->set_href( $mydata->$language );
 					}
-	
+
 					echo '<span class="msls-icon-wrapper ' . esc_attr( $this->options->admin_display ) . '">';
-					echo $icon->get_a(); 
+					echo $icon->get_a();
 					echo '</span>';
 
 					restore_current_blog();

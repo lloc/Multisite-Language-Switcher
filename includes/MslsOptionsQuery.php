@@ -36,21 +36,17 @@ class MslsOptionsQuery extends MslsOptions {
 				get_query_var( 'monthnum' ),
 				get_query_var( 'day' )
 			);
-		}
-		elseif ( is_month() ) {
-			$query =  new MslsOptionsQueryMonth(
+		} elseif ( is_month() ) {
+			$query = new MslsOptionsQueryMonth(
 				get_query_var( 'year' ),
 				get_query_var( 'monthnum' )
 			);
-		}
-		elseif ( is_year() ) {
-			$query =  new MslsOptionsQueryYear( get_query_var( 'year' ) );
-		}
-		elseif ( is_author() ) {
-			$query =  new MslsOptionsQueryAuthor( get_queried_object_id() );
-		}
-		elseif ( is_post_type_archive() ) {
-			$query =  new MslsOptionsQueryPostType( get_query_var( 'post_type' ) );
+		} elseif ( is_year() ) {
+			$query = new MslsOptionsQueryYear( get_query_var( 'year' ) );
+		} elseif ( is_author() ) {
+			$query = new MslsOptionsQueryAuthor( get_queried_object_id() );
+		} elseif ( is_post_type_archive() ) {
+			$query = new MslsOptionsQueryPostType( get_query_var( 'post_type' ) );
 		}
 
 		return $query;
@@ -60,6 +56,7 @@ class MslsOptionsQuery extends MslsOptions {
 	 * Get postlink
 	 *
 	 * @param string $language
+	 *
 	 * @return string
 	 */
 	public function get_postlink( $language ) {

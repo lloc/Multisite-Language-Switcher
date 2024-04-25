@@ -19,7 +19,8 @@ class MslsWidget extends \WP_Widget {
 	 * Constructor
 	 */
 	public function __construct() {
-		$name = apply_filters('msls_widget_title', __( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
+		$name = apply_filters( 'msls_widget_title',
+			__( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
 
 		parent::__construct( $this->id_base, $name, [ 'show_instance_in_rest' => true ] );
 	}
@@ -50,7 +51,7 @@ class MslsWidget extends \WP_Widget {
 
 		$content = MslsOutput::init()->__toString();
 		if ( '' === $content ) {
-			$text    = __( 'No available translations found', 'multisite-language-switcher' );
+			$text = __( 'No available translations found', 'multisite-language-switcher' );
 			$content = apply_filters( 'msls_widget_alternative_content', $text );
 		}
 

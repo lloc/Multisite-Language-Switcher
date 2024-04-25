@@ -24,13 +24,13 @@ class MslsTaxonomy extends MslsContentTypes {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->types = self::get();
+		$this->types   = self::get();
 		$this->request = $this->get_request();
 	}
 
 	/**
-	 * @uses get_taxonomies
 	 * @return string[]
+	 * @uses get_taxonomies
 	 */
 	public static function get(): array {
 		$types = array_merge(

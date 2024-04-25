@@ -22,9 +22,9 @@ class MslsCustomFilter extends MslsMain {
 	 * @return MslsCustomFilter
 	 */
 	public static function init() {
-		$options    = MslsOptions::instance();
+		$options = MslsOptions::instance();
 		$collection = msls_blog_collection();
-		$obj        = new static( $options, $collection );
+		$obj = new static( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();
@@ -57,7 +57,8 @@ class MslsCustomFilter extends MslsMain {
 					'<option value="%d" %s>%s</option>',
 					$blog->userblog_id,
 					selected( $id, $blog->userblog_id, false ),
-					sprintf( __( 'Not translated in the %s-blog', 'multisite-language-switcher' ), $blog->get_description() )
+					sprintf( __( 'Not translated in the %s-blog', 'multisite-language-switcher' ),
+						$blog->get_description() )
 				);
 			}
 			echo '</select>';

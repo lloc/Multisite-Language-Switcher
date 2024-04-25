@@ -19,8 +19,8 @@ class PostMetaImporters extends ImportersBaseFactory {
 	 */
 	public function details() {
 		return (object) [
-			'slug' => static::TYPE,
-			'name' => __( 'Meta Fields', 'multisite-language-switcher' ),
+			'slug'      => static::TYPE,
+			'name'      => __( 'Meta Fields', 'multisite-language-switcher' ),
 			'importers' => $this->importers_info(),
 			'selected'  => $this->selected(),
 		];

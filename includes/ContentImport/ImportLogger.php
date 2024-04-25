@@ -81,7 +81,7 @@ class ImportLogger {
 	 * Logs an error.
 	 *
 	 * @param string $where A location string using `/` as level format.
-	 * @param mixed  $what  What should be stored in the log.
+	 * @param mixed $what What should be stored in the log.
 	 */
 	public function log_error( $where, $what ) {
 		$this->log( $where, $what, 'error' );
@@ -91,8 +91,8 @@ class ImportLogger {
 	 * Logs something.
 	 *
 	 * @param string $where A location string using `/` as level format.
-	 * @param mixed  $what  What should be stored in the log.
-	 * @param string $root  Where to log the information.
+	 * @param mixed $what What should be stored in the log.
+	 * @param string $root Where to log the information.
 	 */
 	protected function log( $where, $what, $root = 'info' ) {
 		if ( ! isset( $this->data[ $root ] ) ) {
@@ -111,7 +111,8 @@ class ImportLogger {
 		        . '":' . json_encode( $what )
 		        . implode(
 			        '',
-			        array_fill( 0, count( $path ),
+			        array_fill( 0,
+				        count( $path ),
 				        '}' )
 		        );
 		$data = json_decode( $json, true );
@@ -152,7 +153,7 @@ class ImportLogger {
 	 * Logs a success.
 	 *
 	 * @param string $where A location string using `/` as level format.
-	 * @param mixed  $what  What should be stored in the log.
+	 * @param mixed $what What should be stored in the log.
 	 */
 	public function log_success( $where, $what ) {
 		$this->log( $where, $what, 'success' );
