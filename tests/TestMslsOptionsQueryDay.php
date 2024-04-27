@@ -11,24 +11,21 @@ use lloc\Msls\MslsOptionsQueryDay;
  */
 class TestMslsOptionsQueryDay extends MslsUnitTestCase {
 
-	function get_test() {
+	public function setUp(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
 
-		return new MslsOptionsQueryDay();
+		$this->test = new MslsOptionsQueryDay();
 	}
 
-	function test_has_value_method() {
-		$obj = $this->get_test();
-
-		$this->assertIsBool( $obj->has_value( 'de_DE' ) );
+	public function test_has_value(): void {
+		$this->assertTrue( $this->test->has_value( 'de_DE' ) );
+		$this->assertFalse( $this->test->has_value( 'es_ES' ) );
 	}
 
-	function test_get_current_link_method() {
+	public function test_get_current_link(): void {
 		Functions\expect( 'get_day_link' )->once()->andReturn( 'https://example.org/queried-day' );
 
-		$obj = $this->get_test();
-
-		$this->assertEquals( 'https://example.org/queried-day', $obj->get_current_link() );
+		$this->assertEquals( 'https://example.org/queried-day', $this->test->get_current_link() );
 	}
 
 }
