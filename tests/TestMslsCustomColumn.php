@@ -10,7 +10,7 @@ use Brain\Monkey\Functions;
 
 class TestMslsCustomColumn extends MslsUnitTestCase {
 
-	function test_th() {
+	public function test_th(): void {
 		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://example.org/added-args' );
 		Functions\expect( 'get_the_ID' )->twice()->andReturnValues( [ 1, 2 ] );
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 1 ) . '/' );
@@ -38,7 +38,7 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $obj->th( [] ) );
 	}
 
-	function test_th_empty() {
+	public function test_th_empty(): void {
 		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
