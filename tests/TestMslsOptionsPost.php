@@ -8,26 +8,28 @@ use lloc\Msls\MslsOptionsPost;
 
 class TestMslsOptionsPost extends MslsUnitTestCase {
 
-	public function get_test() {
+	protected function setUp(): void {
+		parent::setUp();
+
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
 
-		return new MslsOptionsPost();
+		$this->test = new MslsOptionsPost();
 	}
 
-	function test_get_postlink_method() {
+	public function test_get_postlink_not_has_value() {
+		$this->assertEquals( '', $this->test->get_postlink( 'es_ES' ) );
+	}
+
+	public function test_get_postlink_post_is_null(): void {
 		Functions\expect( 'get_post' )->once()->andReturnNull();
 
-		$obj = $this->get_test();
-
-		$this->assertIsSTring( $obj->get_postlink( 'de_DE' ) );
+		$this->assertEquals( '', $this->test->get_postlink( 'de_DE' ) );
 	}
 
-	function test_get_current_link_method() {
+	public function test_get_current_link(): void {
 		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://example.org/a-post' );
 
-		$obj = $this->get_test();
-
-		$this->assertEquals( 'https://example.org/a-post', $obj->get_current_link() );
+		$this->assertEquals( 'https://example.org/a-post', $this->test->get_current_link() );
 	}
 
 }
