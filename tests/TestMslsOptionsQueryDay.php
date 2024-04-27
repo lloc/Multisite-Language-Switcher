@@ -12,6 +12,8 @@ use lloc\Msls\MslsOptionsQueryDay;
 class TestMslsOptionsQueryDay extends MslsUnitTestCase {
 
 	public function setUp(): void {
+		parent::setUp();
+
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
 
 		$this->test = new MslsOptionsQueryDay();
