@@ -23,12 +23,12 @@ class MslsJson {
 	/** MslsLanguageArray
 	 * Adds a value label pair to the internal class container
 	 *
-	 * @param ?int $value
-	 * @param string $label
+	 * @param mixed $value
+	 * @param mixed $label
 	 *
 	 * @return MslsJson
 	 */
-	public function add( ?int $value, string $label ) {
+	public function add( $value, $label ) {
 		$this->arr[] = [
 			'value' => intval( $value ),
 			'label' => strval( $label ),
