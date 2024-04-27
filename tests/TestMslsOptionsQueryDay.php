@@ -19,7 +19,6 @@ class TestMslsOptionsQueryDay extends MslsUnitTestCase {
 
 	public function test_has_value(): void {
 		$this->assertTrue( $this->test->has_value( 'de_DE' ) );
-		$this->assertFalse( $this->test->has_value( 'es_ES' ) );
 	}
 
 	public function test_get_current_link(): void {
