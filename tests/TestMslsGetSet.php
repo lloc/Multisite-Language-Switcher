@@ -6,7 +6,7 @@ use lloc\Msls\MslsGetSet;
 
 class TestMslsGetSet extends MslsUnitTestCase {
 
-	public function test_unset() {
+	public function test_unset(): void {
 		$obj = new MslsGetSet();
 		$this->assertTrue( $obj->is_empty() );
 
@@ -17,7 +17,7 @@ class TestMslsGetSet extends MslsUnitTestCase {
 		$this->assertTrue( $obj->is_empty() );
 	}
 
-	public function test_set_empty() {
+	public function test_set_empty(): void {
 		$obj = new MslsGetSet();
 		$this->assertTrue( $obj->is_empty() );
 
@@ -28,7 +28,7 @@ class TestMslsGetSet extends MslsUnitTestCase {
 		$this->assertTrue( $obj->is_empty() );
 	}
 
-	public function test_set() {
+	public function test_set(): void {
 		$obj = new MslsGetSet();
 
 		$obj->abc = 'test';
@@ -37,7 +37,7 @@ class TestMslsGetSet extends MslsUnitTestCase {
 		$this->assertTrue( isset( $obj->abc ) );
 	}
 
-	public function test_isset() {
+	public function test_isset(): void {
 		$obj = new MslsGetSet();
 
 		$this->assertTrue( $obj->is_empty() );
@@ -48,7 +48,7 @@ class TestMslsGetSet extends MslsUnitTestCase {
 		$this->assertEquals( 'test', $obj->abc );
 	}
 
-	public function test_has_value() {
+	public function test_has_value(): void {
 		$obj = new MslsGetSet();
 
 		$obj->a_key = 'test';
@@ -56,7 +56,7 @@ class TestMslsGetSet extends MslsUnitTestCase {
 		$this->assertTrue( $obj->has_value( 'a_key' ) );
 	}
 
-	public function test_get_array() {
+	public function test_get_array(): void {
 		$obj = new MslsGetSet();
 
 		$obj->temp = 'test';
