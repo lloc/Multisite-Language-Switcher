@@ -11,5 +11,5 @@ interface LogWriter {
 	 *
 	 * @return mixed
 	 */
-	public function write(array $data);
+	public function write( array $data );
 }

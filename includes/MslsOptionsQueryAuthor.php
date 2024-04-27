@@ -18,6 +18,7 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	 * Check if the array has an non empty item which has $language as a key
 	 *
 	 * @param string $language
+	 *
 	 * @return bool
 	 */
 	public function has_value( $language ) {
@@ -31,6 +32,7 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 				)
 			);
 		}
+
 		return (bool) $this->arr[ $language ];
 	}
 

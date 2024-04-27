@@ -6,16 +6,17 @@
   "homepage": "http://msls.co",
   "require": {
     "php": ">=7.4",
-    "composer/installers": "~1.12.0"
+    "composer/installers": "~1.12.0",
+    "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "~9.6",
-    "brain/monkey": "2.*",
-    "phpstan/phpstan": "^1.8",
-    "szepeviktor/phpstan-wordpress": "^1.1",
-    "phpstan/extension-installer": "^1.1",
-    "antecedent/patchwork": "~2.1.19",
-    "squizlabs/php_codesniffer": "^3.7",
+    "phpunit/phpunit": "^9.6",
+    "brain/monkey": "^2.6",
+    "phpstan/phpstan": "^1.10",
+    "szepeviktor/phpstan-wordpress": "^1.3",
+    "phpstan/extension-installer": "^1.3",
+    "antecedent/patchwork": "^2.1",
+    "squizlabs/php_codesniffer": "^3.9",
     "phpcompatibility/php-compatibility": "^9.3"
   },
   "autoload": {
@@ -25,7 +26,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "lloc\\Msls\\": "tests/"
+      "lloc\\MslsTests\\": "tests/"
     }
   },
   "scripts": {
@@ -34,6 +35,7 @@
     "analyze": "vendor/bin/phpstan analyze",
     "php74": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4",
     "php81": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1",
+    "php82": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2",
     "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
     "flags-png": "php bin/flags-png.php > flags/flags.php",
     "flags-svg": "php bin/flags-svg.php > css/flags.php"

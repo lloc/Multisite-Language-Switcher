@@ -11,6 +11,17 @@ use lloc\Msls\Component\Input\Select;
 /**
  * Administration of the options
  *
+ * @method activate_autocomplete(): void
+ * @method sort_by_description(): void
+ * @method exclude_current_blog(): void
+ * @method only_with_translation(): void
+ * @method output_current_blog(): void
+ * @method before_output(): void
+ * @method after_output(): void
+ * @method before_item(): void
+ * @method after_item(): void
+ * @method content_filter(): void
+ *
  * @package Msls
  */
 class MslsAdmin extends MslsMain {
@@ -90,8 +101,10 @@ class MslsAdmin extends MslsMain {
 		}
 
 		$checkboxes = [
-			'activate_autocomplete'   => __( 'Activate experimental autocomplete inputs', 'multisite-language-switcher' ),
-			'activate_content_import' => __( 'Activate the content import functionality', 'multisite-language-switcher' ),
+			'activate_autocomplete'   => __( 'Activate experimental autocomplete inputs',
+				'multisite-language-switcher' ),
+			'activate_content_import' => __( 'Activate the content import functionality',
+				'multisite-language-switcher' ),
 			'sort_by_description'     => __( 'Sort languages by description', 'multisite-language-switcher' ),
 			'exclude_current_blog'    => __( 'Exclude this blog from output', 'multisite-language-switcher' ),
 			'only_with_translation'   => __( 'Show only links with a translation', 'multisite-language-switcher' ),
@@ -100,7 +113,8 @@ class MslsAdmin extends MslsMain {
 		];
 
 		if ( isset ( $checkboxes[ $method ] ) ) {
-			echo ( new Group() )->add( new Checkbox( $method, $this->options->$method ) )->add( new Label( $method, $checkboxes[ $method ] ) )->render();
+			echo ( new Group() )->add( new Checkbox( $method, $this->options->$method ) )->add( new Label( $method,
+				$checkboxes[ $method ] ) )->render();
 		} else {
 			$value = ! empty( $this->options->$method ) ? $this->options->$method : '';
 			echo ( new Text( $method, $value ) )->render();
@@ -116,12 +130,14 @@ class MslsAdmin extends MslsMain {
 
 		if ( $this->options->is_empty() ) {
 			$message = sprintf(
-				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.', 'multisite-language-switcher' ),
+				__( 'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.',
+					'multisite-language-switcher' ),
 				esc_url( admin_url( $this->get_options_page_link() ) )
 			);
 		} elseif ( 1 == count( $this->options->get_available_languages() ) ) {
 			$message = sprintf(
-				__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.', 'multisite-language-switcher' ),
+				__( 'There are no language files installed. You can <a href="%s">manually install some language files</a> or you could use a <a href="%s">plugin</a> to download these files automatically.',
+					'multisite-language-switcher' ),
 				esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
 				esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
 			);
@@ -138,7 +154,8 @@ class MslsAdmin extends MslsMain {
 			'<div class="wrap"><div class="icon32" id="icon-options-general"><br/></div><h1>%s</h1>%s<br class="clear"/><form action="options.php" method="post"><p>%s</p>',
 			__( 'Multisite Language Switcher Options', 'multisite-language-switcher' ),
 			$this->subsubsub(),
-			__( 'To achieve maximum flexibility, you have to configure each blog separately.', 'multisite-language-switcher' )
+			__( 'To achieve maximum flexibility, you have to configure each blog separately.',
+				'multisite-language-switcher' )
 		);
 
 		settings_fields( 'msls' );
@@ -146,7 +163,8 @@ class MslsAdmin extends MslsMain {
 
 		printf(
 			'<p class="submit"><input name="Submit" type="submit" class="button button-primary" value="%s" /></p></form></div>',
-			( $this->options->is_empty() ? __( 'Configure', 'multisite-language-switcher' ) : __( 'Update', 'multisite-language-switcher' ) )
+			( $this->options->is_empty() ? __( 'Configure', 'multisite-language-switcher' ) : __( 'Update',
+				'multisite-language-switcher' ) )
 		);
 	}
 
@@ -166,7 +184,8 @@ class MslsAdmin extends MslsMain {
 			$arr[] = sprintf( '<a href="%1$s"%2$s>%3$s</a>', $admin_url, $current, $blog->get_title( $icon_type ) );
 		}
 
-		return empty( $arr ) ? '' : sprintf( '<ul class="subsubsub"><li>%s</li></ul>', implode( ' | </li><li>', $arr ) );
+		return empty( $arr ) ? '' : sprintf( '<ul class="subsubsub"><li>%s</li></ul>',
+			implode( ' | </li><li>', $arr ) );
 	}
 
 	/**
@@ -323,7 +342,12 @@ class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'admin_display'
 	 */
 	public function admin_display() {
-		echo ( new Select( 'admin_display', array( 'flag' => __( 'Flag', 'multisite-language-switcher' ), 'label' => __( 'Label', 'multisite-language-switcher' ) ), $this->options->admin_display ) )->render();
+		echo ( new Select( 'admin_display',
+			array(
+				'flag'  => __( 'Flag', 'multisite-language-switcher' ),
+				'label' => __( 'Label', 'multisite-language-switcher' )
+			),
+			$this->options->admin_display ) )->render();
 	}
 
 	/**
@@ -340,7 +364,8 @@ class MslsAdmin extends MslsMain {
 			$users = array_slice( $users, 0, self::MAX_REFERENCE_USERS, true );
 
 			$message = sprintf(
-				__( 'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %s users. Please, use the hook "msls_reference_users" to filter the result before!', 'multisite-language-switcher' ),
+				__( 'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %s users. Please, use the hook "msls_reference_users" to filter the result before!',
+					'multisite-language-switcher' ),
 				self::MAX_REFERENCE_USERS
 			);
 			trigger_error( $message );

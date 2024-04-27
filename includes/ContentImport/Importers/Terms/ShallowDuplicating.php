@@ -31,7 +31,8 @@ class ShallowDuplicating extends BaseImporter {
 		return (object) [
 			'slug'        => static::TYPE,
 			'name'        => __( 'Shallow Duplicating', 'multisite-language-switcher' ),
-			'description' => __( 'Shallow (one level deep) duplication or assignment of the source post taxonomy terms to the destnation post.', 'multisite-language-switcher' )
+			'description' => __( 'Shallow (one level deep) duplication or assignment of the source post taxonomy terms to the destnation post.',
+				'multisite-language-switcher' )
 		];
 	}
 
@@ -124,7 +125,11 @@ class ShallowDuplicating extends BaseImporter {
 		 * @param array $meta
 		 * @param ImportCoordinates $import_coordinates
 		 */
-		$blacklist = apply_filters( 'msls_content_import_term_meta_blacklist', array(), $term, $meta, $this->import_coordinates );
+		$blacklist = apply_filters( 'msls_content_import_term_meta_blacklist',
+			array(),
+			$term,
+			$meta,
+			$this->import_coordinates );
 
 		return array_diff_key( $meta, array_combine( $blacklist, $blacklist ) );
 	}

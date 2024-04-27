@@ -31,7 +31,7 @@ class MslsBlog {
 	/**
 	 * Constructor
 	 *
-	 * @param \StdClass $obj
+	 * @param ?\StdClass $obj
 	 * @param string $description
 	 */
 	public function __construct( $obj, $description ) {
@@ -76,7 +76,9 @@ class MslsBlog {
 	public function get_title( string $icon_type = 'flag' ): string {
 		$icon = ( new MslsAdminIcon( null ) )->set_language( $this->language )->set_icon_type( $icon_type );
 
-		return sprintf( '%1$s %2$s', $this->obj->blogname, '<span class="msls-icon-wrapper flag">' . $icon->get_icon() . '</span>' );
+		return sprintf( '%1$s %2$s',
+			$this->obj->blogname,
+			'<span class="msls-icon-wrapper flag">' . $icon->get_icon() . '</span>' );
 	}
 
 	/**
@@ -126,7 +128,8 @@ class MslsBlog {
 
 		switch_to_blog( $this->obj->userblog_id );
 
-		if ( is_object( $options ) && method_exists( $options, 'has_value' ) && ( $is_home || $options->has_value( $this->get_language() ) ) ) {
+		if ( is_object( $options ) && method_exists( $options,
+				'has_value' ) && ( $is_home || $options->has_value( $this->get_language() ) ) ) {
 			$url = apply_filters( 'mlsl_blog_get_permalink', $options->get_permalink( $this->get_language() ), $this );
 		}
 

@@ -36,6 +36,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 *
 	 * @param string $url
 	 * @param MslsOptions $options
+	 *
 	 * @return string
 	 */
 	public function check_base( $url, $options ) {

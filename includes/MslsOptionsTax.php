@@ -77,8 +77,7 @@ class MslsOptionsTax extends MslsOptions {
 
 		if ( class_exists( 'WooCommerce' ) && is_woocommerce() && isset( $wp_query->tax_query->queries[1]['taxonomy'] ) ) {
 			return $wp_query->tax_query->queries[1]['taxonomy'];
-		}
-		elseif ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
+		} elseif ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
 			return $wp_query->tax_query->queries[0]['taxonomy'];
 		}
 

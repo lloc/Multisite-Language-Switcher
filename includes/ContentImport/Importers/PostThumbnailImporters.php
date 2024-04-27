@@ -19,8 +19,8 @@ class PostThumbnailImporters extends ImportersBaseFactory {
 	 */
 	public function details() {
 		return (object) [
-			'slug' => static::TYPE,
-			'name' => __( 'Featured Image', 'multisite-language-switcher' ),
+			'slug'      => static::TYPE,
+			'name'      => __( 'Featured Image', 'multisite-language-switcher' ),
 			'importers' => $this->importers_info(),
 			'selected'  => $this->selected(),
 		];

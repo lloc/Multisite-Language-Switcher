@@ -40,6 +40,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * Overloads the get method.
 	 *
 	 * @param string $key
+	 *
 	 * @return mixed
 	 */
 	public function __get( $key ) {
@@ -50,6 +51,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * Overloads the isset method.
 	 *
 	 * @param string $key
+	 *
 	 * @return bool
 	 */
 	public function __isset( $key ) {
@@ -93,6 +95,7 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * which is the same but in my opinion a little bit ugly.
 	 *
 	 * @param string $key
+	 *
 	 * @return bool
 	 */
 	public function has_value( $key ) {

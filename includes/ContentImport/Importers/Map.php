@@ -38,9 +38,9 @@ class Map extends MslsRegistryInstance {
 	/**
 	 * Returns a filtered list of factories that will provide the importers.
 	 *
+	 * @return array An associative array in the shape [ <string: $slug> => <ImportersFactory: $factory> ]
 	 * @since TBD
 	 *
-	 * @return array An associative array in the shape [ <string: $slug> => <ImportersFactory: $factory> ]
 	 */
 	public function factories() {
 		$map = [

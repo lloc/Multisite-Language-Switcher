@@ -63,7 +63,7 @@ class MslsAdminIcon {
 	 */
 	protected $id;
 
-	const TYPE_FLAG  = 'flag';
+	const TYPE_FLAG = 'flag';
 
 	const TYPE_LABEL = 'label';
 
@@ -209,10 +209,12 @@ class MslsAdminIcon {
 	 */
 	public function get_a(): string {
 		if ( empty( $this->href ) ) {
-			$title = sprintf( __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
+			$title = sprintf( __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
+				$this->language );
 			$href  = $this->get_edit_new();
 		} else {
-			$title = sprintf( __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
+			$title = sprintf( __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
+				$this->language );
 			$href  = $this->href;
 		}
 
@@ -243,7 +245,8 @@ class MslsAdminIcon {
 				);
 				break;
 			default:
-				$icon = sprintf( '<span class="dashicons %s"></span>', empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit' );
+				$icon = sprintf( '<span class="dashicons %s"></span>',
+					empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit' );
 		}
 
 		return $icon;

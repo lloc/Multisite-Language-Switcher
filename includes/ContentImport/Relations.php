@@ -94,7 +94,11 @@ class Relations {
 			 * @param int $source_id
 			 * @param MslsOptions $source_option
 			 */
-			$created = apply_filters( 'msls_content_import_relation_local_to_source_create', null, $local_id, $source_id, $source_option );
+			$created = apply_filters( 'msls_content_import_relation_local_to_source_create',
+				null,
+				$local_id,
+				$source_id,
+				$source_option );
 			if ( null !== $created ) {
 				continue;
 			}

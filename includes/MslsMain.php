@@ -100,6 +100,7 @@ class MslsMain {
 
 	/**
 	 * Prepare input key/value-pair
+	 *
 	 * @param $key
 	 * @param $value
 	 *
@@ -159,10 +160,12 @@ class MslsMain {
 		if ( has_action( 'msls_main_save' ) ) {
 			/**
 			 * Calls completely customized save-routine
-			 * @since 0.9.9
 			 *
 			 * @param int $object_id
 			 * @param string Classname
+			 *
+			 * @since 0.9.9
+			 *
 			 */
 			do_action( 'msls_main_save', $object_id, $class );
 

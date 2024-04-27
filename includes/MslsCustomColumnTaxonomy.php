@@ -8,7 +8,7 @@
 namespace lloc\Msls;
 
 /**
- * Handling of existing/not existing translations in the backend 
+ * Handling of existing/not existing translations in the backend
  * listings of various taxonomies
  * @package Msls
  */
@@ -30,8 +30,8 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 			$taxonomy = MslsTaxonomy::instance()->get_request();
 
 			if ( ! empty( $taxonomy ) ) {
-				add_filter( "manage_edit-{$taxonomy}_columns" , [ $obj, 'th' ] );
-				add_action( "manage_{$taxonomy}_custom_column" , [ $obj, 'column_default' ], -100, 3 );
+				add_filter( "manage_edit-{$taxonomy}_columns", [ $obj, 'th' ] );
+				add_action( "manage_{$taxonomy}_custom_column", [ $obj, 'column_default' ], - 100, 3 );
 				add_action( "delete_{$taxonomy}", [ $obj, 'delete' ] );
 			}
 		}

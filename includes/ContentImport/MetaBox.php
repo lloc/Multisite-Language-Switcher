@@ -48,9 +48,9 @@ class MetaBox extends MslsRegistryInstance {
 				}
 				if ( null !== $id ) {
 					$this->data = [
-						'msls_import'  => "{$blog}|{$id}",
+						'msls_import' => "{$blog}|{$id}",
 					];
-					$output .= sprintf( '<a class="button button-primary thickbox" href="%s" title="%s">%s</a>',
+					$output     .= sprintf( '<a class="button button-primary thickbox" href="%s" title="%s">%s</a>',
 						$this->inline_thickbox_url( $this->data ),
 						$label,
 						$label
@@ -94,51 +94,80 @@ class MetaBox extends MslsRegistryInstance {
 
 		ob_start();
 		?>
-        <div style="display: none;" id="msls-import-dialog-<?php echo esc_attr( $slug ) ?>">
-            <h3><?php esc_html_e( 'Select what should be imported and how', 'multisite-language-switcher' ) ?></h3>
+        <div style="display: none;" id="msls-import-dialog-<?php
+		echo esc_attr( $slug ) ?>">
+            <h3><?php
+				esc_html_e( 'Select what should be imported and how', 'multisite-language-switcher' ) ?></h3>
 
-            <form action="<?php echo add_query_arg( [] ) ?>" method="post">
+            <form action="<?php
+			echo add_query_arg( [] ) ?>" method="post">
 
-				<?php wp_nonce_field( MslsPlugin::path(), 'msls_noncename' ); ?>
+				<?php
+				wp_nonce_field( MslsPlugin::path(), 'msls_noncename' ); ?>
 
-				<?php foreach ( $data as $key => $value ) : ?>
-                    <input type="hidden" name="<?php echo esc_attr( $key ) ?>" value="<?php echo esc_attr( $value ) ?>">
-				<?php endforeach; ?>
+				<?php
+				foreach ( $data as $key => $value ) : ?>
+                    <input type="hidden" name="<?php
+					echo esc_attr( $key ) ?>" value="<?php
+					echo esc_attr( $value ) ?>">
+				<?php
+				endforeach; ?>
 
-				<?php /** @var ImportersFactory $factory */
+				<?php
+				/** @var ImportersFactory $factory */
 				foreach ( Map::instance()->factories() as $slug => $factory ) : ?>
-					<?php $details = $factory->details() ?>
-                    <h4><?php echo esc_html( $details->name ) ?></h4>
-					<?php if ( empty( $details->importers ) ) : ?>
-                        <p><?php esc_html_e( 'No importers available for this type of content.', 'multisite-language-switcher' ) ?></p>
-					<?php else: ?>
+					<?php
+					$details = $factory->details() ?>
+                    <h4><?php
+						echo esc_html( $details->name ) ?></h4>
+					<?php
+					if ( empty( $details->importers ) ) : ?>
+                        <p><?php
+							esc_html_e( 'No importers available for this type of content.',
+								'multisite-language-switcher' ) ?></p>
+					<?php
+					else: ?>
                         <ul>
                             <li>
                                 <label>
-                                    <input type="radio" name="msls_importers[<?php echo esc_attr( $details->slug ) ?>]">
-									<?php esc_html_e( 'Off - Do not import this type of content in the destination post.', 'multisite-language-switcher' ) ?>
+                                    <input type="radio" name="msls_importers[<?php
+									echo esc_attr( $details->slug ) ?>]">
+									<?php
+									esc_html_e( 'Off - Do not import this type of content in the destination post.',
+										'multisite-language-switcher' ) ?>
                                 </label>
                             </li>
-							<?php foreach ( $details->importers as $importer_slug => $importer_info ) : ?>
+							<?php
+							foreach ( $details->importers as $importer_slug => $importer_info ) : ?>
                                 <li>
                                     <label>
-                                        <input type="radio" name="msls_importers[<?php echo esc_attr( $details->slug ) ?>]"
-                                               value="<?php echo esc_attr( $importer_slug ) ?>"
-											<?php checked( $details->selected, $importer_slug ) ?>
+                                        <input type="radio" name="msls_importers[<?php
+										echo esc_attr( $details->slug ) ?>]"
+                                               value="<?php
+										       echo esc_attr( $importer_slug ) ?>"
+											<?php
+											checked( $details->selected, $importer_slug ) ?>
                                         >
-										<?php echo( esc_html( sprintf( '%s -  %s', $importer_info->name, $importer_info->description ) ) ) ?>
+										<?php
+										echo( esc_html( sprintf( '%s -  %s',
+											$importer_info->name,
+											$importer_info->description ) ) ) ?>
                                     </label>
                                 </li>
-							<?php endforeach; ?>
+							<?php
+							endforeach; ?>
                         </ul>
-					<?php endif; ?>
-				<?php endforeach; ?>
+					<?php
+					endif; ?>
+				<?php
+				endforeach; ?>
 
                 <div>
                     <input
                             type="submit"
                             class="button button-primary"
-                            value="<?php esc_html_e( 'Import Content', 'multisite-language-switcher' ) ?>"
+                            value="<?php
+							esc_html_e( 'Import Content', 'multisite-language-switcher' ) ?>"
                     >
                 </div>
             </form>

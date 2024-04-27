@@ -61,11 +61,11 @@ class MslsSqlCacher {
 	/**
 	 * Factory
 	 *
-	 * @uses \WPDB $wpdb
-	 *
 	 * @param string $caller
 	 *
 	 * @return MslsSqlCacher
+	 * @uses \WPDB $wpdb
+	 *
 	 */
 	public static function init( string $caller ): self {
 		global $wpdb;
