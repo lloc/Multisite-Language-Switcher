@@ -1,4 +1,4 @@
-<?php
+<?php declare( strict_types=1 );
 
 namespace lloc\MslsTests\Component\Icon;
 
@@ -7,7 +7,6 @@ use lloc\MslsTests\MslsUnitTestCase;
 use lloc\Msls\Component\Icon\IconSvg;
 
 class TestIconSvg extends MslsUnitTestCase {
-
 
 	public function test_get(): void {
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 3 ) . '/' );
