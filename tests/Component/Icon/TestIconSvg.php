@@ -8,7 +8,6 @@ use lloc\Msls\Component\Icon\IconSvg;
 
 class TestIconSvg extends MslsUnitTestCase {
 
-
 	public function test_get(): void {
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 3 ) . '/' );
 
