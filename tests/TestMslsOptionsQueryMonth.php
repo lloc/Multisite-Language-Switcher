@@ -8,24 +8,22 @@ use lloc\Msls\MslsOptionsQueryMonth;
 
 class TestMslsOptionsQueryMonth extends MslsUnitTestCase {
 
-	function get_test() {
+	public function setUp(): void {
+		parent::setUp();
+
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
 
-		return new MslsOptionsQueryMonth();
+		$this->test = new MslsOptionsQueryMonth();
 	}
 
-	function test_has_value_method() {
-		$obj = $this->get_test();
-
-		$this->assertIsBool( $obj->has_value( 'de_DE' ) );
+	public function test_has_value(): void {
+		$this->assertIsBool( $this->test->has_value( 'de_DE' ) );
 	}
 
-	function test_get_current_link_method() {
+	public function test_get_current_link(): void {
 		Functions\expect( 'get_month_link' )->once()->andReturn( 'https://example.org/queried-month' );
 
-		$obj = $this->get_test();
-
-		$this->assertEquals( 'https://example.org/queried-month', $obj->get_current_link() );
+		$this->assertEquals( 'https://example.org/queried-month', $this->test->get_current_link() );
 	}
 
 }
