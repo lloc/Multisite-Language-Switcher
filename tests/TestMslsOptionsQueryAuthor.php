@@ -8,24 +8,20 @@ use lloc\Msls\MslsOptionsQueryAuthor;
 
 class TestMslsOptionsQueryAuthor extends MslsUnitTestCase {
 
-	function get_test() {
+	protected function setUp(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
 
-		return new MslsOptionsQueryAuthor();
+		$this->test = new MslsOptionsQueryAuthor();
 	}
 
-	function test_has_value_method() {
-		$obj = $this->get_test();
-
-		$this->assertIsBool( $obj->has_value( 'de_DE' ) );
+	public function test_has_value_method(): void {
+		$this->assertIsBool( $this->test->has_value( 'de_DE' ) );
 	}
 
-	function test_get_current_link_method() {
+	public function test_get_current_link_method(): void {
 		Functions\expect( 'get_author_posts_url' )->once()->andReturn( 'https://example.org/queried-author' );
 
-		$obj = $this->get_test();
-
-		$this->assertEquals( 'https://example.org/queried-author', $obj->get_current_link() );
+		$this->assertEquals( 'https://example.org/queried-author', $this->test->get_current_link() );
 	}
 
 }
