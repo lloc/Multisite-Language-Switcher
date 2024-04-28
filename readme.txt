@@ -132,6 +132,6 @@ Thanks to all translators for their great work.
 * Bulgarian (bg_BG) - [Vencislav Raev](http://www.catblue.net/)
 * Mexican Spanish (es_MX) - [Fernando Mata](https://fernandomata.mx/)
 
-If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can
+You can translate this plugin on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/multisite-language-switcher/), or if you prefer and have created your own language pack, or have an update of an existing one, you can [send me](mailto:re@lloc.de) your gettext PO and MO so that I can
 bundle it into the Multisite Language Switcher. You can download the latest POT file
 [from here](http://plugins.svn.wordpress.org/multisite-language-switcher/trunk/languages/default.pot).
