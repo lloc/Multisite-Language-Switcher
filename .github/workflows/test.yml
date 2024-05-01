@@ -12,7 +12,8 @@ jobs:
         run: vendor/bin/phpunit
   code-coverages:
     runs-on: ubuntu-latest
-    needs: unit-test
+    needs: unit-tests
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout project
         uses: actions/checkout@v1
