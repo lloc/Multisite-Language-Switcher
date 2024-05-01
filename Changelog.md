@@ -1,3 +1,10 @@
+## 2.6.4
+
+- WordPress 6.5 tested
+- WooCommerce product categories regression fixed by @nowori
+- Links to translate.wordpress.org added by @patriciabt
+- lots of code improvements in tests and codebase
+
 ## 2.6.3
 
 - Style loading in admin_bar reviewed
