@@ -1,4 +1,4 @@
-<?php
+<?php declare( strict_types=1 );
 
 namespace lloc\MslsTests;
 
@@ -6,7 +6,7 @@ use lloc\Msls\MslsRegistry;
 
 class TestMslsRegistry extends MslsUnitTestCase {
 
-	function test_set_method() {
+	public function test_set_method(): void {
 		$obj = new MslsRegistry();
 
 		$this->assertEquals( null, $obj->get_object( 'test_var' ) );

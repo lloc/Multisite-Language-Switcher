@@ -1,4 +1,4 @@
-<?php
+<?php declare( strict_types=1 );
 
 namespace lloc\MslsTests;
 
@@ -8,10 +8,12 @@ use lloc\Msls\MslsWidget;
 
 class TestMslsWidget extends MslsUnitTestCase {
 
-	public function get_sut(): MslsWidget {
+	protected function setUp(): void {
+        parent::setUp();
+
 		\Mockery::mock( '\WP_Widget' );
 
-		return \Mockery::mock( MslsWidget::class )->makePartial();
+		$this->test = \Mockery::mock( MslsWidget::class )->makePartial();
 	}
 
 	public function test_widget(): void {
@@ -29,22 +31,18 @@ class TestMslsWidget extends MslsUnitTestCase {
 		Functions\expect( 'get_option' )->andReturn( [] );
 		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
 
-		$obj = $this->get_sut();
-
 		$this->expectOutputString( '<div><h3>Test</h3>No available translations found</div>' );
-		$obj->widget( [], [ 'title' => 'Test' ] );
+		$this->test->widget( [], [ 'title' => 'Test' ] );
 	}
 
 	public function test_update(): void {
-		$obj = $this->get_sut();
-
-		$result = $obj->update( [], [] );
+		$result = $this->test->update( [], [] );
 		$this->assertEquals( [], $result );
 
-		$result = $obj->update( [ 'title' => 'abc' ], [] );
+		$result = $this->test->update( [ 'title' => 'abc' ], [] );
 		$this->assertEquals( [ 'title' => 'abc' ], $result );
 
-		$result = $obj->update( [ 'title' => 'xyz' ], [ 'title' => 'abc' ] );
+		$result = $this->test->update( [ 'title' => 'xyz' ], [ 'title' => 'abc' ] );
 		$this->assertEquals( [ 'title' => 'xyz' ], $result );
 	}
 
