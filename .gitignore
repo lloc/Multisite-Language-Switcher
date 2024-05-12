@@ -1,5 +1,6 @@
 composer.lock
 composer.phar
+package-lock.json
 phpunit.xml.bak
 .idea/
 .phpunit.result.cache
