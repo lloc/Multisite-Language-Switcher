@@ -37,10 +37,9 @@ class MslsAdmin extends MslsMain {
 	 */
 	public static function init() {
 		if ( ! ( $obj = MslsRegistry::get_object( __CLASS__ ) ) ) {
-			$options    = MslsOptions::instance();
 			$collection = msls_blog_collection();
 
-			$obj = new static( $options, $collection );
+			$obj = new static( msls_options(), $collection );
 
 			MslsRegistry::set_object( __CLASS__, $obj );
 

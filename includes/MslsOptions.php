@@ -105,15 +105,17 @@ class MslsOptions extends MslsGetSet {
 	}
 
 	/**
-	 * Checks if the current page is a home, front or 404 page
-	 * @return boolean
+	 * Determines if the current page is the main page (front page, search, 404).
+     *
+     * @return boolean
 	 */
 	public static function is_main_page() {
 		return is_front_page() || is_search() || is_404();
 	}
 
 	/**
-	 * Checks if the current page is a category, tag or any other tax archive
+	 * Determines if the current page is a category, tag or taxonomy page.
+     *
 	 * @return boolean
 	 */
 	public static function is_tax_page() {
@@ -121,7 +123,8 @@ class MslsOptions extends MslsGetSet {
 	}
 
 	/**
-	 * Checks if the current page is a date, author any other post_type archive
+	 * Determines if the current page is an archive page for a date, author, or any other post type.
+     *
 	 * @return boolean
 	 */
 	public static function is_query_page() {
@@ -139,8 +142,8 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Gets an element of arg by index
-	 * The returning value is casted to the type of $retval or will be the
-	 * value of $retval if nothing is set at this index.
+     *
+	 * The returned value will either be cast to the type of `$retval` or, if nothing is set at this index, it will be the value of `$retval`.
 	 *
 	 * @param int $idx
 	 * @param mixed $val

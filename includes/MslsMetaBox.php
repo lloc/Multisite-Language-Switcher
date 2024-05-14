@@ -1,4 +1,5 @@
-<?php
+<?php declare( strict_types=1 );
+
 /**
  * MslsMetaBox
  * @author Dennis Ploetner <re@lloc.de>
@@ -82,7 +83,6 @@ class MslsMetaBox extends MslsMain {
 			 *
 			 */
 			$my_query->post = apply_filters( 'msls_meta_box_suggest_post', $my_query->post );
-
 			if ( is_object( $my_query->post ) ) {
 				$json->add( get_the_ID(), get_the_title() );
 			}
@@ -102,9 +102,8 @@ class MslsMetaBox extends MslsMain {
 	 * @return MslsMetaBox
 	 */
 	public static function init() {
-		$options    = MslsOptions::instance();
-		$collection = msls_blog_collection();
-		$obj        = new static( $options, $collection );
+		$options = msls_options();
+		$obj     = new static( $options, msls_blog_collection() );
 
 		if ( ! $options->is_excluded() ) {
 			add_action( 'add_meta_boxes', [ $obj, 'add' ] );
@@ -129,7 +128,7 @@ class MslsMetaBox extends MslsMain {
 				[
 					$this,
 					(
-					MslsOptions::instance()->activate_autocomplete ?
+					msls_options()->activate_autocomplete ?
 						'render_input' :
 						'render_select'
 					),
@@ -139,7 +138,7 @@ class MslsMetaBox extends MslsMain {
 				'high'
 			);
 
-			if ( MslsOptions::instance()->activate_content_import ) {
+			if ( msls_options()->activate_content_import ) {
 				add_meta_box(
 					'msls-content-import',
 					apply_filters(
@@ -252,7 +251,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function render_options( $type, $msls_id ) {
+	public function render_options( $type, $msls_id ): string {
 		$options = [];
 
 		$my_query = new \WP_Query( [

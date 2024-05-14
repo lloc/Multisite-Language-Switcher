@@ -4,6 +4,7 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsWidget;
 
 class TestMslsWidget extends MslsUnitTestCase {
@@ -28,7 +29,10 @@ class TestMslsWidget extends MslsUnitTestCase {
 		];
 
 		Functions\expect( 'wp_parse_args' )->once()->andReturn( $arr );
-		Functions\expect( 'get_option' )->andReturn( [] );
+
+        $options = \Mockery::mock( MslsOptions::class );
+
+		Functions\expect( 'msls_options' )->andReturn( $options );
 		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
 
 		$this->expectOutputString( '<div><h3>Test</h3>No available translations found</div>' );

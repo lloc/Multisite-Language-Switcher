@@ -30,7 +30,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+if ( file_exists(__DIR__ . '/vendor/autoload.php' ) ) {
 	require __DIR__ . '/vendor/autoload.php';
 }
 
@@ -128,8 +128,8 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	/**
-	 * Gets a blog by locale
-	 *
+     * Looks for the MslsBlog instance for a specific locale
+     *
 	 * @param string $locale
 	 *
 	 * @return \lloc\Msls\MslsBlog|null
@@ -147,4 +147,12 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		return \lloc\Msls\MslsBlogCollection::instance();
 	}
 
+    /**
+     * Gets the MslsOptions instance
+     *
+     * @return \lloc\Msls\MslsOptions
+     */
+    function msls_options(): \lloc\Msls\MslsOptions {
+        return \lloc\Msls\MslsOptions::instance();
+    }
 }

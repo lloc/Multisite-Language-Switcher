@@ -47,10 +47,7 @@ class MslsMain {
 	 * @return static
 	 */
 	public static function init() {
-		$options    = MslsOptions::instance();
-		$collection = msls_blog_collection();
-
-		return new static( $options, $collection );
+		return new static( msls_options(), msls_blog_collection() );
 	}
 
 	/**

@@ -9,12 +9,23 @@ use lloc\Msls\MslsOptions;
 
 class TestMslsTaxonomy extends MslsUnitTestCase {
 
-	public function get_test(): MslsTaxonomy {
-		Functions\when( 'apply_filters' )->returnArg( 2 );
-		Functions\when( 'get_option' )->justReturn( [] );
+    /**
+     * @param bool $exluded
+     *
+     * @return MslsTaxonomy
+     */
+    public function get_test( bool $exluded = false ): MslsTaxonomy {
+        parent::setUp();
+
+        $options = \Mockery::mock( MslsOptions::class );
+        $options->shouldReceive( 'is_excluded' )->andReturn( $exluded );
+
+        Functions\expect( 'msls_options' )->zeroOrMoreTimes()->andReturn( $options );
+
+        Functions\expect( 'apply_filters' )->atLeast()->once();
 
 		Functions\expect( 'get_taxonomies' )->atLeast()->once()->andReturn( [] );
-		Functions\expect( 'get_query_var' )->with( 'taxonomy' )->andReturn( 'category' );
+		Functions\expect( 'get_query_var' )->atLeast()->once()->with( 'taxonomy' )->andReturn( 'category' );
 
 		return new MslsTaxonomy();
 	}
@@ -24,10 +35,6 @@ class TestMslsTaxonomy extends MslsUnitTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_acl_request_included(): void {
-		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
-		$mock->shouldReceive( 'instance' )->andReturnSelf();
-		$mock->shouldReceive( 'is_excluded' )->andReturnFalse();
-
 		$cap               = new \stdClass();
 		$cap->manage_terms = 'manage_categories';
 		$taxonomy          = new \stdClass();
@@ -44,11 +51,7 @@ class TestMslsTaxonomy extends MslsUnitTestCase {
 	 * @preserveGlobalState disabled
 	 */
 	public function test_acl_request_excluded(): void {
-		$mock = \Mockery::mock( 'overload:' . MslsOptions::class );
-		$mock->shouldReceive( 'instance' )->andReturnSelf();
-		$mock->shouldReceive( 'is_excluded' )->andReturnTrue();
-
-		$this->assertEquals( '', $this->get_test()->acl_request() );
+		$this->assertEquals( '', $this->get_test( true )->acl_request() );
 	}
 
 	public function test_get_post_type(): void {
@@ -63,15 +66,8 @@ class TestMslsTaxonomy extends MslsUnitTestCase {
 		$this->assertTrue( $this->get_test()->is_taxonomy() );
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
-	 */
 	public function test_get_request(): void {
-		$plugin = \Mockery::mock( 'alias:' . MslsPlugin::class );
-		$plugin->shouldReceive( 'get_superglobals' )->andReturn( [ 'taxonomy' => 'abc' ] );
-
-		$this->assertEquals( 'abc', $this->get_test()->get_request() );
+		$this->assertEquals( 'category', $this->get_test()->get_request() );
 	}
 
 }

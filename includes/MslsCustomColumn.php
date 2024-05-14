@@ -22,7 +22,7 @@ class MslsCustomColumn extends MslsMain {
 	 * @return MslsCustomColumn
 	 */
 	public static function init() {
-		$options    = MslsOptions::instance();
+		$options    = msls_options();
 		$collection = msls_blog_collection();
 		$obj        = new static( $options, $collection );
 

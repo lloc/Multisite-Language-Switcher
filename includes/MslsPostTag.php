@@ -79,7 +79,7 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsPostTag
 	 */
 	public static function init() {
-		$options    = MslsOptions::instance();
+		$options    = msls_options();
 		$collection = msls_blog_collection();
 		$class      = $options->activate_autocomplete ? MslsPostTag::class : MslsPostTagClassic::class;
 		$obj        = new $class( $options, $collection );

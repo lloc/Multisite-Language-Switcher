@@ -73,7 +73,7 @@ class MslsTaxonomy extends MslsContentTypes {
 	 * @return string
 	 */
 	public function acl_request() {
-		if ( ! MslsOptions::instance()->is_excluded() ) {
+		if ( ! msls_options()->is_excluded() ) {
 			$request = $this->get_request();
 
 			$tax = get_taxonomy( $request );

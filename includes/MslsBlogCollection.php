@@ -7,8 +7,6 @@
 
 namespace lloc\Msls;
 
-use const Patchwork\CodeManipulation\Actions\RedefinitionOfNew\publicizeConstructors;
-
 /**
  * Collection of blog-objects
  *
@@ -62,7 +60,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 		$this->current_blog_id = get_current_blog_id();
 
-		$options = MslsOptions::instance();
+		$options = msls_options();
 
 		$this->current_blog_output = isset( $options->output_current_blog );
 		$this->objects_order       = $options->get_order();

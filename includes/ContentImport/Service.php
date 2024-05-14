@@ -21,7 +21,7 @@ class Service extends MslsRegistryInstance {
 	 * @return bool Whether the content import functionality support classes where hooked or not.
 	 */
 	public function register() {
-		if ( ! MslsOptions::instance()->activate_content_import ) {
+		if ( ! msls_options()->activate_content_import ) {
 			return false;
 		}
 

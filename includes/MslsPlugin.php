@@ -38,8 +38,7 @@ class MslsPlugin {
 	 * @return MslsPlugin
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
-		$obj     = new self( $options );
+		$obj     = new self( msls_options() );
 
 		add_action( 'plugins_loaded', [ $obj, 'init_i18n_support' ] );
 
@@ -124,7 +123,7 @@ class MslsPlugin {
 	 * @return void
 	 */
 	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
-		$icon_type = MslsOptions::instance()->get_icon_type();
+		$icon_type = msls_options()->get_icon_type();
 
 		$blog_collection = msls_blog_collection();
 		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
