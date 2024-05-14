@@ -179,6 +179,8 @@ class MslsMetaBox extends MslsMain {
 
 			$lis = '';
 
+			$current_lang = get_bloginfo('language');
+
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
@@ -219,7 +221,7 @@ class MslsMetaBox extends MslsMain {
 					$selects .= sprintf(
 						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
 						$language,
-						$this->render_options( $type, $mydata->$language )
+						$this->render_options( $type, $mydata->$language, $current_lang )
 					);
 				}
 
@@ -252,7 +254,9 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function render_options( $type, $msls_id ) {
+	public function render_options( $type, $msls_id, $current_lang ) {
+		global $wpdb;
+
 		$options = [];
 
 		$my_query = new \WP_Query( [
@@ -265,7 +269,19 @@ class MslsMetaBox extends MslsMain {
 		] );
 
 		if ( $my_query->have_posts() ) {
+			$results = $wpdb->get_results ( "
+				SELECT * 
+				FROM  $wpdb->options
+					WHERE option_name LIKE 'msls_%'
+			" );
+
+			foreach ( $results as $result ) {
+				$langs[$result->option_name] = unserialize($result->option_value);
+			}
+
 			foreach ( $my_query->posts as $post_id ) {
+				if ( isset($langs['msls_'.$post_id][str_replace('-', '_', $current_lang)]) && $post_id != $msls_id )
+					continue;
 				$options[] = $this->render_option( $post_id, $msls_id );
 			}
 		}
