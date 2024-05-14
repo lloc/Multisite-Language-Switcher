@@ -44,8 +44,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 
-	lloc\Msls\MslsPlugin::init();
-
 	/**
 	 * Get the output for using the links to the translations in your code
 	 *
@@ -155,4 +153,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
     function msls_options(): \lloc\Msls\MslsOptions {
         return \lloc\Msls\MslsOptions::instance();
     }
+
+    lloc\Msls\MslsPlugin::init();
 }
