@@ -184,7 +184,7 @@ class MslsMetaBox extends MslsMain {
 
 				$language = $blog->get_language();
 				$iconType = MslsAdminIcon::TYPE_FLAG === $this->options->admin_display ? MslsAdminIcon::TYPE_FLAG : MslsAdminIcon::TYPE_LABEL;
-				$icon     = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $iconType );
+				$icon     = MslsAdminIcon::create($type)->set_language( $language )->set_icon_type( $iconType );
 
 				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( $mydata->$language );
