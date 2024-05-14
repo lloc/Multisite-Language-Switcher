@@ -8,5 +8,9 @@
     "less": "^4.2.0",
     "less-plugin-clean-css": "^1.5.1",
     "uglify-js": "^3.17.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "@types/node": "^20.12.11"
   }
 }
