@@ -29,9 +29,9 @@ class TestMslsMain extends MslsUnitTestCase {
 	}
 
     public function test_get_input_array(): void {
-        Functions\when('filter_input_array', );
+        Functions\when('filter_input_array' )->justReturn( [ 'some_other_key' => 1, 'msls_input_de_DE' => 2 ] );
 
-        $this->assertEquals( [ 'de_DE' => 1 ], $this->test->get_input_array( 1 ) );
+        $this->assertEquals( [ 'de_DE' => 2 ], $this->test->get_input_array( 1 ) );
     }
 
 	public function test_is_autosave(): void {
