@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "title": "Multisite Language Switcher",
+  "icon": "translation",
+  "category": "widgets",
+  "name": "lloc/msls-widget-block",
+  "version": "2.6.4",
+  "description": "This is the widget comes with the Multisite Language Switcher plugin as a Gutenberg block.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "textdomain": "multisite-language-switcher",
+  "editorScript": "file:./index.js"
+}
