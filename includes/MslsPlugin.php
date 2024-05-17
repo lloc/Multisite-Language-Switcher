@@ -226,7 +226,7 @@ class MslsPlugin {
             $toLoad[] = $pagenow === 'widgets.php' ? 'wp-edit-widgets' : 'wp-editor';
 
 			wp_register_script( $handle, self::plugins_url( 'dist/index.js' ), $toLoad);
-			register_block_type( self::plugin_dir_path('dist/index.js' ) );
+			register_block_type( self::plugin_dir_path('dist/msls-widget-block/block.json' ) );
 			add_shortcode( 'sc_msls_widget', $callback );
 
 			return true;
