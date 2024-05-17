@@ -222,25 +222,11 @@ class MslsPlugin {
 
 			global $pagenow;
 
-			$toLoad = [ 'wp-blocks', 'wp-element', 'wp-components' ];
-			if ( $pagenow === 'widgets.php' ) {
-				$toLoad[] = 'wp-edit-widgets';
-			} else {
-				$toLoad[] = 'wp-editor';
-			}
+			$toLoad   = [ 'wp-blocks', 'wp-element', 'wp-components' ];
+            $toLoad[] = $pagenow === 'widgets.php' ? 'wp-edit-widgets' : 'wp-editor';
 
-			wp_register_script(
-				$handle,
-				self::plugins_url( 'js/msls-widget-block.js' ),
-				$toLoad
-			);
-
-			register_block_type( 'lloc/msls-widget-block', [
-				'attributes'      => [ 'title' => [ 'type' => 'string' ] ],
-				'editor_script'   => $handle,
-				'render_callback' => $callback,
-			] );
-
+			wp_register_script( $handle, self::plugins_url( 'dist/index.js' ), $toLoad);
+			register_block_type( self::plugin_dir_path('dist/index.js' ) );
 			add_shortcode( 'sc_msls_widget', $callback );
 
 			return true;
