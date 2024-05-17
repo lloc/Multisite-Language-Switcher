@@ -3,7 +3,6 @@
 namespace lloc\MslsTests;
 
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsCustomColumn;
 use lloc\Msls\MslsCustomColumnTaxonomy;
 use lloc\Msls\MslsOptions;
 
