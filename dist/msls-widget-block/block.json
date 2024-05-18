@@ -12,5 +12,6 @@
     "html": false
   },
   "textdomain": "multisite-language-switcher",
-  "editorScript": "file:./index.js"
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
 }
