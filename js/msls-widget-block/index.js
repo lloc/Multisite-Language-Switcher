@@ -1,8 +1,1 @@
-import { registerBlockType } from '@wordpress/blocks';
-
-import Edit from './edit';
-import metadata from './block.json';
-
-registerBlockType(metadata.name, {
-  edit: Edit
-} );
+(()=>{"use strict";const e=window.wp.blocks,t=window.React,l=window.wp.blockEditor,o=window.wp.components,n=JSON.parse('{"UU":"lloc/msls-widget-block"}');(0,e.registerBlockType)(n.UU,{edit:function(){const e=(0,l.useBlockProps)();return(0,t.createElement)(t.Fragment,null,(0,t.createElement)(o.ServerSideRender,{block:"lloc/msls-widget-block",attributes:e.attributes}),(0,t.createElement)(InspectorControls,null,(0,t.createElement)(o.TextControl,{label:"Title",value:e.attributes.title,onChange:t=>{e.setAttributes({title:t})}})))}})})();
