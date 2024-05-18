@@ -114,4 +114,13 @@ class TestMslsPlugin extends MslsUnitTestCase {
 		$this->assertIsBool( MslsPlugin::cleanup() );
 	}
 
+    public function test_plugin_dir_path(): void {
+        Functions\expect( 'plugin_dir_path' )->once()->andReturnUsing(function() {
+            return trailingslashit(dirname(MSLS_PLUGIN__FILE__));
+        });
+
+        $expected = '/var/www/html/wp-content/plugins/multisite-language-switcher/dist/msls-widget-block';
+        $this->assertEquals( $expected, MslsPlugin::plugin_dir_path( 'dist/msls-widget-block' ) );
+    }
+
 }

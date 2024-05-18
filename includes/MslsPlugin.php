@@ -172,7 +172,7 @@ class MslsPlugin {
 	 *
 	 * @return string
 	 */
-	function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
+	public function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
 		$obj    = MslsOutput::init();
 		$links  = $obj->get( 1, true, true );
 		$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
