@@ -1,23 +1,13 @@
+import { __ } from '@wordpress/i18n';
 import { useBlockProps } from '@wordpress/block-editor';
-import { ServerSideRender, TextControl } from '@wordpress/components';
 
-export default function edit() {
-    const blockProps = useBlockProps();
+export default function Edit() {
     return (
-        <>
-            <ServerSideRender
-                block="lloc/msls-widget-block"
-                attributes={blockProps.attributes}
-            />
-            <InspectorControls>
-                <TextControl
-                    label="Title"
-                    value={blockProps.attributes.title}
-                    onChange={(value) => {
-                        blockProps.setAttributes({ title: value });
-                    }}
-                />
-            </InspectorControls>
-        </>
+        <p { ...useBlockProps() }>
+            { __(
+                'Block with Dynamic Rendering – hello from the editor!',
+                'multisite-language-switcher'
+            ) }
+        </p>
     );
 }
