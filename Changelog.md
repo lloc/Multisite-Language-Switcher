@@ -1,3 +1,9 @@
+## 2.7.0
+
+- Block reorganized
+- WordPress' compatibility changed to min 6.1
+- PHP code-beautifier added
+
 ## 2.6.4
 
 - WordPress 6.5 tested
