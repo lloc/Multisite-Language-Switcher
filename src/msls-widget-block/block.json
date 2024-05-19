@@ -13,5 +13,5 @@
   },
   "textdomain": "multisite-language-switcher",
   "editorScript": "file:./index.js",
-  "render_callback": "get_the_msls"
+  "render": "file:./render.php"
 }

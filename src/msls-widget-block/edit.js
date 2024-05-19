@@ -1,13 +1,14 @@
-import { __ } from '@wordpress/i18n';
+import ServerSideRender from '@wordpress/server-side-render';
 import { useBlockProps } from '@wordpress/block-editor';
 
-export default function Edit() {
+export default function Edit(props) {
+    const blockProps = useBlockProps();
     return (
-        <p { ...useBlockProps() }>
-            { __(
-                'Block with Dynamic Rendering – hello from the editor!',
-                'multisite-language-switcher'
-            ) }
-        </p>
+        <div { ...blockProps }>
+            <ServerSideRender
+                block="gutenberg-examples/example-dynamic"
+                attributes={ props.attributes }
+            />
+        </div>
     );
 }
