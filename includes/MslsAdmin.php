@@ -95,7 +95,7 @@ class MslsAdmin extends MslsMain {
 	public function __call( $method, $args ) {
 		$parts = explode( '_', $method, 2 );
 
-		if ( 'rewrite' === $parts[0] ) {
+		if ( is_array( $parts ) && 'rewrite' === $parts[0] ) {
 			return $this->render_rewrite( $parts[1] );
 		}
 

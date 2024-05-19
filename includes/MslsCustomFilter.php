@@ -41,9 +41,9 @@ class MslsCustomFilter extends MslsMain {
 	 * Echo's select tag with list of blogs
 	 * @uses selected
 	 */
-	public function add_filter() {
+	public function add_filter(): void {
 		$id = (
-		filter_has_var( INPUT_GET, 'msls_filter' ) ?
+		    filter_has_var( INPUT_GET, 'msls_filter' ) ?
 			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ) :
 			''
 		);

@@ -53,13 +53,11 @@ class MslsCustomColumn extends MslsMain {
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
 
-				$icon = new MslsAdminIcon( null );
+                $icon_type=  $this->options->admin_display === 'label' ? 'label' : 'flag';
+
+                $icon = new MslsAdminIcon( null );
 				$icon->set_language( $language );
-				if ( $this->options->admin_display === 'label' ) {
-					$icon->set_icon_type( 'label' );
-				} else {
-					$icon->set_icon_type( 'flag' );
-				}
+                $icon->set_icon_type( $icon_type );
 
 				if ( $post_id = get_the_ID() ) {
 					$icon->set_id( $post_id );

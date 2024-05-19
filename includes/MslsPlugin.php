@@ -172,7 +172,7 @@ class MslsPlugin {
 	 *
 	 * @return string
 	 */
-	function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
+	public function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
 		$obj    = MslsOutput::init();
 		$links  = $obj->get( 1, true, true );
 		$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
@@ -217,31 +217,8 @@ class MslsPlugin {
 	 */
 	public function block_init() {
 		if ( ! $this->options->is_excluded() ) {
-			$handle   = 'msls-widget-block';
-			$callback = [ $this, 'block_render' ];
-
-			global $pagenow;
-
-			$toLoad = [ 'wp-blocks', 'wp-element', 'wp-components' ];
-			if ( $pagenow === 'widgets.php' ) {
-				$toLoad[] = 'wp-edit-widgets';
-			} else {
-				$toLoad[] = 'wp-editor';
-			}
-
-			wp_register_script(
-				$handle,
-				self::plugins_url( 'js/msls-widget-block.js' ),
-				$toLoad
-			);
-
-			register_block_type( 'lloc/msls-widget-block', [
-				'attributes'      => [ 'title' => [ 'type' => 'string' ] ],
-				'editor_script'   => $handle,
-				'render_callback' => $callback,
-			] );
-
-			add_shortcode( 'sc_msls_widget', $callback );
+            register_block_type( self::plugin_dir_path('js/msls-widget-block' ) );
+            add_shortcode( 'sc_msls_widget', [ $this, 'block_render' ] );
 
 			return true;
 		}
@@ -274,15 +251,15 @@ class MslsPlugin {
 			return false;
 		}
 
-		$ver     = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
-		$postfix = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? '' : '.min';
+		$ver    = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
+		$folder = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? 'src' : 'js';
 
 		wp_enqueue_style( 'msls-styles', self::plugins_url( 'css/msls.css' ), [], $ver );
 		wp_enqueue_style( 'msls-flags', self::plugins_url( 'css-flags/css/flag-icon.min.css' ), [], $ver );
 
 		if ( $this->options->activate_autocomplete ) {
 			wp_enqueue_script( 'msls-autocomplete',
-				self::plugins_url( "js/msls{$postfix}.js" ),
+				self::plugins_url( "$folder/msls.js" ),
 				[ 'jquery-ui-autocomplete' ],
 				$ver );
 
