@@ -6,7 +6,7 @@ export default function Edit(props) {
     return (
         <div { ...blockProps }>
             <ServerSideRender
-                block="gutenberg-examples/example-dynamic"
+                block="lloc/msls-widget-block"
                 attributes={ props.attributes }
             />
         </div>
