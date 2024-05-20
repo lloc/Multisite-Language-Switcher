@@ -1,6 +1,7 @@
 <?php
 /**
  * MslsOptions
+ *
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
@@ -11,6 +12,7 @@ use lloc\Msls\Component\Icon\IconPng;
 
 /**
  * General options class
+ *
  * @package Msls
  * @property bool $activate_autocomplete
  * @property bool output_current_blog
@@ -29,42 +31,49 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Args
+	 *
 	 * @var array
 	 */
 	protected $args;
 
 	/**
 	 * Name
+	 *
 	 * @var string
 	 */
 	protected $name;
 
 	/**
 	 * Exists
+	 *
 	 * @var bool
 	 */
 	protected $exists = false;
 
 	/**
 	 * Separator
+	 *
 	 * @var string
 	 */
 	protected $sep = '';
 
 	/**
 	 * Autoload
+	 *
 	 * @var string
 	 */
 	protected $autoload = 'yes';
 
 	/**
 	 * Available languages
+	 *
 	 * @var array
 	 */
 	private $available_languages;
 
 	/**
 	 * Rewrite with front
+	 *
 	 * @var bool
 	 */
 	public $with_front;
@@ -99,15 +108,15 @@ class MslsOptions extends MslsGetSet {
 			$options = new MslsOptionsPost( get_queried_object_id() );
 		}
 
-		add_filter( 'check_url', [ $options, 'check_for_blog_slug' ], 10, 2 );
+		add_filter( 'check_url', array( $options, 'check_for_blog_slug' ), 10, 2 );
 
 		return $options;
 	}
 
 	/**
 	 * Determines if the current page is the main page (front page, search, 404).
-     *
-     * @return boolean
+	 *
+	 * @return boolean
 	 */
 	public static function is_main_page() {
 		return is_front_page() || is_search() || is_404();
@@ -115,7 +124,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Determines if the current page is a category, tag or taxonomy page.
-     *
+	 *
 	 * @return boolean
 	 */
 	public static function is_tax_page() {
@@ -124,7 +133,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Determines if the current page is an archive page for a date, author, or any other post type.
-     *
+	 *
 	 * @return boolean
 	 */
 	public static function is_query_page() {
@@ -142,17 +151,18 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Gets an element of arg by index
-     *
-	 * The returned value will either be cast to the type of `$retval` or, if nothing is set at this index, it will be the value of `$retval`.
 	 *
-	 * @param int $idx
-	 * @param mixed $val
+	 * The returned value will either be cast to the type of `$default` or, if nothing is set at this index, it will be the value of `$default`.
+	 *
+	 * @param int   $index
+	 * @param mixed $default
 	 *
 	 * @return mixed
 	 */
-	public function get_arg( $idx, $val = null ) {
-		$arg = isset( $this->args[ $idx ] ) ? $this->args[ $idx ] : $val;
-		settype( $arg, gettype( $val ) );
+	public function get_arg( int $index, $default = null ) {
+		$arg = $this->args[ $index ] ?? $default;
+
+		settype( $arg, gettype( $default ) );
 
 		return $arg;
 	}
@@ -176,6 +186,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Delete
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function delete() {
@@ -200,7 +211,10 @@ class MslsOptions extends MslsGetSet {
 		/**
 		 * Mapping for us language code
 		 */
-		$map = [ 'us' => 'en_US', 'en' => 'en_US' ];
+		$map = array(
+			'us' => 'en_US',
+			'en' => 'en_US',
+		);
 		foreach ( $map as $old => $new ) {
 			if ( isset( $arr[ $old ] ) ) {
 				$arr[ $new ] = $arr[ $old ];
@@ -229,7 +243,6 @@ class MslsOptions extends MslsGetSet {
 		 * @param string $language
 		 *
 		 * @since 0.9.8
-		 *
 		 */
 		$postlink = (string) apply_filters(
 			'msls_options_get_permalink',
@@ -253,6 +266,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Get the queried taxonomy
+	 *
 	 * @return string
 	 */
 	public function get_tax_query() {
@@ -261,6 +275,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Get current link
+	 *
 	 * @return string
 	 */
 	public function get_current_link() {
@@ -269,6 +284,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Is excluded
+	 *
 	 * @return bool
 	 */
 	public function is_excluded() {
@@ -277,6 +293,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Is content
+	 *
 	 * @return bool
 	 */
 	public function is_content_filter() {
@@ -285,6 +302,7 @@ class MslsOptions extends MslsGetSet {
 
 	/**
 	 * Get order
+	 *
 	 * @return string
 	 */
 	public function get_order() {
@@ -346,7 +364,6 @@ class MslsOptions extends MslsGetSet {
 		 * @param string $url
 		 *
 		 * @since 0.9.9
-		 *
 		 */
 		$url = (string) apply_filters( 'msls_options_get_flag_url', $url );
 
@@ -359,7 +376,6 @@ class MslsOptions extends MslsGetSet {
 		 * @param string $language
 		 *
 		 * @since 1.0.3
-		 *
 		 */
 		$icon = (string) apply_filters( 'msls_options_get_flag_icon', $icon, $language );
 
@@ -375,9 +391,9 @@ class MslsOptions extends MslsGetSet {
 	 */
 	public function get_available_languages() {
 		if ( empty( $this->available_languages ) ) {
-			$this->available_languages = [
+			$this->available_languages = array(
 				'en_US' => __( 'American English', 'multisite-language-switcher' ),
-			];
+			);
 
 			foreach ( get_available_languages() as $code ) {
 				$this->available_languages[ esc_attr( $code ) ] = format_code_lang( $code );
@@ -389,7 +405,6 @@ class MslsOptions extends MslsGetSet {
 			 * @param array $available_languages
 			 *
 			 * @since 1.0
-			 *
 			 */
 			$this->available_languages = (array) apply_filters(
 				'msls_options_get_available_languages',
@@ -403,7 +418,7 @@ class MslsOptions extends MslsGetSet {
 	/**
 	 * The 'blog'-slug-problem :/
 	 *
-	 * @param string $url
+	 * @param string      $url
 	 * @param MslsOptions $options
 	 *
 	 * @return string
@@ -443,5 +458,4 @@ class MslsOptions extends MslsGetSet {
 	public function get_icon_type(): string {
 		return MslsAdminIcon::TYPE_LABEL === $this->admin_display ? MslsAdminIcon::TYPE_LABEL : MslsAdminIcon::TYPE_FLAG;
 	}
-
 }
