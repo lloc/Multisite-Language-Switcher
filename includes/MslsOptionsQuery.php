@@ -1,6 +1,7 @@
 <?php
 /**
  * MslsOptionsQuery
+ *
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
@@ -16,6 +17,7 @@ class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Rewrite with front
+	 *
 	 * @var bool
 	 */
 	public $with_front = true;
@@ -61,13 +63,14 @@ class MslsOptionsQuery extends MslsOptions {
 	 */
 	public function get_postlink( $language ) {
 		if ( $this->has_value( $language ) ) {
-			$link = $this->get_current_link();
-			if ( ! empty( $link ) ) {
-				return apply_filters( 'check_url', $link, $this );
+			$post_link = $this->get_current_link();
+			if ( ! empty( $post_link ) ) {
+				$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', 'msls_get_postlink' );
+
+				return apply_filters( 'msls_get_postlink', $post_link, $this );
 			}
 		}
 
 		return '';
 	}
-
 }

@@ -45,7 +45,11 @@ class MslsOptionsPost extends MslsOptions {
 			$this->with_front = ! empty( $post_object->rewrite['with_front'] );
 		}
 
-		return apply_filters( 'check_url', get_permalink( $post ), $this );
+		$post_link = get_permalink( $post );
+
+		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', 'msls_get_postlink' );
+
+		return apply_filters( 'msls_get_postlink', $post_link, $this );
 	}
 
 	/**

@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsAdminIcon
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -12,6 +7,7 @@ use lloc\Msls\Component\Icon\IconLabel;
 
 /**
  * Handles the icon links in the backend
+ *
  * @package Msls
  */
 class MslsAdminIcon {
@@ -121,7 +117,7 @@ class MslsAdminIcon {
 	 */
 	public function set_path(): MslsAdminIcon {
 		if ( 'post' != $this->type ) {
-			$query_vars = [ 'post_type' => $this->type ];
+			$query_vars = array( 'post_type' => $this->type );
 			$this->path = add_query_arg( $query_vars, $this->path );
 		}
 
@@ -209,12 +205,16 @@ class MslsAdminIcon {
 	 */
 	public function get_a(): string {
 		if ( empty( $this->href ) ) {
-			$title = sprintf( __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
-				$this->language );
+			$title = sprintf(
+				__( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
+				$this->language
+			);
 			$href  = $this->get_edit_new();
 		} else {
-			$title = sprintf( __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
-				$this->language );
+			$title = sprintf(
+				__( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
+				$this->language
+			);
 			$href  = $this->href;
 		}
 
@@ -232,21 +232,25 @@ class MslsAdminIcon {
 		}
 
 		switch ( $this->icon_type ) {
-			case MslsAdminIcon::TYPE_FLAG:
-				$icon = sprintf( '<span class="flag-icon %s">%s</span>',
+			case self::TYPE_FLAG:
+				$icon = sprintf(
+					'<span class="flag-icon %s">%s</span>',
 					( new IconSvg() )->get( $this->language ),
 					$this->language
 				);
 				break;
-			case MslsAdminIcon::TYPE_LABEL:
-				$icon = sprintf( '<span class="language-badge %s">%s</span>',
+			case self::TYPE_LABEL:
+				$icon = sprintf(
+					'<span class="language-badge %s">%s</span>',
 					$this->language,
 					( new IconLabel() )->get( $this->language )
 				);
 				break;
 			default:
-				$icon = sprintf( '<span class="dashicons %s"></span>',
-					empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit' );
+				$icon = sprintf(
+					'<span class="dashicons %s"></span>',
+					empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit'
+				);
 		}
 
 		return $icon;
@@ -261,7 +265,13 @@ class MslsAdminIcon {
 		$path = $this->path;
 
 		if ( null !== $this->id && null !== $this->origin_language ) {
-			$path = add_query_arg( [ 'msls_id' => $this->id, 'msls_lang' => $this->origin_language ], $this->path );
+			$path = add_query_arg(
+				array(
+					'msls_id'   => $this->id,
+					'msls_lang' => $this->origin_language,
+				),
+				$this->path
+			);
 		}
 
 		/**
@@ -275,5 +285,4 @@ class MslsAdminIcon {
 
 		return get_admin_url( get_current_blog_id(), $path );
 	}
-
 }
