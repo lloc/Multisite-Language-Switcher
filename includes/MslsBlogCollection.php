@@ -1,9 +1,4 @@
-<?php
-/**
- * MslsBlogCollection
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
+<?php declare( strict_types=1 );
 
 namespace lloc\Msls;
 
@@ -16,46 +11,52 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * ID of the current blog
+	 *
 	 * @var int
 	 */
 	private $current_blog_id;
 
 	/**
 	 * True if the current blog should be in the output
+	 *
 	 * @var bool
 	 */
 	private $current_blog_output;
 
 	/**
 	 * Collection of MslsBlog-objects
+	 *
 	 * @var MslsBlog[]
 	 */
-	private $objects = [];
+	private $objects = array();
 
 	/**
 	 * Order output by language or description
+	 *
 	 * @var string
 	 */
 	private $objects_order;
 
 	/**
 	 * Active plugins in the whole network
+	 *
 	 * @var array
 	 */
 	private $active_plugins;
 
 	/**
 	 * Container for hreflang-mapping
+	 *
 	 * @var array
 	 */
-	private $hreflangmap = [];
+	private $hreflangmap = array();
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		if ( ! has_filter( 'msls_blog_collection_description' ) ) {
-			add_filter( 'msls_blog_collection_description', [ $this, 'get_configured_blog_description' ], 10, 2 );
+			add_filter( 'msls_blog_collection_description', array( $this, 'get_configured_blog_description' ), 10, 2 );
 		}
 
 		$this->current_blog_id = get_current_blog_id();
@@ -72,7 +73,6 @@ class MslsBlogCollection extends MslsRegistryInstance {
 			 * @param array $blogs_collection
 			 *
 			 * @since 0.9.8
-			 *
 			 */
 			$blogs_collection = (array) apply_filters(
 				'msls_blog_collection_construct',
@@ -97,14 +97,14 @@ class MslsBlogCollection extends MslsRegistryInstance {
 					$this->objects[ $blog->userblog_id ] = new MslsBlog( $blog, $description );
 				}
 			}
-			uasort( $this->objects, [ MslsBlog::class, $this->objects_order ] );
+			uasort( $this->objects, array( MslsBlog::class, $this->objects_order ) );
 		}
 	}
 
 	/**
 	 * Returns the description of a configured blog or false if it is not configured
 	 *
-	 * @param int $blog_id
+	 * @param int         $blog_id
 	 * @param string|bool $description
 	 *
 	 * @return string|bool
@@ -132,8 +132,12 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return array
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
-		$reference_user = $options->has_value( 'reference_user' ) ? $options->reference_user : current( $this->get_users( 'ID',
-			1 ) );
+		$reference_user = $options->has_value( 'reference_user' ) ? $options->reference_user : current(
+			$this->get_users(
+				'ID',
+				1
+			)
+		);
 		$blogs          = get_blogs_of_user( $reference_user );
 
 		/**
@@ -184,6 +188,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * Get the id of the current blog
+	 *
 	 * @return int
 	 */
 	public function get_current_blog_id() {
@@ -212,6 +217,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * Gets current blog as object
+	 *
 	 * @return MslsBlog|null
 	 */
 	public function get_current_blog() {
@@ -220,6 +226,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * Gets an array with all blog-objects
+	 *
 	 * @return MslsBlog[]
 	 */
 	public function get_objects() {
@@ -235,7 +242,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 */
 	public function is_plugin_active( $blog_id ) {
 		if ( ! is_array( $this->active_plugins ) ) {
-			$this->active_plugins = get_site_option( 'active_sitewide_plugins', [] );
+			$this->active_plugins = get_site_option( 'active_sitewide_plugins', array() );
 		}
 
 		$path = MslsPlugin::path();
@@ -243,17 +250,18 @@ class MslsBlogCollection extends MslsRegistryInstance {
 			return true;
 		}
 
-		$plugins = get_blog_option( $blog_id, 'active_plugins', [] );
+		$plugins = get_blog_option( $blog_id, 'active_plugins', array() );
 
 		return in_array( $path, $plugins );
 	}
 
 	/**
 	 * Gets only blogs where the plugin is active
+	 *
 	 * @return array
 	 */
 	public function get_plugin_active_blogs() {
-		$arr = [];
+		$arr = array();
 
 		foreach ( $this->get_objects() as $blog ) {
 			if ( $this->is_plugin_active( $blog->userblog_id ) ) {
@@ -266,6 +274,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 	/**
 	 * Gets an array of all - but not the current - blog-objects
+	 *
 	 * @return MslsBlog[]
 	 */
 	public function get() {
@@ -285,30 +294,26 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @return MslsBlog[]
 	 */
-	public function get_filtered( $filter = false ) {
-		if ( ! $filter && $this->current_blog_output ) {
-			return $this->get_objects();
-		}
-
-		return $this->get();
+	public function get_filtered( bool $filter = false ): array {
+		return ! $filter && $this->current_blog_output ? $this->get_objects() : $this->get();
 	}
 
 	/**
 	 * Gets the registered users of the current blog
 	 *
-	 * @param string $fields
+	 * @param string     $fields
 	 * @param int|string $number
 	 *
 	 * @return array
 	 */
 	public function get_users( $fields = 'all', $number = '' ) {
-		$args = [
+		$args = array(
 			'blog_id'     => $this->current_blog_id,
 			'orderby'     => 'registered',
 			'fields'      => $fields,
 			'number'      => $number,
 			'count_total' => false,
-		];
+		);
 
 		$args = (array) apply_filters( 'msls_get_users', $args );
 
@@ -318,7 +323,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	/**
 	 * Returns a specific blog language.
 	 *
-	 * @param int $blog_id
+	 * @param int    $blog_id
 	 * @param string $default
 	 *
 	 * @return string
@@ -328,9 +333,8 @@ class MslsBlogCollection extends MslsRegistryInstance {
 			$blog_id = get_current_blog_id();
 		}
 
-		$language = ( string ) get_blog_option( $blog_id, 'WPLANG' );
+		$language = (string) get_blog_option( $blog_id, 'WPLANG' );
 
 		return '' !== $language ? $language : $default;
 	}
-
 }

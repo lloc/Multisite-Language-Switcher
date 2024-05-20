@@ -3,6 +3,7 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
+use Brain\Monkey\Filters;
 
 use lloc\Msls\MslsOptionsPost;
 
@@ -11,7 +12,7 @@ class TestMslsOptionsPost extends MslsUnitTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		Functions\expect( 'get_option' )->once()->andReturn( [ 'de_DE' => 42 ] );
+		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
 
 		$this->test = new MslsOptionsPost();
 	}
@@ -26,10 +27,32 @@ class TestMslsOptionsPost extends MslsUnitTestCase {
 		$this->assertEquals( '', $this->test->get_postlink( 'de_DE' ) );
 	}
 
+	public function test_get_postlink_post_is_draft(): void {
+		$post              = \Mockery::mock( '\WP_Post' );
+		$post->post_status = 'draft';
+
+		Functions\expect( 'get_post' )->once()->andReturn( $post );
+
+		$this->assertEquals( '', $this->test->get_postlink( 'de_DE' ) );
+	}
+
+	public function test_get_postlink_post_is_published(): void {
+		$post              = \Mockery::mock( '\WP_Post' );
+		$post->post_status = 'publish';
+		$post->post_type   = 'post';
+
+		Functions\expect( 'get_post' )->once()->andReturn( $post );
+		Functions\expect( 'get_post_type_object' )->once()->andReturn( (object) array( 'rewrite' => array( 'with_front' => true ) ) );
+		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://example.de/a-post' );
+
+		Filters\expectApplied( 'check_url' )->once()->with( 'https://example.de/a-post', $this->test );
+
+		$this->assertEquals( 'https://example.de/a-post', $this->test->get_postlink( 'de_DE' ) );
+	}
+
 	public function test_get_current_link(): void {
 		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://example.org/a-post' );
 
 		$this->assertEquals( 'https://example.org/a-post', $this->test->get_current_link() );
 	}
-
 }

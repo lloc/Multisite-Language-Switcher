@@ -1,26 +1,24 @@
-<?php
-/**
- * MslsOptionsPost
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
+<?php declare( strict_types=1 );
 
 namespace lloc\Msls;
 
 /**
  * Post options
+ *
  * @package Msls
  */
 class MslsOptionsPost extends MslsOptions {
 
 	/**
 	 * Separator
+	 *
 	 * @var string
 	 */
 	protected $sep = '_';
 
 	/**
 	 * Autoload
+	 *
 	 * @var string
 	 */
 	protected $autoload = 'no';
@@ -47,13 +45,6 @@ class MslsOptionsPost extends MslsOptions {
 			$this->with_front = ! empty( $post_object->rewrite['with_front'] );
 		}
 
-		global $current_site;
-		$blog_id = msls_blog_collection()->get_blog_id( $language );
-		if ( $current_site->blog_id != $blog_id ) {
-			$option = get_blog_option( $blog_id, 'msls' );
-			//error_log( print_r( $option, true ) );
-		}
-
 		return apply_filters( 'check_url', get_permalink( $post ), $this );
 	}
 
@@ -65,5 +56,4 @@ class MslsOptionsPost extends MslsOptions {
 	public function get_current_link(): string {
 		return (string) get_permalink( $this->get_arg( 0, 0 ) );
 	}
-
 }
