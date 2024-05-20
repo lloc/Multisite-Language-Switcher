@@ -1,9 +1,9 @@
-<?php
+<?php declare( strict_types=1 );
+
 /**
  * MslsPostTag
  *
  * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
  */
 
 namespace lloc\Msls;
@@ -29,12 +29,12 @@ class MslsPostTag extends MslsMain {
 				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
 			);
 
-			$args = [
+			$args = array(
 				'orderby'    => 'name',
 				'order'      => 'ASC',
 				'number'     => 10,
 				'hide_empty' => 0,
-			];
+			);
 
 			if ( filter_has_var( INPUT_POST, 's' ) ) {
 				$args['search'] = sanitize_text_field(
@@ -81,15 +81,15 @@ class MslsPostTag extends MslsMain {
 	public static function init() {
 		$options    = msls_options();
 		$collection = msls_blog_collection();
-		$class      = $options->activate_autocomplete ? MslsPostTag::class : MslsPostTagClassic::class;
+		$class      = $options->activate_autocomplete ? self::class : MslsPostTagClassic::class;
 		$obj        = new $class( $options, $collection );
 
 		$taxonomy = MslsContentTypes::create()->acl_request();
 		if ( '' != $taxonomy ) {
-			add_action( "{$taxonomy}_add_form_fields", [ $obj, 'add_input' ] );
-			add_action( "{$taxonomy}_edit_form_fields", [ $obj, 'edit_input' ], 10, 2 );
-			add_action( "edited_{$taxonomy}", [ $obj, 'set' ] );
-			add_action( "create_{$taxonomy}", [ $obj, 'set' ] );
+			add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add_input' ) );
+			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ), 10, 2 );
+			add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
+			add_action( "create_{$taxonomy}", array( $obj, 'set' ) );
 		}
 
 		return $obj;
@@ -118,7 +118,7 @@ class MslsPostTag extends MslsMain {
 	 * Add the input fields to the edit-screen of the taxonomies
 	 *
 	 * @param \WP_Term $tag
-	 * @param string $taxonomy
+	 * @param string   $taxonomy
 	 */
 	public function edit_input( \WP_Term $tag, string $taxonomy ): void {
 		$title_format = '<tr>
@@ -148,8 +148,8 @@ class MslsPostTag extends MslsMain {
 	 * Returns true if the blogcollection is not empty
 	 *
 	 * @param ?\WP_Term $tag
-	 * @param string $title_format
-	 * @param string $item_format
+	 * @param string    $title_format
+	 * @param string    $item_format
 	 *
 	 * @return boolean
 	 */
@@ -160,7 +160,7 @@ class MslsPostTag extends MslsMain {
 			return false;
 		}
 
-		$count ++;
+		++$count;
 
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
@@ -258,8 +258,9 @@ class MslsPostTag extends MslsMain {
 	 * @return string
 	 */
 	protected function get_select_title(): string {
-		return apply_filters( 'msls_term_select_title',
-			__( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
+		return apply_filters(
+			'msls_term_select_title',
+			__( 'Multisite Language Switcher', 'multisite-language-switcher' )
+		);
 	}
-
 }

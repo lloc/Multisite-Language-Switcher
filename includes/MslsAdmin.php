@@ -133,7 +133,7 @@ class MslsAdmin extends MslsMain {
 	 *
 	 * @return bool
 	 */
-	public function has_problems() {
+	public function has_problems(): bool {
 		$message = '';
 
 		if ( $this->options->is_empty() ) {
@@ -161,7 +161,7 @@ class MslsAdmin extends MslsMain {
 	/**
 	 * Render the options-page
 	 */
-	public function render() {
+	public function render(): void {
 		printf(
 			'<div class="wrap"><div class="icon32" id="icon-options-general"><br/></div><h1>%s</h1>%s<br class="clear"/><form action="options.php" method="post"><p>%s</p>',
 			__( 'Multisite Language Switcher Options', 'multisite-language-switcher' ),
