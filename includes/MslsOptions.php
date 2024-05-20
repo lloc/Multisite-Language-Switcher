@@ -108,7 +108,7 @@ class MslsOptions extends MslsGetSet {
 			$options = new MslsOptionsPost( get_queried_object_id() );
 		}
 
-		add_filter( 'check_url', array( $options, 'check_for_blog_slug' ), 10, 2 );
+		add_filter( 'msls_get_postlink', array( $options, 'check_for_blog_slug' ), 10, 2 );
 
 		return $options;
 	}
