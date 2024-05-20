@@ -16,15 +16,13 @@ class TestMslsPostTag extends MslsUnitTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		Functions\when( 'get_option' )->justReturn( [] );
+		Functions\when( 'get_option' )->justReturn( array() );
 		Functions\expect( 'is_admin' )->andReturn( true );
-		Functions\expect( 'get_post_types' )->andReturn( [ 'post', 'page' ] );
+		Functions\expect( 'get_post_types' )->andReturn( array( 'post', 'page' ) );
 
-		foreach ( [ 'de_DE', 'en_US' ] as $locale ) {
+		foreach ( array( 'de_DE', 'en_US' ) as $locale ) {
 			$blog = \Mockery::mock( MslsBlog::class );
-			$blog->shouldReceive( [
-				'get_language' => $locale,
-			] );
+			$blog->shouldReceive( 'get_language' )->andReturn( $locale );
 
 			$blogs[] = $blog;
 		}
@@ -56,7 +54,7 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'get_admin_url' )->andReturn( '/wp-admin/edit-tags.php' );
 		Functions\expect( 'switch_to_blog' )->atLeast();
 		Functions\expect( 'restore_current_blog' )->atLeast();
-		Functions\expect( 'get_terms' )->andReturn( [] );
+		Functions\expect( 'get_terms' )->andReturn( array() );
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 
 		$output = '<tr>
@@ -92,5 +90,4 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		// second call should not output anything
 		$this->test->edit_input( $tag, 'test' );
 	}
-
 }
