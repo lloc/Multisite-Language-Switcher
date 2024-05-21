@@ -4,13 +4,14 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 
+use lloc\Msls\MslsAdminIcon;
 use lloc\Msls\MslsOptions;
 
 class TestMslsOptions extends MslsUnitTestCase {
 
 	public function get_test(): MslsOptions {
 		Functions\when( 'home_url' )->justReturn( 'https://lloc.de' );
-		Functions\when( 'get_option' )->justReturn( [] );
+		Functions\when( 'get_option' )->justReturn( array() );
 		Functions\when( 'update_option' )->justReturn( true );
 
 		return new MslsOptions();
@@ -36,9 +37,9 @@ class TestMslsOptions extends MslsUnitTestCase {
 
 	public function test_create_method(): void {
 		Functions\when( 'is_admin' )->justReturn( true );
-		Functions\when( 'get_post_types' )->justReturn( [] );
+		Functions\when( 'get_post_types' )->justReturn( array() );
 		Functions\when( 'get_post_type' )->justReturn( 'post' );
-		Functions\when( 'get_option' )->justReturn( [] );
+		Functions\when( 'get_option' )->justReturn( array() );
 
 		$this->assertInstanceOf( MslsOptions::class, MslsOptions::create() );
 	}
@@ -49,14 +50,23 @@ class TestMslsOptions extends MslsUnitTestCase {
 		$this->assertNull( $obj->get_arg( 0 ) );
 		$this->assertIsSTring( $obj->get_arg( 0, '' ) );
 		$this->assertIsFloat( $obj->get_arg( 0, 1.1 ) );
-		$this->assertIsArray( $obj->get_arg( 0, [] ) );
+		$this->assertIsArray( $obj->get_arg( 0, array() ) );
 	}
 
 	function test_set_method(): void {
 		$obj = $this->get_test();
 
-		$this->assertTrue( $obj->set( [] ) );
-		$this->assertTrue( $obj->set( array( 'temp' => 'abc' ) ) );
+		$this->assertTrue( $obj->set( array() ) );
+		$this->assertTrue(
+			$obj->set(
+				array(
+					'temp' => 'abc',
+					'en'   => 1,
+					'us'   => 2,
+				)
+			)
+		);
+
 		$this->assertFalse( $obj->set( 'Test' ) );
 		$this->assertFalse( $obj->set( 1 ) );
 		$this->assertFalse( $obj->set( 1.1 ) );
@@ -120,11 +130,37 @@ class TestMslsOptions extends MslsUnitTestCase {
 	}
 
 	function test_get_available_languages_method(): void {
-		Functions\when( 'get_available_languages' )->justReturn( [] );
+		Functions\expect( 'get_available_languages' )->once()->andReturn( array( 'de_DE', 'it_IT' ) );
+		Functions\expect( 'format_code_lang' )->atLeast()->once()->andReturnUsing(
+			function ( $code ) {
+				$map = array(
+					'de_DE' => 'German',
+					'it_IT' => 'Italian',
+				);
+				return $map[ $code ] ?? 'American English';
+			}
+		);
 
 		$obj = $this->get_test();
 
-		$this->assertIsArray( $obj->get_available_languages() );
+		$expected = array(
+			'en_US' => 'American English',
+			'de_DE' => 'German',
+			'it_IT' => 'Italian',
+		);
+		$this->assertEquals( $expected, $obj->get_available_languages() );
 	}
 
+	public function test_get_icon_type_standard(): void {
+		$obj = $this->get_test();
+
+		$this->assertEquals( MslsAdminIcon::TYPE_FLAG, $obj->get_icon_type() );
+	}
+
+	public function test_get_icon_type_admin_display(): void {
+		$obj = $this->get_test();
+		$obj->set( array( 'admin_display' => MslsAdminIcon::TYPE_LABEL ) );
+
+		$this->assertEquals( MslsAdminIcon::TYPE_LABEL, $obj->get_icon_type() );
+	}
 }
