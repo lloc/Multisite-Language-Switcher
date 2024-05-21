@@ -323,16 +323,16 @@ class MslsOptions extends MslsGetSet {
 	/**
 	 * Returns slug for a post type
 	 *
+	 * @todo This method is not used anywhere in the codebase. Should it be removed?
+	 *
 	 * @param string $post_type
 	 *
 	 * @return string
 	 */
-	public function get_slug( $post_type ) {
+	public function get_slug( string $post_type ): string {
 		$key = "rewrite_{$post_type}";
 
-		error_log( $key );
-
-		return isset( $this->$key ) ? $this->$key : '';
+		return $this->$key ?? '';
 	}
 
 	/**
@@ -352,11 +352,7 @@ class MslsOptions extends MslsGetSet {
 	 * @return string
 	 */
 	public function get_flag_url( $language ) {
-		if ( ! is_admin() && isset( $this->image_url ) ) {
-			$url = $this->__get( 'image_url' );
-		} else {
-			$url = $this->get_url( 'flags' );
-		}
+		$url = ! is_admin() && isset( $this->image_url ) ? $this->__get( 'image_url' ) : $this->get_url( 'flags' );
 
 		/**
 		 * Override the path to the flag-icons
