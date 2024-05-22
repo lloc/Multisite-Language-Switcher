@@ -1,3 +1,7 @@
+## 2.7.1
+
+- flags/labels in the adminbar works now for every user-role
+
 ## 2.7.0
 
 - Block reorganized

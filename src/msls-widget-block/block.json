@@ -5,7 +5,7 @@
   "icon": "translation",
   "category": "widgets",
   "name": "lloc/msls-widget-block",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "Review the settings for the Multisite Language Switcher plugin, as the block utilizes the API function `the_msls()` for its output.",
   "example": {},
   "supports": {
