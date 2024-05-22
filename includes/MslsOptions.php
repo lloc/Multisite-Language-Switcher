@@ -67,9 +67,9 @@ class MslsOptions extends MslsGetSet {
 	/**
 	 * Available languages
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
-	private $available_languages;
+	private array $available_languages;
 
 	/**
 	 * Rewrite with front
