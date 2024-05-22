@@ -163,4 +163,53 @@ class TestMslsOptions extends MslsUnitTestCase {
 
 		$this->assertEquals( MslsAdminIcon::TYPE_LABEL, $obj->get_icon_type() );
 	}
+
+	public function provide_data_for_slug_check(): array {
+		return array(
+			array( '', '', false, false, false, '', false ), // first return
+			array( null, '', false, false, false, '', false ), // first return
+			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, false, '', false ), // second return
+			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, false, true, '', false ), // second return
+			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '', false ),
+			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/%year%/%monthnum%/%postname%/', false ),
+			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/2024/05/test', true, true, true, '/blog/%year%/%monthnum%/%postname%/', false ),
+			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/%postname%/', false ),
+			array( 'https://msls.co/blog/test', 'https://msls.co/test', true, true, true, '/blog/%postname%/', false ),
+			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/%year%/%monthnum%/%postname%/', true ),
+			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/blog/%year%/%monthnum%/%postname%/', true ),
+			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/%postname%/', true ),
+			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/blog/%postname%/', true ),
+		);
+	}
+
+	/**
+	 * @dataProvider provide_data_for_slug_check
+	 */
+	public function test_check_for_blog_slug( ?string $url, string $expected, bool $with_front, bool $is_subdomain_install, bool $using_permalinks, string $permalink_structure, bool $is_main_site ): void {
+		global $wp_rewrite, $current_site;
+
+		$options             = \Mockery::mock( MslsOptions::class );
+		$options->with_front = $with_front;
+		$wp_rewrite          = \Mockery::mock( '\WP_Rewrite' );
+		$wp_rewrite->shouldReceive( 'using_permalinks' )->andReturn( $using_permalinks );
+		$current_site          = \Mockery::mock( '\WP_Network' );
+		$current_site->blog_id = 1;
+
+		Functions\when( 'is_subdomain_install' )->justReturn( $is_subdomain_install );
+		Functions\expect( 'home_url' )->andReturnUsing(
+			function ( $url = '' ) {
+				return 'https://msls.co' . $url;
+			}
+		);
+		Functions\when( 'get_blog_option' )->justReturn( $permalink_structure );
+		Functions\when( 'is_main_site' )->justReturn( $is_main_site );
+
+		$this->assertEquals( $expected, MslsOptions::check_for_blog_slug( $url, $options ) );
+	}
+
+	public function test_get_slug() {
+		$obj = $this->get_test();
+
+		$this->assertEquals( '', $obj->get_slug( 'post' ) );
+	}
 }
