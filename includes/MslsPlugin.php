@@ -249,7 +249,7 @@ class MslsPlugin {
 	 * @return bool
 	 */
 	public function admin_bar_init() {
-		if ( is_admin_bar_showing() && is_super_admin() ) {
+		if ( is_admin_bar_showing() ) {
 			add_action( 'admin_bar_menu', array( __CLASS__, 'update_adminbar' ), 999 );
 
 			return true;
