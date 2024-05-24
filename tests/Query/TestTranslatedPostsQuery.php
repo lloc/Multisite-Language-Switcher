@@ -2,9 +2,6 @@
 
 namespace lloc\MslsTests\Query;
 
-use Brain\Monkey\Functions;
-use Brain\Monkey\Filters;
-
 use lloc\MslsTests\MslsUnitTestCase;
 use lloc\Msls\Query\TranslatedPostsQuery;
 use lloc\Msls\MslsSqlCacher;
