@@ -1,39 +1,51 @@
 <?php
-/**
- * MslsOptionsQueryDay
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
+use lloc\Msls\Query\DatePostsCounterQuery;
+
 /**
- * OptionsQueryDay
+ * MslsOptionsQueryDay
  *
  * @package Msls
  */
 class MslsOptionsQueryDay extends MslsOptionsQuery {
 
+	protected int $year;
+
+	protected int $monthnum;
+	protected int $day;
+
+	public function __construct( MslsSqlCacher $sql_cache ) {
+		parent::__construct( $sql_cache );
+
+		$params = self::get_params();
+
+		$this->year     = $params['year'];
+		$this->monthnum = $params['monthnum'];
+		$this->day      = $params['day'];
+	}
+
+	public static function get_params(): array {
+		return array(
+			'year'     => get_query_var( 'year' ),
+			'monthnum' => get_query_var( 'monthnum' ),
+			'day'      => get_query_var( 'day' ),
+		);
+	}
+
 	/**
-	 * Check if the array has an non empty item which has $language as a key
+	 * Check if the array has a non-empty item which has $language as a key
 	 *
 	 * @param string $language
 	 *
 	 * @return bool
 	 */
-	public function has_value( $language ) {
+	public function has_value( string $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			$date = new \DateTime();
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
+			$query_callable = new DatePostsCounterQuery( $this->sql_cache );
 
-			$this->arr[ $language ] = $cache->get_var(
-				$cache->prepare(
-					"SELECT count(ID) FROM {$cache->posts} WHERE DATE(post_date) = %s AND post_status = 'publish'",
-					$date->setDate( $this->get_arg( 0, 0 ),
-						$this->get_arg( 1, 0 ),
-						$this->get_arg( 2, 0 ) )->format( 'Y-m-d' )
-				)
-			);
+			$this->arr[ $language ] = $query_callable( $this->year, $this->monthnum, $this->day );
 		}
 
 		return (bool) $this->arr[ $language ];
@@ -45,7 +57,6 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_day_link( $this->get_arg( 0, 0 ), $this->get_arg( 1, 0 ), $this->get_arg( 2, 0 ) );
+		return get_day_link( $this->year, $this->monthnum, $this->day );
 	}
-
 }

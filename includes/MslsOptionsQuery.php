@@ -1,15 +1,9 @@
 <?php
-/**
- * MslsOptionsQuery
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
- * OptionsQuery
+ * MslsOptionsQuery
  *
  * @package Msls
  */
@@ -22,36 +16,48 @@ class MslsOptionsQuery extends MslsOptions {
 	 */
 	public $with_front = true;
 
+	protected MslsSqlCacher $sql_cache;
+
+	public function __construct( MslsSqlCacher $sql_cache ) {
+		parent::__construct();
+
+		$this->sql_cache = $sql_cache;
+	}
+
+	/**
+	 * @return array<string, mixed>
+	 */
+	public static function get_params(): array {
+		return array();
+	}
+
 	/**
 	 * Factory method
 	 *
 	 * @param int $id This parameter is unused here
 	 *
-	 * @return MslsOptionsQuery|null
+	 * @return ?MslsOptionsQuery
 	 */
-	public static function create( $id = 0 ) {
-		$query = null;
-
+	public static function create( $id = 0 ): ?MslsOptionsQuery {
 		if ( is_day() ) {
-			$query = new MslsOptionsQueryDay(
-				get_query_var( 'year' ),
-				get_query_var( 'monthnum' ),
-				get_query_var( 'day' )
-			);
+			$query_class = MslsOptionsQueryDay::class;
 		} elseif ( is_month() ) {
-			$query = new MslsOptionsQueryMonth(
-				get_query_var( 'year' ),
-				get_query_var( 'monthnum' )
-			);
+			$query_class = MslsOptionsQueryMonth::class;
 		} elseif ( is_year() ) {
-			$query = new MslsOptionsQueryYear( get_query_var( 'year' ) );
+			$query_class = MslsOptionsQueryYear::class;
 		} elseif ( is_author() ) {
-			$query = new MslsOptionsQueryAuthor( get_queried_object_id() );
+			$query_class = MslsOptionsQueryAuthor::class;
 		} elseif ( is_post_type_archive() ) {
-			$query = new MslsOptionsQueryPostType( get_query_var( 'post_type' ) );
+			$query_class = MslsOptionsQueryPostType::class;
 		}
 
-		return $query;
+		if ( ! isset( $query_class ) ) {
+			return null;
+		}
+
+		$sql_cache = MslsSqlCacher::create( $query_class, $query_class::get_params() );
+
+		return new $query_class( $sql_cache );
 	}
 
 	/**

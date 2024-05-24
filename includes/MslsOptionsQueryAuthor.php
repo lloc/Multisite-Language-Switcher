@@ -1,19 +1,32 @@
 <?php
-/**
- * MslsOptionsQueryAuthor
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
+use lloc\Msls\Query\AuthorPostsCounterQuery;
+
 /**
- * OptionsQueryAuthor
+ * MslsOptionsQueryAuthor
  *
  * @package Msls
  */
 class MslsOptionsQueryAuthor extends MslsOptionsQuery {
+
+	protected int $author_id;
+
+	public function __construct( MslsSqlCacher $sql_cache ) {
+		parent::__construct( $sql_cache );
+
+		$this->author_id = self::get_params()['author_id'];
+	}
+
+	/**
+	 * @return array<string, mixed>
+	 */
+	public static function get_params(): array {
+		return array(
+			'author_id' => get_queried_object_id(),
+		);
+	}
 
 	/**
 	 * Check if the array has a non-empty item which has $language as a key
@@ -22,16 +35,9 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	 *
 	 * @return bool
 	 */
-	public function has_value( $language ) {
+	public function has_value( string $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( $this->args );
-
-			$this->arr[ $language ] = $cache->get_var(
-				$cache->prepare(
-					"SELECT count(ID) FROM {$cache->posts} WHERE post_author = %d AND post_status = 'publish'",
-					$this->get_arg( 0, 0 )
-				)
-			);
+			$this->arr[ $language ] = ( new AuthorPostsCounterQuery( $this->sql_cache ) )( $this->author_id );
 		}
 
 		return (bool) $this->arr[ $language ];
@@ -43,6 +49,6 @@ class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link() {
-		return get_author_posts_url( $this->get_arg( 0, 0 ) );
+		return get_author_posts_url( $this->author_id );
 	}
 }
