@@ -419,7 +419,7 @@ class MslsPlugin {
 		 * restore_current_blog
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
+			$cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
 
 			$blogs = $cache->get_results(
 				$cache->prepare(
@@ -449,7 +449,7 @@ class MslsPlugin {
 	 */
 	public static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
+			$cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
 			$sql   = $cache->prepare(
 				"DELETE FROM {$cache->options} WHERE option_name LIKE %s",
 				'msls_%'
