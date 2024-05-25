@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsMain
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -31,7 +26,7 @@ class MslsMain {
 	/**
 	 * Constructor
 	 *
-	 * @param MslsOptions $options
+	 * @param MslsOptions        $options
 	 * @param MslsBlogCollection $collection
 	 */
 	public function __construct( MslsOptions $options, MslsBlogCollection $collection ) {
@@ -73,7 +68,7 @@ class MslsMain {
 	 * @return array
 	 */
 	public function get_input_array( $object_id ) {
-		$arr = [];
+		$arr = array();
 
 		$current_blog = $this->collection->get_current_blog();
 		if ( ! is_null( $current_blog ) ) {
@@ -105,10 +100,10 @@ class MslsMain {
 	 */
 	protected function get_input_value( $key, $value ) {
 		if ( false === strpos( $key, 'msls_input_' ) || empty( $value ) ) {
-			return [ '', 0 ];
+			return array( '', 0 );
 		}
 
-		return [ substr( $key, 11 ), intval( $value ) ];
+		return array( substr( $key, 11 ), intval( $value ) );
 	}
 
 	/**
@@ -148,7 +143,7 @@ class MslsMain {
 	/**
 	 * Save
 	 *
-	 * @param int $object_id
+	 * @param int    $object_id
 	 * @param string $class
 	 *
 	 * @codeCoverageIgnore
@@ -162,7 +157,6 @@ class MslsMain {
 			 * @param string Classname
 			 *
 			 * @since 0.9.9
-			 *
 			 */
 			do_action( 'msls_main_save', $object_id, $class );
 
@@ -203,5 +197,4 @@ class MslsMain {
 			restore_current_blog();
 		}
 	}
-
 }

@@ -1,15 +1,11 @@
 <?php
-/**
- * MslsCustomColumn
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
  * Handling of existing/not existing translations in the backend listings of
  * various post types
+ *
  * @package Msls
  */
 class MslsCustomColumn extends MslsMain {
@@ -30,9 +26,9 @@ class MslsCustomColumn extends MslsMain {
 			$post_type = MslsPostType::instance()->get_request();
 
 			if ( ! empty( $post_type ) ) {
-				add_filter( "manage_{$post_type}_posts_columns", [ $obj, 'th' ] );
-				add_action( "manage_{$post_type}_posts_custom_column", [ $obj, 'td' ], 10, 2 );
-				add_action( 'trashed_post', [ $obj, 'delete' ] );
+				add_filter( "manage_{$post_type}_posts_columns", array( $obj, 'th' ) );
+				add_action( "manage_{$post_type}_posts_custom_column", array( $obj, 'td' ), 10, 2 );
+				add_action( 'trashed_post', array( $obj, 'delete' ) );
 			}
 		}
 
@@ -53,11 +49,11 @@ class MslsCustomColumn extends MslsMain {
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
 
-                $icon_type=  $this->options->admin_display === 'label' ? 'label' : 'flag';
+				$icon_type = $this->options->admin_display === 'label' ? 'label' : 'flag';
 
-                $icon = new MslsAdminIcon( null );
+				$icon = new MslsAdminIcon( null );
 				$icon->set_language( $language );
-                $icon->set_icon_type( $icon_type );
+				$icon->set_icon_type( $icon_type );
 
 				if ( $post_id = get_the_ID() ) {
 					$icon->set_id( $post_id );
@@ -78,7 +74,7 @@ class MslsCustomColumn extends MslsMain {
 	 * Table body
 	 *
 	 * @param string $column_name
-	 * @param int $item_id
+	 * @param int    $item_id
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -113,5 +109,4 @@ class MslsCustomColumn extends MslsMain {
 			}
 		}
 	}
-
 }

@@ -1,15 +1,10 @@
 <?php
-/**
- * MslsLink
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
  * Link type: Image and text
+ *
  * @package Msls
  * @property string $txt
  * @property string $src
@@ -20,6 +15,7 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Output format
+	 *
 	 * @var string
 	 */
 	protected $format_string = '<img src="{src}" alt="{alt}"/> {txt}';
@@ -30,12 +26,12 @@ class MslsLink extends MslsGetSet {
 	 * @return string[]
 	 */
 	public static function get_types() {
-		return [
-			MslsLink::class,
+		return array(
+			self::class,
 			MslsLinkTextOnly::class,
 			MslsLinkImageOnly::class,
 			MslsLinkTextImage::class,
-		];
+		);
 	}
 
 	/**
@@ -53,10 +49,10 @@ class MslsLink extends MslsGetSet {
 	 * @return array
 	 */
 	public static function get_types_description() {
-		$types = [];
+		$types = array();
 
 		foreach ( self::get_types() as $key => $class ) {
-			$types[ $key ] = call_user_func( [ $class, 'get_description' ] );
+			$types[ $key ] = call_user_func( array( $class, 'get_description' ) );
 		}
 
 		return $types;
@@ -80,7 +76,6 @@ class MslsLink extends MslsGetSet {
 			 *
 			 * @return MslsLink
 			 * @since 0.9.9
-			 *
 			 */
 			$obj = apply_filters( 'msls_link_create', $display );
 			if ( is_subclass_of( $obj, __CLASS__ ) ) {
@@ -93,7 +88,7 @@ class MslsLink extends MslsGetSet {
 			$display = 0;
 		}
 
-		return new $types[ $display ];
+		return new $types[ $display ]();
 	}
 
 	/**
@@ -116,10 +111,9 @@ class MslsLink extends MslsGetSet {
 		$temp = $this->get_arr();
 
 		return str_replace(
-			array_map( [ $this, 'callback' ], array_keys( $temp ) ),
+			array_map( array( $this, 'callback' ), array_keys( $temp ) ),
 			$temp,
 			$this->format_string
 		);
 	}
-
 }
