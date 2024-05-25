@@ -1,1 +1,1 @@
-{"redefinable-internals": ["filter_input_array", "filter_has_var"]}
+{"redefinable-internals": ["filter_input_array", "filter_has_var", "filter_input"]}

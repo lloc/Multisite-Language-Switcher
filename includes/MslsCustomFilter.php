@@ -43,7 +43,7 @@ class MslsCustomFilter extends MslsMain {
 		$id = (
 			filter_has_var( INPUT_GET, 'msls_filter' ) ?
 			filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT ) :
-			''
+			'0'
 		);
 
 		$blogs = $this->collection->get();
@@ -54,7 +54,7 @@ class MslsCustomFilter extends MslsMain {
 				printf(
 					'<option value="%d" %s>%s</option>',
 					$blog->userblog_id,
-					selected( $id, $blog->userblog_id, false ),
+					selected( intval( $id ), $blog->userblog_id, false ),
 					sprintf(
 						__( 'Not translated in the %s-blog', 'multisite-language-switcher' ),
 						$blog->get_description()
@@ -73,18 +73,18 @@ class MslsCustomFilter extends MslsMain {
 	 * @return bool|\WP_Query
 	 */
 	public function execute_filter( \WP_Query $query ) {
-		$blogs = $this->collection->get();
-
 		if ( ! filter_has_var( INPUT_GET, 'msls_filter' ) ) {
 			return false;
 		}
 
-		$id = filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT );
-		if ( isset( $blogs[ $id ] ) ) {
+		$id   = filter_input( INPUT_GET, 'msls_filter', FILTER_SANITIZE_NUMBER_INT );
+		$blog = $this->collection->get_object( intval( $id ) );
+
+		if ( $blog ) {
 			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
 
 			// load post we need to exclude (they already have a translation) from search query
-			$translated_posts = ( new TranslatedPostsQuery( $sql_cache ) )( $blogs[ $id ]->get_language() );
+			$translated_posts = ( new TranslatedPostsQuery( $sql_cache ) )( $blog->get_language() );
 
 			$exclude_ids = array();
 			foreach ( $translated_posts as $post ) {

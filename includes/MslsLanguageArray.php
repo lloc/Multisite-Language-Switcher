@@ -1,14 +1,10 @@
 <?php
-/**
- * MslsLanguageArray
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
  * Stores the language input from post
+ *
  * @example https://gist.githubusercontent.com/lloc/2c232cef3f910acf692f/raw/c78a78b42cb4c9e97a118523f7497f02b838a2ee/MslsLanguageArray.php
  * @package Msls
  */
@@ -16,6 +12,7 @@ class MslsLanguageArray {
 
 	/**
 	 * Generic container
+	 *
 	 * @var array
 	 */
 	protected $arr;
@@ -25,7 +22,7 @@ class MslsLanguageArray {
 	 *
 	 * @param array $arr
 	 */
-	public function __construct( array $arr = [] ) {
+	public function __construct( array $arr = array() ) {
 		foreach ( $arr as $key => $value ) {
 			$this->set( $key, $value );
 		}
@@ -37,7 +34,7 @@ class MslsLanguageArray {
 	 * - $value must be an integer > 0
 	 *
 	 * @param string $key
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return MslsLanguageArray
 	 */
@@ -77,5 +74,4 @@ class MslsLanguageArray {
 
 		return $arr;
 	}
-
 }

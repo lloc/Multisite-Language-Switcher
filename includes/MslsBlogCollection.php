@@ -97,6 +97,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 					$this->objects[ $blog->userblog_id ] = new MslsBlog( $blog, $description );
 				}
 			}
+
 			uasort( $this->objects, array( MslsBlog::class, $this->objects_order ) );
 		}
 	}
@@ -109,7 +110,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @return string|bool
 	 */
-	public static function get_configured_blog_description( $blog_id, $description = false ) {
+	public static function get_configured_blog_description( int $blog_id, $description = false ) {
 		if ( $description ) {
 			return $description;
 		}
@@ -138,7 +139,8 @@ class MslsBlogCollection extends MslsRegistryInstance {
 				1
 			)
 		);
-		$blogs          = get_blogs_of_user( $reference_user );
+
+		$blogs = get_blogs_of_user( $reference_user );
 
 		/**
 		 * @todo Check if this is still useful
@@ -229,8 +231,19 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @return MslsBlog[]
 	 */
-	public function get_objects() {
+	public function get_objects(): array {
 		return apply_filters( 'msls_blog_collection_get_objects', $this->objects );
+	}
+
+	/**
+	 * Gets a specific blog-object
+	 *
+	 * @param int $blog_id
+	 *
+	 * @return ?MslsBlog
+	 */
+	public function get_object( int $blog_id ): ?MslsBlog {
+		return $this->get_objects()[ $blog_id ] ?? null;
 	}
 
 	/**
