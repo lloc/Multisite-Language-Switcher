@@ -49,12 +49,6 @@ class MslsCustomFilter extends MslsMain {
 	 * @uses selected
 	 */
 	public function add_filter(): void {
-		$id = (
-			filter_has_var( INPUT_GET, self::FILTER_NAME ) ?
-			filter_input( INPUT_GET, self::FILTER_NAME, FILTER_SANITIZE_NUMBER_INT ) :
-			'0'
-		);
-
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			$options = array( '' => esc_html( __( 'Show all posts', 'multisite-language-switcher' ) ) );
@@ -64,6 +58,12 @@ class MslsCustomFilter extends MslsMain {
 					$blog->get_description()
 				);
 			}
+
+			$id = (
+				filter_has_var( INPUT_GET, self::FILTER_NAME ) ?
+				filter_input( INPUT_GET, self::FILTER_NAME, FILTER_SANITIZE_NUMBER_INT ) :
+				'0'
+			);
 
 			echo ( new Select( self::FILTER_NAME, $options, $id ) )->render();
 		}
@@ -84,15 +84,15 @@ class MslsCustomFilter extends MslsMain {
 		$id   = filter_input( INPUT_GET, self::FILTER_NAME, FILTER_SANITIZE_NUMBER_INT );
 		$blog = $this->collection->get_object( intval( $id ) );
 
-		if ( $blog ) {
-			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
-
-			// load post we need to exclude (they already have a translation) from search query
-			$query->query_vars['post__not_in'] = ( new TranslatedPostIdQuery( $sql_cache ) )( $blog->get_language() );
-
-			return $query;
+		if ( ! $blog ) {
+			return false;
 		}
 
-		return false;
+		$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
+
+		// load post we need to exclude (they already have a translation) from search query
+		$query->query_vars['post__not_in'] = ( new TranslatedPostIdQuery( $sql_cache ) )( $blog->get_language() );
+
+		return $query;
 	}
 }
