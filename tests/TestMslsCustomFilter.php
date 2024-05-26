@@ -6,7 +6,9 @@ use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsCustomFilter;
 use lloc\Msls\MslsOptions;
+
 use Brain\Monkey\Functions;
+use Brain\Monkey\Filters;
 
 class TestMslsCustomFilter extends MslsUnitTestCase {
 
@@ -44,7 +46,7 @@ class TestMslsCustomFilter extends MslsUnitTestCase {
 			),
 		);
 
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, 'msls_filter' )->andReturn( true );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsCustomFilter::FILTER_NAME )->andReturn( true );
 		Functions\expect( 'filter_input' )->once()->andReturn( '1' );
 		Functions\expect( 'wp_cache_get' )->once()->andReturn( $result );
 
@@ -57,7 +59,7 @@ class TestMslsCustomFilter extends MslsUnitTestCase {
 	}
 
 	public function test_execute_filter_with_filter_but_no_blog(): void {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, 'msls_filter' )->andReturn( true );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsCustomFilter::FILTER_NAME )->andReturn( true );
 		Functions\expect( 'filter_input' )->once()->andReturn( '2' );
 
 		$query = \Mockery::mock( '\WP_Query' );
@@ -66,19 +68,23 @@ class TestMslsCustomFilter extends MslsUnitTestCase {
 	}
 
 	public function test_add_filter(): void {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, 'msls_filter' )->andReturn( true );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsCustomFilter::FILTER_NAME )->andReturn( true );
 		Functions\expect( 'filter_input' )->once()->andReturn( '1' );
-		Functions\expect( 'selected' )->once()->with( 1, 1, false )->andReturn( 'selected="selected"' );
+		Functions\expect( 'selected' )->once()->with( '1', '1', false )->andReturn( 'selected="selected"' );
 
-		$this->expectOutputString( '<select name="msls_filter" id="msls_filter"><option value="">Show all blogs</option><option value="1" selected="selected">Not translated in the Deutsch-blog</option></select>' );
+		Filters\expectApplied( 'msls_input_select_name' )->once()->andReturn( MslsCustomFilter::FILTER_NAME );
+
+		$this->expectOutputString( '<select id="msls_filter" name="msls_filter"><option value="" >Show all posts</option><option value="1" selected="selected">Not translated in the Deutsch-blog</option></select>' );
 
 		$this->test->add_filter();
 	}
 
 	public function test_add_no_selected_blog(): void {
-		Functions\expect( 'selected' )->once()->with( 0, 1, false )->andReturn( '' );
+		Functions\expect( 'selected' )->twice()->andReturn( '' );
 
-		$this->expectOutputString( '<select name="msls_filter" id="msls_filter"><option value="">Show all blogs</option><option value="1" >Not translated in the Deutsch-blog</option></select>' );
+		Filters\expectApplied( 'msls_input_select_name' )->once()->andReturn( MslsCustomFilter::FILTER_NAME );
+
+		$this->expectOutputString( '<select id="msls_filter" name="msls_filter"><option value="" >Show all posts</option><option value="1" >Not translated in the Deutsch-blog</option></select>' );
 
 		$this->test->add_filter();
 	}

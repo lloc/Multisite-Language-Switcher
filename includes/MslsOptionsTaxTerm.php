@@ -1,32 +1,31 @@
 <?php
-/**
- * MslsOptionsTaxTerm
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
- * Tag options
+ * MslsOptionsTaxTerm
+ *
  * @package Msls
  */
 class MslsOptionsTaxTerm extends MslsOptionsTax {
 
 	/**
 	 * Base option
+	 *
 	 * @var string
 	 */
 	protected $base_option = 'tag_base';
 
 	/**
 	 * Base definition
+	 *
 	 * @var string
 	 */
 	protected $base_defined = 'tag';
 
 	/**
 	 * Rewrite with front
+	 *
 	 * @var bool
 	 */
 	public $with_front = true;
@@ -34,7 +33,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	/**
 	 * Check and correct URL
 	 *
-	 * @param string $url
+	 * @param string      $url
 	 * @param MslsOptions $options
 	 *
 	 * @return string
@@ -72,5 +71,4 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 
 		return $url;
 	}
-
 }

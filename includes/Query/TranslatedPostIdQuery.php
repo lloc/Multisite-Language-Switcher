@@ -2,7 +2,12 @@
 
 namespace lloc\Msls\Query;
 
-class TranslatedPostsQuery extends AbstractQuery {
+/**
+ * Gets the posts_ids of posts that have been translated to a specific language
+ *
+ * @package Msls
+ */
+class TranslatedPostIdQuery extends AbstractQuery {
 
 
 	public function __invoke( string $language ) {
@@ -16,6 +21,11 @@ class TranslatedPostsQuery extends AbstractQuery {
 			'%"' . $language . '"%'
 		);
 
-		return $this->sql_cache->get_results( $query );
+		$post_ids = array();
+		foreach ( $this->sql_cache->get_results( $query ) as $post ) {
+			$post_ids[] = substr( $post->option_name, 5 );
+		}
+
+		return $post_ids;
 	}
 }
