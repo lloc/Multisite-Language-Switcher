@@ -2,8 +2,12 @@
 
 namespace lloc\Msls\Query;
 
+/**
+ * Gets the number of published posts by a date
+ *
+ * @package Msls
+ */
 class DatePostsCounterQuery extends AbstractQuery {
-
 
 	public function __invoke( int $year, $monthnum, $day ) {
 		if ( $year <= 0 || $monthnum <= 0 || $day <= 0 ) {

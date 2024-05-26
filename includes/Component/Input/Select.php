@@ -17,9 +17,9 @@ class Select implements InputInterface {
 	protected $options;
 
 	/**
-	 * @param string $key Name and ID of the form-element
+	 * @param string   $key Name and ID of the form-element
 	 * @param string[] $arr Options as associative array
-	 * @param ?string $selected Values which should be selected
+	 * @param ?string  $selected Values which should be selected
 	 */
 	public function __construct( string $key, array $arr, ?string $selected = null ) {
 		$this->key = esc_attr( $key );
@@ -34,7 +34,8 @@ class Select implements InputInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		return sprintf( '<select id="%1$s" name="msls[%1$s]">%2$s</select>', $this->key, $this->options->render() );
-	}
+		$name = apply_filters( 'msls_input_select_name', 'msls[' . $this->key . ']' );
 
+		return sprintf( '<select id="%1$s" name="%2$s">%3$s</select>', $this->key, $name, $this->options->render() );
+	}
 }

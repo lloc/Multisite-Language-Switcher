@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsOutput
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -11,12 +6,14 @@ use lloc\Msls\Map\HrefLang;
 
 /**
  * Output in the frontend
+ *
  * @package Msls
  */
 class MslsOutput extends MslsMain {
 
 	/**
 	 * Holds the format for the output
+	 *
 	 * @var array $tags
 	 */
 	protected $tags;
@@ -24,7 +21,7 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Creates and gets the output as an array
 	 *
-	 * @param int $display
+	 * @param int  $display
 	 * @param bool $filter
 	 * @param bool $exists
 	 *
@@ -33,7 +30,7 @@ class MslsOutput extends MslsMain {
 	 * @uses MslsOptions
 	 */
 	public function get( $display, $filter = false, $exists = false ) {
-		$arr = [];
+		$arr = array();
 
 		$blogs = $this->collection->get_filtered( $filter );
 		if ( $blogs ) {
@@ -73,9 +70,8 @@ class MslsOutput extends MslsMain {
 					 * @param bool $is_current_blog
 					 *
 					 * @since 0.9.8
-					 *
 					 */
-					$arr[] = ( string ) apply_filters( 'msls_output_get', $url, $link, $is_current_blog );
+					$arr[] = (string) apply_filters( 'msls_output_get', $url, $link, $is_current_blog );
 				} else {
 					$arr[] = sprintf(
 						'<a href="%s" title="%s"%s>%s</a>',
@@ -101,7 +97,7 @@ class MslsOutput extends MslsMain {
 		$hreflang = new HrefLang( $blogs );
 		$options  = MslsOptions::create();
 
-		$arr     = [];
+		$arr     = array();
 		$default = '';
 
 		foreach ( $blogs->get_objects() as $blog ) {
@@ -132,6 +128,7 @@ class MslsOutput extends MslsMain {
 
 	/**
 	 * Returns a string when the object will be treated like a string
+	 *
 	 * @return string
 	 */
 	public function __toString() {
@@ -147,22 +144,23 @@ class MslsOutput extends MslsMain {
 		$tags = $this->get_tags();
 
 		return $tags['before_output'] . $tags['before_item'] .
-		       implode( $tags['after_item'] . $tags['before_item'], $arr ) .
-		       $tags['after_item'] . $tags['after_output'];
+				implode( $tags['after_item'] . $tags['before_item'], $arr ) .
+				$tags['after_item'] . $tags['after_output'];
 	}
 
 	/**
 	 * Gets tags for the output
+	 *
 	 * @return array
 	 */
 	public function get_tags() {
 		if ( empty( $this->tags ) ) {
-			$this->tags = [
+			$this->tags = array(
 				'before_item'   => $this->options->before_item,
 				'after_item'    => $this->options->after_item,
 				'before_output' => $this->options->before_output,
 				'after_output'  => $this->options->after_output,
-			];
+			);
 
 			/**
 			 * Returns tags array for the output
@@ -170,9 +168,8 @@ class MslsOutput extends MslsMain {
 			 * @param array $tags
 			 *
 			 * @since 1.0
-			 *
 			 */
-			$this->tags = ( array ) apply_filters( 'msls_output_get_tags', $this->tags );
+			$this->tags = (array) apply_filters( 'msls_output_get_tags', $this->tags );
 		}
 
 		return $this->tags;
@@ -185,7 +182,7 @@ class MslsOutput extends MslsMain {
 	 *
 	 * @return MslsOutput
 	 */
-	public function set_tags( array $arr = [] ) {
+	public function set_tags( array $arr = array() ) {
 		$this->tags = wp_parse_args( $this->get_tags(), $arr );
 
 		return $this;
@@ -195,8 +192,8 @@ class MslsOutput extends MslsMain {
 	 * Returns true if the requirements not fulfilled
 	 *
 	 * @param MslsOptions|null $thing
-	 * @param boolean $exists
-	 * @param string $language
+	 * @param boolean          $exists
+	 * @param string           $language
 	 *
 	 * @return boolean
 	 */
@@ -207,5 +204,4 @@ class MslsOutput extends MslsMain {
 
 		return MslsOptions::class != get_class( $thing ) && ! $thing->has_value( $language ) && $exists;
 	}
-
 }

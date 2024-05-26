@@ -4,6 +4,11 @@ namespace lloc\Msls\Query;
 
 use lloc\Msls\MslsSqlCacher;
 
+/**
+ * AbstractQuery
+ *
+ * @package Msls
+ */
 abstract class AbstractQuery {
 
 	protected MslsSqlCacher $sql_cache;

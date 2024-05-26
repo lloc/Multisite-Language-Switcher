@@ -2,8 +2,12 @@
 
 namespace lloc\Msls\Query;
 
+/**
+ * Gets the number of published posts by an author
+ *
+ * @package Msls
+ */
 class AuthorPostsCounterQuery extends AbstractQuery {
-
 
 	public function __invoke( int $author_id ) {
 		if ( $author_id <= 0 ) {
