@@ -19,6 +19,8 @@ class MslsUnitTestCase extends TestCase {
 		parent::setUp();
 		Monkey\setUp();
 
+		\Mockery::namedMock( 'WooCommerce', \stdClass::class );
+
 		Functions\when( 'esc_html' )->returnArg();
 		Functions\when( 'esc_attr' )->returnArg();
 		Functions\when( 'esc_url' )->returnArg();
@@ -30,7 +32,8 @@ class MslsUnitTestCase extends TestCase {
 		restore_error_handler();
 
 		Monkey\tearDown();
+		\Mockery::close();
+
 		parent::tearDown();
 	}
-
 }

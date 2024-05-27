@@ -56,6 +56,7 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'restore_current_blog' )->atLeast();
 		Functions\expect( 'get_terms' )->andReturn( array() );
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
+		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 
 		$output = '<tr>
 			<th colspan="2">
