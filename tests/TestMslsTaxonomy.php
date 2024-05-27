@@ -9,31 +9,27 @@ use lloc\Msls\MslsOptions;
 
 class TestMslsTaxonomy extends MslsUnitTestCase {
 
-    /**
-     * @param bool $exluded
-     *
-     * @return MslsTaxonomy
-     */
-    public function get_test( bool $exluded = false ): MslsTaxonomy {
-        parent::setUp();
+	/**
+	 * @param bool $exluded
+	 *
+	 * @return MslsTaxonomy
+	 */
+	public function get_test( bool $exluded = false ): MslsTaxonomy {
+		parent::setUp();
 
-        $options = \Mockery::mock( MslsOptions::class );
-        $options->shouldReceive( 'is_excluded' )->andReturn( $exluded );
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->andReturn( $exluded );
 
-        Functions\expect( 'msls_options' )->zeroOrMoreTimes()->andReturn( $options );
+		Functions\expect( 'msls_options' )->zeroOrMoreTimes()->andReturn( $options );
 
-        Functions\expect( 'apply_filters' )->atLeast()->once();
+		Functions\expect( 'apply_filters' )->atLeast()->once();
 
-		Functions\expect( 'get_taxonomies' )->atLeast()->once()->andReturn( [] );
+		Functions\expect( 'get_taxonomies' )->atLeast()->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->atLeast()->once()->with( 'taxonomy' )->andReturn( 'category' );
 
 		return new MslsTaxonomy();
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
-	 */
 	public function test_acl_request_included(): void {
 		$cap               = new \stdClass();
 		$cap->manage_terms = 'manage_categories';
@@ -46,10 +42,6 @@ class TestMslsTaxonomy extends MslsUnitTestCase {
 		$this->assertEquals( 'category', $this->get_test()->acl_request() );
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
-	 */
 	public function test_acl_request_excluded(): void {
 		$this->assertEquals( '', $this->get_test( true )->acl_request() );
 	}
@@ -69,5 +61,4 @@ class TestMslsTaxonomy extends MslsUnitTestCase {
 	public function test_get_request(): void {
 		$this->assertEquals( 'category', $this->get_test()->get_request() );
 	}
-
 }
