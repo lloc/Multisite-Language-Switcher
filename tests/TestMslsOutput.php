@@ -2,6 +2,7 @@
 
 namespace lloc\MslsTests;
 
+use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsOptions;
@@ -10,82 +11,74 @@ use Brain\Monkey\Functions;
 
 class TestMslsOutput extends MslsUnitTestCase {
 
-	function get_test() {
-		$options    = \Mockery::mock( MslsOptions::class );
+	protected function setUp(): void {
+		$options = \Mockery::mock( MslsOptions::class );
+
 		$collection = \Mockery::mock( MslsBlogCollection::class );
-		$collection->shouldReceive( [
-			'has_current_blog' => true,
-			'get_current_blog' => 1,
-			'get_filtered'     => [],
-		] );
+		$collection->shouldReceive( 'has_current_blog' )->andReturn( true );
+		$collection->shouldReceive( 'get_current_blog' )->andReturn( 1 );
+		$collection->shouldReceive( 'get_filtered' )->andReturn( array() );
 
-		return new MslsOutput( $options, $collection );
+		$this->test = new MslsOutput( $options, $collection );
 	}
 
-	function test_get_method() {
-		$obj = $this->get_test();
-
-		$this->assertIsArray( $obj->get( 0 ) );
+	public function test_get_method(): void {
+		$this->assertEquals( array(), $this->test->get( 0 ) );
 	}
 
-	function test___toString_method() {
-		$obj = $this->get_test();
+	public function test_get_alternate_links() {
+		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
+		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 
-		$this->assertIsSTring( $obj->__toString() );
-		$this->assertIsSTring( strval( $obj ) );
-		$this->assertEquals( $obj->__toString(), strval( $obj ) );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_objects' )->andReturn( array( $blog ) );
+
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_search' )->once()->andReturn( false );
+		Functions\expect( 'is_404' )->once()->andReturn( false );
+
+		$this->assertEquals( array(), $this->test->get_alternate_links() );
 	}
 
-	function test_get_tags_method() {
-		$obj = $this->get_test();
-
-		$this->assertIsArray( $obj->get_tags() );
+	public function test___toString() {
+		$this->assertIsSTring( $this->test->__toString() );
+		$this->assertIsSTring( strval( $this->test ) );
+		$this->assertEquals( $this->test->__toString(), strval( $this->test ) );
 	}
 
-	function test_set_tags_method() {
-		Functions\expect( 'wp_parse_args' )->once()->andReturn( [] );
-
-		$obj = $this->get_test();
-
-		$this->assertInstanceOf( MslsOutput::class, $obj->set_tags() );
+	public function test_get_tags(): void {
+		$this->assertIsArray( $this->test->get_tags() );
 	}
 
-	function test_is_requirements_not_fulfilled_method_with_null() {
-		$obj = $this->get_test();
+	public function test_set_tags(): void {
+		Functions\expect( 'wp_parse_args' )->once()->andReturn( array() );
 
-		$test = $obj->is_requirements_not_fulfilled( null, false, 'de_DE' );
-		$this->assertFalse( $test );
-
-		$test = $obj->is_requirements_not_fulfilled( null, true, 'de_DE' );
-		$this->assertTrue( $test );
+		$this->assertInstanceOf( MslsOutput::class, $this->test->set_tags() );
 	}
 
-	function test_is_requirements_not_fulfilled_method_with_mslsoptions() {
-		Functions\expect( 'get_option' )->once()->andReturn( [] );
+	public function test_is_requirements_not_fulfilled_with_null(): void {
+		$this->assertFalse( $this->test->is_requirements_not_fulfilled( null, false, 'de_DE' ) );
+		$this->assertTrue( $this->test->is_requirements_not_fulfilled( null, true, 'de_DE' ) );
+	}
+
+	public function test_is_requirements_not_fulfilled_with_mslsoptions(): void {
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
 		$mydata = new MslsOptions();
 
-		$obj = $this->get_test();
-
-		$test = $obj->is_requirements_not_fulfilled( $mydata, false, 'de_DE' );
-		$this->assertFalse( $test );
-
-		$test = $obj->is_requirements_not_fulfilled( $mydata, true, 'de_DE' );
-		$this->assertFalse( $test );
+		$this->assertFalse( $this->test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
+		$this->assertFalse( $this->test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
 	}
 
-	function test_is_requirements_not_fulfilled_method_with_mslsoptionspost() {
-		Functions\expect( 'get_option' )->once()->andReturn( [] );
+	public function test_is_requirements_not_fulfilled_with_mslsoptionspost(): void {
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
 		$mydata = new MslsOptionsPost();
 
-		$obj = $this->get_test();
-
-		$test = $obj->is_requirements_not_fulfilled( $mydata, false, 'de_DE' );
-		$this->assertFalse( $test );
-
-		$test = $obj->is_requirements_not_fulfilled( $mydata, true, 'de_DE' );
-		$this->assertTrue( $test );
+		$this->assertFalse( $this->test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
+		$this->assertTrue( $this->test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
 	}
-
 }
