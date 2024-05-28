@@ -9,19 +9,9 @@ namespace lloc\Msls;
  */
 class MslsOptionsTaxTerm extends MslsOptionsTax {
 
-	/**
-	 * Base option
-	 *
-	 * @var string
-	 */
-	protected $base_option = 'tag_base';
+	const BASE_OPTION = 'tag_base';
 
-	/**
-	 * Base definition
-	 *
-	 * @var string
-	 */
-	protected $base_defined = 'tag';
+	const BASE_DEFINED = 'tag';
 
 	/**
 	 * Rewrite with front
@@ -33,8 +23,8 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	/**
 	 * Check and correct URL
 	 *
-	 * @param string      $url
-	 * @param MslsOptions $options
+	 * @param string             $url
+	 * @param MslsOptionsTaxTerm $options
 	 *
 	 * @return string
 	 */
@@ -43,32 +33,38 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 			return $url;
 		}
 
+		$tax_query    = $options->get_tax_query();
+		$base_defined = self::get_base_defined( $tax_query );
+		$base_option  = self::get_base_option();
+
+		if ( $base_defined != $base_option ) {
+			$search  = '/' . $base_defined . '/';
+			$replace = '/' . $base_option . '/';
+			$url     = str_replace( $search, $replace, $url );
+		}
+
+		return $url;
+	}
+
+	protected static function get_base_defined( string $tax_query ): string {
 		global $wp_rewrite;
 
-		$base_defined = $options->base_defined;
-
-		$permastruct = $wp_rewrite->get_extra_permastruct( $options->get_tax_query() );
+		$permastruct = $wp_rewrite->get_extra_permastruct( $tax_query );
 		if ( $permastruct ) {
 			$permastruct = explode( '/', $permastruct );
 			end( $permastruct );
 			$permastruct = prev( $permastruct );
 			if ( false !== $permastruct ) {
-				$base_defined = $permastruct;
+				return $permastruct;
 			}
 		}
 
-		$base_option = get_option( $options->base_option );
-		if ( empty( $base_option ) ) {
-			$base_option = $options->base_defined;
-		}
+		return self::BASE_DEFINED;
+	}
 
-		if ( $base_defined != $base_option ) {
-			$search  = '/' . $base_defined . '/';
-			$replace = '/' . $base_option . '/';
-			$count   = 1;
-			$url     = str_replace( $search, $replace, $url, $count );
-		}
+	protected static function get_base_option(): string {
+		$base_option = get_option( self::BASE_OPTION, '' );
 
-		return $url;
+		return $base_option ?: self::BASE_DEFINED;
 	}
 }
