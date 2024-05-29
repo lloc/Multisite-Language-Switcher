@@ -17,7 +17,7 @@ class TestMslsOptionsQueryYear extends MslsUnitTestCase {
 
 		$sql_cacher = \Mockery::mock( MslsSqlCacher::class );
 		$sql_cacher->shouldReceive( 'prepare' )->andReturn( 'SQL Query String' );
-		$sql_cacher->shouldReceive( 'get_var' )->andReturn( random_int( 0, 10 ) );
+		$sql_cacher->shouldReceive( 'get_var' )->andReturn( random_int( 1, 10 ) );
 
 		return new MslsOptionsQueryYear( $sql_cacher );
 	}

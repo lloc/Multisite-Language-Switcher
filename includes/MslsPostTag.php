@@ -145,7 +145,7 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Print the input fields
 	 *
-	 * Returns true if the blogcollection is not empty
+	 * Returns true if the blog collection is not empty
 	 *
 	 * @param ?\WP_Term $tag
 	 * @param string    $title_format

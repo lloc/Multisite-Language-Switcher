@@ -82,7 +82,7 @@ class TestMslsPostTag extends MslsUnitTestCase {
 			</td>
 			</tr>';
 
-		self::expectOutputString( $output );
+		$this->expectOutputString( $output );
 
 		$tag = \Mockery::mock( \WP_Term::class );
 
@@ -90,5 +90,10 @@ class TestMslsPostTag extends MslsUnitTestCase {
 
 		// second call should not output anything
 		$this->test->edit_input( $tag, 'test' );
+	}
+
+	public function test_add_input() {
+		$this->expectOutputString( '<div class="form-field"></div>' );
+		$this->test->add_input( 'test' );
 	}
 }

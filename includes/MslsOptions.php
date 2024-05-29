@@ -296,7 +296,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @return bool
 	 */
-	public function is_content_filter() {
+	public function is_content_filter(): bool {
 		return isset( $this->content_filter );
 	}
 

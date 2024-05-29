@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsPostTagClassic
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.9
- */
 
 namespace lloc\Msls;
 
@@ -37,7 +32,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * Add the input fields to the edit-screen of the taxonomies
 	 *
 	 * @param \WP_Term $tag
-	 * @param string $taxonomy
+	 * @param string   $taxonomy
 	 */
 	public function edit_input( \WP_Term $tag, string $taxonomy ): void {
 		$title_format = '<tr>
@@ -64,8 +59,8 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * Returns true if the blogcollection is not empty
 	 *
 	 * @param ?\WP_Term $tag
-	 * @param string $title_format
-	 * @param string $item_format
+	 * @param string    $title_format
+	 * @param string    $item_format
 	 *
 	 * @return boolean
 	 */
@@ -76,7 +71,7 @@ class MslsPostTagClassic extends MslsPostTag {
 			return false;
 		}
 
-		$count ++;
+		++$count;
 
 		$blogs = $this->collection->get();
 		if ( ! empty( $blogs ) ) {
@@ -101,10 +96,10 @@ class MslsPostTagClassic extends MslsPostTag {
 	/**
 	 * Prints options inputs
 	 *
-	 * @param MslsBlog $blog
-	 * @param string $type
+	 * @param MslsBlog       $blog
+	 * @param string         $type
 	 * @param MslsOptionsTax $mydata
-	 * @param string $item_format
+	 * @param string         $item_format
 	 */
 	public function print_option( MslsBlog $blog, string $type, MslsOptionsTax $mydata, string $item_format ): void {
 		switch_to_blog( $blog->userblog_id );
@@ -118,7 +113,12 @@ class MslsPostTagClassic extends MslsPostTag {
 		}
 
 		$options = '';
-		$terms   = get_terms( [ 'taxonomy' => $type, 'hide_empty' => false ] );
+		$terms   = get_terms(
+			array(
+				'taxonomy'   => $type,
+				'hide_empty' => false,
+			)
+		);
 		if ( ! empty( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$options .= sprintf(
@@ -126,7 +126,6 @@ class MslsPostTagClassic extends MslsPostTag {
 					$term->term_id,
 					selected( $term->term_id, $mydata->$language, false ),
 					$term->name
-
 				);
 			}
 		}
@@ -135,5 +134,4 @@ class MslsPostTagClassic extends MslsPostTag {
 
 		restore_current_blog();
 	}
-
 }
