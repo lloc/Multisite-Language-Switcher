@@ -1,10 +1,4 @@
 <?php
-/**
- * MslsSqlCacher
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @since 1.0
- */
 
 namespace lloc\Msls;
 
@@ -22,6 +16,7 @@ namespace lloc\Msls;
  * @property string $blogs
  * @property int $blogid
  * @property int $siteid
+ *
  * @package Msls
  */
 class MslsSqlCacher {

@@ -4,6 +4,8 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 
+use lloc\Msls\MslsBlog;
+use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsOptions;
 
@@ -95,10 +97,26 @@ class TestMslsPlugin extends MslsUnitTestCase {
 	 * Verify the static uninstall-method
 	 */
 	function test_uninstall(): void {
-		Functions\when( 'delete_option' )->justReturn( false );
+		Functions\expect( 'delete_option' )->times( 3 )->andReturn( false );
+		Functions\expect( 'is_multisite' )->once()->andReturn( true );
+
+		global $wpdb;
+		$wpdb = \Mockery::mock( '\wpdb' );
+		$wpdb->shouldReceive( 'prepare' )->andReturn( '' );
+		$wpdb->shouldReceive( 'get_results' )->andReturn( array() );
+
+		$blogs = array(
+			(object) array( 'blog_id' => 1 ),
+			(object) array( 'blog_id' => 2 ),
+		);
+
+		Functions\expect( 'wp_cache_get' )->once()->andReturn( $blogs );
 
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
+
+		Functions\expect( 'switch_to_blog' )->times( count( $blogs ) );
+		Functions\expect( 'restore_current_blog' )->times( count( $blogs ) );
 
 		$test = new MslsPlugin( $options );
 
@@ -114,13 +132,108 @@ class TestMslsPlugin extends MslsUnitTestCase {
 		$this->assertIsBool( MslsPlugin::cleanup() );
 	}
 
-    public function test_plugin_dir_path(): void {
-        Functions\expect( 'plugin_dir_path' )->once()->andReturnUsing(function() {
-            return trailingslashit(dirname(MSLS_PLUGIN__FILE__));
-        });
+	public function test_plugin_dir_path(): void {
+		Functions\expect( 'plugin_dir_path' )->once()->andReturnUsing(
+			function () {
+				return trailingslashit( dirname( MSLS_PLUGIN__FILE__ ) );
+			}
+		);
 
-        $expected = '/var/www/html/wp-content/plugins/multisite-language-switcher/dist/msls-widget-block';
-        $this->assertEquals( $expected, MslsPlugin::plugin_dir_path( 'dist/msls-widget-block' ) );
-    }
+		$expected = '/var/www/html/wp-content/plugins/multisite-language-switcher/dist/msls-widget-block';
+		$this->assertEquals( $expected, MslsPlugin::plugin_dir_path( 'dist/msls-widget-block' ) );
+	}
 
+	public function test_print_alternate_links() {
+		$options = \Mockery::mock( MslsOptions::class );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_objects' )->twice()->andReturn( array() );
+
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
+		Functions\expect( 'msls_blog_collection' )->twice()->andReturn( $collection );
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( true );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+
+		$this->expectOutputString( '' . PHP_EOL );
+
+		MslsPlugin::print_alternate_links();
+	}
+
+	protected function provide_content_filter_data(): array {
+		return array(
+			array( 'Test', 'Test', true, false, false ),
+			array( 'Test', 'Test', false, false, false ),
+			array( 'Test', 'Test', false, true, false ),
+			array( 'Test', 'Test', false, false, true ),
+			array( 'Test', 'Test', true, true, true ),
+		);
+	}
+	/**
+	 * @dataProvider provide_content_filter_data
+	 */
+	public function test_content_filter_empty( string $content, string $expected, bool $is_front_page, bool $is_singular, bool $is_content_filter ) {
+		Functions\when( 'is_front_page' )->justReturn( $is_front_page );
+		Functions\when( 'is_singular' )->justReturn( $is_singular );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_content_filter' )->andReturn( $is_content_filter );
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertEquals( $expected, $test->content_filter( $content ) );
+	}
+
+	public function test_block_init_excluded() {
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->once()->andReturn( true );
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertFalse( $test->block_init() );
+	}
+
+	public function test_block_init_not_excluded() {
+		Functions\expect( 'register_block_type' )->once();
+		Functions\expect( 'add_shortcode' )->once();
+		Functions\expect( 'plugin_dir_path' )->once();
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->once()->andReturn( false );
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertTrue( $test->block_init() );
+	}
+
+	public function test_block_render(): void {
+		$expected = '<div id="msls-widget"></div>';
+
+		Functions\expect( 'register_widget' )->once();
+		Functions\when( 'the_widget' )->justEcho( $expected );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->once()->andReturn( false );
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertEquals( $expected, $test->block_render() );
+	}
+
+	public function test_block_render_exclude(): void {
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->once()->andReturn( true );
+
+		$test = new MslsPlugin( $options );
+
+		$this->assertEquals( '', $test->block_render() );
+	}
+
+	public function test_activate(): void {
+		Functions\expect( 'register_uninstall_hook' )->once();
+
+		MslsPlugin::activate();
+
+		$this->expectOutputString( '' );
+	}
 }

@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Query\BlogsInNetworkQuery;
+
 /**
  * Provides functionalities for general hooks and activation/deactivation
  *
@@ -164,13 +166,9 @@ class MslsPlugin {
 	 *
 	 * @return string
 	 */
-	public function content_filter( $content ) {
-		if ( ! is_front_page() && is_singular() ) {
-			$options = $this->options;
-
-			if ( $options->is_content_filter() ) {
-				$content .= $this->filter_string();
-			}
+	public function content_filter( string $content ) {
+		if ( ! is_front_page() && is_singular() && $this->options->is_content_filter() ) {
+			$content .= $this->filter_string();
 		}
 
 		return $content;
@@ -413,15 +411,8 @@ class MslsPlugin {
 		 * restore_current_blog
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			$cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
-
-			$blogs = $cache->get_results(
-				$cache->prepare(
-					"SELECT blog_id FROM {$cache->blogs} WHERE blog_id != %d AND site_id = %d",
-					$cache->blogid,
-					$cache->siteid
-				)
-			);
+			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
+			$blogs     = ( new BlogsInNetworkQuery( $sql_cache ) )();
 
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->blog_id );
