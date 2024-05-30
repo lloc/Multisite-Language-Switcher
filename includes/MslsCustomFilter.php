@@ -12,8 +12,6 @@ use lloc\Msls\Query\TranslatedPostIdQuery;
  */
 class MslsCustomFilter extends MslsMain {
 
-	const FILTER_NAME = 'msls_filter';
-
 	/**
 	 * Init
 	 *
@@ -34,7 +32,7 @@ class MslsCustomFilter extends MslsMain {
 				add_filter(
 					'msls_input_select_name',
 					function () {
-						return self::FILTER_NAME;
+						return MslsFields::FIELD_MSLS_FILTER;
 					}
 				);
 			}
@@ -59,13 +57,9 @@ class MslsCustomFilter extends MslsMain {
 				);
 			}
 
-			$id = (
-				filter_has_var( INPUT_GET, self::FILTER_NAME ) ?
-				filter_input( INPUT_GET, self::FILTER_NAME, FILTER_SANITIZE_NUMBER_INT ) :
-				'0'
-			);
+			$id = MslsRequest::get( MslsFields::FIELD_MSLS_FILTER, 0 );
 
-			echo ( new Select( self::FILTER_NAME, $options, $id ) )->render();
+			echo ( new Select( MslsFields::FIELD_MSLS_FILTER, $options, $id ) )->render();
 		}
 	}
 
@@ -77,11 +71,11 @@ class MslsCustomFilter extends MslsMain {
 	 * @return bool|\WP_Query
 	 */
 	public function execute_filter( \WP_Query $query ) {
-		if ( ! filter_has_var( INPUT_GET, self::FILTER_NAME ) ) {
+		if ( ! MslsRequest::has_var( MslsFields::FIELD_MSLS_FILTER ) ) {
 			return false;
 		}
 
-		$id   = filter_input( INPUT_GET, self::FILTER_NAME, FILTER_SANITIZE_NUMBER_INT );
+		$id   = MslsRequest::get_var( MslsFields::FIELD_MSLS_FILTER );
 		$blog = $this->collection->get_object( intval( $id ) );
 
 		if ( ! $blog ) {

@@ -27,9 +27,9 @@ class MslsMetaBox extends MslsMain {
 	public static function suggest() {
 		$json = new MslsJson();
 
-		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
+		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID ) ) {
 			switch_to_blog(
-				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
+				MslsRequest::get_var( MslsFields::FIELD_BLOG_ID )
 			);
 
 			$args = array(
@@ -37,15 +37,15 @@ class MslsMetaBox extends MslsMain {
 				'posts_per_page' => 10,
 			);
 
-			if ( filter_has_var( INPUT_POST, 'post_type' ) ) {
+			if ( MslsRequest::has_var( MslsFields::FIELD_POST_TYPE ) ) {
 				$args['post_type'] = sanitize_text_field(
-					filter_input( INPUT_POST, 'post_type' )
+					MslsRequest::get_var( MslsFields::FIELD_POST_TYPE )
 				);
 			}
 
-			if ( filter_has_var( INPUT_POST, 's' ) ) {
+			if ( MslsRequest::has_var( MslsFields::FIELD_S ) ) {
 				$args['s'] = sanitize_text_field(
-					filter_input( INPUT_POST, 's' )
+					MslsRequest::get_var( MslsFields::FIELD_S )
 				);
 			}
 
@@ -375,7 +375,7 @@ class MslsMetaBox extends MslsMain {
 			return;
 		}
 
-		$post_type  = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$post_type  = MslsRequest::get_var( MslsFields::FIELD_POST_TYPE );
 		$capability = 'page' === $post_type ? 'edit_page' : 'edit_post';
 
 		if ( ! current_user_can( $capability, $post_id ) ) {
@@ -393,18 +393,17 @@ class MslsMetaBox extends MslsMain {
 	 * @return MslsOptionsPost
 	 */
 	public function maybe_set_linked_post( MslsOptionsPost $mydata ) {
-		if ( ! isset( $_GET['msls_id'], $_GET['msls_lang'] ) ) {
+		if ( ! MslsRequest::isset( array( MslsFields::FIELD_MSLS_ID, MslsFields::FIELD_MSLS_LANG ) ) ) {
 			return $mydata;
 		}
 
-		$origin_lang = trim( $_GET['msls_lang'] );
+		$origin_lang = MslsRequest::get_var( MslsFields::FIELD_MSLS_LANG );
 
 		if ( isset( $mydata->{$origin_lang} ) ) {
 			return $mydata;
 		}
 
-		$origin_post_id = (int) $_GET['msls_id'];
-
+		$origin_post_id = MslsRequest::get_var( MslsFields::FIELD_MSLS_ID );
 		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
 
 		if ( null === $origin_blog_id ) {

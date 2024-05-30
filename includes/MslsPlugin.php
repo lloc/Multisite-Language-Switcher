@@ -3,6 +3,7 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Query\BlogsInNetworkQuery;
+use lloc\Msls\Query\CleanupOptionsQuery;
 
 /**
  * Provides functionalities for general hooks and activation/deactivation
@@ -53,7 +54,8 @@ class MslsPlugin {
 				add_action( 'init', array( $obj, 'block_init' ) );
 			}
 
-			add_action( 'init', array( $obj, 'admin_bar_init' ) );
+			add_action( 'init', array( __CLASS__, 'admin_bar_init' ) );
+
 			add_action( 'admin_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 			add_action( 'wp_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 
@@ -70,8 +72,8 @@ class MslsPlugin {
 				add_action( 'load-edit-tags.php', array( MslsPostTag::class, 'init' ) );
 				add_action( 'load-term.php', array( MslsPostTag::class, 'init' ) );
 
-				if ( filter_has_var( INPUT_POST, 'action' ) ) {
-					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+				if ( MslsRequest::has_var( MslsFields::FIELD_ACTION ) ) {
+					$action = MslsRequest::gas_var( MslsFields::FIELD_ACTION );
 
 					if ( 'add-tag' === $action ) {
 						add_action( 'admin_init', array( MslsPostTag::class, 'init' ) );
@@ -119,6 +121,19 @@ class MslsPlugin {
 		}
 
 		return $obj;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public static function admin_bar_init() {
+		if ( is_admin_bar_showing() ) {
+			add_action( 'admin_bar_menu', array( __CLASS__, 'update_adminbar' ), 999 );
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -230,19 +245,6 @@ class MslsPlugin {
 		if ( ! $this->options->is_excluded() ) {
 			register_block_type( self::plugin_dir_path( 'js/msls-widget-block' ) );
 			add_shortcode( 'sc_msls_widget', array( $this, 'block_render' ) );
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function admin_bar_init() {
-		if ( is_admin_bar_showing() ) {
-			add_action( 'admin_bar_menu', array( __CLASS__, 'update_adminbar' ), 999 );
 
 			return true;
 		}
@@ -434,13 +436,8 @@ class MslsPlugin {
 	 */
 	public static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
-			$cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
-			$sql   = $cache->prepare(
-				"DELETE FROM {$cache->options} WHERE option_name LIKE %s",
-				'msls_%'
-			);
-
-			return (bool) $cache->query( $sql );
+			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
+			return ( new CleanupOptionsQuery( $sql_cache ) )();
 		}
 
 		return false;
@@ -449,15 +446,16 @@ class MslsPlugin {
 	/**
 	 * Get specific vars from $_POST and $_GET in a safe way
 	 *
-	 * @param array $list
+	 * @param array  $list
+	 * @param string $default
 	 *
 	 * @return array
 	 */
-	public static function get_superglobals( array $list ) {
+	public static function get_superglobals( array $list, $default = '' ): array {
 		$arr = array();
 
 		foreach ( $list as $var ) {
-			$arr[ $var ] = '';
+			$arr[ $var ] = $default;
 
 			if ( filter_has_var( INPUT_POST, $var ) ) {
 				$arr[ $var ] = filter_input( INPUT_POST, $var );

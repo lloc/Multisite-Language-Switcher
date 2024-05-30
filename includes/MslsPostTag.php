@@ -24,9 +24,9 @@ class MslsPostTag extends MslsMain {
 	public static function suggest() {
 		$json = new MslsJson();
 
-		if ( filter_has_var( INPUT_POST, 'blog_id' ) ) {
+		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID ) ) {
 			switch_to_blog(
-				filter_input( INPUT_POST, 'blog_id', FILTER_SANITIZE_NUMBER_INT )
+				MslsRequest::get_var( MslsFields::FIELD_BLOG_ID )
 			);
 
 			$args = array(
@@ -36,9 +36,9 @@ class MslsPostTag extends MslsMain {
 				'hide_empty' => 0,
 			);
 
-			if ( filter_has_var( INPUT_POST, 's' ) ) {
+			if ( MslsRequest::has_var( MslsFields::FIELD_S ) ) {
 				$args['search'] = sanitize_text_field(
-					filter_input( INPUT_POST, 's' )
+					MslsRequest::get_var( MslsFields::FIELD_S )
 				);
 			}
 
@@ -49,9 +49,9 @@ class MslsPostTag extends MslsMain {
 			 *
 			 * @since 0.9.9
 			 */
-			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
-
-			foreach ( get_terms( sanitize_text_field( filter_input( INPUT_POST, 'post_type' ) ), $args ) as $term ) {
+			$args      = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
+			$post_type = MslsRequest::get( MslsFields::FIELD_POST_TYPE, '' );
+			foreach ( get_terms( sanitize_text_field( $post_type ), $args ) as $term ) {
 				/**
 				 * Manipulates the term object before using it
 				 *
@@ -221,17 +221,17 @@ class MslsPostTag extends MslsMain {
 	 * @return MslsOptionsTax
 	 */
 	public function maybe_set_linked_term( MslsOptionsTax $mydata ) {
-		if ( ! isset( $_GET['msls_id'], $_GET['msls_lang'] ) ) {
+		if ( ! MslsRequest::isset( array( MslsFields::FIELD_MSLS_ID, MslsFields::FIELD_MSLS_LANG ) ) ) {
 			return $mydata;
 		}
 
-		$origin_lang = trim( $_GET['msls_lang'] );
+		$origin_lang = MslsRequest::get_var( MslsFields::FIELD_MSLS_LANG );
 
 		if ( isset( $mydata->{$origin_lang} ) ) {
 			return $mydata;
 		}
 
-		$origin_term_id = (int) $_GET['msls_id'];
+		$origin_term_id = MslsRequest::get_var( MslsFields::FIELD_MSLS_ID );
 
 		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
 
