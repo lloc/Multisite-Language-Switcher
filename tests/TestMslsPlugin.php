@@ -4,7 +4,6 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 
-use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsOptions;
@@ -123,13 +122,21 @@ class TestMslsPlugin extends MslsUnitTestCase {
 		$this->assertIsBool( $test->uninstall() );
 	}
 
-	/**
-	 * Verify the static cleanup-method
-	 */
-	function test_cleanup(): void {
+	public function test_cleanup_false(): void {
 		Functions\when( 'delete_option' )->justReturn( false );
 
-		$this->assertIsBool( MslsPlugin::cleanup() );
+		$this->assertFalse( MslsPlugin::cleanup() );
+	}
+
+	public function test_cleanup_true(): void {
+		Functions\when( 'delete_option' )->justReturn( true );
+
+		global $wpdb;
+		$wpdb = \Mockery::mock( '\wpdb' );
+		$wpdb->shouldReceive( 'prepare' )->andReturn( '' );
+		$wpdb->shouldReceive( 'query' )->andReturn( true );
+
+		$this->assertTrue( MslsPlugin::cleanup() );
 	}
 
 	public function test_plugin_dir_path(): void {
@@ -235,5 +242,16 @@ class TestMslsPlugin extends MslsUnitTestCase {
 		MslsPlugin::activate();
 
 		$this->expectOutputString( '' );
+	}
+
+	public function test_admin_bar_init_true(): void {
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
+
+		$this->assertTrue( MslsPlugin::admin_bar_init() );
+	}
+	public function test_admin_bar_init_false(): void {
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturn( false );
+
+		$this->assertFalse( MslsPlugin::admin_bar_init() );
 	}
 }

@@ -3,7 +3,6 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsTaxonomy;
 use lloc\Msls\MslsOptions;
 
