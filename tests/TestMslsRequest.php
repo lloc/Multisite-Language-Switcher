@@ -40,4 +40,32 @@ class TestMslsRequest extends MslsUnitTestCase {
 	public function test_get_var_ko(): void {
 		$this->assertNull( MslsRequest::get_var( 'non_existent_key' ) );
 	}
+
+	public function test_request_ok(): void {
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE )->andReturn( false );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_POST_TYPE )->andReturn( true );
+
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'book' );
+
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, MslsFields::FIELD_TAXONOMY )->andReturn( true );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_TAXONOMY, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'fantasy' );
+
+		$expected = array(
+			'post_type' => 'book',
+			'taxonomy'  => 'fantasy',
+		);
+
+		$this->assertEquals( $expected, MslsRequest::get_request( array( MslsFields::FIELD_POST_TYPE, MslsFields::FIELD_TAXONOMY ) ) );
+	}
+
+	public function test_request_ko(): void {
+		Functions\expect( 'filter_has_var' )->times( 4 )->andReturn( false );
+
+		$expected = array(
+			'post_type' => '',
+			'taxonomy'  => '',
+		);
+
+		$this->assertEquals( $expected, MslsRequest::get_request( array( MslsFields::FIELD_POST_TYPE, MslsFields::FIELD_TAXONOMY ) ) );
+	}
 }

@@ -6,6 +6,7 @@ class MslsFields {
 
 	const FIELD_BLOG_ID        = 'blog_id';
 	const FIELD_POST_TYPE      = 'post_type';
+	const FIELD_TAXONOMY       = 'taxonomy';
 	const FIELD_S              = 's';
 	const FIELD_ACTION         = 'action';
 	const FIELD_MSLS_FILTER    = 'msls_filter';
@@ -19,6 +20,10 @@ class MslsFields {
 			FILTER_SANITIZE_NUMBER_INT,
 		),
 		self::FIELD_POST_TYPE      => array(
+			INPUT_POST,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_TAXONOMY       => array(
 			INPUT_POST,
 			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 		),

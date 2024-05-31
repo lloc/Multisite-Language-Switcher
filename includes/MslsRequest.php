@@ -4,7 +4,6 @@ namespace lloc\Msls;
 
 class MslsRequest {
 
-
 	public static function get_config( $name ): array {
 		$config = MslsFields::CONFIG[ $name ] ?? null;
 
@@ -58,5 +57,32 @@ class MslsRequest {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Gets the request values for a list of keys.
+	 *
+	 * It will treat each key as a string and will return an array with every key as index and the value as a sanitized string.
+	 *
+	 * @param string[] $keys
+	 * @param mixed    $default
+	 *
+	 * @return array<string, mixed>
+	 */
+	public static function get_request( array $keys, $default = '' ): array {
+		$values = array();
+
+		foreach ( $keys as $key ) {
+			list( , $filter ) = self::get_config( $key );
+			$values[ $key ]   = $default;
+
+			if ( filter_has_var( INPUT_POST, $key ) ) {
+				$values[ $key ] = filter_input( INPUT_POST, $key, $filter );
+			} elseif ( filter_has_var( INPUT_GET, $key ) ) {
+				$values[ $key ] = filter_input( INPUT_GET, $key, $filter );
+			}
+		}
+
+		return $values;
 	}
 }
