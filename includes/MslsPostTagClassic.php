@@ -109,7 +109,7 @@ class MslsPostTagClassic extends MslsPostTag {
 		$icon      = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $icon_type );
 
 		if ( $mydata->has_value( $language ) ) {
-			$icon->set_href( $mydata->$language );
+			$icon->set_href( (int) $mydata->$language );
 		}
 
 		$options = '';

@@ -185,7 +185,7 @@ class MslsMetaBox extends MslsMain {
 				$icon     = MslsAdminIcon::create( $type )->set_language( $language )->set_icon_type( $iconType );
 
 				if ( $mydata->has_value( $language ) ) {
-					$icon->set_href( $mydata->$language );
+					$icon->set_href( (int) $mydata->$language );
 				}
 
 				$selects  = '';
@@ -323,7 +323,7 @@ class MslsMetaBox extends MslsMain {
 				$value = $title = '';
 
 				if ( $my_data->has_value( $language ) ) {
-					$icon->set_href( $my_data->$language );
+					$icon->set_href( (int) $my_data->$language );
 					$value = $my_data->$language;
 					$title = get_the_title( $value );
 				}

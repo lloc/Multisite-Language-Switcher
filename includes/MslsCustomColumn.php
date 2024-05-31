@@ -97,7 +97,7 @@ class MslsCustomColumn extends MslsMain {
 					$icon->set_icon_type( 'action' );
 
 					if ( $mydata->has_value( $language ) ) {
-						$icon->set_href( $mydata->$language );
+						$icon->set_href( (int) $mydata->$language );
 					}
 
 					echo '<span class="msls-icon-wrapper ' . esc_attr( $this->options->admin_display ) . '">';
