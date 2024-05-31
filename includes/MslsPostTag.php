@@ -183,7 +183,7 @@ class MslsPostTag extends MslsMain {
 				if ( $mydata->has_value( $language ) ) {
 					$term = get_term( $mydata->$language, $type );
 					if ( is_object( $term ) ) {
-						$icon->set_href( $mydata->$language );
+						$icon->set_href( (int) $mydata->$language );
 						$value = $mydata->$language;
 						$title = $term->name;
 					}
