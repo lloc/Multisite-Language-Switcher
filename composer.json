@@ -34,6 +34,7 @@
     "test": "vendor/bin/phpunit",
     "coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html tests/coverage",
     "analyze": "vendor/bin/phpstan analyze",
+    "playwright": "npx playwright test",
     "php74": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4",
     "php81": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1",
     "php82": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2",

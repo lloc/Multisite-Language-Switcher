@@ -44,6 +44,7 @@ class MslsPlugin {
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			add_filter( 'msls_get_output', array( __CLASS__, 'get_output' ) );
+			add_action( 'init', array( MslsAdminBar::class, 'init' ) );
 
 			add_action( 'widgets_init', array( $obj, 'init_widget' ) );
 			add_filter( 'the_content', array( $obj, 'content_filter' ) );
@@ -53,8 +54,6 @@ class MslsPlugin {
 			if ( function_exists( 'register_block_type' ) ) {
 				add_action( 'init', array( $obj, 'block_init' ) );
 			}
-
-			add_action( 'init', array( __CLASS__, 'admin_bar_init' ) );
 
 			add_action( 'admin_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 			add_action( 'wp_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
@@ -121,50 +120,6 @@ class MslsPlugin {
 		}
 
 		return $obj;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public static function admin_bar_init() {
-		if ( is_admin_bar_showing() ) {
-			add_action( 'admin_bar_menu', array( __CLASS__, 'update_adminbar' ), 999 );
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param $wp_admin_bar
-	 *
-	 * @return void
-	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ): void {
-		$icon_type = msls_options()->get_icon_type();
-
-		$blog_collection = msls_blog_collection();
-		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
-			$title = $blog->get_blavatar() . $blog->get_title( $icon_type );
-
-			$wp_admin_bar->add_node(
-				array(
-					'id'    => 'blog-' . $blog->userblog_id,
-					'title' => $title,
-				)
-			);
-		}
-
-		$blog = $blog_collection->get_current_blog();
-		if ( is_object( $blog ) && method_exists( $blog, 'get_title' ) ) {
-			$wp_admin_bar->add_node(
-				array(
-					'id'    => 'site-name',
-					'title' => $blog->get_title( $icon_type ),
-				)
-			);
-		}
 	}
 
 	/**

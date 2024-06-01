@@ -242,15 +242,4 @@ class TestMslsPlugin extends MslsUnitTestCase {
 
 		$this->expectOutputString( '' );
 	}
-
-	public function test_admin_bar_init_true(): void {
-		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
-
-		$this->assertTrue( MslsPlugin::admin_bar_init() );
-	}
-	public function test_admin_bar_init_false(): void {
-		Functions\expect( 'is_admin_bar_showing' )->once()->andReturn( false );
-
-		$this->assertFalse( MslsPlugin::admin_bar_init() );
-	}
 }
