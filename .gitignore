@@ -4,10 +4,10 @@ package-lock.json
 phpunit.xml.bak
 .idea/
 .phpunit.result.cache
-coverage/
+tests/coverage/
+tests/playwright-results/
+tests/playwright-report/
 node_modules/
 vendor/
-/test-results/
-/playwright-report/
 /blob-report/
 /playwright/.cache/
