@@ -2,11 +2,9 @@
 
 namespace lloc\MslsTests;
 
-use Brain\Monkey\Functions;
 use lloc\Msls\MslsAdminBar;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsLink;
 use lloc\Msls\MslsOptions;
 
 class TestMslsAdminBar extends MslsUnitTestCase {
