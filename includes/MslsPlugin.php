@@ -145,7 +145,7 @@ class MslsPlugin {
 	}
 
 	/**
-	 * Create filterstring for msls_content_filter()
+	 * Create filter-string for msls_content_filter()
 	 *
 	 * @param string $pref
 	 * @param string $post
