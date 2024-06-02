@@ -16,7 +16,7 @@ class MslsAdminBar {
 	/**
 	 * @codeCoverageIgnore
 	 */
-	public function init(): void {
+	public static function init(): void {
 		$obj = new MslsAdminBar( msls_options(), msls_blog_collection() );
 
 		if ( is_admin_bar_showing() ) {
