@@ -1,6 +1,7 @@
 <?php
 /**
  * MslsWidget
+ *
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
@@ -9,6 +10,7 @@ namespace lloc\Msls;
 
 /**
  * The standard widget of the Multisite Language Switcher
+ *
  * @package Msls
  */
 class MslsWidget extends \WP_Widget {
@@ -16,13 +18,24 @@ class MslsWidget extends \WP_Widget {
 	public $id_base = 'mslswidget';
 
 	/**
-	 * Constructor
+	 * @codeCoverageIgnore
 	 */
 	public function __construct() {
-		$name = apply_filters( 'msls_widget_title',
-			__( 'Multisite Language Switcher', 'multisite-language-switcher' ) );
+		$name = apply_filters(
+			'msls_widget_title',
+			__( 'Multisite Language Switcher', 'multisite-language-switcher' )
+		);
 
-		parent::__construct( $this->id_base, $name, [ 'show_instance_in_rest' => true ] );
+		parent::__construct( $this->id_base, $name, array( 'show_instance_in_rest' => true ) );
+	}
+
+	/**
+	 * @codeCoverageIgnore
+	 */
+	public function init(): void {
+		if ( ! msls_options()->is_excluded() ) {
+			register_widget( self::class );
+		}
 	}
 
 	/**
@@ -34,12 +47,12 @@ class MslsWidget extends \WP_Widget {
 	 * @user MslsOutput
 	 */
 	public function widget( $args, $instance ) {
-		$default = [
+		$default = array(
 			'before_widget' => '',
 			'after_widget'  => '',
 			'before_title'  => '',
 			'after_title'   => '',
-		];
+		);
 
 		$args = wp_parse_args( $args, $default );
 
@@ -51,7 +64,7 @@ class MslsWidget extends \WP_Widget {
 
 		$content = MslsOutput::init()->__toString();
 		if ( '' === $content ) {
-			$text = __( 'No available translations found', 'multisite-language-switcher' );
+			$text    = __( 'No available translations found', 'multisite-language-switcher' );
 			$content = apply_filters( 'msls_widget_alternative_content', $text );
 		}
 
@@ -92,5 +105,4 @@ class MslsWidget extends \WP_Widget {
 			( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' )
 		);
 	}
-
 }

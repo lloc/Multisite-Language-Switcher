@@ -43,20 +43,17 @@ class MslsPlugin {
 		register_activation_hook( self::file(), array( $obj, 'activate' ) );
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			add_filter( 'msls_get_output', array( __CLASS__, 'get_output' ) );
-			add_action( 'init', array( MslsAdminBar::class, 'init' ) );
-
-			add_action( 'widgets_init', array( $obj, 'init_widget' ) );
-			add_filter( 'the_content', array( $obj, 'content_filter' ) );
-
-			add_action( 'wp_head', array( __CLASS__, 'print_alternate_links' ) );
-
-			if ( function_exists( 'register_block_type' ) ) {
-				add_action( 'init', array( $obj, 'block_init' ) );
-			}
-
 			add_action( 'admin_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 			add_action( 'wp_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
+
+			add_action( 'init', array( MslsAdminBar::class, 'init' ) );
+			add_action( 'init', array( MslsBlock::class, 'init' ) );
+			add_action( 'init', array( MslsShortCode::class, 'init' ) );
+			add_action( 'widgets_init', array( MslsWidget::class, 'init' ) );
+			add_action( 'wp_head', array( __CLASS__, 'print_alternate_links' ) );
+
+			add_filter( 'msls_get_output', array( __CLASS__, 'get_output' ) );
+			add_filter( 'the_content', array( $obj, 'content_filter' ) );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
@@ -192,22 +189,6 @@ class MslsPlugin {
 	}
 
 	/**
-	 * Register block and shortcode.
-	 *
-	 * @return bool
-	 */
-	public function block_init() {
-		if ( ! $this->options->is_excluded() ) {
-			register_block_type( self::plugin_dir_path( 'js/msls-widget-block' ) );
-			add_shortcode( 'sc_msls_widget', array( $this, 'block_render' ) );
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Loads styles and some js if needed
 	 *
 	 * The method returns true if the autocomplete-option is activated, false otherwise.
@@ -277,41 +258,6 @@ class MslsPlugin {
 	 */
 	public static function path(): string {
 		return defined( 'MSLS_PLUGIN_PATH' ) ? constant( 'MSLS_PLUGIN_PATH' ) : '';
-	}
-
-	/**
-	 * Register widget
-	 *
-	 * The widget will only be registered if the current blog is not
-	 * excluded in the configuration of the plugin.
-	 *
-	 * @return boolean
-	 */
-	public function init_widget() {
-		if ( ! $this->options->is_excluded() ) {
-			register_widget( MslsWidget::class );
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Render widget output
-	 *
-	 * @return string
-	 */
-	public function block_render() {
-		if ( ! $this->init_widget() ) {
-			return '';
-		}
-
-		ob_start();
-		the_widget( MslsWidget::class );
-		$output = ob_get_clean();
-
-		return $output;
 	}
 
 	/**

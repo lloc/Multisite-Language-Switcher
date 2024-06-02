@@ -48,26 +48,6 @@ class TestMslsPlugin extends MslsUnitTestCase {
 		$this->assertFalse( $test->custom_enqueue() );
 	}
 
-	function test_init_widget_not_excluded(): void {
-		Functions\expect( 'register_widget' )->once();
-
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->andReturnFalse();
-
-		$test = new MslsPlugin( $options );
-
-		$this->assertTrue( $test->init_widget() );
-	}
-
-	function test_init_widget_excluded(): void {
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->andReturnTrue();
-
-		$test = new MslsPlugin( $options );
-
-		$this->assertFalse( $test->init_widget() );
-	}
-
 	/**
 	 * Verify the static init_i18n_support-method
 	 */
@@ -175,6 +155,7 @@ class TestMslsPlugin extends MslsUnitTestCase {
 			array( 'Test', 'Test', true, true, true ),
 		);
 	}
+
 	/**
 	 * @dataProvider provide_content_filter_data
 	 */
@@ -188,51 +169,6 @@ class TestMslsPlugin extends MslsUnitTestCase {
 		$test = new MslsPlugin( $options );
 
 		$this->assertEquals( $expected, $test->content_filter( $content ) );
-	}
-
-	public function test_block_init_excluded() {
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->once()->andReturn( true );
-
-		$test = new MslsPlugin( $options );
-
-		$this->assertFalse( $test->block_init() );
-	}
-
-	public function test_block_init_not_excluded() {
-		Functions\expect( 'register_block_type' )->once();
-		Functions\expect( 'add_shortcode' )->once();
-		Functions\expect( 'plugin_dir_path' )->once();
-
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->once()->andReturn( false );
-
-		$test = new MslsPlugin( $options );
-
-		$this->assertTrue( $test->block_init() );
-	}
-
-	public function test_block_render(): void {
-		$expected = '<div id="msls-widget"></div>';
-
-		Functions\expect( 'register_widget' )->once();
-		Functions\when( 'the_widget' )->justEcho( $expected );
-
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->once()->andReturn( false );
-
-		$test = new MslsPlugin( $options );
-
-		$this->assertEquals( $expected, $test->block_render() );
-	}
-
-	public function test_block_render_exclude(): void {
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->once()->andReturn( true );
-
-		$test = new MslsPlugin( $options );
-
-		$this->assertEquals( '', $test->block_render() );
 	}
 
 	public function test_activate(): void {
