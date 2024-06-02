@@ -32,7 +32,7 @@ class MslsWidget extends \WP_Widget {
 	/**
 	 * @codeCoverageIgnore
 	 */
-	public function init(): void {
+	public static function init(): void {
 		if ( ! msls_options()->is_excluded() ) {
 			register_widget( self::class );
 		}
