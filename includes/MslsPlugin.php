@@ -87,16 +87,17 @@ class MslsPlugin {
 			add_action(
 				'admin_notices',
 				function () {
-					$href = 'https://wordpress.org/support/article/create-a-network/';
-					$msg  = sprintf(
-						__(
-							'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="%s">this post</a> if you don\'t know the meaning.',
-							'multisite-language-switcher'
-						),
-						$href
+					/* translators: %s: URL to the WordPress Codex. */
+					$format  = __(
+						'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="%s">this post</a> if you don\'t know the meaning.',
+						'multisite-language-switcher'
+					);
+					$message = sprintf(
+						$format,
+						esc_url( 'https://developer.wordpress.org/advanced-administration/multisite/create-network/' )
 					);
 
-					self::message_handler( $msg );
+					self::message_handler( $message );
 				}
 			);
 		}
@@ -150,8 +151,10 @@ class MslsPlugin {
 	 * @return string
 	 */
 	public function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-		$obj    = MslsOutput::init();
-		$links  = $obj->get( 1, true, true );
+		$obj   = MslsOutput::init();
+		$links = $obj->get( 1, true, true );
+
+		/* translators: %s: list of languages */
 		$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
 
 		if ( has_filter( 'msls_filter_string' ) ) {
@@ -164,25 +167,25 @@ class MslsPlugin {
 			 * @since 1.0
 			 */
 			$output = apply_filters( 'msls_filter_string', $output, $links );
-		} else {
-			$output = '';
+		} elseif ( count( $links ) > 1 ) {
+				$last = array_pop( $links );
 
-			if ( count( $links ) > 1 ) {
-				$last   = array_pop( $links );
+				/* translators: %1$s: list of languages separated by a comma, %2$s: last language */
+				$format = __( '%1$s and %2$s', 'multisite-language-switcher' );
+
 				$output = sprintf(
 					$output,
 					sprintf(
-						__( '%1$s and %2$s', 'multisite-language-switcher' ),
+						$format,
 						implode( ', ', $links ),
 						$last
 					)
 				);
-			} elseif ( 1 == count( $links ) ) {
-				$output = sprintf(
-					$output,
-					$links[0]
-				);
-			}
+		} elseif ( 1 == count( $links ) ) {
+			$output = sprintf(
+				$output,
+				$links[0]
+			);
 		}
 
 		return ! empty( $output ) ? $pref . $output . $post : '';
