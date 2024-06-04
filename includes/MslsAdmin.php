@@ -137,21 +137,21 @@ class MslsAdmin extends MslsMain {
 		$message = '';
 
 		if ( $this->options->is_empty() ) {
-			$message = sprintf(
-				__(
-					'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.',
-					'multisite-language-switcher'
-				),
-				esc_url( admin_url( $this->get_options_page_link() ) )
+			/* translators: %s: URL to the options page */
+			$format  = __(
+				'Multisite Language Switcher is almost ready. You must <a href="%s">complete the configuration process</a>.',
+				'multisite-language-switcher'
 			);
+			$message = sprintf( $format, esc_url( admin_url( $this->get_options_page_link() ) ) );
 		} elseif ( 1 == count( $this->options->get_available_languages() ) ) {
+			/* translators: %1$s: URL to a page at WordPress.orgs */
+			$format  = __(
+				'TNo language files are currently installed. Learn how to install various languages in WordPress by <a href="%1$s">reading more here</a>.',
+				'multisite-language-switcher'
+			);
 			$message = sprintf(
-				__(
-					'There are no language files installed. You can <a href="%1$s">manually install some language files</a> or you could use a <a href="%2$s">plugin</a> to download these files automatically.',
-					'multisite-language-switcher'
-				),
-				esc_url( 'http://codex.wordpress.org/Installing_WordPress_in_Your_Language#Manually_Installing_Language_Files' ),
-				esc_url( 'http://wordpress.org/plugins/wp-native-dashboard/' )
+				$format,
+				esc_url( 'https://developer.wordpress.org/advanced-administration/before-install/in-your-language/#Manually_Installing_Language_Files' )
 			);
 		}
 

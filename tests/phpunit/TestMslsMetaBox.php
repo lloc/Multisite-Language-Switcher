@@ -18,7 +18,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 	}
 
 	public function test_suggest(): void {
-		$json = json_encode( array( 'some' => 'JSON' ) );
+		$json = '{"some":"JSON"}';
 
 		Functions\when( 'wp_die' )->justEcho( $json );
 
