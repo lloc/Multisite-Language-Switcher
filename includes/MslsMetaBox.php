@@ -1,12 +1,5 @@
 <?php declare( strict_types=1 );
 
-/**
- * MslsMetaBox
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
-
 namespace lloc\Msls;
 
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
