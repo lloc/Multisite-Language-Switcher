@@ -2,7 +2,6 @@
 
 namespace lloc\Msls\ContentImport;
 
-
 use lloc\Msls\ContentImport\LogWriters\AdminNoticeLogger;
 use lloc\Msls\ContentImport\LogWriters\LogWriter;
 
@@ -10,11 +9,11 @@ class ImportLogger {
 
 	protected $levels_delimiter = '/';
 
-	protected $data = [
-		'info'    => [],
-		'error'   => [],
-		'success' => [],
-	];
+	protected $data = array(
+		'info'    => array(),
+		'error'   => array(),
+		'success' => array(),
+	);
 
 	/**
 	 * @var ImportCoordinates
@@ -66,7 +65,7 @@ class ImportLogger {
 		}
 
 		if ( is_string( $log_writer ) ) {
-			$log_writer = new $log_writer;
+			$log_writer = new $log_writer();
 		}
 
 		if ( ! $log_writer instanceof LogWriter ) {
@@ -81,7 +80,7 @@ class ImportLogger {
 	 * Logs an error.
 	 *
 	 * @param string $where A location string using `/` as level format.
-	 * @param mixed $what What should be stored in the log.
+	 * @param mixed  $what What should be stored in the log.
 	 */
 	public function log_error( $where, $what ) {
 		$this->log( $where, $what, 'error' );
@@ -91,30 +90,31 @@ class ImportLogger {
 	 * Logs something.
 	 *
 	 * @param string $where A location string using `/` as level format.
-	 * @param mixed $what What should be stored in the log.
+	 * @param mixed  $what What should be stored in the log.
 	 * @param string $root Where to log the information.
 	 */
 	protected function log( $where, $what, $root = 'info' ) {
 		if ( ! isset( $this->data[ $root ] ) ) {
-			$this->data[ $root ] = [];
+			$this->data[ $root ] = array();
 		}
 
 		$data = $this->build_nested_array( $this->build_path( $where ), $what );
-
 
 		$this->data[ $root ] = array_merge_recursive( $this->data[ $root ], $data );
 	}
 
 	protected function build_nested_array( $path, $what = '' ) {
 		$json = '{"'
-		        . implode( '":{"', $path )
-		        . '":' . json_encode( $what )
-		        . implode(
-			        '',
-			        array_fill( 0,
-				        count( $path ),
-				        '}' )
-		        );
+				. implode( '":{"', $path )
+				. '":' . wp_json_encode( $what )
+				. implode(
+					'',
+					array_fill(
+						0,
+						count( $path ),
+						'}'
+					)
+				);
 		$data = json_decode( $json, true );
 
 		return $data;
@@ -153,7 +153,7 @@ class ImportLogger {
 	 * Logs a success.
 	 *
 	 * @param string $where A location string using `/` as level format.
-	 * @param mixed $what What should be stored in the log.
+	 * @param mixed  $what What should be stored in the log.
 	 */
 	public function log_success( $where, $what ) {
 		$this->log( $where, $what, 'success' );

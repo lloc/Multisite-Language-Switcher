@@ -40,6 +40,8 @@ class TestMslsWidget extends MslsUnitTestCase {
 	}
 
 	public function test_update(): void {
+		Functions\expect( 'wp_strip_all_tags' )->twice()->andReturnFirstArg();
+
 		$result = $this->test->update( array(), array() );
 		$this->assertEquals( array(), $result );
 
