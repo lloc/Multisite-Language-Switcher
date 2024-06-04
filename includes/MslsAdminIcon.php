@@ -205,6 +205,7 @@ class MslsAdminIcon {
 	 */
 	public function get_a(): string {
 		if ( empty( $this->href ) ) {
+			/* translators: %s: blog name */
 			$format = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
 			$href   = $this->get_edit_new();
 		} else {
