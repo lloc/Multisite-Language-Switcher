@@ -308,7 +308,10 @@ class MslsAdmin extends MslsMain {
 	public function rewrites_section(): int {
 		$map = array();
 		foreach ( get_post_types( array( 'public' => true ), 'objects' ) as $key => $object ) {
-			$map[ "rewrite_{$key}" ] = sprintf( __( '%s Slug', 'multisite-language-switcher' ), $object->label );
+			/* translators: %s: post type label */
+			$format = __( '%s Slug', 'multisite-language-switcher' );
+
+			$map[ "rewrite_{$key}" ] = sprintf( $format, $object->label );
 		}
 
 		return $this->add_settings_fields( $map, 'rewrites_section' );
@@ -382,14 +385,13 @@ class MslsAdmin extends MslsMain {
 		if ( count( $users ) > self::MAX_REFERENCE_USERS ) {
 			$users = array_slice( $users, 0, self::MAX_REFERENCE_USERS, true );
 
-			$message = sprintf(
-				__(
-					'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %s users. Please, use the hook "msls_reference_users" to filter the result before!',
-					'multisite-language-switcher'
-				),
-				self::MAX_REFERENCE_USERS
+			/* translators: %s: maximum number of users */
+			$format = __(
+				'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %s users. Please, use the hook "msls_reference_users" to filter the result before!',
+				'multisite-language-switcher'
 			);
-			trigger_error( $message );
+
+			trigger_error( sprintf( $format, self::MAX_REFERENCE_USERS ) );
 		}
 
 		echo ( new Select( 'reference_user', $users, $this->options->reference_user ) )->render();
