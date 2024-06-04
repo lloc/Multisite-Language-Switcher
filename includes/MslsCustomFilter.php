@@ -51,10 +51,10 @@ class MslsCustomFilter extends MslsMain {
 		if ( $blogs ) {
 			$options = array( '' => esc_html( __( 'Show all posts', 'multisite-language-switcher' ) ) );
 			foreach ( $blogs as $blog ) {
-				$options[ strval( $blog->userblog_id ) ] = sprintf(
-					__( 'Not translated in the %s-blog', 'multisite-language-switcher' ),
-					$blog->get_description()
-				);
+				/* translators: %s: blog name */
+				$format = __( 'Not translated in the %s-blog', 'multisite-language-switcher' );
+
+				$options[ strval( $blog->userblog_id ) ] = sprintf( $format, $blog->get_description() );
 			}
 
 			$id = MslsRequest::get( MslsFields::FIELD_MSLS_FILTER, 0 );

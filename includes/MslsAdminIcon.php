@@ -205,20 +205,17 @@ class MslsAdminIcon {
 	 */
 	public function get_a(): string {
 		if ( empty( $this->href ) ) {
-			$title = sprintf(
-				__( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
-				$this->language
-			);
-			$href  = $this->get_edit_new();
+			$format = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
+			$href   = $this->get_edit_new();
 		} else {
-			$title = sprintf(
-				__( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
-				$this->language
-			);
-			$href  = $this->href;
+			/* translators: %s: blog name */
+			$format = __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' );
+			$href   = $this->href;
 		}
 
-		return sprintf( '<a title="%s" href="%s">%s</a>&nbsp;', $title, $href, $this->get_icon() );
+		$title = sprintf( $format, $this->language );
+
+		return sprintf( '<a title="%1$s" href="%2$s">%3$s</a>&nbsp;', $title, $href, $this->get_icon() );
 	}
 
 	/**
