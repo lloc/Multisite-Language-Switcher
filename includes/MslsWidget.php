@@ -83,7 +83,7 @@ class MslsWidget extends \WP_Widget {
 		$instance = $old_instance;
 
 		if ( isset( $new_instance['title'] ) ) {
-			$instance['title'] = strip_tags( $new_instance['title'] );
+			$instance['title'] = wp_strip_all_tags( $new_instance['title'] );
 		}
 
 		return $instance;

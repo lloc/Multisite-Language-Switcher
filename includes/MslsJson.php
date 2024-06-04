@@ -37,8 +37,8 @@ class MslsJson {
 	/**
 	 * Compare the item with the key "label" of the array $a and the array $b
 	 *
-	 * @param array $a
-	 * @param array $b
+	 * @param array<string, string> $a
+	 * @param array<string, string> $b
 	 *
 	 * @return int
 	 */
@@ -65,7 +65,7 @@ class MslsJson {
 	 * @return string
 	 */
 	public function encode(): string {
-		return json_encode( $this->get() );
+		return wp_json_encode( $this->get() );
 	}
 
 	/**
