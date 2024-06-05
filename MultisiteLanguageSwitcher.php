@@ -76,6 +76,11 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @uses get_the_msls
 	 *
 	 * @param string[] $arr
+	public static function init(): void
+	{
+		add_filter( 'the_content', array( $obj, 'content_filter' ) );
+
+	}
 	 */
 	function the_msls( array $arr = array() ): void {
 		echo get_the_msls( $arr );

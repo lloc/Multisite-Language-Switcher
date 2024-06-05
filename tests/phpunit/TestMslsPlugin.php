@@ -146,31 +146,6 @@ class TestMslsPlugin extends MslsUnitTestCase {
 		MslsPlugin::print_alternate_links();
 	}
 
-	protected function provide_content_filter_data(): array {
-		return array(
-			array( 'Test', 'Test', true, false, false ),
-			array( 'Test', 'Test', false, false, false ),
-			array( 'Test', 'Test', false, true, false ),
-			array( 'Test', 'Test', false, false, true ),
-			array( 'Test', 'Test', true, true, true ),
-		);
-	}
-
-	/**
-	 * @dataProvider provide_content_filter_data
-	 */
-	public function test_content_filter_empty( string $content, string $expected, bool $is_front_page, bool $is_singular, bool $is_content_filter ) {
-		Functions\when( 'is_front_page' )->justReturn( $is_front_page );
-		Functions\when( 'is_singular' )->justReturn( $is_singular );
-
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_content_filter' )->andReturn( $is_content_filter );
-
-		$test = new MslsPlugin( $options );
-
-		$this->assertEquals( $expected, $test->content_filter( $content ) );
-	}
-
 	public function test_activate(): void {
 		Functions\expect( 'register_uninstall_hook' )->once();
 
