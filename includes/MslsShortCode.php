@@ -16,7 +16,8 @@ class MslsShortCode {
 	 */
 	public static function init(): void {
 		$obj = new self( msls_options() );
-		add_shortcode( 'sc_msls_widget', array( $obj, 'block_render' ) );
+		add_shortcode( 'sc_msls_widget', array( $obj, 'render_widget' ) );
+		add_shortcode( 'sc_msls', 'get_the_msls' );
 	}
 
 	/**
@@ -24,7 +25,7 @@ class MslsShortCode {
 	 *
 	 * @return string|false
 	 */
-	public function block_render() {
+	public function render_widget() {
 		if ( $this->options->is_excluded() ) {
 			return '';
 		}

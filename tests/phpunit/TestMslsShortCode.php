@@ -16,7 +16,7 @@ class TestMslsShortCode extends MslsUnitTestCase {
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
-		$this->assertEquals( '', ( new MslsShortCode( $options ) )->block_render() );
+		$this->assertEquals( '', ( new MslsShortCode( $options ) )->render_widget() );
 	}
 
 
@@ -28,6 +28,6 @@ class TestMslsShortCode extends MslsUnitTestCase {
 
 		Functions\when( 'the_widget' )->justEcho( $expected );
 
-		$this->assertEquals( $expected, ( new MslsShortCode( $options ) )->block_render() );
+		$this->assertEquals( $expected, ( new MslsShortCode( $options ) )->render_widget() );
 	}
 }
