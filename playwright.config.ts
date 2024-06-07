@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from "dotenv";
+
+dotenv.config({ path: __dirname + '/tests/playwright/.env.local' });
 
 export default defineConfig({
   testDir: './tests/playwright/',
@@ -12,20 +15,15 @@ export default defineConfig({
     ['json', {  outputFile: './tests/playwright-report/test-results.json' }]
   ],
   use: {
+    baseURL: 'https://msls.co',
     trace: 'on-first-retry',
   },
   projects: [
     {
-      name: 'setup',
-      testMatch: 'tests/playwright/auth.setup.ts',
-    },
-    {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        storageState: 'tests/playwright/.auth/user.json',
       },
-      dependencies: ['setup'],
     },
-  ],
+  ]
 });
