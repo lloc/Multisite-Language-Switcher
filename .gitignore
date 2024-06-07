@@ -8,7 +8,6 @@ tests/coverage/
 tests/playwright-results/
 tests/playwright-report/
 tests/playwright/.env.local
-tests/playwright/.auth/
 node_modules/
 vendor/
 
