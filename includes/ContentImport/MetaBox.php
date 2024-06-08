@@ -39,6 +39,8 @@ class MetaBox extends MslsRegistryInstance {
 
 		if ( $has_input || $has_translation ) {
 			add_thickbox();
+
+			/* translators: %s: language name */
 			$label_template = __( 'Import content from %s', 'multisite-language-switcher' );
 			$output         = '<fieldset>';
 			$output        .= '<legend>'
