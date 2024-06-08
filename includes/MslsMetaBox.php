@@ -270,7 +270,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function render_option( str $post_id, $msls_id ) {
+	public function render_option( $post_id, $msls_id ) {
 		return sprintf(
 			'<option value="%s" %s>%s</option>',
 			$post_id,
