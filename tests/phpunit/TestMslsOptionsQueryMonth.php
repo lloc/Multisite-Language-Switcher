@@ -30,8 +30,8 @@ class TestMslsOptionsQueryMonth extends MslsUnitTestCase {
 	}
 
 	public function test_get_current_link(): void {
-		Functions\expect( 'get_month_link' )->once()->andReturn( 'https://example.org/queried-month' );
+		Functions\expect( 'get_month_link' )->once()->andReturn( 'https://msls.co/queried-month' );
 
-		$this->assertEquals( 'https://example.org/queried-month', $this->get_test( 2015, 7 )->get_current_link() );
+		$this->assertEquals( 'https://msls.co/queried-month', $this->get_test( 2015, 7 )->get_current_link() );
 	}
 }

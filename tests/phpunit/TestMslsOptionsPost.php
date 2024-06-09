@@ -50,8 +50,8 @@ class TestMslsOptionsPost extends MslsUnitTestCase {
 	}
 
 	public function test_get_current_link(): void {
-		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://example.org/a-post' );
+		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://msls.co/a-post' );
 
-		$this->assertEquals( 'https://example.org/a-post', $this->test->get_current_link() );
+		$this->assertEquals( 'https://msls.co/a-post', $this->test->get_current_link() );
 	}
 }

@@ -12,7 +12,7 @@ class TestMslsPlugin extends MslsUnitTestCase {
 	function test_admin_menu_without_autocomplete(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
 		Functions\expect( 'wp_enqueue_style' )->twice();
-		Functions\expect( 'plugins_url' )->twice()->andReturn( 'https://lloc.de/wp-content/plugins' );
+		Functions\expect( 'plugins_url' )->twice()->andReturn( 'https://msls.co/wp-content/plugins' );
 
 		$options = \Mockery::mock( MslsOptions::class );
 
@@ -24,7 +24,7 @@ class TestMslsPlugin extends MslsUnitTestCase {
 	function test_admin_menu_with_autocomplete(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
 		Functions\expect( 'wp_enqueue_style' )->twice();
-		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://lloc.de/wp-content/plugins' );
+		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://msls.co/wp-content/plugins' );
 		Functions\expect( 'wp_enqueue_script' )->once();
 
 		$options = \Mockery::mock( MslsOptions::class );

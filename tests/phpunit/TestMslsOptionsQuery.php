@@ -85,7 +85,7 @@ class TestMslsOptionsQuery extends MslsUnitTestCase {
 	}
 
 	public function test_current_get_postlink(): void {
-		$home_url = 'https://example.org/';
+		$home_url = 'https://msls.co/';
 
 		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
 		Functions\expect( 'home_url' )->once()->andReturn( $home_url );

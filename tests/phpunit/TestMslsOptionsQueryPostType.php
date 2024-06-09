@@ -41,8 +41,8 @@ class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 	}
 
 	public function test_get_current_link(): void {
-		Functions\expect( 'get_post_type_archive_link' )->once()->andReturn( 'https://example.org/queried-posttype' );
+		Functions\expect( 'get_post_type_archive_link' )->once()->andReturn( 'https://msls.co/queried-posttype' );
 
-		$this->assertEquals( 'https://example.org/queried-posttype', $this->test->get_current_link() );
+		$this->assertEquals( 'https://msls.co/queried-posttype', $this->test->get_current_link() );
 	}
 }

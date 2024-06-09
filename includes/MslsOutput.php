@@ -132,11 +132,7 @@ class MslsOutput extends MslsMain {
 	 * @return string
 	 */
 	public function __toString() {
-		$display = (int) $this->options->display;
-		$filter  = false;
-		$exists  = isset( $this->options->only_with_translation );
-
-		$arr = $this->get( $display, $filter, $exists );
+		$arr = $this->get( $this->options->display, false, isset( $this->options->only_with_translation ) );
 		if ( empty( $arr ) ) {
 			return apply_filters( 'msls_output_no_translation_found', '' );
 		}

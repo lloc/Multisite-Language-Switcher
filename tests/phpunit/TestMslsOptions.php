@@ -111,7 +111,7 @@ class TestMslsOptions extends MslsUnitTestCase {
 	}
 
 	function test_get_url_method(): void {
-		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
+		Functions\when( 'plugins_url' )->justReturn( 'https://msls.co/wp-content/plugins' );
 
 		$obj = $this->get_test();
 
@@ -120,7 +120,7 @@ class TestMslsOptions extends MslsUnitTestCase {
 
 	function test_get_flag_url_method(): void {
 		Functions\when( 'is_admin' )->justReturn( true );
-		Functions\when( 'plugins_url' )->justReturn( 'https://lloc.de/wp-content/plugins' );
+		Functions\when( 'plugins_url' )->justReturn( 'https://msls.co/wp-content/plugins' );
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 2 ) . '/' );
 
 		$obj = $this->get_test();

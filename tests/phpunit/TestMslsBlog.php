@@ -29,7 +29,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 	}
 
 	public function test_get_url_current(): void {
-		$url = 'https://example.org/';
+		$url = 'https://msls.co/';
 
 		$option = \Mockery::mock( MslsOptions::class );
 		$option->shouldReceive( 'get_current_link' )->andReturn( $url );
@@ -43,7 +43,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 	}
 
 	public function test_get_frontpage(): void {
-		$url = 'https://example.org/';
+		$url = 'https://msls.co/';
 
 		$option = \Mockery::mock( MslsOptions::class );
 		$option->shouldReceive( 'get_permalink' )->once()->andReturn( $url );
@@ -60,7 +60,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 	}
 
 	public function test_get_url(): void {
-		$url = 'https://example.org/';
+		$url = 'https://msls.co/';
 
 		$option = \Mockery::mock( MslsOptions::class );
 		$option->shouldReceive( 'get_permalink' )->once()->andReturn( $url );
@@ -86,7 +86,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 	}
 
 	public function test_get_title(): void {
-		Functions\expect( 'add_query_arg' )->once()->andReturn( 'https://example.org/added-args' );
+		Functions\expect( 'add_query_arg' )->once()->andReturn( 'https://msls.co/added-args' );
 
 		$this->assertEquals(
 			'Test <span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-it">it_IT</span></span>',
@@ -145,11 +145,11 @@ class TestMslsBlog extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'has_site_icon' )->once()->andReturn( true );
-		Functions\expect( 'get_site_icon_url' )->twice()->andReturn( 'https://example.org/icons/abc.png' );
+		Functions\expect( 'get_site_icon_url' )->twice()->andReturn( 'https://msls.co/icons/abc.png' );
 		Functions\expect( 'wp_lazy_loading_enabled' )->once()->andReturn( true );
 
 		$this->assertEquals(
-			'<img class="blavatar" src="https://example.org/icons/abc.png" srcset="https://example.org/icons/abc.png 2x" alt="" width="16" height="16" loading="lazy" />',
+			'<img class="blavatar" src="https://msls.co/icons/abc.png" srcset="https://msls.co/icons/abc.png 2x" alt="" width="16" height="16" loading="lazy" />',
 			$this->get_blog()->get_blavatar()
 		);
 	}
@@ -158,11 +158,11 @@ class TestMslsBlog extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'has_site_icon' )->once()->andReturn( true );
-		Functions\expect( 'get_site_icon_url' )->twice()->andReturn( 'https://example.org/icons/abc.png' );
+		Functions\expect( 'get_site_icon_url' )->twice()->andReturn( 'https://msls.co/icons/abc.png' );
 		Functions\expect( 'wp_lazy_loading_enabled' )->once()->andReturn( false );
 
 		$this->assertEquals(
-			'<img class="blavatar" src="https://example.org/icons/abc.png" srcset="https://example.org/icons/abc.png 2x" alt="" width="16" height="16" />',
+			'<img class="blavatar" src="https://msls.co/icons/abc.png" srcset="https://msls.co/icons/abc.png 2x" alt="" width="16" height="16" />',
 			$this->get_blog()->get_blavatar()
 		);
 	}

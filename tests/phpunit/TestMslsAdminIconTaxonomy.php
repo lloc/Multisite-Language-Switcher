@@ -13,7 +13,7 @@ class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://example.org/added-args' );
+		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://msls.co/added-args' );
 	}
 
 	public function test_get_img(): void {
@@ -30,7 +30,7 @@ class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
 	}
 
 	public function test_get_edit_new(): void {
-		$admin_url = 'https://example.org/wp-admin/?new_tag';
+		$admin_url = 'https://msls.co/wp-admin/?new_tag';
 
 		Functions\expect( 'get_admin_url' )->once()->andReturn( $admin_url );
 		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );

@@ -30,8 +30,8 @@ class TestMslsOptionsQueryYear extends MslsUnitTestCase {
 	}
 
 	public function test_get_current_link_method(): void {
-		Functions\expect( 'get_year_link' )->once()->andReturn( 'https://example.org/queried-year' );
+		Functions\expect( 'get_year_link' )->once()->andReturn( 'https://msls.co/queried-year' );
 
-		$this->assertEquals( 'https://example.org/queried-year', $this->get_test( 2015 )->get_current_link() );
+		$this->assertEquals( 'https://msls.co/queried-year', $this->get_test( 2015 )->get_current_link() );
 	}
 }
