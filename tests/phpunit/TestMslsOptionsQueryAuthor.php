@@ -28,8 +28,8 @@ class TestMslsOptionsQueryAuthor extends MslsUnitTestCase {
 	}
 
 	public function test_get_current_link_method(): void {
-		Functions\expect( 'get_author_posts_url' )->once()->andReturn( 'https://example.org/queried-author' );
+		Functions\expect( 'get_author_posts_url' )->once()->andReturn( 'https://msls.co/queried-author' );
 
-		$this->assertEquals( 'https://example.org/queried-author', $this->get_test( 42 )->get_current_link() );
+		$this->assertEquals( 'https://msls.co/queried-author', $this->get_test( 42 )->get_current_link() );
 	}
 }

@@ -11,7 +11,7 @@ use lloc\Msls\MslsOptions;
 class TestMslsCustomColumn extends MslsUnitTestCase {
 
 	public function test_th(): void {
-		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://example.org/added-args' );
+		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://msls.co/added-args' );
 		Functions\expect( 'get_the_ID' )->twice()->andReturnValues( array( 1, 2 ) );
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 2 ) . '/' );
 

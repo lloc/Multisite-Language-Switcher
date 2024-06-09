@@ -30,8 +30,8 @@ class TestMslsOptionsQueryDay extends MslsUnitTestCase {
 	}
 
 	public function test_get_current_link(): void {
-		Functions\expect( 'get_day_link' )->once()->andReturn( 'https://example.org/queried-day' );
+		Functions\expect( 'get_day_link' )->once()->andReturn( 'https://msls.co/queried-day' );
 
-		$this->assertEquals( 'https://example.org/queried-day', $this->get_test( 2015, 07, 02 )->get_current_link() );
+		$this->assertEquals( 'https://msls.co/queried-day', $this->get_test( 2015, 07, 02 )->get_current_link() );
 	}
 }

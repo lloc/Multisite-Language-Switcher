@@ -4,7 +4,6 @@ namespace lloc\Msls;
 
 class MslsContentFilter {
 
-
 	protected MslsOptions $options;
 
 	public function __construct( MslsOptions $options ) {

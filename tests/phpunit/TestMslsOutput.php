@@ -6,6 +6,7 @@ use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsContentFilter;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOptionsPost;
 use lloc\Msls\MslsOutput;
@@ -13,6 +14,8 @@ use lloc\Msls\MslsOutput;
 class TestMslsOutput extends MslsUnitTestCase {
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -62,7 +65,6 @@ class TestMslsOutput extends MslsUnitTestCase {
 		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
-		Functions\expect( 'esc_attr' )->times( 3 )->andReturnFirstArg();
 
 		Filters\expectApplied( 'mlsl_output_get_alternate_links_arr' )->once();
 
@@ -129,17 +131,144 @@ class TestMslsOutput extends MslsUnitTestCase {
 		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
-		Functions\expect( 'esc_attr' )->twice()->andReturnFirstArg();
 
 		Filters\expectApplied( 'mlsl_output_get_alternate_links_default' )->once();
 
 		$this->assertEquals( '<link rel="alternate" hreflang="x-default" href="https://example.de/" title="Deutsch" />', $this->test->get_alternate_links() );
 	}
 
-	public function test___toString() {
-		$this->assertIsSTring( $this->test->__toString() );
-		$this->assertIsSTring( strval( $this->test ) );
-		$this->assertEquals( $this->test->__toString(), strval( $this->test ) );
+	public function test___toString_no_translation() {
+		$expected = '<a href="https://example.com" title="Example">Example</a>';
+
+		Filters\expectApplied( 'msls_output_no_translation_found' )->once()->andReturn( $expected );
+		$this->assertEquals( $expected, strval( $this->test ) );
+	}
+
+	public function test___toString_output() {
+		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
+		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->andReturn( array( $blog ) );
+		$collection->shouldReceive( 'is_current_blog' )->andReturn( false );
+
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_search' )->once()->andReturn( false );
+		Functions\expect( 'is_404' )->once()->andReturn( false );
+		Functions\expect( 'is_category' )->once()->andReturn( false );
+		Functions\expect( 'is_tag' )->once()->andReturn( false );
+		Functions\expect( 'is_tax' )->once()->andReturn( false );
+		Functions\expect( 'is_date' )->once()->andReturn( false );
+		Functions\expect( 'is_author' )->once()->andReturn( false );
+		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
+		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'home_url' )->once()->andReturnFirstArg();
+
+		$test = new MslsOutput( $options, $collection );
+
+		$this->assertEquals( '<a href="/" title="Deutsch"><img src="https://msls.co/wp-content/plugins/msls/flags/de.png" alt="de_DE"/> Deutsch</a>', strval( $test ) );
+	}
+
+	public function test___toString_current_blog() {
+		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
+		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->andReturn( array( $blog ) );
+		$collection->shouldReceive( 'is_current_blog' )->andReturn( true );
+
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_search' )->once()->andReturn( false );
+		Functions\expect( 'is_404' )->once()->andReturn( false );
+		Functions\expect( 'is_category' )->once()->andReturn( false );
+		Functions\expect( 'is_tag' )->once()->andReturn( false );
+		Functions\expect( 'is_tax' )->once()->andReturn( false );
+		Functions\expect( 'is_date' )->once()->andReturn( false );
+		Functions\expect( 'is_author' )->once()->andReturn( false );
+		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
+		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://msls.co/de/testpage/' );
+
+		$expected = '<a href="https://msls.co/de/testpage/" title="Deutsch" class="current_language"><img src="https://msls.co/wp-content/plugins/msls/flags/de.png" alt="de_DE"/> Deutsch</a>';
+
+		$this->assertEquals( $expected, strval( new MslsOutput( $options, $collection ) ) );
+	}
+
+	public function test___toString_filter() {
+		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
+		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->andReturn( array( $blog ) );
+		$collection->shouldReceive( 'is_current_blog' )->andReturn( true );
+
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_search' )->once()->andReturn( false );
+		Functions\expect( 'is_404' )->once()->andReturn( false );
+		Functions\expect( 'is_category' )->once()->andReturn( false );
+		Functions\expect( 'is_tag' )->once()->andReturn( false );
+		Functions\expect( 'is_tax' )->once()->andReturn( false );
+		Functions\expect( 'is_date' )->once()->andReturn( false );
+		Functions\expect( 'is_author' )->once()->andReturn( false );
+		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
+		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://msls.co/de/testpage/' );
+		Functions\expect( 'has_filter' )->once()->with( 'msls_output_get' )->andReturn( true );
+
+		$expected = '<a href="https://msls.co/de/testpage/" title="Deutsch"> <img src="https://msls.co/wp-content/plugins/msls/flags/de.png" alt="de_DE"/>Deutsch</a>';
+		Filters\expectApplied( 'msls_output_get' )->once()->andReturn( $expected );
+
+		$this->assertEquals( $expected, strval( new MslsOutput( $options, $collection ) ) );
+	}
+
+	public function test_get_not_fulfilled() {
+		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
+		// $blog->shouldReceive( 'get_description' )->once()->andReturn( 'Deutsch' );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->andReturn( array( $blog ) );
+		$collection->shouldReceive( 'is_current_blog' )->andReturn( false );
+
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_search' )->once()->andReturn( false );
+		Functions\expect( 'is_404' )->once()->andReturn( false );
+		Functions\expect( 'is_category' )->once()->andReturn( false );
+		Functions\expect( 'is_tag' )->once()->andReturn( false );
+		Functions\expect( 'is_tax' )->once()->andReturn( false );
+		Functions\expect( 'is_date' )->once()->andReturn( false );
+		Functions\expect( 'is_author' )->once()->andReturn( false );
+		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
+		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+
+		$this->assertEquals( array(), ( new MslsOutput( $options, $collection ) )->get( 0, false, true ) );
 	}
 
 	public function test_get_tags(): void {

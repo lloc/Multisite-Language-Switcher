@@ -7,7 +7,7 @@ use lloc\Msls\MslsAdminIcon;
 
 class TestMslsAdminIcon extends MslsUnitTestCase {
 
-	protected string $admin_url = 'https://example.org/wp-admin/';
+	protected string $admin_url = 'https://msls.co/wp-admin/';
 
 	protected string $lang = 'de_DE';
 
