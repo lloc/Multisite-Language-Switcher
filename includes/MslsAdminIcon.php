@@ -231,24 +231,24 @@ class MslsAdminIcon {
 
 		switch ( $this->icon_type ) {
 			case self::TYPE_FLAG:
-				$icon = sprintf(
+				$class = ( new IconSvg() )->get( $this->language );
+				$icon  = sprintf(
 					'<span class="flag-icon %s">%s</span>',
-					( new IconSvg() )->get( $this->language ),
-					$this->language
+					esc_attr( $class ),
+					esc_html( $this->language )
 				);
 				break;
 			case self::TYPE_LABEL:
+				$text = ( new IconLabel() )->get( $this->language );
 				$icon = sprintf(
 					'<span class="language-badge %s">%s</span>',
-					$this->language,
-					( new IconLabel() )->get( $this->language )
+					esc_attr( $this->language ),
+					esc_html( $text )
 				);
 				break;
 			default:
-				$icon = sprintf(
-					'<span class="dashicons %s"></span>',
-					empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit'
-				);
+				$class = empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit';
+				$icon  = sprintf( '<span class="dashicons %s"></span>', esc_attr( $class ) );
 		}
 
 		return $icon;

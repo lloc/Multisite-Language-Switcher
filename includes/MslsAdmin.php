@@ -116,12 +116,10 @@ class MslsAdmin extends MslsMain {
 		);
 
 		if ( isset( $checkboxes[ $method ] ) ) {
-			echo ( new Group() )->add( new Checkbox( $method, $this->options->$method ) )->add(
-				new Label(
-					$method,
-					$checkboxes[ $method ]
-				)
-			)->render();
+			echo ( new Group() )
+				->add( new Checkbox( $method, $this->options->$method ) )
+				->add( new Label( $method, $checkboxes[ $method ] ) )
+				->render();
 		} else {
 			$value = ! empty( $this->options->$method ) ? $this->options->$method : '';
 			echo ( new Text( $method, $value ) )->render();
@@ -146,7 +144,7 @@ class MslsAdmin extends MslsMain {
 		} elseif ( 1 == count( $this->options->get_available_languages() ) ) {
 			/* translators: %1$s: URL to a page at WordPress.orgs */
 			$format  = __(
-				'TNo language files are currently installed. Learn how to install various languages in WordPress by <a href="%1$s">reading more here</a>.',
+				'No language files are currently installed. Learn how to install various languages in WordPress by <a href="%1$s">reading more here</a>.',
 				'multisite-language-switcher'
 			);
 			$message = sprintf(
@@ -262,18 +260,18 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function main_section(): int {
 		$map = array(
-			'display'               => __( 'Display', 'multisite-language-switcher' ),
-			'admin_display'         => __( 'Admin Display', 'multisite-language-switcher' ),
-			'sort_by_description'   => __( 'Sort languages', 'multisite-language-switcher' ),
-			'output_current_blog'   => __( 'Current language link', 'multisite-language-switcher' ),
-			'only_with_translation' => __( 'Translation links', 'multisite-language-switcher' ),
-			'description'           => __( 'Description', 'multisite-language-switcher' ),
-			'before_output'         => __( 'Text/HTML before the list', 'multisite-language-switcher' ),
-			'after_output'          => __( 'Text/HTML after the list', 'multisite-language-switcher' ),
-			'before_item'           => __( 'Text/HTML before each item', 'multisite-language-switcher' ),
-			'after_item'            => __( 'Text/HTML after each item', 'multisite-language-switcher' ),
-			'content_filter'        => __( 'Available translations hint', 'multisite-language-switcher' ),
-			'content_priority'      => __( 'Hint priority', 'multisite-language-switcher' ),
+			'display'               => esc_html__( 'Display', 'multisite-language-switcher' ),
+			'admin_display'         => esc_html__( 'Admin Display', 'multisite-language-switcher' ),
+			'sort_by_description'   => esc_html__( 'Sort languages', 'multisite-language-switcher' ),
+			'output_current_blog'   => esc_html__( 'Current language link', 'multisite-language-switcher' ),
+			'only_with_translation' => esc_html__( 'Translation links', 'multisite-language-switcher' ),
+			'description'           => esc_html__( 'Description', 'multisite-language-switcher' ),
+			'before_output'         => esc_html__( 'Text/HTML before the list', 'multisite-language-switcher' ),
+			'after_output'          => esc_html__( 'Text/HTML after the list', 'multisite-language-switcher' ),
+			'before_item'           => esc_html__( 'Text/HTML before each item', 'multisite-language-switcher' ),
+			'after_item'            => esc_html__( 'Text/HTML after each item', 'multisite-language-switcher' ),
+			'content_filter'        => esc_html__( 'Available translations hint', 'multisite-language-switcher' ),
+			'content_priority'      => esc_html__( 'Hint priority', 'multisite-language-switcher' ),
 		);
 
 		return $this->add_settings_fields( $map, 'main_section' );
@@ -288,11 +286,11 @@ class MslsAdmin extends MslsMain {
 	 */
 	public function advanced_section(): int {
 		$map = array(
-			'activate_autocomplete'   => __( 'Autocomplete', 'multisite-language-switcher' ),
-			'image_url'               => __( 'Custom URL for flag-images', 'multisite-language-switcher' ),
-			'reference_user'          => __( 'Reference user', 'multisite-language-switcher' ),
-			'exclude_current_blog'    => __( 'Exclude blog', 'multisite-language-switcher' ),
-			'activate_content_import' => __( 'Content import', 'multisite-language-switcher' ),
+			'activate_autocomplete'   => esc_html__( 'Autocomplete', 'multisite-language-switcher' ),
+			'image_url'               => esc_html__( 'Custom URL for flag-images', 'multisite-language-switcher' ),
+			'reference_user'          => esc_html__( 'Reference user', 'multisite-language-switcher' ),
+			'exclude_current_blog'    => esc_html__( 'Exclude blog', 'multisite-language-switcher' ),
+			'activate_content_import' => esc_html__( 'Content import', 'multisite-language-switcher' ),
 		);
 
 		return $this->add_settings_fields( $map, 'advanced_section' );
