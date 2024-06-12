@@ -1,3 +1,8 @@
+## 2.8.0
+
+- lots of bugfixes, testing & refactoring
+- Plugin Check issues addressed
+
 ## 2.7.1
 
 - flags/labels in the adminbar works now for every user-role
