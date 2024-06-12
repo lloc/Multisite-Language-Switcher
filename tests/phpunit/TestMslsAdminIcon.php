@@ -190,7 +190,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 	 * @dataProvider icon_type_provider
 	 */
 	public function test_get_icon_flag( ?string $icon_type, ?string $language, string $expected ): void {
-		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 2 ) . '/' );
+		Functions\expect( 'plugin_dir_path' )->andReturn( dirname( __DIR__, 2 ) . '/' );
 
 		$obj = new MslsAdminIcon( 'post' );
 		$obj->set_icon_type( $icon_type );

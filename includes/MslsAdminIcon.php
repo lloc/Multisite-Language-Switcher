@@ -243,7 +243,7 @@ class MslsAdminIcon {
 				$icon = sprintf(
 					'<span class="language-badge %s">%s</span>',
 					esc_attr( $this->language ),
-					esc_html( $text )
+					wp_kses( $text, array( 'span' => array() ) )
 				);
 				break;
 			default:

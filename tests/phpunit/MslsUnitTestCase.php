@@ -25,6 +25,7 @@ class MslsUnitTestCase extends TestCase {
 		Functions\when( 'esc_attr' )->returnArg();
 		Functions\when( 'esc_url' )->returnArg();
 		Functions\when( '__' )->returnArg();
+		Functions\when( 'wp_kses' )->returnArg();
 	}
 
 

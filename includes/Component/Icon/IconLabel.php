@@ -7,6 +7,7 @@ use lloc\Msls\MslsPlugin;
 
 /**
  * Class IconLabel
+ *
  * @package lloc\Msls\Component
  */
 class IconLabel extends Icon {
@@ -24,11 +25,6 @@ class IconLabel extends Icon {
 	 * @return string
 	 */
 	public function get( string $language ): string {
-		// if ( isset( $this->map[ $language ] ) ) {
-		// 	return $this->map[ $language ];
-		// }
-
 		return '<span>' . implode( '</span><span>', explode( '_', $language ) ) . '</span>';
 	}
-
 }

@@ -20,11 +20,7 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 
 		foreach ( array( 'de_DE', 'en_US' ) as $locale ) {
 			$blog = \Mockery::mock( MslsBlog::class );
-			$blog->shouldReceive(
-				array(
-					'get_language' => $locale,
-				)
-			);
+			$blog->shouldReceive( 'get_language' )->andReturn( $locale );
 
 			$blogs[] = $blog;
 		}
@@ -54,10 +50,9 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 		Functions\expect( 'get_queried_object_id' )->andReturn( 42 );
 		Functions\expect( 'get_current_blog_id' )->andReturn( 23 );
 		Functions\expect( 'get_admin_url' )->andReturn( '/wp-admin/edit-tags.php' );
-		Functions\expect( 'switch_to_blog' )->atLeast();
-		Functions\expect( 'restore_current_blog' )->atLeast();
+		Functions\expect( 'switch_to_blog' )->twice();
+		Functions\expect( 'restore_current_blog' )->twice();
 		Functions\expect( 'get_terms' )->andReturn( array() );
-		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 1 ) . '/' );
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 
 		$output = '<tr>
