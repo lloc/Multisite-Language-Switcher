@@ -14,12 +14,12 @@ class MslsOptionsTaxTermCategory extends MslsOptionsTaxTerm {
 	 *
 	 * @var string
 	 */
-	protected $base_option = 'category_base';
+	const BASE_OPTION = 'category_base';
 
 	/**
 	 * Base standard definition
 	 *
 	 * @var string
 	 */
-	protected $base_defined = 'category';
+	const BASE_DEFINED = 'category';
 }
