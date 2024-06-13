@@ -77,7 +77,6 @@ class MslsCustomFilter extends MslsMain {
 
 		$id   = MslsRequest::get_var( MslsFields::FIELD_MSLS_FILTER );
 		$blog = $this->collection->get_object( intval( $id ) );
-
 		if ( ! $blog ) {
 			return false;
 		}

@@ -14,24 +14,34 @@ class MslsRequest {
 		return $config;
 	}
 
-	public static function has_var( string $name ): bool {
-		try {
-			list($type, ) = self::get_config( $name );
-		} catch ( \InvalidArgumentException $e ) {
-			return false;
+	/**
+	 * @param string $name
+	 * @param ?int   $input_type
+	 */
+	public static function has_var( string $name, ?int $input_type = null ): bool {
+		if ( null === $input_type ) {
+			try {
+				list($input_type, ) = self::get_config( $name );
+			} catch ( \InvalidArgumentException $e ) {
+				return false;
+			}
 		}
 
-		return filter_has_var( $type, $name );
+		return filter_has_var( $input_type, $name );
 	}
 
-	public static function get_var( string $name ) {
+	/**
+	 * @param string $name
+	 * @param ?int   $input_type
+	 */
+	public static function get_var( string $name, ?int $input_type = null ) {
 		try {
 			list($type, $filter) = self::get_config( $name );
 		} catch ( \InvalidArgumentException $e ) {
 			return null;
 		}
 
-		return filter_input( $type, $name, $filter );
+		return filter_input( $input_type ?? $type, $name, $filter );
 	}
 
 	/**

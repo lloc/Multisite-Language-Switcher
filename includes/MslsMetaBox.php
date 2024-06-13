@@ -20,29 +20,29 @@ class MslsMetaBox extends MslsMain {
 	public static function suggest() {
 		$json = new MslsJson();
 
-		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID ) ) {
-			switch_to_blog(
-				MslsRequest::get_var( MslsFields::FIELD_BLOG_ID )
-			);
+		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID, INPUT_GET ) ) {
+			switch_to_blog( MslsRequest::get_var( MslsFields::FIELD_BLOG_ID, INPUT_GET ) );
 
 			$args = array(
 				'post_status'    => get_post_stati( array( 'internal' => '' ) ),
 				'posts_per_page' => 10,
 			);
 
-			if ( MslsRequest::has_var( MslsFields::FIELD_POST_TYPE ) ) {
+			if ( MslsRequest::has_var( MslsFields::FIELD_POST_TYPE, INPUT_GET ) ) {
 				$args['post_type'] = sanitize_text_field(
-					MslsRequest::get_var( MslsFields::FIELD_POST_TYPE )
+					MslsRequest::get_var( MslsFields::FIELD_POST_TYPE, INPUT_GET )
 				);
 			}
 
-			if ( MslsRequest::has_var( MslsFields::FIELD_S ) ) {
+			if ( MslsRequest::has_var( MslsFields::FIELD_S, INPUT_GET ) ) {
 				$args['s'] = sanitize_text_field(
-					MslsRequest::get_var( MslsFields::FIELD_S )
+					MslsRequest::get_var( MslsFields::FIELD_S, INPUT_GET )
 				);
 			}
 
 			$json = self::get_suggested_fields( $json, $args );
+
+			restore_current_blog();
 		}
 
 		wp_die( $json->encode() );
@@ -64,8 +64,7 @@ class MslsMetaBox extends MslsMain {
 		 */
 		$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
 
-		$posts = get_posts( $args );
-		foreach ( $posts as $post ) {
+		foreach ( get_posts( $args ) as $post ) {
 			/**
 			 * Manipulates the WP_Post object before using it
 			 *
@@ -80,7 +79,6 @@ class MslsMetaBox extends MslsMain {
 		}
 
 		wp_reset_postdata();
-		restore_current_blog();
 
 		return $json;
 	}
@@ -110,6 +108,7 @@ class MslsMetaBox extends MslsMain {
 	 */
 	public function add() {
 		foreach ( MslsPostType::instance()->get() as $post_type ) {
+
 			add_meta_box(
 				'msls',
 				apply_filters(
