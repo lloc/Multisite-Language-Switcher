@@ -59,12 +59,12 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 			}
 		}
 
-		return self::BASE_DEFINED;
+		return static::BASE_DEFINED;
 	}
 
 	protected static function get_base_option(): string {
-		$base_option = get_option( self::BASE_OPTION, '' );
+		$base_option = get_option( static::BASE_OPTION, '' );
 
-		return $base_option ?: self::BASE_DEFINED;
+		return $base_option ?: static::BASE_DEFINED;
 	}
 }
