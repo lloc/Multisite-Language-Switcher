@@ -1,3 +1,8 @@
+## 2.8.1
+
+- Bugfix: Category link
+- Bugfix: Filter _GET request
+
 ## 2.8.0
 
 - lots of bugfixes, testing & refactoring
