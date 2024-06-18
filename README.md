@@ -2,7 +2,7 @@
 
 A simple, powerful, and user-friendly plugin that adds multilingual support to your [WordPress multisite](https://wordpress.org/documentation/article/create-a-network/) installation, whether using multiple subdomains or folders. Multisite Language Switcher allows you to effortlessly manage translations for posts, pages, custom post types, categories, tags, and custom taxonomies.
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/badges/quality-score.png?s=a2e5dbac2690bbd427f2d48b84473482e7e24fdb)](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/badges/quality-score.png?s=a2e5dbac2690bbd427f2d48b84473482e7e24fdb)](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/) [![codecov](https://codecov.io/gh/lloc/Multisite-Language-Switcher/graph/badge.svg?token=IlD4bX4KZ4)](https://codecov.io/gh/lloc/Multisite-Language-Switcher)
 
 ## Where to get the plugin
 
