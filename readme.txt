@@ -14,31 +14,26 @@ A simple, powerful and easy to use plugin that will help you to manage multiling
 
 == Description ==
 
-A simple, powerful and easy to use plugin that will add multilingual support to a WordPress [multisite](https://wordpress.org/documentation/article/create-a-network/) 
-installation, i.e. multiple subdomains or folders (if you need to set up multiple sites across multiple domains, you'll also want to use the [WordPress MU 
-Domain Mapping](http://wordpress.org/plugins/wordpress-mu-domain-mapping/) plugin as well - as long as the domains are all hosted on the same server.).
+A simple, powerful, and user-friendly plugin that adds multilingual support to your [WordPress multisite](https://wordpress.org/documentation/article/create-a-network/) installation, whether using multiple subdomains or folders. Multisite Language Switcher allows you to effortlessly manage translations for posts, pages, custom post types, categories, tags, and custom taxonomies.
 
-The Multisite Language Switcher enables you to manage translations of posts, pages, custom post types, categories, tags and custom taxonomies.
-
-The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition I would like to thank [Jürgen Mayer](
-https://creativpin.com) for creating the plugin's banner.
+The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). Thanks to Mark James for his great work. In addition, I would like to thank [Jürgen Mayer](https://creativpin.com) for creating the plugin's banner.
 
 Please, don't forget to [rate this plugin](https://wordpress.org/support/plugin/multisite-language-switcher/reviews/)! :-)
  
 == Installation ==
 
-* Download the plugin and uncompress it with your preferred unzip programme
-* Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins)
-* Activate the plugin in your plugin administration page (by the network administrator on all the blogs or by the root blog administrator for each particular blog).
-* You need to activate the plugin once in each blog, set the configuration in Settings -> Multisite Language Switcher
+* Use the WordPress admin to install the plugin from there or
+* download the plugin and uncompress it with your preferred unzip programme and copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins)
+* Activate the plugin in your plugin administration page (by the network administrator on all the blogs or by the blog administrator for each particular blog).
+* You need to activate the plugin once in each blog, by setting the configuration in `Settings` -> `Multisite Language Switcher`
 
 Now you can:
 
-* connect your translated pages and posts in Posts -> Edit or Page -> Edit
-* connect your translated categories and tags in Posts -> Categories or Post -> Tags
+* connect your translated pages and posts in `Posts` -> `Edit` or `Page` -> `Edit`
+* connect your translated categories and tags in `Posts` -> `Categories` or `Post` -> `Tags`
 * connect your Custom Post Types and Custom Taxonomies across languages
 * use the widget, the Gutenberg block, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
-* find also a shortcode for the widget [sc_msls_widget]
+* you can find also a shortcode for the widget [sc_msls_widget]
 * optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
 
 Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
