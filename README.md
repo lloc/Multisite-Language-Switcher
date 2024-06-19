@@ -47,8 +47,8 @@ If you plan to use the GitHub repository on a server, don't forget to run `compo
 
 *  Utilize Widgets, Shortcodes, and Content Filters:
     *  Use the widget or the Gutenberg block.
-    *  The is the [sc_msls] shortcode available.
-    *  Use a content filter to display a hint to users when a translation is available.
+    *  Use the [sc_msls] shortcode in the classic editor.
+    *  Set the content filter to display a hint to users when a translation is available.
 
 *  Optional Theme Integration:
     *  Insert the following PHP code directly into your theme files to display language switcher links:
