@@ -10,7 +10,7 @@ A simple, powerful, and user-friendly plugin that adds multilingual support to y
 
 ## Where to get the plugin
 
-Download the [latest stable from the WordPress Plugin Directory](http://downloads.wordpress.org/plugin/multisite-language-switcher.zip), and please remember to give this plugin a five-star rating.
+[Download](http://downloads.wordpress.org/plugin/multisite-language-switcher.zip) the latest stable from the [WordPress Plugin Directory](https://wordpress.org/plugins/multisite-language-switcher/), and please remember to give this plugin [a five-star rating](https://wordpress.org/support/plugin/multisite-language-switcher/reviews/#new-post).
 
 _Please note that the version of Multisite Language Switcher on GitHub is a work in progress._
 
