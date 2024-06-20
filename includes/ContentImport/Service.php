@@ -36,35 +36,56 @@ class Service extends MslsRegistryInstance {
 	 * Differently from the `register` method this method will not check for options to hook.
 	 */
 	public function hook() {
-		add_action( 'load-post.php', function () {
-			return ContentImporter::instance()->handle_import();
-		} );
-		add_action( 'load-post.php', function () {
-			add_action( 'admin_notices', function () {
-				AdminNoticeLogger::instance()->show_last_log();
-			} );
-		} );
-		add_action( 'load-post-new.php', function () {
-			return ContentImporter::instance()->handle_import();
-		} );
-		add_filter( 'wp_insert_post_empty_content', function ( $empty ) {
-			return ContentImporter::instance()->filter_empty( $empty );
-		} );
-		add_filter( 'wp_get_attachment_url', function ( $url, $post_id ) {
-			return AttachmentPathFinder::instance()->filter_attachment_url( $url, $post_id );
-		}, 99, 2 );
-		add_filter( 'wp_calculate_image_srcset',
+		add_action(
+			'load-post.php',
+			function () {
+				return ContentImporter::instance()->handle_import();
+			}
+		);
+		add_action(
+			'load-post.php',
+			function () {
+				add_action(
+					'admin_notices',
+					function () {
+						AdminNoticeLogger::instance()->show_last_log();
+					}
+				);
+			}
+		);
+		add_action(
+			'load-post-new.php',
+			function () {
+				return ContentImporter::instance()->handle_import();
+			}
+		);
+		add_filter(
+			'wp_insert_post_empty_content',
+			function ( $empty ) {
+				return ContentImporter::instance()->filter_empty( $empty );
+			}
+		);
+		add_filter(
+			'wp_get_attachment_url',
+			function ( $url, $post_id ) {
+				return AttachmentPathFinder::instance()->filter_attachment_url( $url, $post_id );
+			},
+			99,
+			2
+		);
+		add_filter(
+			'wp_calculate_image_srcset',
 			function ( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
-				return AttachmentPathFinder::instance()->filter_srcset( $sources,
+				return AttachmentPathFinder::instance()->filter_srcset(
+					$sources,
 					$sizeArray,
 					$imageSrc,
 					$imageMeta,
-					$attachmentId );
+					$attachmentId
+				);
 			},
 			99,
-			5 );
-
-		if ( is_admin() ) {
-		}
+			5
+		);
 	}
 }
