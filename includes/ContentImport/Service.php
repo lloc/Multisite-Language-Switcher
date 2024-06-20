@@ -3,7 +3,6 @@
 namespace lloc\Msls\ContentImport;
 
 use lloc\Msls\ContentImport\LogWriters\AdminNoticeLogger;
-use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsRegistryInstance;
 
 /**
