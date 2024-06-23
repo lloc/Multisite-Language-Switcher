@@ -10,7 +10,8 @@ use Brain\Monkey\Functions;
 class TestService extends MslsUnitTestCase {
 
 	public function test_register_not_active_false(): void {
-		$options                          = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
+
 		$options->activate_content_import = false;
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );
@@ -19,7 +20,8 @@ class TestService extends MslsUnitTestCase {
 	}
 
 	public function test_register_active_true(): void {
-		$options                          = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( MslsOptions::class );
+
 		$options->activate_content_import = true;
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );

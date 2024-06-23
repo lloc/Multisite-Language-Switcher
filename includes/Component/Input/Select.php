@@ -36,6 +36,6 @@ class Select implements InputInterface {
 	public function render(): string {
 		$name = apply_filters( 'msls_input_select_name', 'msls[' . $this->key . ']' );
 
-		return sprintf( '<select id="%1$s" name="%2$s">%3$s</select>', $this->key, $name, $this->options->render() );
+		return sprintf( '<select id="%1$s" name="%2$s">%3$s</select>', $this->key, esc_attr( $name ), $this->options->render() );
 	}
 }
