@@ -26,3 +26,4 @@ phpstan.neon
 phpunit.xml
 playwright.config.ts
 setup.sh
+plantuml_gist.puml
