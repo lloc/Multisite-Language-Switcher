@@ -3,6 +3,7 @@
 /.github
 /bin
 /build
+/diagrams
 /docs
 /githooks
 /legacy-tests
@@ -14,6 +15,7 @@
 .gitignore
 .scrutinizer.yml
 Changelog.md
+Diagrams.md
 README.md
 composer.json
 composer.lock
@@ -26,4 +28,3 @@ phpstan.neon
 phpunit.xml
 playwright.config.ts
 setup.sh
-plantuml_gist.puml
