@@ -1,0 +1,987 @@
+@startuml class-diagram
+  class "MslsCustomColumnTaxonomy\n<b>Handling of existing/not existing translations in the backend</b>" as MslsCustomColumnTaxonomy {
+    {static} +init()
+    +column_default(deprecated, column_name, item_id)
+    +delete(object_id)
+  }
+  class "MslsCustomFilter\n<b>Adding custom filter to posts/pages table.</b>" as MslsCustomFilter {
+    {static} +init()
+    +add_filter()
+    +execute_filter(query)
+  }
+  class "MslsBlock" as MslsBlock {
+    #options : MslsOptions
+    +__construct(options)
+    {static} +init()
+    +register_block()
+  }
+  class "MslsOptionsQuery\n<b>MslsOptionsQuery</b>" as MslsOptionsQuery {
+    +with_front : bool
+    #sql_cache : MslsSqlCacher
+    +__construct(sql_cache)
+    {static} +get_params()
+    {static} +create(id)
+    +get_postlink(language)
+  }
+  class "MslsContentTypes\n<b>Supported content types</b>" as MslsContentTypes {
+    #request : string
+    #types : array
+    {static} +create()
+    +is_post_type()
+    +is_taxonomy()
+    +acl_request()
+    {static} {abstract} +get()
+    {abstract} +get_request()
+  }
+  class "MslsOptionsQueryMonth\n<b>MslsOptionsQueryMonth</b>" as MslsOptionsQueryMonth {
+    #year : int
+    #monthnum : int
+    +__construct(sql_cache)
+    {static} +get_params()
+    +has_value(language)
+    +get_current_link()
+  }
+  class "MslsTaxonomy\n<b>Content types: Taxonomies (Tags, Categories, ...)</b>" as MslsTaxonomy {
+    #post_type : string
+    +__construct()
+    {static} +get()
+    +get_request()
+    +is_taxonomy()
+    +acl_request()
+    +get_post_type()
+  }
+  class "MslsPostTagClassic\n<b>Post Tag Classic</b>" as MslsPostTagClassic {
+    +add_input(taxonomy)
+    +edit_input(tag, taxonomy)
+    +the_input(tag, title_format, item_format)
+    +print_option(blog, type, mydata, item_format)
+  }
+  class "MslsPostType\n<b>Content types: Post types (Pages, Posts, ...)</b>" as MslsPostType {
+    +__construct()
+    {static} +get()
+    +get_request()
+    +is_post_type()
+  }
+  class "MslsPostTag\n<b>Post Tag</b>" as MslsPostTag {
+    {static} +suggest()
+    {static} +init()
+    +add_input(taxonomy)
+    +edit_input(tag, taxonomy)
+    +the_input(tag, title_format, item_format)
+    +set(term_id)
+    +maybe_set_linked_term(mydata)
+    #get_select_title()
+  }
+  class "MslsLanguageArray\n<b>Stores the language input from post</b>" as MslsLanguageArray {
+    #arr : array
+    +__construct(arr)
+    +set(key, value)
+    +get_val(key)
+    +get_arr(key)
+  }
+  class "MslsOutput\n<b>Output in the frontend</b>" as MslsOutput {
+    #tags : array
+    +get(display, filter, exists)
+    +get_alternate_links()
+    +__toString()
+    +get_tags()
+    +set_tags(arr)
+    +is_requirements_not_fulfilled(thing, exists, language)
+  }
+  class "MslsWidget\n<b>The standard widget of the Multisite Language Switcher</b>" as MslsWidget {
+    +id_base : 
+    +__construct()
+    {static} +init()
+    +widget(args, instance)
+    +update(new_instance, old_instance)
+    +form(instance)
+  }
+  class "MslsAdmin\n<b>Administration of the options</b>" as MslsAdmin {
+    {static} +init()
+    +get_menu_slug()
+    +get_options_page_link()
+    +__call(method, args)
+    +has_problems()
+    +render()
+    +subsubsub()
+    +register()
+    +language_section()
+    +main_section()
+    +advanced_section()
+    +rewrites_section()
+    #add_settings_fields(map, section)
+    +blog_language()
+    +display()
+    +admin_display()
+    +reference_user()
+    +description()
+    +content_priority()
+    +render_rewrite(key)
+    +validate(arr)
+    +set_blog_language(arr)
+  }
+  class "MslsLinkImageOnly\n<b>Link type: Image only</b>" as MslsLinkImageOnly {
+    #format_string : string
+    {static} +get_description()
+  }
+  class "MslsMetaBox\n<b>Meta box for the edit mode of the (custom) post types</b>" as MslsMetaBox {
+    {static} +suggest()
+    {static} +get_suggested_fields(json, args)
+    {static} +init()
+    +add()
+    +render_select()
+    +render_options(type, msls_id)
+    +render_option(post_id, msls_id)
+    +render_input(echo)
+    +set(post_id)
+    +maybe_set_linked_post(mydata)
+  }
+  class "MslsLinkTextImage\n<b>Link type: Text and image</b>" as MslsLinkTextImage {
+    #format_string : string
+    {static} +get_description()
+  }
+  class "MslsBlog\n<b>Internal representation of a blog</b>" as MslsBlog {
+    -obj : StdClass
+    -language : string
+    -description : string
+    +__construct(obj, description)
+    +__get(key)
+    +get_description()
+    +get_title(icon_type)
+    +get_language(default)
+    +get_alpha2()
+    +get_url(options)
+    #get_permalink(options)
+    {static} +_cmp(a, b)
+    {static} +language(a, b)
+    {static} +description(a, b)
+    +get_blavatar()
+  }
+  class "MslsOptionsTaxTermCategory\n<b>MslsOptionsTaxTermCategory</b>" as MslsOptionsTaxTermCategory {
+  }
+  class "MslsOptionsQueryPostType\n<b>MslsOptionsQueryPostType</b>" as MslsOptionsQueryPostType {
+    #post_type : string
+    +__construct(sql_cache)
+    {static} +get_params()
+    +has_value(language)
+    +get_current_link()
+  }
+  class "MslsOptionsPost\n<b>Post options</b>" as MslsOptionsPost {
+    #sep : string
+    #autoload : string
+    +get_postlink(language)
+    +get_current_link()
+  }
+  class "MslsAdminIcon\n<b>Handles the icon links in the backend</b>" as MslsAdminIcon {
+    #icon_type : string
+    #language : string
+    +origin_language : string
+    #src : string
+    #href : string
+    #blog_id : int
+    #type : string
+    #path : string
+    #id : int
+    +__construct(type)
+    +__toString()
+    {static} +create(type)
+    +set_icon_type(icon_type)
+    +set_path()
+    +set_language(language)
+    +set_src(src)
+    +set_href(id)
+    +set_id(id)
+    +set_origin_language(origin_language)
+    +get_img()
+    +get_a()
+    +get_icon()
+    +get_edit_new()
+  }
+  class "MslsOptionsTax\n<b>MslsOptionsTax</b>" as MslsOptionsTax {
+    #sep : string
+    #autoload : string
+    {static} +create(id)
+    +get_tax_query()
+    +get_postlink(language)
+    +get_current_link()
+    +get_term_link(term_id)
+  }
+  class "MslsRegistryInstance\n<b>Class MslsRegistryInstance</b>" as MslsRegistryInstance {
+    {static} +instance()
+  }
+  class "MslsOptionsQueryDay\n<b>MslsOptionsQueryDay</b>" as MslsOptionsQueryDay {
+    #year : int
+    #monthnum : int
+    #day : int
+    +__construct(sql_cache)
+    {static} +get_params()
+    +has_value(language)
+    +get_current_link()
+  }
+  class "MslsRegistry\n<b>Registry instead of singletons</b>" as MslsRegistry {
+    {static} -arr : string[]
+    {static} -instance : MslsRegistry
+    -get(key)
+    -set(key, instance)
+    {static} +instance()
+    {static} +get_object(key)
+    {static} +set_object(key, instance)
+  }
+  class "MslsCustomColumn\n<b>Handling of existing/not existing translations in the backend listings of</b>" as MslsCustomColumn {
+    {static} +init()
+    +th(columns)
+    +td(column_name, item_id)
+  }
+  class "MslsGetSet\n<b>Generic class for overloading properties</b>" as MslsGetSet {
+    #arr : array
+    +__set(key, value)
+    +__get(key)
+    +__isset(key)
+    +__unset(key)
+    +reset()
+    +has_value(key)
+    +is_empty()
+    +get_arr()
+  }
+  class "MslsShortCode" as MslsShortCode {
+    #options : MslsOptions
+    +__construct(options)
+    {static} +init()
+    +render_widget()
+  }
+  class "MslsSqlCacher\n<b>Wrapper to avoid direct SQL without caching</b>" as MslsSqlCacher {
+    #db : wpdb
+    #cache_key : string
+    #expire : int
+    +__construct(db, cache_key, expire)
+    {static} +create(caller, params, expire)
+    +__get(name)
+    +__call(method, args)
+  }
+  class "MslsOptionsQueryYear\n<b>OptionsQueryYear</b>" as MslsOptionsQueryYear {
+    #year : int
+    +__construct(sql_cache)
+    {static} +get_params()
+    +has_value(language)
+    +get_current_link()
+  }
+  class "MslsFields" as MslsFields {
+  }
+  class "MslsOptionsTaxTerm\n<b>MslsOptionsTaxTerm</b>" as MslsOptionsTaxTerm {
+    +with_front : bool
+    +check_base(url, options)
+    {static} #get_base_defined(tax_query)
+    {static} #get_base_option()
+  }
+  class "MslsPlugin\n<b>Provides functionalities for general hooks and activation/deactivation</b>" as MslsPlugin {
+    #options : MslsOptions
+    +__construct(options)
+    {static} +init()
+    {static} +get_output()
+    {static} +print_alternate_links()
+    +custom_enqueue()
+    {static} +plugins_url(path)
+    {static} +plugin_dir_path(path)
+    {static} +dirname(path)
+    {static} +file()
+    {static} +path()
+    +init_i18n_support()
+    {static} +message_handler(message, css_class)
+    {static} +activate()
+    {static} +uninstall()
+    {static} +cleanup()
+  }
+  class "MslsContentFilter" as MslsContentFilter {
+    #options : MslsOptions
+    +__construct(options)
+    {static} +init()
+    +content_filter(content)
+    +filter_string(pref, post)
+  }
+  class "MslsBlogCollection\n<b>Collection of blog-objects</b>" as MslsBlogCollection {
+    -current_blog_id : int
+    -current_blog_output : bool
+    -objects : MslsBlog[]
+    -objects_order : string
+    -active_plugins : array
+    -hreflangmap : array
+    +__construct()
+    {static} +get_configured_blog_description(blog_id, description)
+    +get_blogs_of_reference_user(options)
+    +get_blog(language)
+    +get_blog_id(language)
+    +get_current_blog_id()
+    +is_current_blog(blog)
+    +has_current_blog()
+    +get_current_blog()
+    +get_objects()
+    +get_object(blog_id)
+    +is_plugin_active(blog_id)
+    +get_plugin_active_blogs()
+    +get()
+    +get_filtered(filter)
+    +get_users(fields, number)
+    {static} +get_blog_language(blog_id, default)
+  }
+  class "MslsRequest" as MslsRequest {
+    {static} +get_config(name)
+    {static} +has_var(name, input_type)
+    {static} +get_var(name, input_type)
+    {static} +get(name, default)
+    {static} +isset(keys)
+    {static} +get_request(keys, default)
+  }
+  class "MslsOptions\n<b>General options class</b>" as MslsOptions {
+    #args : array
+    #name : string
+    #exists : bool
+    #sep : string
+    #autoload : string
+    -available_languages : array<string, string>
+    +with_front : bool
+    {static} +create(id)
+    {static} +is_main_page()
+    {static} +is_tax_page()
+    {static} +is_query_page()
+    +__construct()
+    +get_arg(index, default)
+    +save(arr)
+    +delete()
+    +set(arr)
+    +get_permalink(language)
+    +get_postlink(language)
+    +get_tax_query()
+    +get_current_link()
+    +is_excluded()
+    +is_content_filter()
+    +get_order()
+    +get_url(dir)
+    +get_slug(post_type)
+    +get_icon(language)
+    +get_flag_url(language)
+    +get_available_languages()
+    {static} +check_for_blog_slug(url, options)
+    +get_icon_type()
+  }
+  class "MslsAdminBar" as MslsAdminBar {
+    #icon_type : string
+    #blog_collection : MslsBlogCollection
+    +__construct(options, blog_collection)
+    {static} +init()
+    +update_admin_bar(wp_admin_bar)
+    +add_node(wp_admin_bar, node_id, title)
+    #get_title(blog, blavatar)
+  }
+  class "MslsJson\n<b>Container for an array which will used in JavaScript as object in JSON</b>" as MslsJson {
+    #arr : array
+    +add(value, label)
+    {static} +compare(a, b)
+    +get()
+    +encode()
+    +__toString()
+  }
+  class "MslsOptionsQueryAuthor\n<b>MslsOptionsQueryAuthor</b>" as MslsOptionsQueryAuthor {
+    #author_id : int
+    +__construct(sql_cache)
+    {static} +get_params()
+    +has_value(language)
+    +get_current_link()
+  }
+  class "MslsLink\n<b>Link type: Image and text</b>" as MslsLink {
+    #format_string : string
+    {static} +get_types()
+    {static} +get_description()
+    {static} +get_types_description()
+    {static} +create(display)
+    {static} +callback(x)
+    +__toString()
+  }
+  class "MslsMain\n<b>Abstraction for the hook classes</b>" as MslsMain {
+    #options : MslsOptions
+    #collection : MslsBlogCollection
+    +__construct(options, collection)
+    {static} +init()
+    +debugger(message)
+    +get_input_array(object_id)
+    #get_input_value(key, value)
+    +is_autosave(post_id)
+    +verify_nonce()
+    +delete(object_id)
+    #save(object_id, class)
+  }
+  class "MslsLinkTextOnly\n<b>Link type: Text only</b>" as MslsLinkTextOnly {
+    #format_string : string
+    {static} +get_description()
+  }
+  class "MslsAdminIconTaxonomy\n<b>Handles backend icons for taxonomies</b>" as MslsAdminIconTaxonomy {
+    #path : string
+    +set_href(id)
+    +set_path()
+  }
+  package ContentImport as ContentImport {
+    class "Relations\n<b>Class Relations</b>" as ContentImport_Relations {
+      +to_create : MslsOptions[]
+      #local_options : MslsOptions[]
+      #import_coordinates : ImportCoordinates
+      +__construct(import_coordinates)
+      +merge(relations)
+      +get_data()
+      +create()
+      #create_source_to_local()
+      #create_local_to_source()
+      +should_create(creator, dest_lang, dest_post_id)
+    }
+    class "ImportCoordinates" as ContentImport_ImportCoordinates {
+      +source_blog_id : int
+      +source_post_id : int
+      +dest_blog_id : int
+      +dest_post_id : int
+      +source_post : WP_Post
+      +source_lang : string
+      +dest_lang : string
+      +importers : array
+      +validate()
+      +get_importer_for(importer_type)
+      +parse_importers_from_request()
+      +set_importer_for(importer_type, slug)
+    }
+    class "MetaBox" as ContentImport_MetaBox {
+      #data : 
+      +render()
+      #inline_thickbox_url(data)
+      +print_modal_html()
+      #inline_thickbox_html(echo, data)
+    }
+    class "Service\n<b>Class Service</b>" as ContentImport_Service {
+      +register()
+      +hook()
+    }
+    class "AttachmentPathFinder" as ContentImport_AttachmentPathFinder {
+      +filter_srcset(sources, sizeArray, imageSrc, imageMeta, attachmentId)
+      #has_import_data(attachment_id)
+      +filter_attachment_url(url, attachment_id)
+      #get_source_post(attachment_id, msls_imported)
+    }
+    class "ImportLogger" as ContentImport_ImportLogger {
+      #levels_delimiter : 
+      #data : 
+      #import_coordinates : ImportCoordinates
+      +__construct(import_coordinates)
+      +merge(logger)
+      +get_data()
+      +save()
+      +log_error(where, what)
+      #log(where, what, root)
+      #build_nested_array(path, what)
+      #build_path(where)
+      +get_levels_delimiter()
+      +set_levels_delimiter(levels_delimiter)
+      +log_success(where, what)
+      +log_information(key, message)
+      +get_error(where)
+      #get_nested_value(where)
+      +get_success(where)
+      +get_information(key)
+    }
+    class "ContentImporter\n<b>Class ContentImporter</b>" as ContentImport_ContentImporter {
+      #main : MslsMain
+      #logger : ImportLogger
+      #relations : Relations
+      #handle : bool
+      #has_created_post : int
+      +__construct(main)
+      +get_logger()
+      +set_logger(logger)
+      +get_relations()
+      +set_relations(relations)
+      +handle_import(data)
+      #pre_flight_check(data)
+      +parse_sources()
+      #get_the_blog_post_ID(blog_id)
+      #insert_blog_post(blog_id, data)
+      +handle(handle)
+      +import_content(import_coordinates, post_fields)
+      #update_inserted_blog_post_data(blog_id, post_id, data)
+      #redirect_to_blog_post(dest_blog_id, post_id)
+      +filter_empty(empty)
+    }
+    package LogWriters as ContentImport.LogWriters {
+      interface "LogWriter" as ContentImport_LogWriters_LogWriter {
+        +write(data)
+      }
+      class "AdminNoticeLogger" as ContentImport_LogWriters_AdminNoticeLogger {
+        #transient : 
+        #import_coordinates : ImportCoordinates
+        +write(data)
+        #get_section_html(section_title, entries, escape_entries)
+        +show_last_log(echo)
+        +set_import_coordinates(import_coordinates)
+        +get_transient()
+      }
+    }
+    package Importers as ContentImport.Importers {
+      interface "Importer" as ContentImport_Importers_Importer {
+        +import(data)
+        +set_import_coordinates(import_coordinates)
+        +get_logger()
+        +get_relations()
+        {static} +info()
+      }
+      class "BaseImporter" as ContentImport_Importers_BaseImporter {
+        +import_coordinates : ImportCoordinates
+        +logger : ImportLogger
+        +relations : Relations
+        +__construct(import_coordinates, logger, relations)
+        +import(data)
+        +set_import_coordinates(import_coordinates)
+        +get_logger()
+        +get_relations()
+        {static} +info()
+      }
+      class "PostFieldsImporters" as ContentImport_Importers_PostFieldsImporters {
+        #importers_map : 
+        +details()
+      }
+      class "Map" as ContentImport_Importers_Map {
+        +make(import_coordinates)
+        +factories()
+      }
+      class "TermsImporters" as ContentImport_Importers_TermsImporters {
+        #importers_map : 
+        +details()
+      }
+      class "WithRequestPostAttributes\n<b>Trait WithRequestPostAttributes</b>" as ContentImport_Importers_WithRequestPostAttributes {
+        #read_post_type_from_request(default)
+      }
+      class "PostThumbnailImporters" as ContentImport_Importers_PostThumbnailImporters {
+        #importers_map : 
+        +details()
+      }
+      class "PostMetaImporters" as ContentImport_Importers_PostMetaImporters {
+        #importers_map : 
+        +details()
+      }
+      class "ImportersBaseFactory" as ContentImport_Importers_ImportersBaseFactory {
+        #importers_map : array
+        +make(import_coordinates)
+        +details()
+        +selected()
+        #importers_info()
+      }
+      class "AttachmentsImporters" as ContentImport_Importers_AttachmentsImporters {
+        #importers_map : 
+        +details()
+      }
+      interface "ImportersFactory" as ContentImport_Importers_ImportersFactory {
+        +make(import_coordinates)
+        +details()
+        +selected()
+      }
+      package PostMeta as ContentImport.Importers.PostMeta {
+        class "Duplicating" as ContentImport_Importers_PostMeta_Duplicating {
+          {static} +info()
+          +import(data)
+          +filter_post_meta(meta)
+        }
+      }
+      package PostThumbnail as ContentImport.Importers.PostThumbnail {
+        class "Linking\n<b>Class Linking</b>" as ContentImport_Importers_PostThumbnail_Linking {
+          {static} +info()
+          +import(data)
+          #get_attachment_meta(source_post_thumbnail_id)
+        }
+      }
+      package Terms as ContentImport.Importers.Terms {
+        class "ShallowDuplicating\n<b>Class ShallowDuplicating</b>" as ContentImport_Importers_Terms_ShallowDuplicating {
+          #reset_taxonomies : array
+          {static} +info()
+          +import(data)
+          #create_local_term(term, msls_term, dest_lang)
+          #filter_term_meta(meta, term)
+          #update_object_terms(object_id, dest_term_id, taxonomy)
+        }
+      }
+      package PostFields as ContentImport.Importers.PostFields {
+        class "Duplicating\n<b>Class Duplicating</b>" as ContentImport_Importers_PostFields_Duplicating {
+          {static} +info()
+          +import(data)
+          +filter_fields()
+        }
+      }
+      package Attachments as ContentImport.Importers.Attachments {
+        class "Linking\n<b>Class Linking</b>" as ContentImport_Importers_Attachments_Linking {
+          {static} +info()
+          +import(data)
+        }
+      }
+    }
+  }
+  package Component as Component {
+    class "Icon\n<b>Class Icon</b>" as Component_Icon {
+      #map : string[]
+      +__construct()
+      #maybe(language, prefix, postfix)
+      {abstract} #get_include()
+      {abstract} +get(language)
+    }
+    interface "InputInterface\n<b>Interface Input</b>" as Component_InputInterface {
+      +render()
+    }
+    package Input as Component.Input {
+      class "Group\n<b>Class Options</b>" as Component_Input_Group {
+        #arr : string[]
+        #glue : string
+        +__construct(glue)
+        +add(input)
+        +render()
+      }
+      class "Label\n<b>Class Label</b>" as Component_Input_Label {
+        #key : string
+        #text : string
+        +__construct(key, text)
+        +render()
+      }
+      class "Option\n<b>Class Option</b>" as Component_Input_Option {
+        #key : string
+        #value : string
+        #selected : string
+        +__construct(key, value, selected)
+        +render()
+      }
+      class "Select" as Component_Input_Select {
+        #key : string
+        #options : Group
+        +__construct(key, arr, selected)
+        +render()
+      }
+      class "Checkbox\n<b>Class Checkbox</b>" as Component_Input_Checkbox {
+        #key : string
+        #selected : string
+        +__construct(key, value)
+        +render()
+      }
+      class "Text" as Component_Input_Text {
+        #key : string
+        #value : string
+        #size : string
+        #readonly : string
+        +__construct(key, value, size, readonly)
+        +render()
+      }
+    }
+    package Icon as Component.Icon {
+      class "IconPng\n<b>Class IconPng</b>" as Component_Icon_IconPng {
+        #get_include()
+        +get(language)
+      }
+      class "IconSvg\n<b>Class IconSvg</b>" as Component_Icon_IconSvg {
+        #get_include()
+        +get(language)
+      }
+      class "IconLabel\n<b>Class IconLabel</b>" as Component_Icon_IconLabel {
+        #get_include()
+        +get(language)
+      }
+    }
+  }
+  package Map as Map {
+    class "HrefLang\n<b>Class HrefLang</b>" as Map_HrefLang {
+      #map : array
+      +__construct(blogs)
+      #get_hreflang(language)
+      +get(language)
+    }
+  }
+  package Query as Query {
+    class "YearPostsCounterQuery" as Query_YearPostsCounterQuery {
+      +__invoke(year)
+    }
+    class "CleanupOptionsQuery\n<b>Cleans up options</b>" as Query_CleanupOptionsQuery {
+      +__invoke()
+    }
+    class "AuthorPostsCounterQuery\n<b>Gets the number of published posts by an author</b>" as Query_AuthorPostsCounterQuery {
+      +__invoke(author_id)
+    }
+    class "TranslatedPostIdQuery\n<b>Gets the posts_ids of posts that have been translated to a specific language</b>" as Query_TranslatedPostIdQuery {
+      +__invoke(language)
+    }
+    class "MonthPostsCounterQuery\n<b>Gets the number of published posts by a month</b>" as Query_MonthPostsCounterQuery {
+      +__invoke(year, monthnum)
+    }
+    class "BlogsInNetworkQuery\n<b>Gets the blog_ids of blogs in the network</b>" as Query_BlogsInNetworkQuery {
+      +__invoke()
+    }
+    class "DatePostsCounterQuery\n<b>Gets the number of published posts by a date</b>" as Query_DatePostsCounterQuery {
+      +__invoke(year, monthnum, day)
+    }
+    class "AbstractQuery\n<b>AbstractQuery</b>" as Query_AbstractQuery {
+      #sql_cache : MslsSqlCacher
+      +__construct(sql_cache)
+    }
+  }
+  Component_Icon <|-- Component_Icon_IconLabel
+  Component_Icon <|-- Component_Icon_IconPng
+  Component_Icon <|-- Component_Icon_IconSvg
+  Component_Icon_IconPng ..> MslsPlugin
+  Component_Icon_IconSvg ..> MslsPlugin
+  Component_InputInterface <|-- Component_Input_Checkbox
+  Component_InputInterface <|-- Component_Input_Group
+  Component_InputInterface <|-- Component_Input_Label
+  Component_InputInterface <|-- Component_Input_Option
+  Component_InputInterface <|-- Component_Input_Select
+  Component_InputInterface <|-- Component_Input_Text
+  Component_Input_Group ..> Component_InputInterface
+  Component_Input_Select ..> Component_Input_Group
+  Component_Input_Select ..> Component_Input_Option
+  ContentImport_ContentImporter ..> ContentImport_ImportCoordinates
+  ContentImport_ContentImporter ..> ContentImport_ImportLogger
+  ContentImport_ContentImporter ..> ContentImport_Importers_Map
+  ContentImport_ContentImporter ..> ContentImport_Relations
+  ContentImport_ContentImporter ..> MslsBlogCollection
+  ContentImport_ContentImporter ..> MslsMain
+  ContentImport_ContentImporter ..> MslsOptionsPost
+  ContentImport_ImportCoordinates ..> MslsBlogCollection
+  ContentImport_ImportLogger ..> ContentImport_ImportCoordinates
+  ContentImport_ImportLogger ..> ContentImport_ImportLogger
+  ContentImport_ImportLogger ..> ContentImport_LogWriters_AdminNoticeLogger
+  ContentImport_ImportLogger ..> ContentImport_LogWriters_LogWriter
+  ContentImport_Importers_BaseImporter ..> ContentImport_ImportCoordinates
+  ContentImport_Importers_BaseImporter ..> ContentImport_ImportLogger
+  ContentImport_Importers_BaseImporter ..> ContentImport_Relations
+  ContentImport_Importers_BaseImporter <|-- ContentImport_Importers_Attachments_Linking
+  ContentImport_Importers_BaseImporter <|-- ContentImport_Importers_PostFields_Duplicating
+  ContentImport_Importers_BaseImporter <|-- ContentImport_Importers_PostMeta_Duplicating
+  ContentImport_Importers_BaseImporter <|-- ContentImport_Importers_PostThumbnail_Linking
+  ContentImport_Importers_BaseImporter <|-- ContentImport_Importers_Terms_ShallowDuplicating
+  ContentImport_Importers_Importer ..> ContentImport_ImportCoordinates
+  ContentImport_Importers_Importer ..> ContentImport_ImportLogger
+  ContentImport_Importers_Importer ..> ContentImport_Relations
+  ContentImport_Importers_Importer <|-- ContentImport_Importers_BaseImporter
+  ContentImport_Importers_ImportersBaseFactory ..> ContentImport_ImportCoordinates
+  ContentImport_Importers_ImportersBaseFactory ..> ContentImport_Importers_BaseImporter
+  ContentImport_Importers_ImportersBaseFactory ..> ContentImport_Importers_Importer
+  ContentImport_Importers_ImportersBaseFactory <|-- ContentImport_Importers_AttachmentsImporters
+  ContentImport_Importers_ImportersBaseFactory <|-- ContentImport_Importers_PostFieldsImporters
+  ContentImport_Importers_ImportersBaseFactory <|-- ContentImport_Importers_PostMetaImporters
+  ContentImport_Importers_ImportersBaseFactory <|-- ContentImport_Importers_PostThumbnailImporters
+  ContentImport_Importers_ImportersBaseFactory <|-- ContentImport_Importers_TermsImporters
+  ContentImport_Importers_ImportersFactory ..> ContentImport_ImportCoordinates
+  ContentImport_Importers_ImportersFactory ..> ContentImport_Importers_Importer
+  ContentImport_Importers_ImportersFactory <|-- ContentImport_Importers_ImportersBaseFactory
+  ContentImport_Importers_Map ..> ContentImport_ImportCoordinates
+  ContentImport_Importers_Map ..> ContentImport_Importers_AttachmentsImporters
+  ContentImport_Importers_Map ..> ContentImport_Importers_PostFieldsImporters
+  ContentImport_Importers_Map ..> ContentImport_Importers_PostMetaImporters
+  ContentImport_Importers_Map ..> ContentImport_Importers_PostThumbnailImporters
+  ContentImport_Importers_Map ..> ContentImport_Importers_TermsImporters
+  ContentImport_Importers_PostThumbnail_Linking ..> ContentImport_AttachmentPathFinder
+  ContentImport_Importers_Terms_ShallowDuplicating ..> MslsOptionsTax
+  ContentImport_Importers_Terms_ShallowDuplicating ..> MslsOptionsTaxTerm
+  ContentImport_LogWriters_AdminNoticeLogger ..> ContentImport_ImportCoordinates
+  ContentImport_LogWriters_LogWriter <|-- ContentImport_LogWriters_AdminNoticeLogger
+  ContentImport_MetaBox ..> ContentImport_Importers_Map
+  ContentImport_MetaBox ..> MslsBlogCollection
+  ContentImport_MetaBox ..> MslsFields
+  ContentImport_MetaBox ..> MslsOptionsPost
+  ContentImport_MetaBox ..> MslsPlugin
+  ContentImport_MetaBox ..> MslsRequest
+  ContentImport_Relations "1" ..> "*" MslsOptions
+  ContentImport_Relations ..> ContentImport_ImportCoordinates
+  ContentImport_Relations ..> ContentImport_Relations
+  ContentImport_Relations ..> MslsOptions
+  ContentImport_Service ..> ContentImport_AttachmentPathFinder
+  ContentImport_Service ..> ContentImport_ContentImporter
+  ContentImport_Service ..> ContentImport_LogWriters_AdminNoticeLogger
+  Map_HrefLang ..> MslsBlogCollection
+  MslsAdmin ..> Component_Input_Checkbox
+  MslsAdmin ..> Component_Input_Group
+  MslsAdmin ..> Component_Input_Label
+  MslsAdmin ..> Component_Input_Select
+  MslsAdmin ..> Component_Input_Text
+  MslsAdmin ..> MslsAdmin
+  MslsAdmin ..> MslsLink
+  MslsAdmin ..> MslsPlugin
+  MslsAdmin ..> MslsRegistry
+  MslsAdminBar ..> MslsAdminBar
+  MslsAdminBar ..> MslsBlog
+  MslsAdminBar ..> MslsBlogCollection
+  MslsAdminBar ..> MslsOptions
+  MslsAdminIcon ..> Component_Icon_IconLabel
+  MslsAdminIcon ..> Component_Icon_IconSvg
+  MslsAdminIcon ..> MslsAdminIcon
+  MslsAdminIcon ..> MslsAdminIconTaxonomy
+  MslsAdminIcon ..> MslsContentTypes
+  MslsAdminIcon <|-- MslsAdminIconTaxonomy
+  MslsAdminIconTaxonomy ..> MslsAdminIcon
+  MslsAdminIconTaxonomy ..> MslsAdminIconTaxonomy
+  MslsAdminIconTaxonomy ..> MslsTaxonomy
+  MslsBlock ..> MslsOptions
+  MslsBlock ..> MslsPlugin
+  MslsBlog ..> MslsAdminIcon
+  MslsBlog ..> MslsBlog
+  MslsBlog ..> MslsBlogCollection
+  MslsBlog ..> MslsOptions
+  MslsBlogCollection "1" ..> "*" MslsBlog
+  MslsBlogCollection ..> MslsBlog
+  MslsBlogCollection ..> MslsOptions
+  MslsBlogCollection ..> MslsPlugin
+  MslsContentFilter ..> MslsOptions
+  MslsContentFilter ..> MslsOutput
+  MslsContentTypes ..> MslsContentTypes
+  MslsContentTypes ..> MslsPostType
+  MslsContentTypes ..> MslsRequest
+  MslsContentTypes ..> MslsTaxonomy
+  MslsContentTypes <|-- MslsPostType
+  MslsContentTypes <|-- MslsTaxonomy
+  MslsCustomColumn ..> MslsAdminIcon
+  MslsCustomColumn ..> MslsBlogCollection
+  MslsCustomColumn ..> MslsCustomColumn
+  MslsCustomColumn ..> MslsOptions
+  MslsCustomColumn ..> MslsPostType
+  MslsCustomColumn <|-- MslsCustomColumnTaxonomy
+  MslsCustomColumnTaxonomy ..> MslsCustomColumnTaxonomy
+  MslsCustomColumnTaxonomy ..> MslsOptionsTax
+  MslsCustomColumnTaxonomy ..> MslsTaxonomy
+  MslsCustomFilter ..> Component_Input_Select
+  MslsCustomFilter ..> MslsCustomFilter
+  MslsCustomFilter ..> MslsFields
+  MslsCustomFilter ..> MslsPostType
+  MslsCustomFilter ..> MslsRequest
+  MslsCustomFilter ..> MslsSqlCacher
+  MslsCustomFilter ..> Query_TranslatedPostIdQuery
+  MslsGetSet ..> MslsGetSet
+  MslsGetSet <|-- MslsLink
+  MslsGetSet <|-- MslsOptions
+  MslsJson ..> MslsJson
+  MslsLanguageArray ..> MslsLanguageArray
+  MslsLink ..> MslsLink
+  MslsLink ..> MslsLinkImageOnly
+  MslsLink ..> MslsLinkTextImage
+  MslsLink ..> MslsLinkTextOnly
+  MslsLink <|-- MslsLinkImageOnly
+  MslsLink <|-- MslsLinkTextImage
+  MslsLink <|-- MslsLinkTextOnly
+  MslsMain ..> MslsBlogCollection
+  MslsMain ..> MslsFields
+  MslsMain ..> MslsLanguageArray
+  MslsMain ..> MslsOptions
+  MslsMain ..> MslsOptionsPost
+  MslsMain ..> MslsPlugin
+  MslsMain ..> MslsRequest
+  MslsMain <|-- MslsAdmin
+  MslsMain <|-- MslsCustomColumn
+  MslsMain <|-- MslsCustomFilter
+  MslsMain <|-- MslsMetaBox
+  MslsMain <|-- MslsOutput
+  MslsMain <|-- MslsPostTag
+  MslsMetaBox ..> ContentImport_MetaBox
+  MslsMetaBox ..> MslsAdminIcon
+  MslsMetaBox ..> MslsFields
+  MslsMetaBox ..> MslsJson
+  MslsMetaBox ..> MslsMetaBox
+  MslsMetaBox ..> MslsOptionsPost
+  MslsMetaBox ..> MslsPlugin
+  MslsMetaBox ..> MslsPostType
+  MslsMetaBox ..> MslsRequest
+  MslsOptions ..> Component_Icon_IconPng
+  MslsOptions ..> MslsAdminIcon
+  MslsOptions ..> MslsContentTypes
+  MslsOptions ..> MslsOptions
+  MslsOptions ..> MslsOptionsPost
+  MslsOptions ..> MslsOptionsQuery
+  MslsOptions ..> MslsOptionsTax
+  MslsOptions ..> MslsPlugin
+  MslsOptions <|-- MslsOptionsPost
+  MslsOptions <|-- MslsOptionsQuery
+  MslsOptions <|-- MslsOptionsTax
+  MslsOptionsQuery ..> MslsOptionsQuery
+  MslsOptionsQuery ..> MslsOptionsQueryAuthor
+  MslsOptionsQuery ..> MslsOptionsQueryDay
+  MslsOptionsQuery ..> MslsOptionsQueryMonth
+  MslsOptionsQuery ..> MslsOptionsQueryPostType
+  MslsOptionsQuery ..> MslsOptionsQueryYear
+  MslsOptionsQuery ..> MslsSqlCacher
+  MslsOptionsQuery <|-- MslsOptionsQueryAuthor
+  MslsOptionsQuery <|-- MslsOptionsQueryDay
+  MslsOptionsQuery <|-- MslsOptionsQueryMonth
+  MslsOptionsQuery <|-- MslsOptionsQueryPostType
+  MslsOptionsQuery <|-- MslsOptionsQueryYear
+  MslsOptionsQueryAuthor ..> MslsSqlCacher
+  MslsOptionsQueryAuthor ..> Query_AuthorPostsCounterQuery
+  MslsOptionsQueryDay ..> MslsSqlCacher
+  MslsOptionsQueryDay ..> Query_DatePostsCounterQuery
+  MslsOptionsQueryMonth ..> MslsSqlCacher
+  MslsOptionsQueryMonth ..> Query_MonthPostsCounterQuery
+  MslsOptionsQueryPostType ..> MslsSqlCacher
+  MslsOptionsQueryYear ..> MslsSqlCacher
+  MslsOptionsQueryYear ..> Query_YearPostsCounterQuery
+  MslsOptionsTax ..> MslsContentTypes
+  MslsOptionsTax ..> MslsOptionsTax
+  MslsOptionsTax ..> MslsOptionsTaxTerm
+  MslsOptionsTax ..> MslsOptionsTaxTermCategory
+  MslsOptionsTax <|-- MslsOptionsTaxTerm
+  MslsOptionsTaxTerm <|-- MslsOptionsTaxTermCategory
+  MslsOutput ..> Map_HrefLang
+  MslsOutput ..> MslsLink
+  MslsOutput ..> MslsOptions
+  MslsOutput ..> MslsOutput
+  MslsPlugin ..> ContentImport_Service
+  MslsPlugin ..> MslsAdmin
+  MslsPlugin ..> MslsAdminBar
+  MslsPlugin ..> MslsBlock
+  MslsPlugin ..> MslsContentFilter
+  MslsPlugin ..> MslsCustomColumn
+  MslsPlugin ..> MslsCustomColumnTaxonomy
+  MslsPlugin ..> MslsCustomFilter
+  MslsPlugin ..> MslsFields
+  MslsPlugin ..> MslsMetaBox
+  MslsPlugin ..> MslsOptions
+  MslsPlugin ..> MslsOutput
+  MslsPlugin ..> MslsPlugin
+  MslsPlugin ..> MslsPostTag
+  MslsPlugin ..> MslsRequest
+  MslsPlugin ..> MslsShortCode
+  MslsPlugin ..> MslsSqlCacher
+  MslsPlugin ..> MslsWidget
+  MslsPlugin ..> Query_BlogsInNetworkQuery
+  MslsPlugin ..> Query_CleanupOptionsQuery
+  MslsPostTag ..> MslsAdminIcon
+  MslsPostTag ..> MslsContentTypes
+  MslsPostTag ..> MslsFields
+  MslsPostTag ..> MslsJson
+  MslsPostTag ..> MslsOptionsTax
+  MslsPostTag ..> MslsPostTag
+  MslsPostTag ..> MslsPostTagClassic
+  MslsPostTag ..> MslsRequest
+  MslsPostTag <|-- MslsPostTagClassic
+  MslsPostTagClassic ..> MslsAdminIcon
+  MslsPostTagClassic ..> MslsBlog
+  MslsPostTagClassic ..> MslsContentTypes
+  MslsPostTagClassic ..> MslsOptionsTax
+  MslsPostType ..> MslsRequest
+  MslsRegistry ..> MslsRegistry
+  MslsRegistryInstance ..> MslsRegistry
+  MslsRegistryInstance <|-- ContentImport_AttachmentPathFinder
+  MslsRegistryInstance <|-- ContentImport_ContentImporter
+  MslsRegistryInstance <|-- ContentImport_Importers_ImportersBaseFactory
+  MslsRegistryInstance <|-- ContentImport_Importers_Map
+  MslsRegistryInstance <|-- ContentImport_LogWriters_AdminNoticeLogger
+  MslsRegistryInstance <|-- ContentImport_MetaBox
+  MslsRegistryInstance <|-- ContentImport_Service
+  MslsRegistryInstance <|-- MslsBlogCollection
+  MslsRegistryInstance <|-- MslsContentTypes
+  MslsRegistryInstance <|-- MslsGetSet
+  MslsRequest ..> MslsFields
+  MslsShortCode ..> MslsOptions
+  MslsShortCode ..> MslsWidget
+  MslsTaxonomy ..> MslsRequest
+  MslsWidget ..> MslsOutput
+  Query_AbstractQuery ..> MslsSqlCacher
+  Query_AbstractQuery <|-- Query_AuthorPostsCounterQuery
+  Query_AbstractQuery <|-- Query_BlogsInNetworkQuery
+  Query_AbstractQuery <|-- Query_CleanupOptionsQuery
+  Query_AbstractQuery <|-- Query_DatePostsCounterQuery
+  Query_AbstractQuery <|-- Query_MonthPostsCounterQuery
+  Query_AbstractQuery <|-- Query_TranslatedPostIdQuery
+  Query_AbstractQuery <|-- Query_YearPostsCounterQuery
+@enduml
