@@ -216,7 +216,7 @@ class MslsAdminIcon {
 
 		$title = sprintf( $format, $this->language );
 
-		return sprintf( '<a title="%1$s" href="%2$s">%3$s</a>&nbsp;', $title, $href, $this->get_icon() );
+		return sprintf( '<a title="%1$s" href="%2$s">%3$s</a>&nbsp;', esc_attr( $title ), esc_url( $href ), $this->get_icon() );
 	}
 
 	/**
