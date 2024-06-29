@@ -42,8 +42,8 @@
     "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
     "flags-png": "php bin/flags-png.php > flags/flags.php",
     "flags-svg": "php bin/flags-svg.php > css/flags.php",
-    "diagram:class": "vendor/bin/php-class-diagram --php7 includes > diagrams/msls-class.puml",
-    "diagram:package": "vendor/bin/php-class-diagram --package-diagram --php7 includes > diagrams/msls-package.puml",
+    "diagram:class": "vendor/bin/php-class-diagram --php8 includes > diagrams/msls-class.puml",
+    "diagram:package": "vendor/bin/php-class-diagram --package-diagram --php8 includes > diagrams/msls-package.puml",
     "githooks": [
       "if [ -e ./githooks/pre-commit ]; then cp ./githooks/pre-commit ./.git/hooks/; fi",
       "if [ -e ./.git/hooks/pre-commit ]; then chmod 0755 ./.git/hooks/pre-commit; fi"
