@@ -100,9 +100,11 @@ class MslsCustomColumn extends MslsMain {
 						$icon->set_href( (int) $mydata->$language );
 					}
 
-					echo '<span class="msls-icon-wrapper ' . esc_attr( $this->options->admin_display ) . '">';
-					echo $icon->get_a();
-					echo '</span>';
+					printf(
+						'<span class="msls-icon-wrapper %1$s">%2$s</span>',
+						esc_attr( $this->options->admin_display ),
+						$icon->get_a()
+					);
 
 					restore_current_blog();
 				}

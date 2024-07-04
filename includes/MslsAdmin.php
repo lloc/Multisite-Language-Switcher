@@ -172,12 +172,13 @@ class MslsAdmin extends MslsMain {
 		settings_fields( 'msls' );
 		do_settings_sections( __CLASS__ );
 
+		$value = $this->options->is_empty() ?
+			__( 'Configure', 'multisite-language-switcher' ) :
+			__( 'Update', 'multisite-language-switcher' );
+
 		printf(
 			'<p class="submit"><input name="Submit" type="submit" class="button button-primary" value="%s" /></p></form></div>',
-			( $this->options->is_empty() ? __( 'Configure', 'multisite-language-switcher' ) : __(
-				'Update',
-				'multisite-language-switcher'
-			) )
+			esc_html( $value )
 		);
 	}
 
