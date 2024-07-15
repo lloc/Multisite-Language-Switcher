@@ -20,23 +20,23 @@ class MslsMetaBox extends MslsMain {
 	public static function suggest() {
 		$json = new MslsJson();
 
-		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID, INPUT_GET ) ) {
-			switch_to_blog( MslsRequest::get_var( MslsFields::FIELD_BLOG_ID, INPUT_GET ) );
+		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID, INPUT_POST ) ) {
+			switch_to_blog( MslsRequest::get_var( MslsFields::FIELD_BLOG_ID, INPUT_POST ) );
 
 			$args = array(
 				'post_status'    => get_post_stati( array( 'internal' => '' ) ),
 				'posts_per_page' => 10,
 			);
 
-			if ( MslsRequest::has_var( MslsFields::FIELD_POST_TYPE, INPUT_GET ) ) {
+			if ( MslsRequest::has_var( MslsFields::FIELD_POST_TYPE, INPUT_POST ) ) {
 				$args['post_type'] = sanitize_text_field(
-					MslsRequest::get_var( MslsFields::FIELD_POST_TYPE, INPUT_GET )
+					MslsRequest::get_var( MslsFields::FIELD_POST_TYPE, INPUT_POST )
 				);
 			}
 
-			if ( MslsRequest::has_var( MslsFields::FIELD_S, INPUT_GET ) ) {
+			if ( MslsRequest::has_var( MslsFields::FIELD_S, INPUT_POST ) ) {
 				$args['s'] = sanitize_text_field(
-					MslsRequest::get_var( MslsFields::FIELD_S, INPUT_GET )
+					MslsRequest::get_var( MslsFields::FIELD_S, INPUT_POST )
 				);
 			}
 
