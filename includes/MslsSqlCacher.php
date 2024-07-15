@@ -1,10 +1,4 @@
 <?php
-/**
- * MslsSqlCacher
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @since 1.0
- */
 
 namespace lloc\Msls;
 
@@ -22,117 +16,85 @@ namespace lloc\Msls;
  * @property string $blogs
  * @property int $blogid
  * @property int $siteid
+ *
  * @package Msls
  */
 class MslsSqlCacher {
 
 	/**
+	 * Cache group
+	 */
+	const CACHE_GROUP = 'msls-cache-group';
+
+	/**
 	 * Database object
-	 *
-	 * @var object $db
 	 */
-	protected $db;
+	protected \wpdb $db;
 
 	/**
-	 * Name of the object which created this object
-	 *
-	 * @var string $caller
+	 * Key for the cached result-set
 	 */
-	protected $caller;
+	protected string $cache_key;
 
 	/**
-	 * Parameters are used to create the key for the cached resultset
-	 *
-	 * @var mixed $params
+	 * Expiration time for the cache in seconds
 	 */
-	protected $params;
+	protected int $expire;
 
 	/**
 	 * Constructor
-	 *
-	 * @param \WPDB $db
-	 * @param $caller
 	 */
-	public function __construct( \WPDB $db, $caller ) {
-		$this->db     = $db;
-		$this->caller = $caller;
+	public function __construct( \wpdb $db, string $cache_key, int $expire = 0 ) {
+		$this->db        = $db;
+		$this->cache_key = $cache_key;
+		$this->expire    = $expire;
 	}
 
 	/**
 	 * Factory
 	 *
-	 * @uses \WPDB $wpdb
-	 *
 	 * @param string $caller
-	 *
-	 * @return MslsSqlCacher
+	 * @param mixed  $params
+	 * @param int    $expire
 	 */
-	public static function init( $caller ) {
+	public static function create( string $caller, $params, int $expire = 0 ): self {
 		global $wpdb;
 
-		return new self( $wpdb, $caller );
-	}
+		if ( is_array( $params ) ) {
+			$params = implode( '_', $params );
+		}
 
-	/**
-	 * Set params
-	 *
-	 * @param mixed $params
-	 *
-	 * @return MslsSqlCacher
-	 */
-	public function set_params( $params ) {
-		$this->params = $params;
-
-		return $this;
-	}
-
-	/**
-	 * Get the name of the key which is in use for the cached object
-	 *
-	 * @return string
-	 */
-	public function get_key() {
-		$params = (
-		is_array( $this->params ) ?
-			implode( '_', $this->params ) :
-			$this->params
-		);
-
-		return $this->caller . '_' . $params;
+		return new self( $wpdb, esc_attr( $caller . '_' . $params ), $expire );
 	}
 
 	/**
 	 * Magic __get
 	 *
-	 * @param string $key
-	 *
 	 * @return mixed
 	 */
-	public function __get( $key ) {
-		return ( isset( $this->db->$key ) ? $this->db->$key : null );
+	public function __get( string $name ) {
+		return $this->db->$name ?? null;
 	}
 
 	/**
 	 * Call a method of the db-object with the needed args and cache the result
 	 *
-	 * @param string $method
-	 * @param array $args
+	 * @param string            $method
+	 * @param array<int|string> $args
 	 *
 	 * @return mixed
 	 */
-	public function __call( $method, $args ) {
+	public function __call( string $method, array $args ) {
 		if ( 'get_' != substr( $method, 0, 4 ) ) {
-			$result = call_user_func_array( [ $this->db, $method ], $args );
-		} else {
-			$key    = $this->get_key();
-			$result = wp_cache_get( $key );
-			if ( false === $result ) {
-				$result = call_user_func_array( [ $this->db, $method ], $args );
-				wp_cache_set( $key, $result );
-			}
+			return call_user_func_array( array( $this->db, $method ), $args );
+		}
+
+		$result = wp_cache_get( $this->cache_key, self::CACHE_GROUP );
+		if ( false === $result ) {
+			$result = call_user_func_array( array( $this->db, $method ), $args );
+			wp_cache_set( $this->cache_key, $result, self::CACHE_GROUP, $this->expire );
 		}
 
 		return $result;
 	}
-
 }

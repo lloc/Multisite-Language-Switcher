@@ -1,15 +1,20 @@
 {
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "uglify": "uglifyjs js/msls.js > js/msls.min.js",
-    "less": "lessc css/msls.less css/msls.css --clean-css=\"--s1 --advanced --compatibility=ie8\"",
-    "build": "npm run uglify && npm run less"
+    "uglify": "uglifyjs src/msls.js > js/msls.js",
+    "less": "lessc css/msls.less css/msls.css --clean-css=\"--s1 --advanced\"",
+    "build-msls-block": "wp-scripts build src/msls-widget-block/index.js --webpack-src-dir=src/msls-widget-block --output-path=js/msls-widget-block",
+    "build": "npm run uglify && npm run less && npm run build-msls-block"
+  },
+  "dependencies": {
+    "less": "^4.2.0",
+    "less-plugin-clean-css": "^1.5.1",
+    "uglify-js": "^3.17.4"
   },
   "devDependencies": {
-    "less": "^3.9.0",
-    "less-plugin-clean-css": "^1.5.1",
-    "uglify-js": "^3.4.9",
-    "vuepress": "^1.2.0"
+    "@playwright/test": "^1.44.0",
+    "@types/node": "^20.12.11",
+    "@wordpress/e2e-test-utils": "^11.0.0",
+    "@wordpress/scripts": "^27.9.0",
+    "dotenv": "^16.4.5"
   }
 }

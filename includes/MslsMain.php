@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsMain
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -31,7 +26,7 @@ class MslsMain {
 	/**
 	 * Constructor
 	 *
-	 * @param MslsOptions $options
+	 * @param MslsOptions        $options
 	 * @param MslsBlogCollection $collection
 	 */
 	public function __construct( MslsOptions $options, MslsBlogCollection $collection ) {
@@ -47,10 +42,7 @@ class MslsMain {
 	 * @return static
 	 */
 	public static function init() {
-		$options    = MslsOptions::instance();
-		$collection = MslsBlogCollection::instance();
-
-		return new static( $options, $collection );
+		return new static( msls_options(), msls_blog_collection() );
 	}
 
 	/**
@@ -58,11 +50,12 @@ class MslsMain {
 	 *
 	 * @param mixed $message
 	 */
-	public function debugger( $message ) {
+	public function debugger( $message ): void {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
 				$message = print_r( $message, true );
 			}
+
 			error_log( 'MSLS Debug: ' . $message );
 		}
 	}
@@ -75,7 +68,7 @@ class MslsMain {
 	 * @return array
 	 */
 	public function get_input_array( $object_id ) {
-		$arr = [];
+		$arr = array();
 
 		$current_blog = $this->collection->get_current_blog();
 		if ( ! is_null( $current_blog ) ) {
@@ -99,6 +92,7 @@ class MslsMain {
 
 	/**
 	 * Prepare input key/value-pair
+	 *
 	 * @param $key
 	 * @param $value
 	 *
@@ -106,10 +100,10 @@ class MslsMain {
 	 */
 	protected function get_input_value( $key, $value ) {
 		if ( false === strpos( $key, 'msls_input_' ) || empty( $value ) ) {
-			return [ '', 0 ];
+			return array( '', 0 );
 		}
 
-		return [ substr( $key, 11 ), intval( $value ) ];
+		return array( substr( $key, 11 ), intval( $value ) );
 	}
 
 	/**
@@ -130,8 +124,8 @@ class MslsMain {
 	 */
 	public function verify_nonce() {
 		return (
-			filter_has_var( INPUT_POST, 'msls_noncename' ) &&
-			wp_verify_nonce( filter_input( INPUT_POST, 'msls_noncename' ), MslsPlugin::path() )
+			MslsRequest::has_var( MslsFields::FIELD_MSLS_NONCENAME ) &&
+			wp_verify_nonce( MslsRequest::get_var( MslsFields::FIELD_MSLS_NONCENAME ), MslsPlugin::path() )
 		);
 	}
 
@@ -149,7 +143,7 @@ class MslsMain {
 	/**
 	 * Save
 	 *
-	 * @param int $object_id
+	 * @param int    $object_id
 	 * @param string $class
 	 *
 	 * @codeCoverageIgnore
@@ -158,10 +152,11 @@ class MslsMain {
 		if ( has_action( 'msls_main_save' ) ) {
 			/**
 			 * Calls completely customized save-routine
-			 * @since 0.9.9
 			 *
 			 * @param int $object_id
 			 * @param string Classname
+			 *
+			 * @since 0.9.9
 			 */
 			do_action( 'msls_main_save', $object_id, $class );
 
@@ -169,7 +164,7 @@ class MslsMain {
 		}
 
 		if ( ! $this->collection->has_current_blog() ) {
-			$this->debugger( 'MslsBlogCollection::instance()->has_current_blog returns false.' );
+			$this->debugger( 'BlogCollection returns false when calling has_current_blog.' );
 
 			return;
 		}
@@ -202,5 +197,4 @@ class MslsMain {
 			restore_current_blog();
 		}
 	}
-
 }

@@ -1,13 +1,25 @@
 {
   "name": "lloc/multisite-language-switcher",
   "description": "Multisite Language Switcher",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "homepage": "http://msls.co",
   "require": {
-    "php": ">=5.6",
-    "composer/installers": "~1.9.0"
+    "php": ">=7.4",
+    "composer/installers": "~1.12.0",
+    "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": ">=5.7 <7",
-    "brain/monkey": "2.*"
+    "phpunit/phpunit": "^9.6",
+    "brain/monkey": "^2.6",
+    "phpstan/phpstan": "^1.11",
+    "szepeviktor/phpstan-wordpress": "^1.3",
+    "phpstan/extension-installer": "^1.3",
+    "antecedent/patchwork": "^2.1",
+    "squizlabs/php_codesniffer": "^3.9",
+    "phpcompatibility/php-compatibility": "^9.3",
+    "wp-coding-standards/wpcs": "^3.0",
+    "smeghead/php-class-diagram": "^1.3"
   },
   "autoload": {
     "psr-4": {
@@ -16,14 +28,32 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "lloc\\Msls\\": "tests/"
+      "lloc\\MslsTests\\": "tests/phpunit/"
     }
   },
   "scripts": {
-    "test": "phpunit",
-    "coverage": "phpunit --coverage-html docs/.vuepress/public/coverage",
+    "test": "vendor/bin/phpunit",
+    "coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html tests/coverage",
+    "analyze": "vendor/bin/phpstan analyze",
+    "playwright": "npx playwright test",
+    "php74": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4",
+    "php81": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1",
+    "php82": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2",
     "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
-    "flags": "php bin/flags.php > flags/flags.php"
+    "flags-png": "php bin/flags-png.php > flags/flags.php",
+    "flags-svg": "php bin/flags-svg.php > css/flags.php",
+    "diagram:class": "vendor/bin/php-class-diagram --php8 includes > diagrams/msls-class.puml",
+    "diagram:package": "vendor/bin/php-class-diagram --package-diagram --php8 includes > diagrams/msls-package.puml",
+    "githooks": [
+      "if [ -e ./githooks/pre-commit ]; then cp ./githooks/pre-commit ./.git/hooks/; fi",
+      "if [ -e ./.git/hooks/pre-commit ]; then chmod 0755 ./.git/hooks/pre-commit; fi"
+    ],
+    "post-install-cmd": [
+      "@githooks"
+    ],
+    "post-update-cmd": [
+      "@githooks"
+    ]
   },
   "authors": [
     {
@@ -37,11 +67,13 @@
     "multisite",
     "language",
     "switcher",
-    "international",
-    "localization",
-    "i18n"
+    "localization"
   ],
-  "type": "wordpress-plugin",
-  "license": "GPL-2.0-or-later",
-  "homepage": "http://msls.co"
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "phpstan/extension-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
 }

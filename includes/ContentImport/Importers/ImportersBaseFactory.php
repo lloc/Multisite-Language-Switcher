@@ -45,10 +45,11 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 		/**
 		 * Filters the importers map.
 		 *
-		 * @since TBD
-		 *
 		 * @param array $map A map of importers in the shape [ <importer-slug> => <importer-class> ]
 		 * @param ImportCoordinates $import_coordinates
+		 *
+		 * @since TBD
+		 *
 		 */
 		$map = apply_filters( "msls_content_import_{$type}_importers_map", $this->importers_map, $import_coordinates );
 
@@ -87,10 +88,11 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 		/**
 		 * Filters the selected importer that among the available ones.
 		 *
-		 * @since TBD
-		 *
 		 * @param string $selected The selected importer slug.
 		 * @param ImportersFactory $this
+		 *
+		 * @since TBD
+		 *
 		 */
 		$selected = apply_filters( "msls_content_import_{$slug}_selected", $selected, $this );
 

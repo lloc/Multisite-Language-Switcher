@@ -15,8 +15,8 @@ class Duplicating extends BaseImporter {
 	 */
 	public static function info() {
 		return (object) [
-			'slug'        => static::TYPE,
-			'name'        => __( 'Duplicating', 'multisite-language-switcher' ),
+			'slug' => static::TYPE,
+			'name' => __( 'Duplicating', 'multisite-language-switcher' ),
 			'description' => __( 'Copies the source post meta to the destination.', 'multisite-language-switcher' )
 		];
 	}
@@ -59,7 +59,10 @@ class Duplicating extends BaseImporter {
 		 * @param array $meta
 		 * @param ImportCoordinates $import_coordinates
 		 */
-		$blacklist = apply_filters( 'msls_content_import_post_meta_blacklist', $blacklist, $meta, $this->import_coordinates );
+		$blacklist = apply_filters( 'msls_content_import_post_meta_blacklist',
+			$blacklist,
+			$meta,
+			$this->import_coordinates );
 
 		return array_diff_key( $meta, array_combine( $blacklist, $blacklist ) );
 	}

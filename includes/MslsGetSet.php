@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsGetSet
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -18,15 +13,16 @@ class MslsGetSet extends MslsRegistryInstance {
 
 	/**
 	 * Generic container for all properties of an instance
+	 *
 	 * @var array $arr
 	 */
-	protected $arr = [];
+	protected $arr = array();
 
 	/**
 	 * Overloads the set method.
 	 *
 	 * @param string $key
-	 * @param mixed $value
+	 * @param mixed  $value
 	 */
 	public function __set( $key, $value ) {
 		$this->arr[ $key ] = $value;
@@ -40,16 +36,18 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * Overloads the get method.
 	 *
 	 * @param string $key
+	 *
 	 * @return mixed
 	 */
 	public function __get( $key ) {
-		return isset( $this->arr[ $key ] ) ? $this->arr[ $key ] : null;
+		return $this->arr[ $key ] ?? null;
 	}
 
 	/**
 	 * Overloads the isset method.
 	 *
 	 * @param string $key
+	 *
 	 * @return bool
 	 */
 	public function __isset( $key ) {
@@ -73,16 +71,16 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * @return MslsGetSet
 	 */
 	public function reset() {
-		$this->arr = [];
+		$this->arr = array();
 
 		return $this;
 	}
 
 	/**
-	 * Checks if the array has an non empty item with the specified key name.
+	 * Checks if the array has a non-empty item with the specified key name.
 	 *
 	 * This is method is similar to the overloaded __isset-method since
-	 * __set cleans empty properties but I use for example
+	 * __set cleans empty properties, but I use for example
 	 *
 	 *     $obj->has_value( $temp )
 	 *
@@ -93,9 +91,10 @@ class MslsGetSet extends MslsRegistryInstance {
 	 * which is the same but in my opinion a little bit ugly.
 	 *
 	 * @param string $key
+	 *
 	 * @return bool
 	 */
-	public function has_value( $key ) {
+	public function has_value( string $key ): bool {
 		return ! empty( $this->arr[ $key ] );
 	}
 
@@ -116,5 +115,4 @@ class MslsGetSet extends MslsRegistryInstance {
 	public function get_arr() {
 		return $this->arr;
 	}
-
 }

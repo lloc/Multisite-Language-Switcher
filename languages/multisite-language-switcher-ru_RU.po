@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSLS 0.9.9\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-language-switcher\n"
-"POT-Creation-Date: 2014-09-01 16:44+0100\n"
-"PO-Revision-Date: 2014-09-01 16:44+0100\n"
+"POT-Creation-Date: 2022-10-27 15:58+0200\n"
+"PO-Revision-Date: 2022-10-27 15:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: andreyv <jujav4ik@gmail.com>\n"
 "Language: ru_RU\n"
@@ -15,39 +15,133 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Textdomain-Support: yes\n"
-"X-Generator: Poedit 1.5.7\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPath-1: ..\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: languages\n"
+"X-Poedit-SearchPath-1: .\n"
+"X-Poedit-SearchPathExcluded-0: vendor\n"
 
-# @ msls
-#: ../MultisiteLanguageSwitcher.php:165
-#, php-format
-msgid "This post is also available in %s."
-msgstr "Эта статья также доступна на %s"
+#: includes/ContentImport/Importers/Attachments/Linking.php:26
+#: includes/ContentImport/Importers/PostThumbnail/Linking.php:27
+msgid "Linking"
+msgstr ""
 
-# @ msls
-#: ../MultisiteLanguageSwitcher.php:182
-#, php-format
-msgid "%s and %s"
-msgstr "%s и %s"
-
-#: ../MultisiteLanguageSwitcher.php:287
+#: includes/ContentImport/Importers/Attachments/Linking.php:27
 msgid ""
-"The Multisite Language Switcher needs the activation of the multisite-"
-"feature for working properly. Please read <a onclick=\"window.open(this."
-"href); return false;\" href=\"http://codex.wordpress.org/Create_A_Network"
-"\">this post</a> if you don't know the meaning."
+"Links the media attachments from the source post to the destination post; "
+"media attachments are not duplicated."
+msgstr ""
+
+#: includes/ContentImport/Importers/Attachments/Linking.php:34
+msgid ""
+"Post attachments were left in place in the source blog and linked in the "
+"destination post."
+msgstr ""
+
+#: includes/ContentImport/Importers/AttachmentsImporters.php:23
+msgid "Image Attachments"
+msgstr ""
+
+#: includes/ContentImport/Importers/PostFields/Duplicating.php:28
+#: includes/ContentImport/Importers/PostMeta/Duplicating.php:19
+msgid "Duplicating"
+msgstr ""
+
+#: includes/ContentImport/Importers/PostFields/Duplicating.php:29
+msgid "Copies the source post fields to the destination."
+msgstr ""
+
+#: includes/ContentImport/Importers/PostFieldsImporters.php:23
+msgid "Post Fields"
+msgstr ""
+
+#: includes/ContentImport/Importers/PostMeta/Duplicating.php:20
+msgid "Copies the source post meta to the destination."
+msgstr ""
+
+#: includes/ContentImport/Importers/PostMetaImporters.php:23
+msgid "Meta Fields"
+msgstr ""
+
+#: includes/ContentImport/Importers/PostThumbnail/Linking.php:28
+msgid ""
+"Links the featured image from the source post to the destination post; the "
+"image is not duplicated."
+msgstr ""
+
+#: includes/ContentImport/Importers/PostThumbnailImporters.php:23
+msgid "Featured Image"
+msgstr ""
+
+#: includes/ContentImport/Importers/Terms/ShallowDuplicating.php:33
+msgid "Shallow Duplicating"
+msgstr ""
+
+#: includes/ContentImport/Importers/Terms/ShallowDuplicating.php:34
+msgid ""
+"Shallow (one level deep) duplication or assignment of the source post "
+"taxonomy terms to the destnation post."
+msgstr ""
+
+#: includes/ContentImport/Importers/TermsImporters.php:23
+msgid "Taxonomy Terms"
+msgstr ""
+
+#: includes/ContentImport/MetaBox.php:35
+#, php-format
+msgid "Import content from %s"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:23 ../includes/MslsAdmin.php:24
-#: ../includes/MslsMetaBox.php:94 ../includes/MslsPostTag.php:151
-#: ../includes/MslsPostTagClassic.php:112 ../includes/MslsWidget.php:20
+#: includes/MslsAdmin.php:46 includes/MslsMetaBox.php:127
+#: includes/MslsPostTag.php:171 includes/MslsPostTagClassic.php:121
+#: includes/MslsWidget.php:26
 msgid "Multisite Language Switcher"
 msgstr ""
 
-#: ../includes/MslsAdmin.php:49
+#: includes/MslsAdmin.php:93
+msgid "Activate experimental autocomplete inputs"
+msgstr ""
+
+#: includes/MslsAdmin.php:94
+msgid "Activate the content import functionality"
+msgstr ""
+
+# @ msls
+#: includes/MslsAdmin.php:95
+#, fuzzy
+#| msgid "Sort output by description"
+msgid "Sort languages by description"
+msgstr "Отсортировать по названию"
+
+# @ msls
+#: includes/MslsAdmin.php:96
+msgid "Exclude this blog from output"
+msgstr "Исключить блог из меню"
+
+# @ msls
+#: includes/MslsAdmin.php:97
+msgid "Show only links with a translation"
+msgstr "Показывать ссылки с переводом"
+
+# @ msls
+#: includes/MslsAdmin.php:98
+msgid "Display link to the current language"
+msgstr "Показать ссылку на данный язык"
+
+# @ msls
+#: includes/MslsAdmin.php:99
+msgid "Add hint for available translations"
+msgstr "Добавить подсказку для имеющихся переводов"
+
+#: includes/MslsAdmin.php:119
+#, php-format
+msgid ""
+"Multisite Language Switcher is almost ready. You must <a href=\"%s"
+"\">complete the configuration process</a>."
+msgstr ""
+
+#: includes/MslsAdmin.php:124
 #, php-format
 msgid ""
 "There are no language files installed. You can <a href=\"%s\">manually "
@@ -55,175 +149,192 @@ msgid ""
 "to download these files automatically."
 msgstr ""
 
-#: ../includes/MslsAdmin.php:56
-#, php-format
-msgid ""
-"Multisite Language Switcher is almost ready. You must <a href=\"%s"
-"\">complete the configuration process</a>."
-msgstr ""
-
 # @ msls
-#: ../includes/MslsAdmin.php:71
+#: includes/MslsAdmin.php:139
 msgid "Multisite Language Switcher Options"
 msgstr "Multisite Language Switcher Настройки"
 
 # @ msls
-#: ../includes/MslsAdmin.php:73
+#: includes/MslsAdmin.php:141
 msgid ""
 "To achieve maximum flexibility, you have to configure each blog separately."
 msgstr ""
 
-#: ../includes/MslsAdmin.php:81
+#: includes/MslsAdmin.php:149
 msgid "Configure"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:81 ../includes/MslsMetaBox.php:197
-#: ../includes/MslsMetaBox.php:263
+#: includes/MslsAdmin.php:149
 msgid "Update"
 msgstr "Обновить"
 
 # @ msls
-#: ../includes/MslsAdmin.php:120
+#: includes/MslsAdmin.php:180
 #, fuzzy
 msgid "Language Settings"
 msgstr "Главные настройки"
 
 # @ msls
-#: ../includes/MslsAdmin.php:121
+#: includes/MslsAdmin.php:181
 msgid "Main Settings"
 msgstr "Главные настройки"
 
 # @ msls
-#: ../includes/MslsAdmin.php:122
+#: includes/MslsAdmin.php:182
 msgid "Advanced Settings"
 msgstr ""
 
-#: ../includes/MslsAdmin.php:137
+# @ msls
+#: includes/MslsAdmin.php:187
+#, fuzzy
+#| msgid "Main Settings"
+msgid "Rewrites Settings"
+msgstr "Главные настройки"
+
+#: includes/MslsAdmin.php:213
 msgid "Blog Language"
 msgstr ""
 
-#: ../includes/MslsAdmin.php:138
-msgid "Admin Language"
-msgstr ""
-
 # @ msls
-#: ../includes/MslsAdmin.php:154
+#: includes/MslsAdmin.php:227
 msgid "Display"
 msgstr "Показать"
 
-# @ msls
-#: ../includes/MslsAdmin.php:155
-msgid "Sort output by description"
-msgstr "Отсортировать по названию"
+#: includes/MslsAdmin.php:228
+msgid "Sort languages"
+msgstr ""
+
+#: includes/MslsAdmin.php:229
+msgid "Current language link"
+msgstr ""
+
+#: includes/MslsAdmin.php:230
+msgid "Translation links"
+msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:156
-msgid "Display link to the current language"
-msgstr "Показать ссылку на данный язык"
-
-# @ msls
-#: ../includes/MslsAdmin.php:157
-msgid "Show only links with a translation"
-msgstr "Показывать ссылки с переводом"
-
-# @ msls
-#: ../includes/MslsAdmin.php:158
+#: includes/MslsAdmin.php:231
 msgid "Description"
 msgstr "Описание"
 
 # @ msls
-#: ../includes/MslsAdmin.php:159
+#: includes/MslsAdmin.php:232
 msgid "Text/HTML before the list"
 msgstr "Текст/HTML перед элементом списка"
 
 # @ msls
-#: ../includes/MslsAdmin.php:160
+#: includes/MslsAdmin.php:233
 msgid "Text/HTML after the list"
 msgstr "Текст/HTML после элемента списка"
 
 # @ msls
-#: ../includes/MslsAdmin.php:161
+#: includes/MslsAdmin.php:234
 msgid "Text/HTML before each item"
 msgstr "Текст/HTML перед элементом"
 
 # @ msls
-#: ../includes/MslsAdmin.php:162
+#: includes/MslsAdmin.php:235
 msgid "Text/HTML after each item"
 msgstr "Текст/HTML после элемента"
 
 # @ msls
-#: ../includes/MslsAdmin.php:163
-msgid "Add hint for available translations"
+#: includes/MslsAdmin.php:236
+#, fuzzy
+#| msgid "Add hint for available translations"
+msgid "Available translations hint"
 msgstr "Добавить подсказку для имеющихся переводов"
 
 # @ msls
-#: ../includes/MslsAdmin.php:164
+#: includes/MslsAdmin.php:237
 msgid "Hint priority"
 msgstr "Приоритет подсказок"
 
-#: ../includes/MslsAdmin.php:180
-msgid "Activate experimental autocomplete inputs"
+#: includes/MslsAdmin.php:252
+msgid "Autocomplete"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsAdmin.php:181
+#: includes/MslsAdmin.php:253
 msgid "Custom URL for flag-images"
 msgstr "Собственная ссылка на флаг-иконку"
 
-#: ../includes/MslsAdmin.php:182
+#: includes/MslsAdmin.php:254
 msgid "Reference user"
 msgstr ""
 
-# @ msls
-#: ../includes/MslsAdmin.php:183
-msgid "Exclude this blog from output"
-msgstr "Исключить блог из меню"
+#: includes/MslsAdmin.php:255
+msgid "Exclude blog"
+msgstr ""
 
-# @ msls
-#: ../includes/MslsAdminIcon.php:147
+#: includes/MslsAdmin.php:256
+msgid "Content import"
+msgstr ""
+
+#: includes/MslsAdmin.php:272
 #, php-format
-msgid "Edit the translation in the %s-blog"
-msgstr "Редактировать перевод в %s-блоге"
+msgid "%s Slug"
+msgstr ""
+
+#: includes/MslsAdmin.php:334
+#, php-format
+msgid ""
+"Multisite Language Switcher: Collection for reference user has been "
+"truncated because it exceeded the maximum of %s users. Please, use the hook "
+"\"msls_reference_users\" to filter the result before!"
+msgstr ""
 
 # @ msls
-#: ../includes/MslsAdminIcon.php:154
+#: includes/MslsAdminIcon.php:209
 #, php-format
 msgid "Create a new translation in the %s-blog"
 msgstr "Добавить перевод в %s-блог"
 
-#: ../includes/MslsCustomFilter.php:45
+# @ msls
+#: includes/MslsAdminIcon.php:212
+#, php-format
+msgid "Edit the translation in the %s-blog"
+msgstr "Редактировать перевод в %s-блоге"
+
+#: includes/MslsCustomFilter.php:54
 msgid "Show all blogs"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsCustomFilter.php:51
+#: includes/MslsCustomFilter.php:60
 #, php-format
 msgid "Not translated in the %s-blog"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsLink.php:45
+#: includes/MslsLink.php:47
 msgid "Flag and description"
 msgstr "Флаг и название"
 
 # @ msls
-#: ../includes/MslsLinkImageOnly.php:25
+#: includes/MslsLinkImageOnly.php:26
 msgid "Flag only"
 msgstr "Только флаг"
 
 # @ msls
-#: ../includes/MslsLinkTextImage.php:25
+#: includes/MslsLinkTextImage.php:26
 msgid "Description and flag"
 msgstr "Название и флаг"
 
 # @ msls
-#: ../includes/MslsLinkTextOnly.php:25
+#: includes/MslsLinkTextOnly.php:26
 msgid "Description only"
 msgstr "Только название"
 
 # @ msls
-#: ../includes/MslsMetaBox.php:204 ../includes/MslsMetaBox.php:271
+#: includes/MslsMetaBox.php:140
+#, fuzzy
+#| msgid "Multisite Language Switcher Options"
+msgid "Multisite Language Switcher - Import content"
+msgstr "Multisite Language Switcher Настройки"
+
+# @ msls
+#: includes/MslsMetaBox.php:233 includes/MslsMetaBox.php:338
 msgid ""
 "You should define at least another blog in a different language in order to "
 "have some benefit from this plugin!"
@@ -231,12 +342,37 @@ msgstr ""
 "Вам необходимо добавить минимум один блог на другом языке, чтобы "
 "активировать plugin!"
 
+#: includes/MslsOptions.php:358
+msgid "American English"
+msgstr ""
+
+#: includes/MslsPlugin.php:94
+#, php-format
+msgid ""
+"The Multisite Language Switcher needs the activation of the multisite-"
+"feature for working properly. Please read <a onclick=\"window.open(this."
+"href); return false;\" href=\"%s\">this post</a> if you don't know the "
+"meaning."
+msgstr ""
+
 # @ msls
-#: ../includes/MslsWidget.php:54
+#: includes/MslsPlugin.php:171
+#, php-format
+msgid "This post is also available in %s."
+msgstr "Эта статья также доступна на %s"
+
+# @ msls
+#: includes/MslsPlugin.php:189
+#, php-format
+msgid "%s and %s"
+msgstr "%s и %s"
+
+# @ msls
+#: includes/MslsWidget.php:60
 msgid "No available translations found"
 msgstr ""
 
 # @ msls
-#: ../includes/MslsWidget.php:83
+#: includes/MslsWidget.php:96
 msgid "Title"
 msgstr "Заголовок"

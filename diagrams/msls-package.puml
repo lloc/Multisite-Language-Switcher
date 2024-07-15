@@ -1,0 +1,48 @@
+@startuml package-related-diagram
+  package lloc.Msls as Msls {
+    package ContentImport {
+      package LogWriters {
+      }
+      package Importers {
+        package PostMeta {
+        }
+        package PostThumbnail {
+        }
+        package Terms {
+        }
+        package PostFields {
+        }
+        package Attachments {
+        }
+      }
+    }
+    package Component {
+      package Input {
+      }
+      package Icon {
+      }
+    }
+    package Map {
+    }
+    package Query {
+    }
+  }
+  Msls --> Input
+  Msls <-[#red,plain,thickness=4]-> Query
+  Msls <-[#red,plain,thickness=4]-> Map
+  Msls <-[#red,plain,thickness=4]-> ContentImport
+  Msls <-[#red,plain,thickness=4]-> Icon
+  ContentImport <-[#red,plain,thickness=4]-> Importers
+  ContentImport <-[#red,plain,thickness=4]-> LogWriters
+  LogWriters --> Msls
+  Importers <-[#red,plain,thickness=4]-> PostFields
+  Importers --> Msls
+  Importers <-[#red,plain,thickness=4]-> Terms
+  Importers <-[#red,plain,thickness=4]-> PostThumbnail
+  Importers <-[#red,plain,thickness=4]-> PostMeta
+  Importers <-[#red,plain,thickness=4]-> Attachments
+  PostThumbnail --> ContentImport
+  Terms --> Msls
+  Input --> Component
+  Icon --> Component
+@enduml

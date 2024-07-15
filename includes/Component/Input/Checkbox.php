@@ -6,6 +6,7 @@ use lloc\Msls\Component\InputInterface;
 
 /**
  * Class Checkbox
+ *
  * @package lloc\Msls\Component\Input
  */
 class Checkbox implements InputInterface {
@@ -22,9 +23,9 @@ class Checkbox implements InputInterface {
 
 	/**
 	 * @param string $key
-	 * @param string|null $value
+	 * @param string $value
 	 */
-	public function __construct( string $key, $value ) {
+	public function __construct( string $key, ?string $value ) {
 		$this->key      = esc_attr( $key );
 		$this->selected = checked( 1, $value, false );
 	}
@@ -33,7 +34,10 @@ class Checkbox implements InputInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		return sprintf( '<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>', $this->key, $this->selected );
+		return sprintf(
+			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
+			$this->key,
+			$this->selected
+		);
 	}
-
 }

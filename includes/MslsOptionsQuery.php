@@ -1,14 +1,9 @@
 <?php
-/**
- * MslsOptionsQuery
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
- * OptionsQuery
+ * MslsOptionsQuery
  *
  * @package Msls
  */
@@ -16,66 +11,72 @@ class MslsOptionsQuery extends MslsOptions {
 
 	/**
 	 * Rewrite with front
+	 *
 	 * @var bool
 	 */
 	public $with_front = true;
 
+	protected MslsSqlCacher $sql_cache;
+
+	public function __construct( MslsSqlCacher $sql_cache ) {
+		parent::__construct();
+
+		$this->sql_cache = $sql_cache;
+	}
+
+	/**
+	 * @return array<string, mixed>
+	 */
+	public static function get_params(): array {
+		return array();
+	}
+
 	/**
 	 * Factory method
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @param int $id This parameter is unused here
 	 *
-	 * @return MslsOptionsQuery
+	 * @return ?MslsOptionsQuery
 	 */
-	public static function create( $id = 0 ) {
+	public static function create( $id = 0 ): ?MslsOptionsQuery {
 		if ( is_day() ) {
-			return new MslsOptionsQueryDay(
-				get_query_var( 'year' ),
-				get_query_var( 'monthnum' ),
-				get_query_var( 'day' )
-			);
-		}
-		elseif ( is_month() ) {
-			return new MslsOptionsQueryMonth(
-				get_query_var( 'year' ),
-				get_query_var( 'monthnum' )
-			);
-		}
-		elseif ( is_year() ) {
-			return new MslsOptionsQueryYear(
-				get_query_var( 'year' )
-			);
-		}
-		elseif ( is_author() ) {
-			return new MslsOptionsQueryAuthor(
-				get_queried_object_id()
-			);
-		}
-		elseif ( is_post_type_archive() ) {
-			return new MslsOptionsQueryPostType(
-				get_query_var( 'post_type' )
-			);
+			$query_class = MslsOptionsQueryDay::class;
+		} elseif ( is_month() ) {
+			$query_class = MslsOptionsQueryMonth::class;
+		} elseif ( is_year() ) {
+			$query_class = MslsOptionsQueryYear::class;
+		} elseif ( is_author() ) {
+			$query_class = MslsOptionsQueryAuthor::class;
+		} elseif ( is_post_type_archive() ) {
+			$query_class = MslsOptionsQueryPostType::class;
 		}
 
-		return null;
+		if ( ! isset( $query_class ) ) {
+			return null;
+		}
+
+		$sql_cache = MslsSqlCacher::create( $query_class, $query_class::get_params() );
+
+		return new $query_class( $sql_cache );
 	}
 
 	/**
 	 * Get postlink
 	 *
 	 * @param string $language
+	 *
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
 		if ( $this->has_value( $language ) ) {
-			$link = $this->get_current_link();
-			if ( ! empty( $link ) ) {
-				return apply_filters( 'check_url', $link, $this );
+			$post_link = $this->get_current_link();
+			if ( ! empty( $post_link ) ) {
+				$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', 'msls_get_postlink' );
+
+				return apply_filters( 'msls_get_postlink', $post_link, $this );
 			}
 		}
+
 		return '';
 	}
-
 }

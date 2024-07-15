@@ -1,11 +1,9 @@
 <?php
-/**
- * MslsPlugin
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
+
+use lloc\Msls\Query\BlogsInNetworkQuery;
+use lloc\Msls\Query\CleanupOptionsQuery;
 
 /**
  * Provides functionalities for general hooks and activation/deactivation
@@ -38,60 +36,70 @@ class MslsPlugin {
 	 * @return MslsPlugin
 	 */
 	public static function init() {
-		$options = MslsOptions::instance();
-		$obj     = new self( $options );
+		$obj = new self( msls_options() );
 
-		add_action( 'plugins_loaded', [ $obj, 'init_i18n_support' ] );
+		add_action( 'plugins_loaded', array( $obj, 'init_i18n_support' ) );
 
-		register_activation_hook( self::file(), [ $obj, 'activate' ] );
+		register_activation_hook( self::file(), array( $obj, 'activate' ) );
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			add_action( 'wp_head', [ __CLASS__, 'print_alternate_links' ] );
-			add_filter( 'msls_get_output', [ __CLASS__, 'get_output' ] );
-			add_action( 'admin_bar_menu', [ __CLASS__, 'update_adminbar' ], 999 );
+			add_action( 'admin_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
+			add_action( 'wp_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 
-			add_action( 'widgets_init', [ $obj, 'init_widget' ] );
-			add_filter( 'the_content', [ $obj, 'content_filter' ] );
+			add_action( 'init', array( MslsAdminBar::class, 'init' ) );
+			add_action( 'init', array( MslsBlock::class, 'init' ) );
+			add_action( 'init', array( MslsShortCode::class, 'init' ) );
+			add_action( 'init', array( MslsContentFilter::class, 'init' ) );
+			add_action( 'widgets_init', array( MslsWidget::class, 'init' ) );
+			add_action( 'wp_head', array( __CLASS__, 'print_alternate_links' ) );
 
-			if ( function_exists( 'register_block_type' ) ) {
-				add_action( 'init', [ $obj, 'block_init' ] );
-			}
+			add_filter( 'msls_get_output', array( __CLASS__, 'get_output' ) );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
 			if ( is_admin() ) {
-				add_action( 'admin_menu', [ $obj, 'admin_menu' ] );
+				add_action( 'admin_menu', array( MslsAdmin::class, 'init' ) );
+				add_action( 'load-post.php', array( MslsMetaBox::class, 'init' ) );
+				add_action( 'load-post-new.php', array( MslsMetaBox::class, 'init' ) );
+				add_action( 'load-edit.php', array( MslsCustomColumn::class, 'init' ) );
+				add_action( 'load-edit.php', array( MslsCustomFilter::class, 'init' ) );
 
-				add_action( 'admin_menu', [ MslsAdmin::class, 'init' ] );
-				add_action( 'load-post.php', [ MslsMetaBox::class, 'init' ] );
-				add_action( 'load-post-new.php', [ MslsMetaBox::class, 'init' ] );
-				add_action( 'load-edit.php', [ MslsCustomColumn::class, 'init' ] );
-				add_action( 'load-edit.php', [ MslsCustomFilter::class, 'init' ] );
+				add_action( 'load-edit-tags.php', array( MslsCustomColumnTaxonomy::class, 'init' ) );
+				add_action( 'load-edit-tags.php', array( MslsPostTag::class, 'init' ) );
+				add_action( 'load-term.php', array( MslsPostTag::class, 'init' ) );
 
-				add_action( 'load-edit-tags.php', [ MslsCustomColumnTaxonomy::class, 'init' ] );
-				add_action( 'load-edit-tags.php', [ MslsPostTag::class, 'init' ] );
-
-				if ( filter_has_var( INPUT_POST, 'action' ) ) {
-					$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
+				if ( MslsRequest::has_var( MslsFields::FIELD_ACTION ) ) {
+					$action = MslsRequest::has_var( MslsFields::FIELD_ACTION );
 
 					if ( 'add-tag' === $action ) {
-						add_action( 'admin_init', [ MslsPostTag::class, 'init' ] );
+						add_action( 'admin_init', array( MslsPostTag::class, 'init' ) );
 					} elseif ( 'inline-save' === $action ) {
-						add_action( 'admin_init', [ MslsCustomColumn::class, 'init' ] );
+						add_action( 'admin_init', array( MslsCustomColumn::class, 'init' ) );
 					} elseif ( 'inline-save-tax' === $action ) {
-						add_action( 'admin_init', [ MslsCustomColumnTaxonomy::class, 'init' ] );
+						add_action( 'admin_init', array( MslsCustomColumnTaxonomy::class, 'init' ) );
 					}
 				}
 
-				add_action( 'wp_ajax_suggest_posts', [ MslsMetaBox::class, 'suggest' ] );
-				add_action( 'wp_ajax_suggest_terms', [ MslsPostTag::class, 'suggest' ] );
+				add_action( 'wp_ajax_suggest_posts', array( MslsMetaBox::class, 'suggest' ) );
+				add_action( 'wp_ajax_suggest_terms', array( MslsPostTag::class, 'suggest' ) );
 			}
 		} else {
-			add_action( 'admin_notices', function () {
-				self::message_handler(
-					__( 'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="http://codex.wordpress.org/Create_A_Network">this post</a> if you don\'t know the meaning.', 'multisite-language-switcher' )
-				);
-			} );
+			add_action(
+				'admin_notices',
+				function () {
+					/* translators: %s: URL to the WordPress Codex. */
+					$format  = __(
+						'The Multisite Language Switcher needs the activation of the multisite-feature for working properly. Please read <a onclick="window.open(this.href); return false;" href="%s">this post</a> if you don\'t know the meaning.',
+						'multisite-language-switcher'
+					);
+					$message = sprintf(
+						$format,
+						esc_url( 'https://developer.wordpress.org/advanced-administration/multisite/create-network/' )
+					);
+
+					self::message_handler( $message );
+				}
+			);
 		}
 
 		return $obj;
@@ -113,23 +121,6 @@ class MslsPlugin {
 	}
 
 	/**
-	 * @param $wp_admin_bar
-	 */
-	public static function update_adminbar( \WP_Admin_Bar $wp_admin_bar ) {
-		$blog_collection = MslsBlogCollection::instance();
-		foreach ( $blog_collection->get_plugin_active_blogs() as $blog ) {
-			$title = '<div class="blavatar"></div>' . $blog->get_title();
-
-			$wp_admin_bar->add_node( [ 'id' => 'blog-' . $blog->userblog_id, 'title' => $title ] );
-		}
-
-		$blog = $blog_collection->get_current_blog();
-		if ( is_object( $blog ) && method_exists( $blog, 'get_title' ) ) {
-			$wp_admin_bar->add_node( [ 'id' => 'site-name', 'title' => $blog->get_title() ] );
-		}
-	}
-
-	/**
 	 * Callback for action wp_head
 	 */
 	public static function print_alternate_links() {
@@ -137,115 +128,25 @@ class MslsPlugin {
 	}
 
 	/**
-	 * Filter for the_content()
-	 *
-	 * @param string $content
-	 *
-	 * @return string
-	 */
-	function content_filter( $content ) {
-		if ( ! is_front_page() && is_singular() ) {
-			$options = $this->options;
-
-			if ( $options->is_content_filter() ) {
-				$content .= $this->filter_string();
-			}
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Create filterstring for msls_content_filter()
-	 *
-	 * @param string $pref
-	 * @param string $post
-	 *
-	 * @return string
-	 */
-	function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-		$obj    = MslsOutput::init();
-		$links  = $obj->get( 1, true, true );
-		$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
-
-		if ( has_filter( 'msls_filter_string' ) ) {
-			/**
-			 * Overrides the string for the output of the translation hint
-			 *
-			 * @param string $output
-			 * @param array $links
-			 *
-			 * @since 1.0
-			 */
-			$output = apply_filters( 'msls_filter_string', $output, $links );
-		} else {
-			$output = '';
-
-			if ( count( $links ) > 1 ) {
-				$last   = array_pop( $links );
-				$output = sprintf(
-					$output,
-					sprintf(
-						__( '%s and %s', 'multisite-language-switcher' ),
-						implode( ', ', $links ),
-						$last
-					)
-				);
-			} elseif ( 1 == count( $links ) ) {
-				$output = sprintf(
-					$output,
-					$links[0]
-				);
-			}
-		}
-
-		return ! empty( $output ) ? $pref . $output . $post : '';
-	}
-
-	/**
-	 * Register block and shortcode.
-	 */
-	public function block_init() {
-		if ( ! $this->options->is_excluded() ) {
-			$handle   = 'msls-widget-block';
-			$callback = [ $this, 'block_render' ];
-
-			wp_register_script(
-				$handle,
-				self::plugins_url( 'js/msls-widget-block.js' ),
-				[ 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ]
-			);
-
-			register_block_type( 'lloc/msls-widget-block', [
-				'attributes'      => [ 'title' => [ 'type' => 'string' ] ],
-				'editor_script'   => $handle,
-				'render_callback' => $callback,
-			] );
-
-			add_shortcode( 'sc_msls_widget', $callback );
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Loads styles and some js if needed
 	 *
-	 * The method returns true if JS is loaded or false if not
+	 * The method returns true if the autocomplete-option is activated, false otherwise.
 	 *
 	 * @return boolean
 	 */
-	public function admin_menu() {
-		$ver     = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
-		$postfix = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? '' : '.min';
+	public function custom_enqueue() {
+		if ( ! is_admin_bar_showing() ) {
+			return false;
+		}
 
-		wp_enqueue_style( 'msls-styles', self::plugins_url( 'css/msls.css' ), [], $ver );
-		wp_enqueue_style( 'msls-flags', self::plugins_url( 'css-flags/css/flag-icon.min.css' ), [], $ver );
+		$ver    = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
+		$folder = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? 'src' : 'js';
+
+		wp_enqueue_style( 'msls-styles', self::plugins_url( 'css/msls.css' ), array(), $ver );
+		wp_enqueue_style( 'msls-flags', self::plugins_url( 'css-flags/css/flag-icon.min.css' ), array(), $ver );
 
 		if ( $this->options->activate_autocomplete ) {
-			wp_enqueue_script( 'msls-autocomplete', self::plugins_url( "js/msls{$postfix}.js" ), [ 'jquery-ui-autocomplete' ], $ver );
+			wp_enqueue_script( 'msls-autocomplete', self::plugins_url( "$folder/msls.js" ), array( 'jquery-ui-autocomplete' ), $ver, array( 'in_footer' => true ) );
 
 			return true;
 		}
@@ -299,40 +200,6 @@ class MslsPlugin {
 	}
 
 	/**
-	 * Register widget
-	 *
-	 * The widget will only be registered if the current blog is not
-	 * excluded in the configuration of the plugin.
-	 * @return boolean
-	 */
-	public function init_widget() {
-		if ( ! $this->options->is_excluded() ) {
-			register_widget( MslsWidget::class );
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Render widget output
-	 *
-	 * @return string
-	 */
-	public function block_render() {
-		if ( ! $this->init_widget() ) {
-			return '';
-		}
-
-		ob_start();
-		the_widget( MslsWidget::class );
-		$output = ob_get_clean();
-
-		return $output;
-	}
-
-	/**
 	 * Load textdomain
 	 *
 	 * The method should be executed always on init because we have some
@@ -368,7 +235,7 @@ class MslsPlugin {
 	 * Activate plugin
 	 */
 	public static function activate() {
-		register_uninstall_hook( self::file(), [ __CLASS__, 'uninstall' ] );
+		register_uninstall_hook( self::file(), array( __CLASS__, 'uninstall' ) );
 	}
 
 	/**
@@ -386,15 +253,8 @@ class MslsPlugin {
 		 * restore_current_blog
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
-
-			$blogs = $cache->get_results(
-				$cache->prepare(
-					"SELECT blog_id FROM {$cache->blogs} WHERE blog_id != %d AND site_id = %d",
-					$cache->blogid,
-					$cache->siteid
-				)
-			);
+			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
+			$blogs     = ( new BlogsInNetworkQuery( $sql_cache ) )();
 
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->blog_id );
@@ -416,39 +276,10 @@ class MslsPlugin {
 	 */
 	public static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
-			$cache = MslsSqlCacher::init( __CLASS__ )->set_params( __METHOD__ );
-			$sql   = $cache->prepare(
-				"DELETE FROM {$cache->options} WHERE option_name LIKE %s",
-				'msls_%'
-			);
-
-			return (bool) $cache->query( $sql );
+			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
+			return ( new CleanupOptionsQuery( $sql_cache ) )();
 		}
 
 		return false;
 	}
-
-	/**
-	 * Get specific vars from $_POST and $_GET in a safe way
-	 *
-	 * @param array $list
-	 *
-	 * @return array
-	 */
-	public function get_superglobals( array $list ) {
-		$arr = [];
-
-		foreach ( $list as $var ) {
-			$arr[ $var ] = '';
-
-			if ( filter_has_var( INPUT_POST, $var ) ) {
-				$arr[ $var ] = filter_input( INPUT_POST, $var );
-			} elseif ( filter_has_var( INPUT_GET, $var ) ) {
-				$arr[ $var ] = filter_input( INPUT_GET, $var );
-			}
-		}
-
-		return $arr;
-	}
-
 }

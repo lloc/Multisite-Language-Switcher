@@ -1,26 +1,24 @@
 <?php
-/**
- * MslsOptionsTax
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
- * Taxonomy options
+ * MslsOptionsTax
+ *
  * @package Msls
  */
 class MslsOptionsTax extends MslsOptions {
 
 	/**
 	 * Separator
+	 *
 	 * @var string
 	 */
 	protected $sep = '_term_';
 
 	/**
 	 * Autoload
+	 *
 	 * @var string
 	 */
 	protected $autoload = 'no';
@@ -58,7 +56,7 @@ class MslsOptionsTax extends MslsOptions {
 		}
 
 		if ( $req ) {
-			add_filter( 'check_url', [ $options, 'check_base' ], 9, 2 );
+			add_filter( 'msls_get_postlink', array( $options, 'check_base' ), 9, 2 );
 		} else {
 			global $wp_rewrite;
 
@@ -70,21 +68,20 @@ class MslsOptionsTax extends MslsOptions {
 
 	/**
 	 * Get the queried taxonomy
+	 *
 	 * @return string
 	 */
-    public function get_tax_query() {
-        global $wp_query;
+	public function get_tax_query() {
+		global $wp_query;
 
-        if ( class_exists('WooCommerce' ) ) {
-            if ( is_woocommerce() && isset( $wp_query->tax_query->queries[1]['taxonomy'] ) ) {
-                    return $wp_query->tax_query->queries[1]['taxonomy'];
-            }
-        } elseif ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
-            return $wp_query->tax_query->queries[0]['taxonomy'];
-        }
+		if ( class_exists( 'WooCommerce' ) && is_woocommerce() && isset( $wp_query->tax_query->queries[1]['taxonomy'] ) ) {
+			return $wp_query->tax_query->queries[1]['taxonomy'];
+		} elseif ( isset( $wp_query->tax_query->queries[0]['taxonomy'] ) ) {
+			return $wp_query->tax_query->queries[0]['taxonomy'];
+		}
 
-        return parent::get_tax_query();
-    }
+		return parent::get_tax_query();
+	}
 
 	/**
 	 * Get postlink
@@ -94,17 +91,20 @@ class MslsOptionsTax extends MslsOptions {
 	 * @return string
 	 */
 	public function get_postlink( $language ) {
-		$url = '';
+		$post_link = '';
 
 		if ( $this->has_value( $language ) ) {
-			$url = $this->get_term_link( (int) $this->__get( $language ) );
+			$post_link = $this->get_term_link( (int) $this->__get( $language ) );
 		}
 
-		return apply_filters( 'check_url', $url, $this );
+		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', 'msls_get_postlink' );
+
+		return apply_filters( 'msls_get_postlink', $post_link, $this );
 	}
 
 	/**
 	 * Get current link
+	 *
 	 * @return string
 	 */
 	public function get_current_link() {
@@ -131,5 +131,4 @@ class MslsOptionsTax extends MslsOptions {
 
 		return '';
 	}
-
 }

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo ""
+echo "phpcbf pre commit hook start"
+
+PHP_CS_FIXER="vendor/bin/phpcbf"
+HAS_PHP_CS_FIXER=false
+
+# check if php-cs-fixer is installed as a composer dependency
+if [ -x $PHP_CS_FIXER ]; then
+  HAS_PHP_CS_FIXER=true
+fi
+
+if $HAS_PHP_CS_FIXER; then
+
+  # gets a list of all staged but not deleted php-files
+  CHANGED_FILES=$(git diff --cached --name-only --diff-filter=ACMRTUXB HEAD | grep .php)
+
+  if [ ! -z "${CHANGED_FILES}" ]; then
+    # runs phpcbf on the changed files
+    vendor/bin/phpcbf -w --standard=WordPress ${CHANGED_FILES}
+    # adds the changed files to staging again
+    git add ${CHANGED_FILES}
+  fi
+fi
+
+echo "phpcbf pre commit hook finish"
+echo ""

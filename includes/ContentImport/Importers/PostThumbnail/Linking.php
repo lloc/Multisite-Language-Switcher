@@ -25,7 +25,8 @@ class Linking extends BaseImporter {
 		return (object) [
 			'slug'        => static::TYPE,
 			'name'        => __( 'Linking', 'multisite-language-switcher' ),
-			'description' => __( 'Links the featured image from the source post to the destination post; the image is not duplicated.', 'multisite-language-switcher' )
+			'description' => __( 'Links the featured image from the source post to the destination post; the image is not duplicated.',
+				'multisite-language-switcher' )
 		];
 	}
 
@@ -48,7 +49,7 @@ class Linking extends BaseImporter {
 			return $data;
 		}
 
-		$source_upload_dir                = wp_upload_dir();
+		$source_upload_dir = wp_upload_dir();
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
@@ -57,7 +58,9 @@ class Linking extends BaseImporter {
 			array_walk( $source_upload_dir, function ( &$entry ) {
 				$entry = str_replace( '//', '/', $entry );
 			} );
-			$source_uploads_dir         = untrailingslashit( str_replace( $source_upload_dir['subdir'], '', $source_upload_dir['path'] ) );
+			$source_uploads_dir         = untrailingslashit( str_replace( $source_upload_dir['subdir'],
+				'',
+				$source_upload_dir['path'] ) );
 			$source_post_thumbnail_file = $source_uploads_dir . '/' . $source_post_thumbnail_meta['_wp_attached_file'];
 
 			// Check the type of file. We'll use this as the 'post_mime_type'.
@@ -73,18 +76,20 @@ class Linking extends BaseImporter {
 			);
 
 			$existing_criteria = [
-				'post_type'   => 'attachment',
-				'title'       => $attachment['post_title'],
+				'post_type' => 'attachment',
+				'title'     => $attachment['post_title'],
 			];
 
-			$found             = get_posts( $existing_criteria );
+			$found = get_posts( $existing_criteria );
 
 			if ( $found && $found[0] instanceof \WP_Post ) {
 				$dest_post_thumbnail_id = $found[0]->ID;
 				$this->logger->log_success( 'post-thumbnail/existing', $dest_post_thumbnail_id );
 			} else {
 				// Insert the attachment.
-				$dest_post_thumbnail_id = wp_insert_attachment( $attachment, $source_post_thumbnail_file, $dest_post_id );
+				$dest_post_thumbnail_id = wp_insert_attachment( $attachment,
+					$source_post_thumbnail_file,
+					$dest_post_id );
 
 				if ( empty( $dest_post_thumbnail_id ) ) {
 					$this->logger->log_error( 'post-thumbnail/created', $dest_post_thumbnail_id );

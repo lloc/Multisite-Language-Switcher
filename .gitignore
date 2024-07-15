@@ -1,7 +1,13 @@
 composer.lock
 composer.phar
 package-lock.json
-vendor/
+phpunit.xml.bak
 .idea/
+.phpunit.result.cache
+tests/coverage/
+tests/playwright-results/
+tests/playwright-report/
+tests/playwright/.env.local
 node_modules/
-docs/.vuepress/dist/
+vendor/
+

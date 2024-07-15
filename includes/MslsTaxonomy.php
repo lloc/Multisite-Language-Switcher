@@ -1,6 +1,7 @@
 <?php
 /**
  * MslsTaxonomy
+ *
  * @author Dennis Ploetner <re@lloc.de>
  * @since 0.9.8
  */
@@ -16,6 +17,7 @@ class MslsTaxonomy extends MslsContentTypes {
 
 	/**
 	 * Post type
+	 *
 	 * @var string
 	 */
 	protected $post_type = '';
@@ -24,22 +26,46 @@ class MslsTaxonomy extends MslsContentTypes {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->types = array_merge(
-			[ 'category', 'post_tag' ], // no 'post_link' here
-			get_taxonomies( [ 'public' => true, '_builtin' => false ], 'names', 'and' )
+		$this->types   = self::get();
+		$this->request = $this->get_request();
+	}
+
+	/**
+	 * @return string[]
+	 * @uses get_taxonomies
+	 */
+	public static function get(): array {
+		$types = array_merge(
+			array( 'category', 'post_tag' ), // no 'post_link' here
+			get_taxonomies(
+				array(
+					'public'   => true,
+					'_builtin' => false,
+				)
+			)
 		);
 
-		$_request = $this->get_superglobals( [ 'taxonomy', 'post_type' ] );
-		if ( '' != $_request['taxonomy'] ) {
-			$this->request   = esc_attr( $_request['taxonomy'] );
-			$this->post_type = esc_attr( $_request['post_type'] );
-		} else {
-			$this->request = get_query_var( 'taxonomy' );
+		return (array) apply_filters( 'msls_supported_taxonomies', $types );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_request(): string {
+		$request = MslsRequest::get_request( array( 'taxonomy', 'post_type' ) );
+
+		if ( ! empty( $request['taxonomy'] ) ) {
+			$this->post_type = esc_attr( $request['post_type'] ?? '' );
+
+			return esc_attr( $request['taxonomy'] );
 		}
+
+		return get_query_var( 'taxonomy' );
 	}
 
 	/**
 	 * Check for taxonomy
+	 *
 	 * @return bool
 	 */
 	public function is_taxonomy() {
@@ -55,7 +81,7 @@ class MslsTaxonomy extends MslsContentTypes {
 	 * @return string
 	 */
 	public function acl_request() {
-		if ( ! MslsOptions::instance()->is_excluded() ) {
+		if ( ! msls_options()->is_excluded() ) {
 			$request = $this->get_request();
 
 			$tax = get_taxonomy( $request );
@@ -64,7 +90,7 @@ class MslsTaxonomy extends MslsContentTypes {
 			}
 		}
 
-		return '';
+		return parent::acl_request();
 	}
 
 	/**
@@ -75,5 +101,4 @@ class MslsTaxonomy extends MslsContentTypes {
 	public function get_post_type() {
 		return $this->post_type;
 	}
-
 }

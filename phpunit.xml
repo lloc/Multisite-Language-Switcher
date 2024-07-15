@@ -1,17 +1,16 @@
-<phpunit
-        bootstrap="tests/bootstrap.php"
-        backupGlobals="false"
-        colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
->
-    <testsuite name="Internal tests">
-        <directory prefix="test-" suffix=".php">./tests/</directory>
-    </testsuite>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./includes/</directory>
-        </whitelist>
-    </filter>
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="true" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">./includes/</directory>
+    </include>
+  </coverage>
+  <php>
+    <const name="MSLS_PLUGIN_PATH" value="multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
+    <const name="MSLS_PLUGIN__FILE__" value="/var/www/html/wp-content/plugins/multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
+    <const name="WP_DEBUG" value="true"/>
+  </php>
+  <testsuite name="Internal tests">
+    <directory prefix="Test" suffix=".php">./tests/phpunit</directory>
+  </testsuite>
 </phpunit>

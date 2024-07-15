@@ -1,14 +1,10 @@
 <?php
-/**
- * MslsJson
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.9
- */
 
 namespace lloc\Msls;
 
 /**
  * Container for an array which will used in JavaScript as object in JSON
+ *
  * @example https://gist.githubusercontent.com/lloc/2c232cef3f910acf692f/raw/1c4f62e1de57ca48f19c37e3a63e7dc311b76b2f/MslsJson.php
  * @package Msls
  */
@@ -16,23 +12,24 @@ class MslsJson {
 
 	/**
 	 * Container
+	 *
 	 * @var array
 	 */
-	protected $arr = [];
+	protected array $arr = array();
 
-	/**
+	/** MslsLanguageArray
 	 * Adds a value label pair to the internal class container
 	 *
-	 * @param int $value
-	 * @param string $label
+	 * @param mixed $value
+	 * @param mixed $label
 	 *
 	 * @return MslsJson
 	 */
 	public function add( $value, $label ) {
-		$this->arr[] = [
+		$this->arr[] = array(
 			'value' => intval( $value ),
 			'label' => strval( $label ),
-		];
+		);
 
 		return $this;
 	}
@@ -40,8 +37,8 @@ class MslsJson {
 	/**
 	 * Compare the item with the key "label" of the array $a and the array $b
 	 *
-	 * @param array $a
-	 * @param array $b
+	 * @param array<string, string> $a
+	 * @param array<string, string> $b
 	 *
 	 * @return int
 	 */
@@ -57,7 +54,7 @@ class MslsJson {
 	public function get(): array {
 		$arr = $this->arr;
 
-		usort( $arr, [ __CLASS__, 'compare' ] );
+		usort( $arr, array( __CLASS__, 'compare' ) );
 
 		return $arr;
 	}
@@ -68,7 +65,7 @@ class MslsJson {
 	 * @return string
 	 */
 	public function encode(): string {
-		return json_encode( $this->get() );
+		return wp_json_encode( $this->get() );
 	}
 
 	/**
@@ -79,5 +76,4 @@ class MslsJson {
 	public function __toString() {
 		return $this->encode();
 	}
-
 }

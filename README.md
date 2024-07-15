@@ -1,47 +1,70 @@
 # Multisite Language Switcher
 
-_Please keep in mind that the version of the Multisite Language Switcher at GitHub is a work in progress._
+A simple, powerful, and user-friendly plugin that adds multilingual support to your [WordPress multisite](https://wordpress.org/documentation/article/create-a-network/) installation, whether using multiple subdomains or folders. Multisite Language Switcher allows you to effortlessly manage translations for posts, pages, custom post types, categories, tags, and custom taxonomies.
 
-Run `composer install --no-dev` if you plan to use the repository anyways.
-
-**Download the [latest stable from the WordPress Plugin Directory](http://downloads.wordpress.org/plugin/multisite-language-switcher.zip) and please, don't forget to give this plugin a (five) star-rating.**
- 
+[![License](http://poser.pugx.org/lloc/multisite-language-switcher/license)](https://packagist.org/packages/lloc/multisite-language-switcher)
+[![Version](http://poser.pugx.org/lloc/multisite-language-switcher/version)](https://packagist.org/packages/lloc/multisite-language-switcher)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/badges/quality-score.png?s=a2e5dbac2690bbd427f2d48b84473482e7e24fdb)](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/)
+[![PHP Version Require](http://poser.pugx.org/lloc/multisite-language-switcher/require/php)](https://packagist.org/packages/lloc/multisite-language-switcher)
+[![codecov](https://codecov.io/gh/lloc/Multisite-Language-Switcher/graph/badge.svg?token=IlD4bX4KZ4)](https://codecov.io/gh/lloc/Multisite-Language-Switcher)
 
-A simple, powerful and easy to use plugin that will add 
-multilingual support to a WordPress 
-[multisite](http://codex.wordpress.org/Create_A_Network) 
-installation, i.e. multiple subdomains or folders (if you need to 
-set up multiple sites across multiple domains, you'll also want to 
-use the
-[WordPress MU Domain Mapping](http://wordpress.org/extend/plugins/wordpress-mu-domain-mapping/)
-plugin as well - as long as the domains are all hosted on the 
-same server.).
+## Where to get the plugin
 
-The Multisite Language Switcher enables you to manage translations of 
-posts, pages, custom post types, categories, tags and custom taxonomies.
+[Download](http://downloads.wordpress.org/plugin/multisite-language-switcher.zip) the latest stable from the [WordPress Plugin Directory](https://wordpress.org/plugins/multisite-language-switcher/), and please remember to give this plugin [a five-star rating](https://wordpress.org/support/plugin/multisite-language-switcher/reviews/#new-post).
 
-The plugin uses flag-icons from [FamFamFam](http://famfamfam.com). 
-Thanks to Mark James for his great work. In addition I would like to 
-thank [Jürgen Mayer](https://creativpin.com) for creating the plugin's 
+_Please note that the version of Multisite Language Switcher on GitHub is a work in progress._
+
+If you plan to use the GitHub repository on a server, don't forget to run `composer install --no-dev`.
+
+## Installation Instructions
+
+*  Via WordPress Dashboard:
+    *  Go to your WordPress dashboard.
+    *  Navigate to `Network Admin` > `Plugins`.
+    *  Click on `Add New Plugin`.
+    *  Search for "Multisite Language Switcher".
+    *  Click `Install Now` and then `Activate`.
+
+* Manual Installation:
+    *  Download the plugin and unzip it using your preferred program.
+    *  Upload the entire plugin directory to your WordPress plugin directory (/wp-content/plugins).
+    *  Navigate to `Network Admin` > `Plugins`.
+    *  Click on `Activate` for the Multisite Language Switcher plugin.
+
+*  Configuration:
+    *  After activation, navigate to `Settings` > `Multisite Language Switcher` in each blog to configure the plugin.
+
+## Features and Capabilities
+
+*  Connect Translations for Pages and Posts:
+    *  Navigate to `Posts` > `Edit` or `Pages` > `Edit` to link your translated content.
+
+*  Connect Translations for Categories and Tags:
+    *  Go to `Posts` > `Categories` or `Posts` > `Tags` to associate your translated categories and tags.
+
+*  Connect Custom Post Types and Custom Taxonomies:
+    *  Easily manage translations across different custom post types and taxonomies.
+
+*  Utilize Widgets, Shortcodes, and Content Filters:
+    *  Use the widget or the Gutenberg block.
+    *  Use the [sc_msls] shortcode in the classic editor.
+    *  Set the content filter to display a hint to users when a translation is available.
+
+*  Optional Theme Integration:
+    *  Insert the following PHP code directly into your theme files to display language switcher links:
+        ```php
+        if ( function_exists( 'the_msls' ) ) {
+            the_msls();
+        }
+        ```
+Review the [Multisite Language Switcher Website](http://msls.co/) for more information. Some [diagrams](https://github.com/lloc/Multisite-Language-Switcher/blob/master/Diagrams.md) are also available. 
+
+## Acknowledgements
+
+The plugin uses flag-icons from [FamFamFam](http://famfamfam.com).
+Thanks to Mark James for his great work. In addition I would like to
+thank [Jürgen Mayer](https://creativpin.com) for creating the plugin's
 banner.
-
-## Installation
-
-*  Download the plugin and uncompress it with your preferred unzip programme
-*  Copy the entire directory in your plugin directory of your WordPress blog (/wp-content/plugins)
-*  Activate the plugin in your plugin administration page (by the network administrator on all the blogs or by the root blog administrator for each particular blog).
-*  You need to activate the plugin once in each blog, set the configuration in Options -> Multisite Language Switcher
-
-Now you can: 
-
-*  connect your translated pages and posts in Posts -> Edit or Page -> Edit
-*  connect your translated categories and tags in Posts -> Categories or Post -> Tags
-*  connect your Custom Post Types and Custom Taxonomies across languages
-*  use the widget, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
-*  optionally you can place the PHP code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
-
-Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
 
 ## Translators
 
@@ -75,7 +98,7 @@ Thanks to all translators for their great work.
 *  Norwegian (nb_NO) - Ibrahim Qraiqe
 *  Bulgarian (bg_BG) - [Vencislav Raev](http://www.catblue.net/)
 
-If you have created your own language pack, or have an update of an 
+You can translate this plugin on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/multisite-language-switcher/), or if you prefer and have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
 and MO so that I can bundle it into the Multisite Language Switcher. 
 You can download the latest POT file
