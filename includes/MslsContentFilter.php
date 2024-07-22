@@ -43,11 +43,11 @@ class MslsContentFilter {
 	 * @return string
 	 */
 	public function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-		$obj   = MslsOutput::init();
-		$links = $obj->get( 1, true, true );
+		$links_arr = MslsOutput::init()->get( 1, true, true );
+		$links_str = $this->format_available_languages( $links_arr );
 
 		/* translators: %s: list of languages */
-		$output = __( 'This post is also available in %s.', 'multisite-language-switcher' );
+		$format = __( 'This post is also available in %s.', 'multisite-language-switcher' );
 
 		if ( has_filter( 'msls_filter_string' ) ) {
 			/**
@@ -58,18 +58,28 @@ class MslsContentFilter {
 			 *
 			 * @since 1.0
 			 */
-			$output = apply_filters( 'msls_filter_string', $output, $links );
-		} elseif ( count( $links ) > 1 ) {
-			$last = array_pop( $links );
-
-			/* translators: %1$s: list of languages separated by a comma, %2$s: last language */
-			$format = __( '%1$s and %2$s', 'multisite-language-switcher' );
-
-			$output = sprintf( $output, sprintf( $format, implode( ', ', $links ), $last ) );
-		} elseif ( 1 == count( $links ) ) {
-			$output = sprintf( $output, $links[0] );
+			$output = apply_filters( 'msls_filter_string', $format, $links_arr );
+		} elseif ( $links_str ) {
+			$output = sprintf( $format, $links_str );
 		}
 
 		return ! empty( $output ) ? $pref . $output . $post : '';
+	}
+
+	public function format_available_languages( array $links ): ?string {
+		if ( empty( $links ) ) {
+			return null;
+		}
+
+		if ( 1 == count( $links ) ) {
+			return $links[0];
+		}
+
+		$last = array_pop( $links );
+
+		/* translators: %1$s: list of languages separated by a comma, %2$s: last language */
+		$format = __( '%1$s and %2$s', 'multisite-language-switcher' );
+
+		return sprintf( $format, implode( ', ', $links ), $last );
 	}
 }
