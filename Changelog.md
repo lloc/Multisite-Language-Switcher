@@ -1,3 +1,7 @@
+## 2.8.2
+
+- Bugfix: Content filter
+
 ## 2.8.1
 
 - Bugfix: Category link
