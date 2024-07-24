@@ -86,22 +86,12 @@ class TestMslsContentFilter extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $test->content_filter( $content ) );
 	}
 
-	public function test_content_filter_two_links() {
-		$a = \Mockery::mock( MslsBlog::class );
-		$a->shouldReceive( 'get_language' )->once()->andReturn( 'it_IT' );
-		$a->shouldReceive( 'get_description' )->once()->andReturn( 'Italiano' );
-
-		$b = \Mockery::mock( MslsBlog::class );
-		$b->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
-		$b->shouldReceive( 'get_description' )->once()->andReturn( 'Deutsch' );
-
+	public function test_content_filter_zero_links() {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
-		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array( $a, $b ) );
-		$collection->shouldReceive( 'is_current_blog' )->twice()->andReturn( false );
+		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array() );
 
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'is_content_filter' )->andReturn( true );
-		$options->shouldReceive( 'get_flag_url' )->twice()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 
 		$post              = \Mockery::mock( 'WP_Post' );
 		$post->post_status = 'publish';
@@ -110,8 +100,54 @@ class TestMslsContentFilter extends MslsUnitTestCase {
 		$post_object                        = \Mockery::mock( 'WP_Post_Type' );
 		$post_object->rewrite['with_front'] = true;
 
-		Functions\expect( 'get_post' )->twice()->andReturn( $post );
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_singular' )->once()->andReturn( true );
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+
+		$test = new MslsContentFilter( $options );
+
+		$content  = '<p>Test>/p>';
+		$expected = '<p>Test>/p>';
+		$this->assertEquals( $expected, $test->content_filter( $content ) );
+	}
+
+	public function test_content_filter_more_links() {
+		$a = \Mockery::mock( MslsBlog::class );
+		$a->shouldReceive( 'get_language' )->once()->andReturn( 'it_IT' );
+		$a->shouldReceive( 'get_description' )->once()->andReturn( 'Italiano' );
+
+		$b = \Mockery::mock( MslsBlog::class );
+		$b->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
+		$b->shouldReceive( 'get_description' )->once()->andReturn( 'Deutsch' );
+
+		$c = \Mockery::mock( MslsBlog::class );
+		$c->shouldReceive( 'get_language' )->once()->andReturn( 'fr_FR' );
+		$c->shouldReceive( 'get_description' )->once()->andReturn( 'Français' );
+
+		$blogs = array( $a, $b, $c );
+		$times = count( $blogs );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( $blogs );
+		$collection->shouldReceive( 'is_current_blog' )->times( $times )->andReturn( false );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_content_filter' )->andReturn( true );
+		$options->shouldReceive( 'get_flag_url' )->times( $times )->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
+
+		$post              = \Mockery::mock( 'WP_Post' );
+		$post->post_status = 'publish';
+		$post->post_type   = 'post';
+
+		$post_object                        = \Mockery::mock( 'WP_Post_Type' );
+		$post_object->rewrite['with_front'] = true;
+
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+
 		Functions\expect( 'get_post_type_object' )->once()->andReturn( $post_object );
+		Functions\expect( 'is_singular' )->once()->andReturn( true );
 		Functions\expect( 'is_front_page' )->twice()->andReturn( false );
 		Functions\expect( 'is_admin' )->once()->andReturn( false );
 		Functions\expect( 'is_search' )->once()->andReturn( false );
@@ -127,19 +163,18 @@ class TestMslsContentFilter extends MslsUnitTestCase {
 			array(
 				'de_DE' => 42,
 				'it_IT' => 17,
+				'fr_FR' => 23,
 			)
 		);
-		Functions\expect( 'is_singular' )->once()->andReturn( true );
-		Functions\expect( 'msls_options' )->once()->andReturn( $options );
-		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
-		Functions\expect( 'get_permalink' )->twice()->andReturn( 'https://msls.co/de/testpage/' );
-		Functions\expect( 'switch_to_blog' )->twice();
-		Functions\expect( 'restore_current_blog' )->twice();
+		Functions\expect( 'get_post' )->times( $times )->andReturn( $post );
+		Functions\expect( 'get_permalink' )->times( $times )->andReturn( 'https://msls.co/de/testpage/' );
+		Functions\expect( 'switch_to_blog' )->times( $times );
+		Functions\expect( 'restore_current_blog' )->times( $times );
 
 		$test = new MslsContentFilter( $options );
 
 		$content  = '<p>Test>/p>';
-		$expected = '<p>Test>/p><p id="msls">This post is also available in <a href="https://msls.co/de/testpage/" title="Italiano">Italiano</a> and <a href="https://msls.co/de/testpage/" title="Deutsch">Deutsch</a>.</p>';
+		$expected = '<p>Test>/p><p id="msls">This post is also available in <a href="https://msls.co/de/testpage/" title="Italiano">Italiano</a>, <a href="https://msls.co/de/testpage/" title="Deutsch">Deutsch</a> and <a href="https://msls.co/de/testpage/" title="Français">Français</a>.</p>';
 		$this->assertEquals( $expected, $test->content_filter( $content ) );
 	}
 

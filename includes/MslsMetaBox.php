@@ -279,11 +279,11 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * Render the suggest input-field
+	 * Render a suggest input-field
 	 *
 	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
 	 */
-	public function render_input( $echo = true ) {
+	public function render_input() {
 		$blogs = $this->collection->get();
 
 		if ( $blogs ) {
@@ -321,11 +321,7 @@ class MslsMetaBox extends MslsMain {
 				}
 
 				$items .= sprintf(
-					'<li class="">
-					<label for="msls_title_%1$s msls-icon-wrapper %6$s">%2$s</label>
-					<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-					<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
-					</li>',
+					'<li class=""><label for="msls_title_%1$s msls-icon-wrapper %6$s">%2$s</label><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/></li>',
 					$blog->userblog_id,
 					$icon,
 					$language,
@@ -338,9 +334,7 @@ class MslsMetaBox extends MslsMain {
 			}
 
 			printf(
-				'<ul>%s</ul>
-				<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-				<input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
+				'<ul>%s</ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
 				$items,
 				$post_type
 			);
