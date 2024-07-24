@@ -113,7 +113,7 @@ class MslsMain {
 	 *
 	 * @return bool
 	 */
-	public function is_autosave( $post_id ) {
+	public function is_autosave( $post_id ): bool {
 		return ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id );
 	}
 
@@ -122,7 +122,7 @@ class MslsMain {
 	 *
 	 * @return boolean
 	 */
-	public function verify_nonce() {
+	public function verify_nonce(): bool {
 		return MslsRequest::has_var( MslsFields::FIELD_MSLS_NONCENAME ) && wp_verify_nonce( MslsRequest::get_var( MslsFields::FIELD_MSLS_NONCENAME ), MslsPlugin::path() );
 	}
 
@@ -133,7 +133,7 @@ class MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function delete( $object_id ) {
+	public function delete( $object_id ): void {
 		$this->save( $object_id, MslsOptionsPost::class );
 	}
 
@@ -145,7 +145,7 @@ class MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	protected function save( $object_id, $class ) {
+	protected function save( $object_id, $class ): void {
 		if ( has_action( 'msls_main_save' ) ) {
 			/**
 			 * Calls completely customized save-routine
