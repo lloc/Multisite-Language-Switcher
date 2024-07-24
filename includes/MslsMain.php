@@ -123,10 +123,7 @@ class MslsMain {
 	 * @return boolean
 	 */
 	public function verify_nonce() {
-		return (
-			MslsRequest::has_var( MslsFields::FIELD_MSLS_NONCENAME ) &&
-			wp_verify_nonce( MslsRequest::get_var( MslsFields::FIELD_MSLS_NONCENAME ), MslsPlugin::path() )
-		);
+		return MslsRequest::has_var( MslsFields::FIELD_MSLS_NONCENAME ) && wp_verify_nonce( MslsRequest::get_var( MslsFields::FIELD_MSLS_NONCENAME ), MslsPlugin::path() );
 	}
 
 	/**
