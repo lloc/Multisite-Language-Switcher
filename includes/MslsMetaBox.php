@@ -90,7 +90,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @return MslsMetaBox
 	 */
-	public static function init() {
+	public static function init(): MslsMetaBox {
 		$options = msls_options();
 		$obj     = new static( $options, msls_blog_collection() );
 
@@ -104,9 +104,9 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * Add
+	 * Adds the meta box to the post types
 	 */
-	public function add() {
+	public function add(): void {
 		foreach ( MslsPostType::instance()->get() as $post_type ) {
 
 			add_meta_box(
@@ -153,7 +153,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @uses selected
 	 */
-	public function render_select() {
+	public function render_select(): void {
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			global $post;
@@ -269,7 +269,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function render_option( $post_id, $msls_id ) {
+	public function render_option( $post_id, $msls_id ): string {
 		return sprintf(
 			'<option value="%s" %s>%s</option>',
 			$post_id,
@@ -283,7 +283,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
 	 */
-	public function render_input() {
+	public function render_input(): void {
 		$blogs = $this->collection->get();
 
 		if ( $blogs ) {
@@ -356,7 +356,7 @@ class MslsMetaBox extends MslsMain {
 	 *
 	 * @param int $post_id
 	 */
-	public function set( $post_id ) {
+	public function set( $post_id ): void {
 		if ( $this->is_autosave( $post_id ) || ! $this->verify_nonce() ) {
 			return;
 		}
