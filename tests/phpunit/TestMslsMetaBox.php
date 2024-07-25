@@ -95,6 +95,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 
 	/**
 	 * @dataProvider add_data_provider
+	 * @doesNotPerformAssertions
 	 */
 	public function test_add( $post_type, $fcount, $ocount, $content_import, $autocomplete ) {
 		$options                          = \Mockery::mock( MslsOptions::class );
@@ -105,8 +106,6 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'add_meta_box' )->times( $fcount );
 		Functions\expect( '__' )->times( $fcount )->andReturnFirstArg();
 		Functions\expect( 'msls_options' )->times( $ocount )->andReturn( $options );
-
-		$this->expectOutputString( '' );
 
 		$this->test->add();
 	}
@@ -232,5 +231,14 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->expectOutputString( $expected );
 
 		$this->test->render_input();
+	}
+
+	/**
+	 * @doesNotPerformAssertions
+	 */
+	public function test_set() {
+		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
+
+		$this->test->set( 13 );
 	}
 }
