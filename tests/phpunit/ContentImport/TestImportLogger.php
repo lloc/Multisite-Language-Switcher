@@ -4,10 +4,7 @@ namespace lloc\MslsTests\ContentImport;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\ImportLogger;
-use lloc\Msls\ContentImport\Service;
-use lloc\Msls\MslsOptions;
 use lloc\MslsTests\MslsUnitTestCase;
-use Brain\Monkey\Functions;
 
 class TestImportLogger extends MslsUnitTestCase {
 
