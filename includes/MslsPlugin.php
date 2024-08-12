@@ -69,7 +69,7 @@ class MslsPlugin {
 				add_action( 'load-term.php', array( MslsPostTag::class, 'init' ) );
 
 				if ( MslsRequest::has_var( MslsFields::FIELD_ACTION ) ) {
-					$action = MslsRequest::has_var( MslsFields::FIELD_ACTION );
+					$action = MslsRequest::get_var( MslsFields::FIELD_ACTION );
 
 					if ( 'add-tag' === $action ) {
 						add_action( 'admin_init', array( MslsPostTag::class, 'init' ) );
