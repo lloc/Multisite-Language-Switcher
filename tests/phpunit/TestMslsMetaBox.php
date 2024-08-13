@@ -32,9 +32,9 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$post->ID = 42;
 
 		Functions\expect( 'filter_has_var' )->times( 3 )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 17 );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
 		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'pending', 'draft', 'future' ) );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
 		Functions\expect( 'sanitize_text_field' )->times( 2 )->andReturnFirstArg();
