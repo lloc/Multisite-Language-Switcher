@@ -66,10 +66,6 @@ Please check the add-on [MslsMenu](https://wordpress.org/plugins/mslsmenu/) out.
 
 Please check the add-on [MslsSelect](https://wordpress.org/plugins/mslsselect/) out.
 
-= I don't want to upload the same media files for every site. What can I do? =
-
-You could try the plugin [Network Shared Media](http://wordpress.org/plugins/network-shared-media/). It adds a new tab to the "Add Media" window, allowing you to access the media files on the other sites in your multisite.
-
 = Can I call a function to get the language of the page the user is viewing? =
 
 Yes, you should use the WordPress API function `get_locale()` but you could also use code like that
@@ -79,9 +75,9 @@ Yes, you should use the WordPress API function `get_locale()` but you could also
 $blog     = MslsBlogCollection::instance()->get_current_blog();
 $language = $blog->get_language();`
 
-= How can I move from WPML to MSLS? =
+= If I have another question, where can I ask? =
 
-There is a [plugin](http://wordpress.org/plugins/wpml2wpmsls/) which comes in handy here.
+Please visit the [MSLS website](https://msls.co/) or use the [WordPress support forum](https://wordpress.org/support/plugin/multisite-language-switcher) for more information.
 
 == Screenshots ==
 

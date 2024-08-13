@@ -152,5 +152,46 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		return \lloc\Msls\MslsOptions::instance();
 	}
 
+	/**
+	 * Retrieves the MslsOptionsPost instance.
+	 *
+	 * @param int $id
+	 * @return \lloc\Msls\MslsOptionsPost
+	 */
+	function msls_get_post( int $id ): \lloc\Msls\MslsOptionsPost {
+		return new \lloc\Msls\MslsOptionsPost( $id );
+	}
+
+	/**
+	 * Retrieves the MslsOptionsTax instance.
+	 *
+	 * Determines the current query based on conditional tags:
+	 * - is_category
+	 * - is_tag
+	 * - is_tax
+	 *
+	 * @param int $id
+	 * @return \lloc\Msls\MslsOptionsTax
+	 */
+	function msls_get_tax( int $id ): \lloc\Msls\MslsOptionsTax {
+		return \lloc\Msls\MslsOptionsTax::create( $id );
+	}
+
+	/**
+	 * Retrieves the MslsOptionsQuery instance.
+	 *
+	 * Determines the current query based on conditional tags:
+	 * - is_day
+	 * - is_month
+	 * - is_year
+	 * - is_author
+	 * - is_post_type_archive
+	 *
+	 * @return ?\lloc\Msls\MslsOptionsQuery
+	 */
+	function msls_get_query(): ?\lloc\Msls\MslsOptionsQuery {
+		return \lloc\Msls\MslsOptionsQuery::create();
+	}
+
 	lloc\Msls\MslsPlugin::init();
 }
