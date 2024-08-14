@@ -1,3 +1,8 @@
+## 2.9.0
+
+- Gato GraphQL integration with 3 new functions: msls_get_post, msls_get_tax and msls_get_query
+- Bugfix - missing action call 
+
 ## 2.8.2
 
 - Bugfix: Content filter
