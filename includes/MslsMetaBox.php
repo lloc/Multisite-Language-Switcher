@@ -35,9 +35,14 @@ class MslsMetaBox extends MslsMain {
 			}
 
 			if ( MslsRequest::has_var( MslsFields::FIELD_S, INPUT_POST ) ) {
-				$args['s'] = sanitize_text_field(
+				$value_s = sanitize_text_field(
 					MslsRequest::get_var( MslsFields::FIELD_S, INPUT_POST )
 				);
+
+				/**
+				 * If the value is numeric, we assume it is a post ID
+				 */
+				is_numeric( $value_s ) ? $args['include'] = array( $value_s ) : $args['s'] = $value_s;
 			}
 
 			$json = self::get_suggested_fields( $json, $args );
