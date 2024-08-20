@@ -4,7 +4,10 @@ namespace lloc\Msls;
 
 class MslsRequest {
 
-	public static function get_config( $name ): array {
+	/**
+	 * @return array<int, int>
+	 */
+	public static function get_config( string $name ): array {
 		$config = MslsFields::CONFIG[ $name ] ?? null;
 
 		if ( null === $config ) {
@@ -14,10 +17,6 @@ class MslsRequest {
 		return $config;
 	}
 
-	/**
-	 * @param string $name
-	 * @param ?int   $input_type
-	 */
 	public static function has_var( string $name, ?int $input_type = null ): bool {
 		if ( null === $input_type ) {
 			try {
@@ -31,8 +30,7 @@ class MslsRequest {
 	}
 
 	/**
-	 * @param string $name
-	 * @param ?int   $input_type
+	 * @return mixed
 	 */
 	public static function get_var( string $name, ?int $input_type = null ) {
 		try {

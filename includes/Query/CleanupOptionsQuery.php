@@ -9,7 +9,7 @@ namespace lloc\Msls\Query;
  */
 class CleanupOptionsQuery extends AbstractQuery {
 
-	public function __invoke() {
+	public function __invoke(): bool {
 		$sql = $this->sql_cache->prepare(
 			"DELETE FROM {$this->sql_cache->options} WHERE option_name LIKE %s",
 			'msls_%'

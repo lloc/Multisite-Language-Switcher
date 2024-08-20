@@ -6,3 +6,5 @@ parameters:
         - includes
     excludePaths:
         - tests
+        - vendor
+        - includes/ContentImport

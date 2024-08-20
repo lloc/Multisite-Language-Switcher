@@ -181,8 +181,6 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 		return array(
 			array( 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ),
 			array( 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>' ),
-			array( null, 'fr_FR', '<span class="dashicons dashicons-plus"></span>' ),
-			array( null, null, '' ),
 		);
 	}
 

@@ -9,7 +9,7 @@ namespace lloc\Msls\Query;
  */
 class AuthorPostsCounterQuery extends AbstractQuery {
 
-	public function __invoke( int $author_id ) {
+	public function __invoke( int $author_id ): int {
 		if ( $author_id <= 0 ) {
 			return 0;
 		}

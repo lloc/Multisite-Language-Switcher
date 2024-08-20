@@ -47,20 +47,17 @@ class MslsCustomColumn extends MslsMain {
 		if ( $blogs ) {
 			$html = '';
 			foreach ( $blogs as $blog ) {
-				$language = $blog->get_language();
+				$language  = $blog->get_language();
+				$icon_type = $this->options->get_icon_type();
 
-				$icon_type = $this->options->admin_display === 'label' ? 'label' : 'flag';
-
-				$icon = new MslsAdminIcon( null );
-				$icon->set_language( $language );
-				$icon->set_icon_type( $icon_type );
+				$icon = ( new MslsAdminIcon() )->set_language( $language )->set_icon_type( $icon_type );
 
 				if ( $post_id = get_the_ID() ) {
 					$icon->set_id( $post_id );
 					$icon->set_origin_language( 'it_IT' );
 				}
 
-				$html .= '<span class="msls-icon-wrapper ' . esc_attr( $this->options->admin_display ) . '">';
+				$html .= '<span class="msls-icon-wrapper ' . esc_attr( $icon_type ) . '">';
 				$html .= $icon->get_icon();
 				$html .= '</span>';
 			}
@@ -78,7 +75,7 @@ class MslsCustomColumn extends MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function td( $column_name, $item_id ) {
+	public function td( $column_name, $item_id ): void {
 		if ( 'mslscol' == $column_name ) {
 			$blogs           = $this->collection->get();
 			$origin_language = MslsBlogCollection::get_blog_language();
@@ -102,7 +99,7 @@ class MslsCustomColumn extends MslsMain {
 
 					printf(
 						'<span class="msls-icon-wrapper %1$s">%2$s</span>',
-						esc_attr( $this->options->admin_display ),
+						esc_attr( $this->options->get_icon_type() ),
 						$icon->get_a()
 					);
 

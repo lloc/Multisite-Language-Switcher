@@ -16,6 +16,7 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 2 ) . '/' );
 
 		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_icon_type' )->andReturn( 'flag' );
 
 		foreach ( array(
 			'de_DE' => 'de',
@@ -38,7 +39,7 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturn( 1 );
 
 		$obj      = new MslsCustomColumn( $options, $collection );
-		$expected = array( 'mslscol' => '<span class="msls-icon-wrapper "><span class="flag-icon flag-icon-de">de_DE</span></span><span class="msls-icon-wrapper "><span class="flag-icon flag-icon-us">en_US</span></span>' );
+		$expected = array( 'mslscol' => '<span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-de">de_DE</span></span><span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-us">en_US</span></span>' );
 
 		$this->assertEquals( $expected, $obj->th( array() ) );
 	}

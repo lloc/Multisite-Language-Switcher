@@ -177,9 +177,9 @@ class MslsMetaBox extends MslsMain {
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
-				$language = $blog->get_language();
-				$iconType = MslsAdminIcon::TYPE_FLAG === $this->options->admin_display ? MslsAdminIcon::TYPE_FLAG : MslsAdminIcon::TYPE_LABEL;
-				$icon     = MslsAdminIcon::create( $type )->set_language( $language )->set_icon_type( $iconType );
+				$language  = $blog->get_language();
+				$icon_type = $this->options->get_icon_type();
+				$icon      = MslsAdminIcon::create( $type )->set_language( $language )->set_icon_type( $icon_type );
 
 				if ( $mydata->has_value( $language ) ) {
 					$icon->set_href( (int) $mydata->$language );
@@ -222,7 +222,7 @@ class MslsMetaBox extends MslsMain {
 					$language,
 					$icon,
 					$selects,
-					esc_attr( $this->options->admin_display )
+					esc_attr( $icon_type )
 				);
 
 				restore_current_blog();
@@ -307,18 +307,11 @@ class MslsMetaBox extends MslsMain {
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
 
-				$language = $blog->get_language();
-				$icon     = MslsAdminIcon::create()
-										->set_language( $language );
-
-				if ( $this->options->admin_display === 'label' ) {
-					$icon->set_icon_type( 'label' );
-				} else {
-					$icon->set_icon_type( 'flag' );
-				}
+				$language  = $blog->get_language();
+				$icon_type = $this->options->get_icon_type();
+				$icon      = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $icon_type );
 
 				$value = $title = '';
-
 				if ( $my_data->has_value( $language ) ) {
 					$icon->set_href( (int) $my_data->$language );
 					$value = $my_data->$language;
@@ -332,7 +325,7 @@ class MslsMetaBox extends MslsMain {
 					$language,
 					$value,
 					$title,
-					esc_attr( $this->options->admin_display )
+					esc_attr( $icon_type )
 				);
 
 				restore_current_blog();
