@@ -363,10 +363,10 @@ class MslsAdmin extends MslsMain {
 		echo ( new Select(
 			'admin_display',
 			array(
-				'flag'  => __( 'Flag', 'multisite-language-switcher' ),
-				'label' => __( 'Label', 'multisite-language-switcher' ),
+				MslsAdminIcon::TYPE_FLAG  => __( 'Flag', 'multisite-language-switcher' ),
+				MslsAdminIcon::TYPE_LABEL => __( 'Label', 'multisite-language-switcher' ),
 			),
-			$this->options->admin_display
+			$this->options->get_icon_type()
 		) )->render();
 	}
 
