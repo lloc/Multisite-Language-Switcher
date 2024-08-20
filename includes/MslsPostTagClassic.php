@@ -96,7 +96,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	/**
 	 * Prints options inputs
 	 *
-	 * @param MslsBlog  _GET $blog
+	 * @param MslsBlog       $blog
 	 * @param string         $type
 	 * @param MslsOptionsTax $mydata
 	 * @param string         $item_format

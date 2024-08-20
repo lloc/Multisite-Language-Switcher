@@ -9,7 +9,7 @@ namespace lloc\Msls\Query;
  */
 class MonthPostsCounterQuery extends AbstractQuery {
 
-	public function __invoke( int $year, int $monthnum ) {
+	public function __invoke( int $year, int $monthnum ): int {
 		if ( $year <= 0 || $monthnum <= 0 ) {
 			return 0;
 		}

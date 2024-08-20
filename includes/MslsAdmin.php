@@ -11,16 +11,16 @@ use lloc\Msls\Component\Input\Select;
 /**
  * Administration of the options
  *
- * @method activate_autocomplete(): void
- * @method sort_by_description(): void
- * @method exclude_current_blog(): void
- * @method only_with_translation(): void
- * @method output_current_blog(): void
- * @method before_output(): void
- * @method after_output(): void
- * @method before_item(): void
- * @method after_item(): void
- * @method content_filter(): void
+ * @method void activate_autocomplete()
+ * @method void sort_by_description()
+ * @method void exclude_current_blog()
+ * @method void only_with_translation()
+ * @method void output_current_blog()
+ * @method void before_output()
+ * @method void after_output()
+ * @method void before_item()
+ * @method void after_item()
+ * @method void content_filter()
  *
  * @package Msls
  */
@@ -69,7 +69,7 @@ class MslsAdmin extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function get_menu_slug() {
+	public function get_menu_slug(): string {
 		return 'MslsAdmin';
 	}
 
@@ -78,7 +78,7 @@ class MslsAdmin extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function get_options_page_link() {
+	public function get_options_page_link(): string {
 		return sprintf( '/options-general.php?page=%s', $this->get_menu_slug() );
 	}
 
@@ -188,7 +188,7 @@ class MslsAdmin extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function subsubsub() {
+	public function subsubsub(): string {
 		$icon_type = $this->options->get_icon_type();
 
 		$arr = array();

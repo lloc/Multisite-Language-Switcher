@@ -4,8 +4,8 @@ namespace lloc\Msls\Query;
 
 class YearPostsCounterQuery extends AbstractQuery {
 
+	public function __invoke( int $year ): int {
 
-	public function __invoke( int $year ) {
 		if ( $year <= 0 ) {
 			return 0;
 		}

@@ -254,10 +254,10 @@ class MslsPlugin {
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
-			$blogs     = ( new BlogsInNetworkQuery( $sql_cache ) )();
+			$blog_ids  = ( new BlogsInNetworkQuery( $sql_cache ) )();
 
-			foreach ( $blogs as $blog ) {
-				switch_to_blog( $blog->blog_id );
+			foreach ( $blog_ids as $new_blog_id ) {
+				switch_to_blog( $new_blog_id );
 				self::cleanup();
 				restore_current_blog();
 			}

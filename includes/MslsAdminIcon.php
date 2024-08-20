@@ -100,11 +100,11 @@ class MslsAdminIcon {
 	/**
 	 * Set the icon path
 	 *
-	 * @param $icon_type
+	 * @param string $icon_type
 	 *
 	 * @return MslsAdminIcon
 	 */
-	public function set_icon_type( $icon_type ): MslsAdminIcon {
+	public function set_icon_type( string $icon_type ): MslsAdminIcon {
 		$this->icon_type = $icon_type;
 
 		return $this;

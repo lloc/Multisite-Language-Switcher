@@ -10,20 +10,23 @@ namespace lloc\Msls\Query;
 class TranslatedPostIdQuery extends AbstractQuery {
 
 
-	public function __invoke( string $language ) {
+	/**
+	 * @return int[]
+	 */
+	public function __invoke( string $language ): array {
 		if ( empty( $language ) ) {
 			return array();
 		}
 
 		$query = $this->sql_cache->prepare(
-			"SELECT option_id, option_name FROM {$this->sql_cache->options} WHERE option_name LIKE %s AND option_value LIKE %s",
+			"SELECT option_name FROM {$this->sql_cache->options} WHERE option_name LIKE %s AND option_value LIKE %s",
 			'msls_%',
 			'%"' . $language . '"%'
 		);
 
 		$post_ids = array();
 		foreach ( $this->sql_cache->get_results( $query ) as $post ) {
-			$post_ids[] = substr( $post->option_name, 5 );
+			$post_ids[] = intval( substr( $post->option_name, 5 ) );
 		}
 
 		return $post_ids;

@@ -9,13 +9,21 @@ namespace lloc\Msls\Query;
  */
 class BlogsInNetworkQuery extends AbstractQuery {
 
-	public function __invoke() {
+	/**
+	 * @return int[]
+	 */
+	public function __invoke(): array {
 		$query = $this->sql_cache->prepare(
 			"SELECT blog_id FROM {$this->sql_cache->blogs} WHERE blog_id != %d AND site_id = %d",
 			$this->sql_cache->blogid,
 			$this->sql_cache->siteid
 		);
 
-		return $this->sql_cache->get_results( $query );
+		$blog_ids = array();
+		foreach ( $this->sql_cache->get_results( $query ) as $blog ) {
+			$blog_ids[] = intval( $blog->blog_id );
+		}
+
+		return $blog_ids;
 	}
 }
