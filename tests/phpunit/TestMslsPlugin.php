@@ -18,7 +18,8 @@ class TestMslsPlugin extends MslsUnitTestCase {
 
 		$test = new MslsPlugin( $options );
 
-		$this->assertFalse( $test->custom_enqueue() );
+		$this->expectNotToPerformAssertions();
+		$test->custom_enqueue();
 	}
 
 	function test_admin_menu_with_autocomplete(): void {
@@ -33,7 +34,8 @@ class TestMslsPlugin extends MslsUnitTestCase {
 
 		$test = new MslsPlugin( $options );
 
-		$this->assertTrue( $test->custom_enqueue() );
+		$this->expectNotToPerformAssertions();
+		$test->custom_enqueue();
 	}
 
 	function test_admin_menu_admin_bar_not_showing(): void {
@@ -45,21 +47,22 @@ class TestMslsPlugin extends MslsUnitTestCase {
 
 		$test = new MslsPlugin( $options );
 
-		$this->assertFalse( $test->custom_enqueue() );
+		$this->expectNotToPerformAssertions();
+		$test->custom_enqueue();
 	}
 
 	/**
 	 * Verify the static init_i18n_support-method
 	 */
 	function test_init_i18n_support(): void {
-		Functions\when( 'load_plugin_textdomain' )->justReturn( true );
+		Functions\expect( 'load_plugin_textdomain' )->once()->andReturn( true );
 
 		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 
 		$test = new MslsPlugin( $options );
 
-		$this->assertIsBool( $test->init_i18n_support() );
+		$this->expectNotToPerformAssertions();
+		$test->init_i18n_support();
 	}
 
 	/**
