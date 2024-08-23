@@ -14,22 +14,18 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Holds the format for the output
 	 *
-	 * @var array $tags
+	 * @var array<string, string>
 	 */
-	protected $tags;
+	protected array $tags;
 
 	/**
-	 * Creates and gets the output as an array
-	 *
 	 * @param int  $display
 	 * @param bool $filter
 	 * @param bool $exists
 	 *
-	 * @return array
-	 * @uses MslsLink
-	 * @uses MslsOptions
+	 * @return string[]
 	 */
-	public function get( $display, $filter = false, $exists = false ) {
+	public function get( int $display, bool $filter = false, bool $exists = false ) {
 		$arr = array();
 
 		$blogs = $this->collection->get_filtered( $filter );

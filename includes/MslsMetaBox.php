@@ -89,13 +89,9 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * Init
-	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return MslsMetaBox
 	 */
-	public static function init(): MslsMetaBox {
+	public static function init(): void {
 		$options = msls_options();
 		$obj     = new static( $options, msls_blog_collection() );
 
@@ -104,8 +100,6 @@ class MslsMetaBox extends MslsMain {
 			add_action( 'save_post', array( $obj, 'set' ) );
 			add_action( 'trashed_post', array( $obj, 'delete' ) );
 		}
-
-		return $obj;
 	}
 
 	/**

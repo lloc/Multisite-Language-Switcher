@@ -62,7 +62,7 @@ class MslsWidget extends \WP_Widget {
 			$title = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
 		}
 
-		$content = MslsOutput::init()->__toString();
+		$content = MslsOutput::create()->__toString();
 		if ( '' === $content ) {
 			$text    = __( 'No available translations found', 'multisite-language-switcher' );
 			$content = apply_filters( 'msls_widget_alternative_content', $text );

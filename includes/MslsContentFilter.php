@@ -43,7 +43,7 @@ class MslsContentFilter {
 	 * @return string
 	 */
 	public function filter_string( $pref = '<p id="msls">', $post = '</p>' ) {
-		$links_arr = MslsOutput::init()->get( 1, true, true );
+		$links_arr = MslsOutput::create()->get( 1, true, true );
 		$links_str = $this->format_available_languages( $links_arr );
 
 		/* translators: %s: list of languages */

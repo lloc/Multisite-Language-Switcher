@@ -38,10 +38,8 @@ class MslsMain {
 	 * Factory
 	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return static
 	 */
-	public static function init() {
+	public static function create() {
 		return new static( msls_options(), msls_blog_collection() );
 	}
 

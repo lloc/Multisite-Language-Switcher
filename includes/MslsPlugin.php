@@ -29,13 +29,9 @@ class MslsPlugin {
 	}
 
 	/**
-	 * Factory
-	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return MslsPlugin
 	 */
-	public static function init() {
+	public static function init(): void {
 		$obj = new self( msls_options() );
 
 		add_action( 'plugins_loaded', array( $obj, 'init_i18n_support' ) );
@@ -103,8 +99,6 @@ class MslsPlugin {
 				}
 			);
 		}
-
-		return $obj;
 	}
 
 	/**
@@ -116,7 +110,7 @@ class MslsPlugin {
 		static $obj = null;
 
 		if ( is_null( $obj ) ) {
-			$obj = MslsOutput::init();
+			$obj = MslsOutput::create();
 		}
 
 		return $obj;

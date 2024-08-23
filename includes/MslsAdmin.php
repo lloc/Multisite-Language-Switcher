@@ -29,13 +29,9 @@ class MslsAdmin extends MslsMain {
 	public const MAX_REFERENCE_USERS = 100;
 
 	/**
-	 * Factory
-	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return MslsAdmin
 	 */
-	public static function init() {
+	public static function init(): void {
 		$obj = MslsRegistry::get_object( __CLASS__ );
 		if ( ! $obj ) {
 			$obj = new static( msls_options(), msls_blog_collection() );
@@ -60,8 +56,6 @@ class MslsAdmin extends MslsMain {
 				add_filter( 'msls_admin_validate', array( $obj, 'set_blog_language' ) );
 			}
 		}
-
-		return $obj;
 	}
 
 	/**

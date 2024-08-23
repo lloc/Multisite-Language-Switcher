@@ -179,9 +179,9 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @param string $language
 	 *
-	 * @return string|null
+	 * @return ?int
 	 */
-	public function get_blog_id( $language ) {
+	public function get_blog_id( string $language ): ?int {
 		$blog    = $this->get_blog( $language );
 		$blog_id = ! is_null( $blog ) ? $blog->userblog_id : null;
 

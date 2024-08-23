@@ -21,7 +21,7 @@ class MslsPostTag extends MslsMain {
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
-	public static function suggest() {
+	public static function suggest(): void {
 		$json = new MslsJson();
 
 		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID ) ) {
@@ -29,7 +29,9 @@ class MslsPostTag extends MslsMain {
 				MslsRequest::get_var( MslsFields::FIELD_BLOG_ID )
 			);
 
-			$args = array(
+			$post_type = MslsRequest::get( MslsFields::FIELD_POST_TYPE, '' );
+			$args      = array(
+				'taxonomy'   => sanitize_text_field( $post_type ),
 				'orderby'    => 'name',
 				'order'      => 'ASC',
 				'number'     => 10,
@@ -49,19 +51,18 @@ class MslsPostTag extends MslsMain {
 			 *
 			 * @since 0.9.9
 			 */
-			$args      = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
-			$post_type = MslsRequest::get( MslsFields::FIELD_POST_TYPE, '' );
-			foreach ( get_terms( sanitize_text_field( $post_type ), $args ) as $term ) {
+			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
+			foreach ( get_terms( $args ) as $term ) {
 				/**
 				 * Manipulates the term object before using it
 				 *
-				 * @param \StdClass $term
+				 * @param int|string|\WP_Term $term
 				 *
 				 * @since 0.9.9
 				 */
 				$term = apply_filters( 'msls_post_tag_suggest_term', $term );
 
-				if ( is_object( $term ) ) {
+				if ( $term instanceof \WP_Term ) {
 					$json->add( $term->term_id, $term->name );
 				}
 			}
@@ -75,10 +76,8 @@ class MslsPostTag extends MslsMain {
 	 * Init
 	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return MslsPostTag
 	 */
-	public static function init() {
+	public static function init(): void {
 		$options    = msls_options();
 		$collection = msls_blog_collection();
 		$class      = $options->activate_autocomplete ? self::class : MslsPostTagClassic::class;
@@ -91,8 +90,6 @@ class MslsPostTag extends MslsMain {
 			add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
 			add_action( "create_{$taxonomy}", array( $obj, 'set' ) );
 		}
-
-		return $obj;
 	}
 
 	/**
@@ -207,7 +204,7 @@ class MslsPostTag extends MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function set( $term_id ) {
+	public function set( $term_id ): void {
 		if ( MslsContentTypes::create()->acl_request() ) {
 			$this->save( $term_id, MslsOptionsTax::class );
 		}
