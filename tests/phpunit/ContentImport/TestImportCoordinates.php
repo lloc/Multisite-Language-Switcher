@@ -23,7 +23,7 @@ class TestImportCoordinates extends MslsUnitTestCase {
 		$this->test->dest_lang      = 'it_IT';
 	}
 
-	public function provider_validate(): array {
+	public static function provider_validate(): array {
 		$post = \Mockery::mock( \WP_Post::class );
 		return array(
 			array( null, null, null, null, null, false ),

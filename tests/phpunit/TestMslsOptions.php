@@ -163,7 +163,7 @@ class TestMslsOptions extends MslsUnitTestCase {
 		$this->assertEquals( MslsAdminIcon::TYPE_LABEL, $obj->get_icon_type() );
 	}
 
-	public function provide_data_for_slug_check(): array {
+	public static function provide_data_for_slug_check(): array {
 		return array(
 			array( '', '', false, false, false, '', false ), // first return
 			array( null, '', false, false, false, '', false ), // first return

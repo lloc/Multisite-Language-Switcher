@@ -177,7 +177,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_icon_type( 'flag' ) );
 	}
 
-	public function icon_type_provider(): array {
+	public static function icon_type_provider(): array {
 		return array(
 			array( 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ),
 			array( 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>' ),
