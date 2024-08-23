@@ -13,7 +13,7 @@ use lloc\Msls\MslsPlugin;
 
 class TestMslsContentFilter extends MslsUnitTestCase {
 
-	protected function provide_content_filter_data(): array {
+	public static function provide_content_filter_data(): array {
 		return array(
 			array( 'Test', 'Test', true, false, false ),
 			array( 'Test', 'Test', false, false, false ),

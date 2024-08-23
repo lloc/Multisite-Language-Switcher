@@ -14,7 +14,7 @@ class TestAttachmentPathFinder extends MslsUnitTestCase {
 		$this->test = new AttachmentPathFinder();
 	}
 
-	public function dataprovider_filter_srcset() {
+	public static function dataprovider_filter_srcset(): array {
 		$image_src     = 'http://example.com/image.jpg';
 		$msls_imported = array(
 			'blog' => 1,

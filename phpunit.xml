@@ -1,10 +1,5 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="true" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage>
-    <include>
-      <directory suffix=".php">./includes/</directory>
-    </include>
-  </coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="true" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
   <php>
     <const name="MSLS_PLUGIN_PATH" value="multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
     <const name="MSLS_PLUGIN__FILE__" value="/var/www/html/wp-content/plugins/multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
@@ -13,4 +8,9 @@
   <testsuite name="Internal tests">
     <directory prefix="Test" suffix=".php">./tests/phpunit</directory>
   </testsuite>
+  <source>
+    <include>
+      <directory suffix=".php">./includes/</directory>
+    </include>
+  </source>
 </phpunit>

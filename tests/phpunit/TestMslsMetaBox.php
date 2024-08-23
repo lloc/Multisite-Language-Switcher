@@ -94,7 +94,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->assertEquals( '<option value="42" selected="selected">A random title</option>', $this->test->render_options( 'post', 42 ) );
 	}
 
-	public function add_data_provider() {
+	public static function add_data_provider(): array {
 		return array(
 			array( array( 'post', 'page' ), 8, 8, true, true ),
 			array( array( 'book' ), 3, 6, false, false ),
@@ -169,7 +169,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->test->render_select();
 	}
 
-	protected function render_input_provider() {
+	public static function render_input_provider(): array {
 		return array(
 			array( array( 'de_DE' => 42 ), 1, 0, 0, 1, '<ul><li class=""><label for="msls_title_ msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value="42"/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value="Test"/></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>' ),
 			array( array( 'en_US' => 17 ), 0, 1, 1, 0, '<ul><li class=""><label for="msls_title_ msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value=""/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>' ),

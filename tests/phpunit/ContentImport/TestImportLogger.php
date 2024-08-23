@@ -16,7 +16,7 @@ class TestImportLogger extends MslsUnitTestCase {
 		$this->test = new ImportLogger( $coordinates );
 	}
 
-	public function provider_get_data(): array {
+	public static function provider_get_data(): array {
 		return array(
 			array( 'info' ),
 			array( 'error' ),

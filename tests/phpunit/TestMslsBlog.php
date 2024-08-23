@@ -99,7 +99,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 	 *
 	 * @return array[]
 	 */
-	public function compareProvider() {
+	public static function compareProvider(): array {
 		return array(
 			array( 0, 0, 0 ),
 			array( 0, 1, - 1 ),
