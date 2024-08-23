@@ -21,7 +21,7 @@ class MslsLinkTextOnly extends MslsLink {
 	 *
 	 * @return string
 	 */
-	public static function get_description() {
+	public static function get_description(): string {
 		return __( 'Description only', 'multisite-language-switcher' );
 	}
 }

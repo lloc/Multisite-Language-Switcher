@@ -4,6 +4,7 @@ package-lock.json
 phpunit.xml.bak
 .idea/
 .phpunit.result.cache
+.phpunit.cache
 tests/coverage/
 tests/playwright-results/
 tests/playwright-report/

@@ -39,16 +39,16 @@ class MslsLink extends MslsGetSet {
 	 *
 	 * @return string
 	 */
-	public static function get_description() {
+	public static function get_description(): string {
 		return __( 'Flag and description', 'multisite-language-switcher' );
 	}
 
 	/**
 	 * Gets an array with all link descriptions
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
-	public static function get_types_description() {
+	public static function get_types_description(): array {
 		$types = array();
 
 		foreach ( self::get_types() as $key => $class ) {
@@ -63,11 +63,11 @@ class MslsLink extends MslsGetSet {
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param int $display
+	 * @param ?int $display
 	 *
 	 * @return MslsLink
 	 */
-	public static function create( $display ) {
+	public static function create( ?int $display ): MslsLink {
 		if ( has_filter( 'msls_link_create' ) ) {
 			/**
 			 * Returns custom MslsLink-Object

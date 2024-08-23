@@ -17,7 +17,7 @@ class MslsMetaBox extends MslsMain {
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
-	public static function suggest() {
+	public static function suggest(): void {
 		$json = new MslsJson();
 
 		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID, INPUT_POST ) ) {
@@ -57,9 +57,9 @@ class MslsMetaBox extends MslsMain {
 	 * @param MslsJson $json
 	 * @param array    $args
 	 *
-	 * @return mixed
+	 * @return MslsJson
 	 */
-	public static function get_suggested_fields( $json, $args ) {
+	public static function get_suggested_fields( MslsJson $json, $args ): MslsJson {
 		/**
 		 * Overrides the query-args for the suggest fields in the MetaBox
 		 *

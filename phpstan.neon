@@ -8,3 +8,5 @@ parameters:
         - tests
         - vendor
         - includes/ContentImport
+    bootstrapFiles:
+        - tests/phpstan/bootstrap.php
