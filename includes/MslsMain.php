@@ -35,11 +35,9 @@ class MslsMain {
 	}
 
 	/**
-	 * Factory
-	 *
 	 * @codeCoverageIgnore
 	 */
-	public static function create() {
+	public static function create(): object {
 		return new static( msls_options(), msls_blog_collection() );
 	}
 

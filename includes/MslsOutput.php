@@ -11,6 +11,12 @@ use lloc\Msls\Map\HrefLang;
  */
 class MslsOutput extends MslsMain {
 
+	public static function init(): object {
+		_deprecated_function( __METHOD__, '2.9.2', 'MslsOutput::create' );
+
+		return self::create();
+	}
+
 	/**
 	 * Holds the format for the output
 	 *

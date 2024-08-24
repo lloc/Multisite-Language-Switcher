@@ -193,5 +193,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		return \lloc\Msls\MslsOptionsQuery::create();
 	}
 
+	function msls_output( $attr = array() ) {
+		echo get_the_msls( $attr );
+	}
+
 	lloc\Msls\MslsPlugin::init();
 }
