@@ -50,7 +50,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @param \lloc\Msls\MslsMain|null $main
 	 */
 	public function __construct( MslsMain $main = null ) {
-		$this->main = $main ?: MslsMain::init();
+		$this->main = $main ?: MslsMain::create();
 	}
 
 	/**

@@ -17,7 +17,7 @@ class MslsMetaBox extends MslsMain {
 	 * Echo a JSON-ified array of posts of the given post-type and
 	 * the requested search-term and then die silently
 	 */
-	public static function suggest() {
+	public static function suggest(): void {
 		$json = new MslsJson();
 
 		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID, INPUT_POST ) ) {
@@ -54,16 +54,16 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * @param MslsJson $json
-	 * @param array    $args
+	 * @param MslsJson             $json
+	 * @param array<string, mixed> $args
 	 *
-	 * @return mixed
+	 * @return MslsJson
 	 */
-	public static function get_suggested_fields( $json, $args ) {
+	public static function get_suggested_fields( MslsJson $json, array $args ): MslsJson {
 		/**
 		 * Overrides the query-args for the suggest fields in the MetaBox
 		 *
-		 * @param array $args
+		 * @param array $args<string, mixed>
 		 *
 		 * @since 0.9.9
 		 */
@@ -89,13 +89,9 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * Init
-	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return MslsMetaBox
 	 */
-	public static function init(): MslsMetaBox {
+	public static function init(): void {
 		$options = msls_options();
 		$obj     = new static( $options, msls_blog_collection() );
 
@@ -104,8 +100,6 @@ class MslsMetaBox extends MslsMain {
 			add_action( 'save_post', array( $obj, 'set' ) );
 			add_action( 'trashed_post', array( $obj, 'delete' ) );
 		}
-
-		return $obj;
 	}
 
 	/**
@@ -244,7 +238,7 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * @param string $type
-	 * @param string $msls_id
+	 * @param int    $msls_id
 	 *
 	 * @return string
 	 */
@@ -269,25 +263,20 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * @param string $post_id
-	 * @param string $msls_id
+	 * @param int $post_id
+	 * @param int $msls_id
 	 *
 	 * @return string
 	 */
-	public function render_option( $post_id, $msls_id ): string {
+	public function render_option( int $post_id, int $msls_id ): string {
 		return sprintf(
-			'<option value="%s" %s>%s</option>',
+			'<option value="%d" %s>%s</option>',
 			$post_id,
 			selected( $post_id, $msls_id, false ),
 			get_the_title( $post_id )
 		);
 	}
 
-	/**
-	 * Render a suggest input-field
-	 *
-	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
-	 */
 	public function render_input(): void {
 		$blogs = $this->collection->get();
 

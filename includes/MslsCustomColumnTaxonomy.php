@@ -11,13 +11,9 @@ namespace lloc\Msls;
 class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
 	/**
-	 * Factory
-	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return MslsCustomColumnTaxonomy
 	 */
-	public static function init() {
+	public static function init(): void {
 		$options    = msls_options();
 		$collection = msls_blog_collection();
 		$obj        = new static( $options, $collection );
@@ -31,8 +27,6 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 				add_action( "delete_{$taxonomy}", array( $obj, 'delete' ) );
 			}
 		}
-
-		return $obj;
 	}
 
 	/**

@@ -13,7 +13,7 @@ class TestMslsOptionsPost extends MslsUnitTestCase {
 
 		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		$this->test = new MslsOptionsPost();
+		$this->test = new MslsOptionsPost( 42 );
 	}
 
 	public function test_get_postlink_not_has_value() {
@@ -53,5 +53,9 @@ class TestMslsOptionsPost extends MslsUnitTestCase {
 		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://msls.co/a-post' );
 
 		$this->assertEquals( 'https://msls.co/a-post', $this->test->get_current_link() );
+	}
+
+	public function test_get_option_name() {
+		$this->assertSame( 'msls_42', $this->test->get_option_name() );
 	}
 }

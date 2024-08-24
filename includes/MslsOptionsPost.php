@@ -9,19 +9,9 @@ namespace lloc\Msls;
  */
 class MslsOptionsPost extends MslsOptions {
 
-	/**
-	 * Separator
-	 *
-	 * @var string
-	 */
-	protected $sep = '_';
+	public const SEPARATOR = '_';
 
-	/**
-	 * Autoload
-	 *
-	 * @var string
-	 */
-	protected $autoload = 'no';
+	protected bool $autoload = false;
 
 	/**
 	 * Get postlink

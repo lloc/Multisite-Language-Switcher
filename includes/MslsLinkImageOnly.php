@@ -21,7 +21,7 @@ class MslsLinkImageOnly extends MslsLink {
 	 *
 	 * @return string
 	 */
-	public static function get_description() {
+	public static function get_description(): string {
 		return __( 'Flag only', 'multisite-language-switcher' );
 	}
 }

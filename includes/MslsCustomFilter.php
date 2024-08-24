@@ -13,13 +13,9 @@ use lloc\Msls\Query\TranslatedPostIdQuery;
 class MslsCustomFilter extends MslsMain {
 
 	/**
-	 * Init
-	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return MslsCustomFilter
 	 */
-	public static function init() {
+	public static function init(): void {
 		$options    = msls_options();
 		$collection = msls_blog_collection();
 		$obj        = new static( $options, $collection );
@@ -37,8 +33,6 @@ class MslsCustomFilter extends MslsMain {
 				);
 			}
 		}
-
-		return $obj;
 	}
 
 	/**

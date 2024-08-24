@@ -11,13 +11,9 @@ namespace lloc\Msls;
 class MslsCustomColumn extends MslsMain {
 
 	/**
-	 * Factory
-	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return MslsCustomColumn
 	 */
-	public static function init() {
+	public static function init(): void {
 		$options    = msls_options();
 		$collection = msls_blog_collection();
 		$obj        = new static( $options, $collection );
@@ -31,8 +27,6 @@ class MslsCustomColumn extends MslsMain {
 				add_action( 'trashed_post', array( $obj, 'delete' ) );
 			}
 		}
-
-		return $obj;
 	}
 
 	/**
