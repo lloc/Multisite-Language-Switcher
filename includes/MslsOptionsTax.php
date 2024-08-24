@@ -9,19 +9,9 @@ namespace lloc\Msls;
  */
 class MslsOptionsTax extends MslsOptions {
 
-	/**
-	 * Separator
-	 *
-	 * @var string
-	 */
-	protected $sep = '_term_';
+	public const SEPARATOR = '_term_';
 
-	/**
-	 * Autoload
-	 *
-	 * @var string
-	 */
-	protected $autoload = 'no';
+	protected bool $autoload = false;
 
 	/**
 	 * Factory method

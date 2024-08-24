@@ -211,4 +211,8 @@ class TestMslsOptions extends MslsUnitTestCase {
 
 		$this->assertEquals( '', $obj->get_slug( 'post' ) );
 	}
+
+	public function test_get_option_name() {
+		$this->assertSame( 'msls', $this->get_test()->get_option_name() );
+	}
 }

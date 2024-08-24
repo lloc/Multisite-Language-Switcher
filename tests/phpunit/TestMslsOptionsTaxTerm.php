@@ -51,4 +51,8 @@ class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 		$expected = 'https://example.de/schlagwort/keyword';
 		$this->assertEquals( $expected, $this->test->check_base( $expected, $options ) );
 	}
+
+	public function test_get_option_name() {
+		$this->assertSame( 'msls_term_42', $this->test->get_option_name() );
+	}
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * MslsOptions
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
@@ -30,44 +24,19 @@ use lloc\Msls\Component\Icon\IconPng;
  */
 class MslsOptions extends MslsGetSet {
 
-	/**
-	 * Args
-	 *
-	 * @var array
-	 */
-	protected $args;
+	public const PREFIX    = 'msls';
+	public const SEPARATOR = '';
+
+	protected string $name;
+	protected bool $exists   = false;
+	protected bool $autoload = true;
 
 	/**
-	 * Name
-	 *
-	 * @var string
+	 * @var array<int, mixed>
 	 */
-	protected $name;
+	protected array $args;
 
 	/**
-	 * Exists
-	 *
-	 * @var bool
-	 */
-	protected $exists = false;
-
-	/**
-	 * Separator
-	 *
-	 * @var string
-	 */
-	protected $sep = '';
-
-	/**
-	 * Autoload
-	 *
-	 * @var string
-	 */
-	protected $autoload = 'yes';
-
-	/**
-	 * Available languages
-	 *
 	 * @var array<string, string>
 	 */
 	private array $available_languages;
@@ -146,8 +115,12 @@ class MslsOptions extends MslsGetSet {
 	 */
 	public function __construct() {
 		$this->args   = func_get_args();
-		$this->name   = 'msls' . $this->sep . implode( $this->sep, $this->args );
+		$this->name   = $this->get_option_name();
 		$this->exists = $this->set( get_option( $this->name ) );
+	}
+
+	public function get_option_name(): string {
+		return self::PREFIX . static::SEPARATOR . implode( static::SEPARATOR, $this->args );
 	}
 
 	/**
@@ -175,7 +148,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function save( $arr ) {
+	public function save( $arr ): void {
 		$this->delete();
 		if ( $this->set( $arr ) ) {
 			$arr = $this->get_arr();
@@ -190,7 +163,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function delete() {
+	public function delete(): void {
 		$this->reset();
 		if ( $this->exists ) {
 			delete_option( $this->name );
@@ -382,11 +355,9 @@ class MslsOptions extends MslsGetSet {
 	/**
 	 * Get all available languages
 	 *
-	 * @return array
-	 * @uses format_code_lang
-	 * @uses get_available_languages
+	 * @return array<string, string>
 	 */
-	public function get_available_languages() {
+	public function get_available_languages(): array {
 		if ( empty( $this->available_languages ) ) {
 			$this->available_languages = array(
 				'en_US' => __( 'American English', 'multisite-language-switcher' ),

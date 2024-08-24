@@ -54,16 +54,16 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * @param MslsJson $json
-	 * @param array    $args
+	 * @param MslsJson             $json
+	 * @param array<string, mixed> $args
 	 *
 	 * @return MslsJson
 	 */
-	public static function get_suggested_fields( MslsJson $json, $args ): MslsJson {
+	public static function get_suggested_fields( MslsJson $json, array $args ): MslsJson {
 		/**
 		 * Overrides the query-args for the suggest fields in the MetaBox
 		 *
-		 * @param array $args
+		 * @param array $args<string, mixed>
 		 *
 		 * @since 0.9.9
 		 */
@@ -238,7 +238,7 @@ class MslsMetaBox extends MslsMain {
 
 	/**
 	 * @param string $type
-	 * @param string $msls_id
+	 * @param int    $msls_id
 	 *
 	 * @return string
 	 */
@@ -263,25 +263,20 @@ class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * @param string $post_id
-	 * @param string $msls_id
+	 * @param int $post_id
+	 * @param int $msls_id
 	 *
 	 * @return string
 	 */
-	public function render_option( $post_id, $msls_id ): string {
+	public function render_option( int $post_id, int $msls_id ): string {
 		return sprintf(
-			'<option value="%s" %s>%s</option>',
+			'<option value="%d" %s>%s</option>',
 			$post_id,
 			selected( $post_id, $msls_id, false ),
 			get_the_title( $post_id )
 		);
 	}
 
-	/**
-	 * Render a suggest input-field
-	 *
-	 * @param bool $echo Whether the metabox markup should be echoed to the page or not.
-	 */
 	public function render_input(): void {
 		$blogs = $this->collection->get();
 
