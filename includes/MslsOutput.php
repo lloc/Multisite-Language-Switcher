@@ -31,7 +31,7 @@ class MslsOutput extends MslsMain {
 	 *
 	 * @return string[]
 	 */
-	public function get( ?int $display, bool $filter = false, bool $exists = false ): array {
+	public function get( ?int $display, bool $filter = false, $exists = false ): array {
 		$arr = array();
 
 		$blogs = $this->collection->get_filtered( $filter );
