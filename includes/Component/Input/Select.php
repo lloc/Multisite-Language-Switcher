@@ -6,6 +6,8 @@ use lloc\Msls\Component\InputInterface;
 
 class Select implements InputInterface {
 
+	const RENDER_FILTER = 'msls_input_select_name';
+
 	/**
 	 * @var string
 	 */
@@ -34,7 +36,7 @@ class Select implements InputInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		$name = apply_filters( 'msls_input_select_name', 'msls[' . $this->key . ']' );
+		$name = apply_filters( self::RENDER_FILTER, 'msls[' . $this->key . ']' );
 
 		return sprintf( '<select id="%1$s" name="%2$s">%3$s</select>', $this->key, esc_attr( $name ), $this->options->render() );
 	}

@@ -2,6 +2,7 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\InputInterface;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
 
 /**
@@ -186,7 +187,7 @@ class MslsMetaBox extends MslsMain {
 					$args = array(
 						'post_type'         => $type,
 						'selected'          => $mydata->$language,
-						'name'              => 'msls_input_' . $language,
+						'name'              => InputInterface::INPUT_PREFIX . $language,
 						'show_option_none'  => ' ',
 						'option_none_value' => 0,
 						'sort_column'       => 'menu_order, post_title',

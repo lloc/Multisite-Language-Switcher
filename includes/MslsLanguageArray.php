@@ -11,16 +11,14 @@ namespace lloc\Msls;
 class MslsLanguageArray {
 
 	/**
-	 * Generic container
-	 *
-	 * @var array
+	 * @var array<string, int>
 	 */
-	protected $arr;
+	protected array $arr;
 
 	/**
 	 * Constructor
 	 *
-	 * @param array $arr
+	 * @param array<string, mixed> $arr
 	 */
 	public function __construct( array $arr = array() ) {
 		foreach ( $arr as $key => $value ) {
@@ -64,10 +62,11 @@ class MslsLanguageArray {
 	 *
 	 * @param string $key
 	 *
-	 * @return array
+	 * @return array<string, int>
 	 */
-	public function get_arr( $key = '' ) {
+	public function get_arr( string $key = '' ): array {
 		$arr = $this->arr;
+
 		if ( isset( $arr[ $key ] ) ) {
 			unset( $arr[ $key ] );
 		}

@@ -3,6 +3,7 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Component\Input\Select;
+use lloc\Msls\Component\InputInterface;
 use lloc\Msls\Query\TranslatedPostIdQuery;
 
 /**
@@ -26,7 +27,7 @@ class MslsCustomFilter extends MslsMain {
 				add_action( 'restrict_manage_posts', array( $obj, 'add_filter' ) );
 				add_filter( 'parse_query', array( $obj, 'execute_filter' ) );
 				add_filter(
-					'msls_input_select_name',
+					Select::RENDER_FILTER,
 					function () {
 						return MslsFields::FIELD_MSLS_FILTER;
 					}
