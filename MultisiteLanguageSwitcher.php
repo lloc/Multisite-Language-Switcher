@@ -158,7 +158,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return \lloc\Msls\MslsOutput
 	 */
 	function msls_output(): \lloc\Msls\MslsOutput {
-		echo \lloc\Msls\MslsOutput::create();
+		return \lloc\Msls\MslsOutput::create();
 	}
 
 	/**

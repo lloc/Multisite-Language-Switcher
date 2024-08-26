@@ -3,7 +3,6 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Component\Input\Select;
-use lloc\Msls\Component\InputInterface;
 use lloc\Msls\Query\TranslatedPostIdQuery;
 
 /**
@@ -11,7 +10,7 @@ use lloc\Msls\Query\TranslatedPostIdQuery;
  *
  * @package Msls
  */
-class MslsCustomFilter extends MslsMain {
+final class MslsCustomFilter extends MslsMain {
 
 	/**
 	 * @codeCoverageIgnore
@@ -19,7 +18,7 @@ class MslsCustomFilter extends MslsMain {
 	public static function init(): void {
 		$options    = msls_options();
 		$collection = msls_blog_collection();
-		$obj        = new static( $options, $collection );
+		$obj        = new self( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
 			$post_type = MslsPostType::instance()->get_request();

@@ -8,24 +8,19 @@ namespace lloc\Msls;
  *
  * @package Msls
  */
-class MslsCustomColumnTaxonomy extends MslsCustomColumn {
+final class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 
-	/**
-	 * @codeCoverageIgnore
-	 */
-	public static function init(): void {
-		$options    = msls_options();
-		$collection = msls_blog_collection();
-		$obj        = new static( $options, $collection );
+	protected function add_hooks(): void {
+		if ( $this->options->is_excluded() ) {
+			return;
+		}
 
-		if ( ! $options->is_excluded() ) {
-			$taxonomy = MslsTaxonomy::instance()->get_request();
+		$taxonomy = MslsTaxonomy::instance()->get_request();
 
-			if ( ! empty( $taxonomy ) ) {
-				add_filter( "manage_edit-{$taxonomy}_columns", array( $obj, 'th' ) );
-				add_action( "manage_{$taxonomy}_custom_column", array( $obj, 'column_default' ), - 100, 3 );
-				add_action( "delete_{$taxonomy}", array( $obj, 'delete' ) );
-			}
+		if ( ! empty( $taxonomy ) ) {
+			add_filter( "manage_edit-{$taxonomy}_columns", array( $this, 'th' ) );
+			add_action( "manage_{$taxonomy}_custom_column", array( $this, 'column_default' ), - 100, 3 );
+			add_action( "delete_{$taxonomy}", array( $this, 'delete' ) );
 		}
 	}
 

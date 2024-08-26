@@ -24,7 +24,7 @@ use lloc\Msls\Component\Input\Select;
  *
  * @package Msls
  */
-class MslsAdmin extends MslsMain {
+final class MslsAdmin extends MslsMain {
 
 	public const MAX_REFERENCE_USERS = 100;
 
@@ -34,7 +34,7 @@ class MslsAdmin extends MslsMain {
 	public static function init(): void {
 		$obj = MslsRegistry::get_object( __CLASS__ );
 		if ( ! $obj ) {
-			$obj = new static( msls_options(), msls_blog_collection() );
+			$obj = new self( msls_options(), msls_blog_collection() );
 
 			MslsRegistry::set_object( __CLASS__, $obj );
 

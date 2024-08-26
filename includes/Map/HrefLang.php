@@ -6,20 +6,21 @@ use lloc\Msls\MslsBlogCollection;
 
 /**
  * Class HrefLang
+ *
  * @package lloc\Msls\Map
  */
 class HrefLang {
 
 	/**
-	 * @var array
+	 * @var array<string, <array<string>>>
 	 */
-	protected $map = [];
+	protected $map = array();
 
 	/**
 	 * @param MslsBlogCollection $blogs
 	 */
 	public function __construct( MslsBlogCollection $blogs ) {
-		$map = [];
+		$map = array();
 		foreach ( $blogs->get_objects() as $blog ) {
 			$map[ $blog->get_alpha2() ][] = $blog->get_language();
 		}
@@ -65,5 +66,4 @@ class HrefLang {
 		 */
 		return (string) apply_filters( 'msls_head_hreflang', $language );
 	}
-
 }

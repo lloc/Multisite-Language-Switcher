@@ -31,7 +31,7 @@ class MslsMain {
 	 * @param MslsOptions        $options
 	 * @param MslsBlogCollection $collection
 	 */
-	public function __construct( MslsOptions $options, MslsBlogCollection $collection ) {
+	final public function __construct( MslsOptions $options, MslsBlogCollection $collection ) {
 		$this->options    = $options;
 		$this->collection = $collection;
 	}
