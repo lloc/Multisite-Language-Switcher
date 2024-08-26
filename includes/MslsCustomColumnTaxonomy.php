@@ -36,7 +36,7 @@ class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @param string $column_name
 	 * @param int    $item_id
 	 */
-	public function column_default( $deprecated, $column_name, $item_id ) {
+	public function column_default( $deprecated, $column_name, $item_id ): void {
 		$this->td( $column_name, $item_id );
 	}
 

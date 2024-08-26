@@ -32,11 +32,11 @@ class MslsCustomColumn extends MslsMain {
 	/**
 	 * Table header
 	 *
-	 * @param array $columns
+	 * @param string[] $columns
 	 *
-	 * @return array
+	 * @return string[]
 	 */
-	public function th( $columns ) {
+	public function th( array $columns ) {
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			$html = '';

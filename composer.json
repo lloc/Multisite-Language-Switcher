@@ -45,8 +45,8 @@
     "diagram:class": "vendor/bin/php-class-diagram --php8 includes > diagrams/msls-class.puml",
     "diagram:package": "vendor/bin/php-class-diagram --package-diagram --php8 includes > diagrams/msls-package.puml",
     "githooks": [
-      "if [ -e ./githooks/pre-commit ]; then cp ./githooks/pre-commit ./.git/hooks/; fi",
-      "if [ -e ./.git/hooks/pre-commit ]; then chmod 0755 ./.git/hooks/pre-commit; fi"
+      "if [ -e bin/githooks/pre-commit ]; then cp bin/githooks/pre-commit ./.git/hooks/; fi",
+      "if [ -e .git/hooks/pre-commit ]; then chmod 0755 .git/hooks/pre-commit; fi"
     ],
     "post-install-cmd": [
       "@githooks"

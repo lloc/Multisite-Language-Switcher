@@ -12,9 +12,7 @@ namespace lloc\Msls;
 class MslsGetSet extends MslsRegistryInstance {
 
 	/**
-	 * Generic container for all properties of an instance
-	 *
-	 * @var array $arr
+	 * @var array<string, mixed>
 	 */
 	protected $arr = array();
 
@@ -110,9 +108,9 @@ class MslsGetSet extends MslsRegistryInstance {
 	/**
 	 * Gets the complete properties-container as an array.
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
-	public function get_arr() {
+	public function get_arr(): array {
 		return $this->arr;
 	}
 }

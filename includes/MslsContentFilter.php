@@ -66,6 +66,10 @@ class MslsContentFilter {
 		return ! empty( $output ) ? $pref . $output . $post : '';
 	}
 
+	/**
+	 * @param string[] $links
+	 * @return string|null
+	 */
 	public function format_available_languages( array $links ): ?string {
 		if ( empty( $links ) ) {
 			return null;

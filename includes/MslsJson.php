@@ -11,9 +11,7 @@ namespace lloc\Msls;
 class MslsJson {
 
 	/**
-	 * Container
-	 *
-	 * @var array
+	 * @var array<int, array<string, string|int>>
 	 */
 	protected array $arr = array();
 
@@ -49,7 +47,7 @@ class MslsJson {
 	/**
 	 * Get the array container sorted by label
 	 *
-	 * @return array
+	 * @return array<int, array<string, string|int>>
 	 */
 	public function get(): array {
 		$arr = $this->arr;

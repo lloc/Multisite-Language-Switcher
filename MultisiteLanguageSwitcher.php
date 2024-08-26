@@ -153,6 +153,15 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	/**
+	 * Gets the MslsOutput instance
+	 *
+	 * @return \lloc\Msls\MslsOutput
+	 */
+	function msls_output(): \lloc\Msls\MslsOutput {
+		echo \lloc\Msls\MslsOutput::create();
+	}
+
+	/**
 	 * Retrieves the MslsOptionsPost instance.
 	 *
 	 * @param int $id
@@ -191,10 +200,6 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 */
 	function msls_get_query(): ?\lloc\Msls\MslsOptionsQuery {
 		return \lloc\Msls\MslsOptionsQuery::create();
-	}
-
-	function msls_output( $attr = array() ) {
-		echo get_the_msls( $attr );
 	}
 
 	lloc\Msls\MslsPlugin::init();

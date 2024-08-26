@@ -14,42 +14,35 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @var int
 	 */
-	private $current_blog_id;
+	private int $current_blog_id;
 
 	/**
 	 * True if the current blog should be in the output
 	 *
 	 * @var bool
 	 */
-	private $current_blog_output;
+	private bool $current_blog_output;
 
 	/**
 	 * Collection of MslsBlog-objects
 	 *
 	 * @var MslsBlog[]
 	 */
-	private $objects = array();
+	private array $objects = array();
 
 	/**
 	 * Order output by language or description
 	 *
 	 * @var string
 	 */
-	private $objects_order;
+	private string $objects_order;
 
 	/**
 	 * Active plugins in the whole network
 	 *
-	 * @var array
+	 * @var string[]
 	 */
-	private $active_plugins;
-
-	/**
-	 * Container for hreflang-mapping
-	 *
-	 * @var array
-	 */
-	private $hreflangmap = array();
+	private ?array $active_plugins = null;
 
 	/**
 	 * Constructor
@@ -130,7 +123,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 *
 	 * @param MslsOptions $options
 	 *
-	 * @return array
+	 * @return object[]|\stdClass[]
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
 		$reference_user = $options->has_value( 'reference_user' ) ? $options->reference_user : current(
@@ -254,7 +247,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return bool
 	 */
 	public function is_plugin_active( $blog_id ) {
-		if ( ! is_array( $this->active_plugins ) ) {
+		if ( is_null( $this->active_plugins ) ) {
 			$this->active_plugins = get_site_option( 'active_sitewide_plugins', array() );
 		}
 
@@ -271,7 +264,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	/**
 	 * Gets only blogs where the plugin is active
 	 *
-	 * @return array
+	 * @return MslsBlog[]
 	 */
 	public function get_plugin_active_blogs() {
 		$arr = array();
@@ -317,7 +310,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @param string     $fields
 	 * @param int|string $number
 	 *
-	 * @return array
+	 * @return array<string, int>
 	 */
 	public function get_users( $fields = 'all', $number = '' ) {
 		$args = array(
