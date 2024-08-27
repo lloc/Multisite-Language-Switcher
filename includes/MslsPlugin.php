@@ -49,7 +49,7 @@ class MslsPlugin {
 			add_action( 'widgets_init', array( MslsWidget::class, 'init' ) );
 			add_action( 'wp_head', array( __CLASS__, 'print_alternate_links' ) );
 
-			add_filter( 'msls_get_output', array( __CLASS__, 'msls_output' ) );
+			add_filter( 'msls_get_output', 'msls_output' );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
