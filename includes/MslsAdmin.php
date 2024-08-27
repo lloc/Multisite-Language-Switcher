@@ -204,7 +204,7 @@ final class MslsAdmin extends MslsMain {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public function register() {
+	public function register(): void {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );
 
 		$sections = array(
@@ -310,8 +310,8 @@ final class MslsAdmin extends MslsMain {
 	}
 
 	/**
-	 * @param array  $map
-	 * @param string $section
+	 * @param array<string, string> $map
+	 * @param string                $section
 	 *
 	 * @return int
 	 */
@@ -336,7 +336,7 @@ final class MslsAdmin extends MslsMain {
 	/**
 	 * Shows the select-form-field 'blog_language'
 	 */
-	public function blog_language() {
+	public function blog_language(): void {
 		$languages = $this->options->get_available_languages();
 		$selected  = get_locale();
 
@@ -346,14 +346,14 @@ final class MslsAdmin extends MslsMain {
 	/**
 	 * Shows the select-form-field 'display'
 	 */
-	public function display() {
-		echo ( new Select( 'display', MslsLink::get_types_description(), $this->options->display ) )->render();
+	public function display(): void {
+		echo ( new Select( 'display', MslsLink::get_types_description(), strval( $this->options->display ) ) )->render();
 	}
 
 	/**
 	 * Shows the select-form-field 'admin_display'
 	 */
-	public function admin_display() {
+	public function admin_display(): void {
 		echo ( new Select(
 			'admin_display',
 			array(
@@ -367,7 +367,7 @@ final class MslsAdmin extends MslsMain {
 	/**
 	 * Shows the select-form-field 'reference_user'
 	 */
-	public function reference_user() {
+	public function reference_user(): void {
 		$users = array();
 
 		foreach ( (array) apply_filters( 'msls_reference_users', $this->collection->get_users() ) as $user ) {
@@ -386,7 +386,7 @@ final class MslsAdmin extends MslsMain {
 			trigger_error( sprintf( $format, self::MAX_REFERENCE_USERS ) );
 		}
 
-		echo ( new Select( 'reference_user', $users, $this->options->reference_user ) )->render();
+		echo ( new Select( 'reference_user', $users, strval( $this->options->reference_user ) ) )->render();
 	}
 
 	/**
@@ -394,8 +394,8 @@ final class MslsAdmin extends MslsMain {
 	 *
 	 * The language will be used ff there is no description.
 	 */
-	public function description() {
-		echo ( new Text( 'description', $this->options->description, '40' ) )->render();
+	public function description(): void {
+		echo ( new Text( 'description', $this->options->description, 40 ) )->render();
 	}
 
 	/**
@@ -405,20 +405,20 @@ final class MslsAdmin extends MslsMain {
 	 * trouble. So you can decide a higher (from 1) or a lower (to 100) priority
 	 * for the output
 	 */
-	public function content_priority() {
+	public function content_priority(): void {
 		$temp     = array_merge( range( 1, 10 ), array( 20, 50, 100 ) );
 		$arr      = array_combine( $temp, $temp );
 		$selected = empty( $this->options->content_priority ) ? 10 : $this->options->content_priority;
 
-		echo ( new Select( 'content_priority', $arr, $selected ) )->render();
+		echo ( new Select( 'content_priority', $arr, strval( $selected ) ) )->render();
 	}
 
 	/**
 	 * Rewrites slugs for registered post types
 	 *
-	 * @param string $key
+	 * @param mixed $key
 	 */
-	public function render_rewrite( $key ) {
+	public function render_rewrite( $key ): void {
 		$rewrite = get_post_type_object( $key )->rewrite;
 
 		$value = '';
@@ -434,9 +434,9 @@ final class MslsAdmin extends MslsMain {
 	/**
 	 * Validates input before saving it
 	 *
-	 * @param array $arr Values of the submitted form
+	 * @param array<string, mixed> $arr Values of the submitted form
 	 *
-	 * @return array Validated input
+	 * @return array<string, mixed>
 	 */
 	public function validate( array $arr ) {
 		/**
@@ -459,9 +459,9 @@ final class MslsAdmin extends MslsMain {
 	/**
 	 * Filter which sets the global blog language
 	 *
-	 * @param array $arr
+	 * @param string[] $arr
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function set_blog_language( array $arr ) {
 		if ( isset( $arr['blog_language'] ) ) {

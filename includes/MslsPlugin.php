@@ -49,7 +49,7 @@ class MslsPlugin {
 			add_action( 'widgets_init', array( MslsWidget::class, 'init' ) );
 			add_action( 'wp_head', array( __CLASS__, 'print_alternate_links' ) );
 
-			add_filter( 'msls_get_output', array( __CLASS__, 'get_output' ) );
+			add_filter( 'msls_get_output', array( __CLASS__, 'msls_output' ) );
 
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
@@ -101,23 +101,8 @@ class MslsPlugin {
 		}
 	}
 
-	/**
-	 * Gets MslsOutput object
-	 *
-	 * @return MslsOutput
-	 */
-	public static function get_output() {
-		static $obj = null;
-
-		if ( is_null( $obj ) ) {
-			$obj = MslsOutput::create();
-		}
-
-		return $obj;
-	}
-
 	public static function print_alternate_links(): void {
-		echo self::get_output()->get_alternate_links(), PHP_EOL;
+		echo msls_output()->get_alternate_links(), PHP_EOL;
 	}
 
 	/**

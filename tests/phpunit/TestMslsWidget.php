@@ -5,6 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsWidget;
 
 class TestMslsWidget extends MslsUnitTestCase {
@@ -18,9 +19,6 @@ class TestMslsWidget extends MslsUnitTestCase {
 	}
 
 	public function test_widget(): void {
-		$collection = \Mockery::mock( MslsBlogCollection::class );
-		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array() );
-
 		$arr = array(
 			'before_widget' => '<div>',
 			'after_widget'  => '</div>',
@@ -30,10 +28,14 @@ class TestMslsWidget extends MslsUnitTestCase {
 
 		Functions\expect( 'wp_parse_args' )->once()->andReturn( $arr );
 
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array() );
+
 		$options = \Mockery::mock( MslsOptions::class );
 
-		Functions\expect( 'msls_options' )->andReturn( $options );
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
 		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		Functions\expect( 'msls_output' )->once()->andReturn( MslsOutput::create() );
 
 		$this->expectOutputString( '<div><h3>Test</h3>No available translations found</div>' );
 		$this->test->widget( array(), array( 'title' => 'Test' ) );

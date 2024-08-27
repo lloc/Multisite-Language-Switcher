@@ -25,7 +25,7 @@ class MslsCustomColumn extends MslsMain {
 			return;
 		}
 
-		$post_type = MslsPostType::instance()->get_request();
+		$post_type = msls_post_type()->get_request();
 
 		if ( ! empty( $post_type ) ) {
 			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'th' ) );

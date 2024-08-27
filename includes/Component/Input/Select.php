@@ -19,16 +19,16 @@ class Select implements InputInterface {
 	protected $options;
 
 	/**
-	 * @param string   $key Name and ID of the form-element
-	 * @param string[] $arr Options as associative array
-	 * @param ?string  $selected Values which should be selected
+	 * @param string  $key Name and ID of the form-element
+	 * @param mixed[] $arr Options as associative array
+	 * @param ?string $selected Values which should be selected
 	 */
 	public function __construct( string $key, array $arr, ?string $selected = null ) {
-		$this->key = esc_attr( $key );
+		$this->key = $key;
 
 		$this->options = new Group( '' );
 		foreach ( $arr as $key => $value ) {
-			$this->options->add( new Option( $key, $value, $selected ) );
+			$this->options->add( new Option( $key, strval( $value ), $selected ) );
 		}
 	}
 
@@ -38,6 +38,11 @@ class Select implements InputInterface {
 	public function render(): string {
 		$name = apply_filters( self::RENDER_FILTER, 'msls[' . $this->key . ']' );
 
-		return sprintf( '<select id="%1$s" name="%2$s">%3$s</select>', $this->key, esc_attr( $name ), $this->options->render() );
+		return sprintf(
+			'<select id="%1$s" name="%2$s">%3$s</select>',
+			esc_attr( $this->key ),
+			esc_attr( $name ),
+			$this->options->render()
+		);
 	}
 }

@@ -21,7 +21,7 @@ final class MslsCustomFilter extends MslsMain {
 		$obj        = new self( $options, $collection );
 
 		if ( ! $options->is_excluded() ) {
-			$post_type = MslsPostType::instance()->get_request();
+			$post_type = msls_post_type()->get_request();
 			if ( ! empty( $post_type ) ) {
 				add_action( 'restrict_manage_posts', array( $obj, 'add_filter' ) );
 				add_filter( 'parse_query', array( $obj, 'execute_filter' ) );

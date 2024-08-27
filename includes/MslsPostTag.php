@@ -83,7 +83,7 @@ class MslsPostTag extends MslsMain {
 		$class      = $options->activate_autocomplete ? self::class : MslsPostTagClassic::class;
 		$obj        = new $class( $options, $collection );
 
-		$taxonomy = MslsContentTypes::create()->acl_request();
+		$taxonomy = msls_content_types()->acl_request();
 		if ( '' != $taxonomy ) {
 			add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add_input' ) );
 			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ), 10, 2 );
@@ -163,7 +163,7 @@ class MslsPostTag extends MslsMain {
 		if ( $blogs ) {
 			$term_id = $tag->term_id ?? 0;
 			$mydata  = MslsOptionsTax::create( $term_id );
-			$type    = MslsContentTypes::create()->get_request();
+			$type    = msls_content_types()->get_request();
 
 			$this->maybe_set_linked_term( $mydata );
 
@@ -205,7 +205,7 @@ class MslsPostTag extends MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function set( $term_id ): void {
-		if ( MslsContentTypes::create()->acl_request() ) {
+		if ( msls_content_types()->acl_request() ) {
 			$this->save( $term_id, MslsOptionsTax::class );
 		}
 	}

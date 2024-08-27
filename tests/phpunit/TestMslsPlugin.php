@@ -5,6 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsPlugin;
 
 class TestMslsPlugin extends MslsUnitTestCase {
@@ -133,6 +134,10 @@ class TestMslsPlugin extends MslsUnitTestCase {
 	}
 
 	public function test_print_alternate_links() {
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( true );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+
 		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -140,9 +145,7 @@ class TestMslsPlugin extends MslsUnitTestCase {
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );
 		Functions\expect( 'msls_blog_collection' )->twice()->andReturn( $collection );
-		Functions\expect( 'is_admin' )->once()->andReturn( false );
-		Functions\expect( 'is_front_page' )->once()->andReturn( true );
-		Functions\expect( 'get_option' )->once()->andReturn( array() );
+		Functions\expect( 'msls_output' )->once()->andReturn( MslsOutput::create() );
 
 		$this->expectOutputString( '' . PHP_EOL );
 

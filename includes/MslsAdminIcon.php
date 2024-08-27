@@ -88,7 +88,7 @@ class MslsAdminIcon {
 	 * @return MslsAdminIcon|MslsAdminIconTaxonomy
 	 */
 	public static function create( ?string $type = null ) {
-		$obj = MslsContentTypes::create();
+		$obj = msls_content_types();
 
 		if ( ! $type ) {
 			$type = $obj->get_request();

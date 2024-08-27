@@ -180,7 +180,7 @@ class MslsOutput extends MslsMain {
 	 *
 	 * @return MslsOutput
 	 */
-	public function set_tags( array $arr = array() ) {
+	public function set_tags( array $arr = array() ): MslsOutput {
 		$this->tags = wp_parse_args( $this->get_tags(), $arr );
 
 		return $this;

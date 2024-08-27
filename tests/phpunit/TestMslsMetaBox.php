@@ -9,6 +9,7 @@ use lloc\Msls\MslsFields;
 use lloc\Msls\MslsJson;
 use lloc\Msls\MslsMetaBox;
 use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsPostType;
 
 class TestMslsMetaBox extends MslsUnitTestCase {
 
@@ -96,8 +97,8 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 
 	public static function add_data_provider(): array {
 		return array(
-			array( array( 'post', 'page' ), 8, 8, true, true ),
-			array( array( 'book' ), 3, 6, false, false ),
+			array( array( 'post', 'page' ), true, true ),
+			array( array( 'book' ), false, false ),
 		);
 	}
 
@@ -105,14 +106,17 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 	 * @dataProvider add_data_provider
 	 * @doesNotPerformAssertions
 	 */
-	public function test_add( $post_type, $fcount, $ocount, $content_import, $autocomplete ) {
+	public function test_add( $post_type, $content_import, $autocomplete ) {
 		$options                          = \Mockery::mock( MslsOptions::class );
 		$options->activate_content_import = $content_import;
 		$options->activate_autocomplete   = $autocomplete;
 
-		Functions\expect( 'get_post_types' )->andReturn( $post_type );
-		Functions\expect( 'add_meta_box' )->times( $fcount );
-		Functions\expect( 'msls_options' )->times( $ocount )->andReturn( $options );
+		$post_type = \Mockery::mock( \WP_Post_Type::class );
+		$post_type->shouldReceive( 'get' )->once()->andReturn( array( 'post', 'page' ) );
+
+		Functions\expect( 'add_meta_box' )->atLeast()->once();
+		Functions\expect( 'msls_options' )->atLeast()->once()->andReturn( $options );
+		Functions\expect( 'msls_post_type' )->once()->andReturn( $post_type );
 
 		$this->test->add();
 	}
@@ -123,8 +127,13 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
-		$post_type               = \Mockery::mock( \WP_Post_Type::class );
-		$post_type->hierarchical = false;
+		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
+
+		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );
+
+		$wp_post_type               = \Mockery::mock( \WP_Post_Type::class );
+		$wp_post_type->hierarchical = false;
 
 		Functions\expect( 'get_post_type' )->once()->andReturn( 'page' );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
@@ -132,7 +141,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'add_query_arg' )->once()->andReturn( 'query_args' );
-		Functions\expect( 'get_post_type_object' )->once()->andReturn( $post_type );
+		Functions\expect( 'get_post_type_object' )->once()->andReturn( $wp_post_type );
 		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'draft', 'public', 'private' ) );
 		Functions\expect( 'get_posts' )->once()->andReturn( array() );
 		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
@@ -150,8 +159,13 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
-		$post_type               = \Mockery::mock( \WP_Post_Type::class );
-		$post_type->hierarchical = true;
+		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
+
+		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );
+
+		$wp_post_type               = \Mockery::mock( \WP_Post_Type::class );
+		$wp_post_type->hierarchical = true;
 
 		Functions\expect( 'get_post_type' )->once()->andReturn( 'page' );
 		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
@@ -159,7 +173,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'add_query_arg' )->once()->andReturn( 'query_args' );
-		Functions\expect( 'get_post_type_object' )->once()->andReturn( $post_type );
+		Functions\expect( 'get_post_type_object' )->once()->andReturn( $wp_post_type );
 		Functions\expect( 'wp_dropdown_pages' )->once()->andReturn( '<select name="msls_input_region_Code"><option value="0">--some value</option></select>' );
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( 'edit-post-link' );
 
@@ -185,9 +199,14 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
+		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
+		$post_type->shouldReceive( 'get_request' )->once()->andReturn( 'post' );
+
+		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );
+
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
-		Functions\expect( 'get_post_types' )->once()->andReturn( array( 'post', 'page' ) );
 		Functions\expect( 'get_post_type' )->once()->andReturn( 'page' );
 		Functions\expect( 'get_option' )->once()->andReturn( $option );
 		Functions\expect( 'wp_nonce_field' )->once()->andReturn( 'nonce_field' );

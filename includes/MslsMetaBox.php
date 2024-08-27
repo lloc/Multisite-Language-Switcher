@@ -107,7 +107,7 @@ final class MslsMetaBox extends MslsMain {
 	 * Adds the meta box to the post types
 	 */
 	public function add(): void {
-		foreach ( MslsPostType::instance()->get() as $post_type ) {
+		foreach ( msls_post_type()->get() as $post_type ) {
 
 			add_meta_box(
 				'msls',

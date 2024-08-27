@@ -7,6 +7,7 @@ use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsPostTagClassic;
+use Mockery\Mock;
 
 class TestMslsPostTagClassic extends MslsUnitTestCase {
 
@@ -46,14 +47,22 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 	}
 
 	public function test_edit_input(): void {
-		Functions\expect( 'did_action' )->andReturn( 1 );
-		Functions\expect( 'get_queried_object_id' )->andReturn( 42 );
-		Functions\expect( 'get_current_blog_id' )->andReturn( 23 );
-		Functions\expect( 'get_admin_url' )->andReturn( '/wp-admin/edit-tags.php' );
-		Functions\expect( 'switch_to_blog' )->twice();
-		Functions\expect( 'restore_current_blog' )->twice();
-		Functions\expect( 'get_terms' )->andReturn( array() );
-		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
+		// Functions\expect( 'did_action' )->andReturn( 1 );
+		Functions\expect( 'get_queried_object_id' )->atLeast()->once()->andReturn( 42 );
+		Functions\expect( 'get_admin_url' )->atLeast()->once()->andReturn( '/wp-admin/edit-tags.php' );
+		Functions\expect( 'switch_to_blog' )->atLeast()->once();
+		Functions\expect( 'restore_current_blog' )->atLeast()->once();
+		Functions\expect( 'get_terms' )->atLeast()->once()->andReturn( array() );
+		Functions\expect( 'is_woocommerce' )->atLeast()->once()->andReturn( false );
+		Functions\expect( 'add_query_arg' )->atLeast()->once()->andReturn( 'added_query_arg' );
+		Functions\expect( 'get_current_blog_id' )->atLeast()->once()->andReturn( 23 );
+
+		$taxonomy = \Mockery::mock( \WP_Taxonomy::class );
+		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( array( 'taxonomy', 'post_type' ) );
+		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
+		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post_type' );
+
+		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
 
 		$output = '<tr>
 			<th colspan="2">

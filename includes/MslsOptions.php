@@ -61,7 +61,7 @@ class MslsOptions extends MslsGetSet {
 		if ( is_admin() ) {
 			$id = (int) $id;
 
-			if ( MslsContentTypes::create()->is_taxonomy() ) {
+			if ( msls_content_types()->is_taxonomy() ) {
 				return MslsOptionsTax::create( $id );
 			}
 

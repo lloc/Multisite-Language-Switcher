@@ -56,7 +56,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 	/**
 	 * Print the input fields
-	 * Returns true if the blogcollection is not empty
+	 * Returns true if the blog-collection is not empty
 	 *
 	 * @param ?\WP_Term $tag
 	 * @param string    $title_format
@@ -77,7 +77,7 @@ class MslsPostTagClassic extends MslsPostTag {
 		if ( ! empty( $blogs ) ) {
 			$term_id = $tag->term_id ?? 0;
 			$mydata  = MslsOptionsTax::create( $term_id );
-			$type    = MslsContentTypes::create()->get_request();
+			$type    = msls_content_types()->get_request();
 
 			$this->maybe_set_linked_term( $mydata );
 

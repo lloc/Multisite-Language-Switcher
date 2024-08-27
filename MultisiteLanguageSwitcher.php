@@ -153,6 +153,33 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	/**
+	 * Gets the MslsContentTypes instance
+	 *
+	 * @return \lloc\Msls\MslsContentTypes
+	 */
+	function msls_content_types(): \lloc\Msls\MslsContentTypes {
+		return \lloc\Msls\MslsContentTypes::create();
+	}
+
+	/**
+	 * Gets the MslsPostType instance
+	 *
+	 * @return \lloc\Msls\MslsPostType
+	 */
+	function msls_post_type(): \lloc\Msls\MslsPostType {
+		return \lloc\Msls\MslsPostType::instance();
+	}
+
+	/**
+	 * Gets the MslsTaxonomy instance
+	 *
+	 * @return \lloc\Msls\MslsTaxonomy
+	 */
+	function msls_taxonomy(): \lloc\Msls\MslsTaxonomy {
+		return \lloc\Msls\MslsTaxonomy::instance();
+	}
+
+	/**
 	 * Gets the MslsOutput instance
 	 *
 	 * @return \lloc\Msls\MslsOutput

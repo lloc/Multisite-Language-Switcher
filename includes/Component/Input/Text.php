@@ -3,10 +3,11 @@
 
 namespace lloc\Msls\Component\Input;
 
-
 use lloc\Msls\Component\InputInterface;
 
 class Text implements InputInterface {
+
+	const DEFAULT_SIZE = 30;
 
 	/**
 	 * @var string
@@ -19,7 +20,7 @@ class Text implements InputInterface {
 	protected $value;
 
 	/**
-	 * @var string
+	 * @var int
 	 */
 	protected $size;
 
@@ -29,15 +30,15 @@ class Text implements InputInterface {
 	protected $readonly;
 
 	/**
-	 * @param string $key
+	 * @param string      $key
 	 * @param string|null $value
-	 * @param string $size
-	 * @param bool $readonly
+	 * @param int         $size
+	 * @param bool        $readonly
 	 */
-	public function __construct( string $key, $value, string $size = '30', bool $readonly = false ) {
-		$this->key      = esc_attr( $key );
-		$this->value    = esc_attr( $value );
-		$this->size     = esc_attr( $size );
+	public function __construct( string $key, ?string $value, int $size = self::DEFAULT_SIZE, bool $readonly = false ) {
+		$this->key      = $key;
+		$this->value    = $value;
+		$this->size     = $size;
 		$this->readonly = $readonly ? ' readonly="readonly"' : '';
 	}
 
@@ -46,12 +47,11 @@ class Text implements InputInterface {
 	 */
 	public function render(): string {
 		return sprintf(
-			'<input type="text" class="regular-text" id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$s"%4$s/>',
-			$this->key,
-			$this->value,
+			'<input type="text" class="regular-text" id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$d"%4$s/>',
+			esc_attr( $this->key ),
+			esc_attr( $this->value ),
 			$this->size,
-			$this->readonly
+			esc_attr( $this->readonly )
 		);
 	}
-
 }

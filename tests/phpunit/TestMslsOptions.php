@@ -5,6 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsAdminIcon;
 use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsPostType;
 
 class TestMslsOptions extends MslsUnitTestCase {
 
@@ -35,10 +36,13 @@ class TestMslsOptions extends MslsUnitTestCase {
 	}
 
 	public function test_create_method(): void {
-		Functions\when( 'is_admin' )->justReturn( true );
-		Functions\when( 'get_post_types' )->justReturn( array() );
-		Functions\when( 'get_post_type' )->justReturn( 'post' );
-		Functions\when( 'get_option' )->justReturn( array() );
+		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
+
+		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );
+
+		Functions\expect( 'is_admin' )->once()->andReturnTrue();
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
 		$this->assertInstanceOf( MslsOptions::class, MslsOptions::create() );
 	}
