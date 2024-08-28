@@ -14,7 +14,7 @@ class MslsOptionsQuery extends MslsOptions {
 	 *
 	 * @var bool
 	 */
-	public $with_front = true;
+	public ?bool $with_front = true;
 
 	protected MslsSqlCacher $sql_cache;
 

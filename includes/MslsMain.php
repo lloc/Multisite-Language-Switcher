@@ -36,9 +36,6 @@ class MslsMain {
 		$this->collection = $collection;
 	}
 
-	/**
-	 * @codeCoverageIgnore
-	 */
 	public static function create(): object {
 		return new static( msls_options(), msls_blog_collection() );
 	}

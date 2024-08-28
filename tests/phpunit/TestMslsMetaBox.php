@@ -3,6 +3,8 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
+use Brain\Monkey\Actions;
+
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
@@ -32,6 +34,23 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get' )->andReturn( array( $blog ) );
 
 		$this->test = new MslsMetaBox( $options, $collection );
+	}
+
+	public function test_init(): void {
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->andReturn( false );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+
+		Actions\expectAdded( 'add_meta_boxes' )->once();
+		Actions\expectAdded( 'save_post' )->once();
+		Actions\expectAdded( 'trashed_post' )->once();
+
+		$this->expectNotToPerformAssertions();
+		MslsMetaBox::init();
 	}
 
 	public function test_suggest(): void {

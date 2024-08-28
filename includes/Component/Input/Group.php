@@ -7,14 +7,15 @@ use lloc\Msls\Component\InputInterface;
 
 /**
  * Class Options
+ *
  * @package lloc\Msls\Component\Input
  */
 class Group implements InputInterface {
 
 	/**
-	 * @var string[]
+	 * @var InputInterface[]
 	 */
-	protected $arr = [];
+	protected $arr = array();
 
 	/**
 	 * @var string
@@ -45,11 +46,13 @@ class Group implements InputInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		$items = array_map( function ( InputInterface $input ) {
-			return $input->render();
-		}, $this->arr );
+		$items = array_map(
+			function ( InputInterface $input ) {
+				return $input->render();
+			},
+			$this->arr
+		);
 
 		return implode( $this->glue, $items );
 	}
-
 }

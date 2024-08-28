@@ -81,8 +81,6 @@ class MslsAdminIcon {
 	}
 
 	/**
-	 * @codeCoverageIgnore
-	 *
 	 * @param ?string $type
 	 *
 	 * @return MslsAdminIcon|MslsAdminIconTaxonomy

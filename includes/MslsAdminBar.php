@@ -13,9 +13,6 @@ class MslsAdminBar {
 		$this->blog_collection = $blog_collection;
 	}
 
-	/**
-	 * @codeCoverageIgnore
-	 */
 	public static function init(): void {
 		$obj = new MslsAdminBar( msls_options(), msls_blog_collection() );
 

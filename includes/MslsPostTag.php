@@ -15,6 +15,8 @@ namespace lloc\Msls;
  */
 class MslsPostTag extends MslsMain {
 
+	protected int $excution_counter = 0;
+
 	/**
 	 * Suggest
 	 *
@@ -72,11 +74,6 @@ class MslsPostTag extends MslsMain {
 		wp_die( $json->encode() );
 	}
 
-	/**
-	 * Init
-	 *
-	 * @codeCoverageIgnore
-	 */
 	public static function init(): void {
 		$options    = msls_options();
 		$collection = msls_blog_collection();
@@ -151,13 +148,9 @@ class MslsPostTag extends MslsMain {
 	 * @return boolean
 	 */
 	public function the_input( ?\WP_Term $tag, string $title_format, string $item_format ): bool {
-		static $count = 0;
-
-		if ( $count > 0 ) {
+		if ( $this->already_executed() ) {
 			return false;
 		}
-
-		++$count;
 
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
@@ -201,8 +194,6 @@ class MslsPostTag extends MslsMain {
 	 * Set calls the save method if taxonomy is set
 	 *
 	 * @param int $term_id
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function set( $term_id ): void {
 		if ( msls_content_types()->acl_request() ) {
@@ -259,5 +250,15 @@ class MslsPostTag extends MslsMain {
 			'msls_term_select_title',
 			__( 'Multisite Language Switcher', 'multisite-language-switcher' )
 		);
+	}
+
+	protected function already_executed(): bool {
+		if ( $this->excution_counter > 0 ) {
+			return true;
+		}
+
+		++$this->excution_counter;
+
+		return false;
 	}
 }

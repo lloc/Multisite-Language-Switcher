@@ -303,4 +303,16 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertFalse( $this->test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
 		$this->assertTrue( $this->test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
 	}
+
+	public function test_init(): void {
+		Functions\expect( '_deprecated_function' )->once();
+
+		$options    = \Mockery::mock( MslsOptions::class );
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+
+		$this->assertInstanceOf( MslsOutput::class, MslsOutput::init() );
+	}
 }

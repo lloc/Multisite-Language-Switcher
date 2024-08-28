@@ -15,7 +15,7 @@ final class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 			return;
 		}
 
-		$taxonomy = MslsTaxonomy::instance()->get_request();
+		$taxonomy = msls_taxonomy()->get_request();
 
 		if ( ! empty( $taxonomy ) ) {
 			add_filter( "manage_edit-{$taxonomy}_columns", array( $this, 'th' ) );
@@ -25,8 +25,6 @@ final class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	}
 
 	/**
-	 * Table body
-	 *
 	 * @param string $deprecated
 	 * @param string $column_name
 	 * @param int    $item_id
@@ -36,8 +34,6 @@ final class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	}
 
 	/**
-	 * Delete
-	 *
 	 * @codeCoverageIgnore
 	 *
 	 * @param int $object_id

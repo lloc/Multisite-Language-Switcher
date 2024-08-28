@@ -17,9 +17,6 @@ class MslsWidget extends \WP_Widget {
 
 	public $id_base = 'mslswidget';
 
-	/**
-	 * @codeCoverageIgnore
-	 */
 	public function __construct() {
 		$name = apply_filters(
 			'msls_widget_title',
@@ -29,9 +26,6 @@ class MslsWidget extends \WP_Widget {
 		parent::__construct( $this->id_base, $name, array( 'show_instance_in_rest' => true ) );
 	}
 
-	/**
-	 * @codeCoverageIgnore
-	 */
 	public static function init(): void {
 		if ( ! msls_options()->is_excluded() ) {
 			register_widget( self::class );
@@ -91,8 +85,6 @@ class MslsWidget extends \WP_Widget {
 	 * Display an input-form in the backend
 	 *
 	 * @param array<string, mixed> $instance
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function form( $instance ) {
 		$form = sprintf(

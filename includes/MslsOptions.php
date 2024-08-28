@@ -46,7 +46,7 @@ class MslsOptions extends MslsGetSet {
 	 *
 	 * @var bool
 	 */
-	public $with_front;
+	public ?bool $with_front = null;
 
 	/**
 	 * Factory method
@@ -142,11 +142,7 @@ class MslsOptions extends MslsGetSet {
 	}
 
 	/**
-	 * Save
-	 *
 	 * @param mixed $arr
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function save( $arr ): void {
 		$this->delete();
@@ -158,11 +154,6 @@ class MslsOptions extends MslsGetSet {
 		}
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @codeCoverageIgnore
-	 */
 	public function delete(): void {
 		$this->reset();
 		if ( $this->exists ) {
@@ -171,13 +162,11 @@ class MslsOptions extends MslsGetSet {
 	}
 
 	/**
-	 * Set
-	 *
 	 * @param mixed $arr
 	 *
 	 * @return bool
 	 */
-	public function set( $arr ) {
+	public function set( $arr ): bool {
 		if ( ! is_array( $arr ) ) {
 			return false;
 		}
@@ -203,8 +192,6 @@ class MslsOptions extends MslsGetSet {
 	}
 
 	/**
-	 * Get permalink
-	 *
 	 * @param string $language
 	 *
 	 * @return string

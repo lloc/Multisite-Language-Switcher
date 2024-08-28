@@ -2,13 +2,15 @@
 
 namespace lloc\MslsTests;
 
+use Brain\Monkey\Functions;
+use Brain\Monkey\Actions;
 use lloc\Msls\MslsAdminBar;
+use lloc\Msls\MslsAdminIcon;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
 
 class TestMslsAdminBar extends MslsUnitTestCase {
-
 
 	public function setUp(): void {
 		parent::setUp();
@@ -33,6 +35,22 @@ class TestMslsAdminBar extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_plugin_active_blogs' )->andReturn( array( $blog_a, $blog_b, $blog_c ) );
 
 		$this->test = new MslsAdminBar( $options, $collection );
+	}
+
+	public function test_init(): void {
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_icon_type' )->andReturn( MslsAdminIcon::TYPE_LABEL );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturn( true );
+
+		Actions\expectAdded( 'admin_bar_menu' )->once();
+
+		$this->expectNotToPerformAssertions();
+		MslsAdminBar::init();
 	}
 
 	public function test_add_node_false(): void {

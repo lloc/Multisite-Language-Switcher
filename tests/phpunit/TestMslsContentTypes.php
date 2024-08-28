@@ -15,4 +15,8 @@ class TestMslsContentTypes extends MslsUnitTestCase {
 
 		$this->assertInstanceOf( MslsPostType::class, $obj );
 	}
+
+	public function test_is_taxonomy(): void {
+		$this->assertFalse( MslsContentTypes::create()->is_taxonomy() );
+	}
 }
