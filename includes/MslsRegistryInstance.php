@@ -1,9 +1,4 @@
 <?php
-/**
- * MslsRegistryInstance
- * @author Dennis Ploetner <re@lloc.de>
- * @since 1.1
- */
 
 namespace lloc\Msls;
 
@@ -23,12 +18,11 @@ class MslsRegistryInstance {
 		$class = get_called_class();
 
 		if ( ! ( $obj = MslsRegistry::get_object( $class ) ) ) {
-			$obj = new $class;
+			$obj = new $class();
 
 			MslsRegistry::set_object( $class, $obj );
 		}
 
 		return $obj;
 	}
-
 }

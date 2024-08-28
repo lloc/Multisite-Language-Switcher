@@ -26,8 +26,6 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 	/**
 	 * Factory method
 	 *
-	 * @codeCoverageIgnoreMslsContentTypes
-	 *
 	 * @return MslsContentTypes
 	 */
 	public static function create() {

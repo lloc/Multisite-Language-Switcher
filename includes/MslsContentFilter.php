@@ -10,9 +10,6 @@ class MslsContentFilter {
 		$this->options = $options;
 	}
 
-	/**
-	 * @codeCoverageIgnore
-	 */
 	public static function init(): void {
 		$obj = new self( msls_options() );
 
@@ -20,8 +17,6 @@ class MslsContentFilter {
 	}
 
 	/**
-	 * Filter for the_content()
-	 *
 	 * @param string $content
 	 *
 	 * @return string

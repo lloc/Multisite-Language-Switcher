@@ -65,13 +65,9 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * @return boolean
 	 */
 	public function the_input( ?\WP_Term $tag, string $title_format, string $item_format ): bool {
-		static $count = 0;
-
-		if ( $count > 0 ) {
+		if ( $this->already_executed() ) {
 			return false;
 		}
-
-		++$count;
 
 		$blogs = $this->collection->get();
 		if ( ! empty( $blogs ) ) {

@@ -14,8 +14,6 @@ class MslsOptionsTax extends MslsOptions {
 	protected bool $autoload = false;
 
 	/**
-	 * @codeCoverageIgnore
-	 *
 	 * @param int $id
 	 *
 	 * @return MslsOptionsTax

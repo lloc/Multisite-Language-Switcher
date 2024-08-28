@@ -9,9 +9,18 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsContentFilter;
 use lloc\Msls\MslsOptions;
 
-use lloc\Msls\MslsPlugin;
-
 class TestMslsContentFilter extends MslsUnitTestCase {
+
+	public function test_init(): void {
+		$options = \Mockery::mock( MslsOptions::class );
+
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
+
+		Filters\expectAdded( 'the_content' )->once();
+
+		$this->expectNotToPerformAssertions();
+		MslsContentFilter::init();
+	}
 
 	public static function provide_content_filter_data(): array {
 		return array(

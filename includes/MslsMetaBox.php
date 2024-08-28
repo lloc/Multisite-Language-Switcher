@@ -12,6 +12,17 @@ use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
  */
 final class MslsMetaBox extends MslsMain {
 
+	public static function init(): void {
+		$options = msls_options();
+		$obj     = new self( $options, msls_blog_collection() );
+
+		if ( ! $options->is_excluded() ) {
+			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
+			add_action( 'save_post', array( $obj, 'set' ) );
+			add_action( 'trashed_post', array( $obj, 'delete' ) );
+		}
+	}
+
 	/**
 	 * Suggest
 	 *
@@ -87,20 +98,6 @@ final class MslsMetaBox extends MslsMain {
 		wp_reset_postdata();
 
 		return $json;
-	}
-
-	/**
-	 * @codeCoverageIgnore
-	 */
-	public static function init(): void {
-		$options = msls_options();
-		$obj     = new self( $options, msls_blog_collection() );
-
-		if ( ! $options->is_excluded() ) {
-			add_action( 'add_meta_boxes', array( $obj, 'add' ) );
-			add_action( 'save_post', array( $obj, 'set' ) );
-			add_action( 'trashed_post', array( $obj, 'delete' ) );
-		}
 	}
 
 	/**

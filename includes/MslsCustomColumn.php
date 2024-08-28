@@ -10,9 +10,6 @@ namespace lloc\Msls;
  */
 class MslsCustomColumn extends MslsMain {
 
-	/**
-	 * @codeCoverageIgnore
-	 */
 	public static function init(): void {
 		$options    = msls_options();
 		$collection = msls_blog_collection();
@@ -71,8 +68,6 @@ class MslsCustomColumn extends MslsMain {
 	 *
 	 * @param string $column_name
 	 * @param int    $item_id
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function td( $column_name, $item_id ): void {
 		if ( 'mslscol' == $column_name ) {

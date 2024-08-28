@@ -11,9 +11,6 @@ class MslsShortCode {
 		$this->options = $options;
 	}
 
-	/**
-	 * @codeCoverageIgnore
-	 */
 	public static function init(): void {
 		$obj = new self( msls_options() );
 		add_shortcode( 'sc_msls_widget', array( $obj, 'render_widget' ) );

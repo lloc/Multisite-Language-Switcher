@@ -201,8 +201,6 @@ final class MslsAdmin extends MslsMain {
 
 	/**
 	 * Register the form-elements
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function register(): void {
 		register_setting( 'msls', 'msls', array( $this, 'validate' ) );

@@ -18,7 +18,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 	 *
 	 * @var bool
 	 */
-	public $with_front = true;
+	public ?bool $with_front = true;
 
 	/**
 	 * Check and correct URL

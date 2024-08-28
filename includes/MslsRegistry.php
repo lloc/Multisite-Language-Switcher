@@ -1,14 +1,10 @@
 <?php
-/**
- * MslsRegistry
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
 
 namespace lloc\Msls;
 
 /**
  * Registry instead of singletons
+ *
  * @package Msls
  */
 class MslsRegistry {
@@ -18,14 +14,14 @@ class MslsRegistry {
 	 *
 	 * @var string[]
 	 */
-	private static $arr = [];
+	private static $arr = array();
 
 	/**
 	 * Instance
 	 *
-	 * @var MslsRegistry
+	 * @var ?MslsRegistry
 	 */
-	private static $instance;
+	private static $instance = null;
 
 	/**
 	 * Get an object by key
@@ -42,7 +38,7 @@ class MslsRegistry {
 	 * Set an object
 	 *
 	 * @param string $key
-	 * @param mixed $instance
+	 * @param mixed  $instance
 	 */
 	private function set( string $key, $instance ): void {
 		self::$arr[ $key ] = $instance;
@@ -54,7 +50,7 @@ class MslsRegistry {
 	 * @return MslsRegistry
 	 */
 	public static function instance(): self {
-		if ( ! isset( self::$instance ) ) {
+		if ( self::$instance === null ) {
 			self::$instance = new self();
 		}
 
@@ -76,10 +72,9 @@ class MslsRegistry {
 	 * Static set_object calls set
 	 *
 	 * @param string $key
-	 * @param mixed $instance
+	 * @param mixed  $instance
 	 */
 	public static function set_object( string $key, $instance ): void {
 		self::instance()->set( $key, $instance );
 	}
-
 }
