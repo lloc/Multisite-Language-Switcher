@@ -10,6 +10,10 @@ use lloc\Msls\MslsOptions;
 
 class TestMslsAdmin extends MslsUnitTestCase {
 
+	/**
+	 * @param array $users
+	 * @return MslsAdmin
+	 */
 	public function get_sut( array $users = array() ): MslsAdmin {
 		Functions\when( 'get_option' )->justReturn( array() );
 		Functions\when( 'update_option' )->justReturn( true );
@@ -348,8 +352,8 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	function test_render(): void {
 		$obj = $this->get_sut();
 
-		Functions\when( 'settings_fields' )->returnArg();
-		Functions\when( 'do_settings_sections' )->returnArg();
+		Functions\expect( 'settings_fields' )->once();
+		Functions\expect( 'do_settings_sections' )->once();
 
 		$this->expectOutputRegex(
 			'/^<div class="wrap"><div class="icon32" id="icon-options-general"><br\/><\/div><h1>Multisite Language Switcher Options<\/h1>.*$/'
@@ -401,5 +405,20 @@ class TestMslsAdmin extends MslsUnitTestCase {
 		Functions\when( 'add_settings_field' )->returnArg();
 
 		$this->assertEquals( 2, $obj->rewrites_section() );
+	}
+
+	public function test_register(): void {
+		global $wp_rewrite;
+
+		Functions\expect( 'register_setting' )->once();
+		Functions\expect( 'add_settings_section' )->times( 4 );
+
+		$wp_rewrite = \Mockery::mock( '\WP_Rewrite' );
+		$wp_rewrite->shouldReceive( 'using_permalinks' )->andReturnTrue();
+
+		$obj = $this->get_sut();
+
+		$this->expectNotToPerformAssertions();
+		$obj->register();
 	}
 }
