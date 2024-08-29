@@ -96,4 +96,10 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 
 		$this->assertEmpty( $obj->th( array() ) );
 	}
+
+	public function test_td(): void {
+		$item_id = 42;
+
+		$this->test->td( 'mslscol', $item_id );
+	}
 }
