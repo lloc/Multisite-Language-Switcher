@@ -100,6 +100,25 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 	public function test_td(): void {
 		$item_id = 42;
 
+		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type->shouldReceive( 'is_taxonomy' )->times( 3 )->andReturnFalse();
+		$post_type->shouldReceive( 'get_request' )->twice()->andReturn( 'post' );
+
+		Functions\expect( 'get_current_blog_id' )->twice()->andReturn( 13 );
+		Functions\expect( 'get_blog_option' )->once()->andReturn( 'de_DE' );
+		Functions\expect( 'is_admin' )->once()->andReturnTrue();
+		Functions\expect( 'msls_content_types' )->times( 3 )->andReturn( $post_type );
+		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 17 ) );
+		Functions\expect( 'switch_to_blog' )->twice();
+		Functions\expect( 'restore_current_blog' )->twice();
+		Functions\expect( 'get_edit_post_link' )->once()->andReturn( 'edit-post-link' );
+		Functions\expect( 'add_query_arg' )->once()->andReturn( 'added-query-args' );
+		Functions\expect( 'get_admin_url' )->once()->andReturn( 'admin-url' );
+
+		$output = '<span class="msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="dashicons dashicons-edit"></span></a>&nbsp;</span><span class="msls-icon-wrapper flag"><a title="Create a new translation in the en_US-blog" href="admin-url"><span class="dashicons dashicons-plus"></span></a>&nbsp;</span>';
+
+		$this->expectOutputString( $output );
+
 		$this->test->td( 'mslscol', $item_id );
 	}
 }
