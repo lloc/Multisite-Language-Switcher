@@ -66,27 +66,26 @@ class MslsLink extends MslsGetSet {
 	 * @return MslsLink
 	 */
 	public static function create( ?int $display ): MslsLink {
-		if ( has_filter( 'msls_link_create' ) ) {
-			/**
-			 * Returns custom MslsLink-Object
-			 *
-			 * @param int $display
-			 *
-			 * @return MslsLink
-			 * @since 0.9.9
-			 */
-			$obj = apply_filters( 'msls_link_create', $display );
-			if ( is_subclass_of( $obj, __CLASS__ ) ) {
-				return $obj;
-			}
-		}
-
 		$types = self::get_types();
 		if ( ! in_array( $display, array_keys( $types ), true ) ) {
 			$display = 0;
 		}
 
-		return new $types[ $display ]();
+		$obj = new $types[ $display ]();
+
+		if ( has_filter( 'msls_link_create' ) ) {
+			/**
+			 * @param int $display
+			 *
+			 * @return MslsLink
+			 */
+			$obj = apply_filters( 'msls_link_create', $obj, $display );
+			if ( in_array( __CLASS__, $types ) || is_subclass_of( $obj, __CLASS__ ) ) {
+				return $obj;
+			}
+		}
+
+		return $obj;
 	}
 
 	/**
