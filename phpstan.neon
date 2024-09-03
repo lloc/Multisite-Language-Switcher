@@ -5,8 +5,7 @@ parameters:
         - MultisiteLanguageSwitcher.php
         - includes
     excludePaths:
-        - tests
         - vendor
-        - includes/ContentImport
+        - tests
     bootstrapFiles:
         - tests/phpstan/bootstrap.php

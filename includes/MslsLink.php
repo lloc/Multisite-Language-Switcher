@@ -75,6 +75,7 @@ class MslsLink extends MslsGetSet {
 
 		if ( has_filter( 'msls_link_create' ) ) {
 			/**
+			 * @param MslsLink $obj
 			 * @param int $display
 			 *
 			 * @return MslsLink
