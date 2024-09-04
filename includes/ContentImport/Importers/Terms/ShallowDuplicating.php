@@ -20,7 +20,7 @@ class ShallowDuplicating extends BaseImporter {
 	/**
 	 * @var array
 	 */
-	protected $reset_taxonomies = [];
+	protected $reset_taxonomies = array();
 
 	/**
 	 * Returns an array of information about the importer.
@@ -28,12 +28,14 @@ class ShallowDuplicating extends BaseImporter {
 	 * @return \stdClass
 	 */
 	public static function info() {
-		return (object) [
+		return (object) array(
 			'slug'        => static::TYPE,
 			'name'        => __( 'Shallow Duplicating', 'multisite-language-switcher' ),
-			'description' => __( 'Shallow (one level deep) duplication or assignment of the source post taxonomy terms to the destnation post.',
-				'multisite-language-switcher' )
-		];
+			'description' => __(
+				'Shallow (one level deep) duplication or assignment of the source post taxonomy terms to the destination post.',
+				'multisite-language-switcher'
+			),
+		);
 	}
 
 	public function import( array $data ) {
@@ -98,14 +100,14 @@ class ShallowDuplicating extends BaseImporter {
 		$dest_term_id = wp_create_term( $term->name, $term->taxonomy );
 
 		if ( $dest_term_id instanceof \WP_Error ) {
-			$this->logger->log_error( "term/created/{$term->taxonomy}", [ $term->name ] );
+			$this->logger->log_error( "term/created/{$term->taxonomy}", array( $term->name ) );
 
 			return false;
 		}
 
 		$dest_term_id = (int) reset( $dest_term_id );
 		$this->relations->should_create( $msls_term, $dest_lang, $dest_term_id );
-		$this->logger->log_success( "term/created/{$term->taxonomy}", [ $term->name => $term->term_id ] );
+		$this->logger->log_success( "term/created/{$term->taxonomy}", array( $term->name => $term->term_id ) );
 		$meta = $this->filter_term_meta( $meta, $term );
 		if ( ! empty( $meta ) ) {
 			foreach ( $meta as $key => $value ) {
@@ -125,18 +127,20 @@ class ShallowDuplicating extends BaseImporter {
 		 * @param array $meta
 		 * @param ImportCoordinates $import_coordinates
 		 */
-		$blacklist = apply_filters( 'msls_content_import_term_meta_blacklist',
+		$blacklist = apply_filters(
+			'msls_content_import_term_meta_blacklist',
 			array(),
 			$term,
 			$meta,
-			$this->import_coordinates );
+			$this->import_coordinates
+		);
 
 		return array_diff_key( $meta, array_combine( $blacklist, $blacklist ) );
 	}
 
 	protected function update_object_terms( $object_id, $dest_term_id, $taxonomy ) {
 		if ( ! in_array( $taxonomy, $this->reset_taxonomies, true ) ) {
-			wp_set_object_terms( $object_id, [], $taxonomy );
+			wp_set_object_terms( $object_id, array(), $taxonomy );
 			$this->reset_taxonomies[] = $taxonomy;
 		}
 

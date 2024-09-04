@@ -12,7 +12,8 @@ use lloc\Msls\MslsRegistryInstance;
 use lloc\Msls\MslsRequest;
 
 class MetaBox extends MslsRegistryInstance {
-	protected $data = array();
+
+	protected array $data = array();
 
 	/**
 	 * Renders the content import metabox.

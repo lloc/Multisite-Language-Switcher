@@ -19,7 +19,7 @@ class Service extends MslsRegistryInstance {
 	 *
 	 * @return bool Whether the content import functionality support classes where hooked or not.
 	 */
-	public function register() {
+	public function register(): bool {
 		if ( ! msls_options()->activate_content_import ) {
 			return false;
 		}
@@ -34,11 +34,11 @@ class Service extends MslsRegistryInstance {
 	 *
 	 * Differently from the `register` method this method will not check for options to hook.
 	 */
-	public function hook() {
+	public function hook(): void {
 		add_action(
 			'load-post.php',
 			function () {
-				return ContentImporter::instance()->handle_import();
+				ContentImporter::instance()->handle_import();
 			}
 		);
 		add_action(
@@ -55,7 +55,7 @@ class Service extends MslsRegistryInstance {
 		add_action(
 			'load-post-new.php',
 			function () {
-				return ContentImporter::instance()->handle_import();
+				ContentImporter::instance()->handle_import();
 			}
 		);
 		add_filter(
