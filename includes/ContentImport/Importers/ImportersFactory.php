@@ -18,7 +18,7 @@ interface ImportersFactory {
 	/**
 	 * Returns the factory details.
 	 *
-	 * @return string
+	 * @return \stdClass
 	 */
 	public function details();
 

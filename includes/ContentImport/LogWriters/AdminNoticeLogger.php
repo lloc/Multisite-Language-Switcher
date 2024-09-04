@@ -6,7 +6,8 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\MslsRegistryInstance;
 
 class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
-	protected $transient = 'msls_last_import_log';
+
+	protected string $transient = 'msls_last_import_log';
 
 	/**
 	 * @var ImportCoordinates
@@ -105,7 +106,14 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 		set_transient( $this->transient, $html, HOUR_IN_SECONDS );
 	}
 
-	protected function get_section_html( $section_title, $entries, $escape_entries = true ) {
+	/**
+	 * @param string $section_title
+	 * @param array  $entries
+	 * @param bool   $escape_entries
+	 *
+	 * @return string
+	 */
+	protected function get_section_html( $section_title, $entries, $escape_entries = true ): string {
 		$html  = '<h3>' . $section_title . '</h3>';
 		$html .= '<ul>';
 		foreach ( $entries as $entry ) {
@@ -120,9 +128,16 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 		return $html;
 	}
 
-	public function show_last_log( $echo = true ) {
+	/**
+	 * Shows the last log that was written.
+	 *
+	 * @param bool $echo
+	 *
+	 * @return ?string
+	 */
+	public function show_last_log( $echo = true ): ?string {
 		if ( ! ( $html = get_transient( $this->transient ) ) ) {
-			return;
+			return null;
 		}
 
 		if ( $echo ) {
@@ -135,7 +150,10 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 		return $html;
 	}
 
-	public function set_import_coordinates( $import_coordinates ) {
+	/**
+	 * @param ImportCoordinates $import_coordinates
+	 */
+	public function set_import_coordinates( $import_coordinates ): void {
 		$this->import_coordinates = $import_coordinates;
 	}
 
@@ -144,7 +162,7 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 	 *
 	 * @return string
 	 */
-	public function get_transient() {
+	public function get_transient(): string {
 		return $this->transient;
 	}
 }

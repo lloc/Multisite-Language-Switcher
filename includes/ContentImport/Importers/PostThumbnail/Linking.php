@@ -22,12 +22,14 @@ class Linking extends BaseImporter {
 	 * @return \stdClass
 	 */
 	public static function info() {
-		return (object) [
+		return (object) array(
 			'slug'        => static::TYPE,
 			'name'        => __( 'Linking', 'multisite-language-switcher' ),
-			'description' => __( 'Links the featured image from the source post to the destination post; the image is not duplicated.',
-				'multisite-language-switcher' )
-		];
+			'description' => __(
+				'Links the featured image from the source post to the destination post; the image is not duplicated.',
+				'multisite-language-switcher'
+			),
+		);
 	}
 
 	public function import( array $data ) {
@@ -55,12 +57,19 @@ class Linking extends BaseImporter {
 
 		if ( $source_post_thumbnail_attachment instanceof \WP_Post ) {
 			// in some instances the folder sep. `/` might be duplicated, we de-duplicate it
-			array_walk( $source_upload_dir, function ( &$entry ) {
-				$entry = str_replace( '//', '/', $entry );
-			} );
-			$source_uploads_dir         = untrailingslashit( str_replace( $source_upload_dir['subdir'],
-				'',
-				$source_upload_dir['path'] ) );
+			array_walk(
+				$source_upload_dir,
+				function ( &$entry ) {
+					$entry = str_replace( '//', '/', $entry );
+				}
+			);
+			$source_uploads_dir         = untrailingslashit(
+				str_replace(
+					$source_upload_dir['subdir'],
+					'',
+					$source_upload_dir['path']
+				)
+			);
 			$source_post_thumbnail_file = $source_uploads_dir . '/' . $source_post_thumbnail_meta['_wp_attached_file'];
 
 			// Check the type of file. We'll use this as the 'post_mime_type'.
@@ -75,10 +84,10 @@ class Linking extends BaseImporter {
 				'post_status'    => 'inherit',
 			);
 
-			$existing_criteria = [
+			$existing_criteria = array(
 				'post_type' => 'attachment',
 				'title'     => $attachment['post_title'],
-			];
+			);
 
 			$found = get_posts( $existing_criteria );
 
@@ -87,9 +96,11 @@ class Linking extends BaseImporter {
 				$this->logger->log_success( 'post-thumbnail/existing', $dest_post_thumbnail_id );
 			} else {
 				// Insert the attachment.
-				$dest_post_thumbnail_id = wp_insert_attachment( $attachment,
+				$dest_post_thumbnail_id = wp_insert_attachment(
+					$attachment,
 					$source_post_thumbnail_file,
-					$dest_post_id );
+					$dest_post_id
+				);
 
 				if ( empty( $dest_post_thumbnail_id ) ) {
 					$this->logger->log_error( 'post-thumbnail/created', $dest_post_thumbnail_id );
@@ -105,10 +116,14 @@ class Linking extends BaseImporter {
 				}
 			}
 
-			update_post_meta( $dest_post_thumbnail_id, AttachmentPathFinder::LINKED, [
-				'blog' => $source_blog_id,
-				'post' => $source_post_thumbnail_id
-			] );
+			update_post_meta(
+				$dest_post_thumbnail_id,
+				AttachmentPathFinder::LINKED,
+				array(
+					'blog' => $source_blog_id,
+					'post' => $source_post_thumbnail_id,
+				)
+			);
 
 			$dest_post_thumbnail_set = set_post_thumbnail( $dest_post_id, $dest_post_thumbnail_id );
 
@@ -124,11 +139,22 @@ class Linking extends BaseImporter {
 		return $data;
 	}
 
+	/**
+	 * @param int $source_post_thumbnail_id
+	 *
+	 * @return array
+	 */
 	protected function get_attachment_meta( $source_post_thumbnail_id ) {
-		$keys = [ '_wp_attached_file', '_wp_attachment_metadata', '_wp_attachment_image_alt' ];
+		$keys = array( '_wp_attached_file', '_wp_attachment_metadata', '_wp_attachment_image_alt' );
 
-		return array_combine( $keys, array_map( function ( $key ) use ( $source_post_thumbnail_id ) {
-			return get_post_meta( $source_post_thumbnail_id, $key, true );
-		}, $keys ) );
+		return array_combine(
+			$keys,
+			array_map(
+				function ( $key ) use ( $source_post_thumbnail_id ) {
+					return get_post_meta( $source_post_thumbnail_id, $key, true );
+				},
+				$keys
+			)
+		);
 	}
 }

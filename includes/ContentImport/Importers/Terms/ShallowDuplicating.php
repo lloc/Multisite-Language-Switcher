@@ -2,6 +2,7 @@
 
 namespace lloc\Msls\ContentImport\Importers\Terms;
 
+use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\Importers\BaseImporter;
 use lloc\Msls\MslsOptionsTax;
 use lloc\Msls\MslsOptionsTaxTerm;
@@ -95,6 +96,13 @@ class ShallowDuplicating extends BaseImporter {
 		return $data;
 	}
 
+	/**
+	 * @param \WP_Term           $term
+	 * @param MslsOptionsTaxTerm $msls_term
+	 * @param string             $dest_lang
+	 *
+	 * @return bool|int
+	 */
 	protected function create_local_term( \WP_Term $term, MslsOptionsTax $msls_term, $dest_lang ) {
 		$meta         = get_term_meta( $term->term_id );
 		$dest_term_id = wp_create_term( $term->name, $term->taxonomy );
@@ -118,6 +126,12 @@ class ShallowDuplicating extends BaseImporter {
 		return $dest_term_id;
 	}
 
+	/**
+	 * @param array    $meta
+	 * @param \WP_Term $term
+	 *
+	 * @return array
+	 */
 	protected function filter_term_meta( array $meta, \WP_Term $term ) {
 		/**
 		 * Filters the list of term meta that should not be imported for a term.
@@ -138,6 +152,13 @@ class ShallowDuplicating extends BaseImporter {
 		return array_diff_key( $meta, array_combine( $blacklist, $blacklist ) );
 	}
 
+	/**
+	 * @param int    $object_id
+	 * @param int    $dest_term_id
+	 * @param string $taxonomy
+	 *
+	 * @return array|\WP_Error
+	 */
 	protected function update_object_terms( $object_id, $dest_term_id, $taxonomy ) {
 		if ( ! in_array( $taxonomy, $this->reset_taxonomies, true ) ) {
 			wp_set_object_terms( $object_id, array(), $taxonomy );

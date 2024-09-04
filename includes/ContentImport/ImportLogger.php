@@ -7,9 +7,12 @@ use lloc\Msls\ContentImport\LogWriters\LogWriter;
 
 class ImportLogger {
 
-	protected $levels_delimiter = '/';
+	protected string $levels_delimiter = '/';
 
-	protected $data = array(
+	/**
+	 * @var array<string, array>
+	 */
+	protected array $data = array(
 		'info'    => array(),
 		'error'   => array(),
 		'success' => array(),
@@ -29,7 +32,7 @@ class ImportLogger {
 	 *
 	 * @param ImportLogger|null $logger
 	 */
-	public function merge( ImportLogger $logger = null ) {
+	public function merge( ImportLogger $logger = null ): void {
 		if ( null === $logger ) {
 			return;
 		}
@@ -38,16 +41,16 @@ class ImportLogger {
 	}
 
 	/**
-	 * @return array
+	 * @return array<string, array>
 	 */
-	public function get_data() {
+	public function get_data(): array {
 		return $this->data;
 	}
 
 	/**
 	 * Saves the log or prints it some place.
 	 */
-	public function save() {
+	public function save(): void {
 		$log_writer = $default_log_writer = AdminNoticeLogger::instance();
 		$log_writer->set_import_coordinates( $this->import_coordinates );
 
@@ -82,7 +85,7 @@ class ImportLogger {
 	 * @param string $where A location string using `/` as level format.
 	 * @param mixed  $what What should be stored in the log.
 	 */
-	public function log_error( $where, $what ) {
+	public function log_error( $where, $what ): void {
 		$this->log( $where, $what, 'error' );
 	}
 
@@ -93,7 +96,7 @@ class ImportLogger {
 	 * @param mixed  $what What should be stored in the log.
 	 * @param string $root Where to log the information.
 	 */
-	protected function log( $where, $what, $root = 'info' ) {
+	protected function log( $where, $what, $root = 'info' ): void {
 		if ( ! isset( $this->data[ $root ] ) ) {
 			$this->data[ $root ] = array();
 		}
@@ -103,7 +106,7 @@ class ImportLogger {
 		$this->data[ $root ] = array_merge_recursive( $this->data[ $root ], $data );
 	}
 
-	protected function build_nested_array( $path, $what = '' ) {
+	protected function build_nested_array( $path, $what = '' ): array {
 		$json = '{"'
 				. implode( '":{"', $path )
 				. '":' . wp_json_encode( $what )
@@ -125,7 +128,7 @@ class ImportLogger {
 	 *
 	 * @return array
 	 */
-	protected function build_path( $where ) {
+	protected function build_path( $where ): array {
 		$where_path = explode( $this->levels_delimiter, $where );
 
 		return $where_path;
@@ -136,7 +139,7 @@ class ImportLogger {
 	 *
 	 * @return string
 	 */
-	public function get_levels_delimiter() {
+	public function get_levels_delimiter(): string {
 		return $this->levels_delimiter;
 	}
 
@@ -145,7 +148,7 @@ class ImportLogger {
 	 *
 	 * @param string $levels_delimiter
 	 */
-	public function set_levels_delimiter( $levels_delimiter ) {
+	public function set_levels_delimiter( $levels_delimiter ): void {
 		$this->levels_delimiter = $levels_delimiter;
 	}
 
@@ -155,7 +158,7 @@ class ImportLogger {
 	 * @param string $where A location string using `/` as level format.
 	 * @param mixed  $what What should be stored in the log.
 	 */
-	public function log_success( $where, $what ) {
+	public function log_success( $where, $what ): void {
 		$this->log( $where, $what, 'success' );
 	}
 
@@ -164,16 +167,21 @@ class ImportLogger {
 	 *
 	 * @param string $message
 	 */
-	public function log_information( $key, $message ) {
+	public function log_information( $key, $message ): void {
 		$this->data['info'][ $key ] = $message;
 	}
 
+	/**
+	 * @param string $where
+	 *
+	 * @return mixed
+	 */
 	public function get_error( $where ) {
 		return $this->get_nested_value( 'error' . $this->levels_delimiter . $where );
 	}
 
 	/**
-	 * @param $where
+	 * @param string $where
 	 *
 	 * @return mixed
 	 */
@@ -189,10 +197,20 @@ class ImportLogger {
 		return $data;
 	}
 
+	/**
+	 * @param string $where
+	 *
+	 * @return mixed
+	 */
 	public function get_success( $where ) {
 		return $this->get_nested_value( 'success' . $this->levels_delimiter . $where );
 	}
 
+	/**
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
 	public function get_information( $key ) {
 		return isset( $this->data['info'][ $key ] ) ? $this->data['info'][ $key ] : '';
 	}

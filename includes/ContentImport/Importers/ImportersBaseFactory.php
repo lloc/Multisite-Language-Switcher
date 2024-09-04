@@ -13,10 +13,10 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 	const TYPE = 'none';
 
 	/**
-	 * @var array An array defining the slug and Importer class relationships in
+	 * @var array<string, string> An array defining the slug and Importer class relationships in
 	 *            the shape [ <slug> => <importer-class> ]
 	 */
-	protected $importers_map = [];
+	protected array $importers_map = array();
 
 	/**
 	 * @return Importer
@@ -49,7 +49,6 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 		 * @param ImportCoordinates $import_coordinates
 		 *
 		 * @since TBD
-		 *
 		 */
 		$map = apply_filters( "msls_content_import_{$type}_importers_map", $this->importers_map, $import_coordinates );
 
@@ -70,10 +69,10 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 	 * @return \stdClass
 	 */
 	public function details() {
-		return (object) [
+		return (object) array(
 			'name'      => 'Base Factory',
-			'importers' => [],
-		];
+			'importers' => array(),
+		);
 	}
 
 	/**
@@ -90,9 +89,6 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 		 *
 		 * @param string $selected The selected importer slug.
 		 * @param ImportersFactory $this
-		 *
-		 * @since TBD
-		 *
 		 */
 		$selected = apply_filters( "msls_content_import_{$slug}_selected", $selected, $this );
 
@@ -102,9 +98,12 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 	protected function importers_info() {
 		return array_combine(
 			array_keys( $this->importers_map ),
-			array_map( function ( $importer_class ) {
-				return $importer_class::info();
-			}, $this->importers_map )
+			array_map(
+				function ( $importer_class ) {
+					return $importer_class::info();
+				},
+				$this->importers_map
+			)
 		);
 	}
 }
