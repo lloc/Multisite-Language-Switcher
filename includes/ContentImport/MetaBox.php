@@ -12,12 +12,13 @@ use lloc\Msls\MslsRegistryInstance;
 use lloc\Msls\MslsRequest;
 
 class MetaBox extends MslsRegistryInstance {
-	protected $data = array();
+
+	protected array $data = array();
 
 	/**
 	 * Renders the content import metabox.
 	 */
-	public function render() {
+	public function render(): void {
 		$post            = get_post();
 		$mydata          = new MslsOptionsPost( $post->ID );
 		$languages       = MslsOptionsPost::instance()->get_available_languages();
@@ -82,7 +83,7 @@ class MetaBox extends MslsRegistryInstance {
 		echo $output;
 	}
 
-	protected function inline_thickbox_url( array $data = array() ) {
+	protected function inline_thickbox_url( array $data = array() ): string {
 		$args = array_merge(
 			array(
 				'modal'    => true,
@@ -98,11 +99,11 @@ class MetaBox extends MslsRegistryInstance {
 		);
 	}
 
-	public function print_modal_html() {
+	public function print_modal_html(): void {
 		echo $this->inline_thickbox_html( true, $this->data );
 	}
 
-	protected function inline_thickbox_html( $echo = true, array $data = array() ) {
+	protected function inline_thickbox_html( $echo = true, array $data = array() ): string {
 		if ( ! isset( $data['msls_import'] ) ) {
 			return '';
 		}
