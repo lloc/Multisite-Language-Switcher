@@ -3,6 +3,7 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
+use Brain\Monkey\Actions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
@@ -32,6 +33,28 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get' )->andReturn( $blogs );
 
 		$this->test = new MslsPostTag( $options, $collection );
+	}
+
+	public function test_init() {
+		$options                        = \Mockery::mock( MslsOptions::class );
+		$options->activate_autocomplete = true;
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+
+		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
+		$taxonomy->shouldReceive( 'acl_request' )->once()->andReturn( 'post_tag' );
+
+		Functions\expect( 'msls_options' )->atLeast()->once()->andReturn( $options );
+		Functions\expect( 'msls_blog_collection' )->atLeast()->once()->andReturn( $collection );
+		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
+
+		Actions\expectAdded( 'post_tag_edit_form_fields' )->once();
+		Actions\expectAdded( 'post_tag_add_form_fields' )->once();
+		Actions\expectAdded( 'edited_post_tag' )->once();
+		Actions\expectAdded( 'create_post_tag' )->once();
+
+		$this->expectNotToPerformAssertions();
+		MslsPostTag::init();
 	}
 
 	/**
