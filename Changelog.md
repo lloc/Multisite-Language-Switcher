@@ -1,3 +1,6 @@
+## 2.9.2
+
+
 ## 2.9.1
 
 - Suggest Field in Post Editor Metabox: This feature allows you to input either numeric or alphanumeric values. If you enter a number, it’s treated as a Post ID. If you enter text, the field will suggest posts with matching titles.
