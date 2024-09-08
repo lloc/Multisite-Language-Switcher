@@ -32,6 +32,8 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array( $blog ) );
+		$collection->shouldReceive( 'has_current_blog' )->andReturnTrue();
+		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blog );
 
 		$this->test = new MslsMetaBox( $options, $collection );
 	}
@@ -123,7 +125,6 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 
 	/**
 	 * @dataProvider add_data_provider
-	 * @doesNotPerformAssertions
 	 */
 	public function test_add( $post_type, $content_import, $autocomplete ) {
 		$options                          = \Mockery::mock( MslsOptions::class );
@@ -137,6 +138,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'msls_options' )->atLeast()->once()->andReturn( $options );
 		Functions\expect( 'msls_post_type' )->once()->andReturn( $post_type );
 
+		$this->expectNotToPerformAssertions();
 		$this->test->add();
 	}
 
@@ -267,12 +269,25 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->test->render_input();
 	}
 
-	/**
-	 * @doesNotPerformAssertions
-	 */
-	public function test_set() {
+	public function test_set_no_request() {
 		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
 
+		$this->expectNotToPerformAssertions();
+		$this->test->set( 13 );
+	}
+
+	public function test_set_with_request() {
+		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, MslsFields::FIELD_MSLS_NONCENAME )->andReturnTrue();
+		// Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_MSLS_NONCENAME )->andReturn( 'random_nonce' );
+		Functions\expect( 'wp_verify_nonce' )->once()->andReturn( true );
+		Functions\expect( 'current_user_can' )->once()->andReturn( true );
+		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array() );
+		Functions\expect( 'delete_option' )->atLeast()->once();
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+
+		$this->expectNotToPerformAssertions();
 		$this->test->set( 13 );
 	}
 }
