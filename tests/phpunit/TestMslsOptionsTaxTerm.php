@@ -52,7 +52,7 @@ class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $this->test->check_base( $expected, $options ) );
 	}
 
-	public function test_get_option_name() {
+	public function test_get_option_name(): void {
 		$this->assertSame( 'msls_term_42', $this->test->get_option_name() );
 	}
 }

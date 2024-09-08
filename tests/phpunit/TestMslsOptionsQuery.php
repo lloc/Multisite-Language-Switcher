@@ -21,7 +21,7 @@ class TestMslsOptionsQuery extends MslsUnitTestCase {
 		$wpdb = \Mockery::mock( '\wpdb' );
 	}
 
-	public function test_get_params() {
+	public function test_get_params(): void {
 		$this->assertEquals( array(), MslsOptionsQuery::get_params() );
 	}
 

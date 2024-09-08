@@ -109,7 +109,7 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 		$this->test->edit_input( $tag, 'test' );
 	}
 
-	public function test_add_input() {
+	public function test_add_input(): void {
 		$terms = array(
 			(object) array(
 				'term_id' => 42,
@@ -152,7 +152,7 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 		$this->test->add_input( 'test' );
 	}
 
-	public function test_the_input_no_blogs() {
+	public function test_the_input_no_blogs(): void {
 		$options    = \Mockery::mock( MslsOptions::class );
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() );

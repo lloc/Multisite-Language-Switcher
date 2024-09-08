@@ -16,7 +16,7 @@ class TestMslsOptionsPost extends MslsUnitTestCase {
 		$this->test = new MslsOptionsPost( 42 );
 	}
 
-	public function test_get_postlink_not_has_value() {
+	public function test_get_postlink_not_has_value(): void {
 		$this->assertEquals( '', $this->test->get_postlink( 'es_ES' ) );
 	}
 
@@ -55,7 +55,7 @@ class TestMslsOptionsPost extends MslsUnitTestCase {
 		$this->assertEquals( 'https://msls.co/a-post', $this->test->get_current_link() );
 	}
 
-	public function test_get_option_name() {
+	public function test_get_option_name(): void {
 		$this->assertSame( 'msls_42', $this->test->get_option_name() );
 	}
 }

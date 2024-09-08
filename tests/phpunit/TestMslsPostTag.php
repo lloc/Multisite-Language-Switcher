@@ -35,7 +35,7 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		$this->test = new MslsPostTag( $options, $collection );
 	}
 
-	public function test_init() {
+	public function test_init(): void {
 		$options                        = \Mockery::mock( MslsOptions::class );
 		$options->activate_autocomplete = true;
 
@@ -117,7 +117,7 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		$this->test->edit_input( $tag, 'test' );
 	}
 
-	public function test_add_input() {
+	public function test_add_input(): void {
 		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post' );
@@ -145,7 +145,7 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		$this->test->add_input( 'test' );
 	}
 
-	public function test_the_input_no_blogs() {
+	public function test_the_input_no_blogs(): void {
 		$options    = \Mockery::mock( MslsOptions::class );
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() );

@@ -30,7 +30,7 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertEquals( array(), $this->test->get( 0 ) );
 	}
 
-	public function test_get_alternate_links_two_url() {
+	public function test_get_alternate_links_two_url(): void {
 		$blogs = array();
 
 		$a = \Mockery::mock( MslsBlog::class );
@@ -74,7 +74,7 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $this->test->get_alternate_links() );
 	}
 
-	public function test_get_alternate_links_null_url() {
+	public function test_get_alternate_links_null_url(): void {
 		$blogs = array();
 
 		$a = \Mockery::mock( MslsBlog::class );
@@ -104,7 +104,7 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertEquals( '', $this->test->get_alternate_links() );
 	}
 
-	public function test_get_alternate_links_one_url() {
+	public function test_get_alternate_links_one_url(): void {
 		$blogs = array();
 
 		$a = \Mockery::mock( MslsBlog::class );
@@ -137,14 +137,14 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertEquals( '<link rel="alternate" hreflang="x-default" href="https://example.de/" title="Deutsch" />', $this->test->get_alternate_links() );
 	}
 
-	public function test___toString_no_translation() {
+	public function test___toString_no_translation(): void {
 		$expected = '<a href="https://example.com" title="Example">Example</a>';
 
 		Filters\expectApplied( 'msls_output_no_translation_found' )->once()->andReturn( $expected );
 		$this->assertEquals( $expected, strval( $this->test ) );
 	}
 
-	public function test___toString_output() {
+	public function test___toString_output(): void {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
@@ -177,7 +177,7 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertEquals( '<a href="/" title="Deutsch"><img src="https://msls.co/wp-content/plugins/msls/flags/de.png" alt="de_DE"/> Deutsch</a>', strval( $test ) );
 	}
 
-	public function test___toString_current_blog() {
+	public function test___toString_current_blog(): void {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
@@ -208,7 +208,7 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertEquals( $expected, strval( new MslsOutput( $options, $collection ) ) );
 	}
 
-	public function test___toString_filter() {
+	public function test___toString_filter(): void {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
@@ -241,7 +241,7 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertEquals( $expected, strval( new MslsOutput( $options, $collection ) ) );
 	}
 
-	public function test_get_not_fulfilled() {
+	public function test_get_not_fulfilled(): void {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
 		// $blog->shouldReceive( 'get_description' )->once()->andReturn( 'Deutsch' );
