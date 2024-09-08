@@ -11,6 +11,7 @@ use lloc\Msls\MslsFields;
 use lloc\Msls\MslsJson;
 use lloc\Msls\MslsMetaBox;
 use lloc\Msls\MslsOptions;
+use lloc\Msls\MslsOptionsPost;
 use lloc\Msls\MslsPostType;
 
 class TestMslsMetaBox extends MslsUnitTestCase {
@@ -34,6 +35,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get' )->andReturn( array( $blog ) );
 		$collection->shouldReceive( 'has_current_blog' )->andReturnTrue();
 		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blog );
+		$collection->shouldReceive( 'get_blog_id' )->andReturn( 1 );
 
 		$this->test = new MslsMetaBox( $options, $collection );
 	}
@@ -104,7 +106,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->assertEquals( '<option value="1" >Test</option>', $this->test->render_option( 1, 2 ) );
 	}
 
-	public function test_render_options() {
+	public function test_render_options(): void {
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
@@ -142,7 +144,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->test->add();
 	}
 
-	public function test_render_select_not_hierarchical() {
+	public function test_render_select_not_hierarchical(): void {
 		global $post;
 
 		$post     = \Mockery::mock( 'WP_Post' );
@@ -174,7 +176,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->test->render_select();
 	}
 
-	public function test_render_select_hierarchical() {
+	public function test_render_select_hierarchical(): void {
 		global $post;
 
 		$post     = \Mockery::mock( 'WP_Post' );
@@ -241,7 +243,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->test->render_input();
 	}
 
-	public function test_render_select_only_one_blog() {
+	public function test_render_select_only_one_blog(): void {
 		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -255,7 +257,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->test->render_select();
 	}
 
-	public function test_render_input_only_one_blog() {
+	public function test_render_input_only_one_blog(): void {
 		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -269,14 +271,24 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->test->render_input();
 	}
 
-	public function test_set_no_request() {
+	public function test_set_no_request(): void {
 		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
 
 		$this->expectNotToPerformAssertions();
 		$this->test->set( 13 );
 	}
 
-	public function test_set_with_request() {
+	public function test_set_with_request_current_user_cannot(): void {
+		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, MslsFields::FIELD_MSLS_NONCENAME )->andReturnTrue();
+		Functions\expect( 'wp_verify_nonce' )->once()->andReturnTrue();
+		Functions\expect( 'current_user_can' )->once()->andReturnFalse();
+
+		$this->expectNotToPerformAssertions();
+		$this->test->set( 13 );
+	}
+
+	public function test_set_with_request(): void {
 		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
 		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, MslsFields::FIELD_MSLS_NONCENAME )->andReturnTrue();
 		Functions\expect( 'wp_verify_nonce' )->once()->andReturnTrue();
@@ -290,13 +302,76 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$this->test->set( 13 );
 	}
 
-	public function test_set_with_request_current_user_cannot() {
-		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, MslsFields::FIELD_MSLS_NONCENAME )->andReturnTrue();
-		Functions\expect( 'wp_verify_nonce' )->once()->andReturnTrue();
-		Functions\expect( 'current_user_can' )->once()->andReturnFalse();
+	public function test_maybe_set_linked_post() {
+		$post = \Mockery::mock( 'WP_Post' );
 
-		$this->expectNotToPerformAssertions();
-		$this->test->set( 13 );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		Functions\expect( 'get_post' )->once()->andReturn( $post );
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+
+		$mydata = new MslsOptionsPost();
+		$mydata = $this->test->maybe_set_linked_post( $mydata );
+
+		$this->assertEquals( 42, $mydata->de_DE );
+	}
+
+	public function test_maybe_set_linked_post_with_no_post() {
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		Functions\expect( 'get_post' )->once()->andReturn( null );
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+
+		$mydata = new MslsOptionsPost();
+		$mydata = $this->test->maybe_set_linked_post( $mydata );
+
+		$this->assertNull( $mydata->de_DE );
+	}
+
+	function test_maybe_set_linked_post_with_no_blog_id() {
+		$options = \Mockery::mock( MslsOptions::class );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_blog_id' )->andReturn( null );
+
+		$this->test = new MslsMetaBox( $options, $collection );
+
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+
+		$mydata = new MslsOptionsPost();
+		$mydata = $this->test->maybe_set_linked_post( $mydata );
+
+		$this->assertNull( $mydata->de_DE );
+	}
+
+	function test_maybe_set_linked_post_with_mydata_already_set() {
+		$options = \Mockery::mock( MslsOptions::class );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+
+		$this->test = new MslsMetaBox( $options, $collection );
+
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+
+		$mydata        = new MslsOptionsPost();
+		$mydata->de_DE = 42;
+		$mydata        = $this->test->maybe_set_linked_post( $mydata );
+
+		$this->assertEquals( 42, $mydata->de_DE );
 	}
 }

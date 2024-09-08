@@ -16,7 +16,7 @@ class TestMslsSqlCacher extends MslsUnitTestCase {
 		$this->test = new MslsSqlCacher( $wpdb, 'MslsSqlCacherTest' );
 	}
 
-	public function test_create() {
+	public function test_create(): void {
 		global $wpdb;
 
 		Functions\expect( 'esc_attr' )->atLeast()->once()->andReturnFirstArg();

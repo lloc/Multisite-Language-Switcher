@@ -28,14 +28,14 @@ class TestBaseImporter extends MslsUnitTestCase {
 		$this->test->set_import_coordinates( $import_coordinates );
 	}
 
-	public function testGetLogger() {
+	public function testGetLogger(): void {
 		$this->assertInstanceOf( ImportLogger::class, $this->test->get_logger() );
 	}
-	public function testGetRelations() {
+	public function testGetRelations(): void {
 		$this->assertInstanceOf( Relations::class, $this->test->get_relations() );
 	}
 
-	public function testInfo() {
+	public function testInfo(): void {
 		$this->assertInstanceOf( \stdClass::class, $this->test->info() );
 	}
 }

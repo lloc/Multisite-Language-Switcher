@@ -133,7 +133,7 @@ class TestMslsPlugin extends MslsUnitTestCase {
 		$this->assertEquals( $expected, MslsPlugin::plugin_dir_path( 'dist/msls-widget-block' ) );
 	}
 
-	public function test_print_alternate_links() {
+	public function test_print_alternate_links(): void {
 		Functions\expect( 'is_admin' )->once()->andReturn( false );
 		Functions\expect( 'is_front_page' )->once()->andReturn( true );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );

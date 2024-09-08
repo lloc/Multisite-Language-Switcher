@@ -33,15 +33,15 @@ class TestContentImporter extends MslsUnitTestCase {
 		$this->assertInstanceOf( Relations::class, $this->test->get_relations() );
 	}
 
-	public function test_handle_import() {
+	public function test_handle_import(): void {
 		$this->assertEquals( array(), $this->test->handle_import() );
 	}
 
-	public function test_parse_sources_no_post() {
+	public function test_parse_sources_no_post(): void {
 		$this->assertFalse( $this->test->parse_sources() );
 	}
 
-	public function test_handle_false() {
+	public function test_handle_false(): void {
 		$this->expectNotToPerformAssertions();
 
 		Actions\expectAdded( 'msls_main_save' )->once();
@@ -49,7 +49,7 @@ class TestContentImporter extends MslsUnitTestCase {
 		$this->test->handle( false );
 	}
 
-	public function test_handle_true() {
+	public function test_handle_true(): void {
 		$this->expectNotToPerformAssertions();
 
 		Actions\expectRemoved( 'msls_main_save' )->once();

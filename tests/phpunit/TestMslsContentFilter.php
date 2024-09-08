@@ -47,7 +47,7 @@ class TestMslsContentFilter extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $test->content_filter( $content ) );
 	}
 
-	public function test_content_filter_one_link() {
+	public function test_content_filter_one_link(): void {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
 		$blog->shouldReceive( 'get_description' )->once()->andReturn( 'Deutsch' );
@@ -95,7 +95,7 @@ class TestMslsContentFilter extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $test->content_filter( $content ) );
 	}
 
-	public function test_content_filter_zero_links() {
+	public function test_content_filter_zero_links(): void {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array() );
 
@@ -121,7 +121,7 @@ class TestMslsContentFilter extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $test->content_filter( $content ) );
 	}
 
-	public function test_content_filter_more_links() {
+	public function test_content_filter_more_links(): void {
 		$a = \Mockery::mock( MslsBlog::class );
 		$a->shouldReceive( 'get_language' )->once()->andReturn( 'it_IT' );
 		$a->shouldReceive( 'get_description' )->once()->andReturn( 'Italiano' );
@@ -187,7 +187,7 @@ class TestMslsContentFilter extends MslsUnitTestCase {
 		$this->assertEquals( $expected, $test->content_filter( $content ) );
 	}
 
-	public function test_content_filter_with_filter() {
+	public function test_content_filter_with_filter(): void {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
 		$blog->shouldReceive( 'get_description' )->once()->andReturn( 'Deutsch' );

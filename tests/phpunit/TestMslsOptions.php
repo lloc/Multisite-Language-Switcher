@@ -232,13 +232,13 @@ class TestMslsOptions extends MslsUnitTestCase {
 		$this->assertEquals( $expected, MslsOptions::check_for_blog_slug( $url, $options ) );
 	}
 
-	public function test_get_slug() {
+	public function test_get_slug(): void {
 		$obj = $this->get_test();
 
 		$this->assertEquals( '', $obj->get_slug( 'post' ) );
 	}
 
-	public function test_get_option_name() {
+	public function test_get_option_name(): void {
 		$this->assertSame( 'msls', $this->get_test()->get_option_name() );
 	}
 }
