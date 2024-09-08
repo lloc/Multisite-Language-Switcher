@@ -2,6 +2,7 @@
 
 namespace lloc\Msls\ContentImport\Importers\PostFields;
 
+use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\Importers\BaseImporter;
 use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;
 
@@ -23,11 +24,11 @@ class Duplicating extends BaseImporter {
 	 * @return \stdClass
 	 */
 	public static function info() {
-		return (object) [
+		return (object) array(
 			'slug'        => static::TYPE,
 			'name'        => __( 'Duplicating', 'multisite-language-switcher' ),
-			'description' => __( 'Copies the source post fields to the destination.', 'multisite-language-switcher' )
-		];
+			'description' => __( 'Copies the source post fields to the destination.', 'multisite-language-switcher' ),
+		);
 	}
 
 	public function import( array $data ) {
@@ -39,11 +40,11 @@ class Duplicating extends BaseImporter {
 		foreach ( $this->filter_fields() as $field ) {
 			$value          = $source_post->{$field};
 			$data[ $field ] = $value;
-			$this->logger->log_success( 'post-field/added', [ $field => $value ] );
+			$this->logger->log_success( 'post-field/added', array( $field => $value ) );
 		}
 
 		if ( ! doing_action( 'wp_insert_post_data' ) ) {
-			$postarr = array_merge( $data, [ 'ID' => $this->import_coordinates->dest_post_id ] );
+			$postarr = array_merge( $data, array( 'ID' => $this->import_coordinates->dest_post_id ) );
 			wp_insert_post( $postarr );
 		}
 

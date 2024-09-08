@@ -51,17 +51,16 @@ class ImportLogger {
 	 * Saves the log or prints it some place.
 	 */
 	public function save(): void {
-		$log_writer = $default_log_writer = AdminNoticeLogger::instance();
-		$log_writer->set_import_coordinates( $this->import_coordinates );
+		$default_log_writer = AdminNoticeLogger::instance();
+		$default_log_writer->set_import_coordinates( $this->import_coordinates );
 
 		/**
 		 * Filters the log class or object that should be used to write the log to the destination.
 		 *
-		 * @param LogWriter $log_writer
+		 * @param mixed $default_log_writer
 		 * @param ImportCoordinates $import_coordinates
 		 */
-		$log_writer = apply_filters( 'msls_content_import_log_writer', $log_writer, $this->import_coordinates );
-
+		$log_writer = apply_filters( 'msls_content_import_log_writer', $default_log_writer, $this->import_coordinates );
 		if ( empty( $log_writer ) ) {
 			// we assume that was done on purpose to prevent logging
 			return;
@@ -106,6 +105,12 @@ class ImportLogger {
 		$this->data[ $root ] = array_merge_recursive( $this->data[ $root ], $data );
 	}
 
+	/**
+	 * @param array $path
+	 * @param mixed $what
+	 *
+	 * @return array
+	 */
 	protected function build_nested_array( $path, $what = '' ): array {
 		$json = '{"'
 				. implode( '":{"', $path )
@@ -124,11 +129,11 @@ class ImportLogger {
 	}
 
 	/**
-	 * @param $where
+	 * @param string $where
 	 *
 	 * @return array
 	 */
-	protected function build_path( $where ): array {
+	protected function build_path( string $where ): array {
 		$where_path = explode( $this->levels_delimiter, $where );
 
 		return $where_path;
@@ -165,6 +170,7 @@ class ImportLogger {
 	/**
 	 * Logs some generic information.
 	 *
+	 * @param string $key
 	 * @param string $message
 	 */
 	public function log_information( $key, $message ): void {

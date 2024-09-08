@@ -20,7 +20,7 @@ class MslsRequest {
 	public static function has_var( string $name, ?int $input_type = null ): bool {
 		if ( null === $input_type ) {
 			try {
-				list($input_type, ) = self::get_config( $name );
+				list( $input_type, ) = self::get_config( $name );
 			} catch ( \InvalidArgumentException $e ) {
 				return false;
 			}

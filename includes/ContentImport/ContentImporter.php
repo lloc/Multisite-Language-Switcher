@@ -63,7 +63,7 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * @param \lloc\Msls\ContentImport\ImportLogger $logger
 	 */
-	public function set_logger( $logger ) {
+	public function set_logger( $logger ): void {
 		$this->logger = $logger;
 	}
 
@@ -77,7 +77,7 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * @param \lloc\Msls\ContentImport\Relations $relations
 	 */
-	public function set_relations( $relations ) {
+	public function set_relations( $relations ): void {
 		$this->relations = $relations;
 	}
 
@@ -179,6 +179,11 @@ class ContentImporter extends MslsRegistryInstance {
 		return array_map( 'intval', $import_data );
 	}
 
+	/**
+	 * @param int $blog_id
+	 *
+	 * @return int
+	 */
 	protected function get_the_blog_post_ID( $blog_id ) {
 		switch_to_blog( $blog_id );
 
@@ -331,9 +336,9 @@ class ContentImporter extends MslsRegistryInstance {
 	}
 
 	/**
-	 * @param array $data
+	 * @param int   $blog_id
 	 * @param int   $post_id
-	 *
+	 * @param array $data
 	 * @return array
 	 */
 	protected function update_inserted_blog_post_data( $blog_id, $post_id, array $data ) {
@@ -346,6 +351,11 @@ class ContentImporter extends MslsRegistryInstance {
 		return $data;
 	}
 
+	/**
+	 * @param int $dest_blog_id
+	 * @param int $post_id
+	 * @return void
+	 */
 	protected function redirect_to_blog_post( $dest_blog_id, $post_id ) {
 		switch_to_blog( $dest_blog_id );
 		$edit_post_link = html_entity_decode( get_edit_post_link( $post_id ) );
