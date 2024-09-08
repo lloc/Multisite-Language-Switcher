@@ -44,7 +44,7 @@ class ImportCoordinates {
 	 * @var array An array keeping track of which importer (slug) should be used for
 	 *            a specific import type, shape [ <import-type> => <slug> ]
 	 */
-	public $importers = [];
+	public $importers = array();
 
 	/**
 	 * Validates the coordinates.
@@ -88,11 +88,11 @@ class ImportCoordinates {
 	/**
 	 * Parses the importers from request superglobals.
 	 */
-	public function parse_importers_from_request() {
+	public function parse_importers_from_request(): void {
 		// bitmask
 		$source = isset( $_REQUEST[ self::IMPORTERS_GLOBAL_KEY ] ) * 100
-		          + isset( $_POST[ self::IMPORTERS_GLOBAL_KEY ] ) * 10
-		          + isset( $_GET[ self::IMPORTERS_GLOBAL_KEY ] );
+					+ isset( $_POST[ self::IMPORTERS_GLOBAL_KEY ] ) * 10
+					+ isset( $_GET[ self::IMPORTERS_GLOBAL_KEY ] );
 
 		switch ( $source ) {
 			case 100:
@@ -114,7 +114,7 @@ class ImportCoordinates {
 
 		$importers = isset( $source[ self::IMPORTERS_GLOBAL_KEY ] ) && is_array( $source[ self::IMPORTERS_GLOBAL_KEY ] )
 			? $source[ self::IMPORTERS_GLOBAL_KEY ]
-			: [];
+			: array();
 
 		foreach ( $importers as $importer_type => $slug ) {
 			$this->set_importer_for( $importer_type, $slug );
@@ -127,7 +127,7 @@ class ImportCoordinates {
 	 * @param string $importer_type
 	 * @param string $slug
 	 */
-	public function set_importer_for( $importer_type, $slug ) {
+	public function set_importer_for( $importer_type, $slug ): void {
 		$this->importers[ $importer_type ] = $slug;
 	}
 }

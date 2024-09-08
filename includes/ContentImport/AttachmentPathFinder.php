@@ -8,7 +8,15 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 
 	const LINKED = '_msls_linked';
 
-	public function filter_srcset( array $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
+	/**
+	 * @param array  $sources
+	 * @param mixed  $sizeArray
+	 * @param string $imageSrc
+	 * @param mixed  $imageMeta
+	 * @param int    $attachmentId
+	 * @return array
+	 */
+	public function filter_srcset( array $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ): array {
 		if ( ! $msls_imported = $this->has_import_data( $attachmentId ) ) {
 			return $sources;
 		}
@@ -32,6 +40,10 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 		return $sources;
 	}
 
+	/**
+	 * @param int $attachment_id
+	 * @return array|false
+	 */
 	protected function has_import_data( $attachment_id ) {
 		if ( empty( $attachment_id ) ) {
 			return false;
@@ -53,6 +65,11 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 		return $msls_imported;
 	}
 
+	/**
+	 * @param string $url
+	 * @param int    $attachment_id
+	 * @return string
+	 */
 	public function filter_attachment_url( $url, $attachment_id ) {
 		if ( ! $msls_imported = $this->has_import_data( $attachment_id ) ) {
 			return $url;
@@ -68,7 +85,7 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 	}
 
 	/**
-	 * @param int $attachment_id
+	 * @param int   $attachment_id
 	 * @param array $msls_imported
 	 *
 	 * @return \WP_Post|false
