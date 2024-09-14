@@ -4,17 +4,34 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsOptionsTax;
+use lloc\Msls\MslsOptionsTaxTerm;
+use lloc\Msls\MslsOptionsTaxTermCategory;
 
 class TestMslsOptionsTax extends MslsUnitTestCase {
-
-	protected $woo;
 
 	protected function setUp(): void {
 		parent::setUp();
 
-		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
+		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
 		$this->test = new MslsOptionsTax( 0 );
+	}
+
+	public function test_create_category(): void {
+		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
+		Functions\expect( 'is_admin' )->once()->andReturnFalse();
+		Functions\expect( 'is_category' )->once()->andReturnTrue();
+
+		$this->assertInstanceOf( MslsOptionsTaxTermCategory::class, MslsOptionsTax::create() );
+	}
+
+	public function test_create_post_tag(): void {
+		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
+		Functions\expect( 'is_admin' )->once()->andReturnFalse();
+		Functions\expect( 'is_category' )->once()->andReturnFalse();
+		Functions\expect( 'is_tag' )->once()->andReturnTrue();
+
+		$this->assertInstanceOf( MslsOptionsTaxTerm::class, MslsOptionsTax::create() );
 	}
 
 	public function test_get_tax_query(): void {
