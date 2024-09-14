@@ -13,9 +13,19 @@ class TestMslsWidget extends MslsUnitTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		\Mockery::mock( '\WP_Widget' );
+		$this->test = new MslsWidget();
+	}
 
-		$this->test = \Mockery::mock( MslsWidget::class )->makePartial();
+	public function test_init(): void {
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'is_excluded' )->once()->andReturn( false );
+
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
+		Functions\expect( 'register_widget' )->once()->with( MslsWidget::class );
+
+		$this->expectNotToPerformAssertions();
+
+		$this->test->init();
 	}
 
 	public function test_widget(): void {
@@ -52,5 +62,14 @@ class TestMslsWidget extends MslsUnitTestCase {
 
 		$result = $this->test->update( array( 'title' => 'xyz' ), array( 'title' => 'abc' ) );
 		$this->assertEquals( array( 'title' => 'xyz' ), $result );
+	}
+
+	public function test_form(): void {
+		$expected = '<p><label for="title">Title:</label> <input class="widefat" id="title" name="title" type="text" value="" /></p>';
+
+		$this->expectOutputString( $expected );
+
+		$result = $this->test->form( array() );
+		$this->assertEquals( $expected, $result );
 	}
 }
