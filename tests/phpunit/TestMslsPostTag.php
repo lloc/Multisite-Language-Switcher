@@ -61,7 +61,16 @@ class TestMslsPostTag extends MslsUnitTestCase {
 	 * Verify the static suggest-method
 	 */
 	public function test_suggest(): void {
+		$term          = \Mockery::mock( \WP_Term::class );
+		$term->term_id = 42;
+		$term->name    = 'test';
+
 		Functions\expect( 'wp_die' );
+		Functions\expect( 'filter_has_var' )->atLeast()->once()->andReturnTrue();
+		Functions\expect( 'filter_input' )->atLeast()->once()->andReturn( 'suggest_terms' );
+		Functions\expect( 'switch_to_blog' )->atLeast()->once();
+		Functions\expect( 'restore_current_blog' )->atLeast()->once();
+		Functions\expect( 'get_terms' )->atLeast()->once()->andReturn( array( $term ) );
 
 		self::expectOutputString( '' );
 
