@@ -31,6 +31,8 @@ class TestMslsPostTag extends MslsUnitTestCase {
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( $blogs );
+		$collection->shouldReceive( 'has_current_blog' )->andReturnTrue();
+		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blogs[0] );
 
 		$this->test = new MslsPostTag( $options, $collection );
 	}
@@ -162,5 +164,18 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		$value = ( new MslsPostTag( $options, $collection ) )->the_input( null, '', '' );
 
 		$this->assertFalse( $value );
+	}
+
+	public function test_set() {
+		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
+		$taxonomy->shouldReceive( 'acl_request' )->once()->andReturn( 'post_tag' );
+
+		Functions\expect( 'msls_content_types' )->once()->andReturn( $taxonomy );
+		Functions\expect( 'delete_option' )->twice();
+		Functions\expect( 'switch_to_blog' )->twice();
+		Functions\expect( 'restore_current_blog' )->twice();
+
+		$this->expectNotToPerformAssertions();
+		$this->test->set( 42 );
 	}
 }
