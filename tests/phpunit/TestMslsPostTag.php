@@ -90,7 +90,8 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post' );
 		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( array( 'taxonomy', 'post_tag' ) );
 
-		$term = \Mockery::mock( \WP_Term::class );
+		$term       = \Mockery::mock( \WP_Term::class );
+		$term->name = 'test-term-name';
 
 		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
 		Functions\expect( 'get_queried_object_id' )->atLeast()->once()->andReturn( 42 );
@@ -115,7 +116,7 @@ class TestMslsPostTag extends MslsUnitTestCase {
 			</th>
 			<td>
 			<input type="hidden" id="msls_id_" name="msls_input_de_DE" value="42"/>
-			<input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/>
+			<input class="msls_title" id="msls_title_" name="msls_title_" type="text" value="test-term-name"/>
 			</td>
 			</tr><tr class="form-field">
 			<th scope="row">

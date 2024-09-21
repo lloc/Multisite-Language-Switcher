@@ -14,7 +14,7 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 	 * @param string $imageSrc
 	 * @param mixed  $imageMeta
 	 * @param int    $attachmentId
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function filter_srcset( array $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ): array {
 		if ( ! $msls_imported = $this->has_import_data( $attachmentId ) ) {
