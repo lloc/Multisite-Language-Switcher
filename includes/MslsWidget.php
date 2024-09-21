@@ -15,7 +15,7 @@ namespace lloc\Msls;
  */
 class MslsWidget extends \WP_Widget {
 
-	public $id_base = 'mslswidget';
+	public const ID_BASE = 'mslswidget';
 
 	public function __construct() {
 		$name = apply_filters(
@@ -23,7 +23,7 @@ class MslsWidget extends \WP_Widget {
 			__( 'Multisite Language Switcher', 'multisite-language-switcher' )
 		);
 
-		parent::__construct( $this->id_base, $name, array( 'show_instance_in_rest' => true ) );
+		parent::__construct( self::ID_BASE, $name, array( 'show_instance_in_rest' => true ) );
 	}
 
 	public static function init(): void {
