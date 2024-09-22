@@ -1,4 +1,4 @@
-name: Test
+name: UnitTests and CodeCoverage
 on: [push]
 jobs:
   unit-tests:
