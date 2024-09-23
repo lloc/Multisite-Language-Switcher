@@ -77,7 +77,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 			$this->maybe_set_linked_term( $mydata );
 
-			printf( $title_format, $this->get_select_title() );
+			printf( wp_kses_post( $title_format ), esc_html( $this->get_select_title() ) );
 
 			foreach ( $blogs as $blog ) {
 				$this->print_option( $blog, $type, $mydata, $item_format );
@@ -119,14 +119,14 @@ class MslsPostTagClassic extends MslsPostTag {
 			foreach ( $terms as $term ) {
 				$options .= sprintf(
 					'<option value="%s" %s>%s</option>',
-					$term->term_id,
+					esc_attr( $term->term_id ),
 					selected( $term->term_id, $mydata->$language, false ),
-					$term->name
+					esc_html( $term->name )
 				);
 			}
 		}
 
-		printf( $item_format, $language, $icon, $options );
+		printf( wp_kses_post( $item_format ), esc_attr( $language ), $icon, $options );
 
 		restore_current_blog();
 	}
