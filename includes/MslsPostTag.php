@@ -179,7 +179,7 @@ class MslsPostTag extends MslsMain {
 					}
 				}
 
-				printf( wp_kses_post( $item_format ), esc_attr( $blog->userblog_id ), $icon, esc_attr( $language ), esc_attr( $value ), esc_attr( $title ) );
+				printf( wp_kses_post( $item_format ), esc_attr( $blog->userblog_id ), wp_kses_post( $icon ), esc_attr( $language ), esc_attr( $value ), esc_attr( $title ) );
 
 				restore_current_blog();
 			}

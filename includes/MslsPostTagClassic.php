@@ -126,7 +126,7 @@ class MslsPostTagClassic extends MslsPostTag {
 			}
 		}
 
-		printf( wp_kses_post( $item_format ), esc_attr( $language ), $icon, $options );
+		printf( wp_kses_post( $item_format ), esc_attr( $language ), wp_kses_post( $icon ), wp_kses_post( $options ) );
 
 		restore_current_blog();
 	}
