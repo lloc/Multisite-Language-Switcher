@@ -16,7 +16,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Composer dependencies
         run: composer install
       - name: Run Testsuite
