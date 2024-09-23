@@ -13,10 +13,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Composer dependencies
-        run: composer install --no-dev
+        run: composer install --no-dev --no-interaction --optimize-autoloader
       - name: Build
-        run: |
-          npm install
-          npm run build
+        run:  composer run-script build
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './multisite-language-switcher'

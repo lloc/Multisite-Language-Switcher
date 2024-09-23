@@ -11,11 +11,9 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
       - name: Composer dependencies
-        run: composer install --no-dev
-      - name: Build
-        run: |
-            npm install
-            npm run build
+        run: composer install --no-dev --no-interaction --optimize-autoloader
+      - name: Composer build
+        run: composer run-script build
       - name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
