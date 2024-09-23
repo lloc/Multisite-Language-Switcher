@@ -50,6 +50,8 @@
       "@prepare",
       "@flags-png",
       "@flags-svg",
+      "npm install",
+      "npm run build",
       "npm run uglify",
       "npm run less",
       "npm run build-msls-block",
