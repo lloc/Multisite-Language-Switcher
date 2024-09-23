@@ -1,10 +1,12 @@
-composer.lock
-composer.phar
-package-lock.json
-phpunit.xml.bak
 .idea/
 .phpunit.result.cache
 .phpunit.cache
+composer.lock
+composer.phar
+multisite-language-switcher/
+multisite-language-switcher.zip
+package-lock.json
+phpunit.xml.bak
 tests/coverage/
 tests/playwright-results/
 tests/playwright-report/

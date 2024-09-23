@@ -190,7 +190,7 @@ class MslsPlugin {
 	 */
 	public static function message_handler( $message, $css_class = 'error' ) {
 		if ( ! empty( $message ) ) {
-			printf( '<div id="msls-warning" class="%s"><p>%s</p></div>', $css_class, $message );
+			printf( '<div id="msls-warning" class="%s"><p>%s</p></div>', esc_attr( $css_class ), esc_html( $message ) );
 
 			return true;
 		}

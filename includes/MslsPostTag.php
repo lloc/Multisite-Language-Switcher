@@ -160,7 +160,7 @@ class MslsPostTag extends MslsMain {
 
 			$this->maybe_set_linked_term( $mydata );
 
-			printf( $title_format, $this->get_select_title(), $type );
+			printf( $title_format, esc_html( $this->get_select_title() ), esc_attr( $type ) );
 
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
@@ -179,7 +179,7 @@ class MslsPostTag extends MslsMain {
 					}
 				}
 
-				printf( $item_format, $blog->userblog_id, $icon, $language, $value, $title );
+				printf( $item_format, esc_attr( $blog->userblog_id ), $icon, esc_attr( $language ), esc_attr( $value ), esc_attr( $title ) );
 
 				restore_current_blog();
 			}
