@@ -94,7 +94,7 @@ class MslsCustomColumn extends MslsMain {
 					printf(
 						'<span class="msls-icon-wrapper %1$s">%2$s</span>',
 						esc_attr( $this->options->get_icon_type() ),
-						$icon->get_a()
+						wp_kses_post( $icon->get_a() )
 					);
 
 					restore_current_blog();
