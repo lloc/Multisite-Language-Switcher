@@ -157,9 +157,9 @@ final class MslsAdmin extends MslsMain {
 	public function render(): void {
 		printf(
 			'<div class="wrap"><div class="icon32" id="icon-options-general"><br/></div><h1>%s</h1>%s<br class="clear"/><form action="options.php" method="post"><p>%s</p>',
-			__( 'Multisite Language Switcher Options', 'multisite-language-switcher' ),
-			$this->subsubsub(),
-			__(
+			esc_html__( 'Multisite Language Switcher Options', 'multisite-language-switcher' ),
+			$this->subsubsub(), // phpcs:ignore WordPress.Security.EscapeOutput
+			esc_html__(
 				'To achieve maximum flexibility, you have to configure each blog separately.',
 				'multisite-language-switcher'
 			)
@@ -338,6 +338,7 @@ final class MslsAdmin extends MslsMain {
 		$languages = $this->options->get_available_languages();
 		$selected  = get_locale();
 
+        // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Select( 'blog_language', $languages, $selected ) )->render();
 	}
 
@@ -345,6 +346,7 @@ final class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'display'
 	 */
 	public function display(): void {
+        // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Select( 'display', MslsLink::get_types_description(), strval( $this->options->display ) ) )->render();
 	}
 
@@ -352,14 +354,16 @@ final class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'admin_display'
 	 */
 	public function admin_display(): void {
-		echo ( new Select(
+		$select = new Select(
 			'admin_display',
 			array(
 				MslsAdminIcon::TYPE_FLAG  => __( 'Flag', 'multisite-language-switcher' ),
 				MslsAdminIcon::TYPE_LABEL => __( 'Label', 'multisite-language-switcher' ),
 			),
 			$this->options->get_icon_type()
-		) )->render();
+		);
+
+		echo $select->render(); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	/**
@@ -384,6 +388,7 @@ final class MslsAdmin extends MslsMain {
 			trigger_error( sprintf( $format, self::MAX_REFERENCE_USERS ) );
 		}
 
+        // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Select( 'reference_user', $users, strval( $this->options->reference_user ) ) )->render();
 	}
 
@@ -393,6 +398,7 @@ final class MslsAdmin extends MslsMain {
 	 * The language will be used ff there is no description.
 	 */
 	public function description(): void {
+        // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Text( 'description', $this->options->description, 40 ) )->render();
 	}
 
@@ -408,6 +414,7 @@ final class MslsAdmin extends MslsMain {
 		$arr      = array_combine( $temp, $temp );
 		$selected = empty( $this->options->content_priority ) ? 10 : $this->options->content_priority;
 
+        // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Select( 'content_priority', $arr, strval( $selected ) ) )->render();
 	}
 
@@ -426,6 +433,7 @@ final class MslsAdmin extends MslsMain {
 			$value = $rewrite['slug'];
 		}
 
+        // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Text( "rewrite_{$key}", $value, 30, true ) )->render();
 	}
 
