@@ -1,10 +1,10 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
-class Select implements InputInterface {
+final class Select extends Component {
 
 	const RENDER_FILTER = 'msls_input_select_name';
 
@@ -28,7 +28,7 @@ class Select implements InputInterface {
 
 		$this->options = new Group( '' );
 		foreach ( $arr as $key => $value ) {
-			$this->options->add( new Option( $key, strval( $value ), $selected ) );
+			$this->options->add( new Option( strval( $key ), strval( $value ), $selected ) );
 		}
 	}
 

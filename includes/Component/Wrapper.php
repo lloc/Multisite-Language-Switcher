@@ -2,7 +2,7 @@
 
 namespace lloc\Msls\Component;
 
-class Wrapper {
+final class Wrapper extends Component {
 
 	protected string $element;
 
@@ -14,6 +14,6 @@ class Wrapper {
 	}
 
 	public function render(): string {
-		return sprintf( '<%1$s>%2$s</%1$s>', esc_html( $this->element ), wp_kses_post( $this->content ) );
+		return sprintf( '<%1$s>%2$s</%1$s>', esc_html( $this->element ), wp_kses( $this->content, self::get_allowed_html() ) );
 	}
 }

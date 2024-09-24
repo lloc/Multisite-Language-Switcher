@@ -2,7 +2,7 @@
 
 namespace lloc\Msls;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
 
@@ -186,7 +186,7 @@ final class MslsMetaBox extends MslsMain {
 					$args = array(
 						'post_type'         => $type,
 						'selected'          => $mydata->$language,
-						'name'              => InputInterface::INPUT_PREFIX . $language,
+						'name'              => Component::INPUT_PREFIX . $language,
 						'show_option_none'  => ' ',
 						'option_none_value' => 0,
 						'sort_column'       => 'menu_order, post_title',
@@ -270,13 +270,14 @@ final class MslsMetaBox extends MslsMain {
 	 * @return string
 	 */
 	public function render_option( int $post_id, int $msls_id ): string {
-		return wp_kses_post(
+		return wp_kses(
 			sprintf(
 				'<option value="%d" %s>%s</option>',
 				esc_attr( $post_id ),
 				selected( $post_id, $msls_id, false ),
 				get_the_title( $post_id )
-			)
+			),
+			Component::get_allowed_html()
 		);
 	}
 
@@ -323,12 +324,13 @@ final class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
-			echo wp_kses_post(
+			echo wp_kses(
 				sprintf(
 					'<ul>%s</ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
 					$items,
 					$post_type
-				)
+				),
+				Component::get_allowed_html()
 			);
 
 			$post = $temp;

@@ -2,6 +2,7 @@
 
 namespace lloc\Msls\ContentImport;
 
+use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\MslsBlogCollection;
@@ -86,7 +87,7 @@ class MetaBox extends MslsRegistryInstance {
 			$output = ( new Wrapper( 'p', $warning ) )->render();
 		}
 
-		echo wp_kses_post( $output );
+		echo wp_kses( $output, Component::get_allowed_html() );
 	}
 
 	protected function inline_thickbox_url( array $data = array() ): string {
@@ -172,7 +173,7 @@ class MetaBox extends MslsRegistryInstance {
 		$html = ob_get_clean();
 
 		if ( $echo ) {
-			echo wp_kses_post( $html );
+			echo wp_kses( $html, Component::get_allowed_html() );
 		}
 
 		return $html;

@@ -1,4 +1,4 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Icon;
 
@@ -10,7 +10,7 @@ use lloc\Msls\MslsPlugin;
  *
  * @package lloc\Msls\Component
  */
-class IconLabel extends Icon {
+final class IconLabel extends Icon {
 
 	/**
 	 * @return string

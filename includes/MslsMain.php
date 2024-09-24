@@ -2,7 +2,7 @@
 
 namespace lloc\Msls;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
 /**
  * Abstraction for the hook classes
@@ -75,9 +75,9 @@ class MslsMain {
 			return $arr;
 		}
 
-		$offset = strlen( InputInterface::INPUT_PREFIX );
+		$offset = strlen( Component::INPUT_PREFIX );
 		foreach ( $input_post as $key => $value ) {
-			if ( false === strpos( $key, InputInterface::INPUT_PREFIX ) || empty( $value ) ) {
+			if ( false === strpos( $key, Component::INPUT_PREFIX ) || empty( $value ) ) {
 				continue;
 			}
 
