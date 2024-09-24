@@ -243,15 +243,16 @@ class MslsAdminIcon {
 				$icon = sprintf(
 					'<span class="language-badge %s">%s</span>',
 					esc_attr( $this->language ),
-					wp_kses( $text, Component::get_allowed_html() )
+					$text
 				);
+
 				break;
 			default:
 				$class = empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit';
 				$icon  = sprintf( '<span class="dashicons %s"></span>', esc_attr( $class ) );
 		}
 
-		return $icon;
+		return wp_kses( $icon, Component::get_allowed_html() );
 	}
 
 	/**

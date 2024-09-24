@@ -79,7 +79,10 @@ class MslsPostTagClassic extends MslsPostTag {
 
 			$this->maybe_set_linked_term( $mydata );
 
-			printf( wp_kses( $title_format, Component::get_allowed_html() ), esc_html( $this->get_select_title() ) );
+			echo wp_kses(
+				sprintf( $title_format, esc_html( $this->get_select_title() ), esc_attr( $type ) ),
+				Component::get_allowed_html()
+			);
 
 			foreach ( $blogs as $blog ) {
 				$this->print_option( $blog, $type, $mydata, $item_format );
@@ -128,7 +131,10 @@ class MslsPostTagClassic extends MslsPostTag {
 			}
 		}
 
-		printf( wp_kses_post( $item_format ), esc_attr( $language ), wp_kses_post( $icon ), wp_kses_post( $options ) );
+		echo wp_kses(
+			sprintf( $item_format, esc_attr( $language ), $icon, $options ),
+			Component::get_allowed_html()
+		);
 
 		restore_current_blog();
 	}

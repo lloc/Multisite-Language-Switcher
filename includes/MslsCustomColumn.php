@@ -93,10 +93,13 @@ class MslsCustomColumn extends MslsMain {
 						$icon->set_href( (int) $mydata->$language );
 					}
 
-					printf(
-						'<span class="msls-icon-wrapper %1$s">%2$s</span>',
-						esc_attr( $this->options->get_icon_type() ),
-						wp_kses( $icon->get_a(), Component::get_allowed_html() )
+					echo wp_kses(
+						sprintf(
+							'<span class="msls-icon-wrapper %1$s">%2$s</span>',
+							esc_attr( $this->options->get_icon_type() ),
+							$icon->get_a()
+						),
+						Component::get_allowed_html()
 					);
 
 					restore_current_blog();
