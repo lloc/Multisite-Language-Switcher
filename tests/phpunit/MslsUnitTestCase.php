@@ -22,6 +22,7 @@ class MslsUnitTestCase extends TestCase {
 		\Mockery::namedMock( 'WooCommerce', \stdClass::class );
 
 		Functions\when( 'esc_html' )->returnArg();
+		Functions\when( 'esc_html__' )->returnArg();
 		Functions\when( 'esc_attr' )->returnArg();
 		Functions\when( 'esc_url' )->returnArg();
 		Functions\when( '__' )->returnArg();

@@ -373,7 +373,6 @@ class TestMslsAdmin extends MslsUnitTestCase {
 		$obj = $this->get_sut();
 
 		Functions\expect( 'add_settings_field' )->times( 12 )->andReturnFirstArg();
-		Functions\expect( 'esc_html__' )->times( 12 )->andReturnFirstArg();
 
 		$this->assertEquals( 12, $obj->main_section() );
 	}
@@ -382,7 +381,6 @@ class TestMslsAdmin extends MslsUnitTestCase {
 		$obj = $this->get_sut();
 
 		Functions\expect( 'add_settings_field' )->times( 5 )->andReturnFirstArg();
-		Functions\expect( 'esc_html__' )->times( 5 )->andReturnFirstArg();
 
 		$this->assertEquals( 5, $obj->advanced_section() );
 	}
