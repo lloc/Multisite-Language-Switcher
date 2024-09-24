@@ -8,6 +8,8 @@ use lloc\Msls\MslsSqlCacher;
 class TestMslsSqlCacher extends MslsUnitTestCase {
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$wpdb = \Mockery::mock( \WPDB::class );
 
 		$wpdb->shouldReceive( 'prepare' )->andReturn( '' );
@@ -18,8 +20,6 @@ class TestMslsSqlCacher extends MslsUnitTestCase {
 
 	public function test_create(): void {
 		global $wpdb;
-
-		Functions\expect( 'esc_attr' )->atLeast()->once()->andReturnFirstArg();
 
 		$wpdb = \Mockery::mock( \WPDB::class );
 

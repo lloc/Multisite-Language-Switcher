@@ -30,7 +30,7 @@ class WP_Widget {
 	 * @return string ID attribute for `$field_name`.
 	 */
 	public function get_field_id( string $field_name ) {
-		return sprintf( 'field-id-%s', esc_attr( $field_name ) );
+		return sprintf( 'field-id-%s', $field_name );
 	}
 
 	/**
@@ -39,6 +39,6 @@ class WP_Widget {
 	 * @return string Name attribute for `$field_name`.
 	 */
 	public function get_field_name( $field_name ) {
-		return sprintf( 'field-name-%s', esc_attr( $field_name ) );
+		return sprintf( 'field-name-%s', $field_name );
 	}
 }

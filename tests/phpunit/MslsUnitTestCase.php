@@ -21,22 +21,21 @@ class MslsUnitTestCase extends TestCase {
 
 		\Mockery::namedMock( 'WooCommerce', \stdClass::class );
 
+		Functions\when( '__' )->returnArg();
+		Functions\when( 'esc_attr' )->returnArg();
 		Functions\when( 'esc_html' )->returnArg();
 		Functions\when( 'esc_html__' )->returnArg();
-		Functions\when( 'esc_attr' )->returnArg();
 		Functions\when( 'esc_url' )->returnArg();
-		Functions\when( '__' )->returnArg();
 		Functions\when( 'wp_kses' )->returnArg();
 		Functions\when( 'wp_kses_post' )->returnArg();
 		Functions\when( 'sanitize_text_field' )->returnArg();
 	}
 
-
 	protected function tearDown(): void {
 		restore_error_handler();
 
-		Monkey\tearDown();
 		\Mockery::close();
+		Monkey\tearDown();
 
 		parent::tearDown();
 	}
