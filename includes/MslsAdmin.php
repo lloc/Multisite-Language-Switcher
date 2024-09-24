@@ -68,7 +68,7 @@ final class MslsAdmin extends MslsMain {
 	}
 
 	/**
-	 * Get's the link for the switcher-settings in the wp-admin
+	 * Gets the link for the switcher-settings in the wp-admin
 	 *
 	 * @return string
 	 */
