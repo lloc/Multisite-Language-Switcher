@@ -239,7 +239,7 @@ final class MslsMetaBox extends MslsMain {
 
 	/**
 	 * @param string $type
-	 * @param int    $msls_id
+	 * @param ?int   $msls_id
 	 *
 	 * @return string
 	 */
@@ -269,7 +269,7 @@ final class MslsMetaBox extends MslsMain {
 	 *
 	 * @return string
 	 */
-	public function render_option( int $post_id, int $msls_id ): string {
+	public function render_option( int $post_id, ?int $msls_id ): string {
 		return wp_kses(
 			sprintf(
 				'<option value="%d" %s>%s</option>',
