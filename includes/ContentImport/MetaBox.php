@@ -80,7 +80,7 @@ class MetaBox extends MslsRegistryInstance {
 						. '</p>';
 		}
 
-		echo $output;
+		echo wp_kses_post( $output );
 	}
 
 	protected function inline_thickbox_url( array $data = array() ): string {
