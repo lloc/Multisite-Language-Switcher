@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tests/phpunit/bootstrap.php" backupGlobals="true" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="tests/phpunit/bootstrap.php"
+         backupGlobals="true"
+         colors="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         cacheDirectory=".phpunit.cache">
   <php>
     <const name="MSLS_PLUGIN_PATH" value="multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
     <const name="MSLS_PLUGIN__FILE__" value="/var/www/html/wp-content/plugins/multisite-language-switcher/MultisiteLanguageSwitcher.php"/>

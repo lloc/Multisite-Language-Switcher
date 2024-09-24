@@ -17,13 +17,9 @@ use lloc\Msls\MslsPostType;
 class TestMslsMetaBox extends MslsUnitTestCase {
 
 	protected function setUp(): void {
-		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 2 ) . '/' );
+		parent::setUp();
 
-		Functions\when( 'esc_attr' )->returnArg();
-		Functions\when( 'esc_html' )->returnArg();
-		Functions\when( 'esc_url' )->returnArg();
-		Functions\when( 'wp_kses' )->returnArg();
-		Functions\when( '__' )->returnArg();
+		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 2 ) . '/' );
 
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
@@ -69,7 +65,6 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
 		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'pending', 'draft', 'future' ) );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
-		Functions\expect( 'sanitize_text_field' )->times( 2 )->andReturnFirstArg();
 		Functions\expect( 'get_posts' )->once()->andReturn( array( $post ) );
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();

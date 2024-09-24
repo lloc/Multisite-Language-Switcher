@@ -2,6 +2,7 @@
 
 namespace lloc\Msls\ContentImport\LogWriters;
 
+use lloc\Msls\Component\Component;
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\MslsRegistryInstance;
 
@@ -141,7 +142,7 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 		}
 
 		if ( $echo ) {
-			echo $html;
+			echo wp_kses( $html, Component::get_allowed_html() );
 		}
 
 		// we've shown it, no reason to keep it

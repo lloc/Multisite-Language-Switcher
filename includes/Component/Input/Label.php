@@ -1,14 +1,15 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
 /**
  * Class Label
+ *
  * @package lloc\Msls\Component\Input
  */
-class Label implements InputInterface {
+final class Label extends Component {
 
 	/**
 	 * @var string
@@ -33,7 +34,6 @@ class Label implements InputInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		return sprintf( '<label for="%1$s">%2$s</label>', $this->key, $this->text );
+		return sprintf( '<label for="%1$s">%2$s</label>', esc_html( $this->key ), esc_html( $this->text ) );
 	}
-
 }

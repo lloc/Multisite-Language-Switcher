@@ -7,14 +7,14 @@
   },
   "dependencies": {
     "less": "^4.2.0",
-    "less-plugin-clean-css": "^1.5.1",
-    "uglify-js": "^3.17.4"
+    "less-plugin-clean-css": "^1.6.0",
+    "uglify-js": "^3.19.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.44.0",
-    "@types/node": "^20.12.11",
-    "@wordpress/e2e-test-utils": "^11.0.0",
-    "@wordpress/scripts": "^27.9.0",
+    "@playwright/test": "^1.47.2",
+    "@types/node": "^22.5.5",
+    "@wordpress/e2e-test-utils": "^11.8.0",
+    "@wordpress/scripts": "^30.0.2",
     "dotenv": "^16.4.5"
   }
 }

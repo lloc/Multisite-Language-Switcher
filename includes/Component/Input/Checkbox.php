@@ -1,15 +1,15 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
 /**
  * Class Checkbox
  *
  * @package lloc\Msls\Component\Input
  */
-class Checkbox implements InputInterface {
+final class Checkbox extends Component {
 
 	/**
 	 * @var string
@@ -36,8 +36,8 @@ class Checkbox implements InputInterface {
 	public function render(): string {
 		return sprintf(
 			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
-			$this->key,
-			$this->selected
+			esc_attr( $this->key ),
+			$this->selected // phpcs:ignore WordPress.Security.EscapeOutput
 		);
 	}
 }

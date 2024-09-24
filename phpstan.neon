@@ -6,6 +6,5 @@ parameters:
         - includes
     excludePaths:
         - vendor
-        - tests
     bootstrapFiles:
         - tests/phpstan/bootstrap.php

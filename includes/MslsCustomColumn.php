@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Component;
+
 /**
  * Handling of existing/not existing translations in the backend listings of
  * various post types
@@ -91,10 +93,13 @@ class MslsCustomColumn extends MslsMain {
 						$icon->set_href( (int) $mydata->$language );
 					}
 
-					printf(
-						'<span class="msls-icon-wrapper %1$s">%2$s</span>',
-						esc_attr( $this->options->get_icon_type() ),
-						$icon->get_a()
+					echo wp_kses(
+						sprintf(
+							'<span class="msls-icon-wrapper %1$s">%2$s</span>',
+							esc_attr( $this->options->get_icon_type() ),
+							$icon->get_a()
+						),
+						Component::get_allowed_html()
 					);
 
 					restore_current_blog();

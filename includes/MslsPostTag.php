@@ -8,6 +8,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Component;
+
 /**
  * Post Tag
  *
@@ -71,7 +73,7 @@ class MslsPostTag extends MslsMain {
 			restore_current_blog();
 		}
 
-		wp_die( $json->encode() );
+		wp_die( $json->encode() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public static function init(): void {
@@ -160,7 +162,12 @@ class MslsPostTag extends MslsMain {
 
 			$this->maybe_set_linked_term( $mydata );
 
-			printf( $title_format, $this->get_select_title(), $type );
+			$allowed_html = Component::get_allowed_html();
+
+			echo wp_kses(
+				sprintf( $title_format, esc_html( $this->get_select_title() ), esc_attr( $type ) ),
+				$allowed_html
+			);
 
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
@@ -179,7 +186,10 @@ class MslsPostTag extends MslsMain {
 					}
 				}
 
-				printf( $item_format, $blog->userblog_id, $icon, $language, $value, $title );
+				echo wp_kses(
+					sprintf( $item_format, esc_attr( $blog->userblog_id ), $icon, esc_attr( $language ), esc_attr( $value ), esc_attr( $title ) ),
+					$allowed_html
+				);
 
 				restore_current_blog();
 			}

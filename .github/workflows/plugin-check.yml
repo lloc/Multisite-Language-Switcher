@@ -1,0 +1,22 @@
+name: Plugin Check
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - master
+      - 'releases/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Composer dependencies
+        run: composer install --no-dev --no-interaction --optimize-autoloader
+      - name: Build
+        run:  composer run-script build
+      - name: Run plugin check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './multisite-language-switcher'

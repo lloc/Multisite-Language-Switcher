@@ -1,11 +1,10 @@
-<?php
-
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
-class Text implements InputInterface {
+final class Text extends Component {
 
 	const DEFAULT_SIZE = 30;
 
@@ -50,8 +49,8 @@ class Text implements InputInterface {
 			'<input type="text" class="regular-text" id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$d"%4$s/>',
 			esc_attr( $this->key ),
 			esc_attr( $this->value ),
-			$this->size,
-			esc_attr( $this->readonly )
+			esc_attr( $this->size ),
+			$this->readonly // phpcs:ignore WordPress.Security.EscapeOutput
 		);
 	}
 }

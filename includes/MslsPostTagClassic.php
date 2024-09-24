@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Component;
+
 /**
  * Post Tag Classic
  *
@@ -77,7 +79,10 @@ class MslsPostTagClassic extends MslsPostTag {
 
 			$this->maybe_set_linked_term( $mydata );
 
-			printf( $title_format, $this->get_select_title() );
+			echo wp_kses(
+				sprintf( $title_format, esc_html( $this->get_select_title() ), esc_attr( $type ) ),
+				Component::get_allowed_html()
+			);
 
 			foreach ( $blogs as $blog ) {
 				$this->print_option( $blog, $type, $mydata, $item_format );
@@ -119,14 +124,17 @@ class MslsPostTagClassic extends MslsPostTag {
 			foreach ( $terms as $term ) {
 				$options .= sprintf(
 					'<option value="%s" %s>%s</option>',
-					$term->term_id,
+					esc_attr( $term->term_id ),
 					selected( $term->term_id, $mydata->$language, false ),
-					$term->name
+					esc_html( $term->name )
 				);
 			}
 		}
 
-		printf( $item_format, $language, $icon, $options );
+		echo wp_kses(
+			sprintf( $item_format, esc_attr( $language ), $icon, $options ),
+			Component::get_allowed_html()
+		);
 
 		restore_current_blog();
 	}

@@ -1,15 +1,15 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
 /**
  * Class Option
  *
  * @package lloc\Msls\Component\Input
  */
-class Option implements InputInterface {
+final class Option extends Component {
 
 	/**
 	 * @var string

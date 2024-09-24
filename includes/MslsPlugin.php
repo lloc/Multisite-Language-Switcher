@@ -102,7 +102,7 @@ class MslsPlugin {
 	}
 
 	public static function print_alternate_links(): void {
-		echo msls_output()->get_alternate_links(), PHP_EOL;
+		echo msls_output()->get_alternate_links(), PHP_EOL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -190,7 +190,7 @@ class MslsPlugin {
 	 */
 	public static function message_handler( $message, $css_class = 'error' ) {
 		if ( ! empty( $message ) ) {
-			printf( '<div id="msls-warning" class="%s"><p>%s</p></div>', $css_class, $message );
+			printf( '<div id="msls-warning" class="%s"><p>%s</p></div>', esc_attr( $css_class ), esc_html( $message ) );
 
 			return true;
 		}

@@ -8,6 +8,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Component;
+
 /**
  * The standard widget of the Multisite Language Switcher
  *
@@ -15,7 +17,7 @@ namespace lloc\Msls;
  */
 class MslsWidget extends \WP_Widget {
 
-	public $id_base = 'mslswidget';
+	public const ID_BASE = 'mslswidget';
 
 	public function __construct() {
 		$name = apply_filters(
@@ -23,7 +25,7 @@ class MslsWidget extends \WP_Widget {
 			__( 'Multisite Language Switcher', 'multisite-language-switcher' )
 		);
 
-		parent::__construct( $this->id_base, $name, array( 'show_instance_in_rest' => true ) );
+		parent::__construct( self::ID_BASE, $name, array( 'show_instance_in_rest' => true ) );
 	}
 
 	public static function init(): void {
@@ -51,7 +53,7 @@ class MslsWidget extends \WP_Widget {
 		/** This filter is documented in wp-includes/default-widgets.php */
 		$title = apply_filters( 'widget_title', $instance['title'] ?? '', $instance, $this->id_base );
 		if ( $title ) {
-			$title = $args['before_title'] . esc_attr( $title ) . $args['after_title'];
+			$title = $args['before_title'] . esc_html( $title ) . $args['after_title'];
 		}
 
 		$content = msls_output()->__toString();
@@ -60,7 +62,10 @@ class MslsWidget extends \WP_Widget {
 			$content = apply_filters( 'msls_widget_alternative_content', $text );
 		}
 
-		echo $args['before_widget'], $title, $content, $args['after_widget'];
+		echo wp_kses(
+			$args['before_widget'] . $title . $content . $args['after_widget'],
+			Component::get_allowed_html()
+		);
 	}
 
 	/**
@@ -95,7 +100,7 @@ class MslsWidget extends \WP_Widget {
 			( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' )
 		);
 
-		echo $form;
+		echo wp_kses( $form, Component::get_allowed_html() );
 
 		return $form;
 	}

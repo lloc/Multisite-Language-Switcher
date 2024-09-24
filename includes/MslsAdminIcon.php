@@ -2,6 +2,7 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Icon\IconSvg;
 use lloc\Msls\Component\Icon\IconLabel;
 
@@ -69,7 +70,8 @@ class MslsAdminIcon {
 	 * @param string $type
 	 */
 	public function __construct( ?string $type = null ) {
-		$this->type = esc_attr( $type );
+		$this->type = $type;
+
 		$this->set_path();
 	}
 
@@ -241,15 +243,16 @@ class MslsAdminIcon {
 				$icon = sprintf(
 					'<span class="language-badge %s">%s</span>',
 					esc_attr( $this->language ),
-					wp_kses( $text, array( 'span' => array() ) )
+					$text
 				);
+
 				break;
 			default:
 				$class = empty( $this->href ) ? 'dashicons-plus' : 'dashicons-edit';
 				$icon  = sprintf( '<span class="dashicons %s"></span>', esc_attr( $class ) );
 		}
 
-		return $icon;
+		return wp_kses( $icon, Component::get_allowed_html() );
 	}
 
 	/**

@@ -10,6 +10,8 @@
 
 namespace lloc\Msls\ContentImport\Importers;
 
+use lloc\Msls\MslsRequest;
+
 /**
  * Trait WithRequestPostAttributes
  *
@@ -24,14 +26,11 @@ trait WithRequestPostAttributes {
 	 * @param string $default The default post type to return if none is specified in the `$_REQUEST` super-global.
 	 *
 	 * @return string Either the post type read from the `$_REQUEST` super-global, or the default value.
-	 * @since TBD
-	 *
+\    *
 	 */
 	protected function read_post_type_from_request( $default = 'post' ) {
-		if ( ! isset( $_REQUEST['post_type'] ) ) {
-			return $default;
-		}
+		$request = MslsRequest::get_request( array( 'post_type' ), $default );
 
-		return filter_var( $_REQUEST['post_type'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ?: 'post';
+		return $request['post_type'];
 	}
 }

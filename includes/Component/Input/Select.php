@@ -1,10 +1,10 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
-class Select implements InputInterface {
+final class Select extends Component {
 
 	const RENDER_FILTER = 'msls_input_select_name';
 
@@ -28,7 +28,7 @@ class Select implements InputInterface {
 
 		$this->options = new Group( '' );
 		foreach ( $arr as $key => $value ) {
-			$this->options->add( new Option( $key, strval( $value ), $selected ) );
+			$this->options->add( new Option( strval( $key ), strval( $value ), $selected ) );
 		}
 	}
 
@@ -42,7 +42,7 @@ class Select implements InputInterface {
 			'<select id="%1$s" name="%2$s">%3$s</select>',
 			esc_attr( $this->key ),
 			esc_attr( $name ),
-			$this->options->render()
+			$this->options->render() // phpcs:ignore WordPress.Security.EscapeOutput
 		);
 	}
 }

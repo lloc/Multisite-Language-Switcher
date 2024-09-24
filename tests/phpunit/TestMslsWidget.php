@@ -65,7 +65,7 @@ class TestMslsWidget extends MslsUnitTestCase {
 	}
 
 	public function test_form(): void {
-		$expected = '<p><label for="title">Title:</label> <input class="widefat" id="title" name="title" type="text" value="" /></p>';
+		$expected = '<p><label for="field-id-title">Title:</label> <input class="widefat" id="field-id-title" name="field-name-title" type="text" value="" /></p>';
 
 		$this->expectOutputString( $expected );
 
