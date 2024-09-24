@@ -13,6 +13,8 @@ class MslsFields {
 	const FIELD_MSLS_NONCENAME = 'msls_noncename';
 	const FIELD_MSLS_ID        = 'msls_id';
 	const FIELD_MSLS_LANG      = 'msls_lang';
+	const FIELD_MSLS_IMPORT    = 'msls_import';
+	const FIELD_POST           = 'post';
 
 	const CONFIG = array(
 		self::FIELD_BLOG_ID        => array(
@@ -50,6 +52,14 @@ class MslsFields {
 		self::FIELD_MSLS_LANG      => array(
 			INPUT_GET,
 			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_MSLS_IMPORT    => array(
+			INPUT_POST,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_POST           => array(
+			INPUT_GET,
+			FILTER_SANITIZE_NUMBER_INT,
 		),
 	);
 }

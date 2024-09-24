@@ -121,7 +121,7 @@ class MetaBox extends MslsRegistryInstance {
 		?>
 		<div style="display: none;" id="msls-import-dialog-<?php echo esc_attr( $slug ); ?>">
 			<h3><?php esc_html_e( 'Select what should be imported and how', 'multisite-language-switcher' ); ?></h3>
-			<form action="<?php echo add_query_arg( array() ); ?>" method="post">
+			<form action="<?php echo esc_url( add_query_arg( array() ) ); ?>" method="post">
 				<?php wp_nonce_field( MslsPlugin::path(), 'msls_noncename' ); ?>
 				<?php foreach ( $data as $key => $value ) : ?>
 					<input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $value ); ?>">
@@ -172,7 +172,7 @@ class MetaBox extends MslsRegistryInstance {
 		$html = ob_get_clean();
 
 		if ( $echo ) {
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		return $html;

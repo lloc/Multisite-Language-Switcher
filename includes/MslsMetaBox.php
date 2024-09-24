@@ -222,7 +222,8 @@ final class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
-			printf( '<ul>%s</ul>', $lis );
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo ( new Wrapper( 'ul', $lis ) )->render();
 
 			$post = $temp;
 		} else {
