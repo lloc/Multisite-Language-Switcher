@@ -109,13 +109,15 @@ final class MslsAdmin extends MslsMain {
 		);
 
 		if ( isset( $checkboxes[ $method ] ) ) {
-			echo ( new Group() )
+			$group = ( new Group() )
 				->add( new Checkbox( $method, $this->options->$method ) )
-				->add( new Label( $method, $checkboxes[ $method ] ) )
-				->render();
+				->add( new Label( $method, $checkboxes[ $method ] ) );
+
+			echo $group->render(); // phpcs:ignore WordPress.Security.EscapeOutput
 		} else {
-			$value = ! empty( $this->options->$method ) ? $this->options->$method : '';
-			echo ( new Text( $method, $value ) )->render();
+			$text = new Text( $method, ! empty( $this->options->$method ) ? $this->options->$method : '' );
+
+			echo $text->render(); // // phpcs:ignore WordPress.Security.EscapeOutput
 		}
 	}
 
