@@ -6,6 +6,7 @@ use lloc\Msls\Component\InputInterface;
 
 /**
  * Class Label
+ *
  * @package lloc\Msls\Component\Input
  */
 class Label implements InputInterface {
@@ -33,7 +34,6 @@ class Label implements InputInterface {
 	 * @return string
 	 */
 	public function render(): string {
-		return sprintf( '<label for="%1$s">%2$s</label>', $this->key, $this->text );
+		return sprintf( '<label for="%1$s">%2$s</label>', esc_html( $this->key ), esc_html( $this->text ) );
 	}
-
 }

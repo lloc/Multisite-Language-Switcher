@@ -42,7 +42,7 @@ class Select implements InputInterface {
 			'<select id="%1$s" name="%2$s">%3$s</select>',
 			esc_attr( $this->key ),
 			esc_attr( $name ),
-			$this->options->render()
+			$this->options->render() // phpcs:ignore WordPress.Security.EscapeOutput
 		);
 	}
 }

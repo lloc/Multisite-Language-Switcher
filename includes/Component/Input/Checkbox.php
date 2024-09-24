@@ -36,8 +36,8 @@ class Checkbox implements InputInterface {
 	public function render(): string {
 		return sprintf(
 			'<input type="checkbox" id="%1$s" name="msls[%1$s]" value="1" %2$s/>',
-			$this->key,
-			$this->selected
+			esc_attr( $this->key ),
+			$this->selected // phpcs:ignore WordPress.Security.EscapeOutput
 		);
 	}
 }

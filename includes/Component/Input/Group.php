@@ -48,7 +48,7 @@ class Group implements InputInterface {
 	public function render(): string {
 		$items = array_map(
 			function ( InputInterface $input ) {
-				return $input->render();
+				return $input->render(); // phpcs:ignore WordPress.Security.EscapeOutput
 			},
 			$this->arr
 		);
