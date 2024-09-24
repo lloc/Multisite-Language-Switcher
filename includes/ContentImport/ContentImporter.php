@@ -9,6 +9,7 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMain;
 use lloc\Msls\MslsOptionsPost;
 use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\MslsRequest;
 
 /**
  * Class ContentImporter
@@ -166,11 +167,12 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @return array|bool
 	 */
 	public function parse_sources() {
-		if ( ! isset( $_POST['msls_import'] ) ) {
+		if ( ! MslsRequest::has_var( 'msls_import' ) ) {
 			return false;
 		}
 
-		$import_data = array_filter( explode( '|', trim( $_POST['msls_import'] ) ), 'is_numeric' );
+		$msls_import = MslsRequest::get_var( 'msls_import' );
+		$import_data = array_filter( explode( '|', trim( $msls_import ) ), 'is_numeric' );
 
 		if ( count( $import_data ) !== 2 ) {
 			return false;
@@ -195,8 +197,9 @@ class ContentImporter extends MslsRegistryInstance {
 			return $id;
 		}
 
-		if ( isset( $_REQUEST['post'] ) && filter_var( $_REQUEST['post'], FILTER_VALIDATE_INT ) ) {
-			return (int) $_REQUEST['post'];
+		$request = MslsRequest::get_request( array( 'post' ) );
+		if ( ! empty( $request['post'] ) ) {
+			return (int) $request['post'];
 		}
 
 		$data = array(

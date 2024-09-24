@@ -76,6 +76,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @param string[] $arr
 	 */
 	function the_msls( array $arr = array() ): void {
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo get_the_msls( $arr );
 	}
 

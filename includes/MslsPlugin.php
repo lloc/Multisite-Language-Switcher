@@ -102,7 +102,7 @@ class MslsPlugin {
 	}
 
 	public static function print_alternate_links(): void {
-		echo msls_output()->get_alternate_links(), PHP_EOL;
+		echo msls_output()->get_alternate_links(), PHP_EOL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

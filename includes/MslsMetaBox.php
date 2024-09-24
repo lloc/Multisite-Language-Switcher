@@ -3,6 +3,7 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
 
 /**
@@ -62,6 +63,7 @@ final class MslsMetaBox extends MslsMain {
 			restore_current_blog();
 		}
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		wp_die( $json->encode() );
 	}
 
@@ -200,37 +202,38 @@ final class MslsMetaBox extends MslsMain {
 					 */
 					$args = (array) apply_filters( 'msls_meta_box_render_select_hierarchical', $args );
 
-					$selects .= wp_dropdown_pages( $args );
+					$selects .= wp_dropdown_pages( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				} else {
 					$selects .= sprintf(
-						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
-						$language,
-						$this->render_options( $type, $mydata->$language )
+						'<select name="msls_input_%1$s"><option value="0"></option>%2$s</select>',
+						esc_attr( $language ),
+						$this->render_options( $type, $mydata->$language ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					);
 				}
 
 				$lis .= sprintf(
-					'<li><label for="msls_input_%s msls-icon-wrapper %4$s">%s</label>%s</li>',
-					$language,
-					$icon,
-					$selects,
+					'<li><label for="msls_input_%1$s msls-icon-wrapper %4$s">%2$s</label>%3$s</li>',
+					esc_attr( $language ),
+					$icon, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$selects, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					esc_attr( $icon_type )
 				);
 
 				restore_current_blog();
 			}
 
-			printf( '<ul>%s</ul>', $lis );
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo ( new Wrapper( 'ul', $lis ) )->render();
 
 			$post = $temp;
 		} else {
-			printf(
-				'<p>%s</p>',
-				__(
-					'You should define at least another blog in a different language in order to have some benefit from this plugin!',
-					'multisite-language-switcher'
-				)
+			$message = esc_html__(
+				'You should define at least another blog in a different language in order to have some benefit from this plugin!',
+				'multisite-language-switcher'
 			);
+
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo ( new Wrapper( 'p', $message ) )->render();
 		}
 	}
 
@@ -267,11 +270,13 @@ final class MslsMetaBox extends MslsMain {
 	 * @return string
 	 */
 	public function render_option( int $post_id, int $msls_id ): string {
-		return sprintf(
-			'<option value="%d" %s>%s</option>',
-			$post_id,
-			selected( $post_id, $msls_id, false ),
-			get_the_title( $post_id )
+		return wp_kses_post(
+			sprintf(
+				'<option value="%d" %s>%s</option>',
+				esc_attr( $post_id ),
+				selected( $post_id, $msls_id, false ),
+				get_the_title( $post_id )
+			)
 		);
 	}
 
@@ -318,21 +323,23 @@ final class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
-			printf(
-				'<ul>%s</ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
-				$items,
-				$post_type
+			echo wp_kses_post(
+				sprintf(
+					'<ul>%s</ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
+					$items,
+					$post_type
+				)
 			);
 
 			$post = $temp;
 		} else {
-			printf(
-				'<p>%s</p>',
-				__(
-					'You should define at least another blog in a different language in order to have some benefit from this plugin!',
-					'multisite-language-switcher'
-				)
+			$message = esc_html__(
+				'You should define at least another blog in a different language in order to have some benefit from this plugin!',
+				'multisite-language-switcher'
 			);
+
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo ( new Wrapper( 'p', $message ) )->render();
 		}
 	}
 

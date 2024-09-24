@@ -27,14 +27,10 @@ class TestMslsLink extends MslsUnitTestCase {
 	}
 
 	public function test_get_description(): void {
-		Functions\when( '__' )->returnArg();
-
 		$this->assertEquals( 'Flag and description', MslsLink::get_description() );
 	}
 
 	public function test_get_types_description(): void {
-		Functions\when( '__' )->returnArg();
-
 		$this->assertCount( 4, MslsLink::get_types_description() );
 	}
 
