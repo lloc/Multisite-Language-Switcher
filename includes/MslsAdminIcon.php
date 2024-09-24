@@ -2,6 +2,7 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Icon\IconSvg;
 use lloc\Msls\Component\Icon\IconLabel;
 
@@ -242,7 +243,7 @@ class MslsAdminIcon {
 				$icon = sprintf(
 					'<span class="language-badge %s">%s</span>',
 					esc_attr( $this->language ),
-					wp_kses( $text, array( 'span' => array() ) )
+					wp_kses( $text, Component::get_allowed_html() )
 				);
 				break;
 			default:
