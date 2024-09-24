@@ -141,7 +141,7 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 		}
 
 		if ( $echo ) {
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		// we've shown it, no reason to keep it

@@ -62,6 +62,7 @@ final class MslsMetaBox extends MslsMain {
 			restore_current_blog();
 		}
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		wp_die( $json->encode() );
 	}
 
@@ -200,20 +201,20 @@ final class MslsMetaBox extends MslsMain {
 					 */
 					$args = (array) apply_filters( 'msls_meta_box_render_select_hierarchical', $args );
 
-					$selects .= wp_dropdown_pages( $args );
+					$selects .= wp_dropdown_pages( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				} else {
 					$selects .= sprintf(
-						'<select name="msls_input_%s"><option value="0"></option>%s</select>',
-						$language,
-						$this->render_options( $type, $mydata->$language )
+						'<select name="msls_input_%1$s"><option value="0"></option>%2$s</select>',
+						esc_attr( $language ),
+						$this->render_options( $type, $mydata->$language ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					);
 				}
 
 				$lis .= sprintf(
-					'<li><label for="msls_input_%s msls-icon-wrapper %4$s">%s</label>%s</li>',
-					$language,
-					$icon,
-					$selects,
+					'<li><label for="msls_input_%1$s msls-icon-wrapper %4$s">%2$s</label>%3$s</li>',
+					esc_attr( $language ),
+					$icon, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$selects, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					esc_attr( $icon_type )
 				);
 
@@ -269,7 +270,7 @@ final class MslsMetaBox extends MslsMain {
 	public function render_option( int $post_id, int $msls_id ): string {
 		return sprintf(
 			'<option value="%d" %s>%s</option>',
-			$post_id,
+			esc_attr( $post_id ),
 			selected( $post_id, $msls_id, false ),
 			get_the_title( $post_id )
 		);

@@ -53,6 +53,7 @@ final class MslsCustomFilter extends MslsMain {
 
 			$id = MslsRequest::get( MslsFields::FIELD_MSLS_FILTER, 0 );
 
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo ( new Select( MslsFields::FIELD_MSLS_FILTER, $options, $id ) )->render();
 		}
 	}
