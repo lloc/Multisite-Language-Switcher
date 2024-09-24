@@ -3,6 +3,7 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
 
 /**
@@ -225,13 +226,13 @@ final class MslsMetaBox extends MslsMain {
 
 			$post = $temp;
 		} else {
-			printf(
-				'<p>%s</p>',
-				__(
-					'You should define at least another blog in a different language in order to have some benefit from this plugin!',
-					'multisite-language-switcher'
-				)
+			$message = esc_html__(
+				'You should define at least another blog in a different language in order to have some benefit from this plugin!',
+				'multisite-language-switcher'
 			);
+
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo ( new Wrapper( 'p', $message ) )->render();
 		}
 	}
 
@@ -268,11 +269,13 @@ final class MslsMetaBox extends MslsMain {
 	 * @return string
 	 */
 	public function render_option( int $post_id, int $msls_id ): string {
-		return sprintf(
-			'<option value="%d" %s>%s</option>',
-			esc_attr( $post_id ),
-			selected( $post_id, $msls_id, false ),
-			get_the_title( $post_id )
+		return wp_kses_post(
+			sprintf(
+				'<option value="%d" %s>%s</option>',
+				esc_attr( $post_id ),
+				selected( $post_id, $msls_id, false ),
+				get_the_title( $post_id )
+			)
 		);
 	}
 
@@ -319,21 +322,23 @@ final class MslsMetaBox extends MslsMain {
 				restore_current_blog();
 			}
 
-			printf(
-				'<ul>%s</ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
-				$items,
-				$post_type
+			echo wp_kses_post(
+				sprintf(
+					'<ul>%s</ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
+					$items,
+					$post_type
+				)
 			);
 
 			$post = $temp;
 		} else {
-			printf(
-				'<p>%s</p>',
-				__(
-					'You should define at least another blog in a different language in order to have some benefit from this plugin!',
-					'multisite-language-switcher'
-				)
+			$message = esc_html__(
+				'You should define at least another blog in a different language in order to have some benefit from this plugin!',
+				'multisite-language-switcher'
 			);
+
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo ( new Wrapper( 'p', $message ) )->render();
 		}
 	}
 
