@@ -1,15 +1,15 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
 /**
  * Class Label
  *
  * @package lloc\Msls\Component\Input
  */
-class Label implements InputInterface {
+final class Label extends Component {
 
 	/**
 	 * @var string

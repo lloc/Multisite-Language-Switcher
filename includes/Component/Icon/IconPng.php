@@ -1,4 +1,4 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Icon;
 
@@ -7,9 +7,10 @@ use lloc\Msls\MslsPlugin;
 
 /**
  * Class IconPng
+ *
  * @package lloc\Msls\Component
  */
-class IconPng extends Icon {
+final class IconPng extends Icon {
 
 	const FLAGS_FILE = 'flags/flags.php';
 
@@ -28,5 +29,4 @@ class IconPng extends Icon {
 	public function get( string $language ): string {
 		return $this->map[ $language ] ?? $this->maybe( $language, '', '.png' );
 	}
-
 }

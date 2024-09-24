@@ -1,11 +1,10 @@
-<?php
-
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
-class Text implements InputInterface {
+final class Text extends Component {
 
 	const DEFAULT_SIZE = 30;
 

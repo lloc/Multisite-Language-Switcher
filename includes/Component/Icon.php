@@ -1,9 +1,10 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component;
 
 /**
  * Class Icon
+ *
  * @package lloc\Msls\Component
  */
 abstract class Icon {
@@ -48,5 +49,4 @@ abstract class Icon {
 	 * @return string
 	 */
 	abstract public function get( string $language ): string;
-
 }

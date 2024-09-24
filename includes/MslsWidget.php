@@ -8,6 +8,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Component\Component;
+
 /**
  * The standard widget of the Multisite Language Switcher
  *
@@ -60,7 +62,10 @@ class MslsWidget extends \WP_Widget {
 			$content = apply_filters( 'msls_widget_alternative_content', $text );
 		}
 
-		echo wp_kses_post( $args['before_widget'] . $title . $content . $args['after_widget'] );
+		echo wp_kses(
+			$args['before_widget'] . $title . $content . $args['after_widget'],
+			Component::get_allowed_html()
+		);
 	}
 
 	/**
@@ -95,7 +100,7 @@ class MslsWidget extends \WP_Widget {
 			( isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' )
 		);
 
-		echo wp_kses_post( $form );
+		echo wp_kses( $form, Component::get_allowed_html() );
 
 		return $form;
 	}

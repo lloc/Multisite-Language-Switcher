@@ -1,15 +1,15 @@
-<?php
+<?php declare( strict_types = 1 );
 
 namespace lloc\Msls\Component\Input;
 
-use lloc\Msls\Component\InputInterface;
+use lloc\Msls\Component\Component;
 
 /**
  * Class Checkbox
  *
  * @package lloc\Msls\Component\Input
  */
-class Checkbox implements InputInterface {
+final class Checkbox extends Component {
 
 	/**
 	 * @var string

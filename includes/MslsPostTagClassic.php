@@ -77,7 +77,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 			$this->maybe_set_linked_term( $mydata );
 
-			printf( wp_kses_post( $title_format ), esc_html( $this->get_select_title() ) );
+			printf( wp_kses( $title_format ), esc_html( $this->get_select_title() ) );
 
 			foreach ( $blogs as $blog ) {
 				$this->print_option( $blog, $type, $mydata, $item_format );
