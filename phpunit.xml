@@ -4,8 +4,16 @@
          bootstrap="tests/phpunit/bootstrap.php"
          backupGlobals="true"
          colors="true"
+         testdox="false"
+         displayDetailsOnIncompleteTests="true"
+         displayDetailsOnSkippedTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
-         cacheDirectory=".phpunit.cache">
+         displayDetailsOnPhpunitDeprecations="true"
+         cacheDirectory=".phpunit.cache"
+>
   <php>
     <const name="MSLS_PLUGIN_PATH" value="multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
     <const name="MSLS_PLUGIN__FILE__" value="/var/www/html/wp-content/plugins/multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
