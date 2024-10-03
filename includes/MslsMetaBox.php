@@ -273,7 +273,7 @@ final class MslsMetaBox extends MslsMain {
 		return wp_kses(
 			sprintf(
 				'<option value="%d" %s>%s</option>',
-				esc_attr( $post_id ),
+				esc_attr( strval( $post_id ) ),
 				selected( $post_id, $msls_id, false ),
 				get_the_title( $post_id )
 			),
