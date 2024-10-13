@@ -17,6 +17,9 @@ use lloc\Msls\Component\Component;
  */
 class MslsPostTag extends MslsMain {
 
+	const EDIT_ACTION = 'msls_post_tag_edit_input';
+	const ADD_ACTION  = 'msls_post_tag_add_input';
+
 	/**
 	 * Suggest
 	 *
@@ -95,6 +98,10 @@ class MslsPostTag extends MslsMain {
 	 * @param string $taxonomy
 	 */
 	public function add_input( string $taxonomy ): void {
+		if ( did_action( self::ADD_ACTION ) ) {
+			return;
+		}
+
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
@@ -106,6 +113,8 @@ class MslsPostTag extends MslsMain {
 		echo '<div class="form-field">';
 		$this->the_input( null, $title_format, $item_format );
 		echo '</div>';
+
+		do_action( self::ADD_ACTION, $taxonomy );
 	}
 
 	/**
@@ -115,6 +124,10 @@ class MslsPostTag extends MslsMain {
 	 * @param string   $taxonomy
 	 */
 	public function edit_input( \WP_Term $tag, string $taxonomy ): void {
+		if ( did_action( self::EDIT_ACTION ) ) {
+			return;
+		}
+
 		$title_format = '<tr>
 			<th colspan="2">
 			<strong>%s</strong>
@@ -134,6 +147,8 @@ class MslsPostTag extends MslsMain {
 			</tr>';
 
 		$this->the_input( $tag, $title_format, $item_format );
+
+		do_action( self::EDIT_ACTION, $tag, $taxonomy );
 	}
 
 	/**
