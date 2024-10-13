@@ -1,5 +1,13 @@
 ## 2.9.2
 
+- Addressed some of the errors that were reported by PHPStan
+- Upgrade of PHPUnit to version 10
+- Raise coverage
+- Plugin check workflow added and existing workflows updated
+- Updated JS dependencies
+- Fix for build script
+- Security fixes
+- Fix double output
 
 ## 2.9.1
 
