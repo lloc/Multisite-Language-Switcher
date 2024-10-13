@@ -17,8 +17,6 @@ use lloc\Msls\Component\Component;
  */
 class MslsPostTag extends MslsMain {
 
-	protected int $excution_counter = 0;
-
 	/**
 	 * Suggest
 	 *
@@ -150,10 +148,6 @@ class MslsPostTag extends MslsMain {
 	 * @return boolean
 	 */
 	public function the_input( ?\WP_Term $tag, string $title_format, string $item_format ): bool {
-		if ( $this->already_executed() ) {
-			return false;
-		}
-
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			$term_id = $tag->term_id ?? 0;
@@ -260,15 +254,5 @@ class MslsPostTag extends MslsMain {
 			'msls_term_select_title',
 			__( 'Multisite Language Switcher', 'multisite-language-switcher' )
 		);
-	}
-
-	protected function already_executed(): bool {
-		if ( $this->excution_counter > 0 ) {
-			return true;
-		}
-
-		++$this->excution_counter;
-
-		return false;
 	}
 }

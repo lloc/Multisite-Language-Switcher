@@ -31,3 +31,4 @@ phpstan.neon
 phpunit.xml
 playwright.config.ts
 setup.sh
+multisite-language-switcher.zip
