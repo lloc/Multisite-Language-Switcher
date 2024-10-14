@@ -10,7 +10,7 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^10",
+    "phpunit/phpunit": "^11",
     "brain/monkey": "^2.6",
     "phpstan/phpstan": "^1.11",
     "szepeviktor/phpstan-wordpress": "^1.3",
