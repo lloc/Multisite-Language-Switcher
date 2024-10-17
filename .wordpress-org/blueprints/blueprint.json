@@ -1,5 +1,5 @@
 {
-  "landingPage": "/wp-admin/options-general.php?page=MslsAdmin",
+  "landingPage": "\/wp-admin\/options-general.php?page=MslsAdmin",
   "preferredVersions": {
     "php": "8.1",
     "wp": "latest"
@@ -15,6 +15,12 @@
       "step": "login",
       "username": "admin",
       "password": "password"
+    },
+    {
+      "step": "defineWpConfigConsts",
+      "consts": {
+        "IS_PLAYGROUND_PREVIEW": true
+      }
     }
   ]
 }
