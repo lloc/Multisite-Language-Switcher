@@ -1,0 +1,18 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "login": true,
+  "siteOptions": {
+    "blogname": "Multisite Language Switcher Demo"
+  },
+  "steps": [
+    {
+      "enableMultisite"
+    },
+    {
+      "installPlugin": "multisite-language-switcher"
+    },
+    {
+      "activatePlugin": "multisite-language-switcher"
+    }
+  ]
+}
