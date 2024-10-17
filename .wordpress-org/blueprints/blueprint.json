@@ -2,14 +2,14 @@
   "landingPage": "\/wp-admin\/options-general.php?page=MslsAdmin",
   "preferredVersions": {
     "php": "8.1",
-    "wp": "latest"
+    "wp": "6.6"
   },
   "phpExtensionBundles": [
     "kitchen-sink"
   ],
   "steps": [
     {
-      "enableMultisite"
+      "step": "enableMultisite"
     },
     {
       "step": "login",
