@@ -1,18 +1,32 @@
 {
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
-  "login": true,
-  "siteOptions": {
-    "blogname": "Multisite Language Switcher Demo"
+  "phpExtensionBundles": [
+    "kitchen-sink"
+  ],
+  "features": {
+    "networking": true
   },
   "steps": [
     {
-      "enableMultisite"
+      "step": "enableMultisite"
     },
     {
-      "installPlugin": "multisite-language-switcher"
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "wordpress.org/plugins",
+        "slug": "multisite-language-switcher"
+      },
+      "options": {
+        "activate": true
+      }
     },
     {
-      "activatePlugin": "multisite-language-switcher"
+      "step": "wp-cli",
+      "command": "wp site create --slug=test"
+    },
+    {
+      "step": "wp-cli",
+      "command": "wp site create --slug=test"
     }
   ]
 }
