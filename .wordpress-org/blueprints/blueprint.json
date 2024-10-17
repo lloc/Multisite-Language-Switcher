@@ -1,32 +1,20 @@
 {
-  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/options-general.php?page=MslsAdmin",
+  "preferredVersions": {
+    "php": "8.1",
+    "wp": "latest"
+  },
   "phpExtensionBundles": [
     "kitchen-sink"
   ],
-  "features": {
-    "networking": true
-  },
   "steps": [
     {
-      "step": "enableMultisite"
+      "enableMultisite"
     },
     {
-      "step": "installPlugin",
-      "pluginZipFile": {
-        "resource": "wordpress.org/plugins",
-        "slug": "multisite-language-switcher"
-      },
-      "options": {
-        "activate": true
-      }
-    },
-    {
-      "step": "wp-cli",
-      "command": "wp site create --slug=test"
-    },
-    {
-      "step": "wp-cli",
-      "command": "wp site create --slug=test"
+      "step": "login",
+      "username": "admin",
+      "password": "password"
     }
   ]
 }
