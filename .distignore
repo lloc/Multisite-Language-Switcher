@@ -15,7 +15,6 @@
 .distignore
 .gitattributes
 .gitignore
-
 .scrutinizer.yml
 Changelog.md
 Diagrams.md

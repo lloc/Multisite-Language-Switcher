@@ -81,10 +81,13 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 
 == Screenshots ==
 
-1. Plugin configuration
-2. Posts list
-3. Edit post
-4. Widget
+1. Plugin configuration with labels
+2. Plugin configuration with flag
+3. Posts list with label
+4. Post list with flag
+5. Edit post with label and select2
+6. Edit post with flag and dropdown
+7. Non-styled output of the widget, block and shortcode
 
 == Changelog ==
 

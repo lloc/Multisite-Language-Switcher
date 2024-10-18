@@ -4,8 +4,6 @@ on: # rebuild any PRs and main branch changes
   push:
     branches:
       - master
-      - 'releases/*'
-
 jobs:
   test:
     runs-on: ubuntu-latest
