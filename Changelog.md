@@ -1,3 +1,7 @@
+## 2.9.3
+
+- bugfix Welsh css flag
+
 ## 2.9.2
 
 - Addressed some of the errors that were reported by PHPStan
