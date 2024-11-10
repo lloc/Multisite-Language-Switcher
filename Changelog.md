@@ -1,3 +1,7 @@
+## 2.9.4
+
+- fix: type casting for msls_id in render_option call
+
 ## 2.9.3
 
 - bugfix Welsh css flag
