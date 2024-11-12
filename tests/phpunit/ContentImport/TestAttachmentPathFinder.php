@@ -44,4 +44,33 @@ class TestAttachmentPathFinder extends MslsUnitTestCase {
 
 		$this->assertEquals( $expected, $this->test->filter_srcset( $source, null, $imageSrc, null, $attachmentId ) );
 	}
+
+	public static function dataprovider_filter_attachement_url(): array {
+		$generic_obj = (object) array( 'guid' => 'http://example.com/image.jpg' );
+
+		$post_mock       = \Mockery::mock( '\WP_Post' );
+		$post_mock->guid = 'http://example.com/image.jpg';
+
+		return array(
+			array( 'http://example.com/image.jpg', $generic_obj, 42 ),
+			array( 'http://example.com/image.jpg', $generic_obj, 0 ),
+			array( 'http://example.com/image.jpg', $post_mock, 42 ),
+		);
+	}
+
+	/**
+	 * @dataProvider dataprovider_filter_attachement_url
+	 */
+	public function test_filter_attachment_url( string $image_src, $source_post, int $attachment_id ): void {
+		$msls_imported = array(
+			'blog' => 1,
+			'post' => 1,
+		);
+
+		Functions\expect( 'get_post_meta' )->zeroOrMoreTimes()->andReturn( $msls_imported );
+		Functions\expect( 'delete_post_meta' )->zeroOrMoreTimes();
+		Functions\expect( 'get_blog_post' )->zeroOrMoreTimes()->andReturn( $source_post );
+
+		$this->assertEquals( $source_post->guid, $this->test->filter_attachment_url( $image_src, $attachment_id ) );
+	}
 }

@@ -126,7 +126,7 @@ final class MslsAdmin extends MslsMain {
 	 *
 	 * @return bool
 	 */
-	public function has_problems(): bool {
+	public function has_problems(): void {
 		$message = '';
 
 		if ( $this->options->is_empty() ) {
@@ -148,7 +148,7 @@ final class MslsAdmin extends MslsMain {
 			);
 		}
 
-		return MslsPlugin::message_handler( $message, 'updated fade' );
+		MslsPlugin::message_handler( $message, 'updated fade' );
 	}
 
 	/**

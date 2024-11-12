@@ -12,6 +12,10 @@ abstract class Component {
 	const INPUT_PREFIX = 'msls_input_';
 
 	const ALLOWED_HTML = array(
+		'form'   => array(
+			'action' => array(),
+			'method' => array(),
+		),
 		'label'  => array(
 			'for' => array(),
 		),

@@ -151,6 +151,8 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'get_admin_url' )->atLeast()->once()->andReturn( '/wp-admin/edit-tags.php' );
 		Functions\expect( 'get_term' )->atLeast()->once()->andReturnNull();
 
+		Actions\expectDone( MslsPostTag::ADD_ACTION );
+
 		$output = '<div class="form-field"><h3>Multisite Language Switcher</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="post"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/><label for="msls_title_"><a title="Create a new translation in the de_DE-blog" href="/wp-admin/edit-tags.php"><span class="language-badge de_DE"><span>de</span><span>DE</span></span></a>&nbsp;</label>
@@ -161,6 +163,9 @@ class TestMslsPostTag extends MslsUnitTestCase {
 
 		$this->expectOutputString( $output );
 
+		$this->test->add_input( 'test' );
+
+		// second call should not output anything
 		$this->test->add_input( 'test' );
 	}
 

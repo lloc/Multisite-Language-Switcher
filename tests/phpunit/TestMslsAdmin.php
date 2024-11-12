@@ -60,47 +60,31 @@ class TestMslsAdmin extends MslsUnitTestCase {
 		return new MslsAdmin( $options, $collection );
 	}
 
-	public function test_has_problems_no_problem(): void {
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'get_available_languages' )->andReturns( array( 'de_DE', 'it_IT' ) );
-
-		$collection = \Mockery::mock( MslsBlogCollection::class );
-		$options->shouldReceive( 'is_empty' )->andReturns( false );
-
-		$obj = new MslsAdmin( $options, $collection );
-
-		$this->assertFalse( $obj->has_problems() );
+	public static function has_problems_data(): array {
+		return array(
+			array( array( 'de_DE', 'it_IT' ), false, '/^$/' ),
+			array( array( 'de_DE' ), false, '/^<div id="msls-warning" class="updated fade"><p>.*$/' ),
+			array( array(), true, '/^<div id="msls-warning" class="updated fade"><p>.*$/' ),
+		);
 	}
 
-	public function test_has_problems_one_language(): void {
-		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'get_available_languages' )->andReturns( array( 'de_DE' ) );
-
-		$collection = \Mockery::mock( MslsBlogCollection::class );
-		$options->shouldReceive( 'is_empty' )->andReturns( false );
-
-		$obj = new MslsAdmin( $options, $collection );
-
-		$this->expectOutputRegex( '/^<div id="msls-warning" class="updated fade"><p>.*$/' );
-
-		$this->assertTrue( $obj->has_problems() );
-	}
-
-	public function test_has_problems_is_empty(): void {
+	/**
+	 * @dataProvider has_problems_data
+	 */
+	public function test_has_problems( array $languages, bool $is_empty, string $regex ): void {
 		Functions\when( 'get_option' )->justReturn( array() );
 		Functions\when( 'get_current_blog_id' )->justReturn( 1 );
 		Functions\when( 'admin_url' )->justReturn( '' );
 
 		$options = \Mockery::mock( MslsOptions::class );
-		$options->shouldReceive( 'is_empty' )->andReturns( true );
+		$options->shouldReceive( 'get_available_languages' )->zeroOrMoreTimes()->andReturns( $languages );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$options->shouldReceive( 'is_empty' )->once()->andReturns( $is_empty );
 
-		$obj = new MslsAdmin( $options, $collection );
+		$this->expectOutputRegex( $regex );
 
-		$this->expectOutputRegex( '/^<div id="msls-warning" class="updated fade"><p>.*$/' );
-
-		$this->assertTrue( $obj->has_problems() );
+		( new MslsAdmin( $options, $collection ) )->has_problems();
 	}
 
 	public function test_subsubsub(): void {

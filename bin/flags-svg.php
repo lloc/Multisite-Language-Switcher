@@ -30,10 +30,10 @@
 $content    = file_get_contents( 'build/translations.json' );
 $json       = json_decode( $content );
 $glob       = glob( 'css-flags/flags/4x3/*.svg' );
-$exceptions = [
+$exceptions = array(
 	'ca'             => 'es-ca',
 	'eo'             => 'eu',
-	'cy'             => 'gb-ls',
+	'cy'             => 'gb-wls',
 	'gd'             => 'gb-sct',
 	'af'             => 'za',
 	'el'             => 'gr',
@@ -81,9 +81,9 @@ $exceptions = [
 	'de_CH_informal' => 'ch',
 	'de_DE_formal'   => 'de',
 	'nl_NL_formal'   => 'nl',
-];
+);
 
-$icons = $not_found = [];
+$icons = $not_found = array();
 
 echo '<?php', PHP_EOL, PHP_EOL;
 
@@ -121,9 +121,12 @@ $count = count( $glob );
 if ( $count > 0 ) {
 	echo '/**', PHP_EOL, " * {$count} unused icons in css-flags/flags/4x3/", PHP_EOL, ' * ', PHP_EOL;
 
-	array_walk( $glob, function ( &$item ) {
-		$item = substr( $item, 6 );
-	} );
+	array_walk(
+		$glob,
+		function ( &$item ) {
+			$item = substr( $item, 6 );
+		}
+	);
 
 	foreach ( array_chunk( $glob, 15 ) as $flags ) {
 		echo ' * ', implode( ', ', $flags ), PHP_EOL;

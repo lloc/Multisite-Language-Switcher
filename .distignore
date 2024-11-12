@@ -15,7 +15,6 @@
 .distignore
 .gitattributes
 .gitignore
-
 .scrutinizer.yml
 Changelog.md
 Diagrams.md
@@ -31,3 +30,4 @@ phpstan.neon
 phpunit.xml
 playwright.config.ts
 setup.sh
+multisite-language-switcher.zip

@@ -257,7 +257,7 @@ final class MslsMetaBox extends MslsMain {
 		);
 
 		foreach ( $posts as $post ) {
-			$options[] = $this->render_option( $post->ID, $msls_id );
+			$options[] = $this->render_option( $post->ID, intval($msls_id) );
 		}
 
 		return implode( PHP_EOL, $options );
@@ -273,7 +273,7 @@ final class MslsMetaBox extends MslsMain {
 		return wp_kses(
 			sprintf(
 				'<option value="%d" %s>%s</option>',
-				esc_attr( $post_id ),
+				esc_attr( strval( $post_id ) ),
 				selected( $post_id, $msls_id, false ),
 				get_the_title( $post_id )
 			),
