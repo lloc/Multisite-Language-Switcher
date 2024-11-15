@@ -10,6 +10,7 @@
 /legacy-tests
 /multisite-language-switcher
 /node_modules
+/out
 /src
 /tests
 .distignore
