@@ -56,9 +56,7 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 		$slug  = $import_coordinates->get_importer_for( $type ) ?: $first;
 
 		// if there is some incoherence return the null-doing base importer
-		$class = ! empty( $slug ) && isset( $map[ $slug ] )
-			? $map[ $slug ]
-			: BaseImporter::class;
+		$class = ! empty( $slug ) && isset( $map[ $slug ] ) ? $map[ $slug ] : BaseImporter::class;
 
 		return new $class( $import_coordinates );
 	}
