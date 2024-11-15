@@ -1,6 +1,6 @@
 @startuml class-diagram
   class "MslsCustomColumnTaxonomy\n<b>Handling of existing/not existing translations in the backend</b>" as MslsCustomColumnTaxonomy {
-    {static} +init()
+    #add_hooks()
     +column_default(deprecated, column_name, item_id)
     +delete(object_id)
   }
@@ -25,7 +25,7 @@
   }
   class "MslsContentTypes\n<b>Supported content types</b>" as MslsContentTypes {
     #request : string
-    #types : array
+    #types : string[]
     {static} +create()
     +is_post_type()
     +is_taxonomy()
@@ -73,14 +73,15 @@
     #get_select_title()
   }
   class "MslsLanguageArray\n<b>Stores the language input from post</b>" as MslsLanguageArray {
-    #arr : array
+    #arr : array<string, int>
     +__construct(arr)
     +set(key, value)
     +get_val(key)
     +get_arr(key)
   }
   class "MslsOutput\n<b>Output in the frontend</b>" as MslsOutput {
-    #tags : array
+    #tags : array<string, string>
+    {static} +init()
     +get(display, filter, exists)
     +get_alternate_links()
     +__toString()
@@ -89,7 +90,6 @@
     +is_requirements_not_fulfilled(thing, exists, language)
   }
   class "MslsWidget\n<b>The standard widget of the Multisite Language Switcher</b>" as MslsWidget {
-    +id_base : 
     +__construct()
     {static} +init()
     +widget(args, instance)
@@ -125,14 +125,14 @@
     {static} +get_description()
   }
   class "MslsMetaBox\n<b>Meta box for the edit mode of the (custom) post types</b>" as MslsMetaBox {
+    {static} +init()
     {static} +suggest()
     {static} +get_suggested_fields(json, args)
-    {static} +init()
     +add()
     +render_select()
     +render_options(type, msls_id)
     +render_option(post_id, msls_id)
-    +render_input(echo)
+    +render_input()
     +set(post_id)
     +maybe_set_linked_post(mydata)
   }
@@ -167,8 +167,7 @@
     +get_current_link()
   }
   class "MslsOptionsPost\n<b>Post options</b>" as MslsOptionsPost {
-    #sep : string
-    #autoload : string
+    #autoload : bool
     +get_postlink(language)
     +get_current_link()
   }
@@ -198,8 +197,7 @@
     +get_edit_new()
   }
   class "MslsOptionsTax\n<b>MslsOptionsTax</b>" as MslsOptionsTax {
-    #sep : string
-    #autoload : string
+    #autoload : bool
     {static} +create(id)
     +get_tax_query()
     +get_postlink(language)
@@ -219,8 +217,8 @@
     +get_current_link()
   }
   class "MslsRegistry\n<b>Registry instead of singletons</b>" as MslsRegistry {
-    {static} -arr : string[]
-    {static} -instance : MslsRegistry
+    -arr : string[]
+    -instance : ?MslsRegistry
     -get(key)
     -set(key, instance)
     {static} +instance()
@@ -229,11 +227,12 @@
   }
   class "MslsCustomColumn\n<b>Handling of existing/not existing translations in the backend listings of</b>" as MslsCustomColumn {
     {static} +init()
+    #add_hooks()
     +th(columns)
     +td(column_name, item_id)
   }
   class "MslsGetSet\n<b>Generic class for overloading properties</b>" as MslsGetSet {
-    #arr : array
+    #arr : array<string, mixed>
     +__set(key, value)
     +__get(key)
     +__isset(key)
@@ -244,10 +243,8 @@
     +get_arr()
   }
   class "MslsShortCode" as MslsShortCode {
-    #options : MslsOptions
-    +__construct(options)
     {static} +init()
-    +render_widget()
+    {static} +render_widget()
   }
   class "MslsSqlCacher\n<b>Wrapper to avoid direct SQL without caching</b>" as MslsSqlCacher {
     #db : wpdb
@@ -277,7 +274,6 @@
     #options : MslsOptions
     +__construct(options)
     {static} +init()
-    {static} +get_output()
     {static} +print_alternate_links()
     +custom_enqueue()
     {static} +plugins_url(path)
@@ -297,14 +293,14 @@
     {static} +init()
     +content_filter(content)
     +filter_string(pref, post)
+    +format_available_languages(links)
   }
   class "MslsBlogCollection\n<b>Collection of blog-objects</b>" as MslsBlogCollection {
     -current_blog_id : int
     -current_blog_output : bool
     -objects : MslsBlog[]
     -objects_order : string
-    -active_plugins : array
-    -hreflangmap : array
+    -active_plugins : string[]
     +__construct()
     {static} +get_configured_blog_description(blog_id, description)
     +get_blogs_of_reference_user(options)
@@ -332,11 +328,10 @@
     {static} +get_request(keys, default)
   }
   class "MslsOptions\n<b>General options class</b>" as MslsOptions {
-    #args : array
     #name : string
     #exists : bool
-    #sep : string
-    #autoload : string
+    #autoload : bool
+    #args : array<int, mixed>
     -available_languages : array<string, string>
     +with_front : bool
     {static} +create(id)
@@ -344,6 +339,7 @@
     {static} +is_tax_page()
     {static} +is_query_page()
     +__construct()
+    +get_option_name()
     +get_arg(index, default)
     +save(arr)
     +delete()
@@ -373,7 +369,7 @@
     #get_title(blog, blavatar)
   }
   class "MslsJson\n<b>Container for an array which will used in JavaScript as object in JSON</b>" as MslsJson {
-    #arr : array
+    #arr : array<int, array<string, (string|int)>>
     +add(value, label)
     {static} +compare(a, b)
     +get()
@@ -400,14 +396,13 @@
     #options : MslsOptions
     #collection : MslsBlogCollection
     +__construct(options, collection)
-    {static} +init()
+    {static} +create()
     +debugger(message)
     +get_input_array(object_id)
-    #get_input_value(key, value)
     +is_autosave(post_id)
     +verify_nonce()
     +delete(object_id)
-    #save(object_id, class)
+    #save(object_id, class_name)
   }
   class "MslsLinkTextOnly\n<b>Link type: Text only</b>" as MslsLinkTextOnly {
     #format_string : string
@@ -420,8 +415,8 @@
   }
   package ContentImport as ContentImport {
     class "Relations\n<b>Class Relations</b>" as ContentImport_Relations {
-      +to_create : MslsOptions[]
-      #local_options : MslsOptions[]
+      +to_create : array
+      #local_options : array
       #import_coordinates : ImportCoordinates
       +__construct(import_coordinates)
       +merge(relations)
@@ -446,7 +441,7 @@
       +set_importer_for(importer_type, slug)
     }
     class "MetaBox" as ContentImport_MetaBox {
-      #data : 
+      #data : array
       +render()
       #inline_thickbox_url(data)
       +print_modal_html()
@@ -463,8 +458,8 @@
       #get_source_post(attachment_id, msls_imported)
     }
     class "ImportLogger" as ContentImport_ImportLogger {
-      #levels_delimiter : 
-      #data : 
+      #levels_delimiter : string
+      #data : array<string, array>
       #import_coordinates : ImportCoordinates
       +__construct(import_coordinates)
       +merge(logger)
@@ -510,7 +505,7 @@
         +write(data)
       }
       class "AdminNoticeLogger" as ContentImport_LogWriters_AdminNoticeLogger {
-        #transient : 
+        #transient : string
         #import_coordinates : ImportCoordinates
         +write(data)
         #get_section_html(section_title, entries, escape_entries)
@@ -539,7 +534,7 @@
         {static} +info()
       }
       class "PostFieldsImporters" as ContentImport_Importers_PostFieldsImporters {
-        #importers_map : 
+        #importers_map : array<string, string>
         +details()
       }
       class "Map" as ContentImport_Importers_Map {
@@ -547,29 +542,29 @@
         +factories()
       }
       class "TermsImporters" as ContentImport_Importers_TermsImporters {
-        #importers_map : 
+        #importers_map : array<string, string>
         +details()
       }
       class "WithRequestPostAttributes\n<b>Trait WithRequestPostAttributes</b>" as ContentImport_Importers_WithRequestPostAttributes {
         #read_post_type_from_request(default)
       }
       class "PostThumbnailImporters" as ContentImport_Importers_PostThumbnailImporters {
-        #importers_map : 
+        #importers_map : array<string, string>
         +details()
       }
       class "PostMetaImporters" as ContentImport_Importers_PostMetaImporters {
-        #importers_map : 
+        #importers_map : array<string, string>
         +details()
       }
       class "ImportersBaseFactory" as ContentImport_Importers_ImportersBaseFactory {
-        #importers_map : array
+        #importers_map : array<string, string>
         +make(import_coordinates)
         +details()
         +selected()
         #importers_info()
       }
       class "AttachmentsImporters" as ContentImport_Importers_AttachmentsImporters {
-        #importers_map : 
+        #importers_map : array<string, string>
         +details()
       }
       interface "ImportersFactory" as ContentImport_Importers_ImportersFactory {
@@ -624,12 +619,19 @@
       {abstract} #get_include()
       {abstract} +get(language)
     }
-    interface "InputInterface\n<b>Interface Input</b>" as Component_InputInterface {
+    class "Component\n<b>Abstract class Input</b>" as Component_Component {
+      {abstract} +render()
+      {static} +get_allowed_html()
+    }
+    class "Wrapper" as Component_Wrapper {
+      #element : string
+      #content : string
+      +__construct(element, content)
       +render()
     }
     package Input as Component.Input {
       class "Group\n<b>Class Options</b>" as Component_Input_Group {
-        #arr : string[]
+        #arr : Component[]
         #glue : string
         +__construct(glue)
         +add(input)
@@ -663,7 +665,7 @@
       class "Text" as Component_Input_Text {
         #key : string
         #value : string
-        #size : string
+        #size : int
         #readonly : string
         +__construct(key, value, size, readonly)
         +render()
@@ -686,7 +688,7 @@
   }
   package Map as Map {
     class "HrefLang\n<b>Class HrefLang</b>" as Map_HrefLang {
-      #map : array
+      #map : array<string, string>
       +__construct(blogs)
       #get_hreflang(language)
       +get(language)
@@ -719,18 +721,20 @@
       +__construct(sql_cache)
     }
   }
+  Component_Component <|-- Component_Input_Checkbox
+  Component_Component <|-- Component_Input_Group
+  Component_Component <|-- Component_Input_Label
+  Component_Component <|-- Component_Input_Option
+  Component_Component <|-- Component_Input_Select
+  Component_Component <|-- Component_Input_Text
+  Component_Component <|-- Component_Wrapper
   Component_Icon <|-- Component_Icon_IconLabel
   Component_Icon <|-- Component_Icon_IconPng
   Component_Icon <|-- Component_Icon_IconSvg
   Component_Icon_IconPng ..> MslsPlugin
   Component_Icon_IconSvg ..> MslsPlugin
-  Component_InputInterface <|-- Component_Input_Checkbox
-  Component_InputInterface <|-- Component_Input_Group
-  Component_InputInterface <|-- Component_Input_Label
-  Component_InputInterface <|-- Component_Input_Option
-  Component_InputInterface <|-- Component_Input_Select
-  Component_InputInterface <|-- Component_Input_Text
-  Component_Input_Group ..> Component_InputInterface
+  Component_Input_Group "1" ..> "*" Component_Component
+  Component_Input_Group ..> Component_Component
   Component_Input_Select ..> Component_Input_Group
   Component_Input_Select ..> Component_Input_Option
   ContentImport_ContentImporter ..> ContentImport_ImportCoordinates
@@ -740,6 +744,7 @@
   ContentImport_ContentImporter ..> MslsBlogCollection
   ContentImport_ContentImporter ..> MslsMain
   ContentImport_ContentImporter ..> MslsOptionsPost
+  ContentImport_ContentImporter ..> MslsRequest
   ContentImport_ImportCoordinates ..> MslsBlogCollection
   ContentImport_ImportLogger ..> ContentImport_ImportCoordinates
   ContentImport_ImportLogger ..> ContentImport_ImportLogger
@@ -777,15 +782,18 @@
   ContentImport_Importers_PostThumbnail_Linking ..> ContentImport_AttachmentPathFinder
   ContentImport_Importers_Terms_ShallowDuplicating ..> MslsOptionsTax
   ContentImport_Importers_Terms_ShallowDuplicating ..> MslsOptionsTaxTerm
+  ContentImport_Importers_WithRequestPostAttributes ..> MslsRequest
+  ContentImport_LogWriters_AdminNoticeLogger ..> Component_Component
   ContentImport_LogWriters_AdminNoticeLogger ..> ContentImport_ImportCoordinates
   ContentImport_LogWriters_LogWriter <|-- ContentImport_LogWriters_AdminNoticeLogger
+  ContentImport_MetaBox ..> Component_Component
+  ContentImport_MetaBox ..> Component_Wrapper
   ContentImport_MetaBox ..> ContentImport_Importers_Map
   ContentImport_MetaBox ..> MslsBlogCollection
   ContentImport_MetaBox ..> MslsFields
   ContentImport_MetaBox ..> MslsOptionsPost
   ContentImport_MetaBox ..> MslsPlugin
   ContentImport_MetaBox ..> MslsRequest
-  ContentImport_Relations "1" ..> "*" MslsOptions
   ContentImport_Relations ..> ContentImport_ImportCoordinates
   ContentImport_Relations ..> ContentImport_Relations
   ContentImport_Relations ..> MslsOptions
@@ -798,7 +806,7 @@
   MslsAdmin ..> Component_Input_Label
   MslsAdmin ..> Component_Input_Select
   MslsAdmin ..> Component_Input_Text
-  MslsAdmin ..> MslsAdmin
+  MslsAdmin ..> MslsAdminIcon
   MslsAdmin ..> MslsLink
   MslsAdmin ..> MslsPlugin
   MslsAdmin ..> MslsRegistry
@@ -806,11 +814,11 @@
   MslsAdminBar ..> MslsBlog
   MslsAdminBar ..> MslsBlogCollection
   MslsAdminBar ..> MslsOptions
+  MslsAdminIcon ..> Component_Component
   MslsAdminIcon ..> Component_Icon_IconLabel
   MslsAdminIcon ..> Component_Icon_IconSvg
   MslsAdminIcon ..> MslsAdminIcon
   MslsAdminIcon ..> MslsAdminIconTaxonomy
-  MslsAdminIcon ..> MslsContentTypes
   MslsAdminIcon <|-- MslsAdminIconTaxonomy
   MslsAdminIconTaxonomy ..> MslsAdminIcon
   MslsAdminIconTaxonomy ..> MslsAdminIconTaxonomy
@@ -833,19 +841,14 @@
   MslsContentTypes ..> MslsTaxonomy
   MslsContentTypes <|-- MslsPostType
   MslsContentTypes <|-- MslsTaxonomy
+  MslsCustomColumn ..> Component_Component
   MslsCustomColumn ..> MslsAdminIcon
   MslsCustomColumn ..> MslsBlogCollection
-  MslsCustomColumn ..> MslsCustomColumn
   MslsCustomColumn ..> MslsOptions
-  MslsCustomColumn ..> MslsPostType
   MslsCustomColumn <|-- MslsCustomColumnTaxonomy
-  MslsCustomColumnTaxonomy ..> MslsCustomColumnTaxonomy
   MslsCustomColumnTaxonomy ..> MslsOptionsTax
-  MslsCustomColumnTaxonomy ..> MslsTaxonomy
   MslsCustomFilter ..> Component_Input_Select
-  MslsCustomFilter ..> MslsCustomFilter
   MslsCustomFilter ..> MslsFields
-  MslsCustomFilter ..> MslsPostType
   MslsCustomFilter ..> MslsRequest
   MslsCustomFilter ..> MslsSqlCacher
   MslsCustomFilter ..> Query_TranslatedPostIdQuery
@@ -861,6 +864,7 @@
   MslsLink <|-- MslsLinkImageOnly
   MslsLink <|-- MslsLinkTextImage
   MslsLink <|-- MslsLinkTextOnly
+  MslsMain ..> Component_Component
   MslsMain ..> MslsBlogCollection
   MslsMain ..> MslsFields
   MslsMain ..> MslsLanguageArray
@@ -874,18 +878,17 @@
   MslsMain <|-- MslsMetaBox
   MslsMain <|-- MslsOutput
   MslsMain <|-- MslsPostTag
+  MslsMetaBox ..> Component_Component
+  MslsMetaBox ..> Component_Wrapper
   MslsMetaBox ..> ContentImport_MetaBox
   MslsMetaBox ..> MslsAdminIcon
   MslsMetaBox ..> MslsFields
   MslsMetaBox ..> MslsJson
-  MslsMetaBox ..> MslsMetaBox
   MslsMetaBox ..> MslsOptionsPost
   MslsMetaBox ..> MslsPlugin
-  MslsMetaBox ..> MslsPostType
   MslsMetaBox ..> MslsRequest
   MslsOptions ..> Component_Icon_IconPng
   MslsOptions ..> MslsAdminIcon
-  MslsOptions ..> MslsContentTypes
   MslsOptions ..> MslsOptions
   MslsOptions ..> MslsOptionsPost
   MslsOptions ..> MslsOptionsQuery
@@ -915,7 +918,6 @@
   MslsOptionsQueryPostType ..> MslsSqlCacher
   MslsOptionsQueryYear ..> MslsSqlCacher
   MslsOptionsQueryYear ..> Query_YearPostsCounterQuery
-  MslsOptionsTax ..> MslsContentTypes
   MslsOptionsTax ..> MslsOptionsTax
   MslsOptionsTax ..> MslsOptionsTaxTerm
   MslsOptionsTax ..> MslsOptionsTaxTermCategory
@@ -936,8 +938,6 @@
   MslsPlugin ..> MslsFields
   MslsPlugin ..> MslsMetaBox
   MslsPlugin ..> MslsOptions
-  MslsPlugin ..> MslsOutput
-  MslsPlugin ..> MslsPlugin
   MslsPlugin ..> MslsPostTag
   MslsPlugin ..> MslsRequest
   MslsPlugin ..> MslsShortCode
@@ -945,18 +945,17 @@
   MslsPlugin ..> MslsWidget
   MslsPlugin ..> Query_BlogsInNetworkQuery
   MslsPlugin ..> Query_CleanupOptionsQuery
+  MslsPostTag ..> Component_Component
   MslsPostTag ..> MslsAdminIcon
-  MslsPostTag ..> MslsContentTypes
   MslsPostTag ..> MslsFields
   MslsPostTag ..> MslsJson
   MslsPostTag ..> MslsOptionsTax
-  MslsPostTag ..> MslsPostTag
   MslsPostTag ..> MslsPostTagClassic
   MslsPostTag ..> MslsRequest
   MslsPostTag <|-- MslsPostTagClassic
+  MslsPostTagClassic ..> Component_Component
   MslsPostTagClassic ..> MslsAdminIcon
   MslsPostTagClassic ..> MslsBlog
-  MslsPostTagClassic ..> MslsContentTypes
   MslsPostTagClassic ..> MslsOptionsTax
   MslsPostType ..> MslsRequest
   MslsRegistry ..> MslsRegistry
@@ -972,10 +971,9 @@
   MslsRegistryInstance <|-- MslsContentTypes
   MslsRegistryInstance <|-- MslsGetSet
   MslsRequest ..> MslsFields
-  MslsShortCode ..> MslsOptions
   MslsShortCode ..> MslsWidget
   MslsTaxonomy ..> MslsRequest
-  MslsWidget ..> MslsOutput
+  MslsWidget ..> Component_Component
   Query_AbstractQuery ..> MslsSqlCacher
   Query_AbstractQuery <|-- Query_AuthorPostsCounterQuery
   Query_AbstractQuery <|-- Query_BlogsInNetworkQuery

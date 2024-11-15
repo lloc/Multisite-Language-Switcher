@@ -29,11 +29,14 @@
   }
   Msls --> Input
   Msls <-[#red,plain,thickness=4]-> Query
+  Msls --> Component
   Msls <-[#red,plain,thickness=4]-> Map
   Msls <-[#red,plain,thickness=4]-> ContentImport
   Msls <-[#red,plain,thickness=4]-> Icon
+  ContentImport --> Component
   ContentImport <-[#red,plain,thickness=4]-> Importers
   ContentImport <-[#red,plain,thickness=4]-> LogWriters
+  LogWriters --> Component
   LogWriters --> Msls
   Importers <-[#red,plain,thickness=4]-> PostFields
   Importers --> Msls
@@ -41,8 +44,11 @@
   Importers <-[#red,plain,thickness=4]-> PostThumbnail
   Importers <-[#red,plain,thickness=4]-> PostMeta
   Importers <-[#red,plain,thickness=4]-> Attachments
+  PostMeta --> ContentImport
   PostThumbnail --> ContentImport
+  Terms --> ContentImport
   Terms --> Msls
+  PostFields --> ContentImport
   Input --> Component
   Icon --> Component
 @enduml
