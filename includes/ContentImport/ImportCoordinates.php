@@ -80,41 +80,20 @@ class ImportCoordinates {
 	 * @return string|null The import slug if set or `null` if not set.
 	 */
 	public function get_importer_for( $importer_type ) {
-		return isset( $this->importers[ $importer_type ] )
-			? $this->importers[ $importer_type ]
-			: null;
+		return $this->importers[ $importer_type ] ?? null;
 	}
 
 	/**
 	 * Parses the importers from request superglobals.
 	 */
 	public function parse_importers_from_request(): void {
-		// bitmask
-		$source = isset( $_REQUEST[ self::IMPORTERS_GLOBAL_KEY ] ) * 100
-					+ isset( $_POST[ self::IMPORTERS_GLOBAL_KEY ] ) * 10
-					+ isset( $_GET[ self::IMPORTERS_GLOBAL_KEY ] );
-
-		switch ( $source ) {
-			case 100:
-			case 101;
-			case 111:
-			case 110:
-				$source = $_REQUEST;
+		$importers = array();
+		foreach ( array( INPUT_POST, INPUT_GET ) as $input_type ) {
+			if ( filter_has_var( $input_type, self::IMPORTERS_GLOBAL_KEY ) ) {
+				$importers = filter_input( $input_type, self::IMPORTERS_GLOBAL_KEY, FILTER_FORCE_ARRAY );
 				break;
-			case 010:
-			case 011:
-			case 000:
-			default:
-				$source = $_POST;
-				break;
-			case 001:
-				$source = $_GET;
-				break;
+			}
 		}
-
-		$importers = isset( $source[ self::IMPORTERS_GLOBAL_KEY ] ) && is_array( $source[ self::IMPORTERS_GLOBAL_KEY ] )
-			? $source[ self::IMPORTERS_GLOBAL_KEY ]
-			: array();
 
 		foreach ( $importers as $importer_type => $slug ) {
 			$this->set_importer_for( $importer_type, $slug );
