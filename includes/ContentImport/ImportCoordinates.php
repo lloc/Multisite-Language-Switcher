@@ -3,7 +3,6 @@
 namespace lloc\Msls\ContentImport;
 
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsRequest;
 
 class ImportCoordinates {
 

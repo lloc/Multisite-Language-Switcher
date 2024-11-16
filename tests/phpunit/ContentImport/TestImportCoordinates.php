@@ -3,7 +3,6 @@
 namespace lloc\MslsTests\ContentImport;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
-use lloc\Msls\MslsFields;
 use lloc\MslsTests\MslsUnitTestCase;
 use Brain\Monkey\Functions;
 
