@@ -18,6 +18,7 @@
     <const name="MSLS_PLUGIN_PATH" value="multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
     <const name="MSLS_PLUGIN__FILE__" value="/var/www/html/wp-content/plugins/multisite-language-switcher/MultisiteLanguageSwitcher.php"/>
     <const name="WP_DEBUG" value="true"/>
+    <const name="HOUR_IN_SECONDS" value="3600"/>
   </php>
   <testsuite name="Internal tests">
     <directory prefix="Test" suffix=".php">tests/phpunit</directory>
