@@ -13,28 +13,28 @@ abstract class Component {
 
 	const ALLOWED_HTML = array(
 		'form'   => array(
-			'action' => array(),
-			'method' => array(),
+			'action' => true,
+			'method' => true,
 		),
 		'label'  => array(
-			'for' => array(),
+			'for' => true,
 		),
 		'option' => array(
-			'value'    => array(),
-			'selected' => array(),
+			'value'    => true,
+			'selected' => true,
 		),
 		'select' => array(
-			'id'   => array(),
-			'name' => array(),
+			'id'   => true,
+			'name' => true,
 		),
 		'input'  => array(
-			'type'     => array(),
-			'class'    => array(),
-			'id'       => array(),
-			'name'     => array(),
-			'value'    => array(),
-			'size'     => array(),
-			'readonly' => array(),
+			'type'     => true,
+			'class'    => true,
+			'id'       => true,
+			'name'     => true,
+			'value'    => true,
+			'size'     => true,
+			'readonly' => true,
 		),
 	);
 
@@ -45,6 +45,8 @@ abstract class Component {
 
 	/**
 	 * Adds our input elements to the allowed HTML elements of a post
+	 *
+	 * @return array<string, array<string, bool>>
 	 */
 	public static function get_allowed_html(): array {
 		$my_allowed = wp_kses_allowed_html( 'post' );
