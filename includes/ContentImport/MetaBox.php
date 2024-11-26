@@ -14,6 +14,9 @@ use lloc\Msls\MslsRequest;
 
 class MetaBox extends MslsRegistryInstance {
 
+	/**
+	 * @var array<string, mixed>
+	 */
 	protected array $data = array();
 
 	/**
@@ -90,6 +93,11 @@ class MetaBox extends MslsRegistryInstance {
 		echo wp_kses( $output, Component::get_allowed_html() );
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return string
+	 */
 	protected function inline_thickbox_url( array $data = array() ): string {
 		$args = array_merge(
 			array(
@@ -111,6 +119,12 @@ class MetaBox extends MslsRegistryInstance {
 		echo $this->inline_thickbox_html( true, $this->data );
 	}
 
+	/**
+	 * @param bool                 $echo
+	 * @param array<string, mixed> $data
+	 *
+	 * @return string
+	 */
 	protected function inline_thickbox_html( $echo = true, array $data = array() ): string {
 		if ( ! isset( $data['msls_import'] ) ) {
 			return '';

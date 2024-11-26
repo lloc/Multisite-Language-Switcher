@@ -15,6 +15,11 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 	 */
 	protected $import_coordinates;
 
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return void
+	 */
 	public function write( array $data ) {
 		/* translators: %1$d: source post ID, %2$d: source blog ID, %3$d: destination post ID, %4$d: destination blog ID */
 		$format = esc_html__( 'From post %1$d on site %2$d to post %3$d on site %4$d', 'multisite-language-switcher' );
@@ -108,9 +113,9 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 	}
 
 	/**
-	 * @param string $section_title
-	 * @param array  $entries
-	 * @param bool   $escape_entries
+	 * @param string   $section_title
+	 * @param string[] $entries
+	 * @param bool     $escape_entries
 	 *
 	 * @return string
 	 */

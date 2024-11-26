@@ -106,9 +106,9 @@ class MslsPostTag extends MslsMain {
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
 
-		$item_format = '<label for="msls_title_%1$s">%2$s</label>
-			<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>';
+		$item_format = '<label for="msls_title_%1$d">%2$s</label>
+			<input type="hidden" id="msls_id_%1$d" name="msls_input_%3$s" value="%4$s"/>
+			<input class="msls_title" id="msls_title_%1$d" name="msls_title_%1$d" type="text" value="%5$s"/>';
 
 		echo '<div class="form-field">';
 		$this->the_input( null, $title_format, $item_format );
@@ -138,11 +138,11 @@ class MslsPostTag extends MslsMain {
 
 		$item_format = '<tr class="form-field">
 			<th scope="row">
-			<label for="msls_title_%1$s">%2$s</label>
+			<label for="msls_title_%1$d">%2$s</label>
 			</th>
 			<td>
-			<input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/>
-			<input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>
+			<input type="hidden" id="msls_id_%1$d" name="msls_input_%3$s" value="%4$s"/>
+			<input class="msls_title" id="msls_title_%1$d" name="msls_title_%1$d" type="text" value="%5$s"/>
 			</td>
 			</tr>';
 
@@ -195,10 +195,16 @@ class MslsPostTag extends MslsMain {
 					}
 				}
 
-				echo wp_kses(
-					sprintf( $item_format, esc_attr( $blog->userblog_id ), $icon, esc_attr( $language ), esc_attr( $value ), esc_attr( $title ) ),
-					$allowed_html
+				$content = sprintf(
+					$item_format,
+					$blog->userblog_id,
+					$icon,
+					esc_attr( $language ),
+					esc_attr( $value ),
+					esc_attr( $title )
 				);
+
+				echo wp_kses( $content, $allowed_html );
 
 				restore_current_blog();
 			}

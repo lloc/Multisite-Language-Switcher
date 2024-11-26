@@ -13,8 +13,14 @@ use lloc\Msls\MslsOptions;
  */
 class Relations {
 
+	/**
+	 * @var array<int, array<int, mixed>>
+	 */
 	public array $to_create = array();
 
+	/**
+	 * @var array<int, array<int, mixed>>
+	 */
 	protected array $local_options = array();
 
 	/**
@@ -45,7 +51,7 @@ class Relations {
 	}
 
 	/**
-	 * @return array
+	 * @return array<int, array<int, mixed>>
 	 */
 	public function get_data(): array {
 		return $this->to_create;

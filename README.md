@@ -9,7 +9,7 @@ A simple, powerful, and user-friendly plugin that adds multilingual support to y
 
 [Download](http://downloads.wordpress.org/plugin/multisite-language-switcher.zip) the latest stable from the [WordPress Plugin Directory](https://wordpress.org/plugins/multisite-language-switcher/), and please remember to give this plugin [a five-star rating](https://wordpress.org/support/plugin/multisite-language-switcher/reviews/#new-post).
 
-_Please note that the version of Multisite Language Switcher on GitHub is a work in progress._
+_Please note that while the master branch on GitHub is intended to be stable, it is not recommended for production use. Instead, please use the [official releases](https://github.com/lloc/Multisite-Language-Switcher/releases) for deployment._
 
 If you plan to use the GitHub repository on a server, don't forget to run `composer install --no-dev`.
 
