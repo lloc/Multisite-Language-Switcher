@@ -385,6 +385,7 @@ final class MslsAdmin extends MslsMain {
 				'multisite-language-switcher'
 			);
 
+			// phpcs:ignore WordPress.Security.EscapeOutput
 			trigger_error( sprintf( esc_html( $format ), strval( self::MAX_REFERENCE_USERS ) ) );
 		}
 
