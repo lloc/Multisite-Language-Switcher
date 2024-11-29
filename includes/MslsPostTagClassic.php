@@ -131,11 +131,12 @@ class MslsPostTagClassic extends MslsPostTag {
 				'hide_empty' => false,
 			)
 		);
-		if ( ! empty( $terms ) ) {
+
+		if ( is_array( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$options .= sprintf(
-					'<option value="%s" %s>%s</option>',
-					esc_attr( $term->term_id ),
+					'<option value="%d" %s>%s</option>',
+					$term->term_id,
 					selected( $term->term_id, $mydata->$language, false ),
 					esc_html( $term->name )
 				);

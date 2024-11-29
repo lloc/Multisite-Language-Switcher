@@ -2,14 +2,16 @@
 
 A simple, powerful, and user-friendly plugin that adds multilingual support to your [WordPress multisite](https://wordpress.org/documentation/article/create-a-network/) installation, whether using multiple subdomains or folders. Multisite Language Switcher allows you to effortlessly manage translations for posts, pages, custom post types, categories, tags, and custom taxonomies.
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/badges/quality-score.png?s=a2e5dbac2690bbd427f2d48b84473482e7e24fdb)](https://scrutinizer-ci.com/g/lloc/Multisite-Language-Switcher/) 
-[![codecov](https://codecov.io/gh/lloc/Multisite-Language-Switcher/graph/badge.svg?token=IlD4bX4KZ4)](https://codecov.io/gh/lloc/Multisite-Language-Switcher) 
+[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/multisite-language-switcher.svg)](https://wordpress.org/plugins/multisite-language-switcher/)
+[![License](https://img.shields.io/badge/license-GPL_v2%2B-blue.svg)](http://opensource.org/licenses/GPL-2.0)
+[![WordPress Tested](https://img.shields.io/wordpress/v/multisite-language-switcher.svg)](https://wordpress.org/plugins/multisite-language-switcher/)
+[![codecov](https://codecov.io/gh/lloc/Multisite-Language-Switcher/graph/badge.svg?token=IlD4bX4KZ4)](https://codecov.io/gh/lloc/Multisite-Language-Switcher)
 
 ## Where to get the plugin
 
 [Download](http://downloads.wordpress.org/plugin/multisite-language-switcher.zip) the latest stable from the [WordPress Plugin Directory](https://wordpress.org/plugins/multisite-language-switcher/), and please remember to give this plugin [a five-star rating](https://wordpress.org/support/plugin/multisite-language-switcher/reviews/#new-post).
 
-_Please note that the version of Multisite Language Switcher on GitHub is a work in progress._
+_Please note that while the master branch on GitHub is intended to be stable, it is not recommended for production use. Instead, please use the [official releases](https://github.com/lloc/Multisite-Language-Switcher/releases) for deployment._
 
 If you plan to use the GitHub repository on a server, don't forget to run `composer install --no-dev`.
 

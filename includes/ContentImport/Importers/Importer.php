@@ -9,9 +9,9 @@ use lloc\Msls\ContentImport\Relations;
 interface Importer {
 
 	/**
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function import( array $data );
 

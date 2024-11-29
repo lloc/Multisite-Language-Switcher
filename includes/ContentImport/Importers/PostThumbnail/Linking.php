@@ -32,6 +32,11 @@ class Linking extends BaseImporter {
 		);
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array<string, mixed>
+	 */
 	public function import( array $data ) {
 		$source_blog_id = $this->import_coordinates->source_blog_id;
 		$source_post_id = $this->import_coordinates->source_post_id;
@@ -142,7 +147,7 @@ class Linking extends BaseImporter {
 	/**
 	 * @param int $source_post_thumbnail_id
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function get_attachment_meta( $source_post_thumbnail_id ) {
 		$keys = array( '_wp_attached_file', '_wp_attachment_metadata', '_wp_attachment_image_alt' );

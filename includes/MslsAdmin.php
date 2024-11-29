@@ -124,7 +124,7 @@ final class MslsAdmin extends MslsMain {
 	/**
 	 * There is something wrong? Here comes the message...
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function has_problems(): void {
 		$message = '';
@@ -381,11 +381,12 @@ final class MslsAdmin extends MslsMain {
 
 			/* translators: %s: maximum number of users */
 			$format = __(
-				'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %s users. Please, use the hook "msls_reference_users" to filter the result before!',
+				'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %d users. Please, use the hook "msls_reference_users" to filter the result before!',
 				'multisite-language-switcher'
 			);
 
-			trigger_error( sprintf( esc_html( $format ), esc_attr( self::MAX_REFERENCE_USERS ) ) );
+			// phpcs:ignore WordPress.Security.EscapeOutput
+			trigger_error( sprintf( esc_html( $format ), strval( self::MAX_REFERENCE_USERS ) ) );
 		}
 
         // phpcs:ignore WordPress.Security.EscapeOutput
