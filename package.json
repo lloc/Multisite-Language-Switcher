@@ -8,13 +8,13 @@
   "dependencies": {
     "less": "^4.2.0",
     "less-plugin-clean-css": "^1.6.0",
-    "uglify-js": "^3.19.3"
+    "uglify-js": "^3.19.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.47.2",
-    "@types/node": "^22.5.5",
-    "@wordpress/e2e-test-utils": "^11.8.0",
-    "@wordpress/scripts": "^30.0.2",
-    "dotenv": "^16.4.5"
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.0",
+    "@wordpress/e2e-test-utils": "^11.13.0",
+    "@wordpress/scripts": "^30.6.0",
+    "dotenv": "^16.4.0"
   }
 }
