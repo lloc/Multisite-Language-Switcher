@@ -7,16 +7,12 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\LogWriters\AdminNoticeLogger;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestAdminNoticeLogger extends MslsUnitTestCase {
-
-	public function setUp(): void {
-		parent::setUp();
-
-		$this->test = new AdminNoticeLogger();
-	}
+final class TestAdminNoticeLogger extends MslsUnitTestCase {
 
 	public function testGetTransient(): void {
-		$this->assertEquals( 'msls_last_import_log', $this->test->get_transient() );
+		$test = new AdminNoticeLogger();
+
+		$this->assertEquals( 'msls_last_import_log', $test->get_transient() );
 	}
 
 	public function testWrite(): void {
@@ -29,10 +25,12 @@ class TestAdminNoticeLogger extends MslsUnitTestCase {
 		$coordinates->dest_blog_id   = 2;
 		$coordinates->dest_post_id   = 13;
 
-		$this->test->set_import_coordinates( $coordinates );
+		$test = new AdminNoticeLogger();
+
+		$test->set_import_coordinates( $coordinates );
 
 		$data = array( 'info', array( 'foo' ) );
-		$this->test->write( $data );
+		$test->write( $data );
 
 		$this->expectNotToPerformAssertions();
 	}

@@ -6,25 +6,25 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\MslsTests\MslsUnitTestCase;
 use Brain\Monkey\Functions;
 
-class TestImportCoordinates extends MslsUnitTestCase {
+final class TestImportCoordinates extends MslsUnitTestCase {
 
+	public function ImportCoordinatesFactory(): ImportCoordinates {
+		$test = new ImportCoordinates();
 
-	public function setUp(): void {
-		parent::setUp();
+		$test->source_blog_id = 1;
+		$test->source_post_id = 42;
+		$test->dest_blog_id   = 2;
+		$test->dest_post_id   = 13;
+		$test->source_post    = \Mockery::mock( \WP_Post::class );
+		$test->source_lang    = 'de_DE';
+		$test->dest_lang      = 'it_IT';
 
-		$this->test = new ImportCoordinates();
-
-		$this->test->source_blog_id = 1;
-		$this->test->source_post_id = 42;
-		$this->test->dest_blog_id   = 2;
-		$this->test->dest_post_id   = 13;
-		$this->test->source_post    = \Mockery::mock( \WP_Post::class );
-		$this->test->source_lang    = 'de_DE';
-		$this->test->dest_lang      = 'it_IT';
+		return $test;
 	}
 
 	public static function providerValidate(): array {
 		$post = \Mockery::mock( \WP_Post::class );
+
 		return array(
 			array( null, null, null, null, null, false ),
 			array( $post, null, null, null, null, false ),
@@ -42,9 +42,10 @@ class TestImportCoordinates extends MslsUnitTestCase {
 		Functions\expect( 'get_blog_post' )->andReturn( $post_a, $post_b );
 		Functions\expect( 'get_blog_option' )->andReturn( $lang_a, $lang_b );
 
-		$this->test->source_post = $source_post;
+		$test              = $this->ImportCoordinatesFactory();
+		$test->source_post = $source_post;
 
-		$this->assertEquals( $expected, $this->test->validate() );
+		$this->assertEquals( $expected, $test->validate() );
 	}
 
 	public function testParseImportersFromPost(): void {
@@ -61,16 +62,20 @@ class TestImportCoordinates extends MslsUnitTestCase {
 			->with( INPUT_GET, ImportCoordinates::IMPORTERS_GLOBAL_KEY, FILTER_FORCE_ARRAY )
 			->andReturn( array( 'pagesType' => 'pagesSlug' ) );
 
-		$this->assertNull( $this->test->get_importer_for( 'pagesType' ) );
+		$test = $this->ImportCoordinatesFactory();
 
-		$this->test->parse_importers_from_request();
+		$this->assertNull( $test->get_importer_for( 'pagesType' ) );
 
-		$this->assertEquals( 'pagesSlug', $this->test->get_importer_for( 'pagesType' ) );
+		$test->parse_importers_from_request();
+
+		$this->assertEquals( 'pagesSlug', $test->get_importer_for( 'pagesType' ) );
 	}
 
 	public function testSetImporterFor(): void {
-		$this->test->set_importer_for( 'postsType', 'postsSlug' );
+		$test = $this->ImportCoordinatesFactory();
 
-		$this->assertEquals( 'postsSlug', $this->test->get_importer_for( 'postsType' ) );
+		$test->set_importer_for( 'postsType', 'postsSlug' );
+
+		$this->assertEquals( 'postsSlug', $test->get_importer_for( 'postsType' ) );
 	}
 }

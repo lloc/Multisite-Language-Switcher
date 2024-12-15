@@ -8,13 +8,9 @@ use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
 
-class TestMslsAdmin extends MslsUnitTestCase {
+final class TestMslsAdmin extends MslsUnitTestCase {
 
-	/**
-	 * @param array $users
-	 * @return MslsAdmin
-	 */
-	public function get_sut( array $users = array() ): MslsAdmin {
+	private function MslsAdminFactory( array $users = array() ): MslsAdmin {
 		Functions\when( 'get_option' )->justReturn( array() );
 		Functions\when( 'update_option' )->justReturn( true );
 		Functions\when( 'get_current_blog_id' )->justReturn( 1 );
@@ -88,23 +84,22 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	public function test_subsubsub(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
-		$this->assertEquals(
-			'<ul class="subsubsub"><li><a href="wp-admin" class="current">abc (DEF)</a> | </li><li><a href="wp-admin">uvw (XYZ)</a></li></ul>',
-			$obj->subsubsub()
-		);
+		$expected = '<ul class="subsubsub"><li><a href="wp-admin" class="current">abc (DEF)</a> | </li><li><a href="wp-admin">uvw (XYZ)</a></li></ul>';
+
+		$this->assertEquals( $expected, $obj->subsubsub() );
 	}
 
 	public function test_blog_language(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputRegex( '/^<select id="blog_language" name="msls\[blog_language\]">.*$/' );
 		$obj->blog_language();
 	}
 
 	public function test_display(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<select id="display" name="msls[display]"><option value="0" >Flag and description</option><option value="1" >Description only</option><option value="2" >Flag only</option><option value="3" >Description and flag</option></select>'
@@ -113,7 +108,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	public function test_admin_display(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<select id="admin_display" name="msls[admin_display]"><option value="flag" >Flag</option><option value="label" >Label</option></select>'
@@ -131,7 +126,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 			);
 		}
 
-		$obj = $this->get_sut( $users );
+		$obj = $this->MslsAdminFactory( $users );
 
 		set_error_handler(
 			static function ( $errno, $errstr ) {
@@ -150,14 +145,14 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	public function test_reference_user_over_max(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputRegex( '/^<select id="reference_user" name="msls\[reference_user\]">.*$/' );
 		$obj->reference_user();
 	}
 
 	public function test_activate_autocomplete(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" /> <label for="activate_autocomplete">Activate experimental autocomplete inputs</label>'
@@ -166,7 +161,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	public function test_sort_by_description(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" /> <label for="sort_by_description">Sort languages by description</label>'
@@ -176,7 +171,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 
 
 	public function test_exclude_current_blog(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" /> <label for="exclude_current_blog">Exclude this blog from output</label>'
@@ -185,7 +180,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_only_with_translation(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" /> <label for="only_with_translation">Show only links with a translation</label>'
@@ -194,7 +189,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_output_current_blog(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" /> <label for="output_current_blog">Display link to the current language</label>'
@@ -203,7 +198,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_description(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="text" class="regular-text" id="description" name="msls[description]" value="" size="40"/>'
@@ -212,7 +207,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_before_output(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="text" class="regular-text" id="before_output" name="msls[before_output]" value="" size="30"/>'
@@ -221,7 +216,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_after_output(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="text" class="regular-text" id="after_output" name="msls[after_output]" value="" size="30"/>'
@@ -230,7 +225,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_before_item(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="text" class="regular-text" id="before_item" name="msls[before_item]" value="" size="30"/>'
@@ -239,7 +234,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_after_item(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="text" class="regular-text" id="after_item" name="msls[after_item]" value="" size="30"/>'
@@ -248,7 +243,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_rewrite_tizio(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = false;
@@ -262,7 +257,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_rewrite_pinko(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = true;
@@ -276,7 +271,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_rewrite_pallino(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$post_type          = \Mockery::mock( \WP_Post_Type::class );
 		$post_type->rewrite = array( 'slug' => 'pallino_slug' );
@@ -290,7 +285,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_content_filter(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputString(
 			'<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" /> <label for="content_filter">Add hint for available translations</label>'
@@ -299,14 +294,14 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_content_priority(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputRegex( '/^<select id="content_priority" name="msls\[content_priority\]">.*$/' );
 		$obj->content_priority();
 	}
 
 	function test_validate(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$arr = array();
 		$this->assertEquals( array( 'display' => 0 ), $obj->validate( $arr ) );
@@ -324,7 +319,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_set_blog_language(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$arr = array(
 			'abc'           => true,
@@ -334,7 +329,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_render(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		Functions\expect( 'settings_fields' )->once();
 		Functions\expect( 'do_settings_sections' )->once();
@@ -346,7 +341,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_language_section(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		Functions\when( 'add_settings_field' )->returnArg();
 
@@ -354,7 +349,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_main_section(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		Functions\expect( 'add_settings_field' )->times( 12 )->andReturnFirstArg();
 
@@ -362,7 +357,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_advanced_section(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		Functions\expect( 'add_settings_field' )->times( 5 )->andReturnFirstArg();
 
@@ -370,7 +365,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 	}
 
 	function test_rewrites_section(): void {
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		foreach ( array(
 			'post' => 'Post',
@@ -398,7 +393,7 @@ class TestMslsAdmin extends MslsUnitTestCase {
 		$wp_rewrite = \Mockery::mock( '\WP_Rewrite' );
 		$wp_rewrite->shouldReceive( 'using_permalinks' )->andReturnTrue();
 
-		$obj = $this->get_sut();
+		$obj = $this->MslsAdminFactory();
 
 		$this->expectNotToPerformAssertions();
 		$obj->register();

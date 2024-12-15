@@ -11,11 +11,9 @@ use lloc\Msls\MslsOptionsTax;
 use lloc\Msls\MslsPostTag;
 use lloc\Msls\MslsTaxonomy;
 
-class TestMslsPostTag extends MslsUnitTestCase {
+final class TestMslsPostTag extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function MslsPostTagFacory(): MslsPostTag {
 		Functions\when( 'get_option' )->justReturn( array( 'de_DE' => 42 ) );
 		Functions\expect( 'is_admin' )->andReturn( true );
 		Functions\expect( 'get_post_types' )->andReturn( array( 'post', 'page' ) );
@@ -39,7 +37,8 @@ class TestMslsPostTag extends MslsUnitTestCase {
 				return $language === 'de_DE' ? 1 : null;
 			}
 		);
-		$this->test = new MslsPostTag( $options, $collection );
+
+		return new MslsPostTag( $options, $collection );
 	}
 
 	public function test_init(): void {
@@ -128,11 +127,13 @@ class TestMslsPostTag extends MslsUnitTestCase {
 			</td>
 			</tr>';
 
+		$test = $this->MslsPostTagFacory();
+
 		$this->expectOutputString( $output );
-		$this->test->edit_input( $term, 'test' );
+		$test->edit_input( $term, 'test' );
 
 		// second call should not output anything
-		$this->test->edit_input( $term, 'test' );
+		$test->edit_input( $term, 'test' );
 	}
 
 	public function test_add_input(): void {
@@ -163,10 +164,11 @@ class TestMslsPostTag extends MslsUnitTestCase {
 
 		$this->expectOutputString( $output );
 
-		$this->test->add_input( 'test' );
+		$test = $this->MslsPostTagFacory();
+		$test->add_input( 'test' );
 
 		// second call should not output anything
-		$this->test->add_input( 'test' );
+		$test->add_input( 'test' );
 	}
 
 	public function test_the_input_no_blogs(): void {
@@ -189,7 +191,7 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'restore_current_blog' )->twice();
 
 		$this->expectNotToPerformAssertions();
-		$this->test->set( 42 );
+		$this->MslsPostTagFacory()->set( 42 );
 	}
 
 	public function test_maybe_set_linked_term_origin_lang(): void {
@@ -199,7 +201,8 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'filter_has_var' )->twice()->andReturnTrue();
 		Functions\expect( 'filter_input' )->once()->andReturn( 'de_DE' );
 
-		$result = $this->test->maybe_set_linked_term( $mydata );
+		$test   = $this->MslsPostTagFacory();
+		$result = $test->maybe_set_linked_term( $mydata );
 
 		$this->assertSame( $mydata, $result );
 	}
@@ -211,7 +214,8 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'filter_has_var' )->twice()->andReturnTrue();
 		Functions\expect( 'filter_input' )->twice()->andReturn( 'fr_FR', 13 );
 
-		$result = $this->test->maybe_set_linked_term( $mydata );
+		$test   = $this->MslsPostTagFacory();
+		$result = $test->maybe_set_linked_term( $mydata );
 
 		$this->assertSame( $mydata, $result );
 	}
@@ -226,7 +230,8 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'get_term' )->once()->andReturn( (object) array() );
 		Functions\expect( 'restore_current_blog' )->once();
 
-		$result = $this->test->maybe_set_linked_term( $mydata );
+		$test   = $this->MslsPostTagFacory();
+		$result = $test->maybe_set_linked_term( $mydata );
 
 		$this->assertSame( $mydata, $result );
 	}
@@ -244,7 +249,8 @@ class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'get_term' )->once()->andReturn( $term );
 		Functions\expect( 'restore_current_blog' )->once();
 
-		$result = $this->test->maybe_set_linked_term( $mydata );
+		$test   = $this->MslsPostTagFacory();
+		$result = $test->maybe_set_linked_term( $mydata );
 
 		$expected = array( $term->en_US, 13 );
 		$actual   = array( $result->en_US, $result->de_DE );

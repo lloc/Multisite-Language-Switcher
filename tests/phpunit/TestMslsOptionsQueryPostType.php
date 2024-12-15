@@ -6,11 +6,9 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsOptionsQueryPostType;
 use lloc\Msls\MslsSqlCacher;
 
-class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
+final class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function MslsOptionsQueryPostTypeFactory(): MslsOptionsQueryPostType {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->once()->andReturn( 'queried-posttype' );
 
@@ -18,7 +16,7 @@ class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 		$sql_cacher->shouldReceive( 'prepare' )->never();
 		$sql_cacher->shouldReceive( 'get_var' )->never();
 
-		$this->test = new MslsOptionsQueryPostType( $sql_cacher );
+		return new MslsOptionsQueryPostType( $sql_cacher );
 	}
 
 	public function test_has_value_existing(): void {
@@ -30,19 +28,26 @@ class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 				),
 			)
 		);
-		$this->assertTrue( $this->test->has_value( 'de_DE' ) );
+
+		$test = $this->MslsOptionsQueryPostTypeFactory();
+
+		$this->assertTrue( $test->has_value( 'de_DE' ) );
 	}
 
 	public function test_has_value_not_existing(): void {
 		$post_type = \Mockery::mock( '\WP_Post_Type' );
 		Functions\expect( 'get_post_type_object' )->once()->andReturn( $post_type );
 
-		$this->assertTrue( $this->test->has_value( 'it_IT' ) );
+		$test = $this->MslsOptionsQueryPostTypeFactory();
+
+		$this->assertTrue( $test->has_value( 'it_IT' ) );
 	}
 
 	public function test_get_current_link(): void {
 		Functions\expect( 'get_post_type_archive_link' )->once()->andReturn( 'https://msls.co/queried-posttype' );
 
-		$this->assertEquals( 'https://msls.co/queried-posttype', $this->test->get_current_link() );
+		$test = $this->MslsOptionsQueryPostTypeFactory();
+
+		$this->assertEquals( 'https://msls.co/queried-posttype', $test->get_current_link() );
 	}
 }

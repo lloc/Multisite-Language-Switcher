@@ -6,7 +6,7 @@ use lloc\Msls\MslsSqlCacher;
 use lloc\Msls\Query\TranslatedPostIdQuery;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestTranslatedPostsQuery extends MslsUnitTestCase {
+final class TestTranslatedPostsQuery extends MslsUnitTestCase {
 
 	public function test_invoke_empty_string(): void {
 		$sql_cache = \Mockery::mock( MslsSqlCacher::class );

@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsFields;
 use lloc\Msls\MslsRequest;
 
-class TestMslsRequest extends MslsUnitTestCase {
+final class TestMslsRequest extends MslsUnitTestCase {
 
 	public function test_isset_ok(): void {
 		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturn( 13 );

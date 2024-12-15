@@ -5,7 +5,7 @@ namespace lloc\MslsTests\ContentImport\Importers;
 use lloc\Msls\ContentImport\Importers\PostMetaImporters;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestPostMetaImporters extends MslsUnitTestCase {
+final class TestPostMetaImporters extends MslsUnitTestCase {
 
 	public function testDetails(): void {
 		$test = new PostMetaImporters();

@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlock;
 use lloc\Msls\MslsOptions;
 
-class TestMslsBlock extends MslsUnitTestCase {
+final class TestMslsBlock extends MslsUnitTestCase {
 
 	public function test_register_block_excluded_true(): void {
 		$options = \Mockery::mock( MslsOptions::class );

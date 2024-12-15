@@ -4,7 +4,7 @@ namespace lloc\MslsTests;
 
 use lloc\Msls\MslsJson;
 
-class TestMslsJson extends MslsUnitTestCase {
+final class TestMslsJson extends MslsUnitTestCase {
 
 	public function test_get(): void {
 		$obj = ( new MslsJson() )->add( null, 'Test 3' )->add( '2', 'Test 2' )->add( 1, 'Test 1' );

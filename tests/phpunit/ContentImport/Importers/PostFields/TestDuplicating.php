@@ -7,7 +7,7 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\Importers\PostFields\Duplicating;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestDuplicating extends MslsUnitTestCase {
+final class TestDuplicating extends MslsUnitTestCase {
 
 	public function testImport(): void {
 		Functions\expect( 'wp_insert_post' )->once();

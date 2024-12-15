@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsShortCode;
 
-class TestMslsShortCode extends MslsUnitTestCase {
+final class TestMslsShortCode extends MslsUnitTestCase {
 
 	public function test_init(): void {
 		Functions\expect( 'add_shortcode' )->once()->with( 'sc_msls_widget', array( MslsShortCode::class, 'render_widget' ) );

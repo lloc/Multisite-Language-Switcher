@@ -14,11 +14,9 @@ use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOptionsPost;
 use lloc\Msls\MslsPostType;
 
-class TestMslsMetaBox extends MslsUnitTestCase {
+final class TestMslsMetaBox extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function MslsMetaBoxFactory(): MslsMetaBox {
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 2 ) . '/' );
 
 		$blog = \Mockery::mock( MslsBlog::class );
@@ -33,7 +31,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blog );
 		$collection->shouldReceive( 'get_blog_id' )->andReturn( 1 );
 
-		$this->test = new MslsMetaBox( $options, $collection );
+		return new MslsMetaBox( $options, $collection );
 	}
 
 	public function test_init(): void {
@@ -91,14 +89,18 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'selected' )->once()->andReturn( 'selected="selected"' );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
 
-		$this->assertEquals( '<option value="1" selected="selected">Test</option>', $this->test->render_option( 1, 1 ) );
+		$test = $this->MslsMetaBoxFactory();
+
+		$this->assertEquals( '<option value="1" selected="selected">Test</option>', $test->render_option( 1, 1 ) );
 	}
 
 	public function test_render_option_not_selected(): void {
 		Functions\expect( 'selected' )->once()->andReturn( '' );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
 
-		$this->assertEquals( '<option value="1" >Test</option>', $this->test->render_option( 1, 2 ) );
+		$test = $this->MslsMetaBoxFactory();
+
+		$this->assertEquals( '<option value="1" >Test</option>', $test->render_option( 1, 2 ) );
 	}
 
 	public function test_render_options(): void {
@@ -110,7 +112,9 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'selected' )->once()->andReturn( 'selected="selected"' );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'A random title' );
 
-		$this->assertEquals( '<option value="42" selected="selected">A random title</option>', $this->test->render_options( 'post', 42 ) );
+		$test = $this->MslsMetaBoxFactory();
+
+		$this->assertEquals( '<option value="42" selected="selected">A random title</option>', $test->render_options( 'post', 42 ) );
 	}
 
 	public static function add_data_provider(): array {
@@ -136,7 +140,8 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'msls_post_type' )->once()->andReturn( $post_type );
 
 		$this->expectNotToPerformAssertions();
-		$this->test->add();
+
+		$this->MslsMetaBoxFactory()->add();
 	}
 
 	public function test_render_select_not_hierarchical(): void {
@@ -168,7 +173,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$expected = '<ul><li><label for="msls_input_de_DE msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><select name="msls_input_de_DE"><option value="0"></option></select></li></ul>';
 		$this->expectOutputString( $expected );
 
-		$this->test->render_select();
+		$this->MslsMetaBoxFactory()->render_select();
 	}
 
 	public function test_render_select_hierarchical(): void {
@@ -198,7 +203,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$expected = '<ul><li><label for="msls_input_de_DE msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><select name="msls_input_region_Code"><option value="0">--some value</option></select></li></ul>';
 		$this->expectOutputString( $expected );
 
-		$this->test->render_select();
+		$this->MslsMetaBoxFactory()->render_select();
 	}
 
 	public static function render_input_provider(): array {
@@ -235,7 +240,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 
 		$this->expectOutputString( $expected );
 
-		$this->test->render_input();
+		$this->MslsMetaBoxFactory()->render_input();
 	}
 
 	public function test_render_select_only_one_blog(): void {
@@ -244,12 +249,12 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() );
 
-		$this->test = new MslsMetaBox( $options, $collection );
+		$test = new MslsMetaBox( $options, $collection );
 
 		$expected = '<p>You should define at least another blog in a different language in order to have some benefit from this plugin!</p>';
 		$this->expectOutputString( $expected );
 
-		$this->test->render_select();
+		$test->render_select();
 	}
 
 	public function test_render_input_only_one_blog(): void {
@@ -258,19 +263,20 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() );
 
-		$this->test = new MslsMetaBox( $options, $collection );
+		$test = new MslsMetaBox( $options, $collection );
 
 		$expected = '<p>You should define at least another blog in a different language in order to have some benefit from this plugin!</p>';
 		$this->expectOutputString( $expected );
 
-		$this->test->render_input();
+		$test->render_input();
 	}
 
 	public function test_set_no_request(): void {
 		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
 
 		$this->expectNotToPerformAssertions();
-		$this->test->set( 13 );
+
+		$this->MslsMetaBoxFactory()->set( 13 );
 	}
 
 	public function test_set_with_request_current_user_cannot(): void {
@@ -280,7 +286,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'current_user_can' )->once()->andReturnFalse();
 
 		$this->expectNotToPerformAssertions();
-		$this->test->set( 13 );
+		$this->MslsMetaBoxFactory()->set( 13 );
 	}
 
 	public function test_set_with_request(): void {
@@ -294,7 +300,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'restore_current_blog' )->once();
 
 		$this->expectNotToPerformAssertions();
-		$this->test->set( 13 );
+		$this->MslsMetaBoxFactory()->set( 13 );
 	}
 
 	public function test_maybe_set_linked_post() {
@@ -309,8 +315,10 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
+		$test = $this->MslsMetaBoxFactory();
+
 		$mydata = new MslsOptionsPost();
-		$mydata = $this->test->maybe_set_linked_post( $mydata );
+		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertEquals( 42, $mydata->de_DE );
 	}
@@ -325,8 +333,10 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
+		$test = $this->MslsMetaBoxFactory();
+
 		$mydata = new MslsOptionsPost();
-		$mydata = $this->test->maybe_set_linked_post( $mydata );
+		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertNull( $mydata->de_DE );
 	}
@@ -337,7 +347,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_blog_id' )->andReturn( null );
 
-		$this->test = new MslsMetaBox( $options, $collection );
+		$test = new MslsMetaBox( $options, $collection );
 
 		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
 		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
@@ -346,7 +356,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
 		$mydata = new MslsOptionsPost();
-		$mydata = $this->test->maybe_set_linked_post( $mydata );
+		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertNull( $mydata->de_DE );
 	}
@@ -356,7 +366,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 
-		$this->test = new MslsMetaBox( $options, $collection );
+		$test = new MslsMetaBox( $options, $collection );
 
 		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
 		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
@@ -365,7 +375,7 @@ class TestMslsMetaBox extends MslsUnitTestCase {
 
 		$mydata        = new MslsOptionsPost();
 		$mydata->de_DE = 42;
-		$mydata        = $this->test->maybe_set_linked_post( $mydata );
+		$mydata        = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertEquals( 42, $mydata->de_DE );
 	}

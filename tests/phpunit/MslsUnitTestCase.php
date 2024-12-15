@@ -8,13 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class MslsUnitTestCase extends TestCase {
 
-	/**
-	 * Instance of the class to test
-	 *
-	 * @var object $test
-	 */
-	protected object $test;
-
 	protected function setUp(): void {
 		parent::setUp();
 		Monkey\setUp();

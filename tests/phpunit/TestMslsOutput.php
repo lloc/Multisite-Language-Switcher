@@ -6,16 +6,13 @@ use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsContentFilter;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOptionsPost;
 use lloc\Msls\MslsOutput;
 
-class TestMslsOutput extends MslsUnitTestCase {
+final class TestMslsOutput extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function MslsOutputFactory(): MslsOutput {
 		$options = \Mockery::mock( MslsOptions::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -23,11 +20,13 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_current_blog' )->andReturn( 1 );
 		$collection->shouldReceive( 'get_filtered' )->andReturn( array() );
 
-		$this->test = new MslsOutput( $options, $collection );
+		return new MslsOutput( $options, $collection );
 	}
 
 	public function test_get_method(): void {
-		$this->assertEquals( array(), $this->test->get( 0 ) );
+		$test = $this->MslsOutputFactory();
+
+		$this->assertEquals( array(), $test->get( 0 ) );
 	}
 
 	public function test_get_alternate_links_two_url(): void {
@@ -71,7 +70,10 @@ class TestMslsOutput extends MslsUnitTestCase {
 		$expected =
 			'<link rel="alternate" hreflang="de" href="https://example.de/" title="Deutsch" />' . PHP_EOL .
 			'<link rel="alternate" hreflang="it" href="https://example.it/" title="Italiano" />';
-		$this->assertEquals( $expected, $this->test->get_alternate_links() );
+
+		$test = $this->MslsOutputFactory();
+
+		$this->assertEquals( $expected, $test->get_alternate_links() );
 	}
 
 	public function test_get_alternate_links_null_url(): void {
@@ -101,7 +103,9 @@ class TestMslsOutput extends MslsUnitTestCase {
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$this->assertEquals( '', $this->test->get_alternate_links() );
+		$test = $this->MslsOutputFactory();
+
+		$this->assertEquals( '', $test->get_alternate_links() );
 	}
 
 	public function test_get_alternate_links_one_url(): void {
@@ -134,14 +138,21 @@ class TestMslsOutput extends MslsUnitTestCase {
 
 		Filters\expectApplied( 'mlsl_output_get_alternate_links_default' )->once();
 
-		$this->assertEquals( '<link rel="alternate" hreflang="x-default" href="https://example.de/" title="Deutsch" />', $this->test->get_alternate_links() );
+		$expected = '<link rel="alternate" hreflang="x-default" href="https://example.de/" title="Deutsch" />';
+
+		$test = $this->MslsOutputFactory();
+
+		$this->assertEquals( $expected, $test->get_alternate_links() );
 	}
 
 	public function test___toString_no_translation(): void {
 		$expected = '<a href="https://example.com" title="Example">Example</a>';
 
 		Filters\expectApplied( 'msls_output_no_translation_found' )->once()->andReturn( $expected );
-		$this->assertEquals( $expected, strval( $this->test ) );
+
+		$test = $this->MslsOutputFactory();
+
+		$this->assertEquals( $expected, strval( $test ) );
 	}
 
 	public function test___toString_output(): void {
@@ -172,9 +183,11 @@ class TestMslsOutput extends MslsUnitTestCase {
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'home_url' )->once()->andReturnFirstArg();
 
+		$expected = '<a href="/" title="Deutsch"><img src="https://msls.co/wp-content/plugins/msls/flags/de.png" alt="de_DE"/> Deutsch</a>';
+
 		$test = new MslsOutput( $options, $collection );
 
-		$this->assertEquals( '<a href="/" title="Deutsch"><img src="https://msls.co/wp-content/plugins/msls/flags/de.png" alt="de_DE"/> Deutsch</a>', strval( $test ) );
+		$this->assertEquals( $expected, strval( $test ) );
 	}
 
 	public function test___toString_current_blog(): void {
@@ -272,18 +285,24 @@ class TestMslsOutput extends MslsUnitTestCase {
 	}
 
 	public function test_get_tags(): void {
-		$this->assertIsArray( $this->test->get_tags() );
+		$test = $this->MslsOutputFactory();
+
+		$this->assertIsArray( $test->get_tags() );
 	}
 
 	public function test_set_tags(): void {
 		Functions\expect( 'wp_parse_args' )->once()->andReturn( array() );
 
-		$this->assertInstanceOf( MslsOutput::class, $this->test->set_tags() );
+		$test = $this->MslsOutputFactory();
+
+		$this->assertInstanceOf( MslsOutput::class, $test->set_tags() );
 	}
 
 	public function test_is_requirements_not_fulfilled_with_null(): void {
-		$this->assertFalse( $this->test->is_requirements_not_fulfilled( null, false, 'de_DE' ) );
-		$this->assertTrue( $this->test->is_requirements_not_fulfilled( null, true, 'de_DE' ) );
+		$test = $this->MslsOutputFactory();
+
+		$this->assertFalse( $test->is_requirements_not_fulfilled( null, false, 'de_DE' ) );
+		$this->assertTrue( $test->is_requirements_not_fulfilled( null, true, 'de_DE' ) );
 	}
 
 	public function test_is_requirements_not_fulfilled_with_mslsoptions(): void {
@@ -291,8 +310,10 @@ class TestMslsOutput extends MslsUnitTestCase {
 
 		$mydata = new MslsOptions();
 
-		$this->assertFalse( $this->test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
-		$this->assertFalse( $this->test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
+		$test = $this->MslsOutputFactory();
+
+		$this->assertFalse( $test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
+		$this->assertFalse( $test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
 	}
 
 	public function test_is_requirements_not_fulfilled_with_mslsoptionspost(): void {
@@ -300,8 +321,10 @@ class TestMslsOutput extends MslsUnitTestCase {
 
 		$mydata = new MslsOptionsPost();
 
-		$this->assertFalse( $this->test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
-		$this->assertTrue( $this->test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
+		$test = $this->MslsOutputFactory();
+
+		$this->assertFalse( $test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
+		$this->assertTrue( $test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
 	}
 
 	public function test_init(): void {

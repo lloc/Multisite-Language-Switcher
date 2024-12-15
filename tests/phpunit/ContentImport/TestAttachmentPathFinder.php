@@ -6,13 +6,7 @@ use lloc\Msls\ContentImport\AttachmentPathFinder;
 use lloc\MslsTests\MslsUnitTestCase;
 use Brain\Monkey\Functions;
 
-class TestAttachmentPathFinder extends MslsUnitTestCase {
-
-	public function setUp(): void {
-		parent::setUp();
-
-		$this->test = new AttachmentPathFinder();
-	}
+final class TestAttachmentPathFinder extends MslsUnitTestCase {
 
 	public static function dataprovider_filter_srcset(): array {
 		$image_src     = 'http://example.com/image.jpg';
@@ -42,7 +36,9 @@ class TestAttachmentPathFinder extends MslsUnitTestCase {
 		Functions\expect( 'delete_post_meta' )->times( $time_dpm );
 		Functions\expect( 'get_blog_post' )->times( $times_gbp )->andReturn( $blog_post );
 
-		$this->assertEquals( $expected, $this->test->filter_srcset( $source, null, $imageSrc, null, $attachmentId ) );
+		$test = new AttachmentPathFinder();
+
+		$this->assertEquals( $expected, $test->filter_srcset( $source, null, $imageSrc, null, $attachmentId ) );
 	}
 
 	public static function dataprovider_filter_attachement_url(): array {
@@ -71,6 +67,8 @@ class TestAttachmentPathFinder extends MslsUnitTestCase {
 		Functions\expect( 'delete_post_meta' )->zeroOrMoreTimes();
 		Functions\expect( 'get_blog_post' )->zeroOrMoreTimes()->andReturn( $source_post );
 
-		$this->assertEquals( $source_post->guid, $this->test->filter_attachment_url( $image_src, $attachment_id ) );
+		$test = new AttachmentPathFinder();
+
+		$this->assertEquals( $source_post->guid, $test->filter_attachment_url( $image_src, $attachment_id ) );
 	}
 }

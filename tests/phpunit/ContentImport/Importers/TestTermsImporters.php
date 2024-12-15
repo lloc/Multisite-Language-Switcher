@@ -5,7 +5,7 @@ namespace lloc\MslsTests\ContentImport\Importers;
 use lloc\Msls\ContentImport\Importers\TermsImporters;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestTermsImporters extends MslsUnitTestCase {
+final class TestTermsImporters extends MslsUnitTestCase {
 
 	public function testDetails(): void {
 		$test = new TermsImporters();

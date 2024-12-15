@@ -6,11 +6,9 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsOptionsQueryYear;
 use lloc\Msls\MslsSqlCacher;
 
-class TestMslsOptionsQueryYear extends MslsUnitTestCase {
+final class TestMslsOptionsQueryYear extends MslsUnitTestCase {
 
-	protected function get_test( int $year ): MslsOptionsQueryYear {
-		parent::setUp();
-
+	private function MslsOptionsQueryYearFactory( int $year ): MslsOptionsQueryYear {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->once()->andReturn( $year );
 
@@ -22,16 +20,18 @@ class TestMslsOptionsQueryYear extends MslsUnitTestCase {
 	}
 
 	public function test_has_value_true(): void {
-		$this->assertTrue( $this->get_test( 1998 )->has_value( 'de_DE' ) );
+		$this->assertTrue( $this->MslsOptionsQueryYearFactory( 1998 )->has_value( 'de_DE' ) );
 	}
 
 	public function test_has_value_false(): void {
-		$this->assertFalse( $this->get_test( 0 )->has_value( 'de_DE' ) );
+		$this->assertFalse( $this->MslsOptionsQueryYearFactory( 0 )->has_value( 'de_DE' ) );
 	}
 
 	public function test_get_current_link_method(): void {
 		Functions\expect( 'get_year_link' )->once()->andReturn( 'https://msls.co/queried-year' );
 
-		$this->assertEquals( 'https://msls.co/queried-year', $this->get_test( 2015 )->get_current_link() );
+		$test = $this->MslsOptionsQueryYearFactory( 2015 );
+
+		$this->assertEquals( 'https://msls.co/queried-year', $test->get_current_link() );
 	}
 }

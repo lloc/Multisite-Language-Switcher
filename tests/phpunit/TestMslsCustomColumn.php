@@ -12,11 +12,9 @@ use lloc\Msls\MslsCustomColumn;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsPostType;
 
-class TestMslsCustomColumn extends MslsUnitTestCase {
+final class TestMslsCustomColumn extends MslsUnitTestCase {
 
-	public function setUp(): void {
-		parent::setUp();
-
+	private function MslsCustomColumnFactory(): MslsCustomColumn {
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_icon_type' )->andReturn( 'flag' );
 
@@ -38,7 +36,7 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get' )->andReturn( $blogs );
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturn( 1 );
 
-		$this->test = new MslsCustomColumn( $options, $collection );
+		return new MslsCustomColumn( $options, $collection );
 	}
 
 	public function test_add_hooks_excluded(): void {
@@ -83,7 +81,9 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 
 		$expected = array( 'mslscol' => '<span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-de">de_DE</span></span><span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-us">en_US</span></span>' );
 
-		$this->assertEquals( $expected, $this->test->th( array() ) );
+		$test = $this->MslsCustomColumnFactory();
+
+		$this->assertEquals( $expected, $test->th( array() ) );
 	}
 
 	public function test_th_empty(): void {
@@ -119,6 +119,8 @@ class TestMslsCustomColumn extends MslsUnitTestCase {
 
 		$this->expectOutputString( $output );
 
-		$this->test->td( 'mslscol', $item_id );
+		$test = $this->MslsCustomColumnFactory();
+
+		$test->td( 'mslscol', $item_id );
 	}
 }

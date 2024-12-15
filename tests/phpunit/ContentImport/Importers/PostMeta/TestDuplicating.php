@@ -9,7 +9,7 @@ use lloc\MslsTests\MslsUnitTestCase;
 
 use function Brain\Monkey\Functions;
 
-class TestDuplicating extends MslsUnitTestCase {
+final class TestDuplicating extends MslsUnitTestCase {
 
 	public function testImport(): void {
 		Functions\expect( 'switch_to_blog' )->twice();

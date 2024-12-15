@@ -9,11 +9,9 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsPostTagClassic;
 
-class TestMslsPostTagClassic extends MslsUnitTestCase {
+final class TestMslsPostTagClassic extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function MslsPostTagClassicFactory(): MslsPostTagClassic {
 		Functions\expect( 'get_option' )->andReturn(
 			array(
 				'de_DE' => 42,
@@ -36,7 +34,7 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( $blogs );
 
-		$this->test = new MslsPostTagClassic( $options, $collection );
+		return new MslsPostTagClassic( $options, $collection );
 	}
 
 	/**
@@ -106,10 +104,11 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 
 		$tag = \Mockery::mock( \WP_Term::class );
 
-		$this->test->edit_input( $tag, 'test' );
+		$test = $this->MslsPostTagClassicFactory();
+		$test->edit_input( $tag, 'test' );
 
 		// second call should not output anything
-		$this->test->edit_input( $tag, 'test' );
+		$test->edit_input( $tag, 'test' );
 	}
 
 	public function test_add_input(): void {
@@ -154,10 +153,11 @@ class TestMslsPostTagClassic extends MslsUnitTestCase {
 
 		$this->expectOutputString( $output );
 
-		$this->test->add_input( 'test' );
+		$test = $this->MslsPostTagClassicFactory();
+		$test->add_input( 'test' );
 
 		// second call should not output anything
-		$this->test->add_input( 'test' );
+		$test->add_input( 'test' );
 	}
 
 	public function test_the_input_no_blogs(): void {

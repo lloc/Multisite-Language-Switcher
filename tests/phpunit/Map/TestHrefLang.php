@@ -9,11 +9,9 @@ use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestHrefLang extends MslsUnitTestCase {
+final class TestHrefLang extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function HrefLangFactory(): HrefLang {
 		$map = array(
 			'de_DE'        => 'de',
 			'de_DE_formal' => 'de',
@@ -26,12 +24,8 @@ class TestHrefLang extends MslsUnitTestCase {
 
 		foreach ( $map as $locale => $alpha2 ) {
 			$blog = \Mockery::mock( MslsBlog::class );
-			$blog->shouldReceive(
-				array(
-					'get_alpha2'   => $alpha2,
-					'get_language' => $locale,
-				)
-			);
+			$blog->shouldReceive( 'get_alpha2' )->andReturn( $alpha2 );
+			$blog->shouldReceive( 'get_language' )->andReturn( $locale );
 
 			$blogs[] = $blog;
 		}
@@ -39,23 +33,27 @@ class TestHrefLang extends MslsUnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
 
-		$this->test = new HrefLang( $collection );
+		return new HrefLang( $collection );
 	}
 
 	public function test_get(): void {
-		$this->assertEquals( 'de-DE', $this->test->get( 'de_DE' ) );
-		$this->assertEquals( 'de-DE', $this->test->get( 'de_DE_formal' ) );
-		$this->assertEquals( 'fr', $this->test->get( 'fr_FR' ) );
-		$this->assertEquals( 'es', $this->test->get( 'es_ES' ) );
-		$this->assertEquals( 'cat', $this->test->get( 'cat' ) );
-		$this->assertEquals( 'en-GB', $this->test->get( 'en_GB' ) );
-		$this->assertEquals( 'en-US', $this->test->get( 'en_US' ) );
+		$test = $this->HrefLangFactory();
+
+		$this->assertEquals( 'de-DE', $test->get( 'de_DE' ) );
+		$this->assertEquals( 'de-DE', $test->get( 'de_DE_formal' ) );
+		$this->assertEquals( 'fr', $test->get( 'fr_FR' ) );
+		$this->assertEquals( 'es', $test->get( 'es_ES' ) );
+		$this->assertEquals( 'cat', $test->get( 'cat' ) );
+		$this->assertEquals( 'en-GB', $test->get( 'en_GB' ) );
+		$this->assertEquals( 'en-US', $test->get( 'en_US' ) );
 	}
 
 	public function test_get_has_filter(): void {
 		Functions\when( 'has_filter' )->justReturn( true );
 		Filters\expectApplied( 'msls_head_hreflang' )->once()->with( 'en_US' )->andReturn( 'en-US' );
 
-		$this->assertEquals( 'en-US', $this->test->get( 'en_US' ) );
+		$test = $this->HrefLangFactory();
+
+		$this->assertEquals( 'en-US', $test->get( 'en_US' ) );
 	}
 }

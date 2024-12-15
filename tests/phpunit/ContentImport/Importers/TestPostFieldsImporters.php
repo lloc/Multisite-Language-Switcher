@@ -8,7 +8,7 @@ use lloc\Msls\ContentImport\Importers\PostFields\Duplicating;
 use lloc\Msls\ContentImport\Importers\PostFieldsImporters;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestPostFieldsImporters extends MslsUnitTestCase {
+final class TestPostFieldsImporters extends MslsUnitTestCase {
 
 	public function testMake(): void {
 		$importer = \Mockery::mock( Duplicating::class );

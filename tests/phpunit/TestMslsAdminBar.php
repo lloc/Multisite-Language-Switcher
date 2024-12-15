@@ -10,11 +10,9 @@ use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
 
-class TestMslsAdminBar extends MslsUnitTestCase {
+final class TestMslsAdminBar extends MslsUnitTestCase {
 
-	public function setUp(): void {
-		parent::setUp();
-
+	private function MslsAdminBarFactory(): MslsAdminBar {
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_icon_type' )->andReturn( 'label' );
 
@@ -34,7 +32,7 @@ class TestMslsAdminBar extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blog_a );
 		$collection->shouldReceive( 'get_plugin_active_blogs' )->andReturn( array( $blog_a, $blog_b, $blog_c ) );
 
-		$this->test = new MslsAdminBar( $options, $collection );
+		return new MslsAdminBar( $options, $collection );
 	}
 
 	public function test_init(): void {
@@ -57,7 +55,9 @@ class TestMslsAdminBar extends MslsUnitTestCase {
 		$wp_admin_bar = \Mockery::mock( \WP_Admin_Bar::class );
 		$wp_admin_bar->shouldReceive( 'get_node' )->once()->andReturnNull();
 
-		$this->assertFalse( $this->test->add_node( $wp_admin_bar, 'node-id', 'title' ) );
+		$test = $this->MslsAdminBarFactory();
+
+		$this->assertFalse( $test->add_node( $wp_admin_bar, 'node-id', 'title' ) );
 	}
 
 	public function test_add_node_true(): void {
@@ -65,7 +65,9 @@ class TestMslsAdminBar extends MslsUnitTestCase {
 		$wp_admin_bar->shouldReceive( 'get_node' )->once()->andReturn( (object) array() );
 		$wp_admin_bar->shouldReceive( 'add_node' )->once();
 
-		$this->assertTrue( $this->test->add_node( $wp_admin_bar, 'node-id', 'title' ) );
+		$test = $this->MslsAdminBarFactory();
+
+		$this->assertTrue( $test->add_node( $wp_admin_bar, 'node-id', 'title' ) );
 	}
 
 	public function test_update_admin_bar(): void {
@@ -74,6 +76,7 @@ class TestMslsAdminBar extends MslsUnitTestCase {
 		$wp_admin_bar->shouldReceive( 'add_node' )->times( 3 );
 
 		$this->expectOutputString( '' );
-		$this->test->update_admin_bar( $wp_admin_bar );
+
+		$this->MslsAdminBarFactory()->update_admin_bar( $wp_admin_bar );
 	}
 }

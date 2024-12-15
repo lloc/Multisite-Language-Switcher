@@ -7,7 +7,7 @@ use lloc\Msls\MslsOptions;
 use lloc\MslsTests\MslsUnitTestCase;
 use Brain\Monkey\Functions;
 
-class TestService extends MslsUnitTestCase {
+final class TestService extends MslsUnitTestCase {
 
 	public function test_register_not_active_false(): void {
 		$options = \Mockery::mock( MslsOptions::class );

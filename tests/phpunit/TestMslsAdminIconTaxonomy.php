@@ -5,7 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsAdminIconTaxonomy;
 
-class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
+final class TestMslsAdminIconTaxonomy extends MslsUnitTestCase {
 
 	const LANGUAGE  = 'de_DE';
 	const IMAGE_SRC = '/dev/german_flag.png';

@@ -5,7 +5,7 @@ namespace lloc\MslsTests\ContentImport\Importers;
 use lloc\Msls\ContentImport\Importers\PostThumbnailImporters;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestPostThumbnailImporters extends MslsUnitTestCase {
+final class TestPostThumbnailImporters extends MslsUnitTestCase {
 
 	public function testDetails(): void {
 		$test = new PostThumbnailImporters();

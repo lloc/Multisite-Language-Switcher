@@ -4,7 +4,7 @@ namespace lloc\MslsTests;
 
 use lloc\Msls\MslsRegistry;
 
-class TestMslsRegistry extends MslsUnitTestCase {
+final class TestMslsRegistry extends MslsUnitTestCase {
 
 	public function test_set_method(): void {
 		$obj = new MslsRegistry();

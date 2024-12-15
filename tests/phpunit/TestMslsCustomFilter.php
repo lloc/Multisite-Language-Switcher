@@ -10,11 +10,9 @@ use lloc\Msls\MslsCustomFilter;
 use lloc\Msls\MslsFields;
 use lloc\Msls\MslsOptions;
 
-class TestMslsCustomFilter extends MslsUnitTestCase {
+final class TestMslsCustomFilter extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function MslsCustomFilterFactory(): MslsCustomFilter {
 		$options = \Mockery::mock( MslsOptions::class );
 
 		$blog              = \Mockery::mock( MslsBlog::class );
@@ -27,13 +25,15 @@ class TestMslsCustomFilter extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_object' )->with( 1 )->andReturns( $blog );
 		$collection->shouldReceive( 'get_object' )->with( 2 )->andReturns( null );
 
-		$this->test = new MslsCustomFilter( $options, $collection );
+		return new MslsCustomFilter( $options, $collection );
 	}
 
 	public function test_execute_filter(): void {
 		$query = \Mockery::mock( 'WP_Query' );
 
-		$this->assertFalse( $this->test->execute_filter( $query ) );
+		$test = $this->MslsCustomFilterFactory();
+
+		$this->assertFalse( $test->execute_filter( $query ) );
 	}
 
 	public function test_execute_filter_with_filter_input(): void {
@@ -55,7 +55,8 @@ class TestMslsCustomFilter extends MslsUnitTestCase {
 
 		$query = \Mockery::mock( '\WP_Query' );
 
-		$this->assertInstanceOf( '\WP_Query', $this->test->execute_filter( $query ) );
+		$test = $this->MslsCustomFilterFactory();
+		$this->assertInstanceOf( '\WP_Query', $test->execute_filter( $query ) );
 	}
 
 	public function test_execute_filter_with_filter_but_no_blog(): void {
@@ -64,7 +65,8 @@ class TestMslsCustomFilter extends MslsUnitTestCase {
 
 		$query = \Mockery::mock( '\WP_Query' );
 
-		$this->assertFalse( $this->test->execute_filter( $query ) );
+		$test = $this->MslsCustomFilterFactory();
+		$this->assertFalse( $test->execute_filter( $query ) );
 	}
 
 	public function test_add_filter(): void {
@@ -76,7 +78,8 @@ class TestMslsCustomFilter extends MslsUnitTestCase {
 
 		$this->expectOutputString( '<select id="msls_filter" name="msls_filter"><option value="" >Show all posts</option><option value="1" selected="selected">Not translated in the Deutsch-blog</option></select>' );
 
-		$this->test->add_filter();
+		$test = $this->MslsCustomFilterFactory();
+		$test->add_filter();
 	}
 
 	public function test_add_no_selected_blog(): void {
@@ -86,6 +89,7 @@ class TestMslsCustomFilter extends MslsUnitTestCase {
 
 		$this->expectOutputString( '<select id="msls_filter" name="msls_filter"><option value="" >Show all posts</option><option value="1" >Not translated in the Deutsch-blog</option></select>' );
 
-		$this->test->add_filter();
+		$test = $this->MslsCustomFilterFactory();
+		$test->add_filter();
 	}
 }

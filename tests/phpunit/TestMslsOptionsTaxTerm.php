@@ -5,25 +5,28 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsOptionsTaxTerm;
 
-class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
+final class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function MslsOptionsTaxTermFactory(): MslsOptionsTaxTerm {
 		Functions\expect( 'get_option' )->once()->with( 'msls_term_42' )->andReturn( array( 'de_DE' => 42 ) );
 
-		$this->test = new MslsOptionsTaxTerm( 42 );
+		return new MslsOptionsTaxTerm( 42 );
 	}
+
 	public function test_get_postlink_empty(): void {
-		$this->assertEquals( '', $this->test->get_postlink( '' ) );
+		$test = $this->MslsOptionsTaxTermFactory();
+
+		$this->assertEquals( '', $test->get_postlink( '' ) );
 	}
 
 	public function test_check_url_empty(): void {
 		$options = \Mockery::mock( MslsOptionsTaxTerm::class );
 
-		$this->assertEquals( '', $this->test->check_base( null, $options ) );
-		$this->assertEquals( '', $this->test->check_base( '', $options ) );
-		$this->assertEquals( '', $this->test->check_base( false, $options ) );
+		$test = $this->MslsOptionsTaxTermFactory();
+
+		$this->assertEquals( '', $test->check_base( null, $options ) );
+		$this->assertEquals( '', $test->check_base( '', $options ) );
+		$this->assertEquals( '', $test->check_base( false, $options ) );
 	}
 
 	public function test_check_url(): void {
@@ -36,7 +39,10 @@ class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 		$options->shouldReceive( 'get_tax_query' )->andReturn( '' );
 
 		$expected = 'https://example.de/tag/keyword';
-		$this->assertEquals( $expected, $this->test->check_base( 'https://example.de/schlagwort/keyword', $options ) );
+
+		$test = $this->MslsOptionsTaxTermFactory();
+
+		$this->assertEquals( $expected, $test->check_base( 'https://example.de/schlagwort/keyword', $options ) );
 	}
 
 	public function test_check_url_permastruct_false(): void {
@@ -49,10 +55,15 @@ class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 		$options->shouldReceive( 'get_tax_query' )->andReturn( '' );
 
 		$expected = 'https://example.de/schlagwort/keyword';
-		$this->assertEquals( $expected, $this->test->check_base( $expected, $options ) );
+
+		$test = $this->MslsOptionsTaxTermFactory();
+
+		$this->assertEquals( $expected, $test->check_base( $expected, $options ) );
 	}
 
 	public function test_get_option_name(): void {
-		$this->assertSame( 'msls_term_42', $this->test->get_option_name() );
+		$test = $this->MslsOptionsTaxTermFactory();
+
+		$this->assertSame( 'msls_term_42', $test->get_option_name() );
 	}
 }

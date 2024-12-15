@@ -8,34 +8,44 @@ use lloc\Msls\ContentImport\ImportLogger;
 use lloc\Msls\ContentImport\Relations;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestBaseImporter extends MslsUnitTestCase {
+final class TestBaseImporter extends MslsUnitTestCase {
 
-	public function setUp(): void {
-		parent::setUp();
-
+	private function BaseImporterFactory(): BaseImporter {
 		$import_coordinates = \Mockery::mock( ImportCoordinates::class );
-		$this->test         = new BaseImporter( $import_coordinates );
+
+		return new BaseImporter( $import_coordinates );
 	}
 
 	public function testImport(): void {
-		$this->assertEquals( array(), $this->test->import( array() ) );
+		$test = $this->BaseImporterFactory();
+
+		$this->assertEquals( array(), $test->import( array() ) );
 	}
 
 	public function testSetImportCoordinates(): void {
 		$import_coordinates = \Mockery::mock( ImportCoordinates::class );
 
 		$this->expectNotToPerformAssertions();
-		$this->test->set_import_coordinates( $import_coordinates );
+
+		$test = $this->BaseImporterFactory();
+
+		$test->set_import_coordinates( $import_coordinates );
 	}
 
 	public function testGetLogger(): void {
-		$this->assertInstanceOf( ImportLogger::class, $this->test->get_logger() );
+		$test = $this->BaseImporterFactory();
+
+		$this->assertInstanceOf( ImportLogger::class, $test->get_logger() );
 	}
 	public function testGetRelations(): void {
-		$this->assertInstanceOf( Relations::class, $this->test->get_relations() );
+		$test = $this->BaseImporterFactory();
+
+		$this->assertInstanceOf( Relations::class, $test->get_relations() );
 	}
 
 	public function testInfo(): void {
-		$this->assertInstanceOf( \stdClass::class, $this->test->info() );
+		$test = $this->BaseImporterFactory();
+
+		$this->assertInstanceOf( \stdClass::class, $test->info() );
 	}
 }

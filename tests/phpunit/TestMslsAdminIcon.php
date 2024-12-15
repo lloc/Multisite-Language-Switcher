@@ -5,7 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsAdminIcon;
 
-class TestMslsAdminIcon extends MslsUnitTestCase {
+final class TestMslsAdminIcon extends MslsUnitTestCase {
 
 	protected string $admin_url = 'https://msls.co/wp-admin/';
 
@@ -13,7 +13,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 
 	protected string $src = '/dev/german_flag.png';
 
-	public function get_test( $post ): MslsAdminIcon {
+	private function MslsAdminIconFactory( $post ): MslsAdminIcon {
 		return ( new MslsAdminIcon( $post->post_type ) )
 			->set_path()
 			->set_language( $this->lang )
@@ -59,7 +59,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
 
 		$post = $this->get_post( $post_type, 2 );
-		$obj  = $this->get_test( $post );
+		$obj  = $this->MslsAdminIconFactory( $post );
 
 		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><span class="dashicons dashicons-edit"></span></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
@@ -73,7 +73,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
 
 		$post = $this->get_post( $post_type, 2 );
-		$obj  = $this->get_test( $post );
+		$obj  = $this->MslsAdminIconFactory( $post );
 
 		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><span class="dashicons dashicons-edit"></span></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
@@ -88,7 +88,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_post_link' )->twice()->andReturn( null );
 
 		$post = $this->get_post( $post_type );
-		$obj  = $this->get_test( $post );
+		$obj  = $this->MslsAdminIconFactory( $post );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_href( 0 ) );
 
@@ -109,7 +109,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_post_link' )->twice()->andReturn( null );
 
 		$post = $this->get_post( $post_type );
-		$obj  = $this->get_test( $post );
+		$obj  = $this->MslsAdminIconFactory( $post );
 
 		$this->assertInstanceOf( MslsAdminIcon::class, $obj->set_href( 0 ) );
 
@@ -129,7 +129,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
 
 		$post = $this->get_post( $post_type );
-		$obj  = $this->get_test( $post );
+		$obj  = $this->MslsAdminIconFactory( $post );
 
 		$this->assertEquals( '<img alt="de_DE" src="' . $this->src . '" />', $obj->get_img() );
 		$this->assertIsSTring( $obj->get_edit_new() );
@@ -145,7 +145,7 @@ class TestMslsAdminIcon extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
 
 		$post = $this->get_post( $post_type );
-		$obj  = $this->get_test( $post );
+		$obj  = $this->MslsAdminIconFactory( $post );
 
 		$this->assertEquals( '<img alt="de_DE" src="' . $this->src . '" />', $obj->get_img() );
 		$this->assertIsSTring( $obj->get_edit_new() );

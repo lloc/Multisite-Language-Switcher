@@ -6,9 +6,9 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsOptionsQueryDay;
 use lloc\Msls\MslsSqlCacher;
 
-class TestMslsOptionsQueryDay extends MslsUnitTestCase {
+final class TestMslsOptionsQueryDay extends MslsUnitTestCase {
 
-	public function get_test( int $year, int $monthnum, int $day ): MslsOptionsQueryDay {
+	private function MslsOptionsQueryDayFactory( int $year, int $monthnum, int $day ): MslsOptionsQueryDay {
 		parent::setUp();
 
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
@@ -22,16 +22,16 @@ class TestMslsOptionsQueryDay extends MslsUnitTestCase {
 	}
 
 	public function test_has_value_true(): void {
-		$this->assertTrue( $this->get_test( 1998, 12, 31 )->has_value( 'de_DE' ) );
+		$this->assertTrue( $this->MslsOptionsQueryDayFactory( 1998, 12, 31 )->has_value( 'de_DE' ) );
 	}
 
 	public function test_has_value(): void {
-		$this->assertFalse( $this->get_test( 0, 0, 0 )->has_value( 'de_DE' ) );
+		$this->assertFalse( $this->MslsOptionsQueryDayFactory( 0, 0, 0 )->has_value( 'de_DE' ) );
 	}
 
 	public function test_get_current_link(): void {
 		Functions\expect( 'get_day_link' )->once()->andReturn( 'https://msls.co/queried-day' );
 
-		$this->assertEquals( 'https://msls.co/queried-day', $this->get_test( 2015, 07, 02 )->get_current_link() );
+		$this->assertEquals( 'https://msls.co/queried-day', $this->MslsOptionsQueryDayFactory( 2015, 07, 02 )->get_current_link() );
 	}
 }

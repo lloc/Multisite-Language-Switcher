@@ -8,7 +8,7 @@ use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsPlugin;
 
-class TestMslsPlugin extends MslsUnitTestCase {
+final class TestMslsPlugin extends MslsUnitTestCase {
 
 	function test_admin_menu_without_autocomplete(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();

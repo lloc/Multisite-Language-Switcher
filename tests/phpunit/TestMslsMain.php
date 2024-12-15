@@ -8,11 +8,9 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMain;
 use lloc\Msls\MslsOptions;
 
-class TestMslsMain extends MslsUnitTestCase {
+final class TestMslsMain extends MslsUnitTestCase {
 
-	protected function setUp(): void {
-		parent::setUp();
-
+	private function MslsMainFactory(): MslsMain {
 		$options = \Mockery::mock( MslsOptions::class );
 
 		$blog = \Mockery::mock( MslsBlog::class );
@@ -21,11 +19,13 @@ class TestMslsMain extends MslsUnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blog );
 
-		$this->test = new MslsMain( $options, $collection );
+		return new MslsMain( $options, $collection );
 	}
 
 	public function test_get_input_array_empty(): void {
-		$this->assertEquals( array( 'de_DE' => 0 ), $this->test->get_input_array( 0 ) );
+		$test = $this->MslsMainFactory();
+
+		$this->assertEquals( array( 'de_DE' => 0 ), $test->get_input_array( 0 ) );
 	}
 
 	public function test_get_input_array(): void {
@@ -36,24 +36,32 @@ class TestMslsMain extends MslsUnitTestCase {
 			)
 		);
 
-		$this->assertEquals( array( 'de_DE' => 2 ), $this->test->get_input_array( 1 ) );
+		$test = $this->MslsMainFactory();
+
+		$this->assertEquals( array( 'de_DE' => 2 ), $test->get_input_array( 1 ) );
 	}
 
 	public function test_is_autosave(): void {
 		Functions\when( 'wp_is_post_revision' )->justReturn( true );
 
-		$this->assertIsBool( $this->test->is_autosave( 0 ) );
+		$test = $this->MslsMainFactory();
+
+		$this->assertIsBool( $test->is_autosave( 0 ) );
 	}
 
 	public function test_verify_nonce(): void {
-		$this->assertFalse( $this->test->verify_nonce() );
+		$test = $this->MslsMainFactory();
+
+		$this->assertFalse( $test->verify_nonce() );
 	}
 
 	public function test_debugger_string(): void {
 		$capture = tmpfile();
 		$backup  = ini_set( 'error_log', stream_get_meta_data( $capture )['uri'] );
 
-		$this->test->debugger( 'Test' );
+		$test = $this->MslsMainFactory();
+
+		$test->debugger( 'Test' );
 
 		$this->assertStringContainsString( 'MSLS Debug: Test', stream_get_contents( $capture ) );
 
@@ -64,7 +72,9 @@ class TestMslsMain extends MslsUnitTestCase {
 		$capture = tmpfile();
 		$backup  = ini_set( 'error_log', stream_get_meta_data( $capture )['uri'] );
 
-		$this->test->debugger( (object) array( 'test' => 'msls' ) );
+		$test = $this->MslsMainFactory();
+
+		$test->debugger( (object) array( 'test' => 'msls' ) );
 
 		$this->assertStringContainsString( '[test] => msls', stream_get_contents( $capture ) );
 

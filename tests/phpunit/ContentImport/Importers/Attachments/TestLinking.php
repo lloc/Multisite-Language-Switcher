@@ -7,7 +7,7 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\Importers\Attachments\Linking;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestLinking extends MslsUnitTestCase {
+final class TestLinking extends MslsUnitTestCase {
 
 	public function testImport(): void {
 		$coordinates = \Mockery::mock( ImportCoordinates::class );

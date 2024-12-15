@@ -7,9 +7,9 @@ use lloc\Msls\MslsAdminIcon;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsPostType;
 
-class TestMslsOptions extends MslsUnitTestCase {
+final class TestMslsOptions extends MslsUnitTestCase {
 
-	public function get_test(): MslsOptions {
+	private function MslsOptionsFactory(): MslsOptions {
 		Functions\when( 'home_url' )->justReturn( 'https://lloc.de' );
 		Functions\when( 'get_option' )->justReturn( array() );
 		Functions\when( 'update_option' )->justReturn( true );
@@ -48,7 +48,7 @@ class TestMslsOptions extends MslsUnitTestCase {
 	}
 
 	public function test_get_arg(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertNull( $obj->get_arg( 0 ) );
 		$this->assertIsSTring( $obj->get_arg( 0, '' ) );
@@ -65,7 +65,7 @@ class TestMslsOptions extends MslsUnitTestCase {
 		Functions\expect( 'delete_option' )->once()->with( 'msls' );
 		Functions\expect( 'add_option' )->once()->with( 'msls', $arr, '', true );
 
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->expectNotToPerformAssertions();
 		$obj->save( $arr );
@@ -94,44 +94,44 @@ class TestMslsOptions extends MslsUnitTestCase {
 	 * @dataProvider set_provider
 	 */
 	function test_set( $expected, $input ): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertEquals( $expected, $obj->set( $input ) );
 	}
 
 	function test_get_permalink(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertIsSTring( $obj->get_permalink( 'de_DE' ) );
 	}
 
 	function test_get_postlink(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertIsSTring( $obj->get_postlink( 'de_DE' ) );
 		$this->assertEquals( '', $obj->get_postlink( 'de_DE' ) );
 	}
 
 	function test_get_current_link(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertIsSTring( $obj->get_current_link() );
 	}
 
 	function test_is_excluded(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertIsBool( $obj->is_excluded() );
 	}
 
 	function test_is_content_filter(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertIsBool( $obj->is_content_filter() );
 	}
 
 	function test_get_order(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertIsSTring( $obj->get_order() );
 	}
@@ -139,7 +139,7 @@ class TestMslsOptions extends MslsUnitTestCase {
 	function test_get_url(): void {
 		Functions\when( 'plugins_url' )->justReturn( 'https://msls.co/wp-content/plugins' );
 
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertIsSTring( $obj->get_url( '/dev/test' ) );
 	}
@@ -149,7 +149,7 @@ class TestMslsOptions extends MslsUnitTestCase {
 		Functions\when( 'plugins_url' )->justReturn( 'https://msls.co/wp-content/plugins' );
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 2 ) . '/' );
 
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertIsSTring( $obj->get_flag_url( 'de_DE' ) );
 	}
@@ -166,7 +166,7 @@ class TestMslsOptions extends MslsUnitTestCase {
 			}
 		);
 
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$expected = array(
 			'en_US' => 'American English',
@@ -177,13 +177,13 @@ class TestMslsOptions extends MslsUnitTestCase {
 	}
 
 	public function test_get_icon_type_standard(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertEquals( MslsAdminIcon::TYPE_FLAG, $obj->get_icon_type() );
 	}
 
 	public function test_get_icon_type_admin_display(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 		$obj->set( array( 'admin_display' => MslsAdminIcon::TYPE_LABEL ) );
 
 		$this->assertEquals( MslsAdminIcon::TYPE_LABEL, $obj->get_icon_type() );
@@ -233,12 +233,12 @@ class TestMslsOptions extends MslsUnitTestCase {
 	}
 
 	public function test_get_slug(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsOptionsFactory();
 
 		$this->assertEquals( '', $obj->get_slug( 'post' ) );
 	}
 
 	public function test_get_option_name(): void {
-		$this->assertSame( 'msls', $this->get_test()->get_option_name() );
+		$this->assertSame( 'msls', $this->MslsOptionsFactory()->get_option_name() );
 	}
 }

@@ -7,7 +7,7 @@ use Brain\Monkey\Filters;
 use Hoa\Iterator\Filter;
 use lloc\Msls\MslsLink;
 
-class TestMslsLink extends MslsUnitTestCase {
+final class TestMslsLink extends MslsUnitTestCase {
 
 	public function test_create(): void {
 		Functions\expect( 'has_filter' )->once()->with( 'msls_link_create' )->andReturn( true );

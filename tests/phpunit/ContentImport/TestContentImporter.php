@@ -9,36 +9,41 @@ use lloc\Msls\MslsMain;
 use lloc\MslsTests\MslsUnitTestCase;
 use Brain\Monkey\Actions;
 
-class TestContentImporter extends MslsUnitTestCase {
+final class TestContentImporter extends MslsUnitTestCase {
 
-
-	public function setUp(): void {
-		parent::setUp();
-
+	private function ContentImporterFactory(): ContentImporter {
 		$main = \Mockery::mock( MslsMain::class );
 		$main->shouldReceive( 'verify_nonce' )->andReturnTrue();
 
-		$this->test = new ContentImporter( $main );
+		return new ContentImporter( $main );
 	}
 
 	public function test_logger(): void {
-		$this->test->set_logger( \Mockery::mock( ImportLogger::class ) );
+		$test = $this->ContentImporterFactory();
 
-		$this->assertInstanceOf( ImportLogger::class, $this->test->get_logger() );
+		$test->set_logger( \Mockery::mock( ImportLogger::class ) );
+
+		$this->assertInstanceOf( ImportLogger::class, $test->get_logger() );
 	}
 
 	public function test_relations(): void {
-		$this->test->set_relations( \Mockery::mock( Relations::class ) );
+		$test = $this->ContentImporterFactory();
 
-		$this->assertInstanceOf( Relations::class, $this->test->get_relations() );
+		$test->set_relations( \Mockery::mock( Relations::class ) );
+
+		$this->assertInstanceOf( Relations::class, $test->get_relations() );
 	}
 
 	public function test_handle_import(): void {
-		$this->assertEquals( array(), $this->test->handle_import() );
+		$test = $this->ContentImporterFactory();
+
+		$this->assertEquals( array(), $test->handle_import() );
 	}
 
 	public function test_parse_sources_no_post(): void {
-		$this->assertFalse( $this->test->parse_sources() );
+		$test = $this->ContentImporterFactory();
+
+		$this->assertFalse( $test->parse_sources() );
 	}
 
 	public function test_handle_false(): void {
@@ -46,7 +51,7 @@ class TestContentImporter extends MslsUnitTestCase {
 
 		Actions\expectAdded( 'msls_main_save' )->once();
 
-		$this->test->handle( false );
+		$this->ContentImporterFactory()->handle( false );
 	}
 
 	public function test_handle_true(): void {
@@ -54,6 +59,6 @@ class TestContentImporter extends MslsUnitTestCase {
 
 		Actions\expectRemoved( 'msls_main_save' )->once();
 
-		$this->test->handle( true );
+		$this->ContentImporterFactory()->handle( true );
 	}
 }

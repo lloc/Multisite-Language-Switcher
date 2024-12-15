@@ -11,7 +11,7 @@ use lloc\Msls\MslsOptionsQueryPostType;
 use lloc\Msls\MslsOptionsQueryYear;
 use lloc\Msls\MslsSqlCacher;
 
-class TestMslsOptionsQuery extends MslsUnitTestCase {
+final class TestMslsOptionsQuery extends MslsUnitTestCase {
 
 	protected function setUp(): void {
 		parent::setUp();

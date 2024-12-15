@@ -5,7 +5,7 @@ namespace lloc\MslsTests\ContentImport\Importers;
 use lloc\Msls\ContentImport\Importers\AttachmentsImporters;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestAttachmentsImporters extends MslsUnitTestCase {
+final class TestAttachmentsImporters extends MslsUnitTestCase {
 
 
 	public function testDetails(): void {

@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 use lloc\Msls\Component\Icon\IconPng;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestIconPng extends MslsUnitTestCase {
+final class TestIconPng extends MslsUnitTestCase {
 
 	public function test_get(): void {
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 4 ) . '/' );

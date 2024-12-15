@@ -6,7 +6,7 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\Importers\Map;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestMap extends MslsUnitTestCase {
+final class TestMap extends MslsUnitTestCase {
 
 	public function testMake(): void {
 		$coordinates = \Mockery::mock( ImportCoordinates::class );

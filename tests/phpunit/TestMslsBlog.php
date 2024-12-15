@@ -7,9 +7,9 @@ use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsOptions;
 
-class TestMslsBlog extends MslsUnitTestCase {
+final class TestMslsBlog extends MslsUnitTestCase {
 
-	public function get_blog(): MslsBlog {
+	private function MslsBlogFactory(): MslsBlog {
 		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 2 ) . '/' );
 
@@ -21,11 +21,11 @@ class TestMslsBlog extends MslsUnitTestCase {
 	}
 
 	public function test_get_userblog_id(): void {
-		$this->assertEquals( 1, $this->get_blog()->userblog_id );
+		$this->assertEquals( 1, $this->MslsBlogFactory()->userblog_id );
 	}
 
 	public function test_get_description(): void {
-		$this->assertEquals( 'Italiano', $this->get_blog()->get_description() );
+		$this->assertEquals( 'Italiano', $this->MslsBlogFactory()->get_description() );
 	}
 
 	public function test_get_url_current(): void {
@@ -39,7 +39,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 
 		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
 
-		$this->assertEquals( $url, $this->get_blog()->get_url( $option ) );
+		$this->assertEquals( $url, $this->MslsBlogFactory()->get_url( $option ) );
 	}
 
 	public function test_get_frontpage(): void {
@@ -56,7 +56,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 
-		$this->assertEquals( $url, $this->get_blog()->get_url( $option ) );
+		$this->assertEquals( $url, $this->MslsBlogFactory()->get_url( $option ) );
 	}
 
 	public function test_get_url(): void {
@@ -74,15 +74,15 @@ class TestMslsBlog extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 
-		$this->assertEquals( $url, $this->get_blog()->get_url( $option ) );
+		$this->assertEquals( $url, $this->MslsBlogFactory()->get_url( $option ) );
 	}
 
 	public function test_get_language(): void {
-		$this->assertEquals( 'it_IT', $this->get_blog()->get_language() );
+		$this->assertEquals( 'it_IT', $this->MslsBlogFactory()->get_language() );
 	}
 
 	public function test_get_alpha2(): void {
-		$this->assertEquals( 'it', $this->get_blog()->get_alpha2() );
+		$this->assertEquals( 'it', $this->MslsBlogFactory()->get_alpha2() );
 	}
 
 	public function test_get_title(): void {
@@ -90,7 +90,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 
 		$this->assertEquals(
 			'Test <span class="msls-icon-wrapper flag"><span class="flag-icon flag-icon-it">it_IT</span></span>',
-			$this->get_blog()->get_title()
+			$this->MslsBlogFactory()->get_title()
 		);
 	}
 
@@ -150,7 +150,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 
 		$this->assertEquals(
 			'<img class="blavatar" src="https://msls.co/icons/abc.png" srcset="https://msls.co/icons/abc.png 2x" alt="" width="16" height="16" loading="lazy" />',
-			$this->get_blog()->get_blavatar()
+			$this->MslsBlogFactory()->get_blavatar()
 		);
 	}
 
@@ -163,7 +163,7 @@ class TestMslsBlog extends MslsUnitTestCase {
 
 		$this->assertEquals(
 			'<img class="blavatar" src="https://msls.co/icons/abc.png" srcset="https://msls.co/icons/abc.png 2x" alt="" width="16" height="16" />',
-			$this->get_blog()->get_blavatar()
+			$this->MslsBlogFactory()->get_blavatar()
 		);
 	}
 }

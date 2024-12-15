@@ -8,13 +8,7 @@ use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsWidget;
 
-class TestMslsWidget extends MslsUnitTestCase {
-
-	protected function setUp(): void {
-		parent::setUp();
-
-		$this->test = new MslsWidget();
-	}
+final class TestMslsWidget extends MslsUnitTestCase {
 
 	public function test_init(): void {
 		$options = \Mockery::mock( MslsOptions::class );
@@ -25,7 +19,7 @@ class TestMslsWidget extends MslsUnitTestCase {
 
 		$this->expectNotToPerformAssertions();
 
-		$this->test->init();
+		MslsWidget::init();
 	}
 
 	public function test_widget(): void {
@@ -48,20 +42,25 @@ class TestMslsWidget extends MslsUnitTestCase {
 		Functions\expect( 'msls_output' )->once()->andReturn( MslsOutput::create() );
 
 		$this->expectOutputString( '<div><h3>Test</h3>No available translations found</div>' );
-		$this->test->widget( array(), array( 'title' => 'Test' ) );
+		( new MslsWidget() )->widget( array(), array( 'title' => 'Test' ) );
 	}
 
-	public function test_update(): void {
-		Functions\expect( 'wp_strip_all_tags' )->twice()->andReturnFirstArg();
+	public static function update_provider(): array {
+		return array(
+			array( array(), array(), array(), 0 ),
+			array( array( 'title' => 'abc' ), array(), array( 'title' => 'abc' ), 1 ),
+			array( array( 'title' => 'xyz' ), array( 'title' => 'abc' ), array( 'title' => 'xyz' ), 1 ),
+		);
+	}
 
-		$result = $this->test->update( array(), array() );
-		$this->assertEquals( array(), $result );
+	/**
+	 * @dataProvider update_provider
+	 */
+	public function test_update( array $new_instance, array $old_instance, array $expected, int $times ): void {
+		Functions\expect( 'wp_strip_all_tags' )->times( $times )->andReturnFirstArg();
 
-		$result = $this->test->update( array( 'title' => 'abc' ), array() );
-		$this->assertEquals( array( 'title' => 'abc' ), $result );
-
-		$result = $this->test->update( array( 'title' => 'xyz' ), array( 'title' => 'abc' ) );
-		$this->assertEquals( array( 'title' => 'xyz' ), $result );
+		$result = ( new MslsWidget() )->update( $new_instance, $old_instance );
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function test_form(): void {
@@ -69,7 +68,7 @@ class TestMslsWidget extends MslsUnitTestCase {
 
 		$this->expectOutputString( $expected );
 
-		$result = $this->test->form( array() );
+		$result = ( new MslsWidget() )->form( array() );
 		$this->assertEquals( $expected, $result );
 	}
 }

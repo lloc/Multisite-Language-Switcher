@@ -9,7 +9,7 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsContentFilter;
 use lloc\Msls\MslsOptions;
 
-class TestMslsContentFilter extends MslsUnitTestCase {
+final class TestMslsContentFilter extends MslsUnitTestCase {
 
 	public function test_init(): void {
 		$options = \Mockery::mock( MslsOptions::class );

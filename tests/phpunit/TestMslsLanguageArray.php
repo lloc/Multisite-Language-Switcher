@@ -4,9 +4,9 @@ namespace lloc\MslsTests;
 
 use lloc\Msls\MslsLanguageArray;
 
-class TestMslsLanguageArray extends MslsUnitTestCase {
+final class TestMslsLanguageArray extends MslsUnitTestCase {
 
-	public function get_test(): MslsLanguageArray {
+	private function MslsLanguageArrayFactory(): MslsLanguageArray {
 		$arr = array(
 			'fr_FR' => 0, // not ok, value 0 is not ok as blog_id
 			'it'    => 1,
@@ -18,14 +18,14 @@ class TestMslsLanguageArray extends MslsUnitTestCase {
 	}
 
 	public function test_get_val(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsLanguageArrayFactory();
 
 		$this->assertEquals( 1, $obj->get_val( 'it' ) );
 		$this->assertEquals( 0, $obj->get_val( 'fr_FR' ) );
 	}
 
 	public function test_get_arr(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsLanguageArrayFactory();
 
 		$this->assertEquals(
 			array(
@@ -38,7 +38,7 @@ class TestMslsLanguageArray extends MslsUnitTestCase {
 	}
 
 	public function test_set(): void {
-		$obj = $this->get_test();
+		$obj = $this->MslsLanguageArrayFactory();
 
 		$this->assertEquals(
 			array(

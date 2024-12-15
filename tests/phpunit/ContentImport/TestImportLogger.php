@@ -6,15 +6,7 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\ImportLogger;
 use lloc\MslsTests\MslsUnitTestCase;
 
-class TestImportLogger extends MslsUnitTestCase {
-
-	public function setUp(): void {
-		parent::setUp();
-
-		$coordinates = \Mockery::mock( ImportCoordinates::class );
-
-		$this->test = new ImportLogger( $coordinates );
-	}
+final class TestImportLogger extends MslsUnitTestCase {
 
 	public static function provider_get_data(): array {
 		return array(
@@ -28,6 +20,9 @@ class TestImportLogger extends MslsUnitTestCase {
 	 * @dataProvider provider_get_data
 	 */
 	public function test_get_data( $key ): void {
-		$this->assertArrayHasKey( $key, $this->test->get_data() );
+		$coordinates = \Mockery::mock( ImportCoordinates::class );
+		$test        = new ImportLogger( $coordinates );
+
+		$this->assertArrayHasKey( $key, $test->get_data() );
 	}
 }

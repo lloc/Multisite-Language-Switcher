@@ -4,7 +4,6 @@ namespace lloc\Msls;
 
 class MslsBlock {
 
-
 	protected MslsOptions $options;
 
 	public function __construct( MslsOptions $options ) {
