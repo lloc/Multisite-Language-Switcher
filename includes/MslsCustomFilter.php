@@ -1,4 +1,4 @@
-<?php
+<?php declare( strict_types=1 );
 
 namespace lloc\Msls;
 
@@ -54,7 +54,7 @@ final class MslsCustomFilter extends MslsMain {
 			$id = MslsRequest::get( MslsFields::FIELD_MSLS_FILTER, 0 );
 
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo ( new Select( MslsFields::FIELD_MSLS_FILTER, $options, $id ) )->render();
+			echo ( new Select( MslsFields::FIELD_MSLS_FILTER, $options, strval( $id ) ) )->render();
 		}
 	}
 
