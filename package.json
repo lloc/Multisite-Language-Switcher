@@ -2,19 +2,19 @@
   "scripts": {
     "uglify": "uglifyjs src/msls.js > js/msls.js",
     "less": "lessc css/msls.less css/msls.css --clean-css=\"--s1 --advanced\"",
-    "build-msls-block": "wp-scripts build src/msls-widget-block/index.js --webpack-src-dir=src/msls-widget-block --output-path=js/msls-widget-block",
+    "build-msls-block": "wp-scripts build src/msls-widget-block/index.js --output-path=js/msls-widget-block",
     "build": "npm run uglify && npm run less && npm run build-msls-block"
   },
   "dependencies": {
-    "less": "^4.2.0",
+    "less": "^4.2.2",
     "less-plugin-clean-css": "^1.6.0",
-    "uglify-js": "^3.19.0"
+    "uglify-js": "^3.19.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.49.0",
-    "@types/node": "^22.10.0",
-    "@wordpress/e2e-test-utils": "^11.13.0",
-    "@wordpress/scripts": "^30.6.0",
-    "dotenv": "^16.4.0"
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.1",
+    "@wordpress/e2e-test-utils": "^11.17.0",
+    "@wordpress/scripts": "^30.10.0",
+    "dotenv": "^16.4.7"
   }
 }

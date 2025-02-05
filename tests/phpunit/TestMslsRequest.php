@@ -9,14 +9,14 @@ use lloc\Msls\MslsRequest;
 final class TestMslsRequest extends MslsUnitTestCase {
 
 	public function test_isset_ok(): void {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturn( 13 );
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_FILTER )->andReturn( 17 );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturn( true );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_FILTER )->andReturn( true );
 
 		$this->assertTrue( MslsRequest::isset( array( MslsFields::FIELD_MSLS_FILTER, MslsFields::FIELD_MSLS_ID ) ) );
 	}
 
 	public function test_has_var_ok(): void {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturn( 13 );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturn( true );
 
 		$this->assertTrue( MslsRequest::has_var( MslsFields::FIELD_MSLS_ID ) );
 	}
@@ -28,7 +28,7 @@ final class TestMslsRequest extends MslsUnitTestCase {
 	}
 
 	public function test_isset_ko(): void {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_FILTER )->andReturn( 17 );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_FILTER )->andReturn( false );
 
 		$this->assertFalse( MslsRequest::isset( array( MslsFields::FIELD_MSLS_FILTER, 'non_existent_key' ) ) );
 	}

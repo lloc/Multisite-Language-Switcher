@@ -1,10 +1,4 @@
-<?php
-/**
- * MslsWidget
- *
- * @author Dennis Ploetner <re@lloc.de>
- * @since 0.9.8
- */
+<?php declare( strict_types=1 );
 
 namespace lloc\Msls;
 
