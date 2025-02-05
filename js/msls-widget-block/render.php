@@ -1,3 +1,0 @@
-<?php
-
-the_msls();
