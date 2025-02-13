@@ -30,8 +30,8 @@
 $content    = file_get_contents( 'build/translations.json' );
 $json       = json_decode( $content );
 $glob       = glob( 'flags/*.png' );
-$icons      = $not_found = [];
-$exceptions = [
+$icons      = $not_found = array();
+$exceptions = array(
 	'ca'             => 'catalonia.png',
 	'eo'             => 'europeanunion.png',
 	'cy'             => 'wales.png',
@@ -83,7 +83,7 @@ $exceptions = [
 	'de_CH_informal' => 'ch.png',
 	'de_DE_formal'   => 'de.png',
 	'nl_NL_formal'   => 'nl.png',
-];
+);
 
 echo '<?php', PHP_EOL, PHP_EOL;
 
@@ -121,9 +121,12 @@ $count = count( $glob );
 if ( $count > 0 ) {
 	echo '/**', PHP_EOL, " * {$count} unused icons in flags/", PHP_EOL, ' * ', PHP_EOL;
 
-	array_walk( $glob, function ( &$item ) {
-		$item = substr( $item, 6 );
-	} );
+	array_walk(
+		$glob,
+		function ( &$item ) {
+			$item = substr( $item, 6 );
+		}
+	);
 
 	foreach ( array_chunk( $glob, 15 ) as $flags ) {
 		echo ' * ', implode( ', ', $flags ), PHP_EOL;

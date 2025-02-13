@@ -85,7 +85,7 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * Handles an import request happening during a post save or a template redirect.
 	 *
-	 * @param array|null $data
+	 * @param array $data
 	 *
 	 * @return array The updated, if needed, data array.
 	 */

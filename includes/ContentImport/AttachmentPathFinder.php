@@ -22,8 +22,7 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 		}
 
 		$source_post = get_blog_post( $msls_imported['blog'], $msls_imported['post'] );
-
-		if ( false === $source_post ) {
+		if ( is_null( $source_post ) ) {
 			return $sources;
 		}
 

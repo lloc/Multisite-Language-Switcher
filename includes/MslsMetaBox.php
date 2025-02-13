@@ -257,7 +257,7 @@ final class MslsMetaBox extends MslsMain {
 		);
 
 		foreach ( $posts as $post ) {
-			$options[] = $this->render_option( $post->ID, intval($msls_id) );
+			$options[] = $this->render_option( $post->ID, intval( $msls_id ) );
 		}
 
 		return implode( PHP_EOL, $options );

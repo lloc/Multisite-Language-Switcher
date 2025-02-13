@@ -2,6 +2,7 @@
 .idea/
 .phpunit.cache
 .phpunit.result.cache
+.vscode/
 composer.lock
 composer.phar
 js/msls-widget-block/

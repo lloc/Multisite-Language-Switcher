@@ -3,6 +3,8 @@
 namespace lloc\Msls\ContentImport;
 
 use lloc\Msls\MslsOptions;
+use lloc\Msls\OptionsInterface;
+use lloc\Msls\OptionsTaxInterface;
 
 /**
  * Class Relations
@@ -113,11 +115,11 @@ class Relations {
 	/**
 	 * Sets a relation that should be created.
 	 *
-	 * @param MslsOptions $creator
-	 * @param string      $dest_lang
-	 * @param string      $dest_post_id
+	 * @param OptionsTaxInterface $creator
+	 * @param string              $dest_lang
+	 * @param int                 $dest_post_id
 	 */
-	public function should_create( MslsOptions $creator, $dest_lang, $dest_post_id ): void {
+	public function should_create( OptionsInterface $creator, $dest_lang, $dest_post_id ): void {
 		$this->to_create[] = array( $creator, $dest_lang, $dest_post_id );
 	}
 }

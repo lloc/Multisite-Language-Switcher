@@ -15,6 +15,13 @@ class MslsCli {
 			\WP_CLI::error( 'Please, provide a locale!' );
 			return;
 		}
+
 		$blog = msls_blog( $locale );
+		if ( is_null( $blog ) ) {
+			\WP_CLI::error( sprintf( 'No blog with locale %s found!', esc_attr( $locale ) ) );
+			return;
+		}
+
+		\WP_CLI::line( sprintf( 'Blog ID %$1d has locale %2s!', $blog->userblog_id, esc_attr( $locale ) ) );
 	}
 }
