@@ -3,6 +3,7 @@
 /.github
 /.idea
 /.phpunit.cache
+/.vscode
 /bin
 /build
 /diagrams
