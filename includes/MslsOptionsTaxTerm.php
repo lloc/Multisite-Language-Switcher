@@ -7,7 +7,7 @@ namespace lloc\Msls;
  *
  * @package Msls
  */
-class MslsOptionsTaxTerm extends MslsOptionsTax {
+class MslsOptionsTaxTerm extends MslsOptionsTax implements OptionsTaxInterface {
 
 	const BASE_OPTION = 'tag_base';
 
@@ -62,7 +62,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax {
 		return static::BASE_DEFINED;
 	}
 
-	protected static function get_base_option(): string {
+	public static function get_base_option(): string {
 		$base_option = get_option( static::BASE_OPTION, '' );
 
 		return $base_option ?: static::BASE_DEFINED;

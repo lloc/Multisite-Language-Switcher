@@ -2,19 +2,34 @@
 
 namespace lloc\Msls;
 
-class MslsCli {
+final class MslsCli {
 
 	public static function init(): void {
-		\WP_CLI::add_command( 'msls blog', array( __CLASS__, 'blog' ) );
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			\WP_CLI::add_command( 'msls', new self() );
+		}
 	}
 
+	/**
+	 * Get the first blog that has a specific locale set.
+	 *
+	 * ## OPTIONS
+	 *
+	 * <locale>
+	 * : The locale e.g. de_DE.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *  $ wp msls blog <locale>
+	 */
 	public function blog( $args, $assoc_args ): void {
-		$locale = $args[0] ?? $assoc_args['locale'] ?? null;
+		list( $locale ) = $args;
+		$blog           = msls_blog( $locale );
 
-		if ( is_null( $locale ) ) {
-			\WP_CLI::error( 'Please, provide a locale!' );
-			return;
+		if ( is_null( $blog ) ) {
+			\WP_CLI::error( sprintf( 'No blog with locale %1$s found!', esc_attr( $locale ) ) );
 		}
-		$blog = msls_blog( $locale );
+
+		\WP_CLI::success( sprintf( 'Blog ID %1$d has locale %2$s!', $blog->userblog_id, esc_attr( $locale ) ) );
 	}
 }

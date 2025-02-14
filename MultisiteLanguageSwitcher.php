@@ -231,7 +231,5 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	lloc\Msls\MslsPlugin::init();
-	if ( defined( 'WP_CLI' ) && WP_CLI ) {
-		lloc\Msls\MslsCli::init();
-	}
+	lloc\Msls\MslsCli::init();
 }

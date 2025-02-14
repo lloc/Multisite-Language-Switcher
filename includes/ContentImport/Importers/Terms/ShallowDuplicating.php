@@ -6,6 +6,7 @@ use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\Importers\BaseImporter;
 use lloc\Msls\MslsOptionsTax;
 use lloc\Msls\MslsOptionsTaxTerm;
+use lloc\Msls\OptionsTaxInterface;
 
 /**
  * Class ShallowDuplicating
@@ -97,13 +98,13 @@ class ShallowDuplicating extends BaseImporter {
 	}
 
 	/**
-	 * @param \WP_Term           $term
-	 * @param MslsOptionsTaxTerm $msls_term
-	 * @param string             $dest_lang
+	 * @param \WP_Term            $term
+	 * @param OptionsTaxInterface $msls_term
+	 * @param string              $dest_lang
 	 *
 	 * @return bool|int
 	 */
-	protected function create_local_term( \WP_Term $term, MslsOptionsTax $msls_term, $dest_lang ) {
+	protected function create_local_term( \WP_Term $term, OptionsTaxInterface $msls_term, $dest_lang ) {
 		$meta         = get_term_meta( $term->term_id );
 		$dest_term_id = wp_create_term( $term->name, $term->taxonomy );
 

@@ -7,7 +7,7 @@ namespace lloc\Msls;
  *
  * @package Msls
  */
-class MslsOptionsTax extends MslsOptions {
+class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 
 	public const SEPARATOR = '_term_';
 
@@ -18,7 +18,7 @@ class MslsOptionsTax extends MslsOptions {
 	 *
 	 * @return MslsOptionsTax
 	 */
-	public static function create( $id = 0 ): MslsOptionsTax {
+	public static function create( $id = 0 ): OptionsTaxInterface {
 		$id = ! empty( $id ) ? (int) $id : get_queried_object_id();
 
 		$req = '';
@@ -115,6 +115,10 @@ class MslsOptionsTax extends MslsOptions {
 			}
 		}
 
+		return '';
+	}
+
+	public static function get_base_option(): string {
 		return '';
 	}
 }

@@ -7,7 +7,7 @@ namespace lloc\Msls;
  *
  * @package Msls
  */
-class MslsOptionsTaxTermCategory extends MslsOptionsTaxTerm {
+class MslsOptionsTaxTermCategory extends MslsOptionsTaxTerm implements OptionsTaxInterface {
 
 	/**
 	 * Base option

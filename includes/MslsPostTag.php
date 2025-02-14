@@ -229,11 +229,11 @@ class MslsPostTag extends MslsMain {
 	/**
 	 * Sets the selected element in the data from the `$_GET` superglobal, if any.
 	 *
-	 * @param MslsOptionsTax $mydata
+	 * @param OptionsTaxInterface $mydata
 	 *
-	 * @return MslsOptionsTax
+	 * @return OptionsTaxInterface
 	 */
-	public function maybe_set_linked_term( MslsOptionsTax $mydata ) {
+	public function maybe_set_linked_term( OptionsTaxInterface $mydata ) {
 		if ( ! MslsRequest::isset( array( MslsFields::FIELD_MSLS_ID, MslsFields::FIELD_MSLS_LANG ) ) ) {
 			return $mydata;
 		}
@@ -253,7 +253,7 @@ class MslsPostTag extends MslsMain {
 		}
 
 		switch_to_blog( $origin_blog_id );
-		$origin_term = get_term( $origin_term_id, $mydata->base );
+		$origin_term = get_term( $origin_term_id, $mydata->get_base_option() );
 		restore_current_blog();
 
 		if ( ! $origin_term instanceof \WP_Term ) {

@@ -8,21 +8,25 @@ use lloc\Msls\Component\Icon\IconPng;
  * General options class
  *
  * @package Msls
- * @property bool $activate_content_import
  * @property bool $activate_autocomplete
+ * @property bool $activate_content_import
  * @property bool $output_current_blog
+ * @property bool $only_with_translation
+ * @property int $content_priority
  * @property int $display
  * @property int $reference_user
- * @property int $content_priority
  * @property string $admin_display
  * @property string $admin_language
- * @property string $description
- * @property string $before_item
  * @property string $after_item
- * @property string $before_output
  * @property string $after_output
+ * @property string $before_item
+ * @property string $before_output
+ * @property string $content_filter
+ * @property string $description
+ * @property string $exclude_current_blog
+ * @property string $sort_by_description
  */
-class MslsOptions extends MslsGetSet {
+class MslsOptions extends MslsGetSet implements OptionsInterface {
 
 	public const PREFIX    = 'msls';
 	public const SEPARATOR = '';

@@ -31,7 +31,7 @@ final class TestAttachmentPathFinder extends MslsUnitTestCase {
 	/**
 	 * @dataProvider dataprovider_filter_srcset
 	 */
-	public function test_filter_srcset( $source, $imageSrc, $attachmentId, $expected, $msls_imported = null, $times_gpm = 0, $time_dpm = 0, $times_gbp = 0, $blog_post = false ) {
+	public function test_filter_srcset( $source, $imageSrc, $attachmentId, $expected, $msls_imported = null, $times_gpm = 0, $time_dpm = 0, $times_gbp = 0, $blog_post = null ) {
 		Functions\expect( 'get_post_meta' )->times( $times_gpm )->andReturn( $msls_imported );
 		Functions\expect( 'delete_post_meta' )->times( $time_dpm );
 		Functions\expect( 'get_blog_post' )->times( $times_gbp )->andReturn( $blog_post );

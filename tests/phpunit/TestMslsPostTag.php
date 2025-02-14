@@ -221,7 +221,8 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_origin_term_wrong(): void {
-		$mydata        = \Mockery::mock( MslsOptionsTax::class );
+		$mydata = \Mockery::mock( MslsOptionsTax::class );
+		$mydata->shouldReceive( 'get_base_option' )->andReturn( 'term' );
 		$mydata->en_US = 42;
 
 		Functions\expect( 'filter_has_var' )->twice()->andReturnTrue();
@@ -237,7 +238,8 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_happy_path(): void {
-		$mydata        = \Mockery::mock( MslsOptionsTax::class );
+		$mydata = \Mockery::mock( MslsOptionsTax::class );
+		$mydata->shouldReceive( 'get_base_option' )->andReturn( 'term' );
 		$mydata->en_US = 42;
 
 		$term        = \Mockery::mock( \WP_Term::class );

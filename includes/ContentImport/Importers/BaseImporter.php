@@ -27,7 +27,7 @@ class BaseImporter implements Importer {
 	 * BaseImporter constructor.
 	 *
 	 * @param ImportLogger|null $logger
-	 * @param Relations|null $relations
+	 * @param Relations|null    $relations
 	 */
 	public function __construct(
 		ImportCoordinates $import_coordinates,
