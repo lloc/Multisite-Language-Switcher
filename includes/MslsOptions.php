@@ -59,7 +59,7 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	 *
 	 * @param int $id
 	 *
-	 * @return MslsOptions
+	 * @return OptionsInterface
 	 */
 	public static function create( $id = 0 ) {
 		if ( is_admin() ) {
@@ -195,12 +195,7 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 		return true;
 	}
 
-	/**
-	 * @param string $language
-	 *
-	 * @return string
-	 */
-	public function get_permalink( $language ) {
+	public function get_permalink( string $language ): string {
 		/**
 		 * Filters the url by language
 		 *
@@ -240,10 +235,8 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 
 	/**
 	 * Get current link
-	 *
-	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return home_url( '/' );
 	}
 

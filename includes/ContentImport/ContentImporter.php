@@ -25,15 +25,8 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @var MslsMain
 	 */
 	protected $main;
-
-	/**
-	 * @var ImportLogger
-	 */
-	protected $logger;
-	/**
-	 * @var Relations
-	 */
-	protected $relations;
+	protected ?ImportLogger $logger;
+	protected ?Relations $relations;
 
 	/**
 	 * @var bool Whether the class should handle requests or not.
@@ -48,9 +41,9 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * ContentImporter constructor.
 	 *
-	 * @param \lloc\Msls\MslsMain|null $main
+	 * @param ?MslsMain $main
 	 */
-	public function __construct( MslsMain $main = null ) {
+	public function __construct( ?MslsMain $main = null ) {
 		$this->main = $main ?: MslsMain::create();
 	}
 
@@ -237,9 +230,9 @@ class ContentImporter extends MslsRegistryInstance {
 
 		// also prevent MSLS from saving
 		if ( false === $handle ) {
-			add_action( 'msls_main_save', '__return_false' );
+			add_action( 'msls_main_save', '__return_void' );
 		} else {
-			remove_action( 'msls_main_save', '__return_false' );
+			remove_action( 'msls_main_save', '__return_void' );
 		}
 	}
 

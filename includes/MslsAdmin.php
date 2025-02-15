@@ -426,13 +426,7 @@ final class MslsAdmin extends MslsMain {
 	 */
 	public function render_rewrite( $key ): void {
 		$rewrite = get_post_type_object( $key )->rewrite;
-
-		$value = '';
-		if ( true === $rewrite ) {
-			$value = $key;
-		} elseif ( ! empty( $rewrite['slug'] ) ) {
-			$value = $rewrite['slug'];
-		}
+		$value   = $rewrite['slug'] ?? '';
 
         // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Text( "rewrite_{$key}", $value, 30, true ) )->render();

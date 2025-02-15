@@ -93,7 +93,7 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 	 *
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return $this->get_term_link( $this->get_arg( 0, 0 ) );
 	}
 

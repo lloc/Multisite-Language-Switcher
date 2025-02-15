@@ -110,7 +110,7 @@ class MslsBlog {
 	}
 
 	/**
-	 * @param MslsOptions $options
+	 * @param OptionsInterface $options
 	 *
 	 * @return string|null
 	 */
@@ -123,9 +123,9 @@ class MslsBlog {
 	}
 
 	/**
-	 * @param MslsOptions $options
+	 * @param OptionsInterface $options
 	 *
-	 * @return string|null
+	 * @return ?string
 	 */
 	protected function get_permalink( $options ) {
 		$url = null;

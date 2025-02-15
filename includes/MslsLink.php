@@ -6,12 +6,8 @@ namespace lloc\Msls;
  * Link type: Image and text
  *
  * @package Msls
- * @property string $txt
- * @property string $src
- * @property string $alt
- * @property string $url
  */
-class MslsLink extends MslsGetSet {
+class MslsLink extends MslsGetSet implements LinkInterface {
 
 	/**
 	 * Output format
@@ -63,9 +59,9 @@ class MslsLink extends MslsGetSet {
 	 *
 	 * @param ?int $display
 	 *
-	 * @return MslsLink
+	 * @return LinkInterface
 	 */
-	public static function create( ?int $display ): MslsLink {
+	public static function create( ?int $display ): LinkInterface {
 		$types = self::get_types();
 		if ( ! in_array( $display, array_keys( $types ), true ) ) {
 			$display = 0;
@@ -75,13 +71,13 @@ class MslsLink extends MslsGetSet {
 
 		if ( has_filter( 'msls_link_create' ) ) {
 			/**
-			 * @param MslsLink $obj
+			 * @param LinkInterface $obj
 			 * @param int $display
 			 *
-			 * @return MslsLink
+			 * @return LinkInterface
 			 */
 			$obj = apply_filters( 'msls_link_create', $obj, $display );
-			if ( in_array( __CLASS__, $types ) || is_subclass_of( $obj, __CLASS__ ) ) {
+			if ( $obj instanceof LinkInterface ) {
 				return $obj;
 			}
 		}
@@ -102,10 +98,8 @@ class MslsLink extends MslsGetSet {
 
 	/**
 	 * Handles the request to print the object
-	 *
-	 * @return string
 	 */
-	public function __toString() {
+	public function __toString(): string {
 		$temp = $this->get_arr();
 
 		return str_replace(

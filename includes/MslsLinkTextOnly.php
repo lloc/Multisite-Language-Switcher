@@ -7,7 +7,7 @@ namespace lloc\Msls;
  *
  * @package Msls
  */
-class MslsLinkTextOnly extends MslsLink {
+class MslsLinkTextOnly extends MslsLink implements LinkInterface {
 
 	/**
 	 * Output format

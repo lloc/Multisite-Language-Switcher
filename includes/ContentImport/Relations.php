@@ -115,9 +115,9 @@ class Relations {
 	/**
 	 * Sets a relation that should be created.
 	 *
-	 * @param OptionsTaxInterface $creator
-	 * @param string              $dest_lang
-	 * @param int                 $dest_post_id
+	 * @param OptionsInterface $creator
+	 * @param string           $dest_lang
+	 * @param int              $dest_post_id
 	 */
 	public function should_create( OptionsInterface $creator, $dest_lang, $dest_post_id ): void {
 		$this->to_create[] = array( $creator, $dest_lang, $dest_post_id );
