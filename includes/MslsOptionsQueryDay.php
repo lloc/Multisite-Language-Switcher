@@ -56,7 +56,7 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 *
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return get_day_link( $this->year, $this->monthnum, $this->day );
 	}
 }

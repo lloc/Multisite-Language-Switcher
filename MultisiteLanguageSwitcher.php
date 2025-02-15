@@ -230,6 +230,16 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		return \lloc\Msls\MslsOptionsQuery::create();
 	}
 
+	/**
+	 * Trivial void function for actions that do not return anything.
+	 *
+	 * @return void
+	 */
+	if ( ! function_exists( '__return_void' ) ) {
+		function __return_void(): void {
+		}
+	}
+
 	lloc\Msls\MslsPlugin::init();
 	lloc\Msls\MslsCli::init();
 }

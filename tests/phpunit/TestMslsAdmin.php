@@ -260,12 +260,12 @@ final class TestMslsAdmin extends MslsUnitTestCase {
 		$obj = $this->MslsAdminFactory();
 
 		$post_type          = \Mockery::mock( \WP_Post_Type::class );
-		$post_type->rewrite = true;
+		$post_type->rewrite = true; // this should not be possible
 
 		Functions\when( 'get_post_type_object' )->justReturn( $post_type );
 
 		$this->expectOutputString(
-			'<input type="text" class="regular-text" id="rewrite_pinko" name="msls[rewrite_pinko]" value="pinko" size="30" readonly="readonly"/>'
+			'<input type="text" class="regular-text" id="rewrite_pinko" name="msls[rewrite_pinko]" value="" size="30" readonly="readonly"/>'
 		);
 		$obj->rewrite_pinko( 'pinko' );
 	}

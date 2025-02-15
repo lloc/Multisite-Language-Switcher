@@ -68,7 +68,7 @@ class MslsOutput extends MslsMain {
 					 * Returns HTML-link for an item of the output-arr
 					 *
 					 * @param string $url
-					 * @param MslsLink $link
+					 * @param LinkInterface $link
 					 * @param bool $is_current_blog
 					 *
 					 * @since 0.9.8
@@ -190,9 +190,9 @@ class MslsOutput extends MslsMain {
 	/**
 	 * Returns true if the requirements not fulfilled
 	 *
-	 * @param MslsOptions|null $thing
-	 * @param boolean          $exists
-	 * @param string           $language
+	 * @param ?OptionsInterface $thing
+	 * @param boolean           $exists
+	 * @param string            $language
 	 *
 	 * @return boolean
 	 */

@@ -43,7 +43,7 @@ class MslsOptionsQueryPostType extends MslsOptionsQuery {
 	 *
 	 * @return string
 	 */
-	public function get_current_link() {
+	public function get_current_link(): string {
 		return (string) get_post_type_archive_link( $this->post_type );
 	}
 }
