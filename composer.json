@@ -51,7 +51,7 @@
       "@prepare",
       "@flags-png",
       "@flags-svg",
-      "npm install",
+      "npm ci",
       "npm run build",
       "npm run uglify",
       "npm run less",
