@@ -31,6 +31,11 @@ class Duplicating extends BaseImporter {
 		);
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array<string, mixed>
+	 */
 	public function import( array $data ) {
 		// Set the post type reading it from the request payload, if not possible, use the default one.
 		$data['post_type'] = $this->read_post_type_from_request( 'post' );
@@ -54,7 +59,7 @@ class Duplicating extends BaseImporter {
 	/**
 	 * Filters the post fields that should be duplicated from the source post to the destination one.
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function filter_fields() {
 		$fields = array(
