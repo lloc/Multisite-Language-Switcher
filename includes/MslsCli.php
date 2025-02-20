@@ -21,6 +21,10 @@ final class MslsCli {
 	 * ## EXAMPLES
 	 *
 	 *  $ wp msls blog <locale>
+	 *
+	 * @param string[]              $args
+	 * @param array<string, string> $assoc_args
+	 * @return void
 	 */
 	public function blog( $args, $assoc_args ): void {
 		list( $locale ) = $args;

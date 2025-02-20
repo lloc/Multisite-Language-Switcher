@@ -10,7 +10,7 @@ class ImportLogger {
 	protected string $levels_delimiter = '/';
 
 	/**
-	 * @var array<string, array>
+	 * @var array<string, string[]>
 	 */
 	protected array $data = array(
 		'info'    => array(),
@@ -41,7 +41,7 @@ class ImportLogger {
 	}
 
 	/**
-	 * @return array<string, array>
+	 * @return array<string, string[]>
 	 */
 	public function get_data(): array {
 		return $this->data;
@@ -106,10 +106,10 @@ class ImportLogger {
 	}
 
 	/**
-	 * @param array $path
-	 * @param mixed $what
+	 * @param string[] $path
+	 * @param mixed    $what
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function build_nested_array( $path, $what = '' ): array {
 		$json = '{"'
@@ -131,7 +131,7 @@ class ImportLogger {
 	/**
 	 * @param string $where
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	protected function build_path( string $where ): array {
 		$where_path = explode( $this->levels_delimiter, $where );

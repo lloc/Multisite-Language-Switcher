@@ -58,9 +58,9 @@ class Duplicating extends BaseImporter {
 	/**
 	 * Filters the post meta that should not be imported.
 	 *
-	 * @param array $meta
+	 * @param mixed[] $meta
 	 *
-	 * @return array
+	 * @return mixed[]
 	 */
 	public function filter_post_meta( array $meta ) {
 		$blacklist = array( '_edit_last', '_thumbnail_id', '_edit_lock' );
