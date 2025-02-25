@@ -20,7 +20,7 @@ class ShallowDuplicating extends BaseImporter {
 	const TYPE = 'shallow-duplicating';
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	protected $reset_taxonomies = array();
 
@@ -40,6 +40,11 @@ class ShallowDuplicating extends BaseImporter {
 		);
 	}
 
+	/**
+	 * @param mixed[] $data
+	 *
+	 * @return mixed[]
+	 */
 	public function import( array $data ) {
 		$source_blog_id = $this->import_coordinates->source_blog_id;
 		$source_post_id = $this->import_coordinates->source_post_id;
@@ -128,10 +133,10 @@ class ShallowDuplicating extends BaseImporter {
 	}
 
 	/**
-	 * @param array    $meta
+	 * @param mixed[]  $meta
 	 * @param \WP_Term $term
 	 *
-	 * @return array
+	 * @return mixed[]
 	 */
 	protected function filter_term_meta( array $meta, \WP_Term $term ) {
 		/**
@@ -158,7 +163,7 @@ class ShallowDuplicating extends BaseImporter {
 	 * @param int    $dest_term_id
 	 * @param string $taxonomy
 	 *
-	 * @return array|\WP_Error
+	 * @return int[]|\WP_Error
 	 */
 	protected function update_object_terms( $object_id, $dest_term_id, $taxonomy ) {
 		if ( ! in_array( $taxonomy, $this->reset_taxonomies, true ) ) {

@@ -41,8 +41,8 @@ class ImportCoordinates {
 	public $dest_lang;
 
 	/**
-	 * @var array An array keeping track of which importer (slug) should be used for
-	 *            a specific import type, shape [ <import-type> => <slug> ]
+	 * @var array<string, string> An array keeping track of which importer (slug) should be used for
+	 *                            a specific import type, shape [ <import-type> => <slug> ]
 	 */
 	public $importers = array();
 

@@ -78,9 +78,9 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * Handles an import request happening during a post save or a template redirect.
 	 *
-	 * @param array $data
+	 * @param string[] $data
 	 *
-	 * @return array The updated, if needed, data array.
+	 * @return string[] The updated, if needed, data array.
 	 */
 	public function handle_import( array $data = array() ) {
 		if ( ! $this->pre_flight_check() || false === $sources = $this->parse_sources() ) {
@@ -138,7 +138,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 *
 	 * @return bool
 	 */
-	protected function pre_flight_check( array $data = array() ) {
+	protected function pre_flight_check() {
 		if ( ! $this->handle ) {
 			return false;
 		}
@@ -157,7 +157,7 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * Parses the source blog and post IDs from the $_POST array validating them.
 	 *
-	 * @return array|bool
+	 * @return int[]|bool
 	 */
 	public function parse_sources() {
 		if ( ! MslsRequest::has_var( 'msls_import' ) ) {
@@ -203,6 +203,12 @@ class ContentImporter extends MslsRegistryInstance {
 		return $this->insert_blog_post( $blog_id, $data );
 	}
 
+	/**
+	 * @param int                  $blog_id
+	 * @param array<string, mixed> $data
+	 *
+	 * @return bool|int
+	 */
 	protected function insert_blog_post( $blog_id, array $data = array() ) {
 		if ( empty( $data ) ) {
 			return false;
@@ -225,6 +231,11 @@ class ContentImporter extends MslsRegistryInstance {
 		return $this->has_created_post;
 	}
 
+	/**
+	 * @param bool $handle
+	 *
+	 * @return void
+	 */
 	public function handle( $handle ) {
 		$this->handle = $handle;
 
@@ -240,11 +251,11 @@ class ContentImporter extends MslsRegistryInstance {
 	 * Imports content according to the provided coordinates.
 	 *
 	 * @param ImportCoordinates $import_coordinates
-	 * @param array             $post_fields An optional array of post fields; this can be
-	 *                                                         left empty if the method is not called as a consequence
-	 *                                                         of filtering the `wp_insert_post_data` filter.
+	 * @param string[]          $post_fields        An optional array of post fields; this can be
+	 *                                              left empty if the method is not called as a consequence
+	 *                                              of filtering the `wp_insert_post_data` filter.
 	 *
-	 * @return array An array of modified post fields.
+	 * @return string[] An array of modified post fields.
 	 */
 	public function import_content( ImportCoordinates $import_coordinates, array $post_fields = array() ) {
 		if ( ! $import_coordinates->validate() ) {
@@ -332,10 +343,10 @@ class ContentImporter extends MslsRegistryInstance {
 	}
 
 	/**
-	 * @param int   $blog_id
-	 * @param int   $post_id
-	 * @param array $data
-	 * @return array
+	 * @param int                  $blog_id
+	 * @param int                  $post_id
+	 * @param array<string, mixed> $data
+	 * @return array<string, mixed>
 	 */
 	protected function update_inserted_blog_post_data( $blog_id, $post_id, array $data ) {
 		$data['ID']          = $post_id;
