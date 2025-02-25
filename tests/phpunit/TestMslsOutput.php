@@ -68,8 +68,8 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		Filters\expectApplied( 'mlsl_output_get_alternate_links_arr' )->once();
 
 		$expected =
-			'<link rel="alternate" hreflang="de" href="https://example.de/" title="Deutsch" />' . PHP_EOL .
-			'<link rel="alternate" hreflang="it" href="https://example.it/" title="Italiano" />';
+			'<link rel="alternate" href="https://example.de/" hreflang="de" />' . PHP_EOL .
+			'<link rel="alternate" href="https://example.it/" hreflang="it" />';
 
 		$test = $this->MslsOutputFactory();
 
@@ -138,7 +138,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 
 		Filters\expectApplied( 'mlsl_output_get_alternate_links_default' )->once();
 
-		$expected = '<link rel="alternate" hreflang="x-default" href="https://example.de/" title="Deutsch" />';
+		$expected = '<link rel="alternate" href="https://example.de/" hreflang="x-default" />';
 
 		$test = $this->MslsOutputFactory();
 
