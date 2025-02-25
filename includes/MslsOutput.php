@@ -98,26 +98,23 @@ class MslsOutput extends MslsMain {
 		$blogs   = msls_blog_collection();
 		$hlObj   = new HrefLang( $blogs );
 		$options = MslsOptions::create();
-
 		$arr     = array();
 		$default = '';
 
 		foreach ( $blogs->get_objects() as $blog ) {
 			$url = apply_filters( 'mlsl_output_get_alternate_links', $blog->get_url( $options ), $blog );
-
 			if ( is_null( $url ) ) {
 				continue;
 			}
 
-			$description = $blog->get_description();
-			$hreflang    = $hlObj->get( $blog->get_language() );
+			$hreflang = $hlObj->get( $blog->get_language() );
+			$format   = '<link rel="alternate" href="%1$s" hreflang="%2$s" />';
 
-			$format = '<link rel="alternate" hreflang="%s" href="%s" title="%s" />';
 			if ( '' === $default ) {
-				$default = sprintf( $format, 'x-default', esc_url( $url ), esc_attr( $description ) );
+				$default = sprintf( $format, esc_url( $url ), 'x-default' );
 			}
 
-			$arr[] = sprintf( $format, esc_attr( $hreflang ), esc_url( $url ), esc_attr( $description ) );
+			$arr[] = sprintf( $format, esc_url( $url ), esc_attr( $hreflang ) );
 		}
 
 		if ( 1 === count( $arr ) ) {
