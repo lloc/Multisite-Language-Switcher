@@ -4,6 +4,12 @@ namespace lloc\Msls;
 
 final class MslsCli {
 
+	/**
+	 * Register the WP-CLI command.
+	 *
+	 * @codeCoverageIgnore
+	 * @return void
+	 */
 	public static function init(): void {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			\WP_CLI::add_command( 'msls', new self() );
