@@ -147,8 +147,10 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 	public function test_get_term_link_empty(): void {
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 
-		$test = $this->MslsOptionsTaxFactory();
+		$this->assertEquals( '', $this->MslsOptionsTaxFactory()->get_term_link( 42 ) );
+	}
 
-		$this->assertEquals( '', $test->get_term_link( 42 ) );
+	public function test_get_base_option() {
+		$this->assertEquals( '', MslsOptionsTax::get_base_option() );
 	}
 }
