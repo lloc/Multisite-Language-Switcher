@@ -4,7 +4,6 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
-use Hoa\Iterator\Filter;
 use lloc\Msls\MslsLink;
 
 final class TestMslsLink extends MslsUnitTestCase {

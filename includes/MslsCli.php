@@ -32,8 +32,8 @@ final class MslsCli {
 
 		if ( is_null( $blog ) ) {
 			\WP_CLI::error( sprintf( 'No blog with locale %1$s found!', esc_attr( $locale ) ) );
+		} else {
+			\WP_CLI::success( sprintf( 'Blog ID %1$d has locale %2$s!', $blog->userblog_id, esc_attr( $locale ) ) );
 		}
-
-		\WP_CLI::success( sprintf( 'Blog ID %1$d has locale %2$s!', $blog->userblog_id, esc_attr( $locale ) ) );
 	}
 }
