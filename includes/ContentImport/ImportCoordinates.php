@@ -55,9 +55,11 @@ class ImportCoordinates {
 		if ( ! get_blog_post( $this->source_blog_id, $this->source_post_id ) ) {
 			return false;
 		}
+
 		if ( ! get_blog_post( $this->dest_blog_id, $this->dest_post_id ) ) {
 			return false;
 		}
+
 		if ( ! $this->source_post instanceof \WP_Post ) {
 			return false;
 		}

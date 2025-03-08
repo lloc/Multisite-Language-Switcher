@@ -16,7 +16,7 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 	/**
 	 * @param int $id
 	 *
-	 * @return MslsOptionsTax
+	 * @return OptionsTaxInterface
 	 */
 	public static function create( $id = 0 ): OptionsTaxInterface {
 		$id = ! empty( $id ) ? (int) $id : get_queried_object_id();
