@@ -16,7 +16,7 @@ class Map extends MslsRegistryInstance {
 	public function make( ImportCoordinates $import_coordinates ) {
 		$importers = array_map(
 			function ( $factory ) use ( $import_coordinates ) {
-				/** @var ImportersFactory $factory */
+				/** @var ImportersBaseFactory $factory */
 				return $factory->make( $import_coordinates );
 			},
 			$this->factories()

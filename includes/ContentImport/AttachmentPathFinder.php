@@ -93,7 +93,7 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 	protected function get_source_post( $attachment_id, $msls_imported ) {
 		$source_post = get_blog_post( $msls_imported['blog'], $msls_imported['post'] );
 
-		if ( empty( $source_post ) || ! $source_post instanceof \WP_Post ) {
+		if ( ! $source_post instanceof \WP_Post ) {
 			delete_post_meta( $attachment_id, self::LINKED );
 
 			return false;

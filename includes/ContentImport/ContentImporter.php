@@ -285,7 +285,7 @@ class ContentImporter extends MslsRegistryInstance {
 		 * Returning a non `null` value here will override the creation of the importers map completely
 		 * and use the one returned in the filter.
 		 *
-		 * @param null $importers
+		 * @param ?array $importers
 		 * @param ImportCoordinates $import_coordinates
 		 */
 		$importers = apply_filters( 'msls_content_import_importers', null, $import_coordinates );
@@ -297,7 +297,7 @@ class ContentImporter extends MslsRegistryInstance {
 		$this->logger    = $this->logger ?: new ImportLogger( $import_coordinates );
 		$this->relations = $this->relations ?: new Relations( $import_coordinates );
 
-		if ( ! empty( $importers ) && is_array( $importers ) ) {
+		if ( ! empty( $importers ) ) {
 			$source_post_id = $import_coordinates->source_post_id;
 			$dest_lang      = $import_coordinates->dest_lang;
 			$dest_post_id   = $import_coordinates->dest_post_id;

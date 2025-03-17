@@ -208,9 +208,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * - is_tax
 	 *
 	 * @param int $id
-	 * @return \lloc\Msls\MslsOptionsTax
+	 * @return \lloc\Msls\OptionsTaxInterface
 	 */
-	function msls_get_tax( int $id ): \lloc\Msls\MslsOptionsTax {
+	function msls_get_tax( int $id ): \lloc\Msls\OptionsTaxInterface {
 		return \lloc\Msls\MslsOptionsTax::create( $id );
 	}
 

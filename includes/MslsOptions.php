@@ -370,7 +370,7 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	/**
 	 * The 'blog'-slug-problem :/
 	 *
-	 * @param string      $url
+	 * @param mixed       $url
 	 * @param MslsOptions $options
 	 *
 	 * @return string

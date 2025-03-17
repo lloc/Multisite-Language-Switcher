@@ -134,14 +134,8 @@ class MslsBlogCollection extends MslsRegistryInstance {
 		);
 
 		$blogs = get_blogs_of_user( $reference_user );
-
-		/**
-		 * @todo Check if this is still useful
-		 */
-		if ( is_array( $blogs ) ) {
-			foreach ( $blogs as $key => $blog ) {
-				$blogs[ $key ]->blog_id = $blog->userblog_id;
-			}
+		foreach ( $blogs as $key => $blog ) {
+			$blogs[ $key ]->blog_id = $blog->userblog_id;
 		}
 
 		return $blogs;
