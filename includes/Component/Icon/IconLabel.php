@@ -3,7 +3,6 @@
 namespace lloc\Msls\Component\Icon;
 
 use lloc\Msls\Component\Icon;
-use lloc\Msls\MslsPlugin;
 
 /**
  * Class IconLabel

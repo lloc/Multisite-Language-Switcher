@@ -26,7 +26,7 @@ class ImportCoordinates {
 	public $dest_post_id;
 
 	/**
-	 * @var \WP_Post
+	 * @var ?\WP_Post
 	 */
 	public $source_post;
 

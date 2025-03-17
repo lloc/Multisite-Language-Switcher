@@ -17,29 +17,34 @@ class MslsRequest {
 		return $config;
 	}
 
-	public static function has_var( string $name, ?int $input_type = null ): bool {
+	public static function has_var( string $var_name, ?int $input_type = null ): bool {
 		if ( null === $input_type ) {
 			try {
-				list( $input_type, ) = self::get_config( $name );
+				list( $input_type, ) = self::get_config( $var_name );
 			} catch ( \InvalidArgumentException $e ) {
 				return false;
 			}
 		}
 
-		return filter_has_var( $input_type, $name );
+		return filter_has_var( $input_type, $var_name );
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public static function get_var( string $name, ?int $input_type = null ) {
+	public static function get_var( string $var_name, ?int $input_type = null ) {
 		try {
-			list($type, $filter) = self::get_config( $name );
+			list($type, $filter) = self::get_config( $var_name );
 		} catch ( \InvalidArgumentException $e ) {
 			return null;
 		}
 
-		return filter_input( $input_type ?? $type, $name, $filter );
+		$type = $input_type ?? $type;
+		if ( in_array( $type, array( INPUT_POST, INPUT_GET, INPUT_COOKIE, INPUT_ENV, INPUT_SERVER ), true ) ) {
+			return filter_input( $type, $var_name, $filter );
+		}
+
+		return null;
 	}
 
 	/**

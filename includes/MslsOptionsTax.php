@@ -33,23 +33,33 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 		switch ( $req ) {
 			case 'category':
 				$options = new MslsOptionsTaxTermCategory( $id );
+				add_filter( 'msls_get_postlink', array( $options, 'check_base' ), 9, 2 );
 				break;
 			case 'post_tag':
 				$options = new MslsOptionsTaxTerm( $id );
+				add_filter( 'msls_get_postlink', array( $options, 'check_base' ), 9, 2 );
 				break;
 			default:
-				$options = new MslsOptionsTax( $id );
-		}
+				global $wp_rewrite;
 
-		if ( method_exists( $options, 'check_base' ) ) {
-			add_filter( 'msls_get_postlink', array( $options, 'check_base' ), 9, 2 );
-		} else {
-			global $wp_rewrite;
-
-			$options->with_front = ! empty( $wp_rewrite->extra_permastructs[ $options->get_tax_query() ]['with_front'] );
+				$options             = new MslsOptionsTax( $id );
+				$options->with_front = ! empty( $wp_rewrite->extra_permastructs[ $options->get_tax_query() ]['with_front'] );
 		}
 
 		return $options;
+	}
+
+	/**
+	 * @param int $id
+	 *
+	 * @return string
+	 */
+	public function get_content_type( int $id ): string {
+		if ( is_admin() ) {
+			return msls_content_types()->acl_request();
+		}
+
+		return ( is_category() ? 'category' : is_tag( $id ) ) ? 'post_tag' : '';
 	}
 
 	/**
