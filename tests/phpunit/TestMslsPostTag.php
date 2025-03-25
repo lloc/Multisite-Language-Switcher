@@ -87,7 +87,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturn( true );
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post' );
-		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( array( 'taxonomy', 'post_tag' ) );
+		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
 
 		$term       = \Mockery::mock( \WP_Term::class );
 		$term->name = 'test-term-name';
@@ -140,7 +140,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post' );
-		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( array( 'taxonomy', 'post_tag' ) );
+		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
 
 		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
 		Functions\expect( 'get_queried_object_id' )->atLeast()->once()->andReturn( 42 );

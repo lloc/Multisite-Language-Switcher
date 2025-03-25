@@ -70,7 +70,7 @@ final class TestMslsPostTagClassic extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_term_link' )->atLeast()->once()->andReturn( 'edit_term_link' );
 
 		$taxonomy = \Mockery::mock( \WP_Taxonomy::class );
-		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( array( 'taxonomy', 'post_type' ) );
+		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post_type' );
 
@@ -133,7 +133,7 @@ final class TestMslsPostTagClassic extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_term_link' )->atLeast()->once()->andReturn( 'edit_term_link' );
 
 		$taxonomy = \Mockery::mock( \WP_Taxonomy::class );
-		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( array( 'taxonomy', 'post_type' ) );
+		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post_type' );
 
