@@ -19,34 +19,21 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 	 * @return OptionsTaxInterface
 	 */
 	public static function create( $id = 0 ): OptionsTaxInterface {
-		$id = ! empty( $id ) ? (int) $id : get_queried_object_id();
-
-		$req = '';
-		if ( is_admin() ) {
-			$req = msls_content_types()->acl_request();
-		} elseif ( is_category() ) {
-			$req = 'category';
-		} elseif ( is_tag( $id ) ) {
-			$req = 'post_tag';
-		}
+		$id  = ! empty( $id ) ? (int) $id : get_queried_object_id();
+		$req = self::get_content_type( $id );
 
 		switch ( $req ) {
 			case 'category':
 				$options = new MslsOptionsTaxTermCategory( $id );
-				add_filter( 'msls_get_postlink', array( $options, 'check_base' ), 9, 2 );
 				break;
 			case 'post_tag':
 				$options = new MslsOptionsTaxTerm( $id );
-				add_filter( 'msls_get_postlink', array( $options, 'check_base' ), 9, 2 );
 				break;
 			default:
-				global $wp_rewrite;
-
-				$options             = new MslsOptionsTax( $id );
-				$options->with_front = ! empty( $wp_rewrite->extra_permastructs[ $options->get_tax_query() ]['with_front'] );
+				$options = new MslsOptionsTax( $id );
 		}
 
-		return $options;
+		return $options->handle_rewrite();
 	}
 
 	/**
@@ -54,12 +41,20 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 	 *
 	 * @return string
 	 */
-	public function get_content_type( int $id ): string {
+	public static function get_content_type( int $id ): string {
 		if ( is_admin() ) {
 			return msls_content_types()->acl_request();
 		}
 
-		return ( is_category() ? 'category' : is_tag( $id ) ) ? 'post_tag' : '';
+		return ( is_category( $id ) ? 'category' : ( is_tag( $id ) ? 'post_tag' : '' ) );
+	}
+
+	public function handle_rewrite(): OptionsTaxInterface {
+		global $wp_rewrite;
+
+		$this->with_front = ! empty( $wp_rewrite->extra_permastructs[ $this->get_tax_query() ]['with_front'] );
+
+		return $this;
 	}
 
 	/**

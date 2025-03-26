@@ -12,13 +12,13 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 	private function MslsOptionsTaxFactory(): MslsOptionsTax {
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		return new MslsOptionsTax( 0 );
+		return new MslsOptionsTax();
 	}
 
 	public function test_create_category(): void {
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'is_admin' )->once()->andReturnFalse();
-		Functions\expect( 'is_category' )->once()->andReturnTrue();
+		Functions\expect( 'is_category' )->once()->with( 42 )->andReturnTrue();
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
 		$this->assertInstanceOf( MslsOptionsTaxTermCategory::class, MslsOptionsTax::create() );
