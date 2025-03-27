@@ -36,7 +36,6 @@
     "test": "vendor/bin/phpunit",
     "coverage": "@php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html tests/coverage",
     "phpstan": "vendor/bin/phpstan analyze",
-    "playwright": "npx playwright test",
     "php74": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4",
     "php81": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1",
     "php82": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2",
@@ -46,15 +45,16 @@
     "diagram:class": "vendor/bin/php-class-diagram --php8 includes > diagrams/msls-class.puml",
     "diagram:package": "vendor/bin/php-class-diagram --package-diagram --php8 includes > diagrams/msls-package.puml",
     "git-release": "bin/git-release.sh",
+    "playwright": [
+      "npx playwright install --with-deps",
+      "npx playwright test"
+    ],
     "build": [
       "@prepare",
       "@flags-png",
       "@flags-svg",
       "npm ci",
       "npm run build",
-      "npm run uglify",
-      "npm run less",
-      "npm run build-msls-block",
       "@git-release"
     ],
     "githooks": [
