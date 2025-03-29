@@ -34,7 +34,7 @@ class MslsPlugin {
 	public static function init(): void {
 		$obj = new self( msls_options() );
 
-		add_action( 'plugins_loaded', array( $obj, 'init_i18n_support' ) );
+		add_action( 'init', array( $obj, 'init_i18n_support' ) );
 
 		register_activation_hook( self::file(), array( __CLASS__, 'activate' ) );
 
