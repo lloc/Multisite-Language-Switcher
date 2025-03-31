@@ -15,7 +15,7 @@
     "@playwright/test": "^1.51.1",
     "@types/node": "^22.13.14",
     "@wordpress/e2e-test-utils": "^11.21.0",
-    "@wordpress/scripts": "^30.13.0",
+    "@wordpress/scripts": "^30.14.0",
     "dotenv": "^16.4.7"
   }
 }
