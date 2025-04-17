@@ -105,7 +105,7 @@
     <rule ref="WordPress.WP.I18n">
         <properties>
             <property name="text_domain" type="array">
-                <element value="my-textdomain"/>
+                <element value="multisite-language-switcher"/>
                 <element value="library-textdomain"/>
             </property>
         </properties>
