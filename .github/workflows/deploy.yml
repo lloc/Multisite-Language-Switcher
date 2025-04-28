@@ -29,6 +29,6 @@ jobs:
         with:
           generate-zip: true
       - name: Attest build provenance
-        uses: johnbillion/action-wordpress-plugin-attestation@0.7.0
+        uses: johnbillion/action-wordpress-plugin-attestation@0.7.1
         with:
           zip-path: ${{ steps.deploy.outputs.zip-path }}
