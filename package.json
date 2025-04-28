@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",
-    "@types/node": "^22.13.14",
+    "@types/node": "^22.15.2",
     "@wordpress/e2e-test-utils": "^11.21.0",
     "@wordpress/scripts": "^30.15.0",
     "dotenv": "^16.4.7"
