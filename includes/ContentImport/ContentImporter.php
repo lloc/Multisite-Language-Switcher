@@ -294,8 +294,8 @@ class ContentImporter extends MslsRegistryInstance {
 			$importers = Map::instance()->make( $import_coordinates );
 		}
 
-		$this->logger    = $this->logger ?: new ImportLogger( $import_coordinates );
-		$this->relations = $this->relations ?: new Relations( $import_coordinates );
+		$this->logger    = $this->logger ?? new ImportLogger( $import_coordinates );
+		$this->relations = $this->relations ?? new Relations( $import_coordinates );
 
 		if ( ! empty( $importers ) ) {
 			$source_post_id = $import_coordinates->source_post_id;
