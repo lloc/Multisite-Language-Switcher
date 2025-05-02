@@ -25,8 +25,8 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @var MslsMain
 	 */
 	protected $main;
-	protected ?ImportLogger $logger;
-	protected ?Relations $relations;
+	protected ?ImportLogger $logger = null;
+	protected ?Relations $relations = null;
 
 	/**
 	 * @var bool Whether the class should handle requests or not.
@@ -290,7 +290,7 @@ class ContentImporter extends MslsRegistryInstance {
 		 */
 		$importers = apply_filters( 'msls_content_import_importers', null, $import_coordinates );
 
-		if ( null === $importers ) {
+		if ( is_null( $importers ) ) {
 			$importers = Map::instance()->make( $import_coordinates );
 		}
 
