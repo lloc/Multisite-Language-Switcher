@@ -92,7 +92,7 @@ class ImportCoordinates {
 		$importers = array();
 		foreach ( array( INPUT_POST, INPUT_GET ) as $input_type ) {
 			if ( filter_has_var( $input_type, self::IMPORTERS_GLOBAL_KEY ) ) {
-				$importers = filter_input( $input_type, self::IMPORTERS_GLOBAL_KEY, FILTER_FORCE_ARRAY );
+				$importers = filter_input( $input_type, self::IMPORTERS_GLOBAL_KEY, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 				break;
 			}
 		}
