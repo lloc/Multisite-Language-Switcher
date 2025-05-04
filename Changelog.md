@@ -1,3 +1,7 @@
+## 2.9.6
+* Alternate links are now printed without the title attribute.
+* Fix in ImportCoordinates
+
 ## 2.9.5
 * Importer base and ImportCoordinates tested and refactored by @lloc in https://github.com/lloc/Multisite-Language-Switcher/pull/402
 * Components fixed
