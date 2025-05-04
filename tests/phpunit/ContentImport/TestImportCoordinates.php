@@ -59,7 +59,7 @@ final class TestImportCoordinates extends MslsUnitTestCase {
 			->andReturn( true );
 		Functions\expect( 'filter_input' )
 			->once()
-			->with( INPUT_GET, ImportCoordinates::IMPORTERS_GLOBAL_KEY, FILTER_FORCE_ARRAY )
+			->with( INPUT_GET, ImportCoordinates::IMPORTERS_GLOBAL_KEY, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY )
 			->andReturn( array( 'pagesType' => 'pagesSlug' ) );
 
 		$test = $this->ImportCoordinatesFactory();
