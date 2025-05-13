@@ -79,7 +79,7 @@ class MslsOutput extends MslsMain {
 						'<a href="%s" title="%s"%s>%s</a>',
 						$url,
 						$link->txt,
-						$is_current_blog ? ' class="current_language"' : '',
+						$is_current_blog ? ' class="current_language" aria-current="page"' : '',
 						$link
 					);
 				}
