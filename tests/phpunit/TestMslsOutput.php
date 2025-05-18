@@ -216,7 +216,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_permalink' )->once()->andReturn( 'https://msls.co/de/testpage/' );
 
-		$expected = '<a href="https://msls.co/de/testpage/" title="Deutsch" class="current_language"><img src="https://msls.co/wp-content/plugins/msls/flags/de.png" alt="de_DE"/> Deutsch</a>';
+		$expected = '<a href="https://msls.co/de/testpage/" title="Deutsch" class="current_language" aria-current="page"><img src="https://msls.co/wp-content/plugins/msls/flags/de.png" alt="de_DE"/> Deutsch</a>';
 
 		$this->assertEquals( $expected, strval( new MslsOutput( $options, $collection ) ) );
 	}
