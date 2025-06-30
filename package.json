@@ -16,6 +16,6 @@
     "@types/node": "^24.0.7",
     "@wordpress/e2e-test-utils": "^11.26.0",
     "@wordpress/scripts": "^30.19.0",
-    "dotenv": "^16.5.0"
+    "dotenv": "^17.0.0"
   }
 }
