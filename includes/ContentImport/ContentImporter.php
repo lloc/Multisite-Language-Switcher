@@ -24,19 +24,20 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * @var MslsMain
 	 */
-	protected $main;
+	protected MslsMain $main;
+
 	protected ?ImportLogger $logger = null;
 	protected ?Relations $relations = null;
 
 	/**
 	 * @var bool Whether the class should handle requests or not.
 	 */
-	protected $handle = true;
+	protected bool $handle = true;
 
 	/**
 	 * @var int The ID of the post the class created while handling the request, if any.
 	 */
-	protected $has_created_post = 0;
+	protected int $has_created_post = 0;
 
 	/**
 	 * ContentImporter constructor.
@@ -48,30 +49,30 @@ class ContentImporter extends MslsRegistryInstance {
 	}
 
 	/**
-	 * @return \lloc\Msls\ContentImport\ImportLogger
+	 * @return ?ImportLogger
 	 */
-	public function get_logger() {
+	public function get_logger(): ?ImportLogger {
 		return $this->logger;
 	}
 
 	/**
-	 * @param \lloc\Msls\ContentImport\ImportLogger $logger
+	 * @param ImportLogger $logger
 	 */
-	public function set_logger( $logger ): void {
+	public function set_logger( ImportLogger $logger ): void {
 		$this->logger = $logger;
 	}
 
 	/**
-	 * @return \lloc\Msls\ContentImport\Relations
+	 * @return ?Relations
 	 */
-	public function get_relations() {
+	public function get_relations(): ?Relations {
 		return $this->relations;
 	}
 
 	/**
-	 * @param \lloc\Msls\ContentImport\Relations $relations
+	 * @param Relations $relations
 	 */
-	public function set_relations( $relations ): void {
+	public function set_relations( Relations $relations ): void {
 		$this->relations = $relations;
 	}
 
@@ -241,9 +242,9 @@ class ContentImporter extends MslsRegistryInstance {
 
 		// also prevent MSLS from saving
 		if ( false === $handle ) {
-			add_action( 'msls_main_save', '__return_void' );
+			add_action( 'msls_main_save', 'msls_return_void' );
 		} else {
-			remove_action( 'msls_main_save', '__return_void' );
+			remove_action( 'msls_main_save', 'msls_return_void' );
 		}
 	}
 
