@@ -127,17 +127,14 @@ class MslsBlog {
 	 *
 	 * @return ?string
 	 */
-	protected function get_permalink( $options ) {
+	protected function get_permalink( OptionsInterface $options ) {
 		$url = null;
 
 		$is_home = is_front_page();
 
 		switch_to_blog( $this->obj->userblog_id );
 
-		if ( is_object( $options ) && method_exists(
-			$options,
-			'has_value'
-		) && ( $is_home || $options->has_value( $this->get_language() ) ) ) {
+		if ( $is_home || $options->has_value( $this->get_language() ) ) {
 			$url = apply_filters( 'mlsl_blog_get_permalink', $options->get_permalink( $this->get_language() ), $this );
 		}
 

@@ -86,7 +86,7 @@ final class MslsAdmin extends MslsMain {
 	 */
 	public function __call( $method, $args ) {
 		$parts = explode( '_', $method, 2 );
-		if ( count( $parts ) > 0 && 'rewrite' === $parts[0] ) {
+		if ( 2 === count( $parts ) && 'rewrite' === $parts[0] ) {
 			$this->render_rewrite( $parts[1] );
 			return;
 		}
