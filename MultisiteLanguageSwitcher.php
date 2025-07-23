@@ -235,9 +235,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @return void
 	 */
-	if ( ! function_exists( '__return_void' ) ) {
-		function __return_void(): void {
-		}
+	function msls_return_void(): void {
 	}
 
 	lloc\Msls\MslsPlugin::init();

@@ -17,7 +17,7 @@ class MslsLink extends MslsGetSet implements LinkInterface {
 	protected $format_string = '<img src="{src}" alt="{alt}"/> {txt}';
 
 	/**
-	 * Gets all link types as array with "id => name"-items
+	 * Gets all link types as an array with "id => name"-items
 	 *
 	 * @return string[]
 	 */
@@ -73,13 +73,8 @@ class MslsLink extends MslsGetSet implements LinkInterface {
 			/**
 			 * @param LinkInterface $obj
 			 * @param int $display
-			 *
-			 * @return LinkInterface
 			 */
 			$obj = apply_filters( 'msls_link_create', $obj, $display );
-			if ( $obj instanceof LinkInterface ) {
-				return $obj;
-			}
 		}
 
 		return $obj;
