@@ -5,6 +5,7 @@ namespace lloc\Msls;
 use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
+use WP_Post;
 
 /**
  * Meta box for the edit mode of the (custom) post types
@@ -75,7 +76,7 @@ final class MslsMetaBox extends MslsMain {
 	 */
 	public static function get_suggested_fields( MslsJson $json, array $args ): MslsJson {
 		/**
-		 * Overrides the query-args for the suggest fields in the MetaBox
+		 * Overrides the query-args for the 'suggest' fields in the MetaBox
 		 *
 		 * @param array $args<string, mixed>
 		 *
@@ -87,14 +88,13 @@ final class MslsMetaBox extends MslsMain {
 			/**
 			 * Manipulates the WP_Post object before using it
 			 *
-			 * @param \WP_Post $post
+			 * @param WP_Post $post
 			 *
 			 * @since 0.9.9
 			 */
 			$post = apply_filters( 'msls_meta_box_suggest_post', $post );
-			if ( is_object( $post ) ) {
-				$json->add( $post->ID, get_the_title( $post ) );
-			}
+
+			$json->add( $post->ID, get_the_title( $post ) );
 		}
 
 		wp_reset_postdata();

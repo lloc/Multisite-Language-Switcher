@@ -60,65 +60,62 @@ class Linking extends BaseImporter {
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
-		if ( $source_post_thumbnail_attachment instanceof \WP_Post ) {
-			// in some instances the folder sep. `/` might be duplicated, we de-duplicate it
-			array_walk(
-				$source_upload_dir,
-				function ( &$entry ) {
-					$entry = str_replace( '//', '/', $entry );
-				}
-			);
-			$source_uploads_dir         = untrailingslashit(
-				str_replace(
-					$source_upload_dir['subdir'],
-					'',
-					$source_upload_dir['path']
-				)
-			);
-			$source_post_thumbnail_file = $source_uploads_dir . '/' . $source_post_thumbnail_meta['_wp_attached_file'];
+		// in some instances, the folder sep. `/` might be duplicated, we de-duplicate it
+		array_walk(
+			$source_upload_dir,
+			function ( &$entry ) {
+				$entry = str_replace( '//', '/', $entry );
+			}
+		);
+		$source_uploads_dir         = untrailingslashit(
+			str_replace(
+				$source_upload_dir['subdir'],
+				'',
+				$source_upload_dir['path']
+			)
+		);
+		$source_post_thumbnail_file = $source_uploads_dir . '/' . $source_post_thumbnail_meta['_wp_attached_file'];
 
-			// Check the type of file. We'll use this as the 'post_mime_type'.
-			$filetype = wp_check_filetype( basename( $source_post_thumbnail_file ), null );
+		// Check the type of file. We'll use this as the 'post_mime_type'.
+		$filetype = wp_check_filetype( basename( $source_post_thumbnail_file ), null );
 
-			// Prepare an array of post data for the attachment.
-			$attachment = array(
-				'guid'           => $source_post_thumbnail_attachment->guid,
-				'post_mime_type' => $filetype['type'],
-				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $source_post_thumbnail_file ) ),
-				'post_content'   => '',
-				'post_status'    => 'inherit',
-			);
+		// Prepare an array of post data for the attachment.
+		$attachment = array(
+			'guid'           => $source_post_thumbnail_attachment->guid,
+			'post_mime_type' => $filetype['type'],
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $source_post_thumbnail_file ) ),
+			'post_content'   => '',
+			'post_status'    => 'inherit',
+		);
 
-			$existing_criteria = array(
+		$found = get_posts(
+			array(
 				'post_type' => 'attachment',
 				'title'     => $attachment['post_title'],
+			)
+		);
+		if ( isset( $found[0]->ID ) ) {
+			$dest_post_thumbnail_id = $found[0]->ID;
+			$this->logger->log_success( 'post-thumbnail/existing', $dest_post_thumbnail_id );
+		} else {
+			// Insert the attachment.
+			$dest_post_thumbnail_id = wp_insert_attachment(
+				$attachment,
+				$source_post_thumbnail_file,
+				$dest_post_id
 			);
 
-			$found = get_posts( $existing_criteria );
-
-			if ( $found && $found[0] instanceof \WP_Post ) {
-				$dest_post_thumbnail_id = $found[0]->ID;
-				$this->logger->log_success( 'post-thumbnail/existing', $dest_post_thumbnail_id );
+			if ( empty( $dest_post_thumbnail_id ) ) {
+				$this->logger->log_error( 'post-thumbnail/created', $dest_post_thumbnail_id );
 			} else {
-				// Insert the attachment.
-				$dest_post_thumbnail_id = wp_insert_attachment(
-					$attachment,
-					$source_post_thumbnail_file,
-					$dest_post_id
-				);
+				$this->logger->log_success( 'post-thumbnail/created', $dest_post_thumbnail_id );
+			}
 
-				if ( empty( $dest_post_thumbnail_id ) ) {
-					$this->logger->log_error( 'post-thumbnail/created', $dest_post_thumbnail_id );
-				} else {
-					$this->logger->log_success( 'post-thumbnail/created', $dest_post_thumbnail_id );
-				}
+			// the `_wp_attached_file` meta has been set before, so we skip it
+			unset( $source_post_thumbnail_meta['_wp_attached_file'] );
 
-				// the `_wp_attached_file` meta has been set before, so we skip it
-				unset( $source_post_thumbnail_meta['_wp_attached_file'] );
-
-				foreach ( $source_post_thumbnail_meta as $key => $value ) {
-					add_post_meta( $dest_post_thumbnail_id, $key, $value, true );
-				}
+			foreach ( $source_post_thumbnail_meta as $key => $value ) {
+				add_post_meta( $dest_post_thumbnail_id, $key, $value, true );
 			}
 
 			update_post_meta(
