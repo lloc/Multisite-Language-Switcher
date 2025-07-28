@@ -1,6 +1,7 @@
 .distignore
 .gitattributes
 .gitignore
+.phpcs.cache
 .scrutinizer.yml
 /.git
 /.github
