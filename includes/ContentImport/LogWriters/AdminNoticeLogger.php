@@ -8,6 +8,11 @@ use lloc\Msls\MslsRegistryInstance;
 
 class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 
+	/**
+	 * The transient where the last import log will be stored.
+	 *
+	 * @var string
+	 */
 	protected string $transient = 'msls_last_import_log';
 
 	/**
@@ -137,20 +142,21 @@ class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
 	/**
 	 * Shows the last log that was written.
 	 *
-	 * @param bool $echo
+	 * @param bool $output
 	 *
 	 * @return ?string
 	 */
-	public function show_last_log( $echo = true ): ?string {
-		if ( ! ( $html = get_transient( $this->transient ) ) ) {
+	public function show_last_log( $output = true ): ?string {
+		$html = get_transient( $this->transient );
+		if ( ! $html ) {
 			return null;
 		}
 
-		if ( $echo ) {
+		if ( $output ) {
 			echo wp_kses( $html, Component::get_allowed_html() );
 		}
 
-		// we've shown it, no reason to keep it
+		// We've shown it, no reason to keep it.
 		delete_transient( $this->transient );
 
 		return $html;

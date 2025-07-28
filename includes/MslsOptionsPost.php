@@ -11,6 +11,9 @@ class MslsOptionsPost extends MslsOptions {
 
 	public const SEPARATOR = '_';
 
+	/**
+	 * @var bool
+	 */
 	protected bool $autoload = false;
 
 	/**
@@ -26,7 +29,7 @@ class MslsOptionsPost extends MslsOptions {
 		}
 
 		$post = get_post( (int) $this->__get( $language ) );
-		if ( is_null( $post ) || 'publish' != $post->post_status ) {
+		if ( is_null( $post ) || 'publish' !== $post->post_status ) {
 			return '';
 		}
 

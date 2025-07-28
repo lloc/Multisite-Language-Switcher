@@ -26,7 +26,14 @@ class ContentImporter extends MslsRegistryInstance {
 	 */
 	protected MslsMain $main;
 
+	/**
+	 * @var ImportLogger|null
+	 */
 	protected ?ImportLogger $logger = null;
+
+	/**
+	 * @var Relations|null
+	 */
 	protected ?Relations $relations = null;
 
 	/**
@@ -45,7 +52,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @param ?MslsMain $main
 	 */
 	public function __construct( ?MslsMain $main = null ) {
-		$this->main = $main ?: MslsMain::create();
+		$this->main = ! is_null( $main ) ? $main : MslsMain::create();
 	}
 
 	/**
@@ -84,13 +91,14 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @return string[] The updated, if needed, data array.
 	 */
 	public function handle_import( array $data = array() ) {
-		if ( ! $this->pre_flight_check() || false === $sources = $this->parse_sources() ) {
+		$sources = $this->parse_sources();
+		if ( ! $this->pre_flight_check() || false === $sources ) {
 			return $data;
 		}
 
 		list( $source_blog_id, $source_post_id ) = $sources;
 
-		if ( $source_blog_id === get_current_blog_id() ) {
+		if ( get_current_blog_id() === $source_blog_id ) {
 			return $data;
 		}
 
@@ -148,6 +156,7 @@ class ContentImporter extends MslsRegistryInstance {
 			return false;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['msls_import'] ) ) {
 			return false;
 		}
@@ -225,7 +234,7 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 		$this->handle( true );
 
-		$this->has_created_post = $post_id ?: false;
+		$this->has_created_post = $post_id > 0 ? $post_id : false;
 
 		restore_current_blog();
 
@@ -240,7 +249,7 @@ class ContentImporter extends MslsRegistryInstance {
 	public function handle( $handle ) {
 		$this->handle = $handle;
 
-		// also prevent MSLS from saving
+		// Also, prevent MSLS from saving.
 		if ( false === $handle ) {
 			add_action( 'msls_main_save', 'msls_return_void' );
 		} else {
@@ -356,7 +365,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 */
 	protected function update_inserted_blog_post_data( $blog_id, $post_id, array $data ) {
 		$data['ID']          = $post_id;
-		$data['post_status'] = empty( $data['post_status'] ) || $data['post_status'] === 'auto-draft'
+		$data['post_status'] = empty( $data['post_status'] ) || 'auto-draft' === $data['post_status']
 			? 'draft'
 			: $data['post_status'];
 		$this->insert_blog_post( $blog_id, $data );
@@ -372,7 +381,7 @@ class ContentImporter extends MslsRegistryInstance {
 	protected function redirect_to_blog_post( $dest_blog_id, $post_id ) {
 		switch_to_blog( $dest_blog_id );
 		$edit_post_link = html_entity_decode( get_edit_post_link( $post_id ) );
-		wp_redirect( $edit_post_link );
+		wp_safe_redirect( $edit_post_link );
 		die();
 	}
 
@@ -382,17 +391,18 @@ class ContentImporter extends MslsRegistryInstance {
 	 * Empty posts would not be saved to database but it's fine if in
 	 * the context of a content import as it will be populated.
 	 *
-	 * @param bool $empty
+	 * @param bool $is_empty
 	 *
 	 * @return bool
 	 */
-	public function filter_empty( $empty ) {
+	public function filter_empty( $is_empty ) {
 		if ( ! $this->main->verify_nonce() ) {
-			return $empty;
+			return $is_empty;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['msls_import'] ) ) {
-			return $empty;
+			return $is_empty;
 		}
 
 		return false;

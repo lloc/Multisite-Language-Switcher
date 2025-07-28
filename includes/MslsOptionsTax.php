@@ -11,6 +11,9 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 
 	public const SEPARATOR = '_term_';
 
+	/**
+	 * @var bool
+	 */
 	protected bool $autoload = false;
 
 	/**

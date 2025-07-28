@@ -79,14 +79,14 @@ class ShallowDuplicating extends BaseImporter {
 			$added = $this->update_object_terms( $dest_post_id, $dest_term_id, $term->taxonomy );
 
 			if ( is_array( $added ) && ! count( array_filter( $added ) ) ) {
-				// while we think the term translation exists it might not, let's create it
+				// While we think the term translation exists it might not, let's create it.
 				$dest_term_id = $this->create_local_term( $term, $msls_term, $dest_lang );
 
 				if ( false === $dest_term_id ) {
 					continue;
 				}
 
-				// and try again
+				// And try again.
 				$added = $this->update_object_terms( $dest_post_id, $dest_term_id, $term->taxonomy );
 			}
 

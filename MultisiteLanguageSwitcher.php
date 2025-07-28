@@ -2,10 +2,6 @@
 /**
  * Multisite Language Switcher Plugin
  *
- * @copyright Copyright (C) 2011-2022, Dennis Ploetner, re@lloc.de
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2 or later
- * @wordpress-plugin
- *
  * Plugin Name: Multisite Language Switcher
  * Version: 2.9.6
  * Plugin URI: http://msls.co/
@@ -28,6 +24,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * @copyright Copyright (C) 2011-2022, Dennis Ploetner, re@lloc.de
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2 or later
+ * @wordpress-plugin
+ * @package msls
  */
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
@@ -95,24 +96,25 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * Gets the description for a blog for a specific locale
 	 *
 	 * @param string $locale
+	 * @param string $preset
 	 *
 	 * @return string
 	 */
-	function get_msls_blog_description( string $locale, string $default = '' ): string {
+	function get_msls_blog_description( string $locale, string $preset = '' ): string {
 		$blog = msls_blog( $locale );
 
-		return $blog ? $blog->get_description() : $default;
+		return $blog ? $blog->get_description() : $preset;
 	}
 
 	/**
 	 * Gets the permalink for a translation of the current post in a given language
 	 *
 	 * @param string $locale
-	 * @param string $default
+	 * @param string $preset
 	 *
 	 * @return string
 	 */
-	function get_msls_permalink( string $locale, string $default = '' ): string {
+	function get_msls_permalink( string $locale, string $preset = '' ): string {
 		$url  = null;
 		$blog = msls_blog( $locale );
 
@@ -121,7 +123,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 			$url     = $blog->get_url( $options );
 		}
 
-		return $url ?? $default;
+		return $url ?? $preset;
 	}
 
 	/**

@@ -43,7 +43,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax implements OptionsTaxInterface {
 		$base_defined = self::get_base_defined( $tax_query );
 		$base_option  = self::get_base_option();
 
-		if ( $base_defined != $base_option ) {
+		if ( $base_defined !== $base_option ) {
 			$search  = '/' . $base_defined . '/';
 			$replace = '/' . $base_option . '/';
 			$url     = str_replace( $search, $replace, $url );
@@ -69,8 +69,6 @@ class MslsOptionsTaxTerm extends MslsOptionsTax implements OptionsTaxInterface {
 	}
 
 	public static function get_base_option(): string {
-		$base_option = get_option( static::BASE_OPTION, '' );
-
-		return $base_option ?: static::BASE_DEFINED;
+		return get_option( static::BASE_OPTION, static::BASE_DEFINED );
 	}
 }

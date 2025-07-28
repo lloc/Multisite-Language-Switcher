@@ -7,14 +7,26 @@ use lloc\Msls\MslsOptionsTaxTerm;
 
 final class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 
-	private function MslsOptionsTaxTermFactory(): MslsOptionsTaxTerm {
-		Functions\expect( 'get_option' )->once()->with( 'msls_term_42' )->andReturn( array( 'de_DE' => 42 ) );
+	private function MslsOptionsTaxTermFactory( $get_option_exec_times = 2 ): MslsOptionsTaxTerm {
+		Functions\expect( 'get_option' )->times( $get_option_exec_times )->andReturnUsing(
+			function ( $value ) {
+				if ( 'msls_term_42' === $value ) {
+						return array( 'de_DE' => 42 );
+				}
+
+				if ( 'tag_base' === $value ) {
+					return 'tag';
+				}
+
+				return null;
+			}
+		);
 
 		return new MslsOptionsTaxTerm( 42 );
 	}
 
 	public function test_get_postlink_empty(): void {
-		$test = $this->MslsOptionsTaxTermFactory();
+		$test = $this->MslsOptionsTaxTermFactory( 1 );
 
 		$this->assertEquals( '', $test->get_postlink( '' ) );
 	}
@@ -22,7 +34,7 @@ final class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 	public function test_check_url_empty(): void {
 		$options = \Mockery::mock( MslsOptionsTaxTerm::class );
 
-		$test = $this->MslsOptionsTaxTermFactory();
+		$test = $this->MslsOptionsTaxTermFactory( 1 );
 
 		$this->assertEquals( '', $test->check_base( null, $options ) );
 		$this->assertEquals( '', $test->check_base( '', $options ) );
@@ -62,7 +74,7 @@ final class TestMslsOptionsTaxTerm extends MslsUnitTestCase {
 	}
 
 	public function test_get_option_name(): void {
-		$test = $this->MslsOptionsTaxTermFactory();
+		$test = $this->MslsOptionsTaxTermFactory( 1 );
 
 		$this->assertSame( 'msls_term_42', $test->get_option_name() );
 	}

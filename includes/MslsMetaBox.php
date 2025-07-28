@@ -225,6 +225,7 @@ final class MslsMetaBox extends MslsMain {
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo ( new Wrapper( 'ul', $lis ) )->render();
 
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$post = $temp;
 		} else {
 			$message = esc_html__(
@@ -303,8 +304,9 @@ final class MslsMetaBox extends MslsMain {
 				$language  = $blog->get_language();
 				$icon_type = $this->options->get_icon_type();
 				$icon      = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $icon_type );
+				$value     = '';
+				$title     = '';
 
-				$value = $title = '';
 				if ( $my_data->has_value( $language ) ) {
 					$icon->set_href( (int) $my_data->$language );
 					$value = $my_data->$language;
@@ -333,6 +335,7 @@ final class MslsMetaBox extends MslsMain {
 				Component::get_allowed_html()
 			);
 
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$post = $temp;
 		} else {
 			$message = esc_html__(

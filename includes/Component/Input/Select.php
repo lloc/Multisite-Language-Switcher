@@ -19,9 +19,9 @@ final class Select extends Component {
 	protected $options;
 
 	/**
-	 * @param string  $key Name and ID of the form-element
-	 * @param mixed[] $arr Options as associative array
-	 * @param ?string $selected Values which should be selected
+	 * @param string  $key Name and ID of the form-element.
+	 * @param mixed[] $arr Options as an associative array.
+	 * @param ?string $selected Values which should be selected.
 	 */
 	public function __construct( string $key, array $arr, ?string $selected = null ) {
 		$this->key = $key;

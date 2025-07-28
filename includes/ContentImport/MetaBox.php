@@ -102,7 +102,7 @@ class MetaBox extends MslsRegistryInstance {
 		$args = array_merge(
 			array(
 				'modal'    => true,
-				'width'    => 770, // meh, just a guess on *most* devices
+				'width'    => 770, // Meh, just a guess on *most* devices.
 				'height'   => 770,
 				'inlineId' => 'msls-import-dialog-' . str_replace( '|', '-', $data['msls_import'] ),
 			),
@@ -120,12 +120,12 @@ class MetaBox extends MslsRegistryInstance {
 	}
 
 	/**
-	 * @param bool                 $echo
+	 * @param bool                 $output
 	 * @param array<string, mixed> $data
 	 *
 	 * @return string
 	 */
-	protected function inline_thickbox_html( $echo = true, array $data = array() ): string {
+	protected function inline_thickbox_html( $output = true, array $data = array() ): string {
 		if ( ! isset( $data['msls_import'] ) ) {
 			return '';
 		}
@@ -186,7 +186,7 @@ class MetaBox extends MslsRegistryInstance {
 
 		$html = ob_get_clean();
 
-		if ( $echo ) {
+		if ( $output ) {
 			echo wp_kses( $html, Component::get_allowed_html() );
 		}
 

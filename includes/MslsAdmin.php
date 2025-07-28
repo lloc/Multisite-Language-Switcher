@@ -135,7 +135,7 @@ final class MslsAdmin extends MslsMain {
 				'multisite-language-switcher'
 			);
 			$message = sprintf( $format, esc_url( admin_url( $this->get_options_page_link() ) ) );
-		} elseif ( 1 == count( $this->options->get_available_languages() ) ) {
+		} elseif ( 1 === count( $this->options->get_available_languages() ) ) {
 			/* translators: %1$s: URL to a page at WordPress.orgs */
 			$format  = __(
 				'No language files are currently installed. Learn how to install various languages in WordPress by <a href="%1$s">reading more here</a>.',
@@ -187,7 +187,7 @@ final class MslsAdmin extends MslsMain {
 		$arr = array();
 		foreach ( $this->collection->get_plugin_active_blogs() as $blog ) {
 			$admin_url = get_admin_url( $blog->userblog_id, $this->get_options_page_link() );
-			$current   = $blog->userblog_id == $this->collection->get_current_blog_id() ? ' class="current"' : '';
+			$current   = $blog->userblog_id === $this->collection->get_current_blog_id() ? ' class="current"' : '';
 
 			$arr[] = sprintf( '<a href="%1$s"%2$s>%3$s</a>', $admin_url, $current, $blog->get_title( $icon_type ) );
 		}
@@ -384,8 +384,8 @@ final class MslsAdmin extends MslsMain {
 				'multisite-language-switcher'
 			);
 
-			// phpcs:ignore WordPress.Security.EscapeOutput
-			trigger_error( sprintf( esc_html( $format ), strval( self::MAX_REFERENCE_USERS ) ) );
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+			trigger_error( esc_html( sprintf( $format, strval( self::MAX_REFERENCE_USERS ) ) ) );
 		}
 
         // phpcs:ignore WordPress.Security.EscapeOutput
@@ -434,7 +434,7 @@ final class MslsAdmin extends MslsMain {
 	/**
 	 * Validates input before saving it
 	 *
-	 * @param array<string, mixed> $arr Values of the submitted form
+	 * @param array<string, mixed> $arr Values of the submitted form.
 	 *
 	 * @return array<string, mixed>
 	 */

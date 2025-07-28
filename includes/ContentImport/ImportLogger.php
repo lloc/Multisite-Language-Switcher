@@ -7,6 +7,9 @@ use lloc\Msls\ContentImport\LogWriters\LogWriter;
 
 class ImportLogger {
 
+	/**
+	 * @var string
+	 */
 	protected string $levels_delimiter = '/';
 
 	/**
@@ -62,7 +65,7 @@ class ImportLogger {
 		 */
 		$log_writer = apply_filters( 'msls_content_import_log_writer', $default_log_writer, $this->import_coordinates );
 		if ( empty( $log_writer ) ) {
-			// we assume that was done on purpose to prevent logging
+			// We assume that was done on purpose to prevent logging.
 			return;
 		}
 
@@ -71,7 +74,7 @@ class ImportLogger {
 		}
 
 		if ( ! $log_writer instanceof LogWriter ) {
-			// something is fishy, let's use the default one
+			// Something is fishy, let's use the default one.
 			$log_writer = $default_log_writer;
 		}
 

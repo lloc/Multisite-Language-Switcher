@@ -4,15 +4,28 @@ namespace lloc\Msls;
 
 class MslsAdminBar {
 
+	/**
+	 * @var string
+	 */
 	protected string $icon_type;
 
+	/**
+	 * @var MslsBlogCollection
+	 */
 	protected MslsBlogCollection $blog_collection;
 
+	/**
+	 * @param MslsOptions        $options
+	 * @param MslsBlogCollection $blog_collection
+	 */
 	public function __construct( MslsOptions $options, MslsBlogCollection $blog_collection ) {
 		$this->icon_type       = $options->get_icon_type();
 		$this->blog_collection = $blog_collection;
 	}
 
+	/**
+	 * @return void
+	 */
 	public static function init(): void {
 		$obj = new MslsAdminBar( msls_options(), msls_blog_collection() );
 
@@ -23,6 +36,10 @@ class MslsAdminBar {
 
 	/**
 	 * Callback that updates the admin bar with the blog information
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar
+	 *
+	 * @return void
 	 */
 	public function update_admin_bar( \WP_Admin_Bar $wp_admin_bar ): void {
 		foreach ( $this->blog_collection->get_plugin_active_blogs() as $blog ) {
@@ -39,6 +56,12 @@ class MslsAdminBar {
 
 	/**
 	 * Adds node information to an existing node
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar
+	 * @param string        $node_id
+	 * @param string        $title
+	 *
+	 * @return bool
 	 */
 	public function add_node( \WP_Admin_Bar $wp_admin_bar, string $node_id, string $title ): bool {
 		$node = $wp_admin_bar->get_node( $node_id );
@@ -60,6 +83,11 @@ class MslsAdminBar {
 	 * Gets a title with label orflag (depending on the settings) for the blog
 	 *
 	 * It uses a blavatar icon as prefix if $blavatar is set to true
+	 *
+	 * @param MslsBlog|null $blog
+	 * @param bool          $blavatar
+	 *
+	 * @return string|null
 	 */
 	protected function get_title( ?MslsBlog $blog, bool $blavatar = false ): ?string {
 		if ( is_null( $blog ) ) {

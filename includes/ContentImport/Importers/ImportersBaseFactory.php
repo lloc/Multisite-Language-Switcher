@@ -19,11 +19,17 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 	protected array $importers_map = array();
 
 	/**
+	 * Creates an Importer instance based on the provided ImportCoordinates.
+	 *
+	 * @param ImportCoordinates $import_coordinates The coordinates for the import operation.
+	 *
 	 * @return Importer
+	 *
+	 * @throws \RuntimeException If the TYPE constant is not defined in the child class.
 	 */
 	public function make( ImportCoordinates $import_coordinates ) {
 		if ( static::TYPE === self::TYPE ) {
-			// this is a developer-land exception, no need to localize it
+			// This is a developer-land exception, no need to localize it.
 			throw new \RuntimeException( 'Importers factories should define their own type' );
 		}
 
@@ -53,9 +59,13 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 		$map = apply_filters( "msls_content_import_{$type}_importers_map", $this->importers_map, $import_coordinates );
 
 		$first = count( $map ) > 0 ? reset( $map ) : null;
-		$slug  = $import_coordinates->get_importer_for( $type ) ?: $first;
+		$slug  = $import_coordinates->get_importer_for( $type );
 
-		// if there is some incoherence return the null-doing base importer
+		if ( is_null( $slug ) ) {
+			$slug = $first;
+		}
+
+		// If there is some incoherence, return the null-doing base importer.
 		$class = ! empty( $slug ) && isset( $map[ $slug ] ) ? $map[ $slug ] : BaseImporter::class;
 
 		return new $class( $import_coordinates );

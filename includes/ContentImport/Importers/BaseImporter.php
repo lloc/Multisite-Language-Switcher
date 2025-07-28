@@ -26,6 +26,7 @@ class BaseImporter implements Importer {
 	/**
 	 * BaseImporter constructor.
 	 *
+	 * @param ImportCoordinates $import_coordinates
 	 * @param ImportLogger|null $logger
 	 * @param Relations|null    $relations
 	 */
@@ -35,8 +36,8 @@ class BaseImporter implements Importer {
 		Relations $relations = null
 	) {
 		$this->import_coordinates = $import_coordinates;
-		$this->logger             = $logger ?: new ImportLogger( $this->import_coordinates );
-		$this->relations          = $relations ?: new Relations( $this->import_coordinates );
+		$this->logger             = ! is_null( $logger ) ? $logger : new ImportLogger( $this->import_coordinates );
+		$this->relations          = ! is_null( $relations ) ? $relations : new Relations( $this->import_coordinates );
 	}
 
 	/**

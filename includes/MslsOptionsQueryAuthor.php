@@ -11,6 +11,11 @@ use lloc\Msls\Query\AuthorPostsCounterQuery;
  */
 class MslsOptionsQueryAuthor extends MslsOptionsQuery {
 
+	/**
+	 * The author ID for which the posts count is queried.
+	 *
+	 * @var int
+	 */
 	protected int $author_id;
 
 	public function __construct( MslsSqlCacher $sql_cache ) {

@@ -60,7 +60,7 @@ class Linking extends BaseImporter {
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
-		// in some instances, the folder sep. `/` might be duplicated, we de-duplicate it
+		// In some instances, the folder sep. `/` might be duplicated, we de-duplicate it.
 		array_walk(
 			$source_upload_dir,
 			function ( &$entry ) {
@@ -111,7 +111,7 @@ class Linking extends BaseImporter {
 				$this->logger->log_success( 'post-thumbnail/created', $dest_post_thumbnail_id );
 			}
 
-			// the `_wp_attached_file` meta has been set before, so we skip it
+			// The `_wp_attached_file` meta has been set before, so we skip it.
 			unset( $source_post_thumbnail_meta['_wp_attached_file'] );
 
 			foreach ( $source_post_thumbnail_meta as $key => $value ) {

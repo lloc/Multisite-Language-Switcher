@@ -31,7 +31,7 @@ abstract class Icon {
 	 * @return string
 	 */
 	protected function maybe( string $language, string $prefix = '', string $postfix = '' ): string {
-		if ( 5 == strlen( $language ) ) {
+		if ( 5 === strlen( $language ) ) {
 			$language = strtolower( substr( $language, - 2 ) );
 		}
 

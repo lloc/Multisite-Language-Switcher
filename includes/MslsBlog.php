@@ -90,12 +90,12 @@ class MslsBlog {
 	/**
 	 * Gets the language stored in this object
 	 *
-	 * @param string $default
+	 * @param string $preset
 	 *
 	 * @return string
 	 */
-	public function get_language( $default = 'en_US' ) {
-		return empty( $this->language ) ? $default : $this->language;
+	public function get_language( $preset = 'en_US' ) {
+		return empty( $this->language ) ? $preset : $this->language;
 	}
 
 	/**
@@ -115,7 +115,7 @@ class MslsBlog {
 	 * @return string|null
 	 */
 	public function get_url( $options ) {
-		if ( $this->obj->userblog_id == msls_blog_collection()->get_current_blog_id() ) {
+		if ( msls_blog_collection()->get_current_blog_id() === $this->obj->userblog_id ) {
 			return $options->get_current_link();
 		}
 
@@ -151,8 +151,8 @@ class MslsBlog {
 	 *
 	 * @return int
 	 */
-	public static function _cmp( $a, $b ) {
-		if ( $a == $b ) {
+	public static function internal_cmp( $a, $b ) {
+		if ( $a === $b ) {
 			return 0;
 		}
 
@@ -168,7 +168,7 @@ class MslsBlog {
 	 * @return int
 	 */
 	public static function language( MslsBlog $a, MslsBlog $b ) {
-		return self::_cmp( $a->get_language(), $b->get_language() );
+		return self::internal_cmp( $a->get_language(), $b->get_language() );
 	}
 
 	/**
@@ -180,7 +180,7 @@ class MslsBlog {
 	 * @return int
 	 */
 	public static function description( MslsBlog $a, MslsBlog $b ) {
-		return self::_cmp( $a->get_description(), $b->get_description() );
+		return self::internal_cmp( $a->get_description(), $b->get_description() );
 	}
 
 	/**

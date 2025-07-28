@@ -4,6 +4,11 @@ namespace lloc\Msls;
 
 class MslsContentFilter {
 
+	/**
+	 * The options instance.
+	 *
+	 * @var MslsOptions
+	 */
 	protected MslsOptions $options;
 
 	public function __construct( MslsOptions $options ) {
@@ -70,7 +75,7 @@ class MslsContentFilter {
 			return null;
 		}
 
-		if ( 1 == count( $links ) ) {
+		if ( 1 === count( $links ) ) {
 			return $links[0];
 		}
 
