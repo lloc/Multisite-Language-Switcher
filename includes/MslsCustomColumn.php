@@ -47,10 +47,10 @@ class MslsCustomColumn extends MslsMain {
 			foreach ( $blogs as $blog ) {
 				$language  = $blog->get_language();
 				$icon_type = $this->options->get_icon_type();
+				$icon      = ( new MslsAdminIcon() )->set_language( $language )->set_icon_type( $icon_type );
 
-				$icon = ( new MslsAdminIcon() )->set_language( $language )->set_icon_type( $icon_type );
-
-				if ( $post_id = get_the_ID() ) {
+				$post_id = get_the_ID();
+				if ( false !== $post_id ) {
 					$icon->set_id( $post_id );
 					$icon->set_origin_language( 'it_IT' );
 				}
@@ -72,7 +72,7 @@ class MslsCustomColumn extends MslsMain {
 	 * @param int    $item_id
 	 */
 	public function td( $column_name, $item_id ): void {
-		if ( 'mslscol' == $column_name ) {
+		if ( 'mslscol' === $column_name ) {
 			$blogs           = $this->collection->get();
 			$origin_language = MslsBlogCollection::get_blog_language();
 			if ( $blogs ) {

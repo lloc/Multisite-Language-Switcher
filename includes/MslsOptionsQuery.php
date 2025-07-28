@@ -16,6 +16,9 @@ class MslsOptionsQuery extends MslsOptions {
 	 */
 	public ?bool $with_front = true;
 
+	/**
+	 * @var MslsSqlCacher
+	 */
 	protected MslsSqlCacher $sql_cache;
 
 	public function __construct( MslsSqlCacher $sql_cache ) {
@@ -34,7 +37,7 @@ class MslsOptionsQuery extends MslsOptions {
 	/**
 	 * Factory method
 	 *
-	 * @param int $id This parameter is unused here
+	 * @param int $id This parameter is unused here.
 	 *
 	 * @return ?MslsOptionsQuery
 	 */

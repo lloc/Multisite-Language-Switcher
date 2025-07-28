@@ -50,7 +50,7 @@ class MslsRegistry {
 	 * @return MslsRegistry
 	 */
 	public static function instance(): self {
-		if ( self::$instance === null ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 

@@ -9,8 +9,9 @@ namespace lloc\Msls\Query;
  */
 class TranslatedPostIdQuery extends AbstractQuery {
 
-
 	/**
+	 * @param string $language
+	 *
 	 * @return int[]
 	 */
 	public function __invoke( string $language ): array {

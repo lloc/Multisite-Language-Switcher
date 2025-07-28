@@ -34,8 +34,6 @@ class MslsPlugin {
 	public static function init(): void {
 		$obj = new self( msls_options() );
 
-		add_action( 'init', array( $obj, 'init_i18n_support' ) );
-
 		register_activation_hook( self::file(), array( __CLASS__, 'activate' ) );
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
@@ -167,15 +165,6 @@ class MslsPlugin {
 	 */
 	public static function path(): string {
 		return defined( 'MSLS_PLUGIN_PATH' ) ? constant( 'MSLS_PLUGIN_PATH' ) : '';
-	}
-
-	/**
-	 * Load textdomain
-	 *
-	 * The method should be executed always on init because we have some translatable string in the frontend too.
-	 */
-	public function init_i18n_support(): void {
-		load_plugin_textdomain( 'multisite-language-switcher', false, self::dirname( '/languages/' ) );
 	}
 
 	/**

@@ -115,10 +115,10 @@ final class TestMslsBlog extends MslsUnitTestCase {
 	 * @dataProvider compareProvider
 	 */
 	public function test__cmp_method( int $a, int $b, int $expected ): void {
-		$this->assertEquals( $expected, MslsBlog::_cmp( $a, $b ) );
+		$this->assertEquals( $expected, MslsBlog::internal_cmp( $a, $b ) );
 
 		$obj = new MslsBlog( null, null );
-		$this->assertEquals( $expected, $obj->_cmp( $a, $b ) );
+		$this->assertEquals( $expected, $obj->internal_cmp( $a, $b ) );
 	}
 
 	/**

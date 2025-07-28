@@ -9,6 +9,11 @@ namespace lloc\Msls;
  */
 class MslsOptionsQueryPostType extends MslsOptionsQuery {
 
+	/**
+	 * The post type for which the options are queried.
+	 *
+	 * @var string
+	 */
 	protected string $post_type;
 
 	public function __construct( MslsSqlCacher $sql_cache ) {

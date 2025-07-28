@@ -257,7 +257,6 @@ final class TestMslsOutput extends MslsUnitTestCase {
 	public function test_get_not_fulfilled(): void {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
-		// $blog->shouldReceive( 'get_description' )->once()->andReturn( 'Deutsch' );
 
 		$options = \Mockery::mock( MslsOptions::class );
 		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );

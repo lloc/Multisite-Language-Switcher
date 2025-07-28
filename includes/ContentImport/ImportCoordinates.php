@@ -64,10 +64,10 @@ class ImportCoordinates {
 			return false;
 		}
 
-		if ( $this->source_lang !== MslsBlogCollection::get_blog_language( $this->source_blog_id ) ) {
+		if ( MslsBlogCollection::get_blog_language( $this->source_blog_id ) !== $this->source_lang ) {
 			return false;
 		}
-		if ( $this->dest_lang !== MslsBlogCollection::get_blog_language( $this->dest_blog_id ) ) {
+		if ( MslsBlogCollection::get_blog_language( $this->dest_blog_id ) !== $this->dest_lang ) {
 			return false;
 		}
 

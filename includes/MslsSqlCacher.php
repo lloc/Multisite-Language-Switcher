@@ -22,27 +22,33 @@ namespace lloc\Msls;
 class MslsSqlCacher {
 
 	/**
-	 * Cache group
+	 * Cache group for the SQL cacher
 	 */
 	const CACHE_GROUP = 'msls-cache-group';
 
 	/**
-	 * Database object
+	 * @var \wpdb
 	 */
 	protected \wpdb $db;
 
 	/**
-	 * Key for the cached result-set
+	 * @var string
 	 */
 	protected string $cache_key;
 
 	/**
 	 * Expiration time for the cache in seconds
+	 *
+	 * @var int
 	 */
 	protected int $expire;
 
 	/**
 	 * Constructor
+	 *
+	 * @param \wpdb  $db        The WordPress database object.
+	 * @param string $cache_key The cache key to use for storing results.
+	 * @param int    $expire    The expiration time for the cache in seconds. Default is 0 (no expiration).
 	 */
 	public function __construct( \wpdb $db, string $cache_key, int $expire = 0 ) {
 		$this->db        = $db;
@@ -70,6 +76,8 @@ class MslsSqlCacher {
 	/**
 	 * Magic __get
 	 *
+	 * @param string $name
+	 *
 	 * @return mixed
 	 */
 	public function __get( string $name ) {
@@ -85,7 +93,7 @@ class MslsSqlCacher {
 	 * @return mixed
 	 */
 	public function __call( string $method, array $args ) {
-		if ( 'get_' != substr( $method, 0, 4 ) ) {
+		if ( 'get_' !== substr( $method, 0, 4 ) ) {
 			return call_user_func_array( array( $this->db, $method ), $args );
 		}
 

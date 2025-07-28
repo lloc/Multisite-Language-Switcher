@@ -23,7 +23,7 @@ class MslsPostType extends MslsContentTypes {
 	 */
 	public static function get(): array {
 		$types = array_merge(
-			array( 'post', 'page' ), // we don't need attachment, revision or nav_menu_item here
+			array( 'post', 'page' ), // We don't need attachment, revision or nav_menu_item here.
 			get_post_types(
 				array(
 					'public'   => true,
@@ -42,7 +42,7 @@ class MslsPostType extends MslsContentTypes {
 		$request   = MslsRequest::get_request( array( 'post_type' ) );
 		$post_type = ! empty( $request['post_type'] ) ? esc_attr( $request['post_type'] ) : 'post';
 
-		return in_array( $post_type, $this->get() ) ? $post_type : '';
+		return in_array( $post_type, $this->get(), true ) ? $post_type : '';
 	}
 
 	/**
