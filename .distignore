@@ -1,6 +1,8 @@
 .distignore
 .gitattributes
 .gitignore
+.phpcs.cache
+.phpcs.xml.dist
 .scrutinizer.yml
 /.git
 /.github
@@ -26,7 +28,6 @@ multisite-language-switcher.zip
 package-lock.json
 package.json
 patchwork.json
-phpcs.xml
 phpdoc.xml
 phpstan.neon.dist
 phpunit.xml

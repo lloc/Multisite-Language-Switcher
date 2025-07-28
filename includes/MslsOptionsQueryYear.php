@@ -11,14 +11,29 @@ use lloc\Msls\Query\YearPostsCounterQuery;
  */
 class MslsOptionsQueryYear extends MslsOptionsQuery {
 
+	/**
+	 * The year for which the posts count is queried.
+	 *
+	 * @var int
+	 */
 	protected int $year;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param MslsSqlCacher $sql_cache The SQL Cacher instance.
+	 */
 	public function __construct( MslsSqlCacher $sql_cache ) {
 		parent::__construct( $sql_cache );
 
 		$this->year = self::get_params()['year'];
 	}
 
+	/**
+	 * Get the parameters for this query.
+	 *
+	 * @return array<string, mixed>
+	 */
 	public static function get_params(): array {
 		return array(
 			'year' => get_query_var( 'year' ),

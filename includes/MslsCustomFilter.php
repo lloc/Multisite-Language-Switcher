@@ -78,7 +78,7 @@ final class MslsCustomFilter extends MslsMain {
 
 		$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
 
-		// load post we need to exclude (they already have a translation) from search query
+		// Load post we need to exclude (they already have a translation) from search query.
 		$query->query_vars['post__not_in'] = ( new TranslatedPostIdQuery( $sql_cache ) )( $blog->get_language() );
 
 		return $query;

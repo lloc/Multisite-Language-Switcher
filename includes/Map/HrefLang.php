@@ -26,7 +26,7 @@ class HrefLang {
 		}
 
 		foreach ( $map as $alpha2 => $languages ) {
-			if ( 1 == count( $languages ) ) {
+			if ( 1 === count( $languages ) ) {
 				$this->map[ $languages[0] ] = $alpha2;
 			} else {
 				foreach ( $languages as $language ) {

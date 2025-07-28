@@ -32,13 +32,13 @@ final class Text extends Component {
 	 * @param string      $key
 	 * @param string|null $value
 	 * @param int         $size
-	 * @param bool        $readonly
+	 * @param bool        $read_only
 	 */
-	public function __construct( string $key, ?string $value, int $size = self::DEFAULT_SIZE, bool $readonly = false ) {
+	public function __construct( string $key, ?string $value, int $size = self::DEFAULT_SIZE, bool $read_only = false ) {
 		$this->key      = $key;
 		$this->value    = $value;
 		$this->size     = $size;
-		$this->readonly = $readonly ? ' readonly="readonly"' : '';
+		$this->readonly = $read_only ? ' readonly="readonly"' : '';
 	}
 
 	/**

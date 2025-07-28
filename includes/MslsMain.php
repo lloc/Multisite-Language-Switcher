@@ -48,9 +48,11 @@ class MslsMain {
 	public function debugger( $message ): void {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
 			if ( is_array( $message ) || is_object( $message ) ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 				$message = print_r( $message, true );
 			}
 
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			error_log( 'MSLS Debug: ' . $message );
 		}
 	}
@@ -152,7 +154,7 @@ class MslsMain {
 		$options  = new $class_name( $object_id );
 		$temp     = $options->get_arr();
 
-		if ( 0 != $msla->get_val( $language ) ) {
+		if ( 0 !== $msla->get_val( $language ) ) {
 			$options->save( $msla->get_arr( $language ) );
 		} else {
 			$options->delete();
@@ -164,7 +166,7 @@ class MslsMain {
 			$language = $blog->get_language();
 			$larr_id  = $msla->get_val( $language );
 
-			if ( 0 != $larr_id ) {
+			if ( 0 !== $larr_id ) {
 				$options = new $class_name( $larr_id );
 				$options->save( $msla->get_arr( $language ) );
 			} elseif ( isset( $temp[ $language ] ) ) {

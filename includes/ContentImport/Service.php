@@ -60,8 +60,8 @@ class Service extends MslsRegistryInstance {
 		);
 		add_filter(
 			'wp_insert_post_empty_content',
-			function ( $empty ) {
-				return ContentImporter::instance()->filter_empty( $empty );
+			function ( $bare ) {
+				return ContentImporter::instance()->filter_empty( $bare );
 			}
 		);
 		add_filter(
@@ -74,13 +74,13 @@ class Service extends MslsRegistryInstance {
 		);
 		add_filter(
 			'wp_calculate_image_srcset',
-			function ( $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ) {
+			function ( $sources, $size_array, $image_src, $image_meta, $attachment_id ) {
 				return AttachmentPathFinder::instance()->filter_srcset(
 					$sources,
-					$sizeArray,
-					$imageSrc,
-					$imageMeta,
-					$attachmentId
+					$size_array,
+					$image_src,
+					$image_meta,
+					$attachment_id
 				);
 			},
 			99,

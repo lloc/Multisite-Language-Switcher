@@ -16,8 +16,9 @@ class MslsRegistryInstance {
 	 */
 	public static function instance() {
 		$class = get_called_class();
+		$obj   = MslsRegistry::get_object( $class );
 
-		if ( ! ( $obj = MslsRegistry::get_object( $class ) ) ) {
+		if ( ! $obj ) {
 			$obj = new $class();
 
 			MslsRegistry::set_object( $class, $obj );

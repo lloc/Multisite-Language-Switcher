@@ -5,7 +5,11 @@ namespace lloc\Msls;
 class MslsRequest {
 
 	/**
+	 * @param string $name
+	 *
 	 * @return array<int, int>
+	 *
+	 * @throws \InvalidArgumentException No field with the given name exists.
 	 */
 	public static function get_config( string $name ): array {
 		$config = MslsFields::CONFIG[ $name ] ?? null;
@@ -30,7 +34,10 @@ class MslsRequest {
 	}
 
 	/**
-	 * @return mixed
+	 * @param string   $var_name
+	 * @param int|null $input_type
+	 *
+	 * @return ?mixed
 	 */
 	public static function get_var( string $var_name, ?int $input_type = null ) {
 		try {
@@ -49,12 +56,12 @@ class MslsRequest {
 
 	/**
 	 * @param string $name
-	 * @param mixed  $default
+	 * @param mixed  $preset
 	 *
 	 * @return mixed
 	 */
-	public static function get( string $name, $default ) {
-		return self::has_var( $name ) ? self::get_var( $name ) : $default;
+	public static function get( string $name, $preset ) {
+		return self::has_var( $name ) ? self::get_var( $name ) : $preset;
 	}
 
 	/**
@@ -78,16 +85,16 @@ class MslsRequest {
 	 * It will treat each key as a string and will return an array with every key as index and the value as a sanitized string.
 	 *
 	 * @param string[] $keys
-	 * @param mixed    $default
+	 * @param mixed    $preset
 	 *
 	 * @return array<string, mixed>
 	 */
-	public static function get_request( array $keys, $default = '' ): array {
+	public static function get_request( array $keys, $preset = '' ): array {
 		$values = array();
 
 		foreach ( $keys as $key ) {
 			list( , $filter ) = self::get_config( $key );
-			$values[ $key ]   = $default;
+			$values[ $key ]   = $preset;
 
 			if ( filter_has_var( INPUT_POST, $key ) ) {
 				$values[ $key ] = filter_input( INPUT_POST, $key, $filter );

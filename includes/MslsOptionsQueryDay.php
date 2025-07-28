@@ -11,9 +11,19 @@ use lloc\Msls\Query\DatePostsCounterQuery;
  */
 class MslsOptionsQueryDay extends MslsOptionsQuery {
 
+	/**
+	 * @var int
+	 */
 	protected int $year;
 
+	/**
+	 * @var int
+	 */
 	protected int $monthnum;
+
+	/**
+	 * @var int
+	 */
 	protected int $day;
 
 	public function __construct( MslsSqlCacher $sql_cache ) {

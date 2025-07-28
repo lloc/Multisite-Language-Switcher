@@ -10,15 +10,16 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 
 	/**
 	 * @param array<string, array<string, mixed>> $sources
-	 * @param mixed                               $sizeArray
-	 * @param string                              $imageSrc
-	 * @param mixed                               $imageMeta
-	 * @param int                                 $attachmentId
+	 * @param mixed                               $size_array
+	 * @param string                              $image_src
+	 * @param mixed                               $image_meta
+	 * @param int                                 $attachment_id
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function filter_srcset( array $sources, $sizeArray, $imageSrc, $imageMeta, $attachmentId ): array {
-		if ( ! $msls_imported = $this->has_import_data( $attachmentId ) ) {
+	public function filter_srcset( array $sources, $size_array, $image_src, $image_meta, $attachment_id ): array {
+		$msls_imported = $this->has_import_data( $attachment_id );
+		if ( ! $msls_imported ) {
 			return $sources;
 		}
 
@@ -27,14 +28,14 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 			return $sources;
 		}
 
-		$extension           = '.' . pathinfo( $source_post->guid, PATHINFO_EXTENSION );
-		$pattern             = '/(-[\\d]+x[\\d]+)*' . preg_quote( $extension, '/' ) . '$/';
-		$srcWithoutExtension = preg_replace( $pattern, '', $imageSrc );
+		$extension             = '.' . pathinfo( $source_post->guid, PATHINFO_EXTENSION );
+		$pattern               = '/(-[\\d]+x[\\d]+)*' . preg_quote( $extension, '/' ) . '$/';
+		$src_without_extension = preg_replace( $pattern, '', $image_src );
 
 		foreach ( $sources as $key => &$value ) {
 			preg_match( $pattern, $value['url'], $matches );
 			$w_and_h      = ! empty( $matches[1] ) ? $matches[1] : '';
-			$value['url'] = $srcWithoutExtension . $w_and_h . $extension;
+			$value['url'] = $src_without_extension . $w_and_h . $extension;
 		}
 
 		return $sources;
@@ -71,7 +72,8 @@ class AttachmentPathFinder extends MslsRegistryInstance {
 	 * @return string
 	 */
 	public function filter_attachment_url( $url, $attachment_id ) {
-		if ( ! $msls_imported = $this->has_import_data( $attachment_id ) ) {
+		$msls_imported = $this->has_import_data( $attachment_id );
+		if ( ! $msls_imported ) {
 			return $url;
 		}
 

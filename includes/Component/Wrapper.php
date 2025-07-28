@@ -4,8 +4,14 @@ namespace lloc\Msls\Component;
 
 final class Wrapper extends Component {
 
+	/**
+	 * @var string
+	 */
 	protected string $element;
 
+	/**
+	 * @var string
+	 */
 	protected string $content;
 
 	public function __construct( string $element, string $content ) {

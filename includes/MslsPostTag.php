@@ -1,11 +1,5 @@
 <?php declare( strict_types=1 );
 
-/**
- * MslsPostTag
- *
- * @author Dennis Ploetner <re@lloc.de>
- */
-
 namespace lloc\Msls;
 
 use lloc\Msls\Component\Component;
@@ -84,7 +78,7 @@ class MslsPostTag extends MslsMain {
 		$obj        = new $class( $options, $collection );
 
 		$taxonomy = msls_content_types()->acl_request();
-		if ( '' != $taxonomy ) {
+		if ( '' !== $taxonomy ) {
 			add_action( "{$taxonomy}_add_form_fields", array( $obj, 'add_input' ) );
 			add_action( "{$taxonomy}_edit_form_fields", array( $obj, 'edit_input' ), 10, 2 );
 			add_action( "edited_{$taxonomy}", array( $obj, 'set' ) );
@@ -184,8 +178,9 @@ class MslsPostTag extends MslsMain {
 				$language  = $blog->get_language();
 				$icon_type = $this->options->get_icon_type();
 				$icon      = MslsAdminIcon::create()->set_language( $language )->set_icon_type( $icon_type );
+				$value     = '';
+				$title     = '';
 
-				$value = $title = '';
 				if ( $mydata->has_value( $language ) ) {
 					$term = get_term( $mydata->$language, $type );
 					if ( is_object( $term ) ) {

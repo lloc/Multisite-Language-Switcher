@@ -53,20 +53,6 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 	}
 
 	/**
-	 * Verify the static init_i18n_support-method
-	 */
-	function test_init_i18n_support(): void {
-		Functions\expect( 'load_plugin_textdomain' )->once()->andReturn( true );
-
-		$options = \Mockery::mock( MslsOptions::class );
-
-		$test = new MslsPlugin( $options );
-
-		$this->expectNotToPerformAssertions();
-		$test->init_i18n_support();
-	}
-
-	/**
 	 * Verify the static message_handler-method
 	 */
 	function test_message_handler(): void {

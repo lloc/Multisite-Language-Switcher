@@ -31,8 +31,25 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	public const PREFIX    = 'msls';
 	public const SEPARATOR = '';
 
+	/**
+	 * The name of the option in the database
+	 *
+	 * @var string
+	 */
 	protected string $name;
-	protected bool $exists   = false;
+
+	/**
+	 * Indicates whether the option exists in the database
+	 *
+	 * @var bool
+	 */
+	protected bool $exists = false;
+
+	/**
+	 * Autoload option
+	 *
+	 * @var bool
+	 */
 	protected bool $autoload = true;
 
 	/**
@@ -133,14 +150,14 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	 * The returned value will either be cast to the type of `$default` or, if nothing is set at this index, it will be the value of `$default`.
 	 *
 	 * @param int   $index
-	 * @param mixed $default
+	 * @param mixed $preset
 	 *
 	 * @return mixed
 	 */
-	public function get_arg( int $index, $default = null ) {
-		$arg = $this->args[ $index ] ?? $default;
+	public function get_arg( int $index, $preset = null ) {
+		$arg = $this->args[ $index ] ?? $preset;
 
-		settype( $arg, gettype( $default ) );
+		settype( $arg, gettype( $preset ) );
 
 		return $arg;
 	}
@@ -210,7 +227,7 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 			$language
 		);
 
-		return '' != $postlink ? $postlink : home_url( '/' );
+		return '' !== $postlink ? $postlink : home_url( '/' );
 	}
 
 	/**

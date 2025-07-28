@@ -11,8 +11,14 @@ use lloc\Msls\Query\MonthPostsCounterQuery;
  */
 class MslsOptionsQueryMonth extends MslsOptionsQuery {
 
+	/**
+	 * @var int
+	 */
 	protected int $year;
 
+	/**
+	 * @var int
+	 */
 	protected int $monthnum;
 
 	public function __construct( MslsSqlCacher $sql_cache ) {
