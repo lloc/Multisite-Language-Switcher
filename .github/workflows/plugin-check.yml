@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Composer dependencies
         run: composer install --no-dev --no-interaction --optimize-autoloader
       - name: Build
