@@ -6,6 +6,9 @@ on: # rebuild any PRs and main branch changes
       - master
 jobs:
   test:
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
