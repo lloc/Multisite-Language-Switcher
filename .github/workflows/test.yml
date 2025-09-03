@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Composer dependencies
         run: composer install
       - name: Run Testsuite
@@ -16,13 +16,13 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Composer dependencies
         run: composer install
       - name: Run Testsuite
         run: php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-clover=coverage.xml
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5.4.3
+        uses: codecov/codecov-action@v5.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage.xml

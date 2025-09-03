@@ -7,15 +7,15 @@
     "playwright": "npx playwright install --with-deps && npx playwright test"
   },
   "dependencies": {
-    "less": "^4.4.0",
+    "less": "^4.4.1",
     "less-plugin-clean-css": "^1.6.0",
     "uglify-js": "^3.19.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.54.1",
-    "@types/node": "^24.1.0",
-    "@wordpress/e2e-test-utils": "^11.26.0",
-    "@wordpress/scripts": "^30.20.0",
-    "dotenv": "^17.2.0"
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0",
+    "@wordpress/e2e-test-utils": "^11.29.0",
+    "@wordpress/scripts": "^30.22.0",
+    "dotenv": "^17.2.1"
   }
 }
