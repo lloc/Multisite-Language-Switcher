@@ -1,4 +1,7 @@
 name: Plugin Check
+permissions:
+  contents: read
+  pull-requests: write
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
@@ -6,9 +9,6 @@ on: # rebuild any PRs and main branch changes
       - master
 jobs:
   test:
-    permissions:
-      contents: read
-      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
