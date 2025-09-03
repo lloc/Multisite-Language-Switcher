@@ -6,6 +6,7 @@ A simple, powerful, and user-friendly plugin that adds multilingual support to y
 [![License](https://img.shields.io/badge/license-GPL_v2%2B-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![WordPress Tested](https://img.shields.io/wordpress/v/multisite-language-switcher.svg)](https://wordpress.org/plugins/multisite-language-switcher/)
 [![codecov](https://codecov.io/gh/lloc/Multisite-Language-Switcher/graph/badge.svg?token=IlD4bX4KZ4)](https://codecov.io/gh/lloc/Multisite-Language-Switcher)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/lloc/Multisite-Language-Switcher)
 
 ## Where to get the plugin
 
