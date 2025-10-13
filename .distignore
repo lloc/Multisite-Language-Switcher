@@ -3,6 +3,7 @@
 .gitignore
 .phpcs.cache
 .phpcs.xml.dist
+.phpstan.neon.dist
 .scrutinizer.yml
 /.git
 /.github
@@ -28,7 +29,6 @@ package-lock.json
 package.json
 patchwork.json
 phpdoc.xml
-phpstan.neon.dist
 phpunit.xml
 playwright.config.ts
 setup.sh
