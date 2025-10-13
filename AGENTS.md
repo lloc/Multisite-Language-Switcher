@@ -19,7 +19,7 @@ Multisite Language Switcher (MSLS) is a WordPress plugin that provides multiling
 - `vendor/` - Composer dependencies (do not edit)
 - `composer.json` - PHP dependencies, autoload configuration, and project metadata (do not edit /vendor/ directly)
 - `package.json` - JavaScript build/test tooling (e.g., Playwright, bundling) and npm scripts for lint/test/build
-
+- `src/` - Source files for JavaScript components and news blocks
 ## Conventions
 - PHP code follows **WordPress Coding Standards** (PHPCS configured accordingly).
 - Namespaces use the prefix `lloc\Msls\` for all plugin classes.
