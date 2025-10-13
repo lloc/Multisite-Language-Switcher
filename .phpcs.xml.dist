@@ -2,9 +2,8 @@
 <ruleset name="CS">
     <description>PHPCS MSLS configuration</description>
     <config name="testVersion" value="7.4-"/>
+    <exclude-pattern>assets/*</exclude-pattern>
     <exclude-pattern>bin/*</exclude-pattern>
-    <exclude-pattern>css/*</exclude-pattern>
-    <exclude-pattern>flags/*</exclude-pattern>
     <exclude-pattern>images/*</exclude-pattern>
     <exclude-pattern>node_modules/*</exclude-pattern>
     <exclude-pattern>tests/*</exclude-pattern>

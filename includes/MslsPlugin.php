@@ -112,10 +112,10 @@ class MslsPlugin {
 		}
 
 		$ver    = defined( 'MSLS_PLUGIN_VERSION' ) ? constant( 'MSLS_PLUGIN_VERSION' ) : false;
-		$folder = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? 'src' : 'js';
+		$folder = defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) ? 'src' : 'assets/js';
 
-		wp_enqueue_style( 'msls-styles', self::plugins_url( 'css/msls.css' ), array(), $ver );
-		wp_enqueue_style( 'msls-flags', self::plugins_url( 'css-flags/css/flag-icon.min.css' ), array(), $ver );
+		wp_enqueue_style( 'msls-styles', self::plugins_url( 'assets/css/msls.css' ), array(), $ver );
+		wp_enqueue_style( 'msls-flags', self::plugins_url( 'assets/css-flags/css/flag-icon.min.css' ), array(), $ver );
 
 		if ( $this->options->activate_autocomplete ) {
 			wp_enqueue_script( 'msls-autocomplete', self::plugins_url( "$folder/msls.js" ), array( 'jquery-ui-autocomplete' ), $ver, array( 'in_footer' => true ) );

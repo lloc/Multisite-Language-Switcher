@@ -1,0 +1,53 @@
+{
+  "name": "Multisite Language Switcher Setup",
+  "description": "Sets up a WordPress Multisite environment with two subsites and activates the Multisite Language Switcher plugin.",
+  "meta": {
+    "version": 2
+  },
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "phpExtensionBundles": [
+    "kitchen-sink"
+  ],
+  "features": {
+    "networkMode": true
+  },
+  "steps": [
+    {
+      "action": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "action": "enableMultisite"
+    },
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "wordpress.org\/plugins",
+        "slug": "multisite-language-switcher"
+      },
+      "networkActivate": true
+    },
+    {
+      "step": "createSite",
+      "name": "English Site",
+      "slug": "it",
+      "homeUrl": "/it",
+      "title": "Italian Site"
+    },
+    {
+      "step": "createSite",
+      "name": "German Site",
+      "slug": "de",
+      "homeUrl": "/de",
+      "title": "German Site"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nupdate_site_option( 'WPLANG', 'en_US' );\nupdate_blog_option( 2, 'WPLANG', 'it_IT' );\nupdate_blog_option( 3, 'WPLANG', 'de_DE' );\n"
+    }
+  ]
+}

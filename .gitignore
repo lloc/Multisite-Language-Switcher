@@ -6,8 +6,8 @@
 .vscode/
 composer.lock
 composer.phar
-js/msls-widget-block/
-js/msls.js
+assets/js/msls-widget-block/
+assets/js/msls.js
 multisite-language-switcher.zip
 multisite-language-switcher/
 node_modules/

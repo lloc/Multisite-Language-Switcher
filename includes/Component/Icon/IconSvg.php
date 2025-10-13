@@ -12,7 +12,7 @@ use lloc\Msls\MslsPlugin;
  */
 final class IconSvg extends Icon {
 
-	const FLAGS_FILE = 'css-flags/flags.php';
+	const FLAGS_FILE = 'assets/css-flags/flags.php';
 
 	/**
 	 * @return string

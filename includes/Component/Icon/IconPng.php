@@ -12,7 +12,7 @@ use lloc\Msls\MslsPlugin;
  */
 final class IconPng extends Icon {
 
-	const FLAGS_FILE = 'flags/flags.php';
+	const FLAGS_FILE = 'assets/flags/flags.php';
 
 	/**
 	 * @return string

@@ -3,6 +3,7 @@
 .gitignore
 .phpcs.cache
 .phpcs.xml.dist
+.phpstan.neon.dist
 .scrutinizer.yml
 /.git
 /.github
@@ -12,14 +13,13 @@
 /.wordpress-org
 /bin
 /build
-/diagrams
 /docs
-/legacy-tests
 /multisite-language-switcher
 /node_modules
 /out
 /src
 /tests
+AGENTS.md
 Changelog.md
 Diagrams.md
 README.md
@@ -29,7 +29,6 @@ package-lock.json
 package.json
 patchwork.json
 phpdoc.xml
-phpstan.neon.dist
 phpunit.xml
 playwright.config.ts
 setup.sh
