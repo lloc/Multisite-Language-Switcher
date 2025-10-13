@@ -73,7 +73,7 @@ layout:
   includes/: core PHP classes and services
   bin/: command-line utilities and scripts
   tests/: unit and integration tests
-  assets/: css, flag, and icon assets
+  assets/: css, js, flag, and icon assets
   js_dir: src/
 files:
   - README.md
