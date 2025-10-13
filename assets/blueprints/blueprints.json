@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "version": 2
+  },
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "features": {
+    "networkMode": true
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "wordpress.org\/plugins",
+        "slug": "multisite-language-switcher"
+      },
+      "networkActivate": true
+    },
+    {
+      "step": "createSite",
+      "name": "English Site",
+      "slug": "it",
+      "homeUrl": "/it",
+      "title": "Italian Site"
+    },
+    {
+      "step": "createSite",
+      "name": "German Site",
+      "slug": "de",
+      "homeUrl": "/de",
+      "title": "German Site"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nupdate_site_option( 'WPLANG', 'en_US' );\nupdate_blog_option( 2, 'WPLANG', 'it_IT' );\nupdate_blog_option( 3, 'WPLANG', 'de_DE' );\n"
+    }
+  ]
+}
