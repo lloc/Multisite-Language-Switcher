@@ -34,7 +34,7 @@ class MslsBlock {
 			return false;
 		}
 
-		register_block_type( MslsPlugin::plugin_dir_path( 'js/msls-widget-block' ) );
+		register_block_type( MslsPlugin::plugin_dir_path( 'assets/js/msls-widget-block' ) );
 
 		return true;
 	}
