@@ -12,14 +12,13 @@
 /.wordpress-org
 /bin
 /build
-/diagrams
 /docs
-/legacy-tests
 /multisite-language-switcher
 /node_modules
 /out
 /src
 /tests
+AGENTS.md
 Changelog.md
 Diagrams.md
 README.md
