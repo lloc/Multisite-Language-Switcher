@@ -29,7 +29,7 @@
  */
 $content    = file_get_contents( 'build/translations.json' );
 $json       = json_decode( $content );
-$glob       = glob( 'css-flags/flags/4x3/*.svg' );
+$glob       = glob( 'assets/css-flags/flags/4x3/*.svg' );
 $exceptions = array(
 	'ca'             => 'es-ca',
 	'eo'             => 'eu',
@@ -107,7 +107,7 @@ if ( isset( $json->translations ) ) {
 echo 'return $className = [', PHP_EOL;
 
 foreach ( array_filter( $icons ) as $key => $value ) {
-	$needle = "css-flags/flags/4x3/{$value}.svg";
+	$needle = "assets/css-flags/flags/4x3/{$value}.svg";
 	$index  = array_search( $needle, $glob );
 	if ( $index !== false ) {
 		unset( $glob[ $index ] );
@@ -119,16 +119,16 @@ echo '];', PHP_EOL, PHP_EOL;
 
 $count = count( $glob );
 if ( $count > 0 ) {
-	echo '/**', PHP_EOL, " * {$count} unused icons in css-flags/flags/4x3/", PHP_EOL, ' * ', PHP_EOL;
+	echo '/**', PHP_EOL, " * {$count} unused icons in assets/css-flags/flags/4x3/", PHP_EOL, ' * ', PHP_EOL;
 
 	array_walk(
 		$glob,
 		function ( &$item ) {
-			$item = substr( $item, 6 );
+			$item = basename( $item );
 		}
 	);
 
-	foreach ( array_chunk( $glob, 15 ) as $flags ) {
+	foreach ( array_chunk( $glob, 14 ) as $flags ) {
 		echo ' * ', implode( ', ', $flags ), PHP_EOL;
 	}
 
