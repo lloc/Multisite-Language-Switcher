@@ -29,7 +29,7 @@
  */
 $content    = file_get_contents( 'build/translations.json' );
 $json       = json_decode( $content );
-$glob       = glob( 'flags/*.png' );
+$glob       = glob( 'assets/flags/*.png' );
 $icons      = $not_found = array();
 $exceptions = array(
 	'ca'             => 'catalonia.png',
@@ -107,7 +107,7 @@ if ( isset( $json->translations ) ) {
 echo 'return $flags = [', PHP_EOL;
 
 foreach ( array_filter( $icons ) as $key => $value ) {
-	$needle = "flags/{$value}";
+	$needle = "assets/flags/{$value}";
 	$index  = array_search( $needle, $glob );
 	if ( $index !== false ) {
 		unset( $glob[ $index ] );

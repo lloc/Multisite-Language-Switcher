@@ -138,3 +138,18 @@ return $flags = [
     'zh_HK' => 'hk.png',
 ];
 
+/**
+ * 158 unused icons in flags/
+ * 
+ * /flags/ad.png, /flags/ae.png, /flags/ag.png, /flags/ai.png, /flags/an.png, /flags/as.png, /flags/aw.png, /flags/ax.png, /flags/bb.png, /flags/bf.png, /flags/bh.png, /flags/bi.png, /flags/bj.png, /flags/bm.png, /flags/bn.png
+ * /flags/bo.png, /flags/bs.png, /flags/bv.png, /flags/bw.png, /flags/bz.png, /flags/cc.png, /flags/cd.png, /flags/cf.png, /flags/cg.png, /flags/ci.png, /flags/ck.png, /flags/cm.png, /flags/cs.png, /flags/cu.png, /flags/cv.png
+ * /flags/cx.png, /flags/cy.png, /flags/dj.png, /flags/dm.png, /flags/eg.png, /flags/eh.png, /flags/england.png, /flags/er.png, /flags/et.png, /flags/fam.png, /flags/fj.png, /flags/fk.png, /flags/fm.png, /flags/fo.png, /flags/ga.png
+ * /flags/gd.png, /flags/gf.png, /flags/gh.png, /flags/gi.png, /flags/gl.png, /flags/gm.png, /flags/gn.png, /flags/gp.png, /flags/gq.png, /flags/gs.png, /flags/gu.png, /flags/gw.png, /flags/gy.png, /flags/hm.png, /flags/hn.png
+ * /flags/ht.png, /flags/ie.png, /flags/io.png, /flags/jm.png, /flags/jo.png, /flags/ke.png, /flags/kg.png, /flags/ki.png, /flags/km.png, /flags/kn.png, /flags/kp.png, /flags/kw.png, /flags/ky.png, /flags/lb.png, /flags/lc.png
+ * /flags/li.png, /flags/lr.png, /flags/ls.png, /flags/lu.png, /flags/ly.png, /flags/mc.png, /flags/md.png, /flags/me.png, /flags/mg.png, /flags/mh.png, /flags/ml.png, /flags/mo.png, /flags/mp.png, /flags/mq.png, /flags/mr.png
+ * /flags/ms.png, /flags/mt.png, /flags/mu.png, /flags/mv.png, /flags/mw.png, /flags/mz.png, /flags/na.png, /flags/nc.png, /flags/ne.png, /flags/nf.png, /flags/ng.png, /flags/ni.png, /flags/nr.png, /flags/nu.png, /flags/om.png
+ * /flags/pa.png, /flags/pg.png, /flags/pm.png, /flags/pn.png, /flags/ps.png, /flags/pw.png, /flags/py.png, /flags/qa.png, /flags/re.png, /flags/rw.png, /flags/sa.png, /flags/sb.png, /flags/sc.png, /flags/sd.png, /flags/sg.png
+ * /flags/sh.png, /flags/sj.png, /flags/sl.png, /flags/sm.png, /flags/sn.png, /flags/so.png, /flags/sr.png, /flags/st.png, /flags/sv.png, /flags/sy.png, /flags/sz.png, /flags/tc.png, /flags/td.png, /flags/tf.png, /flags/tg.png
+ * /flags/tj.png, /flags/tk.png, /flags/tl.png, /flags/tm.png, /flags/tn.png, /flags/to.png, /flags/tt.png, /flags/tv.png, /flags/tz.png, /flags/ug.png, /flags/um.png, /flags/us.png, /flags/va.png, /flags/vc.png, /flags/vg.png
+ * /flags/vi.png, /flags/vu.png, /flags/wf.png, /flags/ws.png, /flags/ye.png, /flags/yt.png, /flags/zm.png, /flags/zw.png
+ */
