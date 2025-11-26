@@ -11,6 +11,8 @@ use lloc\Msls\Component\Component;
  */
 class MslsWidget extends \WP_Widget {
 
+	const MSLS_ALTERNATIVE_CONTENT_HOOK = 'msls_widget_alternative_content';
+
 	public const ID_BASE = 'mslswidget';
 
 	public function __construct() {
@@ -53,7 +55,7 @@ class MslsWidget extends \WP_Widget {
 		$content = msls_output()->__toString();
 		if ( '' === $content ) {
 			$text    = __( 'No available translations found', 'multisite-language-switcher' );
-			$content = apply_filters( 'msls_widget_alternative_content', $text );
+			$content = apply_filters( self::MSLS_ALTERNATIVE_CONTENT_HOOK, $text );
 		}
 
 		echo wp_kses(

@@ -91,9 +91,9 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 			$post_link = $this->get_term_link( (int) $this->__get( $language ) );
 		}
 
-		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', 'msls_get_postlink' );
+		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', MslsOptions::MSLS_GET_POSTLINK_HOOK );
 
-		return apply_filters( 'msls_get_postlink', $post_link, $this );
+		return apply_filters( MslsOptions::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
 	}
 
 	/**
