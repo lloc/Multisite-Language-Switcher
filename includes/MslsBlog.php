@@ -10,9 +10,9 @@ namespace lloc\Msls;
  */
 class MslsBlog {
 
-	const MSLS_GET_PERMALINK_HOOK = 'mlsl_blog_get_permalink';
+	const MSLS_GET_PERMALINK_HOOK = 'msls_blog_get_permalink';
 
-	const MSLS_WP_ADMIN_BAR_SHOW_SITE_ICONS_HOOK = 'wp_admin_bar_show_site_icons';
+	const WP_ADMIN_BAR_SHOW_SITE_ICONS_HOOK = 'wp_admin_bar_show_site_icons';
 
 	/**
 	 * WordPress generates such an object
@@ -192,7 +192,7 @@ class MslsBlog {
 	 */
 	public function get_blavatar(): string {
 		$blavatar_html   = '<div class="blavatar"></div>';
-		$show_site_icons = apply_filters( self::MSLS_WP_ADMIN_BAR_SHOW_SITE_ICONS_HOOK, true );
+		$show_site_icons = apply_filters( self::WP_ADMIN_BAR_SHOW_SITE_ICONS_HOOK, true );
 
 		switch_to_blog( $this->obj->userblog_id );
 
