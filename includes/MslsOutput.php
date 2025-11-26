@@ -13,7 +13,7 @@ class MslsOutput extends MslsMain {
 
 	const MSLS_ALTERNATE_LINKS_HOOK = 'msls_output_get_alternate_links';
 
-	const MSLS_ALTERNATE_LINKS_ARR_HOOK = 'mlsl_output_get_alternate_links_arr';
+	const MSLS_ALTERNATE_LINKS_ARR_HOOK = 'msls_output_get_alternate_links_arr';
 
 	const MSLS_ALTERNATE_LINKS_DEFAULT_HOOK = 'msls_output_get_alternate_links_default';
 
