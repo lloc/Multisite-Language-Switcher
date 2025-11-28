@@ -1,3 +1,3 @@
 <?php
 
-the_msls();
+msls_the_switcher();

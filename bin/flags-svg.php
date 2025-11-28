@@ -104,7 +104,7 @@ if ( isset( $json->translations ) ) {
 	}
 }
 
-echo 'return $className = [', PHP_EOL;
+echo 'return [', PHP_EOL;
 
 foreach ( array_filter( $icons ) as $key => $value ) {
 	$needle = "assets/css-flags/flags/4x3/{$value}.svg";

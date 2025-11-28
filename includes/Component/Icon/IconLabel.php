@@ -12,13 +12,6 @@ use lloc\Msls\Component\Icon;
 final class IconLabel extends Icon {
 
 	/**
-	 * @return string
-	 */
-	protected function get_include(): string {
-		return '';
-	}
-
-	/**
 	 * @param string $language
 	 *
 	 * @return string
