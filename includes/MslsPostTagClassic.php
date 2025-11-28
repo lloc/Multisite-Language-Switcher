@@ -11,8 +11,8 @@ use lloc\Msls\Component\Component;
  */
 class MslsPostTagClassic extends MslsPostTag {
 
-	const EDIT_ACTION = 'msls_post_tag_classic_edit_input';
-	const ADD_ACTION  = 'msls_post_tag_classic_add_input';
+	const MSLS_EDIT_INPUT_ACTION = 'msls_post_tag_classic_edit_input';
+	const MSLS_ADD_INPUT_ACTION  = 'msls_post_tag_classic_add_input';
 
 	/**
 	 * Add the input fields to the add-screen of the taxonomies
@@ -20,7 +20,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * @param string $taxonomy
 	 */
 	public function add_input( string $taxonomy ): void {
-		if ( did_action( self::ADD_ACTION ) ) {
+		if ( did_action( self::MSLS_ADD_INPUT_ACTION ) ) {
 			return;
 		}
 
@@ -36,7 +36,7 @@ class MslsPostTagClassic extends MslsPostTag {
 		$this->the_input( null, $title_format, $item_format );
 		echo '</div>';
 
-		do_action( self::ADD_ACTION, $taxonomy );
+		do_action( self::MSLS_ADD_INPUT_ACTION, $taxonomy );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class MslsPostTagClassic extends MslsPostTag {
 	 * @param string   $taxonomy
 	 */
 	public function edit_input( \WP_Term $tag, string $taxonomy ): void {
-		if ( did_action( self::EDIT_ACTION ) ) {
+		if ( did_action( self::MSLS_EDIT_INPUT_ACTION ) ) {
 			return;
 		}
 
@@ -68,7 +68,7 @@ class MslsPostTagClassic extends MslsPostTag {
 
 		$this->the_input( $tag, $title_format, $item_format );
 
-		do_action( self::EDIT_ACTION, $tag, $taxonomy );
+		do_action( self::MSLS_EDIT_INPUT_ACTION, $tag, $taxonomy );
 	}
 
 	/**

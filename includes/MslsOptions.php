@@ -28,6 +28,8 @@ use lloc\Msls\Component\Icon\IconPng;
  */
 class MslsOptions extends MslsGetSet implements OptionsInterface {
 
+	const MSLS_GET_POSTLINK_HOOK = 'msls_get_postlink';
+
 	public const PREFIX    = 'msls';
 	public const SEPARATOR = '';
 
@@ -99,7 +101,7 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 			$options = new MslsOptionsPost( get_queried_object_id() );
 		}
 
-		add_filter( 'msls_get_postlink', array( $options, 'check_for_blog_slug' ), 10, 2 );
+		add_filter( self::MSLS_GET_POSTLINK_HOOK, array( $options, 'check_for_blog_slug' ), 10, 2 );
 
 		return $options;
 	}

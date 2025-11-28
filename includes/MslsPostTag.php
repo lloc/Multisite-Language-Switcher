@@ -11,8 +11,8 @@ use lloc\Msls\Component\Component;
  */
 class MslsPostTag extends MslsMain {
 
-	const EDIT_ACTION = 'msls_post_tag_edit_input';
-	const ADD_ACTION  = 'msls_post_tag_add_input';
+	const MSLS_EDIT_INPUT_ACTION = 'msls_post_tag_edit_input';
+	const MSLS_ADD_INPUT_ACTION  = 'msls_post_tag_add_input';
 
 	/**
 	 * Suggest
@@ -92,7 +92,7 @@ class MslsPostTag extends MslsMain {
 	 * @param string $taxonomy
 	 */
 	public function add_input( string $taxonomy ): void {
-		if ( did_action( self::ADD_ACTION ) ) {
+		if ( did_action( self::MSLS_ADD_INPUT_ACTION ) ) {
 			return;
 		}
 
@@ -108,7 +108,7 @@ class MslsPostTag extends MslsMain {
 		$this->the_input( null, $title_format, $item_format );
 		echo '</div>';
 
-		do_action( self::ADD_ACTION, $taxonomy );
+		do_action( self::MSLS_ADD_INPUT_ACTION, $taxonomy );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class MslsPostTag extends MslsMain {
 	 * @param string   $taxonomy
 	 */
 	public function edit_input( \WP_Term $tag, string $taxonomy ): void {
-		if ( did_action( self::EDIT_ACTION ) ) {
+		if ( did_action( self::MSLS_EDIT_INPUT_ACTION ) ) {
 			return;
 		}
 
@@ -142,7 +142,7 @@ class MslsPostTag extends MslsMain {
 
 		$this->the_input( $tag, $title_format, $item_format );
 
-		do_action( self::EDIT_ACTION, $tag, $taxonomy );
+		do_action( self::MSLS_EDIT_INPUT_ACTION, $tag, $taxonomy );
 	}
 
 	/**

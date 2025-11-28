@@ -152,7 +152,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'get_admin_url' )->atLeast()->once()->andReturn( '/wp-admin/edit-tags.php' );
 		Functions\expect( 'get_term' )->atLeast()->once()->andReturnNull();
 
-		Actions\expectDone( MslsPostTag::ADD_ACTION );
+		Actions\expectDone( MslsPostTag::MSLS_ADD_INPUT_ACTION );
 
 		$output = '<div class="form-field"><h3>Multisite Language Switcher</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="post"/>

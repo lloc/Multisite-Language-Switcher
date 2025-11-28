@@ -21,7 +21,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax implements OptionsTaxInterface {
 	public ?bool $with_front = true;
 
 	public function handle_rewrite(): OptionsTaxInterface {
-		add_filter( 'msls_get_postlink', array( $this, 'check_base' ), 9, 2 );
+		add_filter( MslsOptions::MSLS_GET_POSTLINK_HOOK, array( $this, 'check_base' ), 9, 2 );
 
 		return $this;
 	}

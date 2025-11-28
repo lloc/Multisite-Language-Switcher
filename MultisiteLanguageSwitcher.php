@@ -45,16 +45,16 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 
+	require_once __DIR__ . '/includes/deprectated.php';
+
 	/**
 	 * Get the output for using the links to the translations in your code
 	 *
 	 * @package Msls
-	 *
 	 * @param mixed $attr
-	 *
 	 * @return string
 	 */
-	function get_the_msls( $attr ): string {
+	function msls_get_switcher( $attr ): string {
 		$arr = is_array( $attr ) ? $attr : array();
 		$obj = apply_filters( 'msls_get_output', null );
 
@@ -76,9 +76,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @param string[] $arr
 	 */
-	function the_msls( array $arr = array() ): void {
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo get_the_msls( $arr );
+	function msls_the_switcher( array $arr = array() ): void {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo msls_get_switcher( $arr );
 	}
 
 	/**
@@ -88,7 +88,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @return string
 	 */
-	function get_msls_flag_url( string $locale ): string {
+	function msls_get_flag_url( string $locale ): string {
 		return ( new \lloc\Msls\MslsOptions() )->get_flag_url( $locale );
 	}
 
@@ -100,7 +100,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @return string
 	 */
-	function get_msls_blog_description( string $locale, string $preset = '' ): string {
+	function msls_get_blog_description( string $locale, string $preset = '' ): string {
 		$blog = msls_blog( $locale );
 
 		return $blog ? $blog->get_description() : $preset;
@@ -114,7 +114,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 *
 	 * @return string
 	 */
-	function get_msls_permalink( string $locale, string $preset = '' ): string {
+	function msls_get_permalink( string $locale, string $preset = '' ): string {
 		$url  = null;
 		$blog = msls_blog( $locale );
 
