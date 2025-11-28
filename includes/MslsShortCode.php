@@ -6,7 +6,7 @@ class MslsShortCode {
 
 	public static function init(): void {
 		add_shortcode( 'sc_msls_widget', array( __CLASS__, 'render_widget' ) );
-		add_shortcode( 'sc_msls', 'get_the_msls' );
+		add_shortcode( 'sc_msls', 'msls_get_switcher' );
 	}
 
 	/**

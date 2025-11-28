@@ -11,6 +11,8 @@ use lloc\Msls\Component\Component;
  */
 class MslsMain {
 
+	const MSLS_SAVE_ACTION = 'msls_main_save';
+
 	/**
 	 * Instance of options
 	 *
@@ -129,7 +131,7 @@ class MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	protected function save( $object_id, $class_name ): void {
-		if ( has_action( 'msls_main_save' ) ) {
+		if ( has_action( self::MSLS_SAVE_ACTION ) ) {
 			/**
 			 * Calls completely customized save-routine
 			 *
@@ -138,7 +140,7 @@ class MslsMain {
 			 *
 			 * @since 0.9.9
 			 */
-			do_action( 'msls_main_save', $object_id, $class_name );
+			do_action( self::MSLS_SAVE_ACTION, $object_id, $class_name );
 
 			return;
 		}

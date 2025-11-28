@@ -76,7 +76,7 @@ final class TestMslsPostTagClassic extends MslsUnitTestCase {
 
 		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
 
-		Actions\expectDone( MslsPostTagClassic::EDIT_ACTION );
+		Actions\expectDone( MslsPostTagClassic::MSLS_EDIT_INPUT_ACTION );
 
 		$output = '<tr>
 			<th colspan="2">
@@ -139,7 +139,7 @@ final class TestMslsPostTagClassic extends MslsUnitTestCase {
 
 		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
 
-		Actions\expectDone( MslsPostTagClassic::ADD_ACTION );
+		Actions\expectDone( MslsPostTagClassic::MSLS_ADD_INPUT_ACTION );
 
 		$output = '<div class="form-field"><h3>Multisite Language Switcher</h3><label for="msls_input_de_DE"><a title="Edit the translation in the de_DE-blog" href="edit_term_link"><span class="language-badge de_DE"><span>de</span><span>DE</span></span></a>&nbsp;</label>
 			<select class="msls-translations" name="msls_input_de_DE">

@@ -65,7 +65,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		Filters\expectApplied( 'mlsl_output_get_alternate_links_arr' )->once();
+		Filters\expectApplied( 'msls_output_get_alternate_links_arr' )->once();
 
 		$expected =
 			'<link rel="alternate" href="https://example.de/" hreflang="de" />' . PHP_EOL .
@@ -136,7 +136,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		Filters\expectApplied( 'mlsl_output_get_alternate_links_default' )->once();
+		Filters\expectApplied( 'msls_output_get_alternate_links_default' )->once();
 
 		$expected = '<link rel="alternate" href="https://example.de/" hreflang="x-default" />';
 

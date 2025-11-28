@@ -11,6 +11,19 @@ use lloc\Msls\Map\HrefLang;
  */
 class MslsOutput extends MslsMain {
 
+	const MSLS_ALTERNATE_LINKS_HOOK = 'msls_output_get_alternate_links';
+
+	const MSLS_ALTERNATE_LINKS_ARR_HOOK = 'msls_output_get_alternate_links_arr';
+
+	const MSLS_ALTERNATE_LINKS_DEFAULT_HOOK = 'msls_output_get_alternate_links_default';
+
+	const MSLS_GET_HOOK = 'msls_output_get';
+
+	const MSLS_NO_TRANSLATION_FOUND_HOOK = 'msls_output_no_translation_found';
+
+	const MSLS_GET_TAGS_HOOK = 'msls_output_get_tags';
+
+
 	public static function init(): object {
 		_deprecated_function( __METHOD__, '2.9.2', 'MslsOutput::create' );
 
@@ -63,7 +76,7 @@ class MslsOutput extends MslsMain {
 					restore_current_blog();
 				}
 
-				if ( has_filter( 'msls_output_get' ) ) {
+				if ( has_filter( self::MSLS_GET_HOOK ) ) {
 					/**
 					 * Returns HTML-link for an item of the output-arr
 					 *
@@ -73,7 +86,7 @@ class MslsOutput extends MslsMain {
 					 *
 					 * @since 0.9.8
 					 */
-					$arr[] = (string) apply_filters( 'msls_output_get', $url, $link, $is_current_blog );
+					$arr[] = (string) apply_filters( self::MSLS_GET_HOOK, $url, $link, $is_current_blog );
 				} else {
 					$arr[] = sprintf(
 						'<a href="%s" title="%s"%s>%s</a>',
@@ -102,7 +115,7 @@ class MslsOutput extends MslsMain {
 		$default   = '';
 
 		foreach ( $blogs->get_objects() as $blog ) {
-			$url = apply_filters( 'mlsl_output_get_alternate_links', $blog->get_url( $options ), $blog );
+			$url = apply_filters( self::MSLS_ALTERNATE_LINKS_HOOK, $blog->get_url( $options ), $blog );
 			if ( is_null( $url ) ) {
 				continue;
 			}
@@ -118,10 +131,10 @@ class MslsOutput extends MslsMain {
 		}
 
 		if ( 1 === count( $arr ) ) {
-			return apply_filters( 'mlsl_output_get_alternate_links_default', $default );
+			return apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
 		}
 
-		$arr = (array) apply_filters( 'mlsl_output_get_alternate_links_arr', $arr );
+		$arr = (array) apply_filters( self::MSLS_ALTERNATE_LINKS_ARR_HOOK, $arr );
 
 		return implode( PHP_EOL, $arr );
 	}
@@ -134,7 +147,7 @@ class MslsOutput extends MslsMain {
 	public function __toString() {
 		$arr = $this->get( $this->options->display, false, isset( $this->options->only_with_translation ) );
 		if ( empty( $arr ) ) {
-			return apply_filters( 'msls_output_no_translation_found', '' );
+			return apply_filters( self::MSLS_NO_TRANSLATION_FOUND_HOOK, '' );
 		}
 
 		$tags = $this->get_tags();
@@ -165,7 +178,7 @@ class MslsOutput extends MslsMain {
 			 *
 			 * @since 1.0
 			 */
-			$this->tags = (array) apply_filters( 'msls_output_get_tags', $this->tags );
+			$this->tags = (array) apply_filters( self::MSLS_GET_TAGS_HOOK, $this->tags );
 		}
 
 		return $this->tags;
