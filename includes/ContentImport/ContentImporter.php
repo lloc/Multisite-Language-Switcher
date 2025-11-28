@@ -21,6 +21,10 @@ use lloc\Msls\MslsRequest;
 class ContentImporter extends MslsRegistryInstance {
 	use WithRequestPostAttributes;
 
+	const MSLS_BEFORE_IMPORT_ACTION = 'msls_content_import_before_import';
+
+	const MSLS_AFTER_IMPORT_ACTION = 'msls_content_import_after_import';
+
 	/**
 	 * @var MslsMain
 	 */
@@ -277,7 +281,7 @@ class ContentImporter extends MslsRegistryInstance {
 		 *
 		 * @param ImportCoordinates $import_coordinates
 		 */
-		do_action( 'msls_content_import_before_import', $import_coordinates );
+		do_action( self::MSLS_BEFORE_IMPORT_ACTION, $import_coordinates );
 
 		/**
 		 * Filters the data before the import runs.
@@ -338,7 +342,7 @@ class ContentImporter extends MslsRegistryInstance {
 		 *
 		 * @since TBD
 		 */
-		do_action( 'msls_content_import_after_import', $import_coordinates, $this->logger, $this->relations );
+		do_action( self::MSLS_AFTER_IMPORT_ACTION, $import_coordinates, $this->logger, $this->relations );
 
 		/**
 		 * Filters the data after the import ran.

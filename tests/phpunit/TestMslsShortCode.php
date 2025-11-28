@@ -10,7 +10,7 @@ final class TestMslsShortCode extends MslsUnitTestCase {
 
 	public function test_init(): void {
 		Functions\expect( 'add_shortcode' )->once()->with( 'sc_msls_widget', array( MslsShortCode::class, 'render_widget' ) );
-		Functions\expect( 'add_shortcode' )->once()->with( 'sc_msls', 'get_the_msls' );
+		Functions\expect( 'add_shortcode' )->once()->with( 'sc_msls', 'msls_get_switcher' );
 
 		$this->expectNotToPerformAssertions();
 		MslsShortCode::init();

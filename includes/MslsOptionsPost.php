@@ -40,9 +40,9 @@ class MslsOptionsPost extends MslsOptions {
 
 		$post_link = get_permalink( $post );
 
-		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', 'msls_get_postlink' );
+		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', MslsOptions::MSLS_GET_POSTLINK_HOOK );
 
-		return apply_filters( 'msls_get_postlink', $post_link, $this );
+		return apply_filters( MslsOptions::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
 	}
 
 	/**

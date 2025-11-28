@@ -26,6 +26,15 @@ use lloc\Msls\Component\Input\Select;
  */
 final class MslsAdmin extends MslsMain {
 
+	const MSLS_REGISTER_ACTION = 'msls_admin_register';
+
+	const MSLS_ACTION_PREFIX = 'msls_admin_';
+
+	/**
+	 * Maximum number of users in the reference user select box
+	 *
+	 * @var int
+	 */
 	public const MAX_REFERENCE_USERS = 100;
 
 	/**
@@ -226,7 +235,7 @@ final class MslsAdmin extends MslsMain {
 		 *
 		 * @since 1.0
 		 */
-		do_action( 'msls_admin_register', __CLASS__ );
+		do_action( self::MSLS_REGISTER_ACTION, __CLASS__ );
 	}
 
 	/**
@@ -325,7 +334,7 @@ final class MslsAdmin extends MslsMain {
 		 *
 		 * @since 2.4.4
 		 */
-		do_action( "msls_admin_{$section}", __CLASS__, $section );
+		do_action( self::MSLS_ACTION_PREFIX . $section, __CLASS__, $section );
 
 		return count( $map );
 	}

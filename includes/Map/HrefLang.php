@@ -11,6 +11,8 @@ use lloc\Msls\MslsBlogCollection;
  */
 class HrefLang {
 
+	const MSLS_HEAD_HREFLANG_HOOK = 'msls_head_hreflang';
+
 	/**
 	 * @var array<string, string>
 	 */
@@ -64,6 +66,6 @@ class HrefLang {
 		 *
 		 * @since 0.9.9
 		 */
-		return (string) apply_filters( 'msls_head_hreflang', $language );
+		return (string) apply_filters( self::MSLS_HEAD_HREFLANG_HOOK, $language );
 	}
 }

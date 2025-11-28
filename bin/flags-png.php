@@ -104,7 +104,7 @@ if ( isset( $json->translations ) ) {
 	}
 }
 
-echo 'return $flags = [', PHP_EOL;
+echo 'return [', PHP_EOL;
 
 foreach ( array_filter( $icons ) as $key => $value ) {
 	$needle = "assets/flags/{$value}";
