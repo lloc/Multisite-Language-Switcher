@@ -3,7 +3,7 @@
  * Multisite Language Switcher Plugin
  *
  * Plugin Name: Multisite Language Switcher
- * Version: 2.9.6
+ * Version: 2.10.0
  * Plugin URI: http://msls.co/
  * Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
  * Author: Dennis Ploetner
@@ -41,7 +41,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
  * @author Dennis Ploetner <re@lloc.de>
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '2.9.6' );
+	define( 'MSLS_PLUGIN_VERSION', '2.10.0' );
 	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 

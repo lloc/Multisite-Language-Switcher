@@ -1,3 +1,12 @@
+## 2.10.0
+
+* Add prefixed public helper functions (msls_get_*, msls_the_msls) with deprecation shims for legacy names to satisfy WPCS while staying backward compatible.
+* Expose action hook names as constants for safer programmatic use.
+* Accessibility: add aria-current="page" on the active language link.
+* Fix: resolve path-related issue affecting asset/loader resolution.
+* Internal: reorganized folders for clearer structure; include composer.json in release artifacts.
+* Maintenance: numerous dependency updates (WordPress build tooling, Playwright/e2e utils, Node types, security bumps such as tar-fs, dotenv, js-yaml, express).
+
 ## 2.9.6
 * Alternate links are now printed without the title attribute.
 * Fix in ImportCoordinates
