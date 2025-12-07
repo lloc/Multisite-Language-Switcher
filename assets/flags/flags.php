@@ -2,8 +2,8 @@
 
 /**
  * File is auto-generated
- *
- * 131 translations-teams for WordPress found
+ * 
+* 131 translations-teams for WordPress found
  */
 // Unhandled language: am (Amharic)
 // Unhandled language: arg (Aragonese)
@@ -140,7 +140,7 @@ return array(
 
 /**
  * 158 unused icons in assets/flags/
- *
+ * 
  * ad.png, ae.png, ag.png, ai.png, an.png, as.png, aw.png, ax.png, bb.png, bf.png, bh.png, bi.png, bj.png, bm.png
  * bn.png, bo.png, bs.png, bv.png, bw.png, bz.png, cc.png, cd.png, cf.png, cg.png, ci.png, ck.png, cm.png, cs.png
  * cu.png, cv.png, cx.png, cy.png, dj.png, dm.png, eg.png, eh.png, england.png, er.png, et.png, fam.png, fj.png, fk.png

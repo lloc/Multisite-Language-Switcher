@@ -2,8 +2,8 @@
 
 /**
  * File is auto-generated
- *
- * 131 translations-teams for WordPress found
+ * 
+* 131 translations-teams for WordPress found
  */
 // Unhandled language: am (Amharic)
 // Unhandled language: arg (Aragonese)
@@ -140,7 +140,7 @@ return array(
 
 /**
  * 168 unused icons in assets/css-flags/flags/4x3/
- *
+ * 
  * ad.svg, ae.svg, ag.svg, ai.svg, aq.svg, as.svg, aw.svg, ax.svg, bb.svg, bf.svg, bh.svg, bi.svg, bj.svg, bl.svg
  * bm.svg, bn.svg, bo.svg, bq.svg, bs.svg, bv.svg, bw.svg, bz.svg, cc.svg, cd.svg, cf.svg, cg.svg, ci.svg, ck.svg
  * cm.svg, cu.svg, cv.svg, cw.svg, cx.svg, cy.svg, dj.svg, dm.svg, eg.svg, eh.svg, er.svg, et.svg, fj.svg, fk.svg
