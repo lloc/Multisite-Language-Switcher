@@ -21,6 +21,14 @@ final class TestMslsRequest extends MslsUnitTestCase {
 		$this->assertTrue( MslsRequest::has_var( MslsFields::FIELD_MSLS_ID ) );
 	}
 
+	public function test_get_var_null(): void {
+		// INPUT_REQUEST (99) has been removed as of PHP 8.0.0; was not implemented previously.
+		$this->assertNull( MslsRequest::get_var( MslsFields::FIELD_MSLS_FILTER, 99 ) );
+
+		// INPUT_SESSION (6) has been removed as of PHP 8.0.0; was not implemented previously.
+		$this->assertNull( MslsRequest::get_var( MslsFields::FIELD_MSLS_FILTER, 6 ) );
+	}
+
 	public function test_get_var_ok(): void {
 		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_FILTER, FILTER_SANITIZE_NUMBER_INT )->andReturn( 17 );
 
