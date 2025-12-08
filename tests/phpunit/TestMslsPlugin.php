@@ -61,7 +61,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		MslsPlugin::message_handler( 'Test' );
 	}
 
-	public function test_direname(): void {
+	public function test_dirname(): void {
 		$expected = 'multisite-language-switcher/subpath';
 		$this->assertEquals( $expected, MslsPlugin::dirname( '/subpath' ) );
 	}
