@@ -206,9 +206,9 @@ class MslsPlugin {
 	 * The plugin data in all blogs of the current network will be
 	 * deleted after the uninstall procedure.
 	 *
-	 * @return boolean
+	 * @return void
 	 */
-	public static function uninstall() {
+	public static function uninstall(): void {
 		/**
 		 * We want to be sure that the user has not deactivated the
 		 * multisite because we need to use switch_to_blog and
@@ -225,7 +225,7 @@ class MslsPlugin {
 			}
 		}
 
-		return self::cleanup();
+		self::cleanup();
 	}
 
 	/**

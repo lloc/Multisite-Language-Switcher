@@ -53,8 +53,8 @@ If you plan to use the GitHub repository on a server, don't forget to run `compo
 *  Optional Theme Integration:
     *  Insert the following PHP code directly into your theme files to display language switcher links:
         ```php
-        if ( function_exists( 'the_msls' ) ) {
-            the_msls();
+        if ( function_exists( 'msls_the_switcher' ) ) {
+            msls_the_switcher();
         }
         ```
 Review the [Multisite Language Switcher Website](http://msls.co/) for more information. Some [diagrams](https://github.com/lloc/Multisite-Language-Switcher/blob/master/Diagrams.md) are also available. 

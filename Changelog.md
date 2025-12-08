@@ -1,3 +1,7 @@
+## 2.10.1
+* Fix: Deprecated function warning pointed to non-existent function.
+* Documentation: update README.md code snippets to reflect new function names.
+
 ## 2.10.0
 
 * Add prefixed public helper functions (msls_get_*, msls_the_msls) with deprecation shims for legacy names to satisfy WPCS while staying backward compatible.

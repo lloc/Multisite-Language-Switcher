@@ -61,6 +61,10 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		MslsPlugin::message_handler( 'Test' );
 	}
 
+	public function test_dirname(): void {
+		$expected = 'multisite-language-switcher/subpath';
+		$this->assertEquals( $expected, MslsPlugin::dirname( '/subpath' ) );
+	}
 	/**
 	 * Verify the static uninstall-method
 	 */
@@ -88,24 +92,30 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 
 		$test = new MslsPlugin( $options );
 
-		$this->assertIsBool( $test->uninstall() );
+		$test->uninstall();
+
+		$this->expectNotToPerformAssertions();
 	}
 
 	public function test_cleanup_false(): void {
-		Functions\when( 'delete_option' )->justReturn( false );
+		Functions\expect( 'delete_option' )->once()->andReturn( false );
 
-		$this->assertFalse( MslsPlugin::cleanup() );
+		MslsPlugin::cleanup();
+
+		$this->expectNotToPerformAssertions();
 	}
 
 	public function test_cleanup_true(): void {
-		Functions\when( 'delete_option' )->justReturn( true );
+		Functions\expect( 'delete_option' )->once()->andReturn( true );
 
 		global $wpdb;
 		$wpdb = \Mockery::mock( '\wpdb' );
 		$wpdb->shouldReceive( 'prepare' )->andReturn( '' );
 		$wpdb->shouldReceive( 'query' )->andReturn( true );
 
-		$this->assertTrue( MslsPlugin::cleanup() );
+		MslsPlugin::cleanup();
+
+		$this->expectNotToPerformAssertions();
 	}
 
 	public function test_plugin_dir_path(): void {

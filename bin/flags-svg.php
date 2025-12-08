@@ -91,7 +91,7 @@ if ( isset( $json->translations ) ) {
 	$count = count( $json->translations );
 
 	echo '/**', PHP_EOL, ' * File is auto-generated', PHP_EOL, ' * ', PHP_EOL;
-	echo "* {$count} translations-teams for WordPress found", PHP_EOL, ' */', PHP_EOL;
+	echo " * {$count} translations-teams for WordPress found", PHP_EOL, ' */', PHP_EOL;
 
 	foreach ( $json->translations as $item ) {
 		if ( isset( $exceptions[ $item->language ] ) ) {

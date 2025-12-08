@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Deprecated: Get the output for using the links to the translations in your code.
  *
- * @deprecated 2.9.7 Use msls_get_the_msls()
+ * @deprecated 2.10.1 Use msls_get_switcher()
  *
  * @param mixed $attr
  *
@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 function get_the_msls( $attr ): string {
-	_deprecated_function( __FUNCTION__, '2.9.7', 'msls_get_the_msls' );
+	_deprecated_function( __FUNCTION__, '2.10.1', 'msls_get_switcher' );
 
 	return msls_get_switcher( $attr );
 }
@@ -21,20 +21,20 @@ function get_the_msls( $attr ): string {
 /**
  * Deprecated: Output the links to the translations in your template.
  *
- * @deprecated 2.9.7 Use msls_the_msls()
+ * @deprecated 2.10.1 Use msls_the_switcher()
  *
  * @param string[] $arr
  */
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 function the_msls( array $arr = array() ): void {
-	_deprecated_function( __FUNCTION__, '2.9.7', 'msls_the_msls' );
+	_deprecated_function( __FUNCTION__, '2.10.1', 'msls_the_switcher' );
 	msls_the_switcher( $arr );
 }
 
 /**
  * Deprecated: Gets the URL of the country flag-icon for a specific locale.
  *
- * @deprecated 2.9.7 Use msls_get_flag_url()
+ * @deprecated 2.10.1 Use msls_get_flag_url()
  *
  * @param string $locale
  *
@@ -42,7 +42,7 @@ function the_msls( array $arr = array() ): void {
  */
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 function get_msls_flag_url( string $locale ): string {
-	_deprecated_function( __FUNCTION__, '2.9.7', 'msls_get_flag_url' );
+	_deprecated_function( __FUNCTION__, '2.10.1', 'msls_get_flag_url' );
 
 	return msls_get_flag_url( $locale );
 }
@@ -50,7 +50,7 @@ function get_msls_flag_url( string $locale ): string {
 /**
  * Deprecated: Gets the description for a blog for a specific locale.
  *
- * @deprecated 2.9.7 Use msls_get_blog_description()
+ * @deprecated 2.10.1 Use msls_get_blog_description()
  *
  * @param string $locale
  * @param string $preset
@@ -59,7 +59,7 @@ function get_msls_flag_url( string $locale ): string {
  */
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 function get_msls_blog_description( string $locale, string $preset = '' ): string {
-	_deprecated_function( __FUNCTION__, '2.9.7', 'msls_get_blog_description' );
+	_deprecated_function( __FUNCTION__, '2.10.1', 'msls_get_blog_description' );
 
 	return msls_get_blog_description( $locale, $preset );
 }
@@ -67,7 +67,7 @@ function get_msls_blog_description( string $locale, string $preset = '' ): strin
 /**
  * Deprecated: Gets the permalink for a translation of the current post in a given language.
  *
- * @deprecated 2.9.7 Use msls_get_permalink()
+ * @deprecated 2.10.1 Use msls_get_permalink()
  *
  * @param string $locale
  * @param string $preset
@@ -76,7 +76,7 @@ function get_msls_blog_description( string $locale, string $preset = '' ): strin
  */
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 function get_msls_permalink( string $locale, string $preset = '' ): string {
-	_deprecated_function( __FUNCTION__, '2.9.7', 'msls_get_permalink' );
+	_deprecated_function( __FUNCTION__, '2.10.1', 'msls_get_permalink' );
 
 	return msls_get_permalink( $locale, $preset );
 }
