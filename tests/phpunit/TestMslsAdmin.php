@@ -138,7 +138,7 @@ final class TestMslsAdmin extends MslsUnitTestCase {
 
 		$this->expectException( \Exception::class );
 		$this->expectExceptionMessage(
-			'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of 100 users. Please, use the hook "msls_reference_users" to filter the result before!'
+			'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of 200 users. Please, use the hook "msls_reference_users" to filter the result before!'
 		);
 
 		$obj->reference_user();
