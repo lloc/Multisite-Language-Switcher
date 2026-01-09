@@ -39,7 +39,7 @@ final class MslsAdmin extends MslsMain {
 	 *
 	 * @var int
 	 */
-	public const MAX_REFERENCE_USERS = 100;
+	public const MAX_REFERENCE_USERS = 200;
 
 	/**
 	 * @codeCoverageIgnore
