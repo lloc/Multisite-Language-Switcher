@@ -1,4 +1,5 @@
 <?php if ( ! defined( 'ABSPATH' ) ) {
-	exit;}
+	exit;
+}
 
 msls_the_switcher();
