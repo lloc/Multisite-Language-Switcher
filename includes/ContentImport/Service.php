@@ -2,6 +2,10 @@
 
 namespace lloc\Msls\ContentImport;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use lloc\Msls\ContentImport\LogWriters\AdminNoticeLogger;
 use lloc\Msls\MslsRegistryInstance;
 
