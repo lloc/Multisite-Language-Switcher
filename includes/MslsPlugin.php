@@ -2,6 +2,10 @@
 
 namespace lloc\Msls;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use lloc\Msls\Query\BlogsInNetworkQuery;
 use lloc\Msls\Query\CleanupOptionsQuery;
 

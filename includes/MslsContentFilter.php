@@ -2,6 +2,10 @@
 
 namespace lloc\Msls;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class MslsContentFilter {
 
 	/**
