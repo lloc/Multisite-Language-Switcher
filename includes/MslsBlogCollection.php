@@ -130,12 +130,9 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return object[]|\stdClass[]
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
-		$reference_user = $options->has_value( 'reference_user' ) ? $options->reference_user : current(
-			$this->get_users(
-				'ID',
-				1
-			)
-		);
+		$reference_user = $options->has_value( 'reference_user' ) ?
+			$options->reference_user :
+			current( $this->get_users( 'ID', 1 ) );
 
 		$blogs = get_blogs_of_user( $reference_user );
 		foreach ( $blogs as $key => $blog ) {
@@ -305,19 +302,33 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	/**
 	 * Gets the registered users of the current blog
 	 *
-	 * @param string     $fields
-	 * @param int|string $number
+	 * @param string|string[] $fields
+	 * @param int             $number
 	 *
 	 * @return array<string, int>
 	 */
-	public function get_users( $fields = 'all', $number = '' ) {
+	public function get_users( $fields = 'all', int $number = MslsAdmin::MAX_REFERENCE_USERS ): array {
 		$args = array(
 			'blog_id'     => $this->current_blog_id,
 			'orderby'     => 'registered',
 			'fields'      => $fields,
-			'number'      => $number,
+			'number'      => $number > 0 ? $number : MslsAdmin::MAX_REFERENCE_USERS,
 			'count_total' => false,
 		);
+
+		if ( $number !== 1 ) { // Check total users only if not fetching a single user
+			$user_count = count_users();
+			if ( isset( $user_count['total_users'] ) && $user_count['total_users'] > $number ) {
+				/* translators: %s: maximum number of users */
+				$format = __(
+					'Multisite Language Switcher: The user list has been limited to %d users.',
+					'multisite-language-switcher'
+				);
+
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+				trigger_error( esc_html( sprintf( $format, strval( $number ) ) ) );
+			}
+		}
 
 		$args = (array) apply_filters( 'msls_get_users', $args );
 
