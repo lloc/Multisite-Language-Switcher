@@ -301,19 +301,34 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	/**
 	 * Gets the registered users of the current blog
 	 *
-	 * @param string     $fields
-	 * @param int|string $number
+	 * @param string|string[] $fields
+	 * @param int             $number
 	 *
 	 * @return array<string, int>
 	 */
-	public function get_users( $fields = 'all', $number = '' ) {
+	public function get_users( $fields = 'all', int $number = 0 ): array {
 		$args = array(
 			'blog_id'     => $this->current_blog_id,
 			'orderby'     => 'registered',
 			'fields'      => $fields,
-			'number'      => $number,
 			'count_total' => false,
 		);
+
+		if ( $number > 1 ) {
+			$args['number'] = $number;
+
+			$user_count = count_users();
+			if ( isset( $user_count['total_users'] ) && $user_count['total_users'] > $number ) {
+				/* translators: %s: maximum number of users */
+				$format = __(
+					'Multisite Language Switcher: The user list has been limited to %d users.',
+					'multisite-language-switcher'
+				);
+
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+				trigger_error( esc_html( sprintf( $format, strval( $number ) ) ) );
+			}
+		}
 
 		$args = (array) apply_filters( 'msls_get_users', $args );
 

@@ -116,38 +116,9 @@ final class TestMslsAdmin extends MslsUnitTestCase {
 		$obj->admin_display();
 	}
 
-	public function test_reference_user(): void {
-		$users    = array();
-		$too_much = MslsAdmin::MAX_REFERENCE_USERS + 1;
-		for ( $i = 1; $i <= $too_much; $i++ ) {
-			$users[] = (object) array(
-				'ID'            => $i,
-				'user_nicename' => 'realloc',
-			);
-		}
-
-		$obj = $this->MslsAdminFactory( $users );
-
-		set_error_handler(
-			static function ( $errno, $errstr ) {
-				restore_error_handler();
-				throw new \Exception( $errstr, $errno );
-			},
-			E_ALL
-		);
-
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage(
-		    sprintf(
-		        'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %d users. Please, use the hook "msls_reference_users" to filter the result before!',
-		        MslsAdmin::MAX_REFERENCE_USERS
-		    )
-		);
-
-		$obj->reference_user();
-	}
-
 	public function test_reference_user_over_max(): void {
+		$users = array( 1 => 'realloc' );
+		Functions\expect( 'wp_list_pluck' )->once()->andReturn( $users );
 		$obj = $this->MslsAdminFactory();
 
 		$this->expectOutputRegex( '/^<select id="reference_user" name="msls\[reference_user\]">.*$/' );

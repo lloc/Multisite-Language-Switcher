@@ -35,7 +35,7 @@ final class MslsAdmin extends MslsMain {
 	 *
 	 * @var int
 	 */
-	public const MAX_REFERENCE_USERS = 200;
+	public const MAX_REFERENCE_USERS = 100;
 
 	/**
 	 * @codeCoverageIgnore
@@ -378,27 +378,17 @@ final class MslsAdmin extends MslsMain {
 	 * Shows the select-form-field 'reference_user'
 	 */
 	public function reference_user(): void {
-		$users = array();
+		$max_users = (int) apply_filters( 'msls_max_reference_users_count', self::MAX_REFERENCE_USERS );
 
-		foreach ( (array) apply_filters( 'msls_reference_users', $this->collection->get_users() ) as $user ) {
-			$users[ $user->ID ] = $user->user_nicename;
-		}
+		$users_collection = $this->collection->get_users( array( 'ID', 'user_nicename' ), $max_users );
 
-		if ( count( $users ) > self::MAX_REFERENCE_USERS ) {
-			$users = array_slice( $users, 0, self::MAX_REFERENCE_USERS, true );
-
-			/* translators: %s: maximum number of users */
-			$format = __(
-				'Multisite Language Switcher: Collection for reference user has been truncated because it exceeded the maximum of %d users. Please, use the hook "msls_reference_users" to filter the result before!',
-				'multisite-language-switcher'
-			);
-
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
-			trigger_error( esc_html( sprintf( $format, strval( self::MAX_REFERENCE_USERS ) ) ) );
-		}
+		$reference_users = (array) apply_filters(
+			'msls_reference_users',
+			wp_list_pluck( $users_collection, 'user_nicename', 'ID' )
+		);
 
         // phpcs:ignore WordPress.Security.EscapeOutput
-		echo ( new Select( 'reference_user', $users, strval( $this->options->reference_user ) ) )->render();
+		echo ( new Select( 'reference_user', $reference_users, strval( $this->options->reference_user ) ) )->render();
 	}
 
 	/**
