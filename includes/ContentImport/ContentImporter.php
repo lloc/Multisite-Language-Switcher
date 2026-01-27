@@ -2,10 +2,6 @@
 
 namespace lloc\Msls\ContentImport;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 use lloc\Msls\ContentImport\Importers\Importer;
 use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;

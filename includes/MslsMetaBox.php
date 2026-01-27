@@ -2,10 +2,6 @@
 
 namespace lloc\Msls;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
