@@ -26,8 +26,6 @@ class MslsUnitTestCase extends TestCase {
 	}
 
 	protected function tearDown(): void {
-		restore_error_handler();
-
 		\Mockery::close();
 		Monkey\tearDown();
 
