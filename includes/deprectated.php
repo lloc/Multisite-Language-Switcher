@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
  * Deprecated: Get the output for using the links to the translations in your code.
  *

@@ -2,10 +2,6 @@
 
 namespace lloc\Msls;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 use lloc\Msls\Component\Input\Checkbox;
 use lloc\Msls\Component\Input\Group;
 use lloc\Msls\Component\Input\Label;

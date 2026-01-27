@@ -2,10 +2,6 @@
 
 namespace lloc\Msls;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
  * Handling of existing/not existing translations in the backend
  * listings of various taxonomies
