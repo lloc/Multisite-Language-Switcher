@@ -314,7 +314,7 @@ class MslsBlogCollection extends MslsRegistryInstance {
 
 		if ( $number !== 1 ) { // Check total users only if not fetching a single user
 			$user_count = count_users();
-			if ( isset( $user_count['total_users'] ) && $user_count['total_users'] > $number ) {
+			if ( $user_count['total_users'] > $number ) {
 				/* translators: %s: maximum number of users */
 				$format = __(
 					'Multisite Language Switcher: The user list has been limited to %d users.',
