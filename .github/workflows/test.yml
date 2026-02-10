@@ -12,7 +12,7 @@ jobs:
       - name: Composer dependencies
         run: composer install
       - name: Run Testsuite
-        run: vendor/bin/phpunit
+        run: composer phpunit
   code-coverages:
     runs-on: ubuntu-latest
     needs: unit-tests
@@ -23,9 +23,9 @@ jobs:
       - name: Composer dependencies
         run: composer install
       - name: Run Testsuite
-        run: php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-clover=coverage.xml
+        run: composer phpunit:clover
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: coverage.xml
+          file: tests/coverage.xml
