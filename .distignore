@@ -5,6 +5,7 @@
 .phpcs.xml.dist
 .phpstan.neon.dist
 .scrutinizer.yml
+.wp-env.json
 /.git
 /.github
 /.idea
