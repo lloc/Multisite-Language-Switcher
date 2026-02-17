@@ -14,6 +14,7 @@ node_modules/
 out/
 phpunit.xml.bak
 tests/coverage/
+tests/coverage.xml
 tests/playwright-report/
 tests/playwright-results/
 tests/playwright/.env.local
