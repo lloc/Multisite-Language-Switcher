@@ -2,6 +2,10 @@
 
 namespace lloc\Msls;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use lloc\Msls\Component\Input\Select;
 use lloc\Msls\Query\TranslatedPostIdQuery;
 
