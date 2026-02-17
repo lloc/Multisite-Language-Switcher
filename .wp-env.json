@@ -1,0 +1,23 @@
+{
+  "phpVersion": "8.3",
+  "multisite": true,
+  "plugins": [
+    "."
+  ],
+  "env": {
+    "tests": {
+      "config": {
+        "HTTP_HOST": "localhost"
+      }
+    },
+    "development": {
+      "plugins": [
+        ".",
+        "https://downloads.wordpress.org/plugin/query-monitor.zip"
+      ]
+    }
+  },
+  "mappings": {
+    "wp-content/plugins/multisite-language-switcher": "."
+  }
+}
