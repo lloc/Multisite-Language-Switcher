@@ -52,7 +52,8 @@ final class TestMslsBlog extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturn( 2 );
 
 		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
-		Functions\expect( 'is_front_page' )->once()->andReturn( true );
+		Functions\expect( 'is_front_page' )->atLeast()->once()->andReturn( true );
+		Functions\expect( 'is_home' )->zeroOrMoreTimes()->andReturn( false );
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 
@@ -70,7 +71,47 @@ final class TestMslsBlog extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_current_blog_id' )->andReturn( 2 );
 
 		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
-		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->atLeast()->once()->andReturn( false );
+		Functions\expect( 'is_home' )->atLeast()->once()->andReturn( false );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+
+		$this->assertEquals( $url, $this->MslsBlogFactory()->get_url( $option ) );
+	}
+
+	public function test_get_posts_page(): void {
+		$url = 'https://msls.co/sv/blogg/';
+
+		$option = \Mockery::mock( MslsOptions::class );
+		$option->shouldReceive( 'has_value' )->once()->andReturn( false );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_current_blog_id' )->andReturn( 2 );
+
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		Functions\expect( 'is_front_page' )->atLeast()->once()->andReturn( false );
+		Functions\expect( 'is_home' )->atLeast()->once()->andReturn( true );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( 42 );
+		Functions\expect( 'get_permalink' )->once()->with( 42 )->andReturn( $url );
+
+		$this->assertEquals( $url, $this->MslsBlogFactory()->get_url( $option ) );
+	}
+
+	public function test_get_posts_page_with_translation(): void {
+		$url = 'https://msls.co/sv/blogg/';
+
+		$option = \Mockery::mock( MslsOptions::class );
+		$option->shouldReceive( 'get_permalink' )->once()->andReturn( $url );
+		$option->shouldReceive( 'has_value' )->once()->andReturn( true );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_current_blog_id' )->andReturn( 2 );
+
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		Functions\expect( 'is_front_page' )->atLeast()->once()->andReturn( false );
+		Functions\expect( 'is_home' )->atLeast()->once()->andReturn( true );
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 
