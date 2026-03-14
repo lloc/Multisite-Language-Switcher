@@ -63,6 +63,14 @@ class MslsOptionsQuery extends MslsOptions {
 		return new $query_class( $sql_cache );
 	}
 
+	public function get_permalink( string $language ): string {
+		return (string) apply_filters(
+			'msls_options_get_permalink',
+			$this->get_postlink( $language ),
+			$language
+		);
+	}
+
 	/**
 	 * Get postlink
 	 *

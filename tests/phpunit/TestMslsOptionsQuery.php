@@ -102,4 +102,12 @@ final class TestMslsOptionsQuery extends MslsUnitTestCase {
 
 		$this->assertEquals( '', ( new MslsOptionsQuery( $sql_cache ) )->get_postlink( 'fr_FR' ) );
 	}
+
+	public function test_get_permalink_returns_empty_when_no_translation(): void {
+		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
+
+		$sql_cache = \Mockery::mock( MslsSqlCacher::class );
+
+		$this->assertSame( '', ( new MslsOptionsQuery( $sql_cache ) )->get_permalink( 'fr_FR' ) );
+	}
 }

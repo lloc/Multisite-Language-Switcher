@@ -96,6 +96,14 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 		return apply_filters( MslsOptions::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
 	}
 
+	public function get_permalink( string $language ): string {
+		return (string) apply_filters(
+			'msls_options_get_permalink',
+			$this->get_postlink( $language ),
+			$language
+		);
+	}
+
 	/**
 	 * Get current link
 	 *

@@ -76,6 +76,10 @@ class MslsOutput extends MslsMain {
 					restore_current_blog();
 				}
 
+				if ( empty( $url ) ) {
+					continue;
+				}
+
 				if ( has_filter( self::MSLS_GET_HOOK ) ) {
 					/**
 					 * Returns HTML-link for an item of the output-arr
@@ -116,7 +120,7 @@ class MslsOutput extends MslsMain {
 
 		foreach ( $blogs->get_objects() as $blog ) {
 			$url = apply_filters( self::MSLS_ALTERNATE_LINKS_HOOK, $blog->get_url( $options ), $blog );
-			if ( is_null( $url ) ) {
+			if ( empty( $url ) ) {
 				continue;
 			}
 
