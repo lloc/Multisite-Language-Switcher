@@ -95,7 +95,6 @@ final class TestMslsBlog extends MslsUnitTestCase {
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( 42 );
 		Functions\expect( 'get_permalink' )->once()->with( 42 )->andReturn( $url );
-		Functions\expect( 'apply_filters' )->once()->andReturn( $url );
 
 		$this->assertEquals( $url, $this->MslsBlogFactory()->get_url( $option ) );
 	}
