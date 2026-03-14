@@ -326,6 +326,67 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertTrue( $test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
 	}
 
+	public function test_get_alternate_links_empty_url(): void {
+		$blogs = array();
+
+		$a = \Mockery::mock( MslsBlog::class );
+		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
+		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
+		$a->shouldReceive( 'get_url' )->andReturn( '' );
+
+		$blogs[] = $a;
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
+
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_search' )->once()->andReturn( false );
+		Functions\expect( 'is_404' )->once()->andReturn( false );
+		Functions\expect( 'is_category' )->once()->andReturn( false );
+		Functions\expect( 'is_tag' )->once()->andReturn( false );
+		Functions\expect( 'is_tax' )->once()->andReturn( false );
+		Functions\expect( 'is_date' )->once()->andReturn( false );
+		Functions\expect( 'is_author' )->once()->andReturn( false );
+		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
+		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+
+		$test = $this->MslsOutputFactory();
+
+		$this->assertEquals( '', $test->get_alternate_links() );
+	}
+
+	public function test_get_skips_empty_url(): void {
+		$blog = \Mockery::mock( MslsBlog::class );
+		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
+		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
+		$blog->userblog_id = 2;
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->andReturn( array( $blog ) );
+		$collection->shouldReceive( 'is_current_blog' )->andReturn( false );
+
+		Functions\expect( 'is_admin' )->atLeast()->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->atLeast()->once()->andReturn( false );
+		Functions\expect( 'is_search' )->andReturn( false );
+		Functions\expect( 'is_404' )->andReturn( false );
+		Functions\expect( 'is_category' )->atLeast()->once()->andReturn( true );
+		Functions\expect( 'is_tag' )->andReturn( false );
+		Functions\expect( 'is_tax' )->andReturn( false );
+		Functions\expect( 'is_woocommerce' )->andReturn( false );
+		Functions\expect( 'get_queried_object_id' )->atLeast()->once()->andReturn( 42 );
+		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array() );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+
+		$this->assertEquals( array(), ( new MslsOutput( $options, $collection ) )->get( 0 ) );
+	}
+
 	public function test_init(): void {
 		Functions\expect( '_deprecated_function' )->once();
 
