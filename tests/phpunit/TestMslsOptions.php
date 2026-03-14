@@ -204,6 +204,8 @@ final class TestMslsOptions extends MslsUnitTestCase {
 			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/blog/%year%/%monthnum%/%postname%/', true ),
 			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/%postname%/', true ),
 			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/blog/%postname%/', true ),
+			array( 'https://msls.co/blogg/', 'https://msls.co/blogg/', true, true, true, '/blog/%postname%/', false ),
+			array( 'https://msls.co/blog/', 'https://msls.co/', true, true, true, '/blog/%postname%/', false ),
 		);
 	}
 
