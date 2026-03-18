@@ -134,12 +134,18 @@ class MslsBlog {
 	protected function get_permalink( OptionsInterface $options ) {
 		$url = null;
 
-		$is_home = is_front_page();
+		$is_front_page = is_front_page();
+		$is_posts_page = ! $is_front_page && is_home();
 
 		switch_to_blog( $this->obj->userblog_id );
 
-		if ( $is_home || $options->has_value( $this->get_language() ) ) {
+		if ( $is_front_page || $options->has_value( $this->get_language() ) ) {
 			$url = apply_filters( self::MSLS_GET_PERMALINK_HOOK, $options->get_permalink( $this->get_language() ), $this );
+		} elseif ( $is_posts_page ) {
+			$page_for_posts = (int) get_option( 'page_for_posts' );
+			if ( $page_for_posts > 0 ) {
+				$url = apply_filters( self::MSLS_GET_PERMALINK_HOOK, (string) get_permalink( $page_for_posts ), $this );
+			}
 		}
 
 		restore_current_blog();

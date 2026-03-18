@@ -416,8 +416,15 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 		if ( $permalink_structure ) {
 			list( $needle, ) = explode( '/%', $permalink_structure, 2 );
 
-			$url = str_replace( $needle, '', $url );
-			if ( is_main_site() && $options->with_front ) {
+			$stripped = false;
+			if ( '' !== $needle && str_starts_with( $url, $needle ) ) {
+				$rest = substr( $url, strlen( $needle ) );
+				if ( '' === $rest || '/' === $rest[0] ) {
+					$url      = '' === $rest ? '/' : $rest;
+					$stripped = true;
+				}
+			}
+			if ( is_main_site() && $options->with_front && $stripped ) {
 				$url = "{$needle}{$url}";
 			}
 		}
