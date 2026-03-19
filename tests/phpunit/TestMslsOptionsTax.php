@@ -150,6 +150,33 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 		$this->assertEquals( '', $this->MslsOptionsTaxFactory()->get_term_link( 42 ) );
 	}
 
+	public function test_get_permalink_returns_empty_when_no_translation(): void {
+		$test = $this->MslsOptionsTaxFactory();
+
+		$this->assertSame( '', $test->get_permalink( 'fr_FR' ) );
+	}
+
+	public function test_get_permalink_returns_url_when_term_link_succeeds(): void {
+		global $wp_query;
+
+		$wp_query = (object) array(
+			'tax_query' => (object) array(
+				'queries' => array(
+					0 => array( 'taxonomy' => 'category' ),
+				),
+			),
+		);
+
+		$expected = 'http://example.com/category/asia/';
+
+		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
+		Functions\expect( 'get_term_link' )->once()->andReturn( $expected );
+
+		$test = $this->MslsOptionsTaxFactory();
+
+		$this->assertSame( $expected, $test->get_permalink( 'de_DE' ) );
+	}
+
 	public function test_get_base_option() {
 		$this->assertEquals( '', MslsOptionsTax::get_base_option() );
 	}
