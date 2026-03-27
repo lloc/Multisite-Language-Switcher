@@ -32,6 +32,7 @@ function get_the_msls( $attr ): string {
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 function the_msls( array $arr = array() ): void {
 	_deprecated_function( __FUNCTION__, '2.10.1', 'msls_the_switcher' );
+
 	msls_the_switcher( $arr );
 }
 

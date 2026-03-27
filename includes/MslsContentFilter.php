@@ -52,6 +52,7 @@ class MslsContentFilter {
 
 		/* translators: %s: list of languages */
 		$format = __( 'This post is also available in %s.', 'multisite-language-switcher' );
+		$output = '';
 
 		if ( has_filter( 'msls_filter_string' ) ) {
 			/**

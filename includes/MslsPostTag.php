@@ -54,8 +54,9 @@ class MslsPostTag extends MslsMain {
 			 *
 			 * @since 0.9.9
 			 */
-			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
-			foreach ( get_terms( $args ) as $term ) {
+			$args  = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
+			$terms = get_terms( $args );
+			foreach ( is_array( $terms ) ? $terms : array() as $term ) {
 				/**
 				 * Manipulates the term object before using it
 				 *
@@ -187,7 +188,7 @@ class MslsPostTag extends MslsMain {
 
 				if ( $mydata->has_value( $language ) ) {
 					$term = get_term( $mydata->$language, $type );
-					if ( is_object( $term ) ) {
+					if ( $term instanceof \WP_Term ) {
 						$icon->set_href( (int) $mydata->$language );
 						$value = $mydata->$language;
 						$title = $term->name;

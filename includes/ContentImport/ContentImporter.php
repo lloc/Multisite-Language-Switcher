@@ -60,7 +60,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @param ?MslsMain $main
 	 */
 	public function __construct( ?MslsMain $main = null ) {
-		$this->main = ! is_null( $main ) ? $main : MslsMain::create();
+		$this->main = $main ?? MslsMain::create();
 	}
 
 	/**
@@ -175,7 +175,7 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * Parses the source blog and post IDs from the $_POST array validating them.
 	 *
-	 * @return int[]|bool
+	 * @return array{int, int}|false
 	 */
 	public function parse_sources() {
 		if ( ! MslsRequest::has_var( 'msls_import' ) ) {
@@ -202,7 +202,7 @@ class ContentImporter extends MslsRegistryInstance {
 
 		$id = get_the_ID();
 
-		if ( ! empty( $id ) ) {
+		if ( false !== $id && $id > 0 ) {
 			restore_current_blog();
 
 			return $id;
@@ -225,11 +225,11 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @param int                  $blog_id
 	 * @param array<string, mixed> $data
 	 *
-	 * @return bool|int
+	 * @return int
 	 */
 	protected function insert_blog_post( $blog_id, array $data = array() ) {
 		if ( empty( $data ) ) {
-			return false;
+			return 0;
 		}
 
 		switch_to_blog( $blog_id );
@@ -242,7 +242,7 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 		$this->handle( true );
 
-		$this->has_created_post = $post_id > 0 ? $post_id : false;
+		$this->has_created_post = $post_id > 0 ? $post_id : 0;
 
 		restore_current_blog();
 
@@ -312,12 +312,12 @@ class ContentImporter extends MslsRegistryInstance {
 			$importers = Map::instance()->make( $import_coordinates );
 		}
 
-		if ( is_null( $this->get_logger() ) ) {
-			$this->set_logger( new ImportLogger( $import_coordinates ) );
+		if ( is_null( $this->logger ) ) {
+			$this->logger = new ImportLogger( $import_coordinates );
 		}
 
-		if ( is_null( $this->get_relations() ) ) {
-			$this->set_relations( new Relations( $import_coordinates ) );
+		if ( is_null( $this->relations ) ) {
+			$this->relations = new Relations( $import_coordinates );
 		}
 
 		if ( ! empty( $importers ) ) {
@@ -341,8 +341,8 @@ class ContentImporter extends MslsRegistryInstance {
 		 * Fires after the import ran.
 		 *
 		 * @param ImportCoordinates $import_coordinates
-		 * @param ImportLogger $logger
-		 * @param Relations $relations
+		 * @param ?ImportLogger $logger
+		 * @param ?Relations $relations
 		 *
 		 * @since TBD
 		 */
@@ -353,8 +353,8 @@ class ContentImporter extends MslsRegistryInstance {
 		 *
 		 * @param array $post_fields
 		 * @param ImportCoordinates $import_coordinates
-		 * @param ImportLogger $logger
-		 * @param Relations $relations
+		 * @param ?ImportLogger $logger
+		 * @param ?Relations $relations
 		 */
 		return apply_filters(
 			'msls_content_import_data_after_import',
