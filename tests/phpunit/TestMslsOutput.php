@@ -387,6 +387,107 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		$this->assertEquals( array(), ( new MslsOutput( $options, $collection ) )->get( 0 ) );
 	}
 
+	private function stub_options_create(): void {
+		Functions\expect( 'is_admin' )->andReturn( false );
+		Functions\expect( 'is_front_page' )->andReturn( false );
+		Functions\expect( 'is_search' )->andReturn( false );
+		Functions\expect( 'is_404' )->andReturn( false );
+		Functions\expect( 'is_category' )->andReturn( false );
+		Functions\expect( 'is_tag' )->andReturn( false );
+		Functions\expect( 'is_tax' )->andReturn( false );
+		Functions\expect( 'is_date' )->andReturn( false );
+		Functions\expect( 'is_author' )->andReturn( false );
+		Functions\expect( 'is_post_type_archive' )->andReturn( false );
+		Functions\expect( 'get_queried_object_id' )->andReturn( 42 );
+		Functions\expect( 'get_option' )->andReturn( array() );
+	}
+
+	public function test_get_languages_empty(): void {
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->once()->with( false )->andReturn( array() );
+
+		$options = \Mockery::mock( MslsOptions::class );
+
+		$this->assertEquals( array(), ( new MslsOutput( $options, $collection ) )->get_languages() );
+	}
+
+	public function test_get_languages(): void {
+		$blog_de              = \Mockery::mock( MslsBlog::class );
+		$blog_de->userblog_id = 2;
+		$blog_de->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
+		$blog_de->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
+		$blog_de->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
+
+		$blog_en              = \Mockery::mock( MslsBlog::class );
+		$blog_en->userblog_id = 1;
+		$blog_en->shouldReceive( 'get_language' )->andReturn( 'en_US' );
+		$blog_en->shouldReceive( 'get_alpha2' )->andReturn( 'en' );
+		$blog_en->shouldReceive( 'get_description' )->andReturn( 'English' );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_flag_url' )->andReturnUsing(
+			function ( string $language ): string {
+				return "https://example.com/flags/{$language}.png";
+			}
+		);
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->once()->with( false )->andReturn( array( $blog_de, $blog_en ) );
+		$collection->shouldReceive( 'is_current_blog' )->with( $blog_de )->andReturn( false );
+		$collection->shouldReceive( 'is_current_blog' )->with( $blog_en )->andReturn( true );
+
+		$this->stub_options_create();
+		Functions\expect( 'switch_to_blog' )->once()->with( 2 );
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'home_url' )->andReturn( 'https://example.com/' );
+		Functions\expect( 'get_permalink' )->andReturn( 'https://example.com/post' );
+
+		$result = ( new MslsOutput( $options, $collection ) )->get_languages();
+
+		$this->assertCount( 2, $result );
+
+		$this->assertEquals( 'de_DE', $result[0]['locale'] );
+		$this->assertEquals( 'de', $result[0]['alpha2'] );
+		$this->assertEquals( 'Deutsch', $result[0]['label'] );
+		$this->assertNotEmpty( $result[0]['url'] );
+		$this->assertEquals( 'https://example.com/flags/de_DE.png', $result[0]['flag_url'] );
+		$this->assertFalse( $result[0]['current'] );
+
+		$this->assertEquals( 'en_US', $result[1]['locale'] );
+		$this->assertEquals( 'en', $result[1]['alpha2'] );
+		$this->assertEquals( 'English', $result[1]['label'] );
+		$this->assertTrue( $result[1]['current'] );
+	}
+
+	public function test_get_languages_skips_empty_url(): void {
+		$blog              = \Mockery::mock( MslsBlog::class );
+		$blog->userblog_id = 2;
+		$blog->shouldReceive( 'get_language' )->andReturn( 'fr_FR' );
+
+		$options = \Mockery::mock( MslsOptions::class );
+		$options->shouldReceive( 'get_flag_url' )->andReturn( '' );
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array( $blog ) );
+		$collection->shouldReceive( 'is_current_blog' )->with( $blog )->andReturn( false );
+
+		$this->stub_options_create();
+		Functions\expect( 'switch_to_blog' )->once()->with( 2 );
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'home_url' )->andReturn( '' );
+
+		$this->assertEmpty( ( new MslsOutput( $options, $collection ) )->get_languages() );
+	}
+
+	public function test_get_languages_filter(): void {
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_filtered' )->once()->with( true )->andReturn( array() );
+
+		$options = \Mockery::mock( MslsOptions::class );
+
+		$this->assertEquals( array(), ( new MslsOutput( $options, $collection ) )->get_languages( true ) );
+	}
+
 	public function test_init(): void {
 		Functions\expect( '_deprecated_function' )->once();
 

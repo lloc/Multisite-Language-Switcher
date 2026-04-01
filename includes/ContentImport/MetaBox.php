@@ -24,7 +24,7 @@ class MetaBox extends MslsRegistryInstance {
 	 */
 	public function render(): void {
 		$post            = get_post();
-		$mydata          = new MslsOptionsPost( $post->ID );
+		$mydata          = new MslsOptionsPost( $post->ID ?? 0 );
 		$languages       = MslsOptionsPost::instance()->get_available_languages();
 		$current         = MslsBlogCollection::get_blog_language( get_current_blog_id() );
 		$languages       = array_diff_key( $languages, array( $current => $current ) );
@@ -139,7 +139,7 @@ class MetaBox extends MslsRegistryInstance {
 			<form action="<?php echo esc_url( add_query_arg( array() ) ); ?>" method="post">
 				<?php wp_nonce_field( MslsPlugin::path(), 'msls_noncename' ); ?>
 				<?php foreach ( $data as $key => $value ) : ?>
-					<input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $value ); ?>">
+					<input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( (string) $value ); ?>">
 				<?php endforeach; ?>
 				<?php foreach ( Map::instance()->factories() as $slug => $factory ) : ?>
 					<?php $details = $factory->details(); ?>
@@ -184,7 +184,7 @@ class MetaBox extends MslsRegistryInstance {
 		</div>
 		<?php
 
-		$html = ob_get_clean();
+		$html = (string) ob_get_clean();
 
 		if ( $output ) {
 			echo wp_kses( $html, Component::get_allowed_html() );

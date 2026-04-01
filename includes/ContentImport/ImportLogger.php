@@ -128,7 +128,7 @@ class ImportLogger {
 				);
 		$data = json_decode( $json, true );
 
-		return $data;
+		return is_array( $data ) ? $data : array();
 	}
 
 	/**
@@ -137,9 +137,7 @@ class ImportLogger {
 	 * @return string[]
 	 */
 	protected function build_path( string $where ): array {
-		$where_path = explode( $this->levels_delimiter, $where );
-
-		return $where_path;
+		return explode( $this->levels_delimiter, $where );
 	}
 
 	/**

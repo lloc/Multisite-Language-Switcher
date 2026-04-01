@@ -24,7 +24,7 @@ class MslsOutput extends MslsMain {
 	const MSLS_GET_TAGS_HOOK = 'msls_output_get_tags';
 
 
-	public static function init(): object {
+	public static function init(): static {
 		_deprecated_function( __METHOD__, '2.9.2', 'MslsOutput::create' );
 
 		return self::create();
@@ -199,6 +199,54 @@ class MslsOutput extends MslsMain {
 		$this->tags = wp_parse_args( $this->get_tags(), $arr );
 
 		return $this;
+	}
+
+	/**
+	 * Gets structured language data for all available translations
+	 *
+	 * @param bool $filter When true, only returns languages with existing translations
+	 *
+	 * @return array<int, array{locale: string, alpha2: string, url: string, label: string, flag_url: string, current: bool}>
+	 */
+	public function get_languages( bool $filter = false ): array {
+		$blogs = $this->collection->get_filtered( $filter );
+
+		if ( ! $blogs ) {
+			return array();
+		}
+
+		$mydata    = MslsOptions::create();
+		$languages = array();
+
+		foreach ( $blogs as $blog ) {
+			$language   = $blog->get_language();
+			$is_current = $this->collection->is_current_blog( $blog );
+
+			if ( $is_current ) {
+				$url = $mydata->get_current_link();
+			} else {
+				switch_to_blog( $blog->userblog_id );
+
+				$url = $mydata->get_permalink( $language );
+
+				restore_current_blog();
+			}
+
+			if ( empty( $url ) ) {
+				continue;
+			}
+
+			$languages[] = array(
+				'locale'   => $language,
+				'alpha2'   => $blog->get_alpha2(),
+				'url'      => $url,
+				'label'    => $blog->get_description(),
+				'flag_url' => $this->options->get_flag_url( $language ),
+				'current'  => $is_current,
+			);
+		}
+
+		return $languages;
 	}
 
 	/**

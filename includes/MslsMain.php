@@ -38,7 +38,7 @@ class MslsMain {
 		$this->collection = $collection;
 	}
 
-	public static function create(): object {
+	public static function create(): static {
 		return new static( msls_options(), msls_blog_collection() );
 	}
 

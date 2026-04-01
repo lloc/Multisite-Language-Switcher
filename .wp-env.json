@@ -1,9 +1,4 @@
 {
-  "phpVersion": "8.3",
-  "multisite": true,
-  "plugins": [
-    "."
-  ],
   "env": {
     "tests": {
       "config": {
@@ -19,5 +14,10 @@
   },
   "mappings": {
     "wp-content/plugins/multisite-language-switcher": "."
-  }
+  },
+  "multisite": true,
+  "phpVersion": "8.3",
+  "plugins": [
+    "."
+  ]
 }

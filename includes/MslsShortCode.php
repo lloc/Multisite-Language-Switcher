@@ -12,17 +12,16 @@ class MslsShortCode {
 	/**
 	 * Renders output using the widget's output
 	 *
-	 * @return string|false
+	 * @return string
 	 */
-	public static function render_widget() {
+	public static function render_widget(): string {
 		if ( msls_options()->is_excluded() ) {
 			return '';
 		}
 
 		ob_start();
 		the_widget( MslsWidget::class );
-		$output = ob_get_clean();
 
-		return $output;
+		return (string) ob_get_clean();
 	}
 }

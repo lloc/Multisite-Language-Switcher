@@ -14,7 +14,7 @@ final class Text extends Component {
 	protected $key;
 
 	/**
-	 * @var string
+	 * @var ?string
 	 */
 	protected $value;
 
@@ -48,7 +48,7 @@ final class Text extends Component {
 		return sprintf(
 			'<input type="text" class="regular-text" id="%1$s" name="msls[%1$s]" value="%2$s" size="%3$d"%4$s/>',
 			esc_attr( $this->key ),
-			esc_attr( $this->value ),
+			esc_attr( (string) $this->value ),
 			$this->size,
 			$this->readonly // phpcs:ignore WordPress.Security.EscapeOutput
 		);

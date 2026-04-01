@@ -1,9 +1,7 @@
 parameters:
-    level: 6
+    level: 8
     paths:
         - MultisiteLanguageSwitcher.php
         - includes
     bootstrapFiles:
         - tests/phpstan/bootstrap.php
-    ignoreErrors:
-        - '/^Class lloc\\Msls\\MslsWidget extends generic class WP_Widget but does not specify its types: T$/'
