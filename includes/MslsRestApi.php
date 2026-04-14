@@ -220,10 +220,11 @@ class MslsRestApi {
 
 			$mapped_terms = array();
 			foreach ( $terms as $term_id ) {
+				/** @var MslsOptionsTax $term_options */
 				$term_options = MslsOptionsTax::create( $term_id );
 
 				if ( $term_options->has_value( $target_lang ) ) {
-					$mapped_terms[] = (int) $term_options->__get( $target_lang );
+					$mapped_terms[] = (int) $term_options->$target_lang;
 				}
 			}
 
