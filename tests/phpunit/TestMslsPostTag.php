@@ -145,6 +145,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 			<strong>Multisite Language Switcher</strong>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="post"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
+			<input type="hidden" name="msls_source_id" id="msls_source_id" value="0"/>
 			</th>
 			</tr><tr class="form-field">
 			<th scope="row">
@@ -193,7 +194,8 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 
 		$output = '<div class="form-field"><h3>Multisite Language Switcher</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="post"/>
-			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/><label for="msls_title_0"><a title="Create a new translation in the de_DE-blog" href="/wp-admin/edit-tags.php"><span class="language-badge de_DE"><span>de</span><span>DE</span></span></a>&nbsp;</label>
+			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
+			<input type="hidden" name="msls_source_id" id="msls_source_id" value="0"/><label for="msls_title_0"><a title="Create a new translation in the de_DE-blog" href="/wp-admin/edit-tags.php"><span class="language-badge de_DE"><span>de</span><span>DE</span></span></a>&nbsp;</label>
 			<input type="hidden" id="msls_id_0" name="msls_input_de_DE" value=""/>
 			<input class="msls_title" id="msls_title_0" name="msls_title_0" type="text" value=""/><label for="msls_title_0"><a title="Create a new translation in the en_US-blog" href="/wp-admin/edit-tags.php"><span class="language-badge en_US"><span>en</span><span>US</span></span></a>&nbsp;</label>
 			<input type="hidden" id="msls_id_0" name="msls_input_en_US" value=""/>
