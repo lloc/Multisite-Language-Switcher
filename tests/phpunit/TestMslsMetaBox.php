@@ -53,25 +53,29 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 	}
 
 	public function test_suggest(): void {
-		$json = '{"some":"JSON"}';
-
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
 		Functions\expect( 'filter_has_var' )->times( 3 )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 17 );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 0 );
 		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'pending', 'draft', 'future' ) );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
 		Functions\expect( 'get_posts' )->once()->andReturn( array( $post ) );
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'wp_reset_postdata' )->once();
+		Functions\expect( 'wp_json_encode' )->once()->andReturnUsing( 'json_encode' );
 
-		Functions\when( 'wp_die' )->justEcho( $json );
+		Functions\expect( 'wp_die' )->once()->andReturnUsing(
+			function ( $output ) {
+				echo $output;
+			}
+		);
 
-		$this->expectOutputString( '{"some":"JSON"}' );
+		$this->expectOutputString( '[{"value":42,"label":"Test"}]' );
 
 		MslsMetaBox::suggest();
 	}
@@ -81,9 +85,9 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		$post->ID = 42;
 
 		Functions\expect( 'filter_has_var' )->times( 3 )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post' );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
 		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 99 );
 		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'pending', 'draft', 'future' ) );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test Post' );
@@ -246,8 +250,8 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 
 	public static function render_input_provider(): array {
 		return array(
-			array( array( 'de_DE' => 42 ), 1, 0, 0, 1, '<ul><li class=""><label for="msls_title_ msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value="42"/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value="Test"/></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>' ),
-			array( array( 'en_US' => 17 ), 0, 1, 1, 0, '<ul><li class=""><label for="msls_title_ msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value=""/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>' ),
+			array( array( 'de_DE' => 42 ), 1, 0, 0, 1, '<ul><li class=""><label for="msls_title_ msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value="42"/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value="Test"/></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
+			array( array( 'en_US' => 17 ), 0, 1, 1, 0, '<ul><li class=""><label for="msls_title_ msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value=""/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
 		);
 	}
 
