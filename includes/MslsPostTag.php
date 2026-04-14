@@ -72,7 +72,26 @@ class MslsPostTag extends MslsMain {
 			restore_current_blog();
 		}
 
-		wp_die( $json->encode() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		/**
+		 * Filters the suggest results before encoding
+		 *
+		 * @param array<int, array{value: int, label: string}> $results
+		 * @param array<string, mixed> $context
+		 *
+		 * @since 2.12.0
+		 */
+		$results = (array) apply_filters(
+			'msls_post_tag_suggest_results',
+			$json->get(),
+			array(
+				'blog_id'   => MslsRequest::get_var( MslsFields::FIELD_BLOG_ID ),
+				'taxonomy'  => MslsRequest::get_var( MslsFields::FIELD_POST_TYPE ),
+				's'         => MslsRequest::get_var( MslsFields::FIELD_S ),
+				'source_id' => MslsRequest::get_var( MslsFields::FIELD_SOURCE_ID ),
+			)
+		);
+
+		wp_die( wp_json_encode( $results ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public static function init(): void {
@@ -102,7 +121,8 @@ class MslsPostTag extends MslsMain {
 
 		$title_format = '<h3>%s</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
-			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>';
+			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
+			<input type="hidden" name="msls_source_id" id="msls_source_id" value="%d"/>';
 
 		$item_format = '<label for="msls_title_%1$d">%2$s</label>
 			<input type="hidden" id="msls_id_%1$d" name="msls_input_%3$s" value="%4$s"/>
@@ -131,6 +151,7 @@ class MslsPostTag extends MslsMain {
 			<strong>%s</strong>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
+			<input type="hidden" name="msls_source_id" id="msls_source_id" value="%d"/>
 			</th>
 			</tr>';
 
@@ -172,7 +193,7 @@ class MslsPostTag extends MslsMain {
 			$allowed_html = Component::get_allowed_html();
 
 			echo wp_kses(
-				sprintf( $title_format, esc_html( $this->get_select_title() ), esc_attr( $type ) ),
+				sprintf( $title_format, esc_html( $this->get_select_title() ), esc_attr( $type ), $term_id ),
 				$allowed_html
 			);
 
