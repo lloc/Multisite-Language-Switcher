@@ -215,12 +215,18 @@ final class MslsMetaBox extends MslsMain {
 					);
 				}
 
+				$create_new = '';
+				if ( ! $mydata->has_value( $language ) && 'auto-draft' !== $post->post_status ) {
+					$create_new = $this->get_create_new_link( $icon, $language, $blog->userblog_id );
+				}
+
 				$lis .= sprintf(
-					'<li><label for="msls_input_%1$s msls-icon-wrapper %4$s">%2$s</label>%3$s</li>',
+					'<li><label for="msls_input_%1$s msls-icon-wrapper %4$s">%2$s</label>%3$s%5$s</li>',
 					esc_attr( $language ),
 					$icon, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					$selects, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					esc_attr( $icon_type )
+					esc_attr( $icon_type ),
+					$create_new // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
 
 				restore_current_blog();
@@ -317,14 +323,25 @@ final class MslsMetaBox extends MslsMain {
 					$title = get_the_title( $value );
 				}
 
+				$create_new  = '';
+				$extra_attrs = '';
+				if ( ! $my_data->has_value( $language ) && 'auto-draft' !== $post->post_status ) {
+					$create_new  = $this->get_create_new_link( $icon, $language, $blog->userblog_id );
+					$extra_attrs = ' style="display:none"';
+				} elseif ( $my_data->has_value( $language ) ) {
+					$extra_attrs = '';
+				}
+
 				$items .= sprintf(
-					'<li class=""><label for="msls_title_%1$s msls-icon-wrapper %6$s">%2$s</label><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/></li>',
+					'<li class=""><label for="msls_title_%1$s msls-icon-wrapper %6$s">%2$s</label><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"%7$s/>%8$s</li>',
 					$blog->userblog_id,
 					$icon,
 					$language,
 					$value,
 					$title,
-					esc_attr( $icon_type )
+					esc_attr( $icon_type ),
+					$extra_attrs,
+					$create_new
 				);
 
 				restore_current_blog();
@@ -350,6 +367,43 @@ final class MslsMetaBox extends MslsMain {
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo ( new Wrapper( 'p', $message ) )->render();
 		}
+	}
+
+	/**
+	 * @param MslsAdminIcon $icon
+	 * @param string        $language
+	 * @param int           $target_blog_id
+	 *
+	 * @return string
+	 */
+	private function get_create_new_link( MslsAdminIcon $icon, string $language, int $target_blog_id ): string {
+		global $post;
+
+		$title = sprintf(
+			/* translators: %s: language code */
+			__( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
+			$language
+		);
+
+		if ( $this->options->activate_quick_create ) {
+			return sprintf(
+				'<a class="msls-create-new msls-quick-create" href="#" title="%1$s" data-target-blog-id="%2$d" data-source-post-id="%3$d" data-source-blog-id="%4$d"><span class="dashicons dashicons-plus"></span></a>',
+				esc_attr( $title ),
+				$target_blog_id,
+				$post->ID,
+				get_current_blog_id()
+			);
+		}
+
+		$href = $icon->set_id( $post->ID )
+			->set_origin_language( $this->collection->get_current_blog()->get_language() )
+			->get_edit_new();
+
+		return sprintf(
+			'<a class="msls-create-new" href="%1$s" target="_blank" title="%2$s"><span class="dashicons dashicons-plus"></span></a>',
+			esc_url( $href ),
+			esc_attr( $title )
+		);
 	}
 
 	/**

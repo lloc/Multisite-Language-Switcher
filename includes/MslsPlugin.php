@@ -125,6 +125,10 @@ class MslsPlugin {
 		if ( $this->options->activate_autocomplete ) {
 			wp_enqueue_script( 'msls-autocomplete', self::plugins_url( "$folder/msls.js" ), array( 'jquery-ui-autocomplete' ), $ver, array( 'in_footer' => true ) );
 		}
+
+		if ( $this->options->activate_quick_create ) {
+			wp_enqueue_script( 'msls-quick-create', self::plugins_url( "$folder/msls-quick-create.js" ), array( 'jquery', 'wp-api-fetch' ), $ver, array( 'in_footer' => true ) );
+		}
 	}
 
 	/**
