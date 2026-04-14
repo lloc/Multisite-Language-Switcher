@@ -4,8 +4,10 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use Brain\Monkey\Actions;
+use Brain\Monkey\Filters;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsFields;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOptionsTax;
 use lloc\Msls\MslsPostTag;
@@ -79,6 +81,41 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 		Functions\expect( 'get_terms' )->atLeast()->once()->andReturn( array( $term ) );
 
 		self::expectOutputString( '' );
+
+		MslsPostTag::suggest();
+	}
+
+	public function test_suggest_applies_results_filter(): void {
+		$term          = \Mockery::mock( \WP_Term::class );
+		$term->term_id = 42;
+		$term->name    = 'Test Term';
+
+		Functions\expect( 'filter_has_var' )->atLeast()->once()->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post_tag' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 99 );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'get_terms' )->once()->andReturn( array( $term ) );
+		Functions\expect( 'wp_json_encode' )->once()->andReturnUsing( 'json_encode' );
+		Functions\expect( 'wp_die' )->once()->andReturnUsing(
+			function ( $output ) {
+				echo $output;
+			}
+		);
+
+		Filters\expectApplied( 'msls_post_tag_suggest_results' )->once()->with(
+			array(
+				array(
+					'value' => 42,
+					'label' => 'Test Term',
+				),
+			),
+			\Mockery::type( 'array' )
+		);
+
+		$this->expectOutputString( '[{"value":42,"label":"Test Term"}]' );
 
 		MslsPostTag::suggest();
 	}

@@ -4,6 +4,7 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use Brain\Monkey\Actions;
+use Brain\Monkey\Filters;
 
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
@@ -71,6 +72,43 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\when( 'wp_die' )->justEcho( $json );
 
 		$this->expectOutputString( '{"some":"JSON"}' );
+
+		MslsMetaBox::suggest();
+	}
+
+	public function test_suggest_applies_results_filter(): void {
+		$post     = \Mockery::mock( 'WP_Post' );
+		$post->ID = 42;
+
+		Functions\expect( 'filter_has_var' )->times( 3 )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 99 );
+		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'pending', 'draft', 'future' ) );
+		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test Post' );
+		Functions\expect( 'get_posts' )->once()->andReturn( array( $post ) );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'wp_reset_postdata' )->once();
+		Functions\expect( 'wp_json_encode' )->once()->andReturnUsing( 'json_encode' );
+		Functions\expect( 'wp_die' )->once()->andReturnUsing(
+			function ( $output ) {
+				echo $output;
+			}
+		);
+
+		Filters\expectApplied( 'msls_meta_box_suggest_results' )->once()->with(
+			array(
+				array(
+					'value' => 42,
+					'label' => 'Test Post',
+				),
+			),
+			\Mockery::type( 'array' )
+		);
+
+		$this->expectOutputString( '[{"value":42,"label":"Test Post"}]' );
 
 		MslsMetaBox::suggest();
 	}
