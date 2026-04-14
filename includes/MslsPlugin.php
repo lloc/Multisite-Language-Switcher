@@ -44,6 +44,7 @@ class MslsPlugin {
 			add_action( 'admin_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 			add_action( 'wp_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 
+			add_action( 'rest_api_init', array( MslsRestApi::class, 'init' ) );
 			add_action( 'init', array( MslsAdminBar::class, 'init' ) );
 			add_action( 'init', array( MslsBlock::class, 'init' ) );
 			add_action( 'init', array( MslsShortCode::class, 'init' ) );

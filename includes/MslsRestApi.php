@@ -1,0 +1,320 @@
+<?php declare( strict_types=1 );
+
+namespace lloc\Msls;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * REST API endpoint for quick-creating translations.
+ *
+ * @package Msls
+ */
+class MslsRestApi {
+
+	const NAMESPACE = 'msls/v1';
+
+	const ROUTE = '/create-translation';
+
+	/**
+	 * Registers the REST API route.
+	 */
+	public static function init(): void {
+		register_rest_route(
+			self::NAMESPACE,
+			self::ROUTE,
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( new self(), 'create_translation' ),
+				'permission_callback' => array( new self(), 'check_permission' ),
+				'args'                => self::get_route_args(),
+			)
+		);
+	}
+
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
+	private static function get_route_args(): array {
+		return array(
+			'source_post_id' => array(
+				'required'          => true,
+				'type'              => 'integer',
+				'sanitize_callback' => 'absint',
+			),
+			'source_blog_id' => array(
+				'required'          => true,
+				'type'              => 'integer',
+				'sanitize_callback' => 'absint',
+			),
+			'target_blog_id' => array(
+				'required'          => true,
+				'type'              => 'integer',
+				'sanitize_callback' => 'absint',
+			),
+		);
+	}
+
+	/**
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return bool
+	 */
+	public function check_permission( \WP_REST_Request $request ): bool {
+		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
+
+		switch_to_blog( $target_blog_id );
+		$can_edit = current_user_can( 'edit_posts' );
+		restore_current_blog();
+
+		return $can_edit;
+	}
+
+	/**
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function create_translation( \WP_REST_Request $request ) {
+		$source_post_id = (int) $request->get_param( 'source_post_id' );
+		$source_blog_id = (int) $request->get_param( 'source_blog_id' );
+		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
+
+		switch_to_blog( $source_blog_id );
+		$source_post = get_post( $source_post_id );
+		restore_current_blog();
+
+		if ( ! $source_post instanceof \WP_Post ) {
+			return new \WP_Error(
+				'msls_source_not_found',
+				__( 'Source post not found.', 'multisite-language-switcher' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		$source_lang = MslsBlogCollection::get_blog_language( $source_blog_id );
+		$target_lang = MslsBlogCollection::get_blog_language( $target_blog_id );
+
+		$post_data = $this->prepare_post_data( $source_post, $source_lang );
+		$post_data = $this->prepare_taxonomies( $source_post, $source_blog_id, $target_blog_id, $target_lang, $post_data );
+
+		/**
+		 * Filters the post data before creating the translation.
+		 *
+		 * @param array    $post_data      The post data for wp_insert_post.
+		 * @param \WP_Post $source_post    The source post object.
+		 * @param int      $source_blog_id The source blog ID.
+		 * @param int      $target_blog_id The target blog ID.
+		 *
+		 * @since TBD
+		 */
+		$post_data = apply_filters( 'msls_quick_create_post_data', $post_data, $source_post, $source_blog_id, $target_blog_id );
+
+		switch_to_blog( $target_blog_id );
+		$new_post_id = wp_insert_post( $post_data, true );
+
+		if ( is_wp_error( $new_post_id ) ) {
+			restore_current_blog();
+
+			return $new_post_id;
+		}
+
+		$this->assign_taxonomies( $post_data, $new_post_id );
+
+		/**
+		 * Fires after the translation post is created on the target blog.
+		 *
+		 * @param int      $new_post_id    The new post ID.
+		 * @param \WP_Post $source_post    The source post object.
+		 * @param int      $source_blog_id The source blog ID.
+		 * @param int      $target_blog_id The target blog ID.
+		 *
+		 * @since TBD
+		 */
+		do_action( 'msls_quick_create_after_insert', $new_post_id, $source_post, $source_blog_id, $target_blog_id );
+
+		$edit_url = get_edit_post_link( $new_post_id, 'raw' );
+		restore_current_blog();
+
+		$this->establish_link( $source_post_id, $source_blog_id, $new_post_id, $target_blog_id );
+
+		$response_data = array(
+			'post_id'  => $new_post_id,
+			'edit_url' => $edit_url,
+		);
+
+		/**
+		 * Filters the REST response data after creating a translation.
+		 *
+		 * @param array    $response_data  The response data.
+		 * @param int      $new_post_id    The new post ID.
+		 * @param \WP_Post $source_post    The source post object.
+		 * @param int      $source_blog_id The source blog ID.
+		 * @param int      $target_blog_id The target blog ID.
+		 *
+		 * @since TBD
+		 */
+		$response_data = apply_filters(
+			'msls_quick_create_response',
+			$response_data,
+			$new_post_id,
+			$source_post,
+			$source_blog_id,
+			$target_blog_id
+		);
+
+		return new \WP_REST_Response( $response_data, 201 );
+	}
+
+	/**
+	 * @param \WP_Post $source_post
+	 * @param string   $source_lang
+	 *
+	 * @return array<string, mixed>
+	 */
+	protected function prepare_post_data( \WP_Post $source_post, string $source_lang ): array {
+		$lang_code = substr( $source_lang, 0, 2 );
+
+		/* translators: 1: language code, 2: original post title */
+		$title = sprintf( __( 'From %1$s: %2$s', 'multisite-language-switcher' ), $lang_code, $source_post->post_title );
+
+		/* translators: 1: language code, 2: original post content */
+		$content = sprintf( __( 'From %1$s: %2$s', 'multisite-language-switcher' ), $lang_code, $source_post->post_content );
+
+		return array(
+			'post_type'    => $source_post->post_type,
+			'post_status'  => 'draft',
+			'post_title'   => $title,
+			'post_content' => $content,
+		);
+	}
+
+	/**
+	 * @param \WP_Post             $source_post
+	 * @param int                  $source_blog_id
+	 * @param int                  $target_blog_id
+	 * @param string               $target_lang
+	 * @param array<string, mixed> $post_data
+	 *
+	 * @return array<string, mixed>
+	 */
+	protected function prepare_taxonomies(
+		\WP_Post $source_post,
+		int $source_blog_id,
+		int $target_blog_id,
+		string $target_lang,
+		array $post_data
+	): array {
+		switch_to_blog( $source_blog_id );
+
+		$taxonomies = get_object_taxonomies( $source_post->post_type );
+		$tax_input  = array();
+
+		foreach ( $taxonomies as $taxonomy ) {
+			$terms = wp_get_object_terms( $source_post->ID, $taxonomy, array( 'fields' => 'ids' ) );
+
+			if ( is_wp_error( $terms ) || empty( $terms ) ) {
+				continue;
+			}
+
+			$mapped_terms = array();
+			foreach ( $terms as $term_id ) {
+				$term_options = MslsOptionsTax::create( $term_id );
+
+				if ( $term_options->has_value( $target_lang ) ) {
+					$mapped_terms[] = (int) $term_options->__get( $target_lang );
+				}
+			}
+
+			if ( ! empty( $mapped_terms ) ) {
+				$tax_input[ $taxonomy ] = $mapped_terms;
+			}
+		}
+
+		restore_current_blog();
+
+		$post_data['_msls_tax_input'] = $tax_input;
+
+		/**
+		 * Filters the mapped taxonomy terms before assigning them.
+		 *
+		 * @param array<string, int[]> $tax_input       Taxonomy => term IDs mapping.
+		 * @param \WP_Post             $source_post     The source post object.
+		 * @param int                  $source_blog_id  The source blog ID.
+		 * @param int                  $target_blog_id  The target blog ID.
+		 *
+		 * @since TBD
+		 */
+		$post_data['_msls_tax_input'] = apply_filters(
+			'msls_quick_create_tax_input',
+			$post_data['_msls_tax_input'],
+			$source_post,
+			$source_blog_id,
+			$target_blog_id
+		);
+
+		return $post_data;
+	}
+
+	/**
+	 * @param array<string, mixed> $post_data
+	 * @param int                  $new_post_id
+	 */
+	protected function assign_taxonomies( array $post_data, int $new_post_id ): void {
+		if ( empty( $post_data['_msls_tax_input'] ) ) {
+			return;
+		}
+
+		foreach ( $post_data['_msls_tax_input'] as $taxonomy => $term_ids ) {
+			wp_set_object_terms( $new_post_id, $term_ids, $taxonomy );
+		}
+	}
+
+	/**
+	 * @param int $source_post_id
+	 * @param int $source_blog_id
+	 * @param int $new_post_id
+	 * @param int $target_blog_id
+	 */
+	protected function establish_link(
+		int $source_post_id,
+		int $source_blog_id,
+		int $new_post_id,
+		int $target_blog_id
+	): void {
+		$collection  = msls_blog_collection();
+		$source_lang = MslsBlogCollection::get_blog_language( $source_blog_id );
+		$target_lang = MslsBlogCollection::get_blog_language( $target_blog_id );
+
+		// Read existing links from the source post
+		switch_to_blog( $source_blog_id );
+		$source_options = new MslsOptionsPost( $source_post_id );
+		$existing_links = $source_options->get_arr();
+		restore_current_blog();
+
+		// Build a complete link map: all existing links + source + target
+		$link_map                 = $existing_links;
+		$link_map[ $source_lang ] = $source_post_id;
+		$link_map[ $target_lang ] = $new_post_id;
+
+		// Update every blog in the link map
+		foreach ( $link_map as $lang => $post_id ) {
+			$blog_id = $collection->get_blog_id( $lang );
+
+			if ( null === $blog_id ) {
+				continue;
+			}
+
+			switch_to_blog( $blog_id );
+
+			$options   = new MslsOptionsPost( $post_id );
+			$save_data = $link_map;
+			unset( $save_data[ $lang ] );
+
+			$options->save( $save_data );
+
+			restore_current_blog();
+		}
+	}
+}
