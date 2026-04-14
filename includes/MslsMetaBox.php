@@ -215,9 +215,12 @@ final class MslsMetaBox extends MslsMain {
 					);
 				}
 
-				$create_new = '';
-				if ( ! $mydata->has_value( $language ) && 'auto-draft' !== $post->post_status ) {
-					$create_new = $this->get_create_new_link( $icon, $language, $blog->userblog_id );
+				$quick_create = '';
+				if ( $this->options->activate_quick_create
+					&& ! $mydata->has_value( $language )
+					&& 'auto-draft' !== $post->post_status
+				) {
+					$quick_create = $this->get_quick_create_link( $language, $blog->userblog_id );
 				}
 
 				$lis .= sprintf(
@@ -226,7 +229,7 @@ final class MslsMetaBox extends MslsMain {
 					$icon, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					$selects, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					esc_attr( $icon_type ),
-					$create_new // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$quick_create // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
 
 				restore_current_blog();
@@ -323,25 +326,23 @@ final class MslsMetaBox extends MslsMain {
 					$title = get_the_title( $value );
 				}
 
-				$create_new  = '';
-				$extra_attrs = '';
-				if ( ! $my_data->has_value( $language ) && 'auto-draft' !== $post->post_status ) {
-					$create_new  = $this->get_create_new_link( $icon, $language, $blog->userblog_id );
-					$extra_attrs = ' style="display:none"';
-				} elseif ( $my_data->has_value( $language ) ) {
-					$extra_attrs = '';
+				$quick_create = '';
+				if ( $this->options->activate_quick_create
+					&& ! $my_data->has_value( $language )
+					&& 'auto-draft' !== $post->post_status
+				) {
+					$quick_create = $this->get_quick_create_link( $language, $blog->userblog_id );
 				}
 
 				$items .= sprintf(
-					'<li class=""><label for="msls_title_%1$s msls-icon-wrapper %6$s">%2$s</label><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"%7$s/>%8$s</li>',
+					'<li class=""><label for="msls_title_%1$s msls-icon-wrapper %6$s">%2$s</label><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>%7$s</li>',
 					$blog->userblog_id,
 					$icon,
 					$language,
 					$value,
 					$title,
 					esc_attr( $icon_type ),
-					$extra_attrs,
-					$create_new
+					$quick_create
 				);
 
 				restore_current_blog();
@@ -370,13 +371,12 @@ final class MslsMetaBox extends MslsMain {
 	}
 
 	/**
-	 * @param MslsAdminIcon $icon
-	 * @param string        $language
-	 * @param int           $target_blog_id
+	 * @param string $language
+	 * @param int    $target_blog_id
 	 *
 	 * @return string
 	 */
-	private function get_create_new_link( MslsAdminIcon $icon, string $language, int $target_blog_id ): string {
+	private function get_quick_create_link( string $language, int $target_blog_id ): string {
 		global $post;
 
 		$title = sprintf(
@@ -385,24 +385,12 @@ final class MslsMetaBox extends MslsMain {
 			$language
 		);
 
-		if ( $this->options->activate_quick_create ) {
-			return sprintf(
-				'<a class="msls-create-new msls-quick-create" href="#" title="%1$s" data-target-blog-id="%2$d" data-source-post-id="%3$d" data-source-blog-id="%4$d"><span class="dashicons dashicons-plus"></span></a>',
-				esc_attr( $title ),
-				$target_blog_id,
-				$post->ID,
-				get_current_blog_id()
-			);
-		}
-
-		$href = $icon->set_id( $post->ID )
-			->set_origin_language( $this->collection->get_current_blog()->get_language() )
-			->get_edit_new();
-
 		return sprintf(
-			'<a class="msls-create-new" href="%1$s" target="_blank" title="%2$s"><span class="dashicons dashicons-plus"></span></a>',
-			esc_url( $href ),
-			esc_attr( $title )
+			'<a class="msls-quick-create" href="#" title="%1$s" data-target-blog-id="%2$d" data-source-post-id="%3$d" data-source-blog-id="%4$d"><span class="dashicons dashicons-plus"></span></a>',
+			esc_attr( $title ),
+			$target_blog_id,
+			$post->ID,
+			get_current_blog_id()
 		);
 	}
 

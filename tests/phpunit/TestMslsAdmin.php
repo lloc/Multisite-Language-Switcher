@@ -333,9 +333,9 @@ final class TestMslsAdmin extends MslsUnitTestCase {
 	function test_advanced_section(): void {
 		$obj = $this->MslsAdminFactory();
 
-		Functions\expect( 'add_settings_field' )->times( 5 )->andReturnFirstArg();
+		Functions\expect( 'add_settings_field' )->times( 6 )->andReturnFirstArg();
 
-		$this->assertEquals( 5, $obj->advanced_section() );
+		$this->assertEquals( 6, $obj->advanced_section() );
 	}
 
 	function test_rewrites_section(): void {

@@ -39,6 +39,22 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		$test->custom_enqueue();
 	}
 
+	function test_admin_menu_with_quick_create(): void {
+		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
+		Functions\expect( 'wp_enqueue_style' )->twice();
+		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://msls.co/wp-content/plugins' );
+		Functions\expect( 'wp_enqueue_script' )->once();
+
+		$options = \Mockery::mock( MslsOptions::class );
+
+		$options->activate_quick_create = true;
+
+		$test = new MslsPlugin( $options );
+
+		$this->expectNotToPerformAssertions();
+		$test->custom_enqueue();
+	}
+
 	function test_admin_menu_admin_bar_not_showing(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnFalse();
 
