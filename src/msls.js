@@ -19,7 +19,8 @@ jQuery( document ).ready(
 										post_type: $( '#msls_post_type' ).val(),
 										blog_id: blog_id,
 										s: request.term,
-										action: $( '#msls_action' ).val()
+										action: $( '#msls_action' ).val(),
+									source_id: $( '#msls_source_id' ).val() || 0
 									},
 									dataType: 'JSON',
 									type: 'POST',
