@@ -110,6 +110,14 @@ class ContentImporter extends MslsRegistryInstance {
 			return $data;
 		}
 
+		switch_to_blog( $source_blog_id );
+		$can_read = current_user_can( 'read_post', $source_post_id );
+		restore_current_blog();
+
+		if ( ! $can_read ) {
+			return $data;
+		}
+
 		$source_lang  = MslsBlogCollection::get_blog_language( $source_blog_id );
 		$dest_blog_id = get_current_blog_id();
 		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
