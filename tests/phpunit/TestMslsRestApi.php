@@ -3,10 +3,7 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptionsPost;
-use lloc\Msls\MslsOptionsTax;
 use lloc\Msls\MslsRestApi;
 
 final class TestMslsRestApi extends MslsUnitTestCase {
@@ -138,5 +135,34 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		$data = $result->get_data();
 		$this->assertEquals( 42, $data['post_id'] );
 		$this->assertEquals( 'https://example.tld/wp-admin/post.php?post=42&action=edit', $data['edit_url'] );
+	}
+
+	public function test_prefix_source_language(): void {
+		Functions\expect( 'get_blog_option' )->once()->andReturn( 'de_DE' );
+
+		$source_post               = \Mockery::mock( \WP_Post::class );
+		$source_post->post_title   = 'Hallo Welt';
+		$source_post->post_content = 'Inhalt';
+
+		$post_data = array(
+			'post_title'   => 'Hallo Welt',
+			'post_content' => 'Inhalt',
+		);
+
+		$result = MslsRestApi::prefix_source_language( $post_data, $source_post, 1, 2 );
+
+		$this->assertEquals( 'From de: Hallo Welt', $result['post_title'] );
+		$this->assertEquals( 'From de: Inhalt', $result['post_content'] );
+	}
+
+	public function test_prefix_source_language_is_removable(): void {
+		$this->assertTrue(
+			method_exists( MslsRestApi::class, 'prefix_source_language' ),
+			'prefix_source_language must be a public static method for use with remove_filter'
+		);
+
+		$reflection = new \ReflectionMethod( MslsRestApi::class, 'prefix_source_language' );
+		$this->assertTrue( $reflection->isPublic() );
+		$this->assertTrue( $reflection->isStatic() );
 	}
 }

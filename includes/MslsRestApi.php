@@ -31,6 +31,8 @@ class MslsRestApi {
 				'args'                => self::get_route_args(),
 			)
 		);
+
+		add_filter( 'msls_quick_create_post_data', array( self::class, 'prefix_source_language' ), 10, 4 );
 	}
 
 	/**
@@ -103,10 +105,9 @@ class MslsRestApi {
 			);
 		}
 
-		$source_lang = MslsBlogCollection::get_blog_language( $source_blog_id );
 		$target_lang = MslsBlogCollection::get_blog_language( $target_blog_id );
 
-		$post_data = $this->prepare_post_data( $source_post, $source_lang );
+		$post_data = $this->prepare_post_data( $source_post );
 		$post_data = $this->prepare_taxonomies( $source_post, $source_blog_id, $target_blog_id, $target_lang, $post_data );
 
 		/**
@@ -190,25 +191,49 @@ class MslsRestApi {
 
 	/**
 	 * @param \WP_Post $source_post
-	 * @param string   $source_lang
 	 *
 	 * @return array<string, mixed>
 	 */
-	protected function prepare_post_data( \WP_Post $source_post, string $source_lang ): array {
-		$lang_code = substr( $source_lang, 0, 2 );
-
-		/* translators: 1: language code, 2: original post title */
-		$title = sprintf( __( 'From %1$s: %2$s', 'multisite-language-switcher' ), $lang_code, $source_post->post_title );
-
-		/* translators: 1: language code, 2: original post content */
-		$content = sprintf( __( 'From %1$s: %2$s', 'multisite-language-switcher' ), $lang_code, $source_post->post_content );
-
+	protected function prepare_post_data( \WP_Post $source_post ): array {
 		return array(
 			'post_type'    => $source_post->post_type,
 			'post_status'  => 'draft',
-			'post_title'   => $title,
-			'post_content' => $content,
+			'post_title'   => $source_post->post_title,
+			'post_content' => $source_post->post_content,
 		);
+	}
+
+	/**
+	 * Prefixes post title and content with the source language code.
+	 *
+	 * Registered as a filter callback on msls_quick_create_post_data.
+	 * Can be removed via remove_filter() to disable the prefix.
+	 *
+	 * @param array<string, mixed> $post_data
+	 * @param \WP_Post             $source_post
+	 * @param int                  $source_blog_id
+	 * @param int                  $target_blog_id
+	 *
+	 * @return array<string, mixed>
+	 */
+	public static function prefix_source_language( array $post_data, \WP_Post $source_post, int $source_blog_id, int $target_blog_id ): array {
+		$lang_code = substr( MslsBlogCollection::get_blog_language( $source_blog_id ), 0, 2 );
+
+		/* translators: 1: language code, 2: original post title */
+		$post_data['post_title'] = sprintf(
+			__( 'From %1$s: %2$s', 'multisite-language-switcher' ),
+			$lang_code,
+			$post_data['post_title']
+		);
+
+		/* translators: 1: language code, 2: original post content */
+		$post_data['post_content'] = sprintf(
+			__( 'From %1$s: %2$s', 'multisite-language-switcher' ),
+			$lang_code,
+			$post_data['post_content']
+		);
+
+		return $post_data;
 	}
 
 	/**
