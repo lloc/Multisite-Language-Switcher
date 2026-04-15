@@ -219,15 +219,15 @@ class MslsRestApi {
 	public static function prefix_source_language( array $post_data, \WP_Post $source_post, int $source_blog_id, int $target_blog_id ): array {
 		$lang_code = substr( MslsBlogCollection::get_blog_language( $source_blog_id ), 0, 2 );
 
-		/* translators: 1: language code, 2: original post title */
 		$post_data['post_title'] = sprintf(
+			/* translators: 1: language code, 2: original post title */
 			__( 'From %1$s: %2$s', 'multisite-language-switcher' ),
 			$lang_code,
 			$post_data['post_title']
 		);
 
-		/* translators: 1: language code, 2: original post content */
 		$post_data['post_content'] = sprintf(
+			/* translators: 1: language code, 2: original post content */
 			__( 'From %1$s: %2$s', 'multisite-language-switcher' ),
 			$lang_code,
 			$post_data['post_content']
