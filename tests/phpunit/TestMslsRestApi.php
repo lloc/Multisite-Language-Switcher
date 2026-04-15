@@ -152,7 +152,7 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		$result = MslsRestApi::prefix_source_language( $post_data, $source_post, 1, 2 );
 
 		$this->assertEquals( 'From de: Hallo Welt', $result['post_title'] );
-		$this->assertEquals( 'From de: Inhalt', $result['post_content'] );
+		$this->assertEquals( 'Inhalt', $result['post_content'] );
 	}
 
 	public function test_prefix_source_language_is_removable(): void {

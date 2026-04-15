@@ -226,13 +226,6 @@ class MslsRestApi {
 			$post_data['post_title']
 		);
 
-		$post_data['post_content'] = sprintf(
-			/* translators: 1: language code, 2: original post content */
-			__( 'From %1$s: %2$s', 'multisite-language-switcher' ),
-			$lang_code,
-			$post_data['post_content']
-		);
-
 		return $post_data;
 	}
 
