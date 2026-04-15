@@ -15,6 +15,7 @@ class MslsFields {
 	const FIELD_MSLS_LANG      = 'msls_lang';
 	const FIELD_MSLS_IMPORT    = 'msls_import';
 	const FIELD_POST           = 'post';
+	const FIELD_SOURCE_ID      = 'source_id';
 
 	const CONFIG = array(
 		self::FIELD_BLOG_ID        => array(
@@ -59,6 +60,10 @@ class MslsFields {
 		),
 		self::FIELD_POST           => array(
 			INPUT_GET,
+			FILTER_SANITIZE_NUMBER_INT,
+		),
+		self::FIELD_SOURCE_ID      => array(
+			INPUT_POST,
 			FILTER_SANITIZE_NUMBER_INT,
 		),
 	);
