@@ -245,7 +245,7 @@ class MslsAdminIcon {
 		$title  = sprintf( $format, $this->language );
 
 		return sprintf(
-			'<a class="msls-quick-create" href="#" title="%1$s" data-target-blog-id="%2$d" data-source-post-id="%3$d" data-source-blog-id="%4$d">%5$s</a>&nbsp;',
+			'<button type="button" class="msls-quick-create" title="%1$s" aria-label="%1$s" data-target-blog-id="%2$d" data-source-post-id="%3$d" data-source-blog-id="%4$d">%5$s</button>&nbsp;',
 			esc_attr( $title ),
 			$target_blog_id,
 			$this->id,

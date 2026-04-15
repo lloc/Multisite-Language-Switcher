@@ -3,35 +3,36 @@ jQuery( document ).ready(
 		$( document ).on(
 			'click',
 			'.msls-quick-create',
-			function ( e ) {
-				e.preventDefault();
+			function () {
+				var $button = $( this );
 
-				var $link = $( this );
-
-				if ( $link.hasClass( 'msls-loading' ) ) {
+				if ( $button.hasClass( 'msls-loading' ) ) {
 					return;
 				}
 
-				$link.addClass( 'msls-loading' );
-				$link.find( '.dashicons' ).removeClass( 'dashicons-plus' ).addClass( 'dashicons-update' );
+				$button.addClass( 'msls-loading' );
+				$button.find( '.dashicons' ).removeClass( 'dashicons-plus' ).addClass( 'dashicons-update' );
 
 				wp.apiFetch(
 					{
 						path: '/msls/v1/create-translation',
 						method: 'POST',
 						data: {
-							source_post_id: parseInt( $link.data( 'source-post-id' ), 10 ),
-							source_blog_id: parseInt( $link.data( 'source-blog-id' ), 10 ),
-							target_blog_id: parseInt( $link.data( 'target-blog-id' ), 10 )
+							source_post_id: parseInt( $button.data( 'source-post-id' ), 10 ),
+							source_blog_id: parseInt( $button.data( 'source-blog-id' ), 10 ),
+							target_blog_id: parseInt( $button.data( 'target-blog-id' ), 10 )
 						}
 					}
 				).then(
 					function ( response ) {
-						$link.removeClass( 'msls-quick-create msls-loading' );
-						$link.removeAttr( 'data-target-blog-id data-source-post-id data-source-blog-id' );
-						$link.attr( 'href', response.edit_url );
-						$link.attr( 'title', $link.attr( 'title' ).replace( /Create/, 'Edit' ) );
+						var $link = $( '<a>' )
+							.attr( 'href', response.edit_url )
+							.attr( 'title', $button.attr( 'title' ).replace( /Create/, 'Edit' ) )
+							.html( $button.html() );
+
 						$link.find( '.dashicons' ).removeClass( 'dashicons-update dashicons-plus' ).addClass( 'dashicons-edit' );
+
+						$button.replaceWith( $link );
 
 						var $container = $link.closest( 'li' );
 						if ( ! $container.length ) {
@@ -52,8 +53,8 @@ jQuery( document ).ready(
 					}
 				).catch(
 					function () {
-						$link.removeClass( 'msls-loading' );
-						$link.find( '.dashicons' ).removeClass( 'dashicons-update' ).addClass( 'dashicons-plus' );
+						$button.removeClass( 'msls-loading' );
+						$button.find( '.dashicons' ).removeClass( 'dashicons-update' ).addClass( 'dashicons-plus' );
 					}
 				);
 			}

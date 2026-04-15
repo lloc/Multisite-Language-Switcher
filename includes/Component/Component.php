@@ -12,11 +12,11 @@ abstract class Component {
 	const INPUT_PREFIX = 'msls_input_';
 
 	const ALLOWED_HTML = array(
-		'a'      => array(
-			'href'                => true,
-			'title'               => true,
+		'button' => array(
+			'type'                => true,
 			'class'               => true,
-			'target'              => true,
+			'title'               => true,
+			'aria-label'          => true,
 			'data-target-blog-id' => true,
 			'data-source-post-id' => true,
 			'data-source-blog-id' => true,
