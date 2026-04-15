@@ -68,8 +68,27 @@ final class MslsMetaBox extends MslsMain {
 			restore_current_blog();
 		}
 
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_die( $json->encode() );
+		/**
+		 * Filters the suggest results before encoding
+		 *
+		 * @param array<int, array{value: int, label: string}> $results
+		 * @param array<string, mixed> $context
+		 *
+		 * @since 2.12.0
+		 */
+		$results = (array) apply_filters(
+			'msls_meta_box_suggest_results',
+			$json->get(),
+			array(
+				'blog_id'   => MslsRequest::get_var( MslsFields::FIELD_BLOG_ID, INPUT_POST ),
+				'post_type' => MslsRequest::get_var( MslsFields::FIELD_POST_TYPE, INPUT_POST ),
+				's'         => MslsRequest::get_var( MslsFields::FIELD_S, INPUT_POST ),
+				'source_id' => MslsRequest::get_var( MslsFields::FIELD_SOURCE_ID, INPUT_POST ),
+			)
+		);
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		wp_die( wp_json_encode( $results ) );
 	}
 
 	/**
@@ -332,9 +351,10 @@ final class MslsMetaBox extends MslsMain {
 
 			echo wp_kses(
 				sprintf(
-					'<ul>%s</ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/>',
+					'<ul>%s</ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="%s"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="%d"/>',
 					$items,
-					$post_type
+					$post_type,
+					$post->ID
 				),
 				Component::get_allowed_html()
 			);
