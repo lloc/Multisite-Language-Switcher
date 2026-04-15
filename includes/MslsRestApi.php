@@ -62,7 +62,17 @@ class MslsRestApi {
 	 * @return bool
 	 */
 	public function check_permission( \WP_REST_Request $request ): bool {
+		$source_blog_id = (int) $request->get_param( 'source_blog_id' );
+		$source_post_id = (int) $request->get_param( 'source_post_id' );
 		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
+
+		switch_to_blog( $source_blog_id );
+		$can_read = current_user_can( 'read_post', $source_post_id );
+		restore_current_blog();
+
+		if ( ! $can_read ) {
+			return false;
+		}
 
 		switch_to_blog( $target_blog_id );
 		$can_edit = current_user_can( 'edit_posts' );
@@ -112,6 +122,17 @@ class MslsRestApi {
 		$post_data = apply_filters( 'msls_quick_create_post_data', $post_data, $source_post, $source_blog_id, $target_blog_id );
 
 		switch_to_blog( $target_blog_id );
+
+		if ( ! post_type_exists( $post_data['post_type'] ) ) {
+			restore_current_blog();
+
+			return new \WP_Error(
+				'msls_target_post_type_not_found',
+				__( 'Post type does not exist on the target blog.', 'multisite-language-switcher' ),
+				array( 'status' => 400 )
+			);
+		}
+
 		$new_post_id = wp_insert_post( $post_data, true );
 
 		if ( is_wp_error( $new_post_id ) ) {
@@ -301,6 +322,10 @@ class MslsRestApi {
 
 		// Update every blog in the link map
 		foreach ( $link_map as $lang => $post_id ) {
+			if ( empty( $post_id ) ) {
+				continue;
+			}
+
 			$blog_id = $collection->get_blog_id( $lang );
 
 			if ( null === $blog_id ) {

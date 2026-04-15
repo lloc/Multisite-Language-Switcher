@@ -32,23 +32,43 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 
 	public function test_check_permission_returns_true(): void {
 		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'source_post_id' )->andReturn( 10 );
 		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
 
-		Functions\expect( 'switch_to_blog' )->once()->with( 2 );
+		Functions\expect( 'switch_to_blog' )->twice();
+		Functions\expect( 'current_user_can' )->once()->with( 'read_post', 10 )->andReturn( true );
 		Functions\expect( 'current_user_can' )->once()->with( 'edit_posts' )->andReturn( true );
-		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->twice();
 
 		$api = new MslsRestApi();
 		$this->assertTrue( $api->check_permission( $request ) );
 	}
 
-	public function test_check_permission_returns_false(): void {
+	public function test_check_permission_no_read_access(): void {
 		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'source_post_id' )->andReturn( 10 );
 		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
 
-		Functions\expect( 'switch_to_blog' )->once()->with( 2 );
-		Functions\expect( 'current_user_can' )->once()->with( 'edit_posts' )->andReturn( false );
+		Functions\expect( 'switch_to_blog' )->once()->with( 1 );
+		Functions\expect( 'current_user_can' )->once()->with( 'read_post', 10 )->andReturn( false );
 		Functions\expect( 'restore_current_blog' )->once();
+
+		$api = new MslsRestApi();
+		$this->assertFalse( $api->check_permission( $request ) );
+	}
+
+	public function test_check_permission_no_edit_access(): void {
+		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'source_post_id' )->andReturn( 10 );
+		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
+
+		Functions\expect( 'switch_to_blog' )->twice();
+		Functions\expect( 'current_user_can' )->once()->with( 'read_post', 10 )->andReturn( true );
+		Functions\expect( 'current_user_can' )->once()->with( 'edit_posts' )->andReturn( false );
+		Functions\expect( 'restore_current_blog' )->twice();
 
 		$api = new MslsRestApi();
 		$this->assertFalse( $api->check_permission( $request ) );
@@ -87,6 +107,7 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		Functions\expect( 'get_post' )->once()->with( 10 )->andReturn( $source_post );
 
 		Functions\expect( 'get_object_taxonomies' )->once()->with( 'post' )->andReturn( array() );
+		Functions\expect( 'post_type_exists' )->once()->with( 'post' )->andReturn( true );
 		Functions\expect( 'wp_insert_post' )->once()->andReturn( 42 );
 		Functions\expect( 'get_edit_post_link' )->once()->with( 42, 'raw' )->andReturn( 'https://example.tld/wp-admin/post.php?post=42&action=edit' );
 
