@@ -115,7 +115,7 @@ final class MslsAdmin extends MslsMain {
 				'multisite-language-switcher'
 			),
 			'activate_quick_create'   => __(
-				'Create translations without leaving the current post',
+				'Create draft translations with a single click',
 				'multisite-language-switcher'
 			),
 			'sort_by_description'     => __( 'Sort languages by description', 'multisite-language-switcher' ),
