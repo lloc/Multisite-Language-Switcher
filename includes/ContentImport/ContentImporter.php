@@ -242,6 +242,12 @@ class ContentImporter extends MslsRegistryInstance {
 
 		switch_to_blog( $blog_id );
 
+		if ( ! empty( $data['post_type'] ) && ! post_type_exists( $data['post_type'] ) ) {
+			restore_current_blog();
+
+			return false;
+		}
+
 		$this->handle( false );
 		if ( isset( $data['ID'] ) ) {
 			$post_id = wp_update_post( $data );
