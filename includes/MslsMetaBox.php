@@ -410,17 +410,19 @@ final class MslsMetaBox extends MslsMain {
 		if ( null !== $linked_post_id ) {
 			$href = (string) get_edit_post_link( $linked_post_id );
 
-			/* translators: %s: language code */
-			$title = sprintf(
-				__( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
-				$language
-			);
+			if ( '' !== $href ) {
+				/* translators: %s: language code */
+				$title = sprintf(
+					__( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
+					$language
+				);
 
-			return sprintf(
-				'<a class="msls-edit-link" href="%1$s" target="_blank" title="%2$s"><span class="dashicons dashicons-external"></span></a>',
-				esc_url( $href ),
-				esc_attr( $title )
-			);
+				return sprintf(
+					'<a class="msls-edit-link" href="%1$s" target="_blank" title="%2$s"><span class="dashicons dashicons-external"></span></a>',
+					esc_url( $href ),
+					esc_attr( $title )
+				);
+			}
 		}
 
 		if ( msls_options()->activate_quick_create ) {
