@@ -205,6 +205,10 @@ class MslsAdminIcon {
 	 */
 	public function get_a(): string {
 		if ( empty( $this->href ) ) {
+			if ( $this->should_quick_create() ) {
+				return $this->get_quick_create_a();
+			}
+
 			/* translators: %s: blog name */
 			$format = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
 			$href   = $this->get_edit_new();
@@ -217,6 +221,37 @@ class MslsAdminIcon {
 		$title = sprintf( $format, $this->language );
 
 		return sprintf( '<a title="%1$s" href="%2$s">%3$s</a>&nbsp;', esc_attr( $title ), esc_url( $href ), $this->get_icon() );
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function should_quick_create(): bool {
+		return null !== $this->id
+			&& null !== $this->origin_language
+			&& msls_options()->activate_quick_create;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function get_quick_create_a(): string {
+		$collection     = msls_blog_collection();
+		$source_blog_id = $collection->get_blog_id( $this->origin_language );
+		$target_blog_id = get_current_blog_id();
+
+		/* translators: %s: blog name */
+		$format = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
+		$title  = sprintf( $format, $this->language );
+
+		return sprintf(
+			'<button type="button" class="msls-quick-create" title="%1$s" aria-label="%1$s" data-target-blog-id="%2$d" data-source-post-id="%3$d" data-source-blog-id="%4$d">%5$s</button>&nbsp;',
+			esc_attr( $title ),
+			$target_blog_id,
+			$this->id,
+			$source_blog_id,
+			$this->get_icon()
+		);
 	}
 
 	/**

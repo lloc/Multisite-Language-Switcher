@@ -114,6 +114,7 @@ final class TestMslsCustomColumn extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( 'edit-post-link' );
 		Functions\expect( 'add_query_arg' )->once()->andReturn( 'added-query-args' );
 		Functions\expect( 'get_admin_url' )->once()->andReturn( 'admin-url' );
+		Functions\expect( 'msls_options' )->andReturn( \Mockery::mock( MslsOptions::class ) );
 
 		$output = '<span class="msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="dashicons dashicons-edit"></span></a>&nbsp;</span><span class="msls-icon-wrapper flag"><a title="Create a new translation in the en_US-blog" href="admin-url"><span class="dashicons dashicons-plus"></span></a>&nbsp;</span>';
 

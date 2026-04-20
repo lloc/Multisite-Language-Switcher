@@ -44,6 +44,7 @@ class MslsPlugin {
 			add_action( 'admin_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 			add_action( 'wp_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 
+			add_action( 'rest_api_init', array( MslsRestApi::class, 'init' ) );
 			add_action( 'init', array( MslsAdminBar::class, 'init' ) );
 			add_action( 'init', array( MslsBlock::class, 'init' ) );
 			add_action( 'init', array( MslsShortCode::class, 'init' ) );
@@ -123,6 +124,10 @@ class MslsPlugin {
 
 		if ( $this->options->activate_autocomplete ) {
 			wp_enqueue_script( 'msls-autocomplete', self::plugins_url( "$folder/msls.js" ), array( 'jquery-ui-autocomplete' ), $ver, array( 'in_footer' => true ) );
+		}
+
+		if ( $this->options->activate_quick_create ) {
+			wp_enqueue_script( 'msls-quick-create', self::plugins_url( "$folder/msls-quick-create.js" ), array( 'jquery', 'wp-api-fetch' ), $ver, array( 'in_footer' => true ) );
 		}
 	}
 

@@ -14,6 +14,7 @@ use lloc\Msls\Component\Icon\IconPng;
  * @package Msls
  * @property bool $activate_autocomplete
  * @property bool $activate_content_import
+ * @property bool $activate_quick_create
  * @property bool $output_current_blog
  * @property bool $only_with_translation
  * @property int $content_priority

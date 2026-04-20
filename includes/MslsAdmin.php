@@ -16,6 +16,7 @@ use lloc\Msls\Component\Input\Select;
  * Administration of the options
  *
  * @method void activate_autocomplete()
+ * @method void activate_quick_create()
  * @method void sort_by_description()
  * @method void exclude_current_blog()
  * @method void only_with_translation()
@@ -111,6 +112,10 @@ final class MslsAdmin extends MslsMain {
 			),
 			'activate_content_import' => __(
 				'Activate the content import functionality',
+				'multisite-language-switcher'
+			),
+			'activate_quick_create'   => __(
+				'Create draft translations with a single click',
 				'multisite-language-switcher'
 			),
 			'sort_by_description'     => __( 'Sort languages by description', 'multisite-language-switcher' ),
@@ -295,6 +300,7 @@ final class MslsAdmin extends MslsMain {
 			'reference_user'          => esc_html__( 'Reference user', 'multisite-language-switcher' ),
 			'exclude_current_blog'    => esc_html__( 'Exclude blog', 'multisite-language-switcher' ),
 			'activate_content_import' => esc_html__( 'Content import', 'multisite-language-switcher' ),
+			'activate_quick_create'   => esc_html__( 'Quick Create', 'multisite-language-switcher' ),
 		);
 
 		return $this->add_settings_fields( $map, 'advanced_section' );
