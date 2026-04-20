@@ -156,14 +156,16 @@ class MslsRestApi {
 		 */
 		do_action( 'msls_quick_create_after_insert', $new_post_id, $source_post, $source_blog_id, $target_blog_id );
 
-		$edit_url = get_edit_post_link( $new_post_id, 'raw' );
+		$edit_url   = get_edit_post_link( $new_post_id, 'raw' );
+		$post_title = get_the_title( $new_post_id );
 		restore_current_blog();
 
 		$this->establish_link( $source_post_id, $source_blog_id, $new_post_id, $target_blog_id );
 
 		$response_data = array(
-			'post_id'  => $new_post_id,
-			'edit_url' => $edit_url,
+			'post_id'    => $new_post_id,
+			'edit_url'   => $edit_url,
+			'post_title' => $post_title,
 		);
 
 		/**
