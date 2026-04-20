@@ -180,8 +180,10 @@ final class MslsMetaBox extends MslsMain {
 		if ( $blogs ) {
 			global $post;
 
-			$type   = get_post_type( $post->ID );
-			$mydata = new MslsOptionsPost( $post->ID );
+			$type            = get_post_type( $post->ID );
+			$mydata          = new MslsOptionsPost( $post->ID );
+			$origin_language = MslsBlogCollection::get_blog_language();
+			$is_saved        = 'auto-draft' !== get_post_status( $post );
 
 			$this->maybe_set_linked_post( $mydata );
 
@@ -198,8 +200,10 @@ final class MslsMetaBox extends MslsMain {
 				$icon_type = $this->options->get_icon_type();
 				$icon      = MslsAdminIcon::create( $type )->set_language( $language )->set_icon_type( $icon_type );
 
+				$linked_post_id = null;
 				if ( $mydata->has_value( $language ) ) {
-					$icon->set_href( (int) $mydata->$language );
+					$linked_post_id = (int) $mydata->$language;
+					$icon->set_href( $linked_post_id );
 				}
 
 				$selects  = '';
@@ -234,11 +238,17 @@ final class MslsMetaBox extends MslsMain {
 					);
 				}
 
+				$action = '';
+				if ( $is_saved ) {
+					$action = $this->get_create_new_link( $type, $language, $post->ID, $origin_language, $linked_post_id );
+				}
+
 				$lis .= sprintf(
-					'<li><label for="msls_input_%1$s msls-icon-wrapper %4$s">%2$s</label>%3$s</li>',
+					'<li><label for="msls_input_%1$s" class="msls-icon-wrapper %5$s">%2$s</label>%3$s%4$s</li>',
 					esc_attr( $language ),
 					$icon, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					$selects, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$action, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					esc_attr( $icon_type )
 				);
 
@@ -311,8 +321,10 @@ final class MslsMetaBox extends MslsMain {
 		if ( $blogs ) {
 			global $post;
 
-			$post_type = get_post_type( $post->ID );
-			$my_data   = new MslsOptionsPost( $post->ID );
+			$post_type       = get_post_type( $post->ID );
+			$my_data         = new MslsOptionsPost( $post->ID );
+			$origin_language = MslsBlogCollection::get_blog_language();
+			$is_saved        = 'auto-draft' !== get_post_status( $post );
 
 			$this->maybe_set_linked_post( $my_data );
 
@@ -330,19 +342,27 @@ final class MslsMetaBox extends MslsMain {
 				$value     = '';
 				$title     = '';
 
+				$linked_post_id = null;
 				if ( $my_data->has_value( $language ) ) {
-					$icon->set_href( (int) $my_data->$language );
+					$linked_post_id = (int) $my_data->$language;
+					$icon->set_href( $linked_post_id );
 					$value = $my_data->$language;
 					$title = get_the_title( $value );
 				}
 
+				$action = '';
+				if ( $is_saved ) {
+					$action = $this->get_create_new_link( $post_type, $language, $post->ID, $origin_language, $linked_post_id );
+				}
+
 				$items .= sprintf(
-					'<li class=""><label for="msls_title_%1$s msls-icon-wrapper %6$s">%2$s</label><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/></li>',
+					'<li class=""><label for="msls_title_%1$s" class="msls-icon-wrapper %7$s">%2$s</label><input type="hidden" id="msls_id_%1$s" name="msls_input_%3$s" value="%4$s"/><input class="msls_title" id="msls_title_%1$s" name="msls_title_%1$s" type="text" value="%5$s"/>%6$s</li>',
 					$blog->userblog_id,
 					$icon,
 					$language,
 					$value,
 					$title,
+					$action,
 					esc_attr( $icon_type )
 				);
 
@@ -370,6 +390,68 @@ final class MslsMetaBox extends MslsMain {
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo ( new Wrapper( 'p', $message ) )->render();
 		}
+	}
+
+	/**
+	 * Renders the action element for a language row in the metabox.
+	 *
+	 * Returns a "+" create button (Quick Create or classic link) when no
+	 * translation is linked, or an external-link icon when one exists.
+	 *
+	 * @param string $type           Post type slug.
+	 * @param string $language       Target language code.
+	 * @param int    $post_id        Current (source) post ID.
+	 * @param string $origin_language Source blog language code.
+	 * @param ?int   $linked_post_id Linked translation post ID, or null.
+	 *
+	 * @return string
+	 */
+	private function get_create_new_link( string $type, string $language, int $post_id, string $origin_language, ?int $linked_post_id ): string {
+		if ( null !== $linked_post_id ) {
+			$href = (string) get_edit_post_link( $linked_post_id );
+
+			/* translators: %s: language code */
+			$title = sprintf(
+				__( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
+				$language
+			);
+
+			return sprintf(
+				'<a class="msls-edit-link" href="%1$s" target="_blank" title="%2$s"><span class="dashicons dashicons-external"></span></a>',
+				esc_url( $href ),
+				esc_attr( $title )
+			);
+		}
+
+		if ( msls_options()->activate_quick_create ) {
+			$action_icon = ( new MslsAdminIcon( $type ) )
+				->set_language( $language )
+				->set_icon_type( 'action' )
+				->set_id( $post_id )
+				->set_origin_language( $origin_language );
+
+			return $action_icon->get_a();
+		}
+
+		$action_icon = ( new MslsAdminIcon( $type ) )
+			->set_language( $language )
+			->set_icon_type( 'action' )
+			->set_id( $post_id )
+			->set_origin_language( $origin_language );
+
+		$href = $action_icon->get_edit_new();
+
+		/* translators: %s: language code */
+		$title = sprintf(
+			__( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
+			$language
+		);
+
+		return sprintf(
+			'<a class="msls-create-new" href="%1$s" target="_blank" title="%2$s"><span class="dashicons dashicons-plus"></span></a>',
+			esc_url( $href ),
+			esc_attr( $title )
+		);
 	}
 
 	/**
