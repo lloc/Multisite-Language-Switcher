@@ -411,8 +411,8 @@ final class MslsMetaBox extends MslsMain {
 			$href = (string) get_edit_post_link( $linked_post_id );
 
 			if ( '' !== $href ) {
-				/* translators: %s: language code */
 				$title = sprintf(
+					/* translators: %s: language code */
 					__( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ),
 					$language
 				);
@@ -443,8 +443,8 @@ final class MslsMetaBox extends MslsMain {
 
 		$href = $action_icon->get_edit_new();
 
-		/* translators: %s: language code */
 		$title = sprintf(
+			/* translators: %s: language code */
 			__( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ),
 			$language
 		);
