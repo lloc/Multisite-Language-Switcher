@@ -4,8 +4,10 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use Brain\Monkey\Actions;
+use Brain\Monkey\Filters;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\MslsFields;
 use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsOptionsTax;
 use lloc\Msls\MslsPostTag;
@@ -83,6 +85,41 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 		MslsPostTag::suggest();
 	}
 
+	public function test_suggest_applies_results_filter(): void {
+		$term          = \Mockery::mock( \WP_Term::class );
+		$term->term_id = 42;
+		$term->name    = 'Test Term';
+
+		Functions\expect( 'filter_has_var' )->atLeast()->once()->andReturnTrue();
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post_tag' );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 99 );
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'restore_current_blog' )->once();
+		Functions\expect( 'get_terms' )->once()->andReturn( array( $term ) );
+		Functions\expect( 'wp_json_encode' )->once()->andReturnUsing( 'json_encode' );
+		Functions\expect( 'wp_die' )->once()->andReturnUsing(
+			function ( $output ) {
+				echo $output;
+			}
+		);
+
+		Filters\expectApplied( 'msls_post_tag_suggest_results' )->once()->with(
+			array(
+				array(
+					'value' => 42,
+					'label' => 'Test Term',
+				),
+			),
+			\Mockery::type( 'array' )
+		);
+
+		$this->expectOutputString( '[{"value":42,"label":"Test Term"}]' );
+
+		MslsPostTag::suggest();
+	}
+
 	public function test_edit_input(): void {
 		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturn( true );
@@ -108,6 +145,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 			<strong>Multisite Language Switcher</strong>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="post"/>
 			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
+			<input type="hidden" name="msls_source_id" id="msls_source_id" value="0"/>
 			</th>
 			</tr><tr class="form-field">
 			<th scope="row">
@@ -156,7 +194,8 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 
 		$output = '<div class="form-field"><h3>Multisite Language Switcher</h3>
 			<input type="hidden" name="msls_post_type" id="msls_post_type" value="post"/>
-			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/><label for="msls_title_0"><a title="Create a new translation in the de_DE-blog" href="/wp-admin/edit-tags.php"><span class="language-badge de_DE"><span>de</span><span>DE</span></span></a>&nbsp;</label>
+			<input type="hidden" name="msls_action" id="msls_action" value="suggest_terms"/>
+			<input type="hidden" name="msls_source_id" id="msls_source_id" value="0"/><label for="msls_title_0"><a title="Create a new translation in the de_DE-blog" href="/wp-admin/edit-tags.php"><span class="language-badge de_DE"><span>de</span><span>DE</span></span></a>&nbsp;</label>
 			<input type="hidden" id="msls_id_0" name="msls_input_de_DE" value=""/>
 			<input class="msls_title" id="msls_title_0" name="msls_title_0" type="text" value=""/><label for="msls_title_0"><a title="Create a new translation in the en_US-blog" href="/wp-admin/edit-tags.php"><span class="language-badge en_US"><span>en</span><span>US</span></span></a>&nbsp;</label>
 			<input type="hidden" id="msls_id_0" name="msls_input_en_US" value=""/>
