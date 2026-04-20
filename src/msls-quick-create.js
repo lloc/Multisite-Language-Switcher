@@ -50,10 +50,15 @@ jQuery( document ).ready(
 							$hiddenInput.val( response.post_id );
 						}
 
+						var $titleInput = $container.find( 'input.msls_title' );
+						if ( $titleInput.length ) {
+							$titleInput.val( response.post_title || '' );
+						}
+
 						var $select = $container.find( 'select[name^="msls_input_"]' );
 						if ( $select.length ) {
 							$select.append(
-								$( '<option>' ).val( response.post_id ).text( response.edit_url ).prop( 'selected', true )
+								$( '<option>' ).val( response.post_id ).text( response.post_title || '' ).prop( 'selected', true )
 							);
 						}
 					}
