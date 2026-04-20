@@ -37,11 +37,15 @@ jQuery( document ).ready(
 						select: function ( event, ui ) {
 								$( event.target ).val( ui.item.label );
 								hid_field.val( ui.item.value );
+								$( event.target ).siblings( '.msls-create-new, .msls-quick-create' ).hide();
+								$( event.target ).siblings( '.msls-edit-link' ).show();
 								return false;
 						},
 						change: function ( event, ui ) {
 							if ( ! $( event.target ).val() ) {
 								hid_field.val( '' );
+								$( event.target ).siblings( '.msls-create-new, .msls-quick-create' ).show();
+								$( event.target ).siblings( '.msls-edit-link' ).hide();
 							} else if (
 							mslsinput.id === hid_field.val() &&
 							mslsinput.title !== $( event.target ).val()
