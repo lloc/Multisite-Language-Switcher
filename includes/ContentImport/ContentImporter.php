@@ -110,6 +110,15 @@ class ContentImporter extends MslsRegistryInstance {
 			return $data;
 		}
 
+		switch_to_blog( $source_blog_id );
+		$can_read    = current_user_can( 'read_post', $source_post_id );
+		$source_post = get_post( $source_post_id );
+		restore_current_blog();
+
+		if ( ! $can_read || ! $source_post instanceof \WP_Post ) {
+			return $data;
+		}
+
 		$source_lang  = MslsBlogCollection::get_blog_language( $source_blog_id );
 		$dest_blog_id = get_current_blog_id();
 		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
@@ -117,14 +126,6 @@ class ContentImporter extends MslsRegistryInstance {
 		$dest_post_id = $this->get_the_blog_post_ID( $dest_blog_id );
 
 		if ( empty( $dest_post_id ) ) {
-			return $data;
-		}
-
-		switch_to_blog( $source_blog_id );
-		$source_post = get_post( $source_post_id );
-		restore_current_blog();
-
-		if ( ! $source_post instanceof \WP_Post ) {
 			return $data;
 		}
 
@@ -233,6 +234,12 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 
 		switch_to_blog( $blog_id );
+
+		if ( ! empty( $data['post_type'] ) && ! post_type_exists( $data['post_type'] ) ) {
+			restore_current_blog();
+
+			return false;
+		}
 
 		$this->handle( false );
 		if ( isset( $data['ID'] ) ) {
