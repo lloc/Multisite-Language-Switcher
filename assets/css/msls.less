@@ -148,6 +148,65 @@ select.msls-translations {
     border: 1px currentColor solid;
 
     & > span {
-        color: currentColor;        
+        color: currentColor;
+    }
+}
+
+.msls-tp {
+    padding: 12px 0 4px;
+
+    .msls-tp-blog-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 12px;
+
+        select {
+            flex: 1;
+        }
+    }
+
+    .msls-tp-status {
+        color: #646970;
+        min-height: 1.4em;
+        margin-bottom: 8px;
+    }
+
+    .msls-tp-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        max-height: 320px;
+        overflow-y: auto;
+        border: 1px solid #dcdcde;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    .msls-tp-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border-bottom: 1px solid #f0f0f1;
+        cursor: pointer;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        &:hover,
+        &:focus {
+            background: #f6f7f7;
+        }
+
+        .msls-tp-item-meta {
+            color: #646970;
+            font-size: 12px;
+            margin-left: 12px;
+            white-space: nowrap;
+        }
     }
 }
