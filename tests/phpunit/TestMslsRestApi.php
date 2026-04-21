@@ -293,6 +293,36 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		$this->assertEquals( 'https://example.tld/?p=42', $data['items'][0]['view_url'] );
 	}
 
+	public function test_remember_source_blog_writes_user_meta(): void {
+		Functions\expect( 'get_current_user_id' )->once()->andReturn( 7 );
+		Functions\expect( 'update_user_meta' )
+			->once()
+			->with( 7, MslsRestApi::LAST_SOURCE_USER_META, 3 );
+
+		MslsRestApi::remember_source_blog( 42, \Mockery::mock( \WP_Post::class ), 3 );
+
+		$this->assertTrue( true );
+	}
+
+	public function test_remember_source_blog_skips_guest(): void {
+		Functions\expect( 'get_current_user_id' )->once()->andReturn( 0 );
+		Functions\expect( 'update_user_meta' )->never();
+
+		MslsRestApi::remember_source_blog( 42, \Mockery::mock( \WP_Post::class ), 3 );
+
+		$this->assertTrue( true );
+	}
+
+	public function test_get_last_source_blog_id_returns_value(): void {
+		Functions\expect( 'get_current_user_id' )->once()->andReturn( 7 );
+		Functions\expect( 'get_user_meta' )
+			->once()
+			->with( 7, MslsRestApi::LAST_SOURCE_USER_META, true )
+			->andReturn( '5' );
+
+		$this->assertSame( 5, MslsRestApi::get_last_source_blog_id() );
+	}
+
 	public function test_list_untranslated_posts_rejects_unknown_post_type(): void {
 		$request = \Mockery::mock( \WP_REST_Request::class );
 		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );

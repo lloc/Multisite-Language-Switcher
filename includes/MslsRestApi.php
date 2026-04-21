@@ -25,6 +25,8 @@ class MslsRestApi {
 
 	const UNTRANSLATED_POST_STATUSES = array( 'publish', 'draft', 'pending', 'future' );
 
+	const LAST_SOURCE_USER_META = 'msls_translation_picker_last_source';
+
 	/**
 	 * Registers the REST API route.
 	 */
@@ -52,6 +54,41 @@ class MslsRestApi {
 		);
 
 		add_filter( 'msls_quick_create_post_data', array( self::class, 'prefix_source_language' ), 10, 4 );
+		add_action( 'msls_quick_create_after_insert', array( self::class, 'remember_source_blog' ), 10, 3 );
+	}
+
+	/**
+	 * Remembers the source blog a user last used when creating a
+	 * translation, so the picker can pre-select it next time.
+	 *
+	 * Hooked to msls_quick_create_after_insert so it only records on
+	 * successful creates, not on modal-open/cancel.
+	 *
+	 * @param int      $new_post_id
+	 * @param \WP_Post $source_post
+	 * @param int      $source_blog_id
+	 */
+	public static function remember_source_blog( int $new_post_id, \WP_Post $source_post, int $source_blog_id ): void {
+		$user_id = get_current_user_id();
+		if ( $user_id <= 0 ) {
+			return;
+		}
+
+		update_user_meta( $user_id, self::LAST_SOURCE_USER_META, $source_blog_id );
+	}
+
+	/**
+	 * Returns the source blog id the current user last picked, or 0.
+	 *
+	 * @return int
+	 */
+	public static function get_last_source_blog_id(): int {
+		$user_id = get_current_user_id();
+		if ( $user_id <= 0 ) {
+			return 0;
+		}
+
+		return (int) get_user_meta( $user_id, self::LAST_SOURCE_USER_META, true );
 	}
 
 	/**
