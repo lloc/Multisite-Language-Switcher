@@ -32,6 +32,9 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 
 	protected string $search;
 
+	/** @var array<string, \WP_Taxonomy>|null */
+	protected ?array $taxonomies_cache = null;
+
 	public function __construct( int $source_blog_id, string $post_type, string $search = '' ) {
 		parent::__construct(
 			array(
@@ -48,13 +51,45 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 	}
 
 	public function get_columns(): array {
-		return array(
-			'cb'      => '<input type="checkbox" />',
-			'title'   => __( 'Title', 'multisite-language-switcher' ),
-			'status'  => __( 'Status', 'multisite-language-switcher' ),
-			'date'    => __( 'Date', 'multisite-language-switcher' ),
-			'actions' => __( 'Actions', 'multisite-language-switcher' ),
+		$cols = array(
+			'cb'     => '<input type="checkbox" />',
+			'title'  => __( 'Title', 'multisite-language-switcher' ),
+			'author' => __( 'Author', 'multisite-language-switcher' ),
 		);
+
+		foreach ( $this->get_admin_column_taxonomies() as $name => $tax ) {
+			$cols[ 'taxonomy-' . $name ] = $tax->labels->name ?? (string) $tax->label;
+		}
+
+		$cols['status']  = __( 'Status', 'multisite-language-switcher' );
+		$cols['date']    = __( 'Date', 'multisite-language-switcher' );
+		$cols['actions'] = __( 'Actions', 'multisite-language-switcher' );
+
+		return $cols;
+	}
+
+	/**
+	 * Returns taxonomies registered for the post type that declared
+	 * show_admin_column => true — same signal core edit.php uses to decide
+	 * which taxonomy columns to render.
+	 *
+	 * @return array<string, \WP_Taxonomy>
+	 */
+	protected function get_admin_column_taxonomies(): array {
+		if ( null !== $this->taxonomies_cache ) {
+			return $this->taxonomies_cache;
+		}
+
+		switch_to_blog( $this->source_blog_id );
+		$this->taxonomies_cache = array();
+		foreach ( get_object_taxonomies( $this->post_type, 'objects' ) as $tax ) {
+			if ( ! empty( $tax->show_admin_column ) ) {
+				$this->taxonomies_cache[ $tax->name ] = $tax;
+			}
+		}
+		restore_current_blog();
+
+		return $this->taxonomies_cache;
 	}
 
 	protected function get_bulk_actions(): array {
@@ -87,16 +122,25 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 			$args['s'] = $this->search;
 		}
 
-		$query = new \WP_Query( $args );
-		$items = array();
+		$query      = new \WP_Query( $args );
+		$items      = array();
+		$taxonomies = array_keys( $this->get_admin_column_taxonomies() );
 
 		foreach ( $query->posts as $post ) {
+			$terms_by_tax = array();
+			foreach ( $taxonomies as $tax_name ) {
+				$terms                     = get_the_terms( $post->ID, $tax_name );
+				$terms_by_tax[ $tax_name ] = is_array( $terms ) ? wp_list_pluck( $terms, 'name' ) : array();
+			}
+
 			$items[] = array(
-				'ID'        => (int) $post->ID,
-				'title'     => get_the_title( $post ),
-				'status'    => $post->post_status,
-				'date'      => get_the_date( '', $post ),
-				'permalink' => get_permalink( $post ),
+				'ID'         => (int) $post->ID,
+				'title'      => get_the_title( $post ),
+				'status'     => $post->post_status,
+				'date'       => get_the_date( '', $post ),
+				'permalink'  => get_permalink( $post ),
+				'author'     => (string) get_the_author_meta( 'display_name', (int) $post->post_author ),
+				'taxonomies' => $terms_by_tax,
 			);
 		}
 
@@ -157,6 +201,28 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 	 */
 	protected function column_date( $item ): string {
 		return esc_html( (string) $item['date'] );
+	}
+
+	/**
+	 * @param array<string, mixed> $item
+	 */
+	protected function column_author( $item ): string {
+		return '' !== (string) $item['author'] ? esc_html( (string) $item['author'] ) : '—';
+	}
+
+	/**
+	 * Fallback for the dynamic taxonomy-* columns.
+	 *
+	 * @param array<string, mixed> $item
+	 * @param string               $column_name
+	 */
+	protected function column_default( $item, $column_name ): string {
+		if ( 0 === strpos( $column_name, 'taxonomy-' ) ) {
+			$tax   = substr( $column_name, strlen( 'taxonomy-' ) );
+			$names = $item['taxonomies'][ $tax ] ?? array();
+			return empty( $names ) ? '—' : esc_html( implode( ', ', $names ) );
+		}
+		return '';
 	}
 
 	/**
