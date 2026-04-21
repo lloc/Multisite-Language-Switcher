@@ -56,7 +56,8 @@ class MslsTranslationPickerPage {
 				__( 'Add from Translation', 'multisite-language-switcher' ),
 				'edit_posts',
 				self::page_slug( $post_type ),
-				array( self::class, 'render' )
+				array( self::class, 'render' ),
+				6
 			);
 		}
 	}
