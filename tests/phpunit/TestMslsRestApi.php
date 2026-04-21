@@ -276,6 +276,7 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		Functions\expect( 'get_posts' )->once()->andReturn( array( $post ) );
 		Functions\expect( 'get_the_title' )->once()->with( $post )->andReturn( 'Original Title' );
 		Functions\expect( 'mysql_to_rfc3339' )->once()->with( '2026-04-20 12:00:00' )->andReturn( '2026-04-20T12:00:00' );
+		Functions\expect( 'get_permalink' )->once()->with( $post )->andReturn( 'https://example.tld/?p=42' );
 
 		$api    = new MslsRestApi();
 		$result = $api->list_untranslated_posts( $request );
@@ -289,6 +290,7 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		$this->assertEquals( 'Original Title', $data['items'][0]['title'] );
 		$this->assertEquals( 'publish', $data['items'][0]['post_status'] );
 		$this->assertEquals( '2026-04-20T12:00:00', $data['items'][0]['date_gmt'] );
+		$this->assertEquals( 'https://example.tld/?p=42', $data['items'][0]['view_url'] );
 	}
 
 	public function test_list_untranslated_posts_rejects_unknown_post_type(): void {

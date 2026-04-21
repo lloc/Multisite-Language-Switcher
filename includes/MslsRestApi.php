@@ -379,6 +379,7 @@ class MslsRestApi {
 				'title'       => get_the_title( $post ),
 				'post_status' => $post->post_status,
 				'date_gmt'    => mysql_to_rfc3339( $post->post_date_gmt ),
+				'view_url'    => (string) get_permalink( $post ),
 			);
 		}
 
