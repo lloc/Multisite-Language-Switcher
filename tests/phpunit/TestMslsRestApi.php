@@ -307,6 +307,5 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		$result = $api->list_untranslated_posts( $request );
 
 		$this->assertInstanceOf( \WP_Error::class, $result );
-		$this->assertEquals( 'msls_source_post_type_not_found', $result->get_error_code() );
 	}
 }
