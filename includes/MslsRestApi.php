@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Query\TranslatedPostIdQuery;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -17,6 +19,12 @@ class MslsRestApi {
 
 	const ROUTE = '/create-translation';
 
+	const ROUTE_UNTRANSLATED = '/untranslated-posts';
+
+	const UNTRANSLATED_POSTS_LIMIT = 100;
+
+	const UNTRANSLATED_POST_STATUSES = array( 'publish', 'draft', 'pending', 'future' );
+
 	/**
 	 * Registers the REST API route.
 	 */
@@ -29,6 +37,17 @@ class MslsRestApi {
 				'callback'            => array( new self(), 'create_translation' ),
 				'permission_callback' => array( new self(), 'check_permission' ),
 				'args'                => self::get_route_args(),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			self::ROUTE_UNTRANSLATED,
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( new self(), 'list_untranslated_posts' ),
+				'permission_callback' => array( new self(), 'check_list_permission' ),
+				'args'                => self::get_list_route_args(),
 			)
 		);
 
@@ -54,6 +73,35 @@ class MslsRestApi {
 				'required'          => true,
 				'type'              => 'integer',
 				'sanitize_callback' => 'absint',
+			),
+		);
+	}
+
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
+	private static function get_list_route_args(): array {
+		return array(
+			'source_blog_id' => array(
+				'required'          => true,
+				'type'              => 'integer',
+				'sanitize_callback' => 'absint',
+			),
+			'target_blog_id' => array(
+				'required'          => true,
+				'type'              => 'integer',
+				'sanitize_callback' => 'absint',
+			),
+			'post_type'      => array(
+				'required'          => true,
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_key',
+			),
+			'search'         => array(
+				'required'          => false,
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => '',
 			),
 		);
 	}
@@ -107,6 +155,32 @@ class MslsRestApi {
 		restore_current_blog();
 
 		return self::apply_capability_filter( $default, $source_post_id, $source_blog_id, $target_blog_id, 'create' );
+	}
+
+	/**
+	 * Permission callback for the untranslated-posts listing endpoint.
+	 *
+	 * Runs the same capability filter as the create endpoint but with no
+	 * specific source post id (0) and with a generic 'read' capability
+	 * default on the source blog, since no single post is being targeted.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return bool
+	 */
+	public function check_list_permission( \WP_REST_Request $request ): bool {
+		$source_blog_id = (int) $request->get_param( 'source_blog_id' );
+		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
+
+		switch_to_blog( $source_blog_id );
+		$default_read = current_user_can( 'read' );
+		restore_current_blog();
+
+		if ( ! self::apply_capability_filter( $default_read, 0, $source_blog_id, $target_blog_id, 'read' ) ) {
+			return false;
+		}
+
+		return self::user_can_create_target( 0, $source_blog_id, $target_blog_id );
 	}
 
 	/**
@@ -250,6 +324,85 @@ class MslsRestApi {
 		);
 
 		return new \WP_REST_Response( $response_data, 201 );
+	}
+
+	/**
+	 * Lists source-blog posts of a given type that have no translation
+	 * in the target blog yet.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function list_untranslated_posts( \WP_REST_Request $request ) {
+		$source_blog_id = (int) $request->get_param( 'source_blog_id' );
+		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
+		$post_type      = (string) $request->get_param( 'post_type' );
+		$search         = (string) $request->get_param( 'search' );
+
+		$target_lang = MslsBlogCollection::get_blog_language( $target_blog_id );
+
+		switch_to_blog( $source_blog_id );
+
+		if ( ! post_type_exists( $post_type ) ) {
+			restore_current_blog();
+
+			return new \WP_Error(
+				'msls_source_post_type_not_found',
+				__( 'Post type does not exist on the source blog.', 'multisite-language-switcher' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		$translated_ids = ( new TranslatedPostIdQuery( MslsSqlCacher::create( __CLASS__, __METHOD__ ) ) )( $target_lang );
+
+		$query_args = array(
+			'post_type'        => $post_type,
+			'post_status'      => self::UNTRANSLATED_POST_STATUSES,
+			'numberposts'      => self::UNTRANSLATED_POSTS_LIMIT,
+			'post__not_in'     => $translated_ids,
+			'suppress_filters' => false,
+			'orderby'          => 'date',
+			'order'            => 'DESC',
+		);
+
+		if ( '' !== $search ) {
+			$query_args['s'] = $search;
+		}
+
+		$posts = get_posts( $query_args );
+
+		$items = array();
+		foreach ( $posts as $post ) {
+			$items[] = array(
+				'id'          => (int) $post->ID,
+				'title'       => get_the_title( $post ),
+				'post_status' => $post->post_status,
+				'date_gmt'    => mysql_to_rfc3339( $post->post_date_gmt ),
+			);
+		}
+
+		restore_current_blog();
+
+		/**
+		 * Filters the untranslated-posts listing response.
+		 *
+		 * @param array<int, array<string, mixed>> $items          Listing items.
+		 * @param int                              $source_blog_id Source blog ID.
+		 * @param int                              $target_blog_id Target blog ID.
+		 * @param string                           $post_type      Post type queried.
+		 *
+		 * @since TBD
+		 */
+		$items = apply_filters( 'msls_untranslated_posts', $items, $source_blog_id, $target_blog_id, $post_type );
+
+		return new \WP_REST_Response(
+			array(
+				'items' => $items,
+				'total' => count( $items ),
+			),
+			200
+		);
 	}
 
 	/**
