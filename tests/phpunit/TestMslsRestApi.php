@@ -14,7 +14,7 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 
 		if ( ! class_exists( \WP_REST_Server::class ) ) {
 			// phpcs:ignore
-			eval( 'class WP_REST_Server { const CREATABLE = "POST"; }' );
+			eval( 'class WP_REST_Server { const CREATABLE = "POST"; const READABLE = "GET"; }' );
 		}
 
 		if ( ! class_exists( \WP_REST_Response::class ) ) {
@@ -207,5 +207,106 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		$reflection = new \ReflectionMethod( MslsRestApi::class, 'prefix_source_language' );
 		$this->assertTrue( $reflection->isPublic() );
 		$this->assertTrue( $reflection->isStatic() );
+	}
+
+	public function test_check_list_permission_denied_when_cannot_read_source(): void {
+		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
+
+		Functions\expect( 'switch_to_blog' )->once()->with( 1 );
+		Functions\expect( 'current_user_can' )->once()->with( 'read' )->andReturn( false );
+		Functions\expect( 'restore_current_blog' )->once();
+
+		Filters\expectApplied( 'msls_quick_create_capability' )
+			->with( false, 0, 1, 2, 'read' )
+			->andReturn( false );
+
+		$api = new MslsRestApi();
+		$this->assertFalse( $api->check_list_permission( $request ) );
+	}
+
+	public function test_check_list_permission_filter_can_grant_access(): void {
+		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
+
+		Functions\expect( 'switch_to_blog' )->twice();
+		Functions\expect( 'current_user_can' )->once()->with( 'read' )->andReturn( false );
+		Functions\expect( 'current_user_can' )->once()->with( 'edit_posts' )->andReturn( true );
+		Functions\expect( 'restore_current_blog' )->twice();
+
+		Filters\expectApplied( 'msls_quick_create_capability' )
+			->with( false, 0, 1, 2, 'read' )
+			->andReturn( true );
+		Filters\expectApplied( 'msls_quick_create_capability' )
+			->with( true, 0, 1, 2, 'create' )
+			->andReturn( true );
+
+		$api = new MslsRestApi();
+		$this->assertTrue( $api->check_list_permission( $request ) );
+	}
+
+	public function test_list_untranslated_posts_returns_filtered_items(): void {
+		global $wpdb;
+		$wpdb          = \Mockery::mock( \WPDB::class );
+		$wpdb->options = 'wp_options';
+		$wpdb->shouldReceive( 'prepare' )->andReturn( '' );
+		$wpdb->shouldReceive( 'get_results' )->andReturn( array() );
+
+		Functions\when( 'wp_cache_get' )->justReturn( false );
+		Functions\when( 'wp_cache_set' )->justReturn( true );
+
+		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
+		$request->shouldReceive( 'get_param' )->with( 'post_type' )->andReturn( 'post' );
+		$request->shouldReceive( 'get_param' )->with( 'search' )->andReturn( '' );
+
+		Functions\expect( 'get_blog_option' )->once()->andReturn( 'de_DE' );
+		Functions\expect( 'switch_to_blog' )->once()->with( 1 );
+		Functions\expect( 'post_type_exists' )->once()->with( 'post' )->andReturn( true );
+		Functions\expect( 'restore_current_blog' )->once();
+
+		$post                = new \stdClass();
+		$post->ID            = 42;
+		$post->post_status   = 'publish';
+		$post->post_date_gmt = '2026-04-20 12:00:00';
+
+		Functions\expect( 'get_posts' )->once()->andReturn( array( $post ) );
+		Functions\expect( 'get_the_title' )->once()->with( $post )->andReturn( 'Original Title' );
+		Functions\expect( 'mysql_to_rfc3339' )->once()->with( '2026-04-20 12:00:00' )->andReturn( '2026-04-20T12:00:00' );
+
+		$api    = new MslsRestApi();
+		$result = $api->list_untranslated_posts( $request );
+
+		$this->assertInstanceOf( \WP_REST_Response::class, $result );
+		$this->assertEquals( 200, $result->get_status() );
+
+		$data = $result->get_data();
+		$this->assertEquals( 1, $data['total'] );
+		$this->assertEquals( 42, $data['items'][0]['id'] );
+		$this->assertEquals( 'Original Title', $data['items'][0]['title'] );
+		$this->assertEquals( 'publish', $data['items'][0]['post_status'] );
+		$this->assertEquals( '2026-04-20T12:00:00', $data['items'][0]['date_gmt'] );
+	}
+
+	public function test_list_untranslated_posts_rejects_unknown_post_type(): void {
+		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
+		$request->shouldReceive( 'get_param' )->with( 'post_type' )->andReturn( 'nonsense' );
+		$request->shouldReceive( 'get_param' )->with( 'search' )->andReturn( '' );
+
+		Functions\expect( 'get_blog_option' )->once()->andReturn( 'de_DE' );
+		Functions\expect( 'switch_to_blog' )->once()->with( 1 );
+		Functions\expect( 'post_type_exists' )->once()->with( 'nonsense' )->andReturn( false );
+		Functions\expect( 'restore_current_blog' )->once();
+
+		$api    = new MslsRestApi();
+		$result = $api->list_untranslated_posts( $request );
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'msls_source_post_type_not_found', $result->get_error_code() );
 	}
 }
