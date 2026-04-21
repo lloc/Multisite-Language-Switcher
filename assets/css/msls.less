@@ -153,16 +153,47 @@ select.msls-translations {
 }
 
 .msls-tp {
-    padding: 12px 0 4px;
+    padding: 8px 0 4px;
+
+    .msls-tp-banner {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        margin-bottom: 14px;
+        background: #f0f6fc;
+        border-left: 3px solid #2271b1;
+        border-radius: 2px;
+        color: #1d2327;
+        font-size: 13px;
+    }
+
+    .msls-tp-banner-arrow {
+        color: #2271b1;
+        font-weight: 600;
+    }
 
     .msls-tp-blog-row {
         display: flex;
         align-items: center;
         gap: 8px;
-        margin: 0 0 12px;
+        margin: 0 0 10px;
 
         select {
             flex: 1;
+        }
+    }
+
+    .msls-tp-search-row {
+        margin: 0 0 10px;
+
+        input[type="search"] {
+            width: 100%;
+            padding: 6px 10px;
+        }
+
+        &[hidden] {
+            display: none;
         }
     }
 
@@ -170,6 +201,7 @@ select.msls-translations {
         color: #646970;
         min-height: 1.4em;
         margin-bottom: 8px;
+        font-size: 12px;
     }
 
     .msls-tp-list {
@@ -179,6 +211,7 @@ select.msls-translations {
         max-height: 320px;
         overflow-y: auto;
         border: 1px solid #dcdcde;
+        border-radius: 2px;
 
         &:empty {
             display: none;
@@ -189,24 +222,147 @@ select.msls-translations {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 12px;
+        gap: 12px;
+        padding: 10px 12px;
         border-bottom: 1px solid #f0f0f1;
-        cursor: pointer;
 
         &:last-child {
             border-bottom: 0;
         }
 
-        &:hover,
-        &:focus {
+        &:hover {
             background: #f6f7f7;
         }
+    }
 
-        .msls-tp-item-meta {
-            color: #646970;
-            font-size: 12px;
-            margin-left: 12px;
-            white-space: nowrap;
+    .msls-tp-item-primary {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .msls-tp-item-title {
+        font-weight: 600;
+        color: #1d2327;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .msls-tp-item-badges {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        font-size: 11px;
+        color: #646970;
+    }
+
+    .msls-tp-item-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+
+        .msls-tp-item-create.msls-loading {
+            position: relative;
+
+            &::after {
+                content: "";
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                margin-left: 6px;
+                border: 2px solid currentColor;
+                border-top-color: transparent;
+                border-radius: 50%;
+                animation: msls-spin 0.8s linear infinite;
+                vertical-align: middle;
+            }
         }
     }
+
+    .msls-tp-item-view {
+        font-size: 12px;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .msls-tp-item-date {
+        color: #646970;
+    }
+
+    .msls-tp-lang-chip {
+        display: inline-block;
+        padding: 2px 6px;
+        background: #f0f0f1;
+        border-radius: 10px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        color: #50575e;
+    }
+
+    .msls-tp-status-badge {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        &.msls-tp-status-publish {
+            background: #e0f7e5;
+            color: #1d593f;
+        }
+        &.msls-tp-status-draft {
+            background: #f0f0f1;
+            color: #50575e;
+        }
+        &.msls-tp-status-pending {
+            background: #fff3cd;
+            color: #674d03;
+        }
+        &.msls-tp-status-future {
+            background: #e7e5f7;
+            color: #3a2d6b;
+        }
+    }
+
+    .msls-tp-skeleton {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        pointer-events: none;
+
+        .msls-tp-skeleton-line {
+            display: block;
+            height: 12px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #f0f0f1 0%, #f6f7f7 50%, #f0f0f1 100%);
+            background-size: 200% 100%;
+            animation: msls-tp-pulse 1.2s ease-in-out infinite;
+        }
+
+        .msls-tp-skeleton-title {
+            width: 60%;
+        }
+
+        .msls-tp-skeleton-meta {
+            width: 35%;
+            height: 10px;
+        }
+    }
+}
+
+@keyframes msls-tp-pulse {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
