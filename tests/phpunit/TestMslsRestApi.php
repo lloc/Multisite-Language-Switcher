@@ -2,6 +2,7 @@
 
 namespace lloc\MslsTests;
 
+use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsRestApi;
@@ -51,6 +52,46 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->once()->with( 1 );
 		Functions\expect( 'current_user_can' )->once()->with( 'read_post', 10 )->andReturn( false );
 		Functions\expect( 'restore_current_blog' )->once();
+
+		$api = new MslsRestApi();
+		$this->assertFalse( $api->check_permission( $request ) );
+	}
+
+	public function test_capability_filter_can_grant_access_without_read_cap(): void {
+		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'source_post_id' )->andReturn( 10 );
+		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
+
+		Functions\expect( 'switch_to_blog' )->twice();
+		Functions\expect( 'current_user_can' )->once()->with( 'read_post', 10 )->andReturn( false );
+		Functions\expect( 'current_user_can' )->once()->with( 'edit_posts' )->andReturn( true );
+		Functions\expect( 'restore_current_blog' )->twice();
+
+		Filters\expectApplied( 'msls_quick_create_capability' )
+			->with( false, 10, 1, 2, 'read' )
+			->andReturn( true );
+		Filters\expectApplied( 'msls_quick_create_capability' )
+			->with( true, 10, 1, 2, 'create' )
+			->andReturn( true );
+
+		$api = new MslsRestApi();
+		$this->assertTrue( $api->check_permission( $request ) );
+	}
+
+	public function test_capability_filter_can_deny_access_with_default_caps(): void {
+		$request = \Mockery::mock( \WP_REST_Request::class );
+		$request->shouldReceive( 'get_param' )->with( 'source_blog_id' )->andReturn( 1 );
+		$request->shouldReceive( 'get_param' )->with( 'source_post_id' )->andReturn( 10 );
+		$request->shouldReceive( 'get_param' )->with( 'target_blog_id' )->andReturn( 2 );
+
+		Functions\expect( 'switch_to_blog' )->once();
+		Functions\expect( 'current_user_can' )->once()->with( 'read_post', 10 )->andReturn( true );
+		Functions\expect( 'restore_current_blog' )->once();
+
+		Filters\expectApplied( 'msls_quick_create_capability' )
+			->with( true, 10, 1, 2, 'read' )
+			->andReturn( false );
 
 		$api = new MslsRestApi();
 		$this->assertFalse( $api->check_permission( $request ) );
