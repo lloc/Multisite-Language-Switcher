@@ -33,6 +33,9 @@ class MslsTranslationPickerPage {
 	 */
 	public static function init(): void {
 		add_action( 'admin_menu', array( self::class, 'register' ) );
+		// Late-priority reorder: put our entries right under "All Posts"
+		// regardless of what other plugins do to the submenu array.
+		add_action( 'admin_menu', array( self::class, 'reorder_submenu' ), 999 );
 	}
 
 	/**
@@ -56,9 +59,64 @@ class MslsTranslationPickerPage {
 				__( 'Add from Translation', 'multisite-language-switcher' ),
 				'edit_posts',
 				self::page_slug( $post_type ),
-				array( self::class, 'render' ),
-				6
+				array( self::class, 'render' )
 			);
+		}
+	}
+
+	/**
+	 * Moves each of our submenu entries to the slot directly after the
+	 * parent's first item ("All Posts" / "All Pages" / "All CPTs"). Runs
+	 * on admin_menu at priority 999 so it applies after every other
+	 * plugin has finished adding entries.
+	 *
+	 * @codeCoverageIgnore
+	 */
+	public static function reorder_submenu(): void {
+		global $submenu;
+
+		if ( ! is_array( $submenu ) ) {
+			return;
+		}
+
+		foreach ( MslsPostType::get() as $post_type ) {
+			$parent = self::parent_slug( $post_type );
+			$slug   = self::page_slug( $post_type );
+
+			if ( empty( $submenu[ $parent ] ) || ! is_array( $submenu[ $parent ] ) ) {
+				continue;
+			}
+
+			$our_key = null;
+			foreach ( $submenu[ $parent ] as $k => $item ) {
+				if ( isset( $item[2] ) && $slug === $item[2] ) {
+					$our_key = $k;
+					break;
+				}
+			}
+
+			if ( null === $our_key ) {
+				continue;
+			}
+
+			$our_item = $submenu[ $parent ][ $our_key ];
+			unset( $submenu[ $parent ][ $our_key ] );
+
+			$rebuilt = array();
+			$placed  = false;
+			foreach ( $submenu[ $parent ] as $k => $item ) {
+				$rebuilt[ $k ] = $item;
+				if ( ! $placed ) {
+					$rebuilt[] = $our_item;
+					$placed    = true;
+				}
+			}
+
+			if ( ! $placed ) {
+				$rebuilt[] = $our_item;
+			}
+
+			$submenu[ $parent ] = $rebuilt;
 		}
 	}
 
