@@ -18,9 +18,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class MslsTranslationPickerPage {
 
-	const SLUG = 'msls-translation-picker';
+	const BASE_SLUG = 'msls-translation-picker';
 
 	const SCRIPT_HANDLE = 'msls-translation-picker';
+
+	/**
+	 * Kept for template callers that reference a single slug; equal to
+	 * the base slug for the 'post' post type.
+	 */
+	const SLUG = self::BASE_SLUG;
 
 	/**
 	 * @codeCoverageIgnore
@@ -30,20 +36,51 @@ class MslsTranslationPickerPage {
 	}
 
 	/**
-	 * Registers a hidden submenu page so the URL is routable but no menu
-	 * item is printed.
+	 * Registers a visible submenu entry under each MSLS-supported post
+	 * type's "All Posts" menu. This keeps the sidebar expanded on the
+	 * right section when the page is active and surfaces the entry point
+	 * directly in the menu hierarchy.
 	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function register(): void {
-		add_submenu_page(
-			'',
-			__( 'Add Post from Translation', 'multisite-language-switcher' ),
-			__( 'Add Post from Translation', 'multisite-language-switcher' ),
-			'edit_posts',
-			self::SLUG,
-			array( self::class, 'render' )
-		);
+		foreach ( MslsPostType::get() as $post_type ) {
+			$parent = self::parent_slug( $post_type );
+			if ( '' === $parent ) {
+				continue;
+			}
+
+			add_submenu_page(
+				$parent,
+				__( 'Add Post from Translation', 'multisite-language-switcher' ),
+				__( 'Add from Translation', 'multisite-language-switcher' ),
+				'edit_posts',
+				self::page_slug( $post_type ),
+				array( self::class, 'render' )
+			);
+		}
+	}
+
+	/**
+	 * Menu slug of the parent (Posts / Pages / CPT) menu for a post type.
+	 */
+	public static function parent_slug( string $post_type ): string {
+		if ( '' === $post_type ) {
+			return '';
+		}
+		if ( 'post' === $post_type ) {
+			return 'edit.php';
+		}
+		return 'edit.php?post_type=' . $post_type;
+	}
+
+	/**
+	 * Unique page slug per post type. Needed because WordPress enforces
+	 * globally unique submenu slugs, so we can't reuse one slug under
+	 * multiple parents.
+	 */
+	public static function page_slug( string $post_type ): string {
+		return self::BASE_SLUG . '-' . $post_type;
 	}
 
 	/**
@@ -55,11 +92,8 @@ class MslsTranslationPickerPage {
 	 */
 	public static function url( string $post_type ): string {
 		return add_query_arg(
-			array(
-				'page'      => self::SLUG,
-				'post_type' => $post_type,
-			),
-			admin_url( 'admin.php' )
+			array( 'page' => self::page_slug( $post_type ) ),
+			admin_url( self::parent_slug( $post_type ) )
 		);
 	}
 
@@ -107,12 +141,18 @@ class MslsTranslationPickerPage {
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$post_type = isset( $_GET['post_type'] ) ? sanitize_key( wp_unslash( (string) $_GET['post_type'] ) ) : 'post';
+		$page      = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( (string) $_GET['page'] ) ) : '';
+		$post_type = isset( $_GET['post_type'] ) ? sanitize_key( wp_unslash( (string) $_GET['post_type'] ) ) : '';
 		$source    = isset( $_GET['msls_source'] ) ? absint( wp_unslash( (string) $_GET['msls_source'] ) ) : 0;
 		$search    = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['s'] ) ) : '';
 		// phpcs:enable
 
-		if ( ! in_array( $post_type, msls_post_type()::get(), true ) ) {
+		// Derive post type from the page slug (msls-translation-picker-<post_type>).
+		if ( '' !== $page && 0 === strpos( $page, self::BASE_SLUG . '-' ) ) {
+			$post_type = substr( $page, strlen( self::BASE_SLUG ) + 1 );
+		}
+
+		if ( ! in_array( $post_type, MslsPostType::get(), true ) ) {
 			$post_type = 'post';
 		}
 
@@ -128,6 +168,11 @@ class MslsTranslationPickerPage {
 		self::enqueue( (int) get_current_blog_id() );
 
 		echo '<div class="wrap msls-tp-page">';
+		printf(
+			'<p class="msls-tp-back"><a href="%1$s">%2$s</a></p>',
+			esc_url( admin_url( self::parent_slug( $post_type ) ) ),
+			esc_html__( '← Back to all posts', 'multisite-language-switcher' )
+		);
 		printf(
 			'<h1 class="wp-heading-inline">%s</h1>',
 			esc_html__( 'Add Post from Translation', 'multisite-language-switcher' )
@@ -168,9 +213,11 @@ class MslsTranslationPickerPage {
 	private static function render_filter_form( string $post_type, int $source, string $search, array $blogs ): void {
 		self::render_source_flags( $post_type, $source, $search, $blogs );
 
-		echo '<form method="get" action="', esc_url( admin_url( 'admin.php' ) ), '" class="msls-tp-filters">';
-		echo '<input type="hidden" name="page" value="', esc_attr( self::SLUG ), '" />';
-		echo '<input type="hidden" name="post_type" value="', esc_attr( $post_type ), '" />';
+		echo '<form method="get" action="', esc_url( admin_url( self::parent_slug( $post_type ) ) ), '" class="msls-tp-filters">';
+		echo '<input type="hidden" name="page" value="', esc_attr( self::page_slug( $post_type ) ), '" />';
+		if ( 'post' !== $post_type ) {
+			echo '<input type="hidden" name="post_type" value="', esc_attr( $post_type ), '" />';
+		}
 		echo '<input type="hidden" name="msls_source" value="', esc_attr( (string) $source ), '" />';
 
 		printf(
@@ -222,12 +269,11 @@ class MslsTranslationPickerPage {
 
 			$url = add_query_arg(
 				array(
-					'page'        => self::SLUG,
-					'post_type'   => $post_type,
+					'page'        => self::page_slug( $post_type ),
 					'msls_source' => $blog_id,
 					's'           => $search,
 				),
-				admin_url( 'admin.php' )
+				admin_url( self::parent_slug( $post_type ) )
 			);
 
 			printf(
