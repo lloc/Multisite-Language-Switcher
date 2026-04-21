@@ -165,11 +165,71 @@ select.msls-translations {
         }
     }
 
+    .msls-tp-sources {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin: 14px 0 10px;
+
+        .msls-tp-sources-label {
+            font-weight: 600;
+            margin-right: 4px;
+            color: #1d2327;
+        }
+    }
+
+    .msls-tp-source-flag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        background: #fff;
+        border: 1px solid #c3c4c7;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #1d2327;
+        font-size: 13px;
+        line-height: 1.2;
+        transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+
+        .flag-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        &:hover,
+        &:focus {
+            background: #f6f7f7;
+            border-color: #8c8f94;
+            color: #1d2327;
+            box-shadow: none;
+        }
+
+        &.is-active {
+            background: #2271b1;
+            border-color: #2271b1;
+            color: #fff;
+            box-shadow: 0 0 0 1px #2271b1;
+
+            &:hover,
+            &:focus {
+                background: #135e96;
+                border-color: #135e96;
+                color: #fff;
+            }
+        }
+
+        .msls-tp-source-label {
+            font-weight: 500;
+        }
+    }
+
     .msls-tp-filters {
         display: flex;
         align-items: center;
         gap: 8px;
-        margin: 12px 0 16px;
+        margin: 4px 0 16px;
         flex-wrap: wrap;
 
         input[type="search"] {

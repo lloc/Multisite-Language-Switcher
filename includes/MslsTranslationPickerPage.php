@@ -166,26 +166,12 @@ class MslsTranslationPickerPage {
 	 * @codeCoverageIgnore
 	 */
 	private static function render_filter_form( string $post_type, int $source, string $search, array $blogs ): void {
+		self::render_source_flags( $post_type, $source, $search, $blogs );
+
 		echo '<form method="get" action="', esc_url( admin_url( 'admin.php' ) ), '" class="msls-tp-filters">';
 		echo '<input type="hidden" name="page" value="', esc_attr( self::SLUG ), '" />';
 		echo '<input type="hidden" name="post_type" value="', esc_attr( $post_type ), '" />';
-
-		echo '<label for="msls-tp-source">', esc_html__( 'Source blog', 'multisite-language-switcher' ), '</label> ';
-		echo '<select id="msls-tp-source" name="msls_source">';
-		printf(
-			'<option value="">%s</option>',
-			esc_html__( '— Select —', 'multisite-language-switcher' )
-		);
-		foreach ( $blogs as $blog ) {
-			printf(
-				'<option value="%1$d" %2$s>[%3$s] %4$s</option>',
-				(int) $blog->userblog_id,
-				selected( $source, (int) $blog->userblog_id, false ),
-				esc_html( strtoupper( $blog->get_alpha2() ) ),
-				esc_html( $blog->get_description() )
-			);
-		}
-		echo '</select> ';
+		echo '<input type="hidden" name="msls_source" value="', esc_attr( (string) $source ), '" />';
 
 		printf(
 			'<input type="search" id="msls-tp-search" name="s" value="%1$s" placeholder="%2$s" />',
@@ -199,6 +185,64 @@ class MslsTranslationPickerPage {
 		);
 
 		echo '</form>';
+	}
+
+	/**
+	 * Renders a row of clickable flag-buttons — one per source blog.
+	 * Navigating between sources no longer needs a select + Apply.
+	 *
+	 * @param string               $post_type
+	 * @param int                  $source
+	 * @param string               $search
+	 * @param array<int, MslsBlog> $blogs
+	 *
+	 * @codeCoverageIgnore
+	 */
+	private static function render_source_flags( string $post_type, int $source, string $search, array $blogs ): void {
+		if ( empty( $blogs ) ) {
+			return;
+		}
+
+		echo '<div class="msls-tp-sources" role="tablist" aria-label="',
+			esc_attr__( 'Source blog', 'multisite-language-switcher' ), '">';
+
+		printf(
+			'<span class="msls-tp-sources-label">%s</span>',
+			esc_html__( 'Source blog:', 'multisite-language-switcher' )
+		);
+
+		foreach ( $blogs as $blog ) {
+			$blog_id   = (int) $blog->userblog_id;
+			$is_active = ( $source === $blog_id );
+
+			$icon = ( new MslsAdminIcon( null ) )
+				->set_language( $blog->get_language() )
+				->set_icon_type( MslsAdminIcon::TYPE_FLAG )
+				->get_icon();
+
+			$url = add_query_arg(
+				array(
+					'page'        => self::SLUG,
+					'post_type'   => $post_type,
+					'msls_source' => $blog_id,
+					's'           => $search,
+				),
+				admin_url( 'admin.php' )
+			);
+
+			printf(
+				'<a href="%1$s" class="msls-tp-source-flag%2$s" role="tab" aria-selected="%3$s" title="%4$s">%5$s<span class="msls-tp-source-label">%6$s</span></a>',
+				esc_url( $url ),
+				$is_active ? ' is-active' : '',
+				$is_active ? 'true' : 'false',
+				esc_attr( $blog->get_description() ),
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$icon,
+				esc_html( $blog->get_description() )
+			);
+		}
+
+		echo '</div>';
 	}
 
 	/**
