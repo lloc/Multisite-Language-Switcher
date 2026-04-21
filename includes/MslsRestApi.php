@@ -68,19 +68,80 @@ class MslsRestApi {
 		$source_post_id = (int) $request->get_param( 'source_post_id' );
 		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
 
-		switch_to_blog( $source_blog_id );
-		$can_read = current_user_can( 'read_post', $source_post_id );
-		restore_current_blog();
-
-		if ( ! $can_read ) {
+		if ( ! self::user_can_read_source( $source_post_id, $source_blog_id, $target_blog_id ) ) {
 			return false;
 		}
 
-		switch_to_blog( $target_blog_id );
-		$can_edit = current_user_can( 'edit_posts' );
+		return self::user_can_create_target( $source_post_id, $source_blog_id, $target_blog_id );
+	}
+
+	/**
+	 * Evaluates the read capability on the source blog, with filter override.
+	 *
+	 * @param int $source_post_id
+	 * @param int $source_blog_id
+	 * @param int $target_blog_id
+	 *
+	 * @return bool
+	 */
+	public static function user_can_read_source( int $source_post_id, int $source_blog_id, int $target_blog_id ): bool {
+		switch_to_blog( $source_blog_id );
+		$default = current_user_can( 'read_post', $source_post_id );
 		restore_current_blog();
 
-		return $can_edit;
+		return self::apply_capability_filter( $default, $source_post_id, $source_blog_id, $target_blog_id, 'read' );
+	}
+
+	/**
+	 * Evaluates the create capability on the target blog, with filter override.
+	 *
+	 * @param int $source_post_id
+	 * @param int $source_blog_id
+	 * @param int $target_blog_id
+	 *
+	 * @return bool
+	 */
+	public static function user_can_create_target( int $source_post_id, int $source_blog_id, int $target_blog_id ): bool {
+		switch_to_blog( $target_blog_id );
+		$default = current_user_can( 'edit_posts' );
+		restore_current_blog();
+
+		return self::apply_capability_filter( $default, $source_post_id, $source_blog_id, $target_blog_id, 'create' );
+	}
+
+	/**
+	 * @param bool   $default
+	 * @param int    $source_post_id
+	 * @param int    $source_blog_id
+	 * @param int    $target_blog_id
+	 * @param string $context
+	 *
+	 * @return bool
+	 */
+	private static function apply_capability_filter( bool $default, int $source_post_id, int $source_blog_id, int $target_blog_id, string $context ): bool {
+		/**
+		 * Filters the result of the Quick Create capability check.
+		 *
+		 * Lets integrations override the default read/edit checks, for
+		 * example to permit a translator without an account on the source
+		 * blog to mirror a post into the target blog.
+		 *
+		 * @param bool   $default        Result of the default capability check.
+		 * @param int    $source_post_id Source post ID (0 for list-style checks).
+		 * @param int    $source_blog_id Source blog ID.
+		 * @param int    $target_blog_id Target blog ID.
+		 * @param string $context        'read' when checking the source, 'create' when checking the target.
+		 *
+		 * @since TBD
+		 */
+		return (bool) apply_filters(
+			'msls_quick_create_capability',
+			$default,
+			$source_post_id,
+			$source_blog_id,
+			$target_blog_id,
+			$context
+		);
 	}
 
 	/**
