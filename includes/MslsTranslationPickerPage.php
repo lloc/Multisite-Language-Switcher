@@ -224,6 +224,12 @@ class MslsTranslationPickerPage {
 			}
 		}
 
+		// With only one source available, treat it as pre-selected so the
+		// user lands straight on the list instead of a picker-of-one.
+		if ( 0 === $source && 1 === count( $blogs ) ) {
+			$source = (int) $blogs[0]->userblog_id;
+		}
+
 		self::enqueue( (int) get_current_blog_id() );
 
 		echo '<div class="wrap msls-tp-page">';
