@@ -152,122 +152,49 @@ select.msls-translations {
     }
 }
 
-.msls-tp {
-    padding: 8px 0 4px;
-
+.msls-tp-page {
     .msls-tp-banner {
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 10px 12px;
-        margin-bottom: 14px;
-        background: #f0f6fc;
-        border-left: 3px solid #2271b1;
-        border-radius: 2px;
-        color: #1d2327;
-        font-size: 13px;
+        margin: 14px 0;
+
+        .msls-tp-banner-arrow {
+            color: #2271b1;
+            font-weight: 600;
+        }
     }
 
-    .msls-tp-banner-arrow {
-        color: #2271b1;
-        font-weight: 600;
-    }
-
-    .msls-tp-blog-row {
+    .msls-tp-filters {
         display: flex;
         align-items: center;
         gap: 8px;
-        margin: 0 0 10px;
-
-        select {
-            flex: 1;
-        }
-    }
-
-    .msls-tp-search-row {
-        margin: 0 0 10px;
+        margin: 12px 0 16px;
+        flex-wrap: wrap;
 
         input[type="search"] {
-            width: 100%;
-            padding: 6px 10px;
-        }
-
-        &[hidden] {
-            display: none;
+            min-width: 240px;
         }
     }
 
-    .msls-tp-status {
-        color: #646970;
-        min-height: 1.4em;
-        margin-bottom: 8px;
-        font-size: 12px;
+    .msls-tp-progress {
+        margin: 12px 0;
     }
 
-    .msls-tp-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        max-height: 320px;
-        overflow-y: auto;
-        border: 1px solid #dcdcde;
-        border-radius: 2px;
+    table.wp-list-table {
+        .msls-tp-view {
+            text-decoration: none;
+            margin-right: 10px;
+            white-space: nowrap;
 
-        &:empty {
-            display: none;
-        }
-    }
-
-    .msls-tp-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        padding: 10px 12px;
-        border-bottom: 1px solid #f0f0f1;
-
-        &:last-child {
-            border-bottom: 0;
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
-        &:hover {
-            background: #f6f7f7;
-        }
-    }
-
-    .msls-tp-item-primary {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        min-width: 0;
-        flex: 1;
-    }
-
-    .msls-tp-item-title {
-        font-weight: 600;
-        color: #1d2327;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .msls-tp-item-badges {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        flex-wrap: wrap;
-        font-size: 11px;
-        color: #646970;
-    }
-
-    .msls-tp-item-actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-shrink: 0;
-
-        .msls-tp-item-create.msls-loading {
-            position: relative;
+        .msls-tp-create.msls-loading {
+            opacity: 0.7;
+            pointer-events: none;
 
             &::after {
                 content: "";
@@ -282,87 +209,56 @@ select.msls-translations {
                 vertical-align: middle;
             }
         }
-    }
 
-    .msls-tp-item-view {
-        font-size: 12px;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    .msls-tp-item-date {
-        color: #646970;
-    }
-
-    .msls-tp-lang-chip {
-        display: inline-block;
-        padding: 2px 6px;
-        background: #f0f0f1;
-        border-radius: 10px;
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: 0.4px;
-        text-transform: uppercase;
-        color: #50575e;
-    }
-
-    .msls-tp-status-badge {
-        display: inline-block;
-        padding: 2px 6px;
-        border-radius: 3px;
-        font-size: 10px;
-        font-weight: 600;
-        text-transform: uppercase;
-
-        &.msls-tp-status-publish {
-            background: #e0f7e5;
-            color: #1d593f;
-        }
-        &.msls-tp-status-draft {
-            background: #f0f0f1;
-            color: #50575e;
-        }
-        &.msls-tp-status-pending {
-            background: #fff3cd;
-            color: #674d03;
-        }
-        &.msls-tp-status-future {
-            background: #e7e5f7;
-            color: #3a2d6b;
-        }
-    }
-
-    .msls-tp-skeleton {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 6px;
-        pointer-events: none;
-
-        .msls-tp-skeleton-line {
-            display: block;
-            height: 12px;
-            border-radius: 4px;
-            background: linear-gradient(90deg, #f0f0f1 0%, #f6f7f7 50%, #f0f0f1 100%);
-            background-size: 200% 100%;
-            animation: msls-tp-pulse 1.2s ease-in-out infinite;
+        .column-status {
+            width: 110px;
         }
 
-        .msls-tp-skeleton-title {
-            width: 60%;
+        .column-date {
+            width: 140px;
         }
 
-        .msls-tp-skeleton-meta {
-            width: 35%;
-            height: 10px;
+        .column-actions {
+            width: 260px;
+            text-align: right;
         }
     }
 }
 
-@keyframes msls-tp-pulse {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+.msls-tp-lang-chip {
+    display: inline-block;
+    padding: 2px 6px;
+    background: #f0f0f1;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #50575e;
+}
+
+.msls-tp-status-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.msls-tp-status-publish {
+        background: #e0f7e5;
+        color: #1d593f;
+    }
+    &.msls-tp-status-draft {
+        background: #f0f0f1;
+        color: #50575e;
+    }
+    &.msls-tp-status-pending {
+        background: #fff3cd;
+        color: #674d03;
+    }
+    &.msls-tp-status-future {
+        background: #e7e5f7;
+        color: #3a2d6b;
+    }
 }
