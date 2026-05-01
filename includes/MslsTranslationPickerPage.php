@@ -65,6 +65,10 @@ class MslsTranslationPickerPage {
 	 * @codeCoverageIgnore
 	 */
 	public static function register(): void {
+		if ( msls_options()->is_excluded() ) {
+			return;
+		}
+
 		foreach ( MslsPostType::get() as $post_type ) {
 			$parent = self::parent_slug( $post_type );
 			if ( '' === $parent ) {
@@ -138,7 +142,7 @@ class MslsTranslationPickerPage {
 	public static function reorder_submenu(): void {
 		global $submenu;
 
-		if ( ! is_array( $submenu ) ) {
+		if ( ! is_array( $submenu ) || msls_options()->is_excluded() ) {
 			return;
 		}
 
