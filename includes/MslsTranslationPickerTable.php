@@ -116,7 +116,10 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 
 		switch_to_blog( $this->source_blog_id );
 
-		$translated_ids = ( new TranslatedPostIdQuery( MslsSqlCacher::create( __CLASS__, __METHOD__ ) ) )( $target_lang );
+		// Cache key includes the source blog id so a non-blog-aware object
+		// cache backend can't leak ids from one switched-to blog to another.
+		$cache_params   = array( __METHOD__, (string) $this->source_blog_id, $target_lang );
+		$translated_ids = ( new TranslatedPostIdQuery( MslsSqlCacher::create( __CLASS__, $cache_params ) ) )( $target_lang );
 
 		$args = array(
 			'post_type'      => $this->post_type,
