@@ -110,6 +110,17 @@ jQuery( document ).ready(
 							$row.css( 'opacity', 0.5 );
 						}
 					);
+					// Reload so the now-translated rows drop out of the list
+					// and pagination/totals reflect the new state. Brief
+					// delay lets the user read the completion notice.
+					if ( done > 0 ) {
+						window.setTimeout(
+							function () {
+								window.location.reload();
+							},
+							1500
+						);
+					}
 					return;
 				}
 
@@ -127,6 +138,12 @@ jQuery( document ).ready(
 				createOne( task.postId, sourceBlogId ).then(
 					function () {
 						done++;
+						if ( task.$button.length ) {
+							task.$button
+								.prop( 'disabled', true )
+								.removeClass( 'msls-loading' )
+								.addClass( 'msls-tp-done' );
+						}
 						completed.push( task.$button.closest( 'tr' ) );
 						step();
 					}
