@@ -22,6 +22,10 @@ class MslsTranslationPickerPage {
 
 	const SCRIPT_HANDLE = 'msls-translation-picker';
 
+	const PER_PAGE_OPTION = 'msls_tp_per_page';
+
+	const PER_PAGE_DEFAULT = 20;
+
 	/**
 	 * Kept for template callers that reference a single slug; equal to
 	 * the base slug for the 'post' post type.
@@ -36,6 +40,26 @@ class MslsTranslationPickerPage {
 		// Late-priority reorder: put our entries right under "All Posts"
 		// regardless of what other plugins do to the submenu array.
 		add_action( 'admin_menu', array( self::class, 'reorder_submenu' ), 999 );
+
+		add_filter( 'set-screen-option', array( self::class, 'save_per_page_option' ), 10, 3 );
+		add_filter( 'set_screen_option_' . self::PER_PAGE_OPTION, array( self::class, 'save_per_page_option' ), 10, 3 );
+	}
+
+	/**
+	 * Persists the chosen per-page value submitted via screen options.
+	 *
+	 * @param mixed  $status
+	 * @param string $option
+	 * @param mixed  $value
+	 *
+	 * @return mixed
+	 */
+	public static function save_per_page_option( $status, $option, $value ) {
+		if ( self::PER_PAGE_OPTION === $option ) {
+			$value = (int) $value;
+			return $value > 0 ? $value : self::PER_PAGE_DEFAULT;
+		}
+		return $status;
 	}
 
 	/**
@@ -53,7 +77,7 @@ class MslsTranslationPickerPage {
 				continue;
 			}
 
-			add_submenu_page(
+			$hook = add_submenu_page(
 				$parent,
 				__( 'Add Post from Translation', 'multisite-language-switcher' ),
 				__( 'Add from Translation', 'multisite-language-switcher' ),
@@ -61,7 +85,52 @@ class MslsTranslationPickerPage {
 				self::page_slug( $post_type ),
 				array( self::class, 'render' )
 			);
+
+			if ( $hook ) {
+				add_action(
+					'load-' . $hook,
+					static function () use ( $post_type ) {
+						MslsTranslationPickerPage::on_page_load( $post_type );
+					}
+				);
+			}
 		}
+	}
+
+	/**
+	 * Called once per request when the picker page is being loaded for a
+	 * specific post type. Registers the screen options (per-page and the
+	 * automatic column-toggle dropdown).
+	 *
+	 * @codeCoverageIgnore
+	 */
+	public static function on_page_load( string $post_type ): void {
+		add_screen_option(
+			'per_page',
+			array(
+				'label'   => __( 'Posts per page', 'multisite-language-switcher' ),
+				'default' => self::PER_PAGE_DEFAULT,
+				'option'  => self::PER_PAGE_OPTION,
+			)
+		);
+
+		$screen = get_current_screen();
+		if ( ! $screen ) {
+			return;
+		}
+
+		// Surface the table's columns to WordPress so the screen-options
+		// dropdown shows toggles for them and hidden-column user prefs
+		// persist through manage{$screen->id}columnshidden.
+		add_filter(
+			'manage_' . $screen->id . '_columns',
+			static function () use ( $post_type ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$source = isset( $_GET['msls_source'] ) ? absint( wp_unslash( (string) $_GET['msls_source'] ) ) : 0;
+				$table  = new MslsTranslationPickerTable( $source, $post_type );
+				return $table->get_columns();
+			}
+		);
 	}
 
 	/**

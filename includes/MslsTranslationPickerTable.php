@@ -80,14 +80,22 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 			return $this->taxonomies_cache;
 		}
 
-		switch_to_blog( $this->source_blog_id );
+		$switched = false;
+		if ( $this->source_blog_id > 0 ) {
+			switch_to_blog( $this->source_blog_id );
+			$switched = true;
+		}
+
 		$this->taxonomies_cache = array();
 		foreach ( get_object_taxonomies( $this->post_type, 'objects' ) as $tax ) {
 			if ( ! empty( $tax->show_admin_column ) ) {
 				$this->taxonomies_cache[ $tax->name ] = $tax;
 			}
 		}
-		restore_current_blog();
+
+		if ( $switched ) {
+			restore_current_blog();
+		}
 
 		return $this->taxonomies_cache;
 	}
@@ -99,10 +107,13 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 	}
 
 	public function prepare_items(): void {
-		$this->_column_headers = array( $this->get_columns(), array(), array() );
+		$columns               = $this->get_columns();
+		$hidden                = is_object( $this->screen ) ? get_hidden_columns( $this->screen ) : array();
+		$this->_column_headers = array( $columns, $hidden, array() );
 
 		$target_lang  = MslsBlogCollection::get_blog_language( get_current_blog_id() );
 		$current_page = $this->get_pagenum();
+		$per_page     = (int) $this->get_items_per_page( MslsTranslationPickerPage::PER_PAGE_OPTION, self::PER_PAGE );
 
 		switch_to_blog( $this->source_blog_id );
 
@@ -111,7 +122,7 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 		$args = array(
 			'post_type'      => $this->post_type,
 			'post_status'    => array( 'publish', 'draft', 'pending', 'future' ),
-			'posts_per_page' => self::PER_PAGE,
+			'posts_per_page' => $per_page,
 			'paged'          => $current_page,
 			'post__not_in'   => $translated_ids,
 			'orderby'        => 'date',
@@ -153,8 +164,8 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 		$this->set_pagination_args(
 			array(
 				'total_items' => $total,
-				'per_page'    => self::PER_PAGE,
-				'total_pages' => (int) ceil( $total / self::PER_PAGE ),
+				'per_page'    => $per_page,
+				'total_pages' => $per_page > 0 ? (int) ceil( $total / $per_page ) : 0,
 			)
 		);
 	}
