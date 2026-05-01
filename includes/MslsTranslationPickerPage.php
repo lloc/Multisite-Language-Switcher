@@ -446,8 +446,10 @@ class MslsTranslationPickerPage {
 		$table = new MslsTranslationPickerTable( $source, $post_type, $search );
 		$table->prepare_items();
 
+		// The form's submit is intercepted client-side and dispatched through
+		// the REST API (which carries its own X-WP-Nonce), so no server-side
+		// nonce is required here.
 		echo '<form method="post" id="msls-tp-form">';
-		wp_nonce_field( 'msls_tp_bulk', 'msls_tp_nonce' );
 		$table->display();
 		echo '</form>';
 	}
