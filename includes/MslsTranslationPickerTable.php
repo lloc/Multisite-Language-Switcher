@@ -151,7 +151,11 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 				'title'      => get_the_title( $post ),
 				'status'     => $post->post_status,
 				'date'       => get_the_date( '', $post ),
-				'permalink'  => get_permalink( $post ),
+				// Preview URL for non-published statuses so reviewers
+				// can view drafts/pending without hitting a public 404.
+				'permalink'  => 'publish' === $post->post_status
+					? get_permalink( $post )
+					: get_preview_post_link( $post ),
 				'author'     => (string) get_the_author_meta( 'display_name', (int) $post->post_author ),
 				'taxonomies' => $terms_by_tax,
 			);
