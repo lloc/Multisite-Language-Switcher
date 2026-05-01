@@ -61,9 +61,8 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 			$cols[ 'taxonomy-' . $name ] = $tax->labels->name ?? (string) $tax->label;
 		}
 
-		$cols['status']  = __( 'Status', 'multisite-language-switcher' );
-		$cols['date']    = __( 'Date', 'multisite-language-switcher' );
-		$cols['actions'] = __( 'Actions', 'multisite-language-switcher' );
+		$cols['status'] = __( 'Status', 'multisite-language-switcher' );
+		$cols['date']   = __( 'Date', 'multisite-language-switcher' );
 
 		return $cols;
 	}
@@ -184,7 +183,23 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 	 * @param array<string, mixed> $item
 	 */
 	protected function column_title( $item ): string {
-		return '<strong>' . esc_html( $item['title'] ) . '</strong>';
+		$title = '<strong>' . esc_html( $item['title'] ) . '</strong>';
+
+		$actions = array(
+			'view'   => sprintf(
+				'<a class="msls-tp-view" href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a>',
+				esc_url( (string) $item['permalink'] ),
+				esc_html__( 'View original', 'multisite-language-switcher' )
+			),
+			'create' => sprintf(
+				'<button type="button" class="button-link msls-tp-create" data-source-post-id="%1$d" data-source-blog-id="%2$d">%3$s</button>',
+				(int) $item['ID'],
+				$this->source_blog_id,
+				esc_html__( 'Create draft', 'multisite-language-switcher' )
+			),
+		);
+
+		return $title . $this->row_actions( $actions, true );
 	}
 
 	/**
@@ -234,26 +249,6 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 			return empty( $names ) ? '—' : esc_html( implode( ', ', $names ) );
 		}
 		return '';
-	}
-
-	/**
-	 * @param array<string, mixed> $item
-	 */
-	protected function column_actions( $item ): string {
-		$view = sprintf(
-			'<a class="msls-tp-view" href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a>',
-			esc_url( (string) $item['permalink'] ),
-			esc_html__( 'View original', 'multisite-language-switcher' )
-		);
-
-		$create = sprintf(
-			'<button type="button" class="button button-primary msls-tp-create" data-source-post-id="%1$d" data-source-blog-id="%2$d">%3$s</button>',
-			(int) $item['ID'],
-			$this->source_blog_id,
-			esc_html__( 'Create draft', 'multisite-language-switcher' )
-		);
-
-		return $view . ' ' . $create;
 	}
 
 	public function no_items(): void {
