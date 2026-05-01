@@ -41,7 +41,7 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 				'singular' => 'msls_source_post',
 				'plural'   => 'msls_source_posts',
 				'ajax'     => false,
-				'screen'   => MslsTranslationPickerPage::SLUG,
+				'screen'   => MslsTranslationPickerPage::BASE_SLUG,
 			)
 		);
 

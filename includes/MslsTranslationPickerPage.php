@@ -27,12 +27,6 @@ class MslsTranslationPickerPage {
 	const PER_PAGE_DEFAULT = 20;
 
 	/**
-	 * Kept for template callers that reference a single slug; equal to
-	 * the base slug for the 'post' post type.
-	 */
-	const SLUG = self::BASE_SLUG;
-
-	/**
 	 * @codeCoverageIgnore
 	 */
 	public static function init(): void {
