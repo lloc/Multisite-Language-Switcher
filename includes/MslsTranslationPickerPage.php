@@ -165,11 +165,21 @@ class MslsTranslationPickerPage {
 			$our_item = $submenu[ $parent ][ $our_key ];
 			unset( $submenu[ $parent ][ $our_key ] );
 
+			// Locate the "All Posts" entry by its slug rather than assuming
+			// it is the first item — another plugin could have prepended.
+			$all_key = null;
+			foreach ( $submenu[ $parent ] as $k => $item ) {
+				if ( isset( $item[2] ) && $parent === $item[2] ) {
+					$all_key = $k;
+					break;
+				}
+			}
+
 			$rebuilt = array();
 			$placed  = false;
 			foreach ( $submenu[ $parent ] as $k => $item ) {
 				$rebuilt[ $k ] = $item;
-				if ( ! $placed ) {
+				if ( ! $placed && ( null === $all_key || $k === $all_key ) ) {
 					$rebuilt[] = $our_item;
 					$placed    = true;
 				}
