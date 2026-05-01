@@ -249,7 +249,9 @@ class MslsTranslationPickerPage {
 				'targetBlogId' => $target_blog_id,
 				'i18n'         => array(
 					'creating'  => __( 'Creating draft…', 'multisite-language-switcher' ),
+					/* translators: 1: index of the current item being processed, 2: total number of selected items */
 					'progress'  => __( 'Creating drafts: %1$d of %2$d…', 'multisite-language-switcher' ),
+					/* translators: 1: number of drafts successfully created, 2: number of errors encountered */
 					'completed' => __( '%1$d drafts created, %2$d errors.', 'multisite-language-switcher' ),
 					'noneChose' => __( 'No posts selected.', 'multisite-language-switcher' ),
 					'error'     => __( 'Something went wrong. Please try again.', 'multisite-language-switcher' ),
