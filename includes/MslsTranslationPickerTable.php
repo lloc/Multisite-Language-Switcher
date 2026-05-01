@@ -255,7 +255,7 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 			$names = $item['taxonomies'][ $tax ] ?? array();
 			return empty( $names ) ? '—' : esc_html( implode( ', ', $names ) );
 		}
-		return '';
+		return '—';
 	}
 
 	public function no_items(): void {
