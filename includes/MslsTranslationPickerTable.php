@@ -24,17 +24,48 @@ if ( ! class_exists( '\\WP_List_Table' ) ) {
  */
 class MslsTranslationPickerTable extends \WP_List_Table {
 
+	/**
+	 * Default page size used as a fallback when the user has not picked a
+	 * value via the screen-options dropdown.
+	 */
 	const PER_PAGE = 20;
 
+	/**
+	 * Source blog the listing queries (the picker reads from this site's
+	 * data while the page itself runs on the target blog).
+	 *
+	 * @var int
+	 */
 	protected int $source_blog_id;
 
+	/**
+	 * Post type being listed (read from the URL slug).
+	 *
+	 * @var string
+	 */
 	protected string $post_type;
 
+	/**
+	 * Optional title-search string forwarded to WP_Query as 's'.
+	 *
+	 * @var string
+	 */
 	protected string $search;
 
-	/** @var array<string, \WP_Taxonomy>|null */
+	/**
+	 * Per-request memo of the source-blog taxonomies whose admin column is
+	 * enabled. Resolved once and reused for both column headers and item
+	 * rendering.
+	 *
+	 * @var array<string, \WP_Taxonomy>|null
+	 */
 	protected ?array $taxonomies_cache = null;
 
+	/**
+	 * @param int    $source_blog_id Blog to read posts from.
+	 * @param string $post_type      Post type to query.
+	 * @param string $search         Optional title-search term.
+	 */
 	public function __construct( int $source_blog_id, string $post_type, string $search = '' ) {
 		parent::__construct(
 			array(
@@ -50,6 +81,13 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 		$this->search         = $search;
 	}
 
+	/**
+	 * Returns the column map for the table — checkbox, title, author, any
+	 * source-blog taxonomies that opted into show_admin_column, then status
+	 * and date.
+	 *
+	 * @return array<string, string>
+	 */
 	public function get_columns(): array {
 		$cols = array(
 			'cb'     => '<input type="checkbox" />',
@@ -99,12 +137,25 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 		return $this->taxonomies_cache;
 	}
 
+	/**
+	 * Registers the bulk action that the picker JS hijacks to create
+	 * drafts for every checked row.
+	 *
+	 * @return array<string, string>
+	 */
 	protected function get_bulk_actions(): array {
 		return array(
 			'msls_bulk_create' => __( 'Create drafts for selected', 'multisite-language-switcher' ),
 		);
 	}
 
+	/**
+	 * Loads the source-blog posts for the current page into $this->items.
+	 *
+	 * Honours hidden-column user prefs, the per-page screen option, the
+	 * search term and pagination. Already-translated post IDs are excluded
+	 * via TranslatedPostIdQuery against the target language.
+	 */
 	public function prepare_items(): void {
 		$columns               = $this->get_columns();
 		$hidden                = is_object( $this->screen ) ? get_hidden_columns( $this->screen ) : array();
@@ -258,6 +309,10 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 		return '—';
 	}
 
+	/**
+	 * Renders the empty-state message — distinguishes between "search
+	 * returned nothing" and "every source post already has a translation".
+	 */
 	public function no_items(): void {
 		if ( '' !== $this->search ) {
 			esc_html_e( 'No posts match your search.', 'multisite-language-switcher' );

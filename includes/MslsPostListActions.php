@@ -18,6 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class MslsPostListActions {
 
 	/**
+	 * Bootstraps the button injector on edit.php — short-circuits when MSLS
+	 * is excluded for the current blog, when no post_type is in the request,
+	 * when the current user can't create posts, or when no MSLS-active source
+	 * blogs exist.
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function init(): void {

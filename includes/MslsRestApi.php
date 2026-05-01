@@ -115,6 +115,8 @@ class MslsRestApi {
 	}
 
 	/**
+	 * Argument schema for the GET /untranslated-posts endpoint.
+	 *
 	 * @return array<string, array<string, mixed>>
 	 */
 	private static function get_list_route_args(): array {
@@ -221,11 +223,14 @@ class MslsRestApi {
 	}
 
 	/**
-	 * @param bool   $default
-	 * @param int    $source_post_id
+	 * Routes the default capability decision through the
+	 * msls_quick_create_capability filter so integrations can override it.
+	 *
+	 * @param bool   $default        Result of the default capability check.
+	 * @param int    $source_post_id Source post id, or 0 for list-style checks.
 	 * @param int    $source_blog_id
 	 * @param int    $target_blog_id
-	 * @param string $context
+	 * @param string $context        'read' for source-side checks, 'create' for target-side.
 	 *
 	 * @return bool
 	 */

@@ -18,12 +18,26 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class MslsTranslationPickerPage {
 
+	/**
+	 * Base of the per-post-type page slugs. The actual slug appended to the
+	 * URL is BASE_SLUG . '-' . $post_type — see {@see self::page_slug()}.
+	 */
 	const BASE_SLUG = 'msls-translation-picker';
 
+	/**
+	 * Script handle registered by {@see self::enqueue()} and reused as the
+	 * localization key for the script's bootstrap payload.
+	 */
 	const SCRIPT_HANDLE = 'msls-translation-picker';
 
+	/**
+	 * User-meta key behind the "Posts per page" Screen Options input.
+	 */
 	const PER_PAGE_OPTION = 'msls_tp_per_page';
 
+	/**
+	 * Page size used until the user picks a value via Screen Options.
+	 */
 	const PER_PAGE_DEFAULT = 20;
 
 	/**
