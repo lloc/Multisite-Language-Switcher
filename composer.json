@@ -48,6 +48,11 @@
       "npx playwright install --with-deps",
       "npx playwright test"
     ],
+    "qa": [
+      "@phpcs",
+      "@phpstan",
+      "@phpunit"
+    ],
     "build": [
       "@prepare",
       "@flags-png",

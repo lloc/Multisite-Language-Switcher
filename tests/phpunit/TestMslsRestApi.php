@@ -275,7 +275,7 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 
 		Functions\expect( 'get_posts' )->once()->andReturn( array( $post ) );
 		Functions\expect( 'get_the_title' )->once()->with( $post )->andReturn( 'Original Title' );
-		Functions\expect( 'mysql_to_rfc3339' )->once()->with( '2026-04-20 12:00:00' )->andReturn( '2026-04-20T12:00:00' );
+		Functions\expect( 'mysql2date' )->once()->with( 'Y-m-d\TH:i:s', '2026-04-20 12:00:00', false )->andReturn( '2026-04-20T12:00:00' );
 		Functions\expect( 'get_permalink' )->once()->with( $post )->andReturn( 'https://example.tld/?p=42' );
 
 		$api    = new MslsRestApi();

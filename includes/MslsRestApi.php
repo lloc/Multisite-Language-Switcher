@@ -420,7 +420,7 @@ class MslsRestApi {
 				'id'          => (int) $post->ID,
 				'title'       => get_the_title( $post ),
 				'post_status' => $post->post_status,
-				'date_gmt'    => mysql_to_rfc3339( $post->post_date_gmt ),
+				'date_gmt'    => mysql2date( 'Y-m-d\TH:i:s', $post->post_date_gmt, false ),
 				'view_url'    => (string) get_permalink( $post ),
 			);
 		}
