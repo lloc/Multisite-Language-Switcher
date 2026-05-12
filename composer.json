@@ -48,7 +48,7 @@
       "@prepare",
       "@flags-png",
       "@flags-svg",
-      "@composer update --no-dev --prefer-dist --optimize-autoloader",
+      "@composer install --no-dev --prefer-dist --optimize-autoloader",
       "npm ci",
       "npm run build",
       "@git-release",
