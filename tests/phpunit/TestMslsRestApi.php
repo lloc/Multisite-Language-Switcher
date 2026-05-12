@@ -107,6 +107,7 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		Functions\expect( 'post_type_exists' )->once()->with( 'post' )->andReturn( true );
 		Functions\expect( 'wp_insert_post' )->once()->andReturn( 42 );
 		Functions\expect( 'get_edit_post_link' )->once()->with( 42, 'raw' )->andReturn( 'https://example.tld/wp-admin/post.php?post=42&action=edit' );
+		Functions\expect( 'get_the_title' )->once()->with( 42 )->andReturn( 'Test Title' );
 
 		Functions\expect( 'get_option' )->andReturn( array() );
 		Functions\expect( 'add_option' )->andReturn( true );
@@ -135,6 +136,7 @@ final class TestMslsRestApi extends MslsUnitTestCase {
 		$data = $result->get_data();
 		$this->assertEquals( 42, $data['post_id'] );
 		$this->assertEquals( 'https://example.tld/wp-admin/post.php?post=42&action=edit', $data['edit_url'] );
+		$this->assertEquals( 'Test Title', $data['post_title'] );
 	}
 
 	public function test_prefix_source_language(): void {

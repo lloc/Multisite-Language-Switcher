@@ -25,12 +25,18 @@ jQuery( document ).ready(
 					}
 				).then(
 					function ( response ) {
+						var isMetabox = $button.closest( '#msls' ).length > 0;
 						var $link = $( '<a>' )
 							.attr( 'href', response.edit_url )
 							.attr( 'title', $button.attr( 'title' ).replace( /Create/, 'Edit' ) )
 							.html( $button.html() );
 
-						$link.find( '.dashicons' ).removeClass( 'dashicons-update dashicons-plus' ).addClass( 'dashicons-edit' );
+						if ( isMetabox ) {
+							$link.addClass( 'msls-edit-link' ).attr( 'target', '_blank' );
+						}
+
+						var successIcon = isMetabox ? 'dashicons-external' : 'dashicons-edit';
+						$link.find( '.dashicons' ).removeClass( 'dashicons-update dashicons-plus' ).addClass( successIcon );
 
 						$button.replaceWith( $link );
 
@@ -44,10 +50,15 @@ jQuery( document ).ready(
 							$hiddenInput.val( response.post_id );
 						}
 
+						var $titleInput = $container.find( 'input.msls_title' );
+						if ( $titleInput.length ) {
+							$titleInput.val( response.post_title || '' );
+						}
+
 						var $select = $container.find( 'select[name^="msls_input_"]' );
 						if ( $select.length ) {
 							$select.append(
-								$( '<option>' ).val( response.post_id ).text( response.edit_url ).prop( 'selected', true )
+								$( '<option>' ).val( response.post_id ).text( response.post_title || '' ).prop( 'selected', true )
 							);
 						}
 					}

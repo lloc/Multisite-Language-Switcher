@@ -192,27 +192,33 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
+		$options                        = \Mockery::mock( MslsOptions::class );
+		$options->activate_quick_create = false;
+
 		$post_type = \Mockery::mock( MslsPostType::class );
 		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
 
 		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );
+		Functions\expect( 'msls_options' )->once()->andReturn( $options );
 
 		$wp_post_type               = \Mockery::mock( \WP_Post_Type::class );
 		$wp_post_type->hierarchical = false;
 
 		Functions\expect( 'get_post_type' )->once()->andReturn( 'page' );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
+		Functions\expect( 'get_blog_option' )->once()->andReturn( '' );
+		Functions\expect( 'get_post_status' )->once()->andReturn( 'draft' );
 		Functions\expect( 'wp_nonce_field' )->once()->andReturn( 'nonce_field' );
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
-		Functions\expect( 'add_query_arg' )->once()->andReturn( 'query_args' );
+		Functions\expect( 'add_query_arg' )->times( 3 )->andReturn( 'query_args' );
 		Functions\expect( 'get_post_type_object' )->once()->andReturn( $wp_post_type );
 		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'draft', 'public', 'private' ) );
 		Functions\expect( 'get_posts' )->once()->andReturn( array() );
-		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
-		Functions\expect( 'get_admin_url' )->once()->andReturn( 'admin-url-empty' );
+		Functions\expect( 'get_current_blog_id' )->times( 3 )->andReturn( 1 );
+		Functions\expect( 'get_admin_url' )->twice()->andReturn( 'admin-url-empty' );
 
-		$expected = '<ul><li><label for="msls_input_de_DE msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><select name="msls_input_de_DE"><option value="0"></option></select></li></ul>';
+		$expected = '<ul><li><label for="msls_input_de_DE" class="msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><select name="msls_input_de_DE"><option value="0"></option></select><a class="msls-create-new" href="admin-url-empty" target="_blank" title="Create a new translation in the de_DE-blog"><span class="dashicons dashicons-plus"></span></a></li></ul>';
 		$this->expectOutputString( $expected );
 
 		$this->MslsMetaBoxFactory()->render_select();
@@ -234,15 +240,18 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 
 		Functions\expect( 'get_post_type' )->once()->andReturn( 'page' );
 		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
+		Functions\expect( 'get_blog_option' )->once()->andReturn( '' );
+		Functions\expect( 'get_post_status' )->once()->andReturn( 'draft' );
 		Functions\expect( 'wp_nonce_field' )->once()->andReturn( 'nonce_field' );
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'add_query_arg' )->once()->andReturn( 'query_args' );
 		Functions\expect( 'get_post_type_object' )->once()->andReturn( $wp_post_type );
 		Functions\expect( 'wp_dropdown_pages' )->once()->andReturn( '<select name="msls_input_region_Code"><option value="0">--some value</option></select>' );
-		Functions\expect( 'get_edit_post_link' )->once()->andReturn( 'edit-post-link' );
+		Functions\expect( 'get_edit_post_link' )->twice()->andReturn( 'edit-post-link' );
+		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
 
-		$expected = '<ul><li><label for="msls_input_de_DE msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><select name="msls_input_region_Code"><option value="0">--some value</option></select></li></ul>';
+		$expected = '<ul><li><label for="msls_input_de_DE" class="msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><select name="msls_input_region_Code"><option value="0">--some value</option></select><a class="msls-edit-link" href="edit-post-link" target="_blank" title="Edit the translation in the de_DE-blog"><span class="dashicons dashicons-external"></span></a></li></ul>';
 		$this->expectOutputString( $expected );
 
 		$this->MslsMetaBoxFactory()->render_select();
@@ -250,35 +259,42 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 
 	public static function render_input_provider(): array {
 		return array(
-			array( array( 'de_DE' => 42 ), 1, 0, 0, 1, '<ul><li class=""><label for="msls_title_ msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value="42"/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value="Test"/></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
-			array( array( 'en_US' => 17 ), 0, 1, 1, 0, '<ul><li class=""><label for="msls_title_ msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value=""/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
+			array( array( 'de_DE' => 42 ), 1, 1, 0, 2, 0, '<ul><li class=""><label for="msls_title_" class="msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value="42"/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value="Test"/><a class="msls-edit-link" href="edit-post-link" target="_blank" title="Edit the translation in the de_DE-blog"><span class="dashicons dashicons-external"></span></a></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
+			array( array( 'en_US' => 17 ), 0, 3, 2, 0, 2, '<ul><li class=""><label for="msls_title_" class="msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value=""/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/><a class="msls-create-new" href="admin-url-empty" target="_blank" title="Create a new translation in the de_DE-blog"><span class="dashicons dashicons-plus"></span></a></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
 		);
 	}
 
 	/**
 	 * @dataProvider render_input_provider
 	 */
-	public function test_render_input( $option, $the_title_times, $current_blog_id_times, $admin_url_times, $edit_post_link_times, $expected ) {
+	public function test_render_input( $option, $the_title_times, $current_blog_id_times, $admin_url_times, $edit_post_link_times, $add_query_arg_times, $expected ) {
 		global $post;
 
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
+
+		$options                        = \Mockery::mock( MslsOptions::class );
+		$options->activate_quick_create = false;
 
 		$post_type = \Mockery::mock( MslsPostType::class );
 		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
 		$post_type->shouldReceive( 'get_request' )->once()->andReturn( 'post' );
 
 		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );
+		Functions\expect( 'msls_options' )->atMost()->times( 1 )->andReturn( $options );
 
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'get_post_type' )->once()->andReturn( 'page' );
 		Functions\expect( 'get_option' )->once()->andReturn( $option );
+		Functions\expect( 'get_blog_option' )->once()->andReturn( '' );
+		Functions\expect( 'get_post_status' )->once()->andReturn( 'draft' );
 		Functions\expect( 'wp_nonce_field' )->once()->andReturn( 'nonce_field' );
 		Functions\expect( 'get_the_title' )->times( $the_title_times )->andReturn( 'Test' );
 		Functions\expect( 'get_current_blog_id' )->times( $current_blog_id_times )->andReturn( 1 );
 		Functions\expect( 'get_admin_url' )->times( $admin_url_times )->andReturn( 'admin-url-empty' );
 		Functions\expect( 'get_edit_post_link' )->times( $edit_post_link_times )->andReturn( 'edit-post-link' );
+		Functions\expect( 'add_query_arg' )->times( $add_query_arg_times )->andReturn( 'query_args' );
 
 		$this->expectOutputString( $expected );
 
