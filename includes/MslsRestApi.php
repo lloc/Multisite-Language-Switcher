@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Query\TranslatedPostIdQuery;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -16,6 +18,14 @@ class MslsRestApi {
 	const NAMESPACE = 'msls/v1';
 
 	const ROUTE = '/create-translation';
+
+	const ROUTE_UNTRANSLATED = '/untranslated-posts';
+
+	const UNTRANSLATED_POSTS_LIMIT = 100;
+
+	const UNTRANSLATED_POST_STATUSES = array( 'publish', 'draft', 'pending', 'future' );
+
+	const LAST_SOURCE_USER_META = 'msls_translation_picker_last_source';
 
 	/**
 	 * Registers the REST API route.
@@ -32,7 +42,53 @@ class MslsRestApi {
 			)
 		);
 
+		register_rest_route(
+			self::NAMESPACE,
+			self::ROUTE_UNTRANSLATED,
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( new self(), 'list_untranslated_posts' ),
+				'permission_callback' => array( new self(), 'check_list_permission' ),
+				'args'                => self::get_list_route_args(),
+			)
+		);
+
 		add_filter( 'msls_quick_create_post_data', array( self::class, 'prefix_source_language' ), 10, 4 );
+		add_action( 'msls_quick_create_after_insert', array( self::class, 'remember_source_blog' ), 10, 3 );
+	}
+
+	/**
+	 * Remembers the source blog a user last used when creating a
+	 * translation, so the picker can pre-select it next time.
+	 *
+	 * Hooked to msls_quick_create_after_insert so it only records on
+	 * successful creates, not on modal-open/cancel.
+	 *
+	 * @param int      $new_post_id
+	 * @param \WP_Post $source_post
+	 * @param int      $source_blog_id
+	 */
+	public static function remember_source_blog( int $new_post_id, \WP_Post $source_post, int $source_blog_id ): void {
+		$user_id = get_current_user_id();
+		if ( $user_id <= 0 ) {
+			return;
+		}
+
+		update_user_meta( $user_id, self::LAST_SOURCE_USER_META, $source_blog_id );
+	}
+
+	/**
+	 * Returns the source blog id the current user last picked, or 0.
+	 *
+	 * @return int
+	 */
+	public static function get_last_source_blog_id(): int {
+		$user_id = get_current_user_id();
+		if ( $user_id <= 0 ) {
+			return 0;
+		}
+
+		return (int) get_user_meta( $user_id, self::LAST_SOURCE_USER_META, true );
 	}
 
 	/**
@@ -59,6 +115,37 @@ class MslsRestApi {
 	}
 
 	/**
+	 * Argument schema for the GET /untranslated-posts endpoint.
+	 *
+	 * @return array<string, array<string, mixed>>
+	 */
+	private static function get_list_route_args(): array {
+		return array(
+			'source_blog_id' => array(
+				'required'          => true,
+				'type'              => 'integer',
+				'sanitize_callback' => 'absint',
+			),
+			'target_blog_id' => array(
+				'required'          => true,
+				'type'              => 'integer',
+				'sanitize_callback' => 'absint',
+			),
+			'post_type'      => array(
+				'required'          => true,
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_key',
+			),
+			'search'         => array(
+				'required'          => false,
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => '',
+			),
+		);
+	}
+
+	/**
 	 * @param \WP_REST_Request $request
 	 *
 	 * @return bool
@@ -68,19 +155,109 @@ class MslsRestApi {
 		$source_post_id = (int) $request->get_param( 'source_post_id' );
 		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
 
-		switch_to_blog( $source_blog_id );
-		$can_read = current_user_can( 'read_post', $source_post_id );
-		restore_current_blog();
-
-		if ( ! $can_read ) {
+		if ( ! self::user_can_read_source( $source_post_id, $source_blog_id, $target_blog_id ) ) {
 			return false;
 		}
 
-		switch_to_blog( $target_blog_id );
-		$can_edit = current_user_can( 'edit_posts' );
+		return self::user_can_create_target( $source_post_id, $source_blog_id, $target_blog_id );
+	}
+
+	/**
+	 * Evaluates the read capability on the source blog, with filter override.
+	 *
+	 * @param int $source_post_id
+	 * @param int $source_blog_id
+	 * @param int $target_blog_id
+	 *
+	 * @return bool
+	 */
+	public static function user_can_read_source( int $source_post_id, int $source_blog_id, int $target_blog_id ): bool {
+		switch_to_blog( $source_blog_id );
+		$default = current_user_can( 'read_post', $source_post_id );
 		restore_current_blog();
 
-		return $can_edit;
+		return self::apply_capability_filter( $default, $source_post_id, $source_blog_id, $target_blog_id, 'read' );
+	}
+
+	/**
+	 * Evaluates the create capability on the target blog, with filter override.
+	 *
+	 * @param int $source_post_id
+	 * @param int $source_blog_id
+	 * @param int $target_blog_id
+	 *
+	 * @return bool
+	 */
+	public static function user_can_create_target( int $source_post_id, int $source_blog_id, int $target_blog_id ): bool {
+		switch_to_blog( $target_blog_id );
+		$default = current_user_can( 'edit_posts' );
+		restore_current_blog();
+
+		return self::apply_capability_filter( $default, $source_post_id, $source_blog_id, $target_blog_id, 'create' );
+	}
+
+	/**
+	 * Permission callback for the untranslated-posts listing endpoint.
+	 *
+	 * Runs the same capability filter as the create endpoint but with no
+	 * specific source post id (0) and with a generic 'read' capability
+	 * default on the source blog, since no single post is being targeted.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return bool
+	 */
+	public function check_list_permission( \WP_REST_Request $request ): bool {
+		$source_blog_id = (int) $request->get_param( 'source_blog_id' );
+		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
+
+		switch_to_blog( $source_blog_id );
+		$default_read = current_user_can( 'read' );
+		restore_current_blog();
+
+		if ( ! self::apply_capability_filter( $default_read, 0, $source_blog_id, $target_blog_id, 'read' ) ) {
+			return false;
+		}
+
+		return self::user_can_create_target( 0, $source_blog_id, $target_blog_id );
+	}
+
+	/**
+	 * Routes the default capability decision through the
+	 * msls_quick_create_capability filter so integrations can override it.
+	 *
+	 * @param bool   $default        Result of the default capability check.
+	 * @param int    $source_post_id Source post id, or 0 for list-style checks.
+	 * @param int    $source_blog_id
+	 * @param int    $target_blog_id
+	 * @param string $context        'read' for source-side checks, 'create' for target-side.
+	 *
+	 * @return bool
+	 */
+	private static function apply_capability_filter( bool $default, int $source_post_id, int $source_blog_id, int $target_blog_id, string $context ): bool {
+		/**
+		 * Filters the result of the Quick Create capability check.
+		 *
+		 * Lets integrations override the default read/edit checks, for
+		 * example to permit a translator without an account on the source
+		 * blog to mirror a post into the target blog.
+		 *
+		 * @param bool   $default        Result of the default capability check.
+		 * @param int    $source_post_id Source post ID (0 for list-style checks).
+		 * @param int    $source_blog_id Source blog ID.
+		 * @param int    $target_blog_id Target blog ID.
+		 * @param string $context        'read' when checking the source, 'create' when checking the target.
+		 *
+		 * @since TBD
+		 */
+		return (bool) apply_filters(
+			'msls_quick_create_capability',
+			$default,
+			$source_post_id,
+			$source_blog_id,
+			$target_blog_id,
+			$context
+		);
 	}
 
 	/**
@@ -189,6 +366,86 @@ class MslsRestApi {
 		);
 
 		return new \WP_REST_Response( $response_data, 201 );
+	}
+
+	/**
+	 * Lists source-blog posts of a given type that have no translation
+	 * in the target blog yet.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function list_untranslated_posts( \WP_REST_Request $request ) {
+		$source_blog_id = (int) $request->get_param( 'source_blog_id' );
+		$target_blog_id = (int) $request->get_param( 'target_blog_id' );
+		$post_type      = (string) $request->get_param( 'post_type' );
+		$search         = (string) $request->get_param( 'search' );
+
+		$target_lang = MslsBlogCollection::get_blog_language( $target_blog_id );
+
+		switch_to_blog( $source_blog_id );
+
+		if ( ! post_type_exists( $post_type ) ) {
+			restore_current_blog();
+
+			return new \WP_Error(
+				'msls_source_post_type_not_found',
+				__( 'Post type does not exist on the source blog.', 'multisite-language-switcher' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		$translated_ids = ( new TranslatedPostIdQuery( MslsSqlCacher::create( __CLASS__, __METHOD__ ) ) )( $target_lang );
+
+		$query_args = array(
+			'post_type'        => $post_type,
+			'post_status'      => self::UNTRANSLATED_POST_STATUSES,
+			'numberposts'      => self::UNTRANSLATED_POSTS_LIMIT,
+			'post__not_in'     => $translated_ids,
+			'suppress_filters' => false,
+			'orderby'          => 'date',
+			'order'            => 'DESC',
+		);
+
+		if ( '' !== $search ) {
+			$query_args['s'] = $search;
+		}
+
+		$posts = get_posts( $query_args );
+
+		$items = array();
+		foreach ( $posts as $post ) {
+			$items[] = array(
+				'id'          => (int) $post->ID,
+				'title'       => get_the_title( $post ),
+				'post_status' => $post->post_status,
+				'date_gmt'    => mysql_to_rfc3339( $post->post_date_gmt ),
+				'view_url'    => (string) get_permalink( $post ),
+			);
+		}
+
+		restore_current_blog();
+
+		/**
+		 * Filters the untranslated-posts listing response.
+		 *
+		 * @param array<int, array<string, mixed>> $items          Listing items.
+		 * @param int                              $source_blog_id Source blog ID.
+		 * @param int                              $target_blog_id Target blog ID.
+		 * @param string                           $post_type      Post type queried.
+		 *
+		 * @since TBD
+		 */
+		$items = apply_filters( 'msls_untranslated_posts', $items, $source_blog_id, $target_blog_id, $post_type );
+
+		return new \WP_REST_Response(
+			array(
+				'items' => $items,
+				'total' => count( $items ),
+			),
+			200
+		);
 	}
 
 	/**

@@ -58,10 +58,12 @@ class MslsPlugin {
 
 			if ( is_admin() ) {
 				add_action( 'admin_menu', array( MslsAdmin::class, 'init' ) );
+				MslsTranslationPickerPage::init();
 				add_action( 'load-post.php', array( MslsMetaBox::class, 'init' ) );
 				add_action( 'load-post-new.php', array( MslsMetaBox::class, 'init' ) );
 				add_action( 'load-edit.php', array( MslsCustomColumn::class, 'init' ) );
 				add_action( 'load-edit.php', array( MslsCustomFilter::class, 'init' ) );
+				add_action( 'load-edit.php', array( MslsPostListActions::class, 'init' ) );
 
 				add_action( 'load-edit-tags.php', array( MslsCustomColumnTaxonomy::class, 'init' ) );
 				add_action( 'load-edit-tags.php', array( MslsPostTag::class, 'init' ) );
