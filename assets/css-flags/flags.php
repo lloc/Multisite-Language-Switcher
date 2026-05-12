@@ -2,8 +2,8 @@
 
 /**
  * File is auto-generated
- * 
-* 131 translations-teams for WordPress found
+ *
+ * 132 translations-teams for WordPress found
  */
 // Unhandled language: am (Amharic)
 // Unhandled language: arg (Aragonese)
@@ -15,6 +15,7 @@
 // Unhandled language: kir (Kyrgyz)
 // Unhandled language: snd (Sindhi)
 // Unhandled language: sw (Swahili)
+// Unhandled language: yor (Yoruba)
 return array(
 	'af'             => 'flag-icon-za',
 	'ary'            => 'flag-icon-ma',
@@ -32,39 +33,39 @@ return array(
 	'cy'             => 'flag-icon-gb-wls',
 	'da_DK'          => 'flag-icon-dk',
 	'de_AT'          => 'flag-icon-at',
+	'de_CH'          => 'flag-icon-ch',
 	'de_DE'          => 'flag-icon-de',
 	'de_DE_formal'   => 'flag-icon-de',
-	'de_CH'          => 'flag-icon-ch',
 	'de_CH_informal' => 'flag-icon-ch',
 	'dzo'            => 'flag-icon-bt',
 	'el'             => 'flag-icon-gr',
 	'en_NZ'          => 'flag-icon-nz',
 	'en_CA'          => 'flag-icon-ca',
 	'en_GB'          => 'flag-icon-gb',
-	'en_ZA'          => 'flag-icon-za',
 	'en_AU'          => 'flag-icon-au',
+	'en_ZA'          => 'flag-icon-za',
 	'eo'             => 'flag-icon-eu',
-	'es_AR'          => 'flag-icon-ar',
-	'es_CL'          => 'flag-icon-cl',
 	'es_ES'          => 'flag-icon-es',
-	'es_PE'          => 'flag-icon-pe',
+	'es_MX'          => 'flag-icon-mx',
+	'es_CO'          => 'flag-icon-co',
+	'es_CL'          => 'flag-icon-cl',
 	'es_CR'          => 'flag-icon-cr',
+	'es_PE'          => 'flag-icon-pe',
 	'es_VE'          => 'flag-icon-ve',
 	'es_EC'          => 'flag-icon-ec',
 	'es_DO'          => 'flag-icon-do',
 	'es_UY'          => 'flag-icon-uy',
 	'es_PR'          => 'flag-icon-pr',
-	'es_MX'          => 'flag-icon-mx',
 	'es_GT'          => 'flag-icon-gt',
-	'es_CO'          => 'flag-icon-co',
+	'es_AR'          => 'flag-icon-ar',
 	'et'             => 'flag-icon-ee',
 	'eu'             => 'flag-icon-es',
 	'fa_IR'          => 'flag-icon-ir',
 	'fa_AF'          => 'flag-icon-af',
 	'fi'             => 'flag-icon-fi',
 	'fr_CA'          => 'flag-icon-ca',
-	'fr_BE'          => 'flag-icon-be',
 	'fr_FR'          => 'flag-icon-fr',
+	'fr_BE'          => 'flag-icon-be',
 	'fur'            => 'flag-icon-it',
 	'gd'             => 'flag-icon-gb-sct',
 	'gl_ES'          => 'flag-icon-es',
@@ -97,18 +98,18 @@ return array(
 	'my_MM'          => 'flag-icon-mm',
 	'nb_NO'          => 'flag-icon-no',
 	'ne_NP'          => 'flag-icon-np',
-	'nl_BE'          => 'flag-icon-be',
 	'nl_NL'          => 'flag-icon-nl',
+	'nl_BE'          => 'flag-icon-be',
 	'nl_NL_formal'   => 'flag-icon-nl',
 	'nn_NO'          => 'flag-icon-no',
 	'oci'            => 'flag-icon-es-ca',
 	'pa_IN'          => 'flag-icon-in',
 	'pl_PL'          => 'flag-icon-pl',
 	'ps'             => 'flag-icon-af',
-	'pt_BR'          => 'flag-icon-br',
-	'pt_PT'          => 'flag-icon-pt',
 	'pt_PT_ao90'     => 'flag-icon-90',
+	'pt_PT'          => 'flag-icon-pt',
 	'pt_AO'          => 'flag-icon-ao',
+	'pt_BR'          => 'flag-icon-br',
 	'ro_RO'          => 'flag-icon-ro',
 	'ru_RU'          => 'flag-icon-ru',
 	'sah'            => 'flag-icon-ru',
@@ -134,13 +135,13 @@ return array(
 	'uz_UZ'          => 'flag-icon-uz',
 	'vi'             => 'flag-icon-vn',
 	'zh_TW'          => 'flag-icon-tw',
-	'zh_CN'          => 'flag-icon-cn',
 	'zh_HK'          => 'flag-icon-hk',
+	'zh_CN'          => 'flag-icon-cn',
 );
 
 /**
  * 168 unused icons in assets/css-flags/flags/4x3/
- * 
+ *
  * ad.svg, ae.svg, ag.svg, ai.svg, aq.svg, as.svg, aw.svg, ax.svg, bb.svg, bf.svg, bh.svg, bi.svg, bj.svg, bl.svg
  * bm.svg, bn.svg, bo.svg, bq.svg, bs.svg, bv.svg, bw.svg, bz.svg, cc.svg, cd.svg, cf.svg, cg.svg, ci.svg, ck.svg
  * cm.svg, cu.svg, cv.svg, cw.svg, cx.svg, cy.svg, dj.svg, dm.svg, eg.svg, eh.svg, er.svg, et.svg, fj.svg, fk.svg
