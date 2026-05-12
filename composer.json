@@ -33,38 +33,45 @@
     }
   },
   "scripts": {
-    "phpunit": "@php vendor/bin/phpunit",
-    "phpunit:html": "@php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html tests/coverage",
-    "phpunit:clover": "@php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-clover tests/coverage.xml",
-    "phpstan": "vendor/bin/phpstan analyze --memory-limit=1G",
-    "phpcs": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4-",
-    "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
-    "flags-png": "php bin/flags-png.php > assets/flags/flags.php",
-    "flags-svg": "php bin/flags-svg.php > assets/css-flags/flags.php",
     "diagram:class": "vendor/bin/php-class-diagram --php8 includes > docs/diagrams/msls-class.puml",
     "diagram:package": "vendor/bin/php-class-diagram --package-diagram --php8 includes > docs/diagrams/msls-package.puml",
+    "flags-png": "php bin/flags-png.php > assets/flags/flags.php",
+    "flags-svg": "php bin/flags-svg.php > assets/css-flags/flags.php",
     "git-release": "bin/git-release.sh",
-    "playwright": [
-      "npx playwright install --with-deps",
-      "npx playwright test"
-    ],
+    "phpcs": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4-",
+    "phpstan": "vendor/bin/phpstan analyze --memory-limit=1G",
+    "phpunit": "@php vendor/bin/phpunit",
+    "phpunit:clover": "@php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-clover tests/coverage.xml",
+    "phpunit:html": "@php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html tests/coverage",
+    "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
     "build": [
       "@prepare",
       "@flags-png",
       "@flags-svg",
+      "@composer install --no-dev --prefer-dist --optimize-autoloader",
       "npm ci",
       "npm run build",
-      "@git-release"
+      "@git-release",
+      "@composer update --prefer-dist --optimize-autoloader"
     ],
     "githooks": [
       "if [ -e bin/githooks/pre-commit ]; then cp bin/githooks/pre-commit ./.git/hooks/; fi",
       "if [ -e .git/hooks/pre-commit ]; then chmod 0755 .git/hooks/pre-commit; fi"
+    ],
+    "playwright": [
+      "npx playwright install --with-deps",
+      "npx playwright test"
     ],
     "post-install-cmd": [
       "@githooks"
     ],
     "post-update-cmd": [
       "@githooks"
+    ],
+    "qa": [
+      "@phpcs",
+      "@phpstan",
+      "@phpunit"
     ]
   },
   "authors": [

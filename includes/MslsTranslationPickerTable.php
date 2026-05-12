@@ -152,13 +152,13 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 	/**
 	 * Loads the source-blog posts for the current page into $this->items.
 	 *
-	 * Honours hidden-column user prefs, the per-page screen option, the
+	 * Honors hidden-column user prefs, the per-page screen option, the
 	 * search term and pagination. Already-translated post IDs are excluded
 	 * via TranslatedPostIdQuery against the target language.
 	 */
 	public function prepare_items(): void {
 		$columns               = $this->get_columns();
-		$hidden                = is_object( $this->screen ) ? get_hidden_columns( $this->screen ) : array();
+		$hidden                = get_hidden_columns( $this->screen );
 		$this->_column_headers = array( $columns, $hidden, array() );
 
 		$target_lang  = MslsBlogCollection::get_blog_language( get_current_blog_id() );
