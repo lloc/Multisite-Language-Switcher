@@ -36,7 +36,7 @@ final class Text extends Component {
 	 */
 	public function __construct( string $key, ?string $value, int $size = self::DEFAULT_SIZE, bool $read_only = false ) {
 		$this->key      = $key;
-		$this->value    = $value;
+		$this->value    = $value ?? '';
 		$this->size     = $size;
 		$this->readonly = $read_only ? ' readonly="readonly"' : '';
 	}

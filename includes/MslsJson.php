@@ -40,7 +40,7 @@ class MslsJson {
 	 *
 	 * @return int
 	 */
-	public static function compare( array $a, array $b ) {
+	public static function compare( array $a, array $b ): int {
 		return strnatcmp( $a['label'], $b['label'] );
 	}
 
@@ -63,7 +63,9 @@ class MslsJson {
 	 * @return string
 	 */
 	public function encode(): string {
-		return wp_json_encode( $this->get() );
+		$json_string = wp_json_encode( $this->get() );
+
+		return is_string( $json_string ) ? $json_string : '';
 	}
 
 	/**

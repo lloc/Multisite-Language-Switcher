@@ -98,7 +98,7 @@ final class MslsAdmin extends MslsMain {
 	 *
 	 * @return mixed
 	 */
-	public function __call( $method, $args ) {
+	public function __call( string $method, $args ) {
 		$parts = explode( '_', $method, 2 );
 		if ( 2 === count( $parts ) && 'rewrite' === $parts[0] ) {
 			$this->render_rewrite( $parts[1] );
@@ -433,8 +433,9 @@ final class MslsAdmin extends MslsMain {
 	 * @param mixed $key
 	 */
 	public function render_rewrite( $key ): void {
-		$rewrite = get_post_type_object( $key )->rewrite;
-		$value   = $rewrite['slug'] ?? '';
+		$pt_object = get_post_type_object( $key );
+		$rewrite   = $pt_object ? $pt_object->rewrite : array();
+		$value     = $rewrite['slug'] ?? '';
 
         // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Text( "rewrite_{$key}", $value, 30, true ) )->render();

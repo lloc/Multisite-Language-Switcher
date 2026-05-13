@@ -10,6 +10,7 @@ use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
 use WP_Post;
+use WP_Post_Type;
 
 /**
  * Meta box for the edit mode of the (custom) post types
@@ -206,10 +207,9 @@ final class MslsMetaBox extends MslsMain {
 					$icon->set_href( $linked_post_id );
 				}
 
-				$selects  = '';
-				$p_object = get_post_type_object( $type );
-
-				if ( $p_object->hierarchical ) {
+				$selects   = '';
+				$pt_object = get_post_type_object( $type );
+				if ( $pt_object instanceof WP_Post_Type && $pt_object->hierarchical ) {
 					$args = array(
 						'post_type'         => $type,
 						'selected'          => $mydata->$language,

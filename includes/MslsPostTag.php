@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use lloc\Msls\Component\Component;
+use WP_Term;
 
 /**
  * Post Tag
@@ -91,7 +92,7 @@ class MslsPostTag extends MslsMain {
 			)
 		);
 
-		wp_die( wp_json_encode( $results ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		wp_die( (string) wp_json_encode( $results ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public static function init(): void {
@@ -208,7 +209,7 @@ class MslsPostTag extends MslsMain {
 
 				if ( $mydata->has_value( $language ) ) {
 					$term = get_term( $mydata->$language, $type );
-					if ( is_object( $term ) ) {
+					if ( $term instanceof WP_Term ) {
 						$icon->set_href( (int) $mydata->$language );
 						$value = $mydata->$language;
 						$title = $term->name;
