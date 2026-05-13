@@ -13,23 +13,21 @@ use lloc\Msls\Component\Icon\IconLabel;
  */
 class MslsAdminIcon {
 
-	protected string $icon_type = 'action';
-	protected string $language;
-	public string $origin_language;
-	protected string $src;
-	protected string $href;
-	protected int $blog_id;
-	protected string $type;
-	protected string $path = 'post-new.php';
-	protected int $id;
+	protected string $icon_type    = 'action';
+	protected string $language     = '';
+	public string $origin_language = '';
+	protected string $src          = '';
+	protected string $href         = '';
+	protected int $blog_id         = 0;
+	protected string $type         = '';
+	protected string $path         = 'post-new.php';
+	protected int $id              = 0;
 
 	const TYPE_FLAG  = 'flag';
 	const TYPE_LABEL = 'label';
 
 	/**
 	 * Constructor
-	 *
-	 * @param string $type
 	 */
 	public function __construct( ?string $type = null ) {
 		$this->type = $type ?? '';
@@ -37,16 +35,11 @@ class MslsAdminIcon {
 		$this->set_path();
 	}
 
-	/**
-	 * @return string
-	 */
-	public function __toString() {
+	public function __toString(): string {
 		return $this->get_a();
 	}
 
 	/**
-	 * @param ?string $type
-	 *
 	 * @return MslsAdminIcon|MslsAdminIconTaxonomy
 	 */
 	public static function create( ?string $type = null ) {
@@ -61,10 +54,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Set the icon path
-	 *
-	 * @param string $icon_type
-	 *
-	 * @return MslsAdminIcon
 	 */
 	public function set_icon_type( string $icon_type ): MslsAdminIcon {
 		$this->icon_type = $icon_type;
@@ -74,8 +63,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Set the path by type
-	 *
-	 * @return MslsAdminIcon
 	 */
 	public function set_path(): MslsAdminIcon {
 		if ( 'post' !== $this->type ) {
@@ -86,39 +73,18 @@ class MslsAdminIcon {
 		return $this;
 	}
 
-	/**
-	 * Set language
-	 *
-	 * @param string $language
-	 *
-	 * @return MslsAdminIcon
-	 */
 	public function set_language( string $language ): MslsAdminIcon {
 		$this->language = $language;
 
 		return $this;
 	}
 
-	/**
-	 * Set src
-	 *
-	 * @param string $src
-	 *
-	 * @return MslsAdminIcon
-	 */
 	public function set_src( string $src ): MslsAdminIcon {
 		$this->src = $src;
 
 		return $this;
 	}
 
-	/**
-	 * Set href
-	 *
-	 * @param int $id
-	 *
-	 * @return MslsAdminIcon
-	 */
 	public function set_href( int $id ): MslsAdminIcon {
 		$this->href = get_edit_post_link( $id ) ?? '';
 
@@ -127,10 +93,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Sets the id of the object this icon is for
-	 *
-	 * @param int $id
-	 *
-	 * @return MslsAdminIcon
 	 */
 	public function set_id( int $id ): MslsAdminIcon {
 		$this->id = $id;
@@ -140,10 +102,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Sets the origin language for this icon
-	 *
-	 * @param string $origin_language
-	 *
-	 * @return MslsAdminIcon
 	 */
 	public function set_origin_language( string $origin_language ): MslsAdminIcon {
 		$this->origin_language = $origin_language;
@@ -153,8 +111,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Get image as html-tag
-	 *
-	 * @return string
 	 */
 	public function get_img(): string {
 		return sprintf( '<img alt="%s" src="%s" />', $this->language, $this->src );
@@ -162,8 +118,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Get link as html-tag
-	 *
-	 * @return string
 	 */
 	public function get_a(): string {
 		if ( empty( $this->href ) ) {
@@ -185,18 +139,12 @@ class MslsAdminIcon {
 		return sprintf( '<a title="%1$s" href="%2$s">%3$s</a>&nbsp;', esc_attr( $title ), esc_url( $href ), $this->get_icon() );
 	}
 
-	/**
-	 * @return bool
-	 */
 	protected function should_quick_create(): bool {
 		return 0 !== $this->id
 			&& '' !== $this->origin_language
 			&& msls_options()->activate_quick_create;
 	}
 
-	/**
-	 * @return string
-	 */
 	protected function get_quick_create_a(): string {
 		$collection     = msls_blog_collection();
 		$source_blog_id = $collection->get_blog_id( $this->origin_language );
@@ -218,8 +166,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Get icon as html-tag
-	 *
-	 * @return string
 	 */
 	public function get_icon(): string {
 		if ( ! $this->language ) {
@@ -254,8 +200,6 @@ class MslsAdminIcon {
 
 	/**
 	 * Creates new admin link
-	 *
-	 * @return string
 	 */
 	public function get_edit_new(): string {
 		$path = $this->path;
