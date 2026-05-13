@@ -23,6 +23,9 @@ class MslsOutput extends MslsMain {
 
 	const MSLS_GET_TAGS_HOOK = 'msls_output_get_tags';
 
+	public static function create(): MslsOutput {
+		return new static( msls_options(), msls_blog_collection() );
+	}
 
 	public static function init(): object {
 		_deprecated_function( __METHOD__, '2.9.2', 'MslsOutput::create' );
