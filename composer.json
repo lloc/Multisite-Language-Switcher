@@ -39,7 +39,7 @@
     "flags-svg": "php bin/flags-svg.php > assets/css-flags/flags.php",
     "git-release": "bin/git-release.sh",
     "phpcs": "phpcs -p ./*.php includes/ --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4-",
-    "phpstan": "vendor/bin/phpstan analyze --memory-limit=1G",
+    "phpstan": "vendor/bin/phpstan analyze --memory-limit=2G",
     "phpunit": "@php vendor/bin/phpunit",
     "phpunit:clover": "@php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-clover tests/coverage.xml",
     "phpunit:html": "@php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html tests/coverage",
