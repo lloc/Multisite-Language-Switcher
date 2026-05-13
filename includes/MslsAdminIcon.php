@@ -13,55 +13,17 @@ use lloc\Msls\Component\Icon\IconLabel;
  */
 class MslsAdminIcon {
 
-	/**
-	 * @var string
-	 */
-	protected $icon_type = 'action';
+	protected string $icon_type = 'action';
+	protected string $language;
+	public string $origin_language;
+	protected string $src;
+	protected string $href;
+	protected int $blog_id;
+	protected string $type;
+	protected string $path = 'post-new.php';
+	protected int $id;
 
-	/**
-	 * @var string
-	 */
-	protected $language;
-
-	/**
-	 * @var string
-	 */
-	public $origin_language;
-
-	/**
-	 * @var string
-	 */
-	protected $src;
-
-	/**
-	 * @var string
-	 */
-	protected $href;
-
-	/**
-	 * @var int
-	 */
-	protected $blog_id;
-
-	/**
-	 * @var string
-	 */
-	protected $type;
-
-	/**
-	 * @var string
-	 */
-	protected $path = 'post-new.php';
-
-	/**
-	 * The current object ID
-	 *
-	 * @var int
-	 */
-	protected $id;
-
-	const TYPE_FLAG = 'flag';
-
+	const TYPE_FLAG  = 'flag';
 	const TYPE_LABEL = 'label';
 
 	/**
@@ -70,7 +32,7 @@ class MslsAdminIcon {
 	 * @param string $type
 	 */
 	public function __construct( ?string $type = null ) {
-		$this->type = $type;
+		$this->type = $type ?? '';
 
 		$this->set_path();
 	}
@@ -158,7 +120,7 @@ class MslsAdminIcon {
 	 * @return MslsAdminIcon
 	 */
 	public function set_href( int $id ): MslsAdminIcon {
-		$this->href = get_edit_post_link( $id );
+		$this->href = get_edit_post_link( $id ) ?? '';
 
 		return $this;
 	}
@@ -227,8 +189,8 @@ class MslsAdminIcon {
 	 * @return bool
 	 */
 	protected function should_quick_create(): bool {
-		return null !== $this->id
-			&& null !== $this->origin_language
+		return 0 !== $this->id
+			&& '' !== $this->origin_language
 			&& msls_options()->activate_quick_create;
 	}
 
@@ -298,7 +260,7 @@ class MslsAdminIcon {
 	public function get_edit_new(): string {
 		$path = $this->path;
 
-		if ( null !== $this->id && null !== $this->origin_language ) {
+		if ( 0 !== $this->id && '' !== $this->origin_language ) {
 			$path = add_query_arg(
 				array(
 					'msls_id'   => $this->id,
