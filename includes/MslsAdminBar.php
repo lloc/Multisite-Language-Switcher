@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Options\Options;
+
 class MslsAdminBar {
 
 	/**
@@ -19,10 +21,10 @@ class MslsAdminBar {
 	protected MslsBlogCollection $blog_collection;
 
 	/**
-	 * @param MslsOptions        $options
+	 * @param Options            $options
 	 * @param MslsBlogCollection $blog_collection
 	 */
-	public function __construct( MslsOptions $options, MslsBlogCollection $blog_collection ) {
+	public function __construct( Options $options, MslsBlogCollection $blog_collection ) {
 		$this->icon_type       = $options->get_icon_type();
 		$this->blog_collection = $blog_collection;
 	}

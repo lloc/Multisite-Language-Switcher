@@ -8,12 +8,12 @@ use lloc\Msls\MslsAdminBar;
 use lloc\Msls\MslsAdminIcon;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 
 final class TestMslsAdminBar extends MslsUnitTestCase {
 
 	private function MslsAdminBarFactory(): MslsAdminBar {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_icon_type' )->andReturn( 'label' );
 
 		$blog_a              = \Mockery::mock( MslsBlog::class );
@@ -36,7 +36,7 @@ final class TestMslsAdminBar extends MslsUnitTestCase {
 	}
 
 	public function test_init(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_icon_type' )->andReturn( MslsAdminIcon::TYPE_LABEL );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );

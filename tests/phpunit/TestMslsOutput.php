@@ -6,14 +6,14 @@ use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptions;
-use lloc\Msls\MslsOptionsPost;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\OptionsPost;
 use lloc\Msls\MslsOutput;
 
 final class TestMslsOutput extends MslsUnitTestCase {
 
 	private function MslsOutputFactory(): MslsOutput {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'has_current_blog' )->andReturn( true );
@@ -160,7 +160,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -195,7 +195,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -226,7 +226,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -258,7 +258,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->once()->andReturn( 'de_DE' );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -307,7 +307,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 	public function test_is_requirements_not_fulfilled_with_mslsoptions(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$mydata = new MslsOptions();
+		$mydata = new Options();
 
 		$test = $this->MslsOutputFactory();
 
@@ -318,7 +318,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 	public function test_is_requirements_not_fulfilled_with_mslsoptionspost(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$mydata = new MslsOptionsPost();
+		$mydata = new OptionsPost();
 
 		$test = $this->MslsOutputFactory();
 
@@ -364,7 +364,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		$blog->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
 		$blog->userblog_id = 2;
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -390,7 +390,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 	public function test_init(): void {
 		Functions\expect( '_deprecated_function' )->once();
 
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options    = \Mockery::mock( Options::class );
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );

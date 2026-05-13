@@ -49,6 +49,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 
+	require_once __DIR__ . '/includes/aliases.php';
 	require_once __DIR__ . '/includes/deprectated.php';
 
 	/**
@@ -93,7 +94,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return string
 	 */
 	function msls_get_flag_url( string $locale ): string {
-		return ( new \lloc\Msls\MslsOptions() )->get_flag_url( $locale );
+		return ( new \lloc\Msls\Options\Options() )->get_flag_url( $locale );
 	}
 
 	/**
@@ -123,7 +124,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		$blog = msls_blog( $locale );
 
 		if ( $blog ) {
-			$options = \lloc\Msls\MslsOptions::create();
+			$options = \lloc\Msls\Options\Options::create();
 			$url     = $blog->get_url( $options );
 		}
 
@@ -151,12 +152,12 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	/**
-	 * Gets the MslsOptions instance
+	 * Gets the Options instance
 	 *
-	 * @return \lloc\Msls\MslsOptions
+	 * @return \lloc\Msls\Options\Options
 	 */
-	function msls_options(): \lloc\Msls\MslsOptions {
-		return \lloc\Msls\MslsOptions::instance();
+	function msls_options(): \lloc\Msls\Options\Options {
+		return \lloc\Msls\Options\Options::instance();
 	}
 
 	/**
@@ -196,17 +197,17 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	/**
-	 * Retrieves the MslsOptionsPost instance.
+	 * Retrieves the OptionsPost instance.
 	 *
 	 * @param int $id
-	 * @return \lloc\Msls\MslsOptionsPost
+	 * @return \lloc\Msls\Options\OptionsPost
 	 */
-	function msls_get_post( int $id ): \lloc\Msls\MslsOptionsPost {
-		return new \lloc\Msls\MslsOptionsPost( $id );
+	function msls_get_post( int $id ): \lloc\Msls\Options\OptionsPost {
+		return new \lloc\Msls\Options\OptionsPost( $id );
 	}
 
 	/**
-	 * Retrieves the MslsOptionsTax instance.
+	 * Retrieves the OptionsTax instance.
 	 *
 	 * Determines the current query based on conditional tags:
 	 * - is_category
@@ -217,11 +218,11 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return \lloc\Msls\OptionsTaxInterface
 	 */
 	function msls_get_tax( int $id ): \lloc\Msls\OptionsTaxInterface {
-		return \lloc\Msls\MslsOptionsTax::create( $id );
+		return \lloc\Msls\Options\OptionsTax::create( $id );
 	}
 
 	/**
-	 * Retrieves the MslsOptionsQuery instance.
+	 * Retrieves the OptionsQuery instance.
 	 *
 	 * Determines the current query based on conditional tags:
 	 * - is_day
@@ -230,10 +231,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * - is_author
 	 * - is_post_type_archive
 	 *
-	 * @return ?\lloc\Msls\MslsOptionsQuery
+	 * @return ?\lloc\Msls\Options\OptionsQuery
 	 */
-	function msls_get_query(): ?\lloc\Msls\MslsOptionsQuery {
-		return \lloc\Msls\MslsOptionsQuery::create();
+	function msls_get_query(): ?\lloc\Msls\Options\OptionsQuery {
+		return \lloc\Msls\Options\OptionsQuery::create();
 	}
 
 	/**

@@ -5,7 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 
 final class TestMslsBlogCollection extends MslsUnitTestCase {
 
@@ -16,7 +16,7 @@ final class TestMslsBlogCollection extends MslsUnitTestCase {
 
 		Functions\when( 'count_users' )->justReturn( array( 'total_users' => self::TOTAL_USERS ) );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_order' )->andReturn( 'description' );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 		$options->shouldReceive( 'has_value' )->andReturn( false );
@@ -86,7 +86,7 @@ final class TestMslsBlogCollection extends MslsUnitTestCase {
 	public function test_get_blogs_of_reference_user(): void {
 		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'has_value' )->andReturn( true );
 
 		$obj = new MslsBlogCollection();

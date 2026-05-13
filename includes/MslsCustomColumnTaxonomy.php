@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Options\OptionsTax;
+
 /**
  * Handling of existing/not existing translations in the backend
  * listings of various taxonomies
@@ -43,6 +45,6 @@ final class MslsCustomColumnTaxonomy extends MslsCustomColumn {
 	 * @param int $object_id
 	 */
 	public function delete( $object_id ): void {
-		$this->save( $object_id, MslsOptionsTax::class );
+		$this->save( $object_id, OptionsTax::class );
 	}
 }

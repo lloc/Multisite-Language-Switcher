@@ -4,8 +4,7 @@ namespace lloc\Msls\ContentImport\Importers\Terms;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\Importers\BaseImporter;
-use lloc\Msls\MslsOptionsTax;
-use lloc\Msls\MslsOptionsTaxTerm;
+use lloc\Msls\Options\OptionsTaxTerm;
 use lloc\Msls\OptionsTaxInterface;
 
 /**
@@ -63,7 +62,7 @@ class ShallowDuplicating extends BaseImporter {
 		$source_terms_ids = wp_list_pluck( $source_terms, 'term_id' );
 		$msls_terms       = array_combine(
 			$source_terms_ids,
-			array_map( array( MslsOptionsTaxTerm::class, 'create' ), $source_terms_ids )
+			array_map( array( OptionsTaxTerm::class, 'create' ), $source_terms_ids )
 		);
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );

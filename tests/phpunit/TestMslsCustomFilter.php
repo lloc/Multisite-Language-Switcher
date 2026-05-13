@@ -8,12 +8,12 @@ use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsCustomFilter;
 use lloc\Msls\MslsFields;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 
 final class TestMslsCustomFilter extends MslsUnitTestCase {
 
 	private function MslsCustomFilterFactory(): MslsCustomFilter {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$blog              = \Mockery::mock( MslsBlog::class );
 		$blog->userblog_id = 1;

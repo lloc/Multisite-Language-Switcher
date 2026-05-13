@@ -3,7 +3,7 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 use lloc\Msls\MslsShortCode;
 
 final class TestMslsShortCode extends MslsUnitTestCase {
@@ -17,7 +17,7 @@ final class TestMslsShortCode extends MslsUnitTestCase {
 	}
 
 	public function test_block_render_excluded_true(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );
@@ -27,7 +27,7 @@ final class TestMslsShortCode extends MslsUnitTestCase {
 
 
 	public function test_block_render_excluded_false(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );

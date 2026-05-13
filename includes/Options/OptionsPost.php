@@ -1,13 +1,13 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Options;
 
 /**
  * Post options
  *
  * @package Msls
  */
-class MslsOptionsPost extends MslsOptions {
+class OptionsPost extends Options {
 
 	public const SEPARATOR = '_';
 
@@ -40,9 +40,9 @@ class MslsOptionsPost extends MslsOptions {
 
 		$post_link = get_permalink( $post );
 
-		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', MslsOptions::MSLS_GET_POSTLINK_HOOK );
+		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', Options::MSLS_GET_POSTLINK_HOOK );
 
-		return apply_filters( MslsOptions::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
+		return apply_filters( Options::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
 	}
 
 	/**

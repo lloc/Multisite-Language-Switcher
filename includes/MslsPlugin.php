@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Options\Options;
 use lloc\Msls\Query\BlogsInNetworkQuery;
 use lloc\Msls\Query\CleanupOptionsQuery;
 
@@ -17,18 +18,18 @@ use lloc\Msls\Query\CleanupOptionsQuery;
 class MslsPlugin {
 
 	/**
-	 * Injected MslsOptions object
+	 * Injected Options object
 	 *
-	 * @var MslsOptions
+	 * @var Options
 	 */
 	protected $options;
 
 	/**
 	 * MslsPlugin constructor.
 	 *
-	 * @param MslsOptions $options
+	 * @param Options $options
 	 */
-	public function __construct( MslsOptions $options ) {
+	public function __construct( Options $options ) {
 		$this->options = $options;
 	}
 

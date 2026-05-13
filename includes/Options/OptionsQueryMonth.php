@@ -1,15 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Options;
 
-use lloc\Msls\Query\DatePostsCounterQuery;
+use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Query\MonthPostsCounterQuery;
 
 /**
- * MslsOptionsQueryDay
+ * OptionsQueryMonth
  *
  * @package Msls
  */
-class MslsOptionsQueryDay extends MslsOptionsQuery {
+class OptionsQueryMonth extends OptionsQuery {
 
 	/**
 	 * @var int
@@ -21,11 +22,6 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 */
 	protected int $monthnum;
 
-	/**
-	 * @var int
-	 */
-	protected int $day;
-
 	public function __construct( MslsSqlCacher $sql_cache ) {
 		parent::__construct( $sql_cache );
 
@@ -33,14 +29,15 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 
 		$this->year     = $params['year'];
 		$this->monthnum = $params['monthnum'];
-		$this->day      = $params['day'];
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public static function get_params(): array {
 		return array(
 			'year'     => get_query_var( 'year' ),
 			'monthnum' => get_query_var( 'monthnum' ),
-			'day'      => get_query_var( 'day' ),
 		);
 	}
 
@@ -53,9 +50,8 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 */
 	public function has_value( string $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			$query_callable = new DatePostsCounterQuery( $this->sql_cache );
+			$this->arr[ $language ] = ( new MonthPostsCounterQuery( $this->sql_cache ) )( $this->year, $this->monthnum );
 
-			$this->arr[ $language ] = $query_callable( $this->year, $this->monthnum, $this->day );
 		}
 
 		return (bool) $this->arr[ $language ];
@@ -67,6 +63,6 @@ class MslsOptionsQueryDay extends MslsOptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link(): string {
-		return get_day_link( $this->year, $this->monthnum, $this->day );
+		return get_month_link( $this->year, $this->monthnum );
 	}
 }

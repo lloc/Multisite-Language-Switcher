@@ -1,13 +1,15 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Options;
+
+use lloc\Msls\OptionsTaxInterface;
 
 /**
- * MslsOptionsTaxTermCategory
+ * OptionsTaxTermCategory
  *
  * @package Msls
  */
-class MslsOptionsTaxTermCategory extends MslsOptionsTaxTerm implements OptionsTaxInterface {
+class OptionsTaxTermCategory extends OptionsTaxTerm implements OptionsTaxInterface {
 
 	/**
 	 * Base option

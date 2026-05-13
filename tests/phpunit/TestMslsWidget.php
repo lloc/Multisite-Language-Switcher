@@ -4,14 +4,14 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsWidget;
 
 final class TestMslsWidget extends MslsUnitTestCase {
 
 	public function test_init(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->once()->andReturn( false );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );
@@ -35,7 +35,7 @@ final class TestMslsWidget extends MslsUnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array() );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );
 		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );

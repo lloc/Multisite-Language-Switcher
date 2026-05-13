@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use lloc\Msls\Component\Component;
+use lloc\Msls\Options\OptionsTax;
 use WP_Term;
 
 /**
@@ -190,7 +191,7 @@ class MslsPostTag extends MslsMain {
 		$blogs = $this->collection->get();
 		if ( $blogs ) {
 			$term_id = $tag->term_id ?? 0;
-			$mydata  = MslsOptionsTax::create( $term_id );
+			$mydata  = OptionsTax::create( $term_id );
 			$type    = msls_content_types()->get_request();
 
 			$this->maybe_set_linked_term( $mydata );
@@ -247,7 +248,7 @@ class MslsPostTag extends MslsMain {
 	 */
 	public function set( $term_id ): void {
 		if ( msls_content_types()->acl_request() ) {
-			$this->save( $term_id, MslsOptionsTax::class );
+			$this->save( $term_id, OptionsTax::class );
 		}
 	}
 

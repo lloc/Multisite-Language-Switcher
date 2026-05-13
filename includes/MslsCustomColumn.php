@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use lloc\Msls\Component\Component;
+use lloc\Msls\Options\Options;
 
 /**
  * Handling of existing/not existing translations in the backend listings of
@@ -80,7 +81,7 @@ class MslsCustomColumn extends MslsMain {
 			$blogs           = $this->collection->get();
 			$origin_language = MslsBlogCollection::get_blog_language();
 			if ( $blogs ) {
-				$mydata = MslsOptions::create( $item_id );
+				$mydata = Options::create( $item_id );
 				foreach ( $blogs as $blog ) {
 					switch_to_blog( $blog->userblog_id );
 

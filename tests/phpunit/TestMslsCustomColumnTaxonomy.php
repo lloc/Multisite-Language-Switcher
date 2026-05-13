@@ -7,13 +7,13 @@ use Brain\Monkey\Filters;
 use Brain\Monkey\Actions;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsCustomColumnTaxonomy;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 use lloc\Msls\MslsTaxonomy;
 
 final class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 
 	public function test_add_hooks_excluded(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -26,7 +26,7 @@ final class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 	}
 
 	public function test_add_hooks(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -48,7 +48,7 @@ final class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 	}
 
 	public function test_th(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() )->once();
@@ -59,7 +59,7 @@ final class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 	}
 
 	public function test_column_default(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 

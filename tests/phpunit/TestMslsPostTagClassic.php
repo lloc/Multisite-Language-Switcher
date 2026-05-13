@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 use Brain\Monkey\Actions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 use lloc\Msls\MslsPostTagClassic;
 
 final class TestMslsPostTagClassic extends MslsUnitTestCase {
@@ -28,7 +28,7 @@ final class TestMslsPostTagClassic extends MslsUnitTestCase {
 			$blogs[] = $blog;
 		}
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_icon_type' )->andReturn( 'label' );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -161,7 +161,7 @@ final class TestMslsPostTagClassic extends MslsUnitTestCase {
 	}
 
 	public function test_the_input_no_blogs(): void {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options    = \Mockery::mock( Options::class );
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() );
 

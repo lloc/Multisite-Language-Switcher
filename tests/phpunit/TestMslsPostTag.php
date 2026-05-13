@@ -8,8 +8,8 @@ use Brain\Monkey\Filters;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
-use lloc\Msls\MslsOptions;
-use lloc\Msls\MslsOptionsTax;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\OptionsTax;
 use lloc\Msls\MslsPostTag;
 use lloc\Msls\MslsTaxonomy;
 
@@ -27,7 +27,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 			$blogs[] = $blog;
 		}
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_icon_type' )->andReturn( 'label' );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -44,7 +44,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_init(): void {
-		$options                        = \Mockery::mock( MslsOptions::class );
+		$options                        = \Mockery::mock( Options::class );
 		$options->activate_autocomplete = true;
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -211,7 +211,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_the_input_no_blogs(): void {
-		$options    = \Mockery::mock( MslsOptions::class );
+		$options    = \Mockery::mock( Options::class );
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() );
 
@@ -234,7 +234,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_origin_lang(): void {
-		$mydata        = \Mockery::mock( MslsOptionsTax::class );
+		$mydata        = \Mockery::mock( OptionsTax::class );
 		$mydata->de_DE = 42;
 
 		Functions\expect( 'filter_has_var' )->twice()->andReturnTrue();
@@ -247,7 +247,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_blog_id_null(): void {
-		$mydata        = \Mockery::mock( MslsOptionsTax::class );
+		$mydata        = \Mockery::mock( OptionsTax::class );
 		$mydata->de_DE = 42;
 
 		Functions\expect( 'filter_has_var' )->twice()->andReturnTrue();
@@ -260,7 +260,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_origin_term_wrong(): void {
-		$mydata = \Mockery::mock( MslsOptionsTax::class );
+		$mydata = \Mockery::mock( OptionsTax::class );
 		$mydata->shouldReceive( 'get_base_option' )->andReturn( 'term' );
 		$mydata->en_US = 42;
 
@@ -277,7 +277,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_happy_path(): void {
-		$mydata = \Mockery::mock( MslsOptionsTax::class );
+		$mydata = \Mockery::mock( OptionsTax::class );
 		$mydata->shouldReceive( 'get_base_option' )->andReturn( 'term' );
 		$mydata->en_US = 42;
 

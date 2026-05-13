@@ -1,38 +1,39 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\Options;
 
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsAdminIcon;
-use lloc\Msls\MslsOptions;
 use lloc\Msls\MslsPostType;
+use lloc\Msls\Options\Options;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestMslsOptions extends MslsUnitTestCase {
+final class TestOptions extends MslsUnitTestCase {
 
-	private function MslsOptionsFactory(): MslsOptions {
+	private function MslsOptionsFactory(): Options {
 		Functions\when( 'home_url' )->justReturn( 'https://lloc.de' );
 		Functions\when( 'get_option' )->justReturn( array() );
 		Functions\when( 'update_option' )->justReturn( true );
 
-		return new MslsOptions();
+		return new Options();
 	}
 
 	public function test_is_main_page(): void {
 		Functions\when( 'is_front_page' )->justReturn( true );
 
-		$this->assertIsBool( MslsOptions::is_main_page() );
+		$this->assertIsBool( Options::is_main_page() );
 	}
 
 	public function test_is_tax_page(): void {
 		Functions\when( 'is_category' )->justReturn( true );
 
-		$this->assertIsBool( MslsOptions::is_tax_page() );
+		$this->assertIsBool( Options::is_tax_page() );
 	}
 
 	public function test_is_query_page(): void {
 		Functions\when( 'is_date' )->justReturn( true );
 
-		$this->assertIsBool( MslsOptions::is_query_page() );
+		$this->assertIsBool( Options::is_query_page() );
 	}
 
 	public function test_create(): void {
@@ -44,7 +45,7 @@ final class TestMslsOptions extends MslsUnitTestCase {
 		Functions\expect( 'is_admin' )->once()->andReturnTrue();
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$this->assertInstanceOf( MslsOptions::class, MslsOptions::create() );
+		$this->assertInstanceOf( Options::class, Options::create() );
 	}
 
 	public function test_get_arg(): void {
@@ -216,7 +217,7 @@ final class TestMslsOptions extends MslsUnitTestCase {
 	public function test_check_for_blog_slug( ?string $url, string $expected, bool $with_front, bool $is_subdomain_install, bool $using_permalinks, string $permalink_structure, bool $is_main_site ): void {
 		global $wp_rewrite, $current_site;
 
-		$options             = \Mockery::mock( MslsOptions::class );
+		$options             = \Mockery::mock( Options::class );
 		$options->with_front = $with_front;
 		$wp_rewrite          = \Mockery::mock( '\WP_Rewrite' );
 		$wp_rewrite->shouldReceive( 'using_permalinks' )->andReturn( $using_permalinks );
@@ -232,7 +233,7 @@ final class TestMslsOptions extends MslsUnitTestCase {
 		Functions\when( 'get_blog_option' )->justReturn( $permalink_structure );
 		Functions\when( 'is_main_site' )->justReturn( $is_main_site );
 
-		$this->assertEquals( $expected, MslsOptions::check_for_blog_slug( $url, $options ) );
+		$this->assertEquals( $expected, Options::check_for_blog_slug( $url, $options ) );
 	}
 
 	public function test_get_slug(): void {

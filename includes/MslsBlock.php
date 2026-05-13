@@ -2,16 +2,18 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Options\Options;
+
 class MslsBlock {
 
 	/**
 	 * The options instance.
 	 *
-	 * @var MslsOptions
+	 * @var Options
 	 */
-	protected MslsOptions $options;
+	protected Options $options;
 
-	public function __construct( MslsOptions $options ) {
+	public function __construct( Options $options ) {
 		$this->options = $options;
 	}
 

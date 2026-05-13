@@ -6,12 +6,12 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMain;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 
 final class TestMslsMain extends MslsUnitTestCase {
 
 	private function MslsMainFactory(): MslsMain {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );

@@ -1,14 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\Options;
+
+use lloc\MslsTests\MslsUnitTestCase;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsOptionsQueryMonth;
+use lloc\Msls\Options\OptionsQueryMonth;
 use lloc\Msls\MslsSqlCacher;
 
-final class TestMslsOptionsQueryMonth extends MslsUnitTestCase {
+final class TestOptionsQueryMonth extends MslsUnitTestCase {
 
-	private function MslsOptionsQueryMonthFactory( int $year, int $monthnum ): MslsOptionsQueryMonth {
+	private function OptionsQueryMonthFactory( int $year, int $monthnum ): OptionsQueryMonth {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->times( 2 )->andReturn( $year, $monthnum );
 
@@ -16,20 +18,20 @@ final class TestMslsOptionsQueryMonth extends MslsUnitTestCase {
 		$sql_cacher->shouldReceive( 'prepare' )->andReturn( 'SQL Query String' );
 		$sql_cacher->shouldReceive( 'get_var' )->andReturn( random_int( 1, 10 ) );
 
-		return new MslsOptionsQueryMonth( $sql_cacher );
+		return new OptionsQueryMonth( $sql_cacher );
 	}
 
 	public function test_has_value_true(): void {
-		$this->assertTrue( $this->MslsOptionsQueryMonthFactory( 1998, 12 )->has_value( 'de_DE' ) );
+		$this->assertTrue( $this->OptionsQueryMonthFactory( 1998, 12 )->has_value( 'de_DE' ) );
 	}
 
 	public function test_has_value_false(): void {
-		$this->assertFalse( $this->MslsOptionsQueryMonthFactory( 0, 0 )->has_value( 'de_DE' ) );
+		$this->assertFalse( $this->OptionsQueryMonthFactory( 0, 0 )->has_value( 'de_DE' ) );
 	}
 
 	public function test_get_current_link(): void {
 		Functions\expect( 'get_month_link' )->once()->andReturn( 'https://msls.co/queried-month' );
 
-		$this->assertEquals( 'https://msls.co/queried-month', $this->MslsOptionsQueryMonthFactory( 2015, 7 )->get_current_link() );
+		$this->assertEquals( 'https://msls.co/queried-month', $this->OptionsQueryMonthFactory( 2015, 7 )->get_current_link() );
 	}
 }

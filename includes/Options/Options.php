@@ -1,12 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 use lloc\Msls\Component\Icon\IconPng;
+use lloc\Msls\MslsAdminIcon;
+use lloc\Msls\MslsGetSet;
+use lloc\Msls\MslsPlugin;
+use lloc\Msls\OptionsInterface;
 
 /**
  * General options class
@@ -31,7 +35,7 @@ use lloc\Msls\Component\Icon\IconPng;
  * @property string $exclude_current_blog
  * @property string $sort_by_description
  */
-class MslsOptions extends MslsGetSet implements OptionsInterface {
+class Options extends MslsGetSet implements OptionsInterface {
 
 	const MSLS_GET_POSTLINK_HOOK = 'msls_get_postlink';
 
@@ -90,20 +94,20 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 			$id = (int) $id;
 
 			if ( msls_content_types()->is_taxonomy() ) {
-				return MslsOptionsTax::create( $id );
+				return OptionsTax::create( $id );
 			}
 
-			return new MslsOptionsPost( $id );
+			return new OptionsPost( $id );
 		}
 
 		if ( self::is_main_page() ) {
-			$options = new MslsOptions();
+			$options = new Options();
 		} elseif ( self::is_tax_page() ) {
-			$options = MslsOptionsTax::create();
+			$options = OptionsTax::create();
 		} elseif ( self::is_query_page() ) {
-			$options = MslsOptionsQuery::create() ?? new MslsOptions();
+			$options = OptionsQuery::create() ?? new Options();
 		} else {
-			$options = new MslsOptionsPost( get_queried_object_id() );
+			$options = new OptionsPost( get_queried_object_id() );
 		}
 
 		add_filter( self::MSLS_GET_POSTLINK_HOOK, array( self::class, 'check_for_blog_slug' ), 10, 2 );
@@ -394,8 +398,8 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 	/**
 	 * The 'blog'-slug-problem :/
 	 *
-	 * @param mixed       $url
-	 * @param MslsOptions $options
+	 * @param mixed   $url
+	 * @param Options $options
 	 *
 	 * @return string
 	 */

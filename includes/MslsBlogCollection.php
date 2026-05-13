@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Options\Options;
+
 /**
  * Collection of blog-objects
  *
@@ -128,11 +130,11 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * The first available user of the blog will be used if there is no
 	 * refrence user configured
 	 *
-	 * @param MslsOptions $options
+	 * @param Options $options
 	 *
 	 * @return object[]|\stdClass[]
 	 */
-	public function get_blogs_of_reference_user( MslsOptions $options ) {
+	public function get_blogs_of_reference_user( Options $options ) {
 		$reference_user = $options->has_value( 'reference_user' ) ?
 			$options->reference_user :
 			current( $this->get_users( 'ID', 1 ) );

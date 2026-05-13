@@ -3,6 +3,8 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Component\Component;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\OptionsPost;
 
 /**
  * Abstraction for the hook classes
@@ -16,7 +18,7 @@ class MslsMain {
 	/**
 	 * Instance of options
 	 *
-	 * @var MslsOptions
+	 * @var Options
 	 */
 	protected $options;
 
@@ -30,10 +32,10 @@ class MslsMain {
 	/**
 	 * Constructor
 	 *
-	 * @param MslsOptions        $options
+	 * @param Options            $options
 	 * @param MslsBlogCollection $collection
 	 */
-	final public function __construct( MslsOptions $options, MslsBlogCollection $collection ) {
+	final public function __construct( Options $options, MslsBlogCollection $collection ) {
 		$this->options    = $options;
 		$this->collection = $collection;
 	}
@@ -119,14 +121,14 @@ class MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function delete( $object_id ): void {
-		$this->save( $object_id, MslsOptionsPost::class );
+		$this->save( $object_id, OptionsPost::class );
 	}
 
 	/**
 	 * Save
 	 *
-	 * @param int                       $object_id
-	 * @param class-string<MslsOptions> $class_name
+	 * @param int                   $object_id
+	 * @param class-string<Options> $class_name
 	 *
 	 * @codeCoverageIgnore
 	 */

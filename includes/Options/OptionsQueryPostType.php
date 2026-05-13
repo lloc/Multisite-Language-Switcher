@@ -1,13 +1,15 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Options;
+
+use lloc\Msls\MslsSqlCacher;
 
 /**
- * MslsOptionsQueryPostType
+ * OptionsQueryPostType
  *
  * @package Msls
  */
-class MslsOptionsQueryPostType extends MslsOptionsQuery {
+class OptionsQueryPostType extends OptionsQuery {
 
 	/**
 	 * The post type for which the options are queried.

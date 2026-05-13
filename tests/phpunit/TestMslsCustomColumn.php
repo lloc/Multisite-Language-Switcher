@@ -9,13 +9,13 @@ use Brain\Monkey\Actions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsCustomColumn;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 use lloc\Msls\MslsPostType;
 
 final class TestMslsCustomColumn extends MslsUnitTestCase {
 
 	private function MslsCustomColumnFactory(): MslsCustomColumn {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_icon_type' )->andReturn( 'flag' );
 
 		$locales = array(
@@ -40,7 +40,7 @@ final class TestMslsCustomColumn extends MslsUnitTestCase {
 	}
 
 	public function test_add_hooks_excluded(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( true );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -53,7 +53,7 @@ final class TestMslsCustomColumn extends MslsUnitTestCase {
 	}
 
 	public function test_add_hooks(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -87,7 +87,7 @@ final class TestMslsCustomColumn extends MslsUnitTestCase {
 	}
 
 	public function test_th_empty(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->once()->andReturn( array() );
@@ -114,7 +114,7 @@ final class TestMslsCustomColumn extends MslsUnitTestCase {
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( 'edit-post-link' );
 		Functions\expect( 'add_query_arg' )->once()->andReturn( 'added-query-args' );
 		Functions\expect( 'get_admin_url' )->once()->andReturn( 'admin-url' );
-		Functions\expect( 'msls_options' )->andReturn( \Mockery::mock( MslsOptions::class ) );
+		Functions\expect( 'msls_options' )->andReturn( \Mockery::mock( Options::class ) );
 
 		$output = '<span class="msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="dashicons dashicons-edit"></span></a>&nbsp;</span><span class="msls-icon-wrapper flag"><a title="Create a new translation in the en_US-blog" href="admin-url"><span class="dashicons dashicons-plus"></span></a>&nbsp;</span>';
 

@@ -3,6 +3,7 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Map\HrefLang;
+use lloc\Msls\Options\Options;
 
 /**
  * Output in the frontend
@@ -52,7 +53,7 @@ class MslsOutput extends MslsMain {
 
 		$blogs = $this->collection->get_filtered( $filter );
 		if ( $blogs ) {
-			$mydata = MslsOptions::create();
+			$mydata = Options::create();
 			$link   = MslsLink::create( $display );
 
 			foreach ( $blogs as $blog ) {
@@ -117,7 +118,7 @@ class MslsOutput extends MslsMain {
 	public function get_alternate_links() {
 		$blogs     = msls_blog_collection();
 		$href_lang = new HrefLang( $blogs );
-		$options   = MslsOptions::create();
+		$options   = Options::create();
 		$arr       = array();
 		$default   = '';
 
@@ -218,6 +219,6 @@ class MslsOutput extends MslsMain {
 			return $exists;
 		}
 
-		return MslsOptions::class !== get_class( $thing ) && ! $thing->has_value( $language ) && $exists;
+		return Options::class !== get_class( $thing ) && ! $thing->has_value( $language ) && $exists;
 	}
 }

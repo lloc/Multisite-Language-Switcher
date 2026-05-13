@@ -1,14 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\Options;
+
+use lloc\MslsTests\MslsUnitTestCase;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsOptionsQueryPostType;
+use lloc\Msls\Options\OptionsQueryPostType;
 use lloc\Msls\MslsSqlCacher;
 
-final class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
+final class TestOptionsQueryPostType extends MslsUnitTestCase {
 
-	private function MslsOptionsQueryPostTypeFactory(): MslsOptionsQueryPostType {
+	private function OptionsQueryPostTypeFactory(): OptionsQueryPostType {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->once()->andReturn( 'queried-posttype' );
 
@@ -16,7 +18,7 @@ final class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 		$sql_cacher->shouldReceive( 'prepare' )->never();
 		$sql_cacher->shouldReceive( 'get_var' )->never();
 
-		return new MslsOptionsQueryPostType( $sql_cacher );
+		return new OptionsQueryPostType( $sql_cacher );
 	}
 
 	public function test_has_value_existing(): void {
@@ -29,7 +31,7 @@ final class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 			)
 		);
 
-		$test = $this->MslsOptionsQueryPostTypeFactory();
+		$test = $this->OptionsQueryPostTypeFactory();
 
 		$this->assertTrue( $test->has_value( 'de_DE' ) );
 	}
@@ -38,7 +40,7 @@ final class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 		$post_type = \Mockery::mock( '\WP_Post_Type' );
 		Functions\expect( 'get_post_type_object' )->once()->andReturn( $post_type );
 
-		$test = $this->MslsOptionsQueryPostTypeFactory();
+		$test = $this->OptionsQueryPostTypeFactory();
 
 		$this->assertTrue( $test->has_value( 'it_IT' ) );
 	}
@@ -46,7 +48,7 @@ final class TestMslsOptionsQueryPostType extends MslsUnitTestCase {
 	public function test_get_current_link(): void {
 		Functions\expect( 'get_post_type_archive_link' )->once()->andReturn( 'https://msls.co/queried-posttype' );
 
-		$test = $this->MslsOptionsQueryPostTypeFactory();
+		$test = $this->OptionsQueryPostTypeFactory();
 
 		$this->assertEquals( 'https://msls.co/queried-posttype', $test->get_current_link() );
 	}

@@ -4,7 +4,7 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsPlugin;
 
@@ -15,7 +15,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		Functions\expect( 'wp_enqueue_style' )->twice();
 		Functions\expect( 'plugins_url' )->twice()->andReturn( 'https://msls.co/wp-content/plugins' );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$test = new MslsPlugin( $options );
 
@@ -29,7 +29,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://msls.co/wp-content/plugins' );
 		Functions\expect( 'wp_enqueue_script' )->once();
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$options->activate_autocomplete = true;
 
@@ -45,7 +45,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://msls.co/wp-content/plugins' );
 		Functions\expect( 'wp_enqueue_script' )->once();
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$options->activate_quick_create = true;
 
@@ -58,7 +58,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 	function test_admin_menu_admin_bar_not_showing(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnFalse();
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$options->activate_autocomplete = true;
 
@@ -100,7 +100,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 
 		Functions\expect( 'wp_cache_get' )->once()->andReturn( $blogs );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 
 		Functions\expect( 'switch_to_blog' )->times( count( $blogs ) );
@@ -150,7 +150,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		Functions\expect( 'is_front_page' )->once()->andReturn( true );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_objects' )->twice()->andReturn( array() );

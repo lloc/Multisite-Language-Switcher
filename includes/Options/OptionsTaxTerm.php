@@ -1,17 +1,19 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\OptionsTaxInterface;
+
 /**
- * MslsOptionsTaxTerm
+ * OptionsTaxTerm
  *
  * @package Msls
  */
-class MslsOptionsTaxTerm extends MslsOptionsTax implements OptionsTaxInterface {
+class OptionsTaxTerm extends OptionsTax implements OptionsTaxInterface {
 
 	const BASE_OPTION = 'tag_base';
 
@@ -25,7 +27,7 @@ class MslsOptionsTaxTerm extends MslsOptionsTax implements OptionsTaxInterface {
 	public ?bool $with_front = true;
 
 	public function handle_rewrite(): OptionsTaxInterface {
-		add_filter( MslsOptions::MSLS_GET_POSTLINK_HOOK, array( $this, 'check_base' ), 9, 2 );
+		add_filter( Options::MSLS_GET_POSTLINK_HOOK, array( $this, 'check_base' ), 9, 2 );
 
 		return $this;
 	}
@@ -33,8 +35,8 @@ class MslsOptionsTaxTerm extends MslsOptionsTax implements OptionsTaxInterface {
 	/**
 	 * Check and correct URL
 	 *
-	 * @param mixed              $url
-	 * @param MslsOptionsTaxTerm $options
+	 * @param mixed          $url
+	 * @param OptionsTaxTerm $options
 	 *
 	 * @return string
 	 */

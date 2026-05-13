@@ -7,12 +7,12 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsContentFilter;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 
 final class TestMslsContentFilter extends MslsUnitTestCase {
 
 	public function test_init(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );
 
@@ -39,7 +39,7 @@ final class TestMslsContentFilter extends MslsUnitTestCase {
 		Functions\when( 'is_front_page' )->justReturn( $is_front_page );
 		Functions\when( 'is_singular' )->justReturn( $is_singular );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_content_filter' )->andReturn( $is_content_filter );
 
 		$test = new MslsContentFilter( $options );
@@ -56,7 +56,7 @@ final class TestMslsContentFilter extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array( $blog ) );
 		$collection->shouldReceive( 'is_current_blog' )->once()->andReturn( false );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_content_filter' )->andReturn( true );
 		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 
@@ -99,7 +99,7 @@ final class TestMslsContentFilter extends MslsUnitTestCase {
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array() );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_content_filter' )->andReturn( true );
 
 		$post              = \Mockery::mock( 'WP_Post' );
@@ -141,7 +141,7 @@ final class TestMslsContentFilter extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( $blogs );
 		$collection->shouldReceive( 'is_current_blog' )->times( $times )->andReturn( false );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_content_filter' )->andReturn( true );
 		$options->shouldReceive( 'get_flag_url' )->times( $times )->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 
@@ -196,7 +196,7 @@ final class TestMslsContentFilter extends MslsUnitTestCase {
 		$collection->shouldReceive( 'get_filtered' )->once()->andReturn( array( $blog ) );
 		$collection->shouldReceive( 'is_current_blog' )->once()->andReturn( false );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_content_filter' )->andReturn( true );
 		$options->shouldReceive( 'get_flag_url' )->once()->andReturn( 'https://msls.co/wp-content/plugins/msls/flags/de.png' );
 

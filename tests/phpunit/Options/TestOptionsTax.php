@@ -1,18 +1,20 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\Options;
+
+use lloc\MslsTests\MslsUnitTestCase;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsOptionsTax;
-use lloc\Msls\MslsOptionsTaxTerm;
-use lloc\Msls\MslsOptionsTaxTermCategory;
+use lloc\Msls\Options\OptionsTax;
+use lloc\Msls\Options\OptionsTaxTerm;
+use lloc\Msls\Options\OptionsTaxTermCategory;
 
-final class TestMslsOptionsTax extends MslsUnitTestCase {
+final class TestOptionsTax extends MslsUnitTestCase {
 
-	private function MslsOptionsTaxFactory(): MslsOptionsTax {
+	private function OptionsTaxFactory(): OptionsTax {
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		return new MslsOptionsTax();
+		return new OptionsTax();
 	}
 
 	public function test_create_category(): void {
@@ -21,7 +23,7 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 		Functions\expect( 'is_category' )->once()->with( 42 )->andReturnTrue();
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		$this->assertInstanceOf( MslsOptionsTaxTermCategory::class, MslsOptionsTax::create() );
+		$this->assertInstanceOf( OptionsTaxTermCategory::class, OptionsTax::create() );
 	}
 
 	public function test_create_post_tag(): void {
@@ -31,13 +33,13 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 		Functions\expect( 'is_tag' )->once()->andReturnTrue();
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		$this->assertInstanceOf( MslsOptionsTaxTerm::class, MslsOptionsTax::create() );
+		$this->assertInstanceOf( OptionsTaxTerm::class, OptionsTax::create() );
 	}
 
 	public function test_get_tax_query(): void {
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertEquals( '', $test->get_tax_query() );
 	}
@@ -56,7 +58,7 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( true );
 
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertEquals( $expected, $test->get_tax_query() );
 	}
@@ -75,7 +77,7 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertEquals( $expected, $test->get_tax_query( array() ) );
 	}
@@ -83,7 +85,7 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 	public function test_get_postlink(): void {
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertEquals( '', $test->get_postlink( 'de_DE' ) );
 	}
@@ -91,13 +93,13 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 	public function test_get_postlink_empty(): void {
 		Functions\expect( 'is_woocommerce' )->never();
 
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertEquals( '', $test->get_postlink( 'it_IT' ) );
 	}
 
 	public function test_get_current_link(): void {
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertIsString( $test->get_current_link() );
 	}
@@ -118,7 +120,7 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 		Functions\expect( 'get_term_link' )->once()->andReturn( $expected );
 
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertEquals( $expected, $test->get_term_link( 42 ) );
 	}
@@ -139,7 +141,7 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 		Functions\expect( 'get_term_link' )->once()->andReturn( $wp_error );
 
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertEquals( '', $test->get_term_link( 42 ) );
 	}
@@ -147,11 +149,11 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 	public function test_get_term_link_empty(): void {
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 
-		$this->assertEquals( '', $this->MslsOptionsTaxFactory()->get_term_link( 42 ) );
+		$this->assertEquals( '', $this->OptionsTaxFactory()->get_term_link( 42 ) );
 	}
 
 	public function test_get_permalink_returns_empty_when_no_translation(): void {
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertSame( '', $test->get_permalink( 'fr_FR' ) );
 	}
@@ -172,12 +174,12 @@ final class TestMslsOptionsTax extends MslsUnitTestCase {
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 		Functions\expect( 'get_term_link' )->once()->andReturn( $expected );
 
-		$test = $this->MslsOptionsTaxFactory();
+		$test = $this->OptionsTaxFactory();
 
 		$this->assertSame( $expected, $test->get_permalink( 'de_DE' ) );
 	}
 
 	public function test_get_base_option() {
-		$this->assertEquals( '', MslsOptionsTax::get_base_option() );
+		$this->assertEquals( '', OptionsTax::get_base_option() );
 	}
 }

@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 use lloc\Msls\MslsAdmin;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 
 final class TestMslsAdmin extends MslsUnitTestCase {
 
@@ -19,7 +19,7 @@ final class TestMslsAdmin extends MslsUnitTestCase {
 		Functions\when( 'get_admin_url' )->justReturn( 'wp-admin' );
 		Functions\when( 'get_locale' )->justReturn( 'de_DE' );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_empty' )->andReturns( false );
 		$options->shouldReceive( 'get_available_languages' )->andReturns( array( 'de_DE', 'it_IT' ) );
 		$options->shouldReceive( 'get_icon_type' )->andReturns( 'flag' );
@@ -72,7 +72,7 @@ final class TestMslsAdmin extends MslsUnitTestCase {
 		Functions\when( 'get_current_blog_id' )->justReturn( 1 );
 		Functions\when( 'admin_url' )->justReturn( '' );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_available_languages' )->zeroOrMoreTimes()->andReturns( $languages );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );

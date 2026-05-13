@@ -11,8 +11,8 @@ use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
 use lloc\Msls\MslsJson;
 use lloc\Msls\MslsMetaBox;
-use lloc\Msls\MslsOptions;
-use lloc\Msls\MslsOptionsPost;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\OptionsPost;
 use lloc\Msls\MslsPostType;
 
 final class TestMslsMetaBox extends MslsUnitTestCase {
@@ -23,7 +23,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		$blog = \Mockery::mock( MslsBlog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_icon_type' )->andReturn( 'flag' );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -36,7 +36,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 	}
 
 	public function test_init(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -170,7 +170,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 	 * @dataProvider add_data_provider
 	 */
 	public function test_add( $post_type, $content_import, $autocomplete ) {
-		$options                          = \Mockery::mock( MslsOptions::class );
+		$options                          = \Mockery::mock( Options::class );
 		$options->activate_content_import = $content_import;
 		$options->activate_autocomplete   = $autocomplete;
 
@@ -192,7 +192,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
-		$options                        = \Mockery::mock( MslsOptions::class );
+		$options                        = \Mockery::mock( Options::class );
 		$options->activate_quick_create = false;
 
 		$post_type = \Mockery::mock( MslsPostType::class );
@@ -273,7 +273,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
-		$options                        = \Mockery::mock( MslsOptions::class );
+		$options                        = \Mockery::mock( Options::class );
 		$options->activate_quick_create = false;
 
 		$post_type = \Mockery::mock( MslsPostType::class );
@@ -302,7 +302,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 	}
 
 	public function test_render_select_only_one_blog(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() );
@@ -316,7 +316,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 	}
 
 	public function test_render_input_only_one_blog(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get' )->andReturn( array() );
@@ -375,7 +375,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 
 		$test = $this->MslsMetaBoxFactory();
 
-		$mydata = new MslsOptionsPost();
+		$mydata = new OptionsPost();
 		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertEquals( 42, $mydata->de_DE );
@@ -393,14 +393,14 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 
 		$test = $this->MslsMetaBoxFactory();
 
-		$mydata = new MslsOptionsPost();
+		$mydata = new OptionsPost();
 		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertNull( $mydata->de_DE );
 	}
 
 	function test_maybe_set_linked_post_with_no_blog_id() {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 		$collection->shouldReceive( 'get_blog_id' )->andReturn( null );
@@ -413,14 +413,14 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$mydata = new MslsOptionsPost();
+		$mydata = new OptionsPost();
 		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertNull( $mydata->de_DE );
 	}
 
 	function test_maybe_set_linked_post_with_mydata_already_set() {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 
@@ -431,7 +431,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$mydata        = new MslsOptionsPost();
+		$mydata        = new OptionsPost();
 		$mydata->de_DE = 42;
 		$mydata        = $test->maybe_set_linked_post( $mydata );
 

@@ -4,13 +4,13 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsFields;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 use lloc\Msls\MslsTaxonomy;
 
 final class TestMslsTaxonomy extends MslsUnitTestCase {
 
 	private function MslsTaxonomyFactory( bool $exluded = false ): MslsTaxonomy {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( $exluded );
 
 		Functions\expect( 'msls_options' )->zeroOrMoreTimes()->andReturn( $options );

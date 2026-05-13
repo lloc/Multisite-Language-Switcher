@@ -11,7 +11,7 @@ use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMain;
-use lloc\Msls\MslsOptionsPost;
+use lloc\Msls\Options\OptionsPost;
 use lloc\Msls\MslsRegistryInstance;
 use lloc\Msls\MslsRequest;
 
@@ -333,7 +333,7 @@ class ContentImporter extends MslsRegistryInstance {
 			$source_post_id = $import_coordinates->source_post_id;
 			$dest_lang      = $import_coordinates->dest_lang;
 			$dest_post_id   = $import_coordinates->dest_post_id;
-			$relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
+			$relations->should_create( OptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
 
 			foreach ( $importers as $key => $importer ) {
 				if ( ! $importer instanceof Importer ) {

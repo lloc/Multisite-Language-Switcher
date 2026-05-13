@@ -1,13 +1,15 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Options;
+
+use lloc\Msls\MslsSqlCacher;
 
 /**
- * MslsOptionsQuery
+ * OptionsQuery
  *
  * @package Msls
  */
-class MslsOptionsQuery extends MslsOptions {
+class OptionsQuery extends Options {
 
 	/**
 	 * Rewrite with front
@@ -39,19 +41,19 @@ class MslsOptionsQuery extends MslsOptions {
 	 *
 	 * @param int $id This parameter is unused here.
 	 *
-	 * @return ?MslsOptionsQuery
+	 * @return ?OptionsQuery
 	 */
-	public static function create( $id = 0 ): ?MslsOptionsQuery {
+	public static function create( $id = 0 ): ?OptionsQuery {
 		if ( is_day() ) {
-			$query_class = MslsOptionsQueryDay::class;
+			$query_class = OptionsQueryDay::class;
 		} elseif ( is_month() ) {
-			$query_class = MslsOptionsQueryMonth::class;
+			$query_class = OptionsQueryMonth::class;
 		} elseif ( is_year() ) {
-			$query_class = MslsOptionsQueryYear::class;
+			$query_class = OptionsQueryYear::class;
 		} elseif ( is_author() ) {
-			$query_class = MslsOptionsQueryAuthor::class;
+			$query_class = OptionsQueryAuthor::class;
 		} elseif ( is_post_type_archive() ) {
-			$query_class = MslsOptionsQueryPostType::class;
+			$query_class = OptionsQueryPostType::class;
 		}
 
 		if ( ! isset( $query_class ) ) {
@@ -82,9 +84,9 @@ class MslsOptionsQuery extends MslsOptions {
 		if ( $this->has_value( $language ) ) {
 			$post_link = $this->get_current_link();
 			if ( ! empty( $post_link ) ) {
-				$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', MslsOptions::MSLS_GET_POSTLINK_HOOK );
+				$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', Options::MSLS_GET_POSTLINK_HOOK );
 
-				return apply_filters( MslsOptions::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
+				return apply_filters( Options::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
 			}
 		}
 

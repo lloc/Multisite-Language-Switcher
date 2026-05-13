@@ -1,13 +1,15 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Options;
+
+use lloc\Msls\OptionsTaxInterface;
 
 /**
- * MslsOptionsTax
+ * OptionsTax
  *
  * @package Msls
  */
-class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
+class OptionsTax extends Options implements OptionsTaxInterface {
 
 	public const SEPARATOR = '_term_';
 
@@ -27,13 +29,13 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 
 		switch ( $req ) {
 			case 'category':
-				$options = new MslsOptionsTaxTermCategory( $id );
+				$options = new OptionsTaxTermCategory( $id );
 				break;
 			case 'post_tag':
-				$options = new MslsOptionsTaxTerm( $id );
+				$options = new OptionsTaxTerm( $id );
 				break;
 			default:
-				$options = new MslsOptionsTax( $id );
+				$options = new OptionsTax( $id );
 		}
 
 		return $options->handle_rewrite();
@@ -91,9 +93,9 @@ class MslsOptionsTax extends MslsOptions implements OptionsTaxInterface {
 			$post_link = $this->get_term_link( (int) $this->__get( $language ) );
 		}
 
-		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', MslsOptions::MSLS_GET_POSTLINK_HOOK );
+		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', Options::MSLS_GET_POSTLINK_HOOK );
 
-		return apply_filters( MslsOptions::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
+		return apply_filters( Options::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
 	}
 
 	public function get_permalink( string $language ): string {

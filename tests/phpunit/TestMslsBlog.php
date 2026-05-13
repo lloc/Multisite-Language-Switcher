@@ -5,7 +5,7 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 
 final class TestMslsBlog extends MslsUnitTestCase {
 
@@ -31,7 +31,7 @@ final class TestMslsBlog extends MslsUnitTestCase {
 	public function test_get_url_current(): void {
 		$url = 'https://msls.co/';
 
-		$option = \Mockery::mock( MslsOptions::class );
+		$option = \Mockery::mock( Options::class );
 		$option->shouldReceive( 'get_current_link' )->andReturn( $url );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -45,7 +45,7 @@ final class TestMslsBlog extends MslsUnitTestCase {
 	public function test_get_frontpage(): void {
 		$url = 'https://msls.co/';
 
-		$option = \Mockery::mock( MslsOptions::class );
+		$option = \Mockery::mock( Options::class );
 		$option->shouldReceive( 'get_permalink' )->once()->andReturn( $url );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -63,7 +63,7 @@ final class TestMslsBlog extends MslsUnitTestCase {
 	public function test_get_url(): void {
 		$url = 'https://msls.co/';
 
-		$option = \Mockery::mock( MslsOptions::class );
+		$option = \Mockery::mock( Options::class );
 		$option->shouldReceive( 'get_permalink' )->once()->andReturn( $url );
 		$option->shouldReceive( 'has_value' )->once()->andReturn( true );
 
@@ -82,7 +82,7 @@ final class TestMslsBlog extends MslsUnitTestCase {
 	public function test_get_posts_page(): void {
 		$url = 'https://msls.co/sv/blogg/';
 
-		$option = \Mockery::mock( MslsOptions::class );
+		$option = \Mockery::mock( Options::class );
 		$option->shouldReceive( 'has_value' )->once()->andReturn( false );
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
@@ -102,7 +102,7 @@ final class TestMslsBlog extends MslsUnitTestCase {
 	public function test_get_posts_page_with_translation(): void {
 		$url = 'https://msls.co/sv/blogg/';
 
-		$option = \Mockery::mock( MslsOptions::class );
+		$option = \Mockery::mock( Options::class );
 		$option->shouldReceive( 'get_permalink' )->once()->andReturn( $url );
 		$option->shouldReceive( 'has_value' )->once()->andReturn( true );
 
