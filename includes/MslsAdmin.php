@@ -11,6 +11,7 @@ use lloc\Msls\Component\Input\Group;
 use lloc\Msls\Component\Input\Label;
 use lloc\Msls\Component\Input\Text;
 use lloc\Msls\Component\Input\Select;
+use WP_Post_Type;
 
 /**
  * Administration of the options
@@ -93,12 +94,12 @@ final class MslsAdmin extends MslsMain {
 	/**
 	 * You can use every method of the decorated object
 	 *
-	 * @param string $method
-	 * @param mixed  $args
+	 * @param string  $method
+	 * @param mixed[] $args
 	 *
 	 * @return mixed
 	 */
-	public function __call( string $method, $args ) {
+	public function __call( string $method, array $args ) {
 		$parts = explode( '_', $method, 2 );
 		if ( 2 === count( $parts ) && 'rewrite' === $parts[0] ) {
 			$this->render_rewrite( $parts[1] );
@@ -434,8 +435,8 @@ final class MslsAdmin extends MslsMain {
 	 */
 	public function render_rewrite( $key ): void {
 		$pt_object = get_post_type_object( $key );
-		$rewrite   = $pt_object ? $pt_object->rewrite : array();
-		$value     = $rewrite['slug'] ?? '';
+		$rewrite   = $pt_object instanceof WP_Post_Type ? $pt_object->rewrite : null;
+		$value     = is_array( $rewrite ) ? ( $rewrite['slug'] ?? '' ) : '';
 
         // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Text( "rewrite_{$key}", $value, 30, true ) )->render();

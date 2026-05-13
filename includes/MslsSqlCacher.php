@@ -94,15 +94,30 @@ class MslsSqlCacher {
 	 */
 	public function __call( string $method, array $args ) {
 		if ( 'get_' !== substr( $method, 0, 4 ) ) {
-			return call_user_func_array( array( $this->db, $method ), $args );
+			return $this->invoke( $method, $args );
 		}
 
 		$result = wp_cache_get( $this->cache_key, self::CACHE_GROUP );
 		if ( false === $result ) {
-			$result = call_user_func_array( array( $this->db, $method ), $args );
+			$result = $this->invoke( $method, $args );
 			wp_cache_set( $this->cache_key, $result, self::CACHE_GROUP, $this->expire );
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @param string            $method
+	 * @param array<int|string> $args
+	 *
+	 * @return mixed
+	 */
+	protected function invoke( string $method, array $args ) {
+		$callback = array( $this->db, $method );
+		if ( ! is_callable( $callback ) ) {
+			return null;
+		}
+
+		return $callback( ...$args );
 	}
 }

@@ -19,7 +19,7 @@ class MslsLink extends MslsGetSet implements LinkInterface {
 	/**
 	 * Gets all link types as an array with "id => name"-items
 	 *
-	 * @return string[]
+	 * @return array<int, class-string>
 	 */
 	public static function get_types() {
 		return array(
