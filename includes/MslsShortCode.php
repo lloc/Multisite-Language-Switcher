@@ -5,7 +5,7 @@ namespace lloc\Msls;
 class MslsShortCode {
 
 	public static function init(): void {
-		add_shortcode( 'sc_msls_widget', \Closure::fromCallable( array( __CLASS__, 'render_widget' ) ) );
+		add_shortcode( 'sc_msls_widget', array( __CLASS__, 'render_widget' ) );
 		add_shortcode( 'sc_msls', 'msls_get_switcher' );
 	}
 

@@ -52,7 +52,7 @@ class MslsJson {
 	public function get(): array {
 		$arr = $this->arr;
 
-		usort( $arr, \Closure::fromCallable( array( __CLASS__, 'compare' ) ) );
+		usort( $arr, array( __CLASS__, 'compare' ) );
 
 		return $arr;
 	}
