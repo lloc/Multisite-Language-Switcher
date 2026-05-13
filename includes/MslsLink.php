@@ -19,7 +19,7 @@ class MslsLink extends MslsGetSet implements LinkInterface {
 	/**
 	 * Gets all link types as an array with "id => name"-items
 	 *
-	 * @return string[]
+	 * @return array<int, class-string<LinkInterface>>
 	 */
 	public static function get_types() {
 		return array(
@@ -42,13 +42,13 @@ class MslsLink extends MslsGetSet implements LinkInterface {
 	/**
 	 * Gets an array with all link descriptions
 	 *
-	 * @return array<string, string>
+	 * @return array<int, string>
 	 */
 	public static function get_types_description(): array {
 		$types = array();
 
 		foreach ( self::get_types() as $key => $class ) {
-			$types[ $key ] = call_user_func( array( $class, 'get_description' ) );
+			$types[ $key ] = $class::get_description();
 		}
 
 		return $types;
@@ -70,11 +70,10 @@ class MslsLink extends MslsGetSet implements LinkInterface {
 		$obj = new $types[ $display ]();
 
 		if ( has_filter( 'msls_link_create' ) ) {
-			/**
-			 * @param LinkInterface $obj
-			 * @param int $display
-			 */
-			$obj = apply_filters( 'msls_link_create', $obj, $display );
+			$filtered = apply_filters( 'msls_link_create', $obj, $display );
+			if ( $filtered instanceof LinkInterface ) {
+				$obj = $filtered;
+			}
 		}
 
 		return $obj;

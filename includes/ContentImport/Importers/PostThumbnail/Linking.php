@@ -63,15 +63,20 @@ class Linking extends BaseImporter {
 		// In some instances, the folder sep. `/` might be duplicated, we de-duplicate it.
 		array_walk(
 			$source_upload_dir,
-			function ( &$entry ) {
-				$entry = str_replace( '//', '/', $entry );
+			function ( &$entry ): void {
+				if ( is_string( $entry ) ) {
+					$entry = str_replace( '//', '/', $entry );
+				}
 			}
 		);
+		$subdir = is_string( $source_upload_dir['subdir'] ) ? $source_upload_dir['subdir'] : '';
+		$path   = is_string( $source_upload_dir['path'] ) ? $source_upload_dir['path'] : '';
+
 		$source_uploads_dir         = untrailingslashit(
 			str_replace(
-				$source_upload_dir['subdir'],
+				$subdir,
 				'',
-				$source_upload_dir['path']
+				$path
 			)
 		);
 		$source_post_thumbnail_file = $source_uploads_dir . '/' . $source_post_thumbnail_meta['_wp_attached_file'];
@@ -91,7 +96,7 @@ class Linking extends BaseImporter {
 		$found = get_posts(
 			array(
 				'post_type' => 'attachment',
-				'title'     => $attachment['post_title'],
+				'title'     => $attachment['post_title'] ?? '',
 			)
 		);
 		if ( isset( $found[0]->ID ) ) {

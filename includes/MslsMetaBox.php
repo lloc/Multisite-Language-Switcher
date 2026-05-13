@@ -89,7 +89,7 @@ final class MslsMetaBox extends MslsMain {
 		);
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_die( wp_json_encode( $results ) );
+		wp_die( wp_json_encode( $results ) ?: '' );
 	}
 
 	/**
@@ -109,14 +109,19 @@ final class MslsMetaBox extends MslsMain {
 		$args = (array) apply_filters( 'msls_meta_box_suggest_args', $args );
 
 		foreach ( get_posts( $args ) as $post ) {
+			if ( ! $post instanceof \WP_Post ) {
+				continue;
+			}
+
 			/**
 			 * Manipulates the WP_Post object before using it
 			 *
-			 * @param WP_Post $post
-			 *
 			 * @since 0.9.9
 			 */
-			$post = apply_filters( 'msls_meta_box_suggest_post', $post );
+			$filtered = apply_filters( 'msls_meta_box_suggest_post', $post );
+			if ( $filtered instanceof \WP_Post ) {
+				$post = $filtered;
+			}
 
 			$json->add( $post->ID, get_the_title( $post ) );
 		}
@@ -181,7 +186,11 @@ final class MslsMetaBox extends MslsMain {
 		if ( $blogs ) {
 			global $post;
 
-			$type            = get_post_type( $post->ID );
+			$type = get_post_type( $post->ID );
+			if ( false === $type ) {
+				return;
+			}
+
 			$mydata          = new MslsOptionsPost( $post->ID );
 			$origin_language = MslsBlogCollection::get_blog_language();
 			$is_saved        = 'auto-draft' !== get_post_status( $post );
@@ -321,7 +330,11 @@ final class MslsMetaBox extends MslsMain {
 		if ( $blogs ) {
 			global $post;
 
-			$post_type       = get_post_type( $post->ID );
+			$post_type = get_post_type( $post->ID );
+			if ( false === $post_type ) {
+				return;
+			}
+
 			$my_data         = new MslsOptionsPost( $post->ID );
 			$origin_language = MslsBlogCollection::get_blog_language();
 			$is_saved        = 'auto-draft' !== get_post_status( $post );

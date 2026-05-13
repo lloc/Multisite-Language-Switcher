@@ -191,6 +191,10 @@ class MslsTranslationPickerTable extends \WP_List_Table {
 		$taxonomies = array_keys( $this->get_admin_column_taxonomies() );
 
 		foreach ( $query->posts as $post ) {
+			if ( ! $post instanceof \WP_Post ) {
+				continue;
+			}
+
 			$terms_by_tax = array();
 			foreach ( $taxonomies as $tax_name ) {
 				$terms                     = get_the_terms( $post->ID, $tax_name );

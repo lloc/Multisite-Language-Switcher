@@ -125,8 +125,8 @@ class MslsMain {
 	/**
 	 * Save
 	 *
-	 * @param int    $object_id
-	 * @param string $class_name
+	 * @param int                       $object_id
+	 * @param class-string<MslsOptions> $class_name
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -145,13 +145,14 @@ class MslsMain {
 			return;
 		}
 
-		if ( ! $this->collection->has_current_blog() ) {
+		$current_blog = $this->collection->get_current_blog();
+		if ( ! $current_blog instanceof MslsBlog ) {
 			$this->debugger( 'BlogCollection returns false when calling has_current_blog.' );
 
 			return;
 		}
 
-		$language = $this->collection->get_current_blog()->get_language();
+		$language = $current_blog->get_language();
 		$msla     = new MslsLanguageArray( $this->get_input_array( $object_id ) );
 		$options  = new $class_name( $object_id );
 		$temp     = $options->get_arr();

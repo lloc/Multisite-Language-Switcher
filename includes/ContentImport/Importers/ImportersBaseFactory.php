@@ -13,7 +13,7 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 	const TYPE = 'none';
 
 	/**
-	 * @var array<string, string> An array defining the slug and Importer class relationships in
+	 * @var array<string, class-string<Importer>> An array defining the slug and Importer class relationships in
 	 *            the shape [ <slug> => <importer-class> ]
 	 */
 	protected array $importers_map = array();
@@ -67,6 +67,9 @@ abstract class ImportersBaseFactory extends MslsRegistryInstance implements Impo
 
 		// If there is some incoherence, return the null-doing base importer.
 		$class = ! empty( $slug ) && isset( $map[ $slug ] ) ? $map[ $slug ] : BaseImporter::class;
+		if ( ! is_string( $class ) || ! is_a( $class, Importer::class, true ) ) {
+			$class = BaseImporter::class;
+		}
 
 		return new $class( $import_coordinates );
 	}

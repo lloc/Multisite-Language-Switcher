@@ -97,7 +97,14 @@ class ImportCoordinates {
 			}
 		}
 
+		if ( ! is_array( $importers ) ) {
+			return;
+		}
+
 		foreach ( $importers as $importer_type => $slug ) {
+			if ( ! is_string( $slug ) ) {
+				continue;
+			}
 			$this->set_importer_for( $importer_type, $slug );
 		}
 	}

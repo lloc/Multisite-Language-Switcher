@@ -95,7 +95,10 @@ class MslsBlogCollection extends MslsRegistryInstance {
 				}
 			}
 
-			uasort( $this->objects, array( MslsBlog::class, $this->objects_order ) );
+			$compare = array( MslsBlog::class, $this->objects_order );
+			if ( is_callable( $compare ) ) {
+				uasort( $this->objects, $compare );
+			}
 		}
 	}
 
@@ -134,12 +137,11 @@ class MslsBlogCollection extends MslsRegistryInstance {
 			$options->reference_user :
 			current( $this->get_users( 'ID', 1 ) );
 
-		$blogs = get_blogs_of_user( $reference_user );
-		foreach ( $blogs as $key => $blog ) {
-			$blogs[ $key ]->blog_id = $blog->userblog_id;
+		if ( ! is_int( $reference_user ) ) {
+			$reference_user = 0;
 		}
 
-		return $blogs;
+		return get_blogs_of_user( $reference_user );
 	}
 
 	/**

@@ -12,9 +12,13 @@ class MslsShortCode {
 	/**
 	 * Renders output using the widget's output
 	 *
-	 * @return string|false
+	 * @param array<string>|string $atts
+	 * @param string|null          $content
+	 * @param string               $tag
+	 *
+	 * @return string
 	 */
-	public static function render_widget() {
+	public static function render_widget( $atts = array(), ?string $content = null, string $tag = '' ): string {
 		if ( msls_options()->is_excluded() ) {
 			return '';
 		}
@@ -23,6 +27,6 @@ class MslsShortCode {
 		the_widget( MslsWidget::class );
 		$output = ob_get_clean();
 
-		return $output;
+		return false === $output ? '' : $output;
 	}
 }

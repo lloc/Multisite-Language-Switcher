@@ -152,7 +152,7 @@ final class TestMslsAdminIcon extends MslsUnitTestCase {
 	}
 
 	public function test_set_id_with_null_constructor(): void {
-		Functions\expect( 'add_query_arg' )->once();
+		Functions\expect( 'add_query_arg' )->once()->andReturn( 'post-new.php' );
 
 		$obj = new MslsAdminIcon( null );
 

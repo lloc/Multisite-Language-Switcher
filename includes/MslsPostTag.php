@@ -55,8 +55,12 @@ class MslsPostTag extends MslsMain {
 			 *
 			 * @since 0.9.9
 			 */
-			$args = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
-			foreach ( get_terms( $args ) as $term ) {
+			$args  = (array) apply_filters( 'msls_post_tag_suggest_args', $args );
+			$terms = get_terms( $args );
+			if ( ! is_array( $terms ) ) {
+				$terms = array();
+			}
+			foreach ( $terms as $term ) {
 				/**
 				 * Manipulates the term object before using it
 				 *
