@@ -9,7 +9,7 @@ class PostMetaImporters extends ImportersBaseFactory {
 	const TYPE = 'post-meta';
 
 	/**
-	 * @var array<string, string>
+	 * @var array<string, class-string<Importer>>
 	 */
 	protected array $importers_map = array(
 		Duplicating::TYPE => Duplicating::class,

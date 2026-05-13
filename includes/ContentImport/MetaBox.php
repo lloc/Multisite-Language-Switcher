@@ -23,7 +23,11 @@ class MetaBox extends MslsRegistryInstance {
 	 * Renders the content import metabox.
 	 */
 	public function render(): void {
-		$post            = get_post();
+		$post = get_post();
+		if ( ! $post instanceof \WP_Post ) {
+			return;
+		}
+
 		$mydata          = new MslsOptionsPost( $post->ID );
 		$languages       = MslsOptionsPost::instance()->get_available_languages();
 		$current         = MslsBlogCollection::get_blog_language( get_current_blog_id() );
@@ -185,6 +189,9 @@ class MetaBox extends MslsRegistryInstance {
 		<?php
 
 		$html = ob_get_clean();
+		if ( false === $html ) {
+			$html = '';
+		}
 
 		if ( $output ) {
 			echo wp_kses( $html, Component::get_allowed_html() );

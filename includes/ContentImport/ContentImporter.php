@@ -99,8 +99,12 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @return string[] The updated, if needed, data array.
 	 */
 	public function handle_import( array $data = array() ) {
+		if ( ! $this->pre_flight_check() ) {
+			return $data;
+		}
+
 		$sources = $this->parse_sources();
-		if ( ! $this->pre_flight_check() || false === $sources ) {
+		if ( null === $sources ) {
 			return $data;
 		}
 
@@ -176,21 +180,21 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * Parses the source blog and post IDs from the $_POST array validating them.
 	 *
-	 * @return int[]|bool
+	 * @return array{0: int, 1: int}|null
 	 */
-	public function parse_sources() {
+	public function parse_sources(): ?array {
 		if ( ! MslsRequest::has_var( 'msls_import' ) ) {
-			return false;
+			return null;
 		}
 
 		$msls_import = MslsRequest::get_var( 'msls_import' );
-		$import_data = array_filter( explode( '|', trim( $msls_import ) ), 'is_numeric' );
+		$import_data = array_values( array_filter( explode( '|', trim( $msls_import ) ), 'is_numeric' ) );
 
 		if ( count( $import_data ) !== 2 ) {
-			return false;
+			return null;
 		}
 
-		return array_map( 'intval', $import_data );
+		return array( (int) $import_data[0], (int) $import_data[1] );
 	}
 
 	/**
@@ -198,12 +202,12 @@ class ContentImporter extends MslsRegistryInstance {
 	 *
 	 * @return int
 	 */
-	protected function get_the_blog_post_ID( $blog_id ) {
+	protected function get_the_blog_post_ID( $blog_id ): int {
 		switch_to_blog( $blog_id );
 
 		$id = get_the_ID();
 
-		if ( ! empty( $id ) ) {
+		if ( false !== $id && ! empty( $id ) ) {
 			restore_current_blog();
 
 			return $id;
@@ -226,11 +230,11 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @param int                  $blog_id
 	 * @param array<string, mixed> $data
 	 *
-	 * @return bool|int
+	 * @return int
 	 */
-	protected function insert_blog_post( $blog_id, array $data = array() ) {
+	protected function insert_blog_post( $blog_id, array $data = array() ): int {
 		if ( empty( $data ) ) {
-			return false;
+			return 0;
 		}
 
 		switch_to_blog( $blog_id );
@@ -238,7 +242,7 @@ class ContentImporter extends MslsRegistryInstance {
 		if ( ! empty( $data['post_type'] ) && ! post_type_exists( $data['post_type'] ) ) {
 			restore_current_blog();
 
-			return false;
+			return 0;
 		}
 
 		$this->handle( false );
@@ -249,7 +253,7 @@ class ContentImporter extends MslsRegistryInstance {
 		}
 		$this->handle( true );
 
-		$this->has_created_post = $post_id > 0 ? $post_id : false;
+		$this->has_created_post = $post_id > 0 ? $post_id : 0;
 
 		restore_current_blog();
 
@@ -319,29 +323,29 @@ class ContentImporter extends MslsRegistryInstance {
 			$importers = Map::instance()->make( $import_coordinates );
 		}
 
-		if ( is_null( $this->get_logger() ) ) {
-			$this->set_logger( new ImportLogger( $import_coordinates ) );
-		}
+		$logger = $this->logger ?? new ImportLogger( $import_coordinates );
+		$this->set_logger( $logger );
 
-		if ( is_null( $this->get_relations() ) ) {
-			$this->set_relations( new Relations( $import_coordinates ) );
-		}
+		$relations = $this->relations ?? new Relations( $import_coordinates );
+		$this->set_relations( $relations );
 
 		if ( ! empty( $importers ) ) {
 			$source_post_id = $import_coordinates->source_post_id;
 			$dest_lang      = $import_coordinates->dest_lang;
 			$dest_post_id   = $import_coordinates->dest_post_id;
-			$this->relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
+			$relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
 
 			foreach ( $importers as $key => $importer ) {
-				/** @var Importer $importer */
+				if ( ! $importer instanceof Importer ) {
+					continue;
+				}
 				$post_fields = $importer->import( $post_fields );
-				$this->logger->merge( $importer->get_logger() );
-				$this->relations->merge( $importer->get_relations() );
+				$logger->merge( $importer->get_logger() );
+				$relations->merge( $importer->get_relations() );
 			}
 
-			$this->relations->create();
-			$this->logger->save();
+			$relations->create();
+			$logger->save();
 		}
 
 		/**
@@ -353,7 +357,7 @@ class ContentImporter extends MslsRegistryInstance {
 		 *
 		 * @since TBD
 		 */
-		do_action( self::MSLS_AFTER_IMPORT_ACTION, $import_coordinates, $this->logger, $this->relations );
+		do_action( self::MSLS_AFTER_IMPORT_ACTION, $import_coordinates, $logger, $relations );
 
 		/**
 		 * Filters the data after the import ran.
@@ -367,8 +371,8 @@ class ContentImporter extends MslsRegistryInstance {
 			'msls_content_import_data_after_import',
 			$post_fields,
 			$import_coordinates,
-			$this->logger,
-			$this->relations
+			$logger,
+			$relations
 		);
 	}
 
@@ -395,7 +399,7 @@ class ContentImporter extends MslsRegistryInstance {
 	 */
 	protected function redirect_to_blog_post( $dest_blog_id, $post_id ) {
 		switch_to_blog( $dest_blog_id );
-		$edit_post_link = html_entity_decode( get_edit_post_link( $post_id ) );
+		$edit_post_link = html_entity_decode( get_edit_post_link( $post_id ) ?? '' );
 		wp_safe_redirect( $edit_post_link );
 		die();
 	}

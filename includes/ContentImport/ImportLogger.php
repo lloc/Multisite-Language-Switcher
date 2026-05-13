@@ -8,7 +8,7 @@ use lloc\Msls\ContentImport\LogWriters\LogWriter;
 class ImportLogger {
 
 	/**
-	 * @var string
+	 * @var non-empty-string
 	 */
 	protected string $levels_delimiter = '/';
 
@@ -154,9 +154,9 @@ class ImportLogger {
 	/**
 	 * Sets the string that will be used to split paths into levels.
 	 *
-	 * @param string $levels_delimiter
+	 * @param non-empty-string $levels_delimiter
 	 */
-	public function set_levels_delimiter( $levels_delimiter ): void {
+	public function set_levels_delimiter( string $levels_delimiter ): void {
 		$this->levels_delimiter = $levels_delimiter;
 	}
 
@@ -197,9 +197,17 @@ class ImportLogger {
 	protected function get_nested_value( $where ) {
 		$path = $this->build_path( $where );
 
-		$data = $this->data[ array_shift( $path ) ];
+		$first = array_shift( $path );
+		if ( null === $first || ! isset( $this->data[ $first ] ) ) {
+			return null;
+		}
+
+		$data = $this->data[ $first ];
 
 		foreach ( $path as $frag ) {
+			if ( ! is_array( $data ) || ! isset( $data[ $frag ] ) ) {
+				return null;
+			}
 			$data = $data[ $frag ];
 		}
 

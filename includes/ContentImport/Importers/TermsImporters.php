@@ -9,7 +9,7 @@ class TermsImporters extends ImportersBaseFactory {
 	const TYPE = 'terms';
 
 	/**
-	 * @var array<string, string>
+	 * @var array<string, class-string<Importer>>
 	 */
 	protected array $importers_map = array(
 		ShallowDuplicating::TYPE => ShallowDuplicating::class,

@@ -9,7 +9,7 @@ class PostFieldsImporters extends ImportersBaseFactory {
 	const TYPE = 'post-fields';
 
 	/**
-	 * @var array<string, string>
+	 * @var array<string, class-string<Importer>>
 	 */
 	protected array $importers_map = array(
 		Duplicating::TYPE => Duplicating::class,

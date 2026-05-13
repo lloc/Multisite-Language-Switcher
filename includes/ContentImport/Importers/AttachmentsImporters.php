@@ -9,7 +9,7 @@ class AttachmentsImporters extends ImportersBaseFactory {
 	const TYPE = 'attachments';
 
 	/**
-	 * @var array<string, string>
+	 * @var array<string, class-string<Importer>>
 	 */
 	protected array $importers_map = array(
 		Linking::TYPE => Linking::class,

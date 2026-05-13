@@ -43,7 +43,7 @@ final class TestContentImporter extends MslsUnitTestCase {
 	public function test_parse_sources_no_post(): void {
 		$test = $this->ContentImporterFactory();
 
-		$this->assertFalse( $test->parse_sources() );
+		$this->assertNull( $test->parse_sources() );
 	}
 
 	public function test_handle_false(): void {
