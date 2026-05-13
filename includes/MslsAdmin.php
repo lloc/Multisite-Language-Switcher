@@ -127,8 +127,13 @@ final class MslsAdmin extends MslsMain {
 		);
 
 		if ( isset( $checkboxes[ $method ] ) ) {
+			$value = $this->options->$method;
+			if ( is_bool( $value ) ) {
+				$value = $value ? '1' : '';
+			}
+
 			$group = ( new Group() )
-				->add( new Checkbox( $method, $this->options->$method ) )
+				->add( new Checkbox( $method, $value ) )
 				->add( new Label( $method, $checkboxes[ $method ] ) );
 
 			echo $group->render(); // phpcs:ignore WordPress.Security.EscapeOutput
@@ -334,7 +339,11 @@ final class MslsAdmin extends MslsMain {
 	 */
 	protected function add_settings_fields( array $map, string $section ): int {
 		foreach ( $map as $id => $title ) {
-			add_settings_field( $id, $title, array( $this, $id ), __CLASS__, $section, array( 'label_for' => $id ) );
+			$callback = array( $this, $id );
+			if ( ! is_callable( $callback ) ) {
+				continue;
+			}
+			add_settings_field( $id, $title, $callback, __CLASS__, $section, array( 'label_for' => $id ) );
 		}
 
 		/**
