@@ -101,12 +101,12 @@ class MslsOptions extends MslsGetSet implements OptionsInterface {
 		} elseif ( self::is_tax_page() ) {
 			$options = MslsOptionsTax::create();
 		} elseif ( self::is_query_page() ) {
-			$options = MslsOptionsQuery::create();
+			$options = MslsOptionsQuery::create() ?? new MslsOptions();
 		} else {
 			$options = new MslsOptionsPost( get_queried_object_id() );
 		}
 
-		add_filter( self::MSLS_GET_POSTLINK_HOOK, array( $options, 'check_for_blog_slug' ), 10, 2 );
+		add_filter( self::MSLS_GET_POSTLINK_HOOK, \Closure::fromCallable( array( self::class, 'check_for_blog_slug' ) ), 10, 2 );
 
 		return $options;
 	}
