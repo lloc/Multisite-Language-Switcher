@@ -1,15 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\Options;
-
-use lloc\MslsTests\MslsUnitTestCase;
+namespace lloc\MslsTests\Options\Tax;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\Options\OptionsTaxTerm;
+use lloc\Msls\Options\Tax\Term;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestOptionsTaxTerm extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
 
-	private function OptionsTaxTermFactory( $get_option_exec_times = 2 ): OptionsTaxTerm {
+final class TestTerm extends MslsUnitTestCase {
+
+	private function OptionsTaxTermFactory( $get_option_exec_times = 2 ): Term {
 		Functions\expect( 'get_option' )->times( $get_option_exec_times )->andReturnUsing(
 			function ( $value ) {
 				if ( 'msls_term_42' === $value ) {
@@ -24,7 +25,7 @@ final class TestOptionsTaxTerm extends MslsUnitTestCase {
 			}
 		);
 
-		return new OptionsTaxTerm( 42 );
+		return new Term( 42 );
 	}
 
 	public function test_get_postlink_empty(): void {
@@ -34,7 +35,7 @@ final class TestOptionsTaxTerm extends MslsUnitTestCase {
 	}
 
 	public function test_check_url_empty(): void {
-		$options = \Mockery::mock( OptionsTaxTerm::class );
+		$options = \Mockery::mock( Term::class );
 
 		$test = $this->OptionsTaxTermFactory( 1 );
 
@@ -49,7 +50,7 @@ final class TestOptionsTaxTerm extends MslsUnitTestCase {
 		$wp_rewrite = \Mockery::mock( 'WP_Rewrite' );
 		$wp_rewrite->shouldReceive( 'get_extra_permastruct' )->andReturn( '/schlagwort/' );
 
-		$options = \Mockery::mock( OptionsTaxTerm::class );
+		$options = \Mockery::mock( Term::class );
 		$options->shouldReceive( 'get_tax_query' )->andReturn( '' );
 
 		$expected = 'https://example.de/tag/keyword';
@@ -65,7 +66,7 @@ final class TestOptionsTaxTerm extends MslsUnitTestCase {
 		$wp_rewrite = \Mockery::mock( 'WP_Rewrite' );
 		$wp_rewrite->shouldReceive( 'get_extra_permastruct' )->andReturn( false );
 
-		$options = \Mockery::mock( OptionsTaxTerm::class );
+		$options = \Mockery::mock( Term::class );
 		$options->shouldReceive( 'get_tax_query' )->andReturn( '' );
 
 		$expected = 'https://example.de/schlagwort/keyword';

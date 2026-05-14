@@ -1,19 +1,20 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\Options;
-
-use lloc\MslsTests\MslsUnitTestCase;
+namespace lloc\MslsTests\Options\Query;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\Options\OptionsQuery;
-use lloc\Msls\Options\OptionsQueryAuthor;
-use lloc\Msls\Options\OptionsQueryDay;
-use lloc\Msls\Options\OptionsQueryMonth;
-use lloc\Msls\Options\OptionsQueryPostType;
-use lloc\Msls\Options\OptionsQueryYear;
 use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Options\Query\Author;
+use lloc\Msls\Options\Query\Day;
+use lloc\Msls\Options\Query\Month;
+use lloc\Msls\Options\Query\PostType;
+use lloc\Msls\Options\Query\Query;
+use lloc\Msls\Options\Query\Year;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestOptionsQuery extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
+
+final class TestQuery extends MslsUnitTestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -24,7 +25,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 	}
 
 	public function test_get_params(): void {
-		$this->assertEquals( array(), OptionsQuery::get_params() );
+		$this->assertEquals( array(), Query::get_params() );
 	}
 
 	public function test_create_is_day(): void {
@@ -32,7 +33,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 		Functions\expect( 'get_query_var' )->times( 6 )->andReturnValues( array( 1969, 6, 26 ) );
 		Functions\expect( 'get_option' )->once();
 
-		$this->assertInstanceOf( OptionsQueryDay::class, OptionsQuery::create() );
+		$this->assertInstanceOf( Day::class, Query::create() );
 	}
 	public function test_create_is_month(): void {
 		Functions\expect( 'is_day' )->once()->andReturn( false );
@@ -40,7 +41,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 		Functions\expect( 'get_query_var' )->times( 4 )->andReturnValues( array( 1969, 6 ) );
 		Functions\expect( 'get_option' )->once();
 
-		$this->assertInstanceOf( OptionsQueryMonth::class, OptionsQuery::create() );
+		$this->assertInstanceOf( Month::class, Query::create() );
 	}
 
 	public function test_create_is_year(): void {
@@ -50,7 +51,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 		Functions\expect( 'get_query_var' )->times( 2 )->andReturn( 1969 );
 		Functions\expect( 'get_option' )->once();
 
-		$this->assertInstanceOf( OptionsQueryYear::class, OptionsQuery::create() );
+		$this->assertInstanceOf( Year::class, Query::create() );
 	}
 
 	public function test_create_is_author(): void {
@@ -61,7 +62,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 		Functions\expect( 'get_queried_object_id' )->times( 2 )->andReturn( 42 );
 		Functions\expect( 'get_option' )->once();
 
-		$this->assertInstanceOf( OptionsQueryAuthor::class, OptionsQuery::create() );
+		$this->assertInstanceOf( Author::class, Query::create() );
 	}
 
 	public function test_create_is_post_type_archive(): void {
@@ -73,7 +74,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 		Functions\expect( 'get_query_var' )->times( 2 )->andReturn( 'book' );
 		Functions\expect( 'get_option' )->once();
 
-		$this->assertInstanceOf( OptionsQueryPostType::class, OptionsQuery::create() );
+		$this->assertInstanceOf( PostType::class, Query::create() );
 	}
 
 	public function test_create_is_null(): void {
@@ -83,7 +84,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 		Functions\expect( 'is_author' )->once()->andReturn( false );
 		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
 
-		$this->assertNull( OptionsQuery::create() );
+		$this->assertNull( Query::create() );
 	}
 
 	public function test_current_get_postlink(): void {
@@ -94,7 +95,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 
 		$sql_cache = \Mockery::mock( MslsSqlCacher::class );
 
-		$this->assertEquals( $home_url, ( new OptionsQuery( $sql_cache ) )->get_postlink( 'de_DE' ) );
+		$this->assertEquals( $home_url, ( new Query( $sql_cache ) )->get_postlink( 'de_DE' ) );
 	}
 
 	public function test_non_existent_get_postlink(): void {
@@ -102,7 +103,7 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 
 		$sql_cache = \Mockery::mock( MslsSqlCacher::class );
 
-		$this->assertEquals( '', ( new OptionsQuery( $sql_cache ) )->get_postlink( 'fr_FR' ) );
+		$this->assertEquals( '', ( new Query( $sql_cache ) )->get_postlink( 'fr_FR' ) );
 	}
 
 	public function test_get_permalink_returns_empty_when_no_translation(): void {
@@ -110,6 +111,6 @@ final class TestOptionsQuery extends MslsUnitTestCase {
 
 		$sql_cache = \Mockery::mock( MslsSqlCacher::class );
 
-		$this->assertSame( '', ( new OptionsQuery( $sql_cache ) )->get_permalink( 'fr_FR' ) );
+		$this->assertSame( '', ( new Query( $sql_cache ) )->get_permalink( 'fr_FR' ) );
 	}
 }

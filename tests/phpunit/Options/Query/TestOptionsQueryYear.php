@@ -1,16 +1,17 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\Options;
-
-use lloc\MslsTests\MslsUnitTestCase;
+namespace lloc\MslsTests\Options\Query;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\Options\OptionsQueryYear;
 use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Options\Query\Year;
+use lloc\MslsTests\MslsUnitTestCase;
+
+use function Brain\Monkey\Functions;
 
 final class TestOptionsQueryYear extends MslsUnitTestCase {
 
-	private function OptionsQueryYearFactory( int $year ): OptionsQueryYear {
+	private function OptionsQueryYearFactory( int $year ): Year {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->once()->andReturn( $year );
 
@@ -18,7 +19,7 @@ final class TestOptionsQueryYear extends MslsUnitTestCase {
 		$sql_cacher->shouldReceive( 'prepare' )->andReturn( 'SQL Query String' );
 		$sql_cacher->shouldReceive( 'get_var' )->andReturn( random_int( 1, 10 ) );
 
-		return new OptionsQueryYear( $sql_cacher );
+		return new Year( $sql_cacher );
 	}
 
 	public function test_has_value_true(): void {

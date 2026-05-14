@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\Options;
+namespace lloc\Msls\Options\Tax;
 
 use lloc\Msls\OptionsTaxInterface;
 
@@ -9,7 +9,7 @@ use lloc\Msls\OptionsTaxInterface;
  *
  * @package Msls
  */
-class OptionsTaxTermCategory extends OptionsTaxTerm implements OptionsTaxInterface {
+class Category extends Term implements OptionsTaxInterface {
 
 	/**
 	 * Base option

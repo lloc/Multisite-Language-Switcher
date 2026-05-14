@@ -2,8 +2,8 @@
 
 namespace lloc\Msls;
 
-use lloc\Msls\Options\OptionsPost;
-use lloc\Msls\Options\OptionsTax;
+use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Options\Tax\Tax;
 use lloc\Msls\Query\TranslatedPostIdQuery;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -520,8 +520,8 @@ class MslsRestApi {
 
 			$mapped_terms = array();
 			foreach ( $terms as $term_id ) {
-				/** @var OptionsTax $term_options */
-				$term_options = OptionsTax::create( $term_id );
+				/** @var Tax $term_options */
+				$term_options = Tax::create( $term_id );
 
 				if ( $term_options->has_value( $target_lang ) ) {
 					$mapped_terms[] = (int) $term_options->$target_lang;
@@ -590,7 +590,7 @@ class MslsRestApi {
 
 		// Read existing links from the source post
 		switch_to_blog( $source_blog_id );
-		$source_options = new OptionsPost( $source_post_id );
+		$source_options = new Post( $source_post_id );
 		$existing_links = $source_options->get_arr();
 		restore_current_blog();
 
@@ -613,7 +613,7 @@ class MslsRestApi {
 
 			switch_to_blog( $blog_id );
 
-			$options   = new OptionsPost( $post_id );
+			$options   = new Post( $post_id );
 			$save_data = $link_map;
 			unset( $save_data[ $lang ] );
 

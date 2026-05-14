@@ -1,15 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\Options;
+namespace lloc\Msls\Options\Query;
 
 use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Options\Options;
 
 /**
  * OptionsQuery
  *
  * @package Msls
  */
-class OptionsQuery extends Options {
+class Query extends Options {
 
 	/**
 	 * Rewrite with front
@@ -41,19 +42,19 @@ class OptionsQuery extends Options {
 	 *
 	 * @param int $id This parameter is unused here.
 	 *
-	 * @return ?OptionsQuery
+	 * @return ?Query
 	 */
-	public static function create( $id = 0 ): ?OptionsQuery {
+	public static function create( $id = 0 ): ?Query {
 		if ( is_day() ) {
-			$query_class = OptionsQueryDay::class;
+			$query_class = Day::class;
 		} elseif ( is_month() ) {
-			$query_class = OptionsQueryMonth::class;
+			$query_class = Month::class;
 		} elseif ( is_year() ) {
-			$query_class = OptionsQueryYear::class;
+			$query_class = Year::class;
 		} elseif ( is_author() ) {
-			$query_class = OptionsQueryAuthor::class;
+			$query_class = Author::class;
 		} elseif ( is_post_type_archive() ) {
-			$query_class = OptionsQueryPostType::class;
+			$query_class = PostType::class;
 		}
 
 		if ( ! isset( $query_class ) ) {

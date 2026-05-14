@@ -200,10 +200,11 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * Retrieves the OptionsPost instance.
 	 *
 	 * @param int $id
-	 * @return \lloc\Msls\Options\OptionsPost
+	 *
+	 * @return \lloc\Msls\Options\Post\Post
 	 */
-	function msls_get_post( int $id ): \lloc\Msls\Options\OptionsPost {
-		return new \lloc\Msls\Options\OptionsPost( $id );
+	function msls_get_post( int $id ): \lloc\Msls\Options\Post\Post {
+		return new \lloc\Msls\Options\Post\Post( $id );
 	}
 
 	/**
@@ -218,7 +219,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * @return \lloc\Msls\OptionsTaxInterface
 	 */
 	function msls_get_tax( int $id ): \lloc\Msls\OptionsTaxInterface {
-		return \lloc\Msls\Options\OptionsTax::create( $id );
+		return \lloc\Msls\Options\Tax\Tax::create( $id );
 	}
 
 	/**
@@ -231,10 +232,10 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * - is_author
 	 * - is_post_type_archive
 	 *
-	 * @return ?\lloc\Msls\Options\OptionsQuery
+	 * @return ?\lloc\Msls\Options\Query\Query
 	 */
-	function msls_get_query(): ?\lloc\Msls\Options\OptionsQuery {
-		return \lloc\Msls\Options\OptionsQuery::create();
+	function msls_get_query(): ?\lloc\Msls\Options\Query\Query {
+		return \lloc\Msls\Options\Query\Query::create();
 	}
 
 	/**

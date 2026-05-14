@@ -2,18 +2,17 @@
 
 namespace lloc\MslsTests;
 
-use Brain\Monkey\Functions;
 use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
-
+use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
 use lloc\Msls\MslsJson;
 use lloc\Msls\MslsMetaBox;
-use lloc\Msls\Options\Options;
-use lloc\Msls\Options\OptionsPost;
 use lloc\Msls\MslsPostType;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\Post\Post;
 
 final class TestMslsMetaBox extends MslsUnitTestCase {
 
@@ -375,7 +374,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 
 		$test = $this->MslsMetaBoxFactory();
 
-		$mydata = new OptionsPost();
+		$mydata = new Post();
 		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertEquals( 42, $mydata->de_DE );
@@ -393,7 +392,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 
 		$test = $this->MslsMetaBoxFactory();
 
-		$mydata = new OptionsPost();
+		$mydata = new Post();
 		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertNull( $mydata->de_DE );
@@ -413,7 +412,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$mydata = new OptionsPost();
+		$mydata = new Post();
 		$mydata = $test->maybe_set_linked_post( $mydata );
 
 		$this->assertNull( $mydata->de_DE );
@@ -431,7 +430,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$mydata        = new OptionsPost();
+		$mydata        = new Post();
 		$mydata->de_DE = 42;
 		$mydata        = $test->maybe_set_linked_post( $mydata );
 

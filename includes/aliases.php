@@ -14,25 +14,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use lloc\Msls\Options\Options;
-use lloc\Msls\Options\OptionsPost;
-use lloc\Msls\Options\OptionsQuery;
-use lloc\Msls\Options\OptionsQueryAuthor;
-use lloc\Msls\Options\OptionsQueryDay;
-use lloc\Msls\Options\OptionsQueryMonth;
-use lloc\Msls\Options\OptionsQueryPostType;
-use lloc\Msls\Options\OptionsQueryYear;
-use lloc\Msls\Options\OptionsTax;
-use lloc\Msls\Options\OptionsTaxTerm;
-use lloc\Msls\Options\OptionsTaxTermCategory;
+use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Options\Query\Author;
+use lloc\Msls\Options\Query\Day;
+use lloc\Msls\Options\Query\Month;
+use lloc\Msls\Options\Query\PostType;
+use lloc\Msls\Options\Query\Query;
+use lloc\Msls\Options\Query\Year;
+use lloc\Msls\Options\Tax\Category;
+use lloc\Msls\Options\Tax\Tax;
+use lloc\Msls\Options\Tax\Term;
 
 class_alias( Options::class, 'lloc\\Msls\\MslsOptions' );
-class_alias( OptionsPost::class, 'lloc\\Msls\\MslsOptionsPost' );
-class_alias( OptionsQuery::class, 'lloc\\Msls\\MslsOptionsQuery' );
-class_alias( OptionsQueryAuthor::class, 'lloc\\Msls\\MslsOptionsQueryAuthor' );
-class_alias( OptionsQueryDay::class, 'lloc\\Msls\\MslsOptionsQueryDay' );
-class_alias( OptionsQueryMonth::class, 'lloc\\Msls\\MslsOptionsQueryMonth' );
-class_alias( OptionsQueryPostType::class, 'lloc\\Msls\\MslsOptionsQueryPostType' );
-class_alias( OptionsQueryYear::class, 'lloc\\Msls\\MslsOptionsQueryYear' );
-class_alias( OptionsTax::class, 'lloc\\Msls\\MslsOptionsTax' );
-class_alias( OptionsTaxTerm::class, 'lloc\\Msls\\MslsOptionsTaxTerm' );
-class_alias( OptionsTaxTermCategory::class, 'lloc\\Msls\\MslsOptionsTaxTermCategory' );
+class_alias( Post::class, 'lloc\\Msls\\MslsOptionsPost' );
+class_alias( Query::class, 'lloc\\Msls\\MslsOptionsQuery' );
+class_alias( Author::class, 'lloc\\Msls\\MslsOptionsQueryAuthor' );
+class_alias( Day::class, 'lloc\\Msls\\MslsOptionsQueryDay' );
+class_alias( Month::class, 'lloc\\Msls\\MslsOptionsQueryMonth' );
+class_alias( PostType::class, 'lloc\\Msls\\MslsOptionsQueryPostType' );
+class_alias( Year::class, 'lloc\\Msls\\MslsOptionsQueryYear' );
+class_alias( Tax::class, 'lloc\\Msls\\MslsOptionsTax' );
+class_alias( Term::class, 'lloc\\Msls\\MslsOptionsTaxTerm' );
+class_alias( Category::class, 'lloc\\Msls\\MslsOptionsTaxTermCategory' );

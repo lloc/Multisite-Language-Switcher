@@ -1,11 +1,12 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\Options;
+namespace lloc\Msls\Options\Tax;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Options\Options;
 use lloc\Msls\OptionsTaxInterface;
 
 /**
@@ -13,7 +14,7 @@ use lloc\Msls\OptionsTaxInterface;
  *
  * @package Msls
  */
-class OptionsTaxTerm extends OptionsTax implements OptionsTaxInterface {
+class Term extends Tax implements OptionsTaxInterface {
 
 	const BASE_OPTION = 'tag_base';
 
@@ -35,8 +36,8 @@ class OptionsTaxTerm extends OptionsTax implements OptionsTaxInterface {
 	/**
 	 * Check and correct URL
 	 *
-	 * @param mixed          $url
-	 * @param OptionsTaxTerm $options
+	 * @param mixed $url
+	 * @param Term  $options
 	 *
 	 * @return string
 	 */

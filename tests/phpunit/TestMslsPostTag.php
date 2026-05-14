@@ -2,16 +2,16 @@
 
 namespace lloc\MslsTests;
 
-use Brain\Monkey\Functions;
 use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
+use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
-use lloc\Msls\Options\Options;
-use lloc\Msls\Options\OptionsTax;
 use lloc\Msls\MslsPostTag;
 use lloc\Msls\MslsTaxonomy;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\Tax\Tax;
 
 final class TestMslsPostTag extends MslsUnitTestCase {
 
@@ -234,7 +234,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_origin_lang(): void {
-		$mydata        = \Mockery::mock( OptionsTax::class );
+		$mydata        = \Mockery::mock( Tax::class );
 		$mydata->de_DE = 42;
 
 		Functions\expect( 'filter_has_var' )->twice()->andReturnTrue();
@@ -247,7 +247,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_blog_id_null(): void {
-		$mydata        = \Mockery::mock( OptionsTax::class );
+		$mydata        = \Mockery::mock( Tax::class );
 		$mydata->de_DE = 42;
 
 		Functions\expect( 'filter_has_var' )->twice()->andReturnTrue();
@@ -260,7 +260,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_origin_term_wrong(): void {
-		$mydata = \Mockery::mock( OptionsTax::class );
+		$mydata = \Mockery::mock( Tax::class );
 		$mydata->shouldReceive( 'get_base_option' )->andReturn( 'term' );
 		$mydata->en_US = 42;
 
@@ -277,7 +277,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_term_happy_path(): void {
-		$mydata = \Mockery::mock( OptionsTax::class );
+		$mydata = \Mockery::mock( Tax::class );
 		$mydata->shouldReceive( 'get_base_option' )->andReturn( 'term' );
 		$mydata->en_US = 42;
 

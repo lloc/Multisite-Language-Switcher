@@ -4,7 +4,7 @@ namespace lloc\Msls;
 
 use lloc\Msls\Component\Component;
 use lloc\Msls\Options\Options;
-use lloc\Msls\Options\OptionsPost;
+use lloc\Msls\Options\Post\Post;
 
 /**
  * Abstraction for the hook classes
@@ -121,7 +121,7 @@ class MslsMain {
 	 * @codeCoverageIgnore
 	 */
 	public function delete( $object_id ): void {
-		$this->save( $object_id, OptionsPost::class );
+		$this->save( $object_id, Post::class );
 	}
 
 	/**

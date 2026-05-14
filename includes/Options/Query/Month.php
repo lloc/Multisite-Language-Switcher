@@ -1,28 +1,34 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\Options;
+namespace lloc\Msls\Options\Query;
 
 use lloc\Msls\MslsSqlCacher;
-use lloc\Msls\Query\AuthorPostsCounterQuery;
+use lloc\Msls\Query\MonthPostsCounterQuery;
 
 /**
- * OptionsQueryAuthor
+ * OptionsQueryMonth
  *
  * @package Msls
  */
-class OptionsQueryAuthor extends OptionsQuery {
+class Month extends Query {
 
 	/**
-	 * The author ID for which the posts count is queried.
-	 *
 	 * @var int
 	 */
-	protected int $author_id;
+	protected int $year;
+
+	/**
+	 * @var int
+	 */
+	protected int $monthnum;
 
 	public function __construct( MslsSqlCacher $sql_cache ) {
 		parent::__construct( $sql_cache );
 
-		$this->author_id = self::get_params()['author_id'];
+		$params = self::get_params();
+
+		$this->year     = $params['year'];
+		$this->monthnum = $params['monthnum'];
 	}
 
 	/**
@@ -30,7 +36,8 @@ class OptionsQueryAuthor extends OptionsQuery {
 	 */
 	public static function get_params(): array {
 		return array(
-			'author_id' => get_queried_object_id(),
+			'year'     => get_query_var( 'year' ),
+			'monthnum' => get_query_var( 'monthnum' ),
 		);
 	}
 
@@ -43,7 +50,8 @@ class OptionsQueryAuthor extends OptionsQuery {
 	 */
 	public function has_value( string $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			$this->arr[ $language ] = ( new AuthorPostsCounterQuery( $this->sql_cache ) )( $this->author_id );
+			$this->arr[ $language ] = ( new MonthPostsCounterQuery( $this->sql_cache ) )( $this->year, $this->monthnum );
+
 		}
 
 		return (bool) $this->arr[ $language ];
@@ -55,6 +63,6 @@ class OptionsQueryAuthor extends OptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link(): string {
-		return get_author_posts_url( $this->author_id );
+		return get_month_link( $this->year, $this->monthnum );
 	}
 }

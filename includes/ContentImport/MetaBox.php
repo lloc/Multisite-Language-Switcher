@@ -7,10 +7,10 @@ use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
-use lloc\Msls\Options\OptionsPost;
 use lloc\Msls\MslsPlugin;
 use lloc\Msls\MslsRegistryInstance;
 use lloc\Msls\MslsRequest;
+use lloc\Msls\Options\Post\Post;
 
 class MetaBox extends MslsRegistryInstance {
 
@@ -28,8 +28,8 @@ class MetaBox extends MslsRegistryInstance {
 			return;
 		}
 
-		$mydata          = new OptionsPost( $post->ID );
-		$languages       = OptionsPost::instance()->get_available_languages();
+		$mydata          = new Post( $post->ID );
+		$languages       = Post::instance()->get_available_languages();
 		$current         = MslsBlogCollection::get_blog_language( get_current_blog_id() );
 		$languages       = array_diff_key( $languages, array( $current => $current ) );
 		$input_lang      = MslsRequest::get( MslsFields::FIELD_MSLS_LANG, null );

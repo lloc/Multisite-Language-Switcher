@@ -1,13 +1,15 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\Options;
+namespace lloc\Msls\Options\Post;
+
+use lloc\Msls\Options\Options;
 
 /**
  * Post options
  *
  * @package Msls
  */
-class OptionsPost extends Options {
+class Post extends Options {
 
 	public const SEPARATOR = '_';
 

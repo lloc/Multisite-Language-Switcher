@@ -1,16 +1,17 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\Options;
-
-use lloc\MslsTests\MslsUnitTestCase;
+namespace lloc\MslsTests\Options\Query;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\Options\OptionsQueryMonth;
 use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Options\Query\Month;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestOptionsQueryMonth extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
 
-	private function OptionsQueryMonthFactory( int $year, int $monthnum ): OptionsQueryMonth {
+final class TestMonth extends MslsUnitTestCase {
+
+	private function OptionsQueryMonthFactory( int $year, int $monthnum ): Month {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->times( 2 )->andReturn( $year, $monthnum );
 
@@ -18,7 +19,7 @@ final class TestOptionsQueryMonth extends MslsUnitTestCase {
 		$sql_cacher->shouldReceive( 'prepare' )->andReturn( 'SQL Query String' );
 		$sql_cacher->shouldReceive( 'get_var' )->andReturn( random_int( 1, 10 ) );
 
-		return new OptionsQueryMonth( $sql_cacher );
+		return new Month( $sql_cacher );
 	}
 
 	public function test_has_value_true(): void {

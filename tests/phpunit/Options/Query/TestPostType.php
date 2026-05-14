@@ -1,16 +1,17 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\Options;
-
-use lloc\MslsTests\MslsUnitTestCase;
+namespace lloc\MslsTests\Options\Query;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\Options\OptionsQueryPostType;
 use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Options\Query\PostType;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestOptionsQueryPostType extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
 
-	private function OptionsQueryPostTypeFactory(): OptionsQueryPostType {
+final class TestPostType extends MslsUnitTestCase {
+
+	private function OptionsQueryPostTypeFactory(): PostType {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->once()->andReturn( 'queried-posttype' );
 
@@ -18,7 +19,7 @@ final class TestOptionsQueryPostType extends MslsUnitTestCase {
 		$sql_cacher->shouldReceive( 'prepare' )->never();
 		$sql_cacher->shouldReceive( 'get_var' )->never();
 
-		return new OptionsQueryPostType( $sql_cacher );
+		return new PostType( $sql_cacher );
 	}
 
 	public function test_has_value_existing(): void {

@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\Options;
+namespace lloc\Msls\Options\Query;
 
 use lloc\Msls\MslsSqlCacher;
 use lloc\Msls\Query\DatePostsCounterQuery;
@@ -10,7 +10,7 @@ use lloc\Msls\Query\DatePostsCounterQuery;
  *
  * @package Msls
  */
-class OptionsQueryDay extends OptionsQuery {
+class Day extends Query {
 
 	/**
 	 * @var int

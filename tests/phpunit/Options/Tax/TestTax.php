@@ -1,20 +1,21 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\Options;
-
-use lloc\MslsTests\MslsUnitTestCase;
+namespace lloc\MslsTests\Options\Tax;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\Options\OptionsTax;
-use lloc\Msls\Options\OptionsTaxTerm;
-use lloc\Msls\Options\OptionsTaxTermCategory;
+use lloc\Msls\Options\Tax\Category;
+use lloc\Msls\Options\Tax\Tax;
+use lloc\Msls\Options\Tax\Term;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestOptionsTax extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
 
-	private function OptionsTaxFactory(): OptionsTax {
+final class TestTax extends MslsUnitTestCase {
+
+	private function OptionsTaxFactory(): Tax {
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		return new OptionsTax();
+		return new Tax();
 	}
 
 	public function test_create_category(): void {
@@ -23,7 +24,7 @@ final class TestOptionsTax extends MslsUnitTestCase {
 		Functions\expect( 'is_category' )->once()->with( 42 )->andReturnTrue();
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		$this->assertInstanceOf( OptionsTaxTermCategory::class, OptionsTax::create() );
+		$this->assertInstanceOf( Category::class, Tax::create() );
 	}
 
 	public function test_create_post_tag(): void {
@@ -33,7 +34,7 @@ final class TestOptionsTax extends MslsUnitTestCase {
 		Functions\expect( 'is_tag' )->once()->andReturnTrue();
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		$this->assertInstanceOf( OptionsTaxTerm::class, OptionsTax::create() );
+		$this->assertInstanceOf( Term::class, Tax::create() );
 	}
 
 	public function test_get_tax_query(): void {
@@ -180,6 +181,6 @@ final class TestOptionsTax extends MslsUnitTestCase {
 	}
 
 	public function test_get_base_option() {
-		$this->assertEquals( '', OptionsTax::get_base_option() );
+		$this->assertEquals( '', Tax::get_base_option() );
 	}
 }

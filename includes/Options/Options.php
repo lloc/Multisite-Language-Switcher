@@ -10,6 +10,9 @@ use lloc\Msls\Component\Icon\IconPng;
 use lloc\Msls\MslsAdminIcon;
 use lloc\Msls\MslsGetSet;
 use lloc\Msls\MslsPlugin;
+use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Options\Query\Query;
+use lloc\Msls\Options\Tax\Tax;
 use lloc\Msls\OptionsInterface;
 
 /**
@@ -94,20 +97,20 @@ class Options extends MslsGetSet implements OptionsInterface {
 			$id = (int) $id;
 
 			if ( msls_content_types()->is_taxonomy() ) {
-				return OptionsTax::create( $id );
+				return Tax::create( $id );
 			}
 
-			return new OptionsPost( $id );
+			return new Post( $id );
 		}
 
 		if ( self::is_main_page() ) {
 			$options = new Options();
 		} elseif ( self::is_tax_page() ) {
-			$options = OptionsTax::create();
+			$options = Tax::create();
 		} elseif ( self::is_query_page() ) {
-			$options = OptionsQuery::create() ?? new Options();
+			$options = Query::create() ?? new Options();
 		} else {
-			$options = new OptionsPost( get_queried_object_id() );
+			$options = new Post( get_queried_object_id() );
 		}
 
 		if ( ! has_filter( self::MSLS_GET_POSTLINK_HOOK, array( self::class, 'check_for_blog_slug' ) ) ) {

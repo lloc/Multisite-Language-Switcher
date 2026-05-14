@@ -1,43 +1,32 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\Options;
+namespace lloc\Msls\Options\Query;
 
 use lloc\Msls\MslsSqlCacher;
-use lloc\Msls\Query\MonthPostsCounterQuery;
 
 /**
- * OptionsQueryMonth
+ * OptionsQueryPostType
  *
  * @package Msls
  */
-class OptionsQueryMonth extends OptionsQuery {
+class PostType extends Query {
 
 	/**
-	 * @var int
+	 * The post type for which the options are queried.
+	 *
+	 * @var string
 	 */
-	protected int $year;
-
-	/**
-	 * @var int
-	 */
-	protected int $monthnum;
+	protected string $post_type;
 
 	public function __construct( MslsSqlCacher $sql_cache ) {
 		parent::__construct( $sql_cache );
 
-		$params = self::get_params();
-
-		$this->year     = $params['year'];
-		$this->monthnum = $params['monthnum'];
+		$this->post_type = self::get_params()['post_type'];
 	}
 
-	/**
-	 * @return array<string, mixed>
-	 */
 	public static function get_params(): array {
 		return array(
-			'year'     => get_query_var( 'year' ),
-			'monthnum' => get_query_var( 'monthnum' ),
+			'post_type' => get_query_var( 'post_type' ),
 		);
 	}
 
@@ -50,8 +39,7 @@ class OptionsQueryMonth extends OptionsQuery {
 	 */
 	public function has_value( string $language ): bool {
 		if ( ! isset( $this->arr[ $language ] ) ) {
-			$this->arr[ $language ] = ( new MonthPostsCounterQuery( $this->sql_cache ) )( $this->year, $this->monthnum );
-
+			$this->arr[ $language ] = get_post_type_object( $this->post_type );
 		}
 
 		return (bool) $this->arr[ $language ];
@@ -63,6 +51,6 @@ class OptionsQueryMonth extends OptionsQuery {
 	 * @return string
 	 */
 	public function get_current_link(): string {
-		return get_month_link( $this->year, $this->monthnum );
+		return (string) get_post_type_archive_link( $this->post_type );
 	}
 }

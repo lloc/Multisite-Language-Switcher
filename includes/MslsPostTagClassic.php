@@ -3,7 +3,7 @@
 namespace lloc\Msls;
 
 use lloc\Msls\Component\Component;
-use lloc\Msls\Options\OptionsTax;
+use lloc\Msls\Options\Tax\Tax;
 
 /**
  * Post Tag Classic
@@ -86,7 +86,7 @@ class MslsPostTagClassic extends MslsPostTag {
 		$blogs = $this->collection->get();
 		if ( ! empty( $blogs ) ) {
 			$term_id = $tag->term_id ?? 0;
-			$mydata  = OptionsTax::create( $term_id );
+			$mydata  = Tax::create( $term_id );
 			$type    = msls_content_types()->get_request();
 
 			$this->maybe_set_linked_term( $mydata );

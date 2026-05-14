@@ -1,16 +1,17 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\Options;
-
-use lloc\MslsTests\MslsUnitTestCase;
+namespace lloc\MslsTests\Options\Query;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\Options\OptionsQueryAuthor;
 use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Options\Query\Author;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestOptionsQueryAuthor extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
 
-	private function OptionsQueryAuthorFactory( int $author_id ): OptionsQueryAuthor {
+final class TestAuthor extends MslsUnitTestCase {
+
+	private function OptionsQueryAuthorFactory( int $author_id ): Author {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( $author_id );
 
@@ -18,7 +19,7 @@ final class TestOptionsQueryAuthor extends MslsUnitTestCase {
 		$sql_cacher->shouldReceive( 'prepare' )->andReturn( 'SQL Query String' );
 		$sql_cacher->shouldReceive( 'get_var' )->andReturn( random_int( 1, 10 ) );
 
-		return new OptionsQueryAuthor( $sql_cacher );
+		return new Author( $sql_cacher );
 	}
 
 	public function test_has_value_true(): void {

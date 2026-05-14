@@ -6,9 +6,9 @@ use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\Options\Options;
-use lloc\Msls\Options\OptionsPost;
 use lloc\Msls\MslsOutput;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\Post\Post;
 
 final class TestMslsOutput extends MslsUnitTestCase {
 
@@ -318,7 +318,7 @@ final class TestMslsOutput extends MslsUnitTestCase {
 	public function test_is_requirements_not_fulfilled_with_mslsoptionspost(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$mydata = new OptionsPost();
+		$mydata = new Post();
 
 		$test = $this->MslsOutputFactory();
 

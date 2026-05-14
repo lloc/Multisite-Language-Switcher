@@ -1,7 +1,8 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\Options;
+namespace lloc\Msls\Options\Tax;
 
+use lloc\Msls\Options\Options;
 use lloc\Msls\OptionsTaxInterface;
 
 /**
@@ -9,7 +10,7 @@ use lloc\Msls\OptionsTaxInterface;
  *
  * @package Msls
  */
-class OptionsTax extends Options implements OptionsTaxInterface {
+class Tax extends Options implements OptionsTaxInterface {
 
 	public const SEPARATOR = '_term_';
 
@@ -29,13 +30,13 @@ class OptionsTax extends Options implements OptionsTaxInterface {
 
 		switch ( $req ) {
 			case 'category':
-				$options = new OptionsTaxTermCategory( $id );
+				$options = new Category( $id );
 				break;
 			case 'post_tag':
-				$options = new OptionsTaxTerm( $id );
+				$options = new Term( $id );
 				break;
 			default:
-				$options = new OptionsTax( $id );
+				$options = new Tax( $id );
 		}
 
 		return $options->handle_rewrite();

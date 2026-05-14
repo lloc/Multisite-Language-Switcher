@@ -9,8 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
-use lloc\Msls\Options\OptionsPost;
-use WP_Post;
+use lloc\Msls\Options\Post\Post;
 use WP_Post_Type;
 
 /**
@@ -192,7 +191,7 @@ final class MslsMetaBox extends MslsMain {
 				return;
 			}
 
-			$mydata          = new OptionsPost( $post->ID );
+			$mydata          = new Post( $post->ID );
 			$origin_language = MslsBlogCollection::get_blog_language();
 			$is_saved        = 'auto-draft' !== get_post_status( $post );
 
@@ -336,7 +335,7 @@ final class MslsMetaBox extends MslsMain {
 				return;
 			}
 
-			$my_data         = new OptionsPost( $post->ID );
+			$my_data         = new Post( $post->ID );
 			$origin_language = MslsBlogCollection::get_blog_language();
 			$is_saved        = 'auto-draft' !== get_post_status( $post );
 
@@ -487,17 +486,17 @@ final class MslsMetaBox extends MslsMain {
 			return;
 		}
 
-		$this->save( $post_id, OptionsPost::class );
+		$this->save( $post_id, Post::class );
 	}
 
 	/**
 	 * Sets the selected element in the data from the `$_GET` superglobal, if any.
 	 *
-	 * @param OptionsPost $mydata
+	 * @param Post $mydata
 	 *
-	 * @return OptionsPost
+	 * @return Post
 	 */
-	public function maybe_set_linked_post( OptionsPost $mydata ) {
+	public function maybe_set_linked_post( Post $mydata ) {
 		if ( ! MslsRequest::isset( array( MslsFields::FIELD_MSLS_ID, MslsFields::FIELD_MSLS_LANG ) ) ) {
 			return $mydata;
 		}

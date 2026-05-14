@@ -1,19 +1,21 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\Options;
-
-use lloc\MslsTests\MslsUnitTestCase;
+namespace lloc\MslsTests\Options\Post;
 
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
-use lloc\Msls\Options\OptionsPost;
+use lloc\Msls\Options\Post\Post;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestOptionsPost extends MslsUnitTestCase {
+use function Brain\Monkey\Filters;
+use function Brain\Monkey\Functions;
 
-	private function OptionsPostFactory(): OptionsPost {
+final class TestPost extends MslsUnitTestCase {
+
+	private function OptionsPostFactory(): Post {
 		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		return new OptionsPost( 42 );
+		return new Post( 42 );
 	}
 
 	public function test_get_postlink_not_has_value(): void {
