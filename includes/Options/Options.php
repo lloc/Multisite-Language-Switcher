@@ -110,7 +110,9 @@ class Options extends MslsGetSet implements OptionsInterface {
 			$options = new OptionsPost( get_queried_object_id() );
 		}
 
-		add_filter( self::MSLS_GET_POSTLINK_HOOK, array( self::class, 'check_for_blog_slug' ), 10, 2 );
+		if ( ! has_filter( self::MSLS_GET_POSTLINK_HOOK, array( self::class, 'check_for_blog_slug' ) ) ) {
+			add_filter( self::MSLS_GET_POSTLINK_HOOK, array( self::class, 'check_for_blog_slug' ), 10, 2 );
+		}
 
 		return $options;
 	}
