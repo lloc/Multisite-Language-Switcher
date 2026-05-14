@@ -1,13 +1,15 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Link;
+
+use lloc\Msls\LinkInterface;
 
 /**
  * Link type: Text only
  *
  * @package Msls
  */
-class MslsLinkTextOnly extends MslsLink implements LinkInterface {
+class TextOnly extends Link implements LinkInterface {
 
 	/**
 	 * Output format

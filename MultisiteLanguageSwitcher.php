@@ -163,28 +163,28 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	/**
 	 * Gets the MslsContentTypes instance
 	 *
-	 * @return \lloc\Msls\MslsContentTypes
+	 * @return \lloc\Msls\ContentTypes\ContentTypes
 	 */
-	function msls_content_types(): \lloc\Msls\MslsContentTypes {
-		return \lloc\Msls\MslsContentTypes::create();
+	function msls_content_types(): \lloc\Msls\ContentTypes\ContentTypes {
+		return \lloc\Msls\ContentTypes\ContentTypes::create();
 	}
 
 	/**
 	 * Gets the MslsPostType instance
 	 *
-	 * @return \lloc\Msls\MslsPostType
+	 * @return \lloc\Msls\ContentTypes\PostType
 	 */
-	function msls_post_type(): \lloc\Msls\MslsPostType {
-		return \lloc\Msls\MslsPostType::instance();
+	function msls_post_type(): \lloc\Msls\ContentTypes\PostType {
+		return \lloc\Msls\ContentTypes\PostType::instance();
 	}
 
 	/**
 	 * Gets the MslsTaxonomy instance
 	 *
-	 * @return \lloc\Msls\MslsTaxonomy
+	 * @return \lloc\Msls\ContentTypes\Taxonomy
 	 */
-	function msls_taxonomy(): \lloc\Msls\MslsTaxonomy {
-		return \lloc\Msls\MslsTaxonomy::instance();
+	function msls_taxonomy(): \lloc\Msls\ContentTypes\Taxonomy {
+		return \lloc\Msls\ContentTypes\Taxonomy::instance();
 	}
 
 	/**

@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\ContentTypes\Taxonomy;
+
 /**
  * Handles backend icons for taxonomies
  *
@@ -20,7 +22,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 	 * @uses get_edit_term_link()
 	 */
 	public function set_href( int $id ): MslsAdminIcon {
-		$object_type = MslsTaxonomy::instance()->get_post_type();
+		$object_type = Taxonomy::instance()->get_post_type();
 
 		$this->href = get_edit_term_link( $id, $this->type, $object_type ) ?? '';
 
@@ -35,7 +37,7 @@ class MslsAdminIconTaxonomy extends MslsAdminIcon {
 	public function set_path(): MslsAdminIcon {
 		$args = array( 'taxonomy' => $this->type );
 
-		$post_type = MslsTaxonomy::instance()->get_post_type();
+		$post_type = Taxonomy::instance()->get_post_type();
 		if ( '' !== $post_type ) {
 			$args['post_type'] = $post_type;
 		}

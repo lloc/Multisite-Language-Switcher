@@ -1,13 +1,15 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\ContentTypes;
+
+use lloc\Msls\MslsRequest;
 
 /**
  * Content types: Taxonomies (Tags, Categories, ...)
  *
  * @package Msls
  */
-class MslsTaxonomy extends MslsContentTypes {
+class Taxonomy extends ContentTypes {
 
 	/**
 	 * Post type

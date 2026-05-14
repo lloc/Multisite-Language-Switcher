@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Link\Link;
+
 /**
  * Interface for the link types
  *
@@ -11,7 +13,7 @@ namespace lloc\Msls;
  * @property string $url
  *
  * @package Msls
- * @phpstan-require-extends MslsLink
+ * @phpstan-require-extends Link
  */
 interface LinkInterface {
 

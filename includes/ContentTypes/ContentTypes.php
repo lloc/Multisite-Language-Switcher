@@ -1,13 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\ContentTypes;
+
+use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\MslsRequest;
 
 /**
  * Supported content types
  *
  * @package Msls
  */
-abstract class MslsContentTypes extends MslsRegistryInstance {
+abstract class ContentTypes extends MslsRegistryInstance {
 
 	/**
 	 * Request
@@ -26,12 +29,12 @@ abstract class MslsContentTypes extends MslsRegistryInstance {
 	/**
 	 * Factory method
 	 *
-	 * @return MslsContentTypes
+	 * @return ContentTypes
 	 */
 	public static function create() {
 		$_request = MslsRequest::get_request( array( 'taxonomy' ) );
 
-		return '' !== $_request['taxonomy'] ? MslsTaxonomy::instance() : MslsPostType::instance();
+		return '' !== $_request['taxonomy'] ? Taxonomy::instance() : PostType::instance();
 	}
 
 	/**

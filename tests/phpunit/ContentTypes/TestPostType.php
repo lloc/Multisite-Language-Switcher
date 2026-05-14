@@ -1,17 +1,20 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\ContentTypes;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsPostType;
+use lloc\Msls\ContentTypes\PostType;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestMslsPostType extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
 
-	private function MslsPostTypeFactory(): MslsPostType {
+final class TestPostType extends MslsUnitTestCase {
+
+	private function MslsPostTypeFactory(): PostType {
 		Functions\when( 'get_post_types' )->justReturn( array() );
 		Functions\when( 'get_post_type' )->justReturn( array() );
 
-		return new MslsPostType();
+		return new PostType();
 	}
 
 	public function test_is_post_type(): void {

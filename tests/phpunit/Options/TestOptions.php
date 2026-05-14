@@ -3,8 +3,8 @@
 namespace lloc\MslsTests\Options;
 
 use Brain\Monkey\Functions;
+use lloc\Msls\ContentTypes\PostType;
 use lloc\Msls\MslsAdminIcon;
-use lloc\Msls\MslsPostType;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
 
@@ -37,7 +37,7 @@ final class TestOptions extends MslsUnitTestCase {
 	}
 
 	public function test_create(): void {
-		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type = \Mockery::mock( PostType::class );
 		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
 
 		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );

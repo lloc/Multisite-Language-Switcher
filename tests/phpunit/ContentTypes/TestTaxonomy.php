@@ -1,15 +1,18 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\ContentTypes;
 
 use Brain\Monkey\Functions;
+use lloc\Msls\ContentTypes\Taxonomy;
 use lloc\Msls\MslsFields;
 use lloc\Msls\Options\Options;
-use lloc\Msls\MslsTaxonomy;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestMslsTaxonomy extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
 
-	private function MslsTaxonomyFactory( bool $exluded = false ): MslsTaxonomy {
+final class TestTaxonomy extends MslsUnitTestCase {
+
+	private function MslsTaxonomyFactory( bool $exluded = false ): Taxonomy {
 		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'is_excluded' )->andReturn( $exluded );
 
@@ -17,7 +20,7 @@ final class TestMslsTaxonomy extends MslsUnitTestCase {
 		Functions\expect( 'apply_filters' )->atLeast()->once();
 		Functions\expect( 'get_taxonomies' )->atLeast()->once()->andReturn( array() );
 
-		return new MslsTaxonomy();
+		return new Taxonomy();
 	}
 
 	public function test_acl_request_included(): void {

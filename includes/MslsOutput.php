@@ -2,6 +2,7 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Link\Link;
 use lloc\Msls\Map\HrefLang;
 use lloc\Msls\Options\Options;
 
@@ -54,7 +55,7 @@ class MslsOutput extends MslsMain {
 		$blogs = $this->collection->get_filtered( $filter );
 		if ( $blogs ) {
 			$mydata = Options::create();
-			$link   = MslsLink::create( $display );
+			$link   = Link::create( $display );
 
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();

@@ -5,11 +5,11 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
+use lloc\Msls\ContentTypes\Taxonomy;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
 use lloc\Msls\MslsPostTag;
-use lloc\Msls\MslsTaxonomy;
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Tax\Tax;
 
@@ -49,7 +49,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 
-		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
+		$taxonomy = \Mockery::mock( Taxonomy::class );
 		$taxonomy->shouldReceive( 'acl_request' )->once()->andReturn( 'post_tag' );
 
 		Functions\expect( 'msls_options' )->atLeast()->once()->andReturn( $options );
@@ -121,7 +121,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_edit_input(): void {
-		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
+		$taxonomy = \Mockery::mock( Taxonomy::class );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturn( true );
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post' );
 		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
@@ -175,7 +175,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_add_input(): void {
-		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
+		$taxonomy = \Mockery::mock( Taxonomy::class );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post' );
 		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
@@ -221,7 +221,7 @@ final class TestMslsPostTag extends MslsUnitTestCase {
 	}
 
 	public function test_set() {
-		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
+		$taxonomy = \Mockery::mock( Taxonomy::class );
 		$taxonomy->shouldReceive( 'acl_request' )->once()->andReturn( 'post_tag' );
 
 		Functions\expect( 'msls_content_types' )->once()->andReturn( $taxonomy );

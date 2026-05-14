@@ -5,12 +5,12 @@ namespace lloc\MslsTests;
 use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
+use lloc\Msls\ContentTypes\PostType;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
 use lloc\Msls\MslsJson;
 use lloc\Msls\MslsMetaBox;
-use lloc\Msls\MslsPostType;
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Post\Post;
 
@@ -194,7 +194,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		$options                        = \Mockery::mock( Options::class );
 		$options->activate_quick_create = false;
 
-		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type = \Mockery::mock( PostType::class );
 		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
 
 		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );
@@ -229,7 +229,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		$post     = \Mockery::mock( 'WP_Post' );
 		$post->ID = 42;
 
-		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type = \Mockery::mock( PostType::class );
 		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
 
 		Functions\expect( 'msls_content_types' )->once()->andReturn( $post_type );
@@ -275,7 +275,7 @@ final class TestMslsMetaBox extends MslsUnitTestCase {
 		$options                        = \Mockery::mock( Options::class );
 		$options->activate_quick_create = false;
 
-		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type = \Mockery::mock( PostType::class );
 		$post_type->shouldReceive( 'is_taxonomy' )->once()->andReturnFalse();
 		$post_type->shouldReceive( 'get_request' )->once()->andReturn( 'post' );
 

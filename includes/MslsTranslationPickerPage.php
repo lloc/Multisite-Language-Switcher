@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\ContentTypes\PostType;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -83,7 +85,7 @@ class MslsTranslationPickerPage {
 			return;
 		}
 
-		foreach ( MslsPostType::get() as $post_type ) {
+		foreach ( PostType::get() as $post_type ) {
 			$parent = self::parent_slug( $post_type );
 			if ( '' === $parent ) {
 				continue;
@@ -160,7 +162,7 @@ class MslsTranslationPickerPage {
 			return;
 		}
 
-		foreach ( MslsPostType::get() as $post_type ) {
+		foreach ( PostType::get() as $post_type ) {
 			$parent = self::parent_slug( $post_type );
 			$slug   = self::page_slug( $post_type );
 
@@ -304,7 +306,7 @@ class MslsTranslationPickerPage {
 			$post_type = substr( $page, strlen( self::BASE_SLUG ) + 1 );
 		}
 
-		if ( ! in_array( $post_type, MslsPostType::get(), true ) ) {
+		if ( ! in_array( $post_type, PostType::get(), true ) ) {
 			$post_type = 'post';
 		}
 

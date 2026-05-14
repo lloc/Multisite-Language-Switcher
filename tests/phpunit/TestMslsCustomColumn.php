@@ -2,15 +2,14 @@
 
 namespace lloc\MslsTests;
 
-use Brain\Monkey\Functions;
-use Brain\Monkey\Filters;
 use Brain\Monkey\Actions;
-
+use Brain\Monkey\Filters;
+use Brain\Monkey\Functions;
+use lloc\Msls\ContentTypes\PostType;
 use lloc\Msls\MslsBlog;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsCustomColumn;
 use lloc\Msls\Options\Options;
-use lloc\Msls\MslsPostType;
 
 final class TestMslsCustomColumn extends MslsUnitTestCase {
 
@@ -58,7 +57,7 @@ final class TestMslsCustomColumn extends MslsUnitTestCase {
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 
-		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type = \Mockery::mock( PostType::class );
 		$post_type->shouldReceive( 'get_request' )->andReturn( 'post' );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );
@@ -100,7 +99,7 @@ final class TestMslsCustomColumn extends MslsUnitTestCase {
 	public function test_td(): void {
 		$item_id = 42;
 
-		$post_type = \Mockery::mock( MslsPostType::class );
+		$post_type = \Mockery::mock( PostType::class );
 		$post_type->shouldReceive( 'is_taxonomy' )->times( 3 )->andReturnFalse();
 		$post_type->shouldReceive( 'get_request' )->twice()->andReturn( 'post' );
 

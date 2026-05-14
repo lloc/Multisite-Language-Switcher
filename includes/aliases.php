@@ -13,17 +13,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Link\{
+	Link,
+	ImageOnly,
+	TextImage,
+	TextOnly
+};
+
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Post\Post;
-use lloc\Msls\Options\Query\Author;
-use lloc\Msls\Options\Query\Day;
-use lloc\Msls\Options\Query\Month;
-use lloc\Msls\Options\Query\PostType;
-use lloc\Msls\Options\Query\Query;
-use lloc\Msls\Options\Query\Year;
-use lloc\Msls\Options\Tax\Category;
-use lloc\Msls\Options\Tax\Tax;
-use lloc\Msls\Options\Tax\Term;
+
+use lloc\Msls\Options\Query\{
+	Author,
+	Day,
+	Month,
+	PostType as QueryPostType,
+	Query,
+	Year
+};
+
+use lloc\Msls\Options\Tax\{
+	Category,
+	Tax,
+	Term
+};
+
+use lloc\Msls\ContentTypes\{
+	ContentTypes,
+	PostType as ContentPostType,
+	Taxonomy
+};
 
 class_alias( Options::class, 'lloc\\Msls\\MslsOptions' );
 class_alias( Post::class, 'lloc\\Msls\\MslsOptionsPost' );
@@ -31,8 +50,18 @@ class_alias( Query::class, 'lloc\\Msls\\MslsOptionsQuery' );
 class_alias( Author::class, 'lloc\\Msls\\MslsOptionsQueryAuthor' );
 class_alias( Day::class, 'lloc\\Msls\\MslsOptionsQueryDay' );
 class_alias( Month::class, 'lloc\\Msls\\MslsOptionsQueryMonth' );
-class_alias( PostType::class, 'lloc\\Msls\\MslsOptionsQueryPostType' );
+class_alias( QueryPostType::class, 'lloc\\Msls\\MslsOptionsQueryPostType' );
 class_alias( Year::class, 'lloc\\Msls\\MslsOptionsQueryYear' );
+
 class_alias( Tax::class, 'lloc\\Msls\\MslsOptionsTax' );
 class_alias( Term::class, 'lloc\\Msls\\MslsOptionsTaxTerm' );
 class_alias( Category::class, 'lloc\\Msls\\MslsOptionsTaxTermCategory' );
+
+class_alias( Link::class, 'lloc\\Msls\\MslsLink' );
+class_alias( ImageOnly::class, 'lloc\\Msls\\MslsLinkImageOnly' );
+class_alias( TextImage::class, 'lloc\\Msls\\MslsLinkTextImage' );
+class_alias( TextOnly::class, 'lloc\\Msls\\MslsLinkTextOnly' );
+
+class_alias( ContentTypes::class, 'lloc\\Msls\\MslsContentTypes' );
+class_alias( ContentPostType::class, 'lloc\\Msls\\MslsPostType' );
+class_alias( Taxonomy::class, 'lloc\\Msls\\MslsTaxonomy' );

@@ -1,13 +1,15 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\ContentTypes;
+
+use lloc\Msls\MslsRequest;
 
 /**
  * Content types: Post types (Pages, Posts, ...)
  *
  * @package Msls
  */
-class MslsPostType extends MslsContentTypes {
+class PostType extends ContentTypes {
 
 	/**
 	 * Constructor

@@ -2,13 +2,13 @@
 
 namespace lloc\MslsTests;
 
-use Brain\Monkey\Functions;
-use Brain\Monkey\Filters;
 use Brain\Monkey\Actions;
+use Brain\Monkey\Filters;
+use Brain\Monkey\Functions;
+use lloc\Msls\ContentTypes\Taxonomy;
 use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsCustomColumnTaxonomy;
 use lloc\Msls\Options\Options;
-use lloc\Msls\MslsTaxonomy;
 
 final class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 
@@ -31,7 +31,7 @@ final class TestMslsCustomColumnTaxonomy extends MslsUnitTestCase {
 
 		$collection = \Mockery::mock( MslsBlogCollection::class );
 
-		$taxonomy = \Mockery::mock( MslsTaxonomy::class );
+		$taxonomy = \Mockery::mock( Taxonomy::class );
 		$taxonomy->shouldReceive( 'get_request' )->andReturn( 'post_tag' );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );

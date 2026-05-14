@@ -9,8 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 use lloc\Msls\Component\Input\Checkbox;
 use lloc\Msls\Component\Input\Group;
 use lloc\Msls\Component\Input\Label;
-use lloc\Msls\Component\Input\Text;
 use lloc\Msls\Component\Input\Select;
+use lloc\Msls\Component\Input\Text;
+use lloc\Msls\Link\Link;
 use WP_Post_Type;
 
 /**
@@ -375,7 +376,7 @@ final class MslsAdmin extends MslsMain {
 	 */
 	public function display(): void {
         // phpcs:ignore WordPress.Security.EscapeOutput
-		echo ( new Select( 'display', MslsLink::get_types_description(), strval( $this->options->display ) ) )->render();
+		echo ( new Select( 'display', Link::get_types_description(), strval( $this->options->display ) ) )->render();
 	}
 
 	/**

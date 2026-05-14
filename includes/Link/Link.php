@@ -1,13 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Link;
+
+use lloc\Msls\LinkInterface;
+use lloc\Msls\MslsGetSet;
 
 /**
  * Link type: Image and text
  *
  * @package Msls
  */
-class MslsLink extends MslsGetSet implements LinkInterface {
+class Link extends MslsGetSet implements LinkInterface {
 
 	/**
 	 * Output format
@@ -24,9 +27,9 @@ class MslsLink extends MslsGetSet implements LinkInterface {
 	public static function get_types() {
 		return array(
 			self::class,
-			MslsLinkTextOnly::class,
-			MslsLinkImageOnly::class,
-			MslsLinkTextImage::class,
+			TextOnly::class,
+			ImageOnly::class,
+			TextImage::class,
 		);
 	}
 
