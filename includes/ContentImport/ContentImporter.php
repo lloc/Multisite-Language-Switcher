@@ -6,14 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Admin\Main;
+use lloc\Msls\Blog\Collection;
 use lloc\Msls\ContentImport\Importers\Importer;
 use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;
-use lloc\Msls\MslsBlogCollection;
-use lloc\Msls\MslsMain;
-use lloc\Msls\MslsOptionsPost;
-use lloc\Msls\MslsRegistryInstance;
-use lloc\Msls\MslsRequest;
+use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Registry\Instance;
+use lloc\Msls\RestApi\Request;
 
 /**
  * Class ContentImporter
@@ -22,7 +22,7 @@ use lloc\Msls\MslsRequest;
  *
  * @package lloc\Msls\ContentImport
  */
-class ContentImporter extends MslsRegistryInstance {
+class ContentImporter extends Instance {
 	use WithRequestPostAttributes;
 
 	const MSLS_BEFORE_IMPORT_ACTION = 'msls_content_import_before_import';
@@ -30,9 +30,9 @@ class ContentImporter extends MslsRegistryInstance {
 	const MSLS_AFTER_IMPORT_ACTION = 'msls_content_import_after_import';
 
 	/**
-	 * @var MslsMain
+	 * @var Main
 	 */
-	protected MslsMain $main;
+	protected Main $main;
 
 	/**
 	 * @var ImportLogger|null
@@ -57,10 +57,10 @@ class ContentImporter extends MslsRegistryInstance {
 	/**
 	 * ContentImporter constructor.
 	 *
-	 * @param ?MslsMain $main
+	 * @param ?Main $main
 	 */
-	public function __construct( ?MslsMain $main = null ) {
-		$this->main = ! is_null( $main ) ? $main : MslsMain::create();
+	public function __construct( ?Main $main = null ) {
+		$this->main = ! is_null( $main ) ? $main : Main::create();
 	}
 
 	/**
@@ -123,9 +123,9 @@ class ContentImporter extends MslsRegistryInstance {
 			return $data;
 		}
 
-		$source_lang  = MslsBlogCollection::get_blog_language( $source_blog_id );
+		$source_lang  = Collection::get_blog_language( $source_blog_id );
 		$dest_blog_id = get_current_blog_id();
-		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
+		$dest_lang    = Collection::get_blog_language( get_current_blog_id() );
 
 		$dest_post_id = $this->get_the_blog_post_ID( $dest_blog_id );
 
@@ -183,11 +183,11 @@ class ContentImporter extends MslsRegistryInstance {
 	 * @return array{0: int, 1: int}|null
 	 */
 	public function parse_sources(): ?array {
-		if ( ! MslsRequest::has_var( 'msls_import' ) ) {
+		if ( ! Request::has_var( 'msls_import' ) ) {
 			return null;
 		}
 
-		$msls_import = MslsRequest::get_var( 'msls_import' );
+		$msls_import = Request::get_var( 'msls_import' );
 		$import_data = array_values( array_filter( explode( '|', trim( $msls_import ) ), 'is_numeric' ) );
 
 		if ( count( $import_data ) !== 2 ) {
@@ -213,7 +213,7 @@ class ContentImporter extends MslsRegistryInstance {
 			return $id;
 		}
 
-		$request = MslsRequest::get_request( array( 'post' ) );
+		$request = Request::get_request( array( 'post' ) );
 		if ( ! empty( $request['post'] ) ) {
 			return (int) $request['post'];
 		}
@@ -333,7 +333,7 @@ class ContentImporter extends MslsRegistryInstance {
 			$source_post_id = $import_coordinates->source_post_id;
 			$dest_lang      = $import_coordinates->dest_lang;
 			$dest_post_id   = $import_coordinates->dest_post_id;
-			$relations->should_create( MslsOptionsPost::create( $source_post_id ), $dest_lang, $dest_post_id );
+			$relations->should_create( Post::create( $source_post_id ), $dest_lang, $dest_post_id );
 
 			foreach ( $importers as $key => $importer ) {
 				if ( ! $importer instanceof Importer ) {

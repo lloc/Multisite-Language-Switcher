@@ -3,9 +3,9 @@
 namespace lloc\Msls\ContentImport\Importers;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
-use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\Registry\Instance;
 
-class Map extends MslsRegistryInstance {
+class Map extends Instance {
 	/**
 	 * Builds and returns an array of importers for the specified import coordinates.
 	 *

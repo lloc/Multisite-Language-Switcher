@@ -1,0 +1,191 @@
+<?php declare( strict_types=1 );
+
+namespace lloc\Msls\Admin;
+
+use lloc\Msls\Plugin;
+use lloc\Msls\Blog\Blog;
+use lloc\Msls\Blog\Collection;
+use lloc\Msls\Component\Component;
+use lloc\Msls\Data\LanguageArray;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Request\Fields;
+use lloc\Msls\RestApi\Request;
+
+/**
+ * Abstraction for the hook classes
+ *
+ * @package Msls
+ */
+class Main {
+
+	const MSLS_SAVE_ACTION = 'msls_main_save';
+
+	/**
+	 * Instance of options
+	 *
+	 * @var Options
+	 */
+	protected $options;
+
+	/**
+	 * Collection of blog objects
+	 *
+	 * @var Collection
+	 */
+	protected $collection;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Options    $options
+	 * @param Collection $collection
+	 */
+	final public function __construct( Options $options, Collection $collection ) {
+		$this->options    = $options;
+		$this->collection = $collection;
+	}
+
+	public static function create(): Main {
+		return new static( msls_options(), msls_blog_collection() );
+	}
+
+	/**
+	 * Prints a message in the error log if WP_DEBUG is true
+	 *
+	 * @param mixed $message
+	 */
+	public function debugger( $message ): void {
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) {
+			if ( is_array( $message ) || is_object( $message ) ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+				$message = print_r( $message, true );
+			}
+
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( 'MSLS Debug: ' . $message );
+		}
+	}
+
+	/**
+	 * Get the input array
+	 *
+	 * @param int $object_id
+	 *
+	 * @return array<string, int>
+	 */
+	public function get_input_array( $object_id ): array {
+		$arr = array();
+
+		$current_blog = $this->collection->get_current_blog();
+		if ( ! is_null( $current_blog ) ) {
+			$arr[ $current_blog->get_language() ] = (int) $object_id;
+		}
+
+		$input_post = filter_input_array( INPUT_POST );
+		if ( ! is_array( $input_post ) ) {
+			return $arr;
+		}
+
+		$offset = strlen( Component::INPUT_PREFIX );
+		foreach ( $input_post as $key => $value ) {
+			if ( false === strpos( $key, Component::INPUT_PREFIX ) || empty( $value ) ) {
+				continue;
+			}
+
+			$arr[ substr( $key, $offset ) ] = intval( $value );
+		}
+
+		return $arr;
+	}
+
+	/**
+	 * Checks if the current input comes from the autosave-functionality
+	 *
+	 * @param int $post_id
+	 *
+	 * @return bool
+	 */
+	public function is_autosave( $post_id ): bool {
+		return ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id );
+	}
+
+	/**
+	 * Checks for the nonce in the INPUT_POST
+	 *
+	 * @return boolean
+	 */
+	public function verify_nonce(): bool {
+		return Request::has_var( Fields::FIELD_MSLS_NONCENAME ) && wp_verify_nonce( Request::get_var( Fields::FIELD_MSLS_NONCENAME ), Plugin::path() );
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @param int $object_id
+	 *
+	 * @codeCoverageIgnore
+	 */
+	public function delete( $object_id ): void {
+		$this->save( $object_id, Post::class );
+	}
+
+	/**
+	 * Save
+	 *
+	 * @param int                   $object_id
+	 * @param class-string<Options> $class_name
+	 *
+	 * @codeCoverageIgnore
+	 */
+	protected function save( $object_id, $class_name ): void {
+		if ( has_action( self::MSLS_SAVE_ACTION ) ) {
+			/**
+			 * Calls completely customized save-routine
+			 *
+			 * @param int $object_id
+			 * @param string $class_name
+			 *
+			 * @since 0.9.9
+			 */
+			do_action( self::MSLS_SAVE_ACTION, $object_id, $class_name );
+
+			return;
+		}
+
+		$current_blog = $this->collection->get_current_blog();
+		if ( ! $current_blog instanceof Blog ) {
+			$this->debugger( 'BlogCollection returns false when calling has_current_blog.' );
+
+			return;
+		}
+
+		$language = $current_blog->get_language();
+		$msla     = new LanguageArray( $this->get_input_array( $object_id ) );
+		$options  = new $class_name( $object_id );
+		$temp     = $options->get_arr();
+
+		if ( 0 !== $msla->get_val( $language ) ) {
+			$options->save( $msla->get_arr( $language ) );
+		} else {
+			$options->delete();
+		}
+
+		foreach ( $this->collection->get() as $blog ) {
+			switch_to_blog( $blog->userblog_id );
+
+			$language = $blog->get_language();
+			$larr_id  = $msla->get_val( $language );
+
+			if ( 0 !== $larr_id ) {
+				$options = new $class_name( $larr_id );
+				$options->save( $msla->get_arr( $language ) );
+			} elseif ( isset( $temp[ $language ] ) ) {
+				$options = new $class_name( $temp[ $language ] );
+				$options->delete();
+			}
+
+			restore_current_blog();
+		}
+	}
+}

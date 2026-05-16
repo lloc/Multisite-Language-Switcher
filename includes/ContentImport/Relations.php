@@ -2,9 +2,9 @@
 
 namespace lloc\Msls\ContentImport;
 
-use lloc\Msls\MslsOptions;
-use lloc\Msls\OptionsInterface;
-use lloc\Msls\OptionsTaxInterface;
+use lloc\Msls\Options\Options;
+use lloc\Msls\Options\OptionsInterface;
+use lloc\Msls\Options\Tax\OptionsTaxInterface;
 
 /**
  * Class Relations
@@ -72,7 +72,7 @@ class Relations {
 		switch_to_blog( $this->import_coordinates->source_blog_id );
 
 		foreach ( $this->to_create as $relation ) {
-			/** @var MslsOptions $option */
+			/** @var Options $option */
 			list( $option, $lang, $id ) = $relation;
 			$option->save( array( $lang => $id ) );
 			$source_id = $option->get_arg( 0, $id );
@@ -106,13 +106,13 @@ class Relations {
 				continue;
 			}
 
-			if ( ! $source_option instanceof MslsOptions ) {
+			if ( ! $source_option instanceof Options ) {
 				continue;
 			}
 
 			$option_class = get_class( $source_option );
 			$local_option = $option_class::create( $local_id );
-			if ( $local_option instanceof MslsOptions ) {
+			if ( $local_option instanceof Options ) {
 				$local_option->save( array( $this->import_coordinates->source_lang => $source_id ) );
 			}
 		}

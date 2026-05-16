@@ -1,0 +1,70 @@
+<?php declare( strict_types=1 );
+
+namespace lloc\Msls\Request;
+
+class Fields {
+
+	const FIELD_BLOG_ID        = 'blog_id';
+	const FIELD_POST_TYPE      = 'post_type';
+	const FIELD_TAXONOMY       = 'taxonomy';
+	const FIELD_S              = 's';
+	const FIELD_ACTION         = 'action';
+	const FIELD_MSLS_FILTER    = 'msls_filter';
+	const FIELD_MSLS_NONCENAME = 'msls_noncename';
+	const FIELD_MSLS_ID        = 'msls_id';
+	const FIELD_MSLS_LANG      = 'msls_lang';
+	const FIELD_MSLS_IMPORT    = 'msls_import';
+	const FIELD_POST           = 'post';
+	const FIELD_SOURCE_ID      = 'source_id';
+
+	const CONFIG = array(
+		self::FIELD_BLOG_ID        => array(
+			INPUT_POST,
+			FILTER_SANITIZE_NUMBER_INT,
+		),
+		self::FIELD_POST_TYPE      => array(
+			INPUT_POST,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_TAXONOMY       => array(
+			INPUT_POST,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_S              => array(
+			INPUT_POST,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_ACTION         => array(
+			INPUT_POST,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_MSLS_FILTER    => array(
+			INPUT_GET,
+			FILTER_SANITIZE_NUMBER_INT,
+		),
+		self::FIELD_MSLS_NONCENAME => array(
+			INPUT_POST,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_MSLS_ID        => array(
+			INPUT_GET,
+			FILTER_SANITIZE_NUMBER_INT,
+		),
+		self::FIELD_MSLS_LANG      => array(
+			INPUT_GET,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_MSLS_IMPORT    => array(
+			INPUT_POST,
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		),
+		self::FIELD_POST           => array(
+			INPUT_GET,
+			FILTER_SANITIZE_NUMBER_INT,
+		),
+		self::FIELD_SOURCE_ID      => array(
+			INPUT_POST,
+			FILTER_SANITIZE_NUMBER_INT,
+		),
+	);
+}
