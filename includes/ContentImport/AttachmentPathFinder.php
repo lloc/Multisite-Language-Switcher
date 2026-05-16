@@ -2,9 +2,9 @@
 
 namespace lloc\Msls\ContentImport;
 
-use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\Registry\Instance;
 
-class AttachmentPathFinder extends MslsRegistryInstance {
+class AttachmentPathFinder extends Instance {
 
 	const LINKED = '_msls_linked';
 

@@ -3,8 +3,8 @@
 namespace lloc\MslsTests\Options;
 
 use Brain\Monkey\Functions;
+use lloc\Msls\Admin\Icon as MslsAdminIcon;
 use lloc\Msls\ContentTypes\PostType;
-use lloc\Msls\MslsAdminIcon;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
 

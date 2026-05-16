@@ -2,8 +2,6 @@
 
 namespace lloc\Msls\Options\Tax;
 
-use lloc\Msls\OptionsTaxInterface;
-
 /**
  * OptionsTaxTermCategory
  *

@@ -2,7 +2,7 @@
 
 namespace lloc\Msls\ContentImport;
 
-use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\Blog\Collection;
 
 class ImportCoordinates {
 
@@ -64,10 +64,10 @@ class ImportCoordinates {
 			return false;
 		}
 
-		if ( MslsBlogCollection::get_blog_language( $this->source_blog_id ) !== $this->source_lang ) {
+		if ( Collection::get_blog_language( $this->source_blog_id ) !== $this->source_lang ) {
 			return false;
 		}
-		if ( MslsBlogCollection::get_blog_language( $this->dest_blog_id ) !== $this->dest_lang ) {
+		if ( Collection::get_blog_language( $this->dest_blog_id ) !== $this->dest_lang ) {
 			return false;
 		}
 

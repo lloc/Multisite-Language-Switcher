@@ -2,8 +2,8 @@
 
 namespace lloc\Msls\Options\Query;
 
-use lloc\Msls\MslsSqlCacher;
-use lloc\Msls\Query\YearPostsCounterQuery;
+use lloc\Msls\Db\SqlCacher;
+use lloc\Msls\Db\Query\YearPostsCounterQuery;
 
 /**
  * OptionsQueryYear
@@ -22,9 +22,9 @@ class Year extends Query {
 	/**
 	 * Constructor.
 	 *
-	 * @param MslsSqlCacher $sql_cache The SQL Cacher instance.
+	 * @param SqlCacher $sql_cache The SQL Cacher instance.
 	 */
-	public function __construct( MslsSqlCacher $sql_cache ) {
+	public function __construct( SqlCacher $sql_cache ) {
 		parent::__construct( $sql_cache );
 
 		$this->year = self::get_params()['year'];

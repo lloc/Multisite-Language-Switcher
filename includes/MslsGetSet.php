@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Registry\Instance;
+
 /**
  * Generic class for overloading properties
  *
@@ -9,7 +11,7 @@ namespace lloc\Msls;
  *
  * @package Msls
  */
-class MslsGetSet extends MslsRegistryInstance {
+class MslsGetSet extends Instance {
 
 	/**
 	 * @var array<string, mixed>

@@ -2,7 +2,6 @@
 
 namespace lloc\Msls\Link;
 
-use lloc\Msls\LinkInterface;
 use lloc\Msls\MslsGetSet;
 
 /**

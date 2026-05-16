@@ -3,7 +3,7 @@
 namespace lloc\MslsTests\Options\Query;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Db\SqlCacher;
 use lloc\Msls\Options\Query\Year;
 use lloc\MslsTests\MslsUnitTestCase;
 
@@ -15,7 +15,7 @@ final class TestOptionsQueryYear extends MslsUnitTestCase {
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 		Functions\expect( 'get_query_var' )->once()->andReturn( $year );
 
-		$sql_cacher = \Mockery::mock( MslsSqlCacher::class );
+		$sql_cacher = \Mockery::mock( SqlCacher::class );
 		$sql_cacher->shouldReceive( 'prepare' )->andReturn( 'SQL Query String' );
 		$sql_cacher->shouldReceive( 'get_var' )->andReturn( random_int( 1, 10 ) );
 

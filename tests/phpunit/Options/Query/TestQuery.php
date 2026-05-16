@@ -3,7 +3,7 @@
 namespace lloc\MslsTests\Options\Query;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Db\SqlCacher;
 use lloc\Msls\Options\Query\Author;
 use lloc\Msls\Options\Query\Day;
 use lloc\Msls\Options\Query\Month;
@@ -93,7 +93,7 @@ final class TestQuery extends MslsUnitTestCase {
 		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
 		Functions\expect( 'home_url' )->once()->andReturn( $home_url );
 
-		$sql_cache = \Mockery::mock( MslsSqlCacher::class );
+		$sql_cache = \Mockery::mock( SqlCacher::class );
 
 		$this->assertEquals( $home_url, ( new Query( $sql_cache ) )->get_postlink( 'de_DE' ) );
 	}
@@ -101,7 +101,7 @@ final class TestQuery extends MslsUnitTestCase {
 	public function test_non_existent_get_postlink(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		$sql_cache = \Mockery::mock( MslsSqlCacher::class );
+		$sql_cache = \Mockery::mock( SqlCacher::class );
 
 		$this->assertEquals( '', ( new Query( $sql_cache ) )->get_postlink( 'fr_FR' ) );
 	}
@@ -109,7 +109,7 @@ final class TestQuery extends MslsUnitTestCase {
 	public function test_get_permalink_returns_empty_when_no_translation(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( array( 'de_DE' => 42 ) );
 
-		$sql_cache = \Mockery::mock( MslsSqlCacher::class );
+		$sql_cache = \Mockery::mock( SqlCacher::class );
 
 		$this->assertSame( '', ( new Query( $sql_cache ) )->get_permalink( 'fr_FR' ) );
 	}

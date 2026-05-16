@@ -2,8 +2,8 @@
 
 namespace lloc\Msls\Options\Query;
 
-use lloc\Msls\MslsSqlCacher;
-use lloc\Msls\Query\MonthPostsCounterQuery;
+use lloc\Msls\Db\SqlCacher;
+use lloc\Msls\Db\Query\MonthPostsCounterQuery;
 
 /**
  * OptionsQueryMonth
@@ -22,7 +22,7 @@ class Month extends Query {
 	 */
 	protected int $monthnum;
 
-	public function __construct( MslsSqlCacher $sql_cache ) {
+	public function __construct( SqlCacher $sql_cache ) {
 		parent::__construct( $sql_cache );
 
 		$params = self::get_params();

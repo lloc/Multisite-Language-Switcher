@@ -2,6 +2,8 @@
 
 namespace lloc\Msls;
 
+use lloc\Msls\Blog\Blog;
+use lloc\Msls\Blog\Collection;
 use lloc\Msls\Component\Component;
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Post\Post;
@@ -25,17 +27,17 @@ class MslsMain {
 	/**
 	 * Collection of blog objects
 	 *
-	 * @var MslsBlogCollection
+	 * @var Collection
 	 */
 	protected $collection;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Options            $options
-	 * @param MslsBlogCollection $collection
+	 * @param Options    $options
+	 * @param Collection $collection
 	 */
-	final public function __construct( Options $options, MslsBlogCollection $collection ) {
+	final public function __construct( Options $options, Collection $collection ) {
 		$this->options    = $options;
 		$this->collection = $collection;
 	}
@@ -148,7 +150,7 @@ class MslsMain {
 		}
 
 		$current_blog = $this->collection->get_current_blog();
-		if ( ! $current_blog instanceof MslsBlog ) {
+		if ( ! $current_blog instanceof Blog ) {
 			$this->debugger( 'BlogCollection returns false when calling has_current_blog.' );
 
 			return;

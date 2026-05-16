@@ -2,8 +2,8 @@
 
 namespace lloc\Msls\Options\Query;
 
-use lloc\Msls\MslsSqlCacher;
-use lloc\Msls\Query\AuthorPostsCounterQuery;
+use lloc\Msls\Db\SqlCacher;
+use lloc\Msls\Db\Query\AuthorPostsCounterQuery;
 
 /**
  * OptionsQueryAuthor
@@ -19,7 +19,7 @@ class Author extends Query {
 	 */
 	protected int $author_id;
 
-	public function __construct( MslsSqlCacher $sql_cache ) {
+	public function __construct( SqlCacher $sql_cache ) {
 		parent::__construct( $sql_cache );
 
 		$this->author_id = self::get_params()['author_id'];

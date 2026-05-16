@@ -3,8 +3,8 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsBlog;
-use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\Blog\Blog;
+use lloc\Msls\Blog\Collection;
 use lloc\Msls\MslsMain;
 use lloc\Msls\Options\Options;
 
@@ -13,10 +13,10 @@ final class TestMslsMain extends MslsUnitTestCase {
 	private function MslsMainFactory(): MslsMain {
 		$options = \Mockery::mock( Options::class );
 
-		$blog = \Mockery::mock( MslsBlog::class );
+		$blog = \Mockery::mock( Blog::class );
 		$blog->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 
-		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection = \Mockery::mock( Collection::class );
 		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blog );
 
 		return new MslsMain( $options, $collection );

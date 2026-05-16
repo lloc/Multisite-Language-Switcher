@@ -2,7 +2,7 @@
 
 namespace lloc\Msls\Options\Query;
 
-use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Db\SqlCacher;
 use lloc\Msls\Options\Options;
 
 /**
@@ -20,11 +20,11 @@ class Query extends Options {
 	public ?bool $with_front = true;
 
 	/**
-	 * @var MslsSqlCacher
+	 * @var SqlCacher
 	 */
-	protected MslsSqlCacher $sql_cache;
+	protected SqlCacher $sql_cache;
 
-	public function __construct( MslsSqlCacher $sql_cache ) {
+	public function __construct( SqlCacher $sql_cache ) {
 		parent::__construct();
 
 		$this->sql_cache = $sql_cache;
@@ -61,7 +61,7 @@ class Query extends Options {
 			return null;
 		}
 
-		$sql_cache = MslsSqlCacher::create( $query_class, $query_class::get_params() );
+		$sql_cache = SqlCacher::create( $query_class, $query_class::get_params() );
 
 		return new $query_class( $sql_cache );
 	}

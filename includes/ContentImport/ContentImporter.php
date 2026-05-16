@@ -6,12 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Blog\Collection;
 use lloc\Msls\ContentImport\Importers\Importer;
 use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;
-use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsMain;
-use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\Registry\Instance;
 use lloc\Msls\MslsRequest;
 use lloc\Msls\Options\Post\Post;
 
@@ -22,7 +22,7 @@ use lloc\Msls\Options\Post\Post;
  *
  * @package lloc\Msls\ContentImport
  */
-class ContentImporter extends MslsRegistryInstance {
+class ContentImporter extends Instance {
 	use WithRequestPostAttributes;
 
 	const MSLS_BEFORE_IMPORT_ACTION = 'msls_content_import_before_import';
@@ -123,9 +123,9 @@ class ContentImporter extends MslsRegistryInstance {
 			return $data;
 		}
 
-		$source_lang  = MslsBlogCollection::get_blog_language( $source_blog_id );
+		$source_lang  = Collection::get_blog_language( $source_blog_id );
 		$dest_blog_id = get_current_blog_id();
-		$dest_lang    = MslsBlogCollection::get_blog_language( get_current_blog_id() );
+		$dest_lang    = Collection::get_blog_language( get_current_blog_id() );
 
 		$dest_post_id = $this->get_the_blog_post_ID( $dest_blog_id );
 

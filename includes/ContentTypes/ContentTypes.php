@@ -2,7 +2,7 @@
 
 namespace lloc\Msls\ContentTypes;
 
-use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\Registry\Instance;
 use lloc\Msls\MslsRequest;
 
 /**
@@ -10,7 +10,7 @@ use lloc\Msls\MslsRequest;
  *
  * @package Msls
  */
-abstract class ContentTypes extends MslsRegistryInstance {
+abstract class ContentTypes extends Instance {
 
 	/**
 	 * Request

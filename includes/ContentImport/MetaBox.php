@@ -2,17 +2,17 @@
 
 namespace lloc\Msls\ContentImport;
 
+use lloc\Msls\Blog\Collection;
 use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\Importers\Map;
-use lloc\Msls\MslsBlogCollection;
 use lloc\Msls\MslsFields;
 use lloc\Msls\MslsPlugin;
-use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\Registry\Instance;
 use lloc\Msls\MslsRequest;
 use lloc\Msls\Options\Post\Post;
 
-class MetaBox extends MslsRegistryInstance {
+class MetaBox extends Instance {
 
 	/**
 	 * @var array<string, mixed>
@@ -30,7 +30,7 @@ class MetaBox extends MslsRegistryInstance {
 
 		$mydata          = new Post( $post->ID );
 		$languages       = Post::instance()->get_available_languages();
-		$current         = MslsBlogCollection::get_blog_language( get_current_blog_id() );
+		$current         = Collection::get_blog_language( get_current_blog_id() );
 		$languages       = array_diff_key( $languages, array( $current => $current ) );
 		$input_lang      = MslsRequest::get( MslsFields::FIELD_MSLS_LANG, null );
 		$input_id        = MslsRequest::get( MslsFields::FIELD_MSLS_ID, null );

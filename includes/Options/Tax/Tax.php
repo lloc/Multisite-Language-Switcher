@@ -3,7 +3,6 @@
 namespace lloc\Msls\Options\Tax;
 
 use lloc\Msls\Options\Options;
-use lloc\Msls\OptionsTaxInterface;
 
 /**
  * OptionsTax

@@ -2,7 +2,7 @@
 
 namespace lloc\Msls\Options\Query;
 
-use lloc\Msls\MslsSqlCacher;
+use lloc\Msls\Db\SqlCacher;
 
 /**
  * OptionsQueryPostType
@@ -18,7 +18,7 @@ class PostType extends Query {
 	 */
 	protected string $post_type;
 
-	public function __construct( MslsSqlCacher $sql_cache ) {
+	public function __construct( SqlCacher $sql_cache ) {
 		parent::__construct( $sql_cache );
 
 		$this->post_type = self::get_params()['post_type'];

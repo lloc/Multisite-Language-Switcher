@@ -132,23 +132,23 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	/**
-	 * Looks for the MslsBlog instance for a specific locale
+	 * Looks for the Blog instance for a specific locale
 	 *
 	 * @param string $locale
 	 *
-	 * @return \lloc\Msls\MslsBlog|null
+	 * @return \lloc\Msls\Blog\Blog|null
 	 */
-	function msls_blog( string $locale ): ?\lloc\Msls\MslsBlog {
+	function msls_blog( string $locale ): ?\lloc\Msls\Blog\Blog {
 		return msls_blog_collection()->get_blog( $locale );
 	}
 
 	/**
-	 * Gets the MslsBlogCollection instance
+	 * Gets the Blog Collection instance
 	 *
-	 * @return \lloc\Msls\MslsBlogCollection
+	 * @return \lloc\Msls\Blog\Collection
 	 */
-	function msls_blog_collection(): \lloc\Msls\MslsBlogCollection {
-		return \lloc\Msls\MslsBlogCollection::instance();
+	function msls_blog_collection(): \lloc\Msls\Blog\Collection {
+		return \lloc\Msls\Blog\Collection::instance();
 	}
 
 	/**
@@ -188,12 +188,12 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	/**
-	 * Gets the MslsOutput instance
+	 * Gets the Output instance
 	 *
-	 * @return \lloc\Msls\MslsOutput
+	 * @return \lloc\Msls\Frontend\Output
 	 */
-	function msls_output(): \lloc\Msls\MslsOutput {
-		return \lloc\Msls\MslsOutput::create();
+	function msls_output(): \lloc\Msls\Frontend\Output {
+		return \lloc\Msls\Frontend\Output::create();
 	}
 
 	/**
@@ -216,9 +216,9 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	 * - is_tax
 	 *
 	 * @param int $id
-	 * @return \lloc\Msls\OptionsTaxInterface
+	 * @return \lloc\Msls\Options\Tax\OptionsTaxInterface
 	 */
-	function msls_get_tax( int $id ): \lloc\Msls\OptionsTaxInterface {
+	function msls_get_tax( int $id ): \lloc\Msls\Options\Tax\OptionsTaxInterface {
 		return \lloc\Msls\Options\Tax\Tax::create( $id );
 	}
 
@@ -247,5 +247,5 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	}
 
 	lloc\Msls\MslsPlugin::init();
-	lloc\Msls\MslsCli::init();
+	lloc\Msls\Cli\Cli::init();
 }

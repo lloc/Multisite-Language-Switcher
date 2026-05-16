@@ -3,8 +3,8 @@
 namespace lloc\Msls\ContentImport;
 
 use lloc\Msls\Options\Options;
-use lloc\Msls\OptionsInterface;
-use lloc\Msls\OptionsTaxInterface;
+use lloc\Msls\Options\OptionsInterface;
+use lloc\Msls\Options\Tax\OptionsTaxInterface;
 
 /**
  * Class Relations

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use lloc\Msls\ContentImport\LogWriters\AdminNoticeLogger;
-use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\Registry\Instance;
 
 /**
  * Class Service
@@ -16,7 +16,7 @@ use lloc\Msls\MslsRegistryInstance;
  *
  * @package lloc\Msls\ContentImport
  */
-class Service extends MslsRegistryInstance {
+class Service extends Instance {
 
 	/**
 	 * Hooks the classes that provide the content import functionality if the content import option is active.

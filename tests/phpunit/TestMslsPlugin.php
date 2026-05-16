@@ -3,9 +3,9 @@
 namespace lloc\MslsTests;
 
 use Brain\Monkey\Functions;
-use lloc\Msls\MslsBlogCollection;
+use lloc\Msls\Frontend\Output;
+use lloc\Msls\Blog\Collection;
 use lloc\Msls\Options\Options;
-use lloc\Msls\MslsOutput;
 use lloc\Msls\MslsPlugin;
 
 final class TestMslsPlugin extends MslsUnitTestCase {
@@ -152,12 +152,12 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 
 		$options = \Mockery::mock( Options::class );
 
-		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection = \Mockery::mock( Collection::class );
 		$collection->shouldReceive( 'get_objects' )->twice()->andReturn( array() );
 
 		Functions\expect( 'msls_options' )->once()->andReturn( $options );
 		Functions\expect( 'msls_blog_collection' )->twice()->andReturn( $collection );
-		Functions\expect( 'msls_output' )->once()->andReturn( MslsOutput::create() );
+		Functions\expect( 'msls_output' )->once()->andReturn( Output::create() );
 
 		$this->expectOutputString( '' . PHP_EOL );
 

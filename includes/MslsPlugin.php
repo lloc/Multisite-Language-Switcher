@@ -6,9 +6,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Admin\Admin;
+use lloc\Msls\Admin\Bar as AdminBar;
+use lloc\Msls\Admin\CustomColumn;
+use lloc\Msls\Admin\CustomColumnTaxonomy;
+use lloc\Msls\Admin\CustomFilter;
+use lloc\Msls\Admin\MetaBox;
+use lloc\Msls\Admin\PostListActions;
+use lloc\Msls\Frontend\Block;
+use lloc\Msls\Frontend\ContentFilter;
+use lloc\Msls\Frontend\ShortCode;
+use lloc\Msls\Frontend\Widget;
+use lloc\Msls\Db\SqlCacher;
+use lloc\Msls\Db\Query\BlogsInNetworkQuery;
+use lloc\Msls\Db\Query\CleanupOptionsQuery;
 use lloc\Msls\Options\Options;
-use lloc\Msls\Query\BlogsInNetworkQuery;
-use lloc\Msls\Query\CleanupOptionsQuery;
+use lloc\Msls\PostTag\PostTag;
+use lloc\Msls\RestApi\RestApi;
+use lloc\Msls\Admin\TranslationPicker\Page as TranslationPickerPage;
 
 /**
  * Provides functionalities for general hooks and activation/deactivation
@@ -45,12 +60,12 @@ class MslsPlugin {
 			add_action( 'admin_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 			add_action( 'wp_enqueue_scripts', array( $obj, 'custom_enqueue' ) );
 
-			add_action( 'rest_api_init', array( MslsRestApi::class, 'init' ) );
-			add_action( 'init', array( MslsAdminBar::class, 'init' ) );
-			add_action( 'init', array( MslsBlock::class, 'init' ) );
-			add_action( 'init', array( MslsShortCode::class, 'init' ) );
-			add_action( 'init', array( MslsContentFilter::class, 'init' ) );
-			add_action( 'widgets_init', array( MslsWidget::class, 'init' ) );
+			add_action( 'rest_api_init', array( RestApi::class, 'init' ) );
+			add_action( 'init', array( AdminBar::class, 'init' ) );
+			add_action( 'init', array( Block::class, 'init' ) );
+			add_action( 'init', array( ShortCode::class, 'init' ) );
+			add_action( 'init', array( ContentFilter::class, 'init' ) );
+			add_action( 'widgets_init', array( Widget::class, 'init' ) );
 			add_action( 'wp_head', array( __CLASS__, 'print_alternate_links' ) );
 
 			add_filter( 'msls_get_output', 'msls_output' );
@@ -58,34 +73,34 @@ class MslsPlugin {
 			\lloc\Msls\ContentImport\Service::instance()->register();
 
 			if ( is_admin() ) {
-				add_action( 'admin_menu', array( MslsAdmin::class, 'init' ) );
-				MslsTranslationPickerPage::init();
-				add_action( 'load-post.php', array( MslsMetaBox::class, 'init' ) );
-				add_action( 'load-post-new.php', array( MslsMetaBox::class, 'init' ) );
-				add_action( 'load-edit.php', array( MslsCustomColumn::class, 'init' ) );
-				add_action( 'load-edit.php', array( MslsCustomFilter::class, 'init' ) );
-				add_action( 'load-edit.php', array( MslsPostListActions::class, 'init' ) );
+				add_action( 'admin_menu', array( Admin::class, 'init' ) );
+				TranslationPickerPage::init();
+				add_action( 'load-post.php', array( MetaBox::class, 'init' ) );
+				add_action( 'load-post-new.php', array( MetaBox::class, 'init' ) );
+				add_action( 'load-edit.php', array( CustomColumn::class, 'init' ) );
+				add_action( 'load-edit.php', array( CustomFilter::class, 'init' ) );
+				add_action( 'load-edit.php', array( PostListActions::class, 'init' ) );
 
-				add_action( 'load-edit-tags.php', array( MslsCustomColumnTaxonomy::class, 'init' ) );
-				add_action( 'load-edit-tags.php', array( MslsPostTag::class, 'init' ) );
-				add_action( 'load-term.php', array( MslsPostTag::class, 'init' ) );
+				add_action( 'load-edit-tags.php', array( CustomColumnTaxonomy::class, 'init' ) );
+				add_action( 'load-edit-tags.php', array( PostTag::class, 'init' ) );
+				add_action( 'load-term.php', array( PostTag::class, 'init' ) );
 
 				if ( MslsRequest::has_var( MslsFields::FIELD_ACTION ) ) {
 					switch ( MslsRequest::get_var( MslsFields::FIELD_ACTION ) ) {
 						case 'add-tag':
-							add_action( 'admin_init', array( MslsPostTag::class, 'init' ) );
+							add_action( 'admin_init', array( PostTag::class, 'init' ) );
 							break;
 						case 'inline-save':
-							add_action( 'admin_init', array( MslsCustomColumn::class, 'init' ) );
+							add_action( 'admin_init', array( CustomColumn::class, 'init' ) );
 							break;
 						case 'inline-save-tax':
-							add_action( 'admin_init', array( MslsCustomColumnTaxonomy::class, 'init' ) );
+							add_action( 'admin_init', array( CustomColumnTaxonomy::class, 'init' ) );
 							break;
 					}
 				}
 
-				add_action( 'wp_ajax_suggest_posts', array( MslsMetaBox::class, 'suggest' ) );
-				add_action( 'wp_ajax_suggest_terms', array( MslsPostTag::class, 'suggest' ) );
+				add_action( 'wp_ajax_suggest_posts', array( MetaBox::class, 'suggest' ) );
+				add_action( 'wp_ajax_suggest_terms', array( PostTag::class, 'suggest' ) );
 			}
 		} else {
 			add_action(
@@ -227,7 +242,7 @@ class MslsPlugin {
 		 * restore_current_blog
 		 */
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
+			$sql_cache = SqlCacher::create( __CLASS__, __METHOD__ );
 			$blog_ids  = ( new BlogsInNetworkQuery( $sql_cache ) )();
 
 			foreach ( $blog_ids as $new_blog_id ) {
@@ -250,7 +265,7 @@ class MslsPlugin {
 	 */
 	public static function cleanup() {
 		if ( delete_option( 'msls' ) ) {
-			$sql_cache = MslsSqlCacher::create( __CLASS__, __METHOD__ );
+			$sql_cache = SqlCacher::create( __CLASS__, __METHOD__ );
 			return ( new CleanupOptionsQuery( $sql_cache ) )();
 		}
 

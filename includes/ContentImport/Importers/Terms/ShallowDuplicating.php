@@ -4,8 +4,8 @@ namespace lloc\Msls\ContentImport\Importers\Terms;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\Importers\BaseImporter;
+use lloc\Msls\Options\Tax\OptionsTaxInterface;
 use lloc\Msls\Options\Tax\Term;
-use lloc\Msls\OptionsTaxInterface;
 
 /**
  * Class ShallowDuplicating

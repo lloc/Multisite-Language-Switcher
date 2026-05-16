@@ -6,14 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Admin\Icon as AdminIcon;
 use lloc\Msls\Component\Icon\IconPng;
-use lloc\Msls\MslsAdminIcon;
 use lloc\Msls\MslsGetSet;
 use lloc\Msls\MslsPlugin;
 use lloc\Msls\Options\Post\Post;
 use lloc\Msls\Options\Query\Query;
 use lloc\Msls\Options\Tax\Tax;
-use lloc\Msls\OptionsInterface;
 
 /**
  * General options class
@@ -448,6 +447,6 @@ class Options extends MslsGetSet implements OptionsInterface {
 	 * @return string
 	 */
 	public function get_icon_type(): string {
-		return MslsAdminIcon::TYPE_LABEL === $this->admin_display ? MslsAdminIcon::TYPE_LABEL : MslsAdminIcon::TYPE_FLAG;
+		return AdminIcon::TYPE_LABEL === $this->admin_display ? AdminIcon::TYPE_LABEL : AdminIcon::TYPE_FLAG;
 	}
 }
