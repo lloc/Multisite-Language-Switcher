@@ -1,13 +1,14 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\Data;
 
-use lloc\Msls\MslsJson;
+use lloc\Msls\Data\Json;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestMslsJson extends MslsUnitTestCase {
+final class TestJson extends MslsUnitTestCase {
 
 	public function test_get(): void {
-		$obj = ( new MslsJson() )->add( null, 'Test 3' )->add( '2', 'Test 2' )->add( 1, 'Test 1' );
+		$obj = ( new Json() )->add( null, 'Test 3' )->add( '2', 'Test 2' )->add( 1, 'Test 1' );
 
 		$expected = array(
 			array(
@@ -28,7 +29,7 @@ final class TestMslsJson extends MslsUnitTestCase {
 	}
 
 	public function test___toString(): void {
-		$obj = ( new MslsJson() )->add( null, 'Test 3' )->add( '2', 'Test 2' )->add( 1, 'Test 1' );
+		$obj = ( new Json() )->add( null, 'Test 3' )->add( '2', 'Test 2' )->add( 1, 'Test 1' );
 
 		$expected = '[{"value":1,"label":"Test 1"},{"value":2,"label":"Test 2"},{"value":0,"label":"Test 3"}]';
 

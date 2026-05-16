@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use lloc\Msls\Admin\Admin;
-use lloc\Msls\MslsPlugin;
+use lloc\Msls\Plugin;
 use lloc\Msls\Registry\Instance;
 use lloc\Msls\Options\Options;
 
@@ -253,7 +253,7 @@ class Collection extends Instance {
 			$this->active_plugins = get_site_option( 'active_sitewide_plugins', array() );
 		}
 
-		$path = MslsPlugin::path();
+		$path = Plugin::path();
 		if ( isset( $this->active_plugins[ $path ] ) ) {
 			return true;
 		}

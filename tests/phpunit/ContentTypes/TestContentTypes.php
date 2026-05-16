@@ -20,6 +20,8 @@ final class TestContentTypes extends MslsUnitTestCase {
 	}
 
 	public function test_is_taxonomy(): void {
+		Functions\expect( 'get_post_types' )->twice()->andReturn( array() );
+
 		$this->assertFalse( ContentTypes::create()->is_taxonomy() );
 	}
 }

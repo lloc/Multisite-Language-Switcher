@@ -1,19 +1,23 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Admin;
 
+use lloc\Msls\Plugin;
 use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\Component\Component;
+use lloc\Msls\Data\LanguageArray;
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Request\Fields;
+use lloc\Msls\RestApi\Request;
 
 /**
  * Abstraction for the hook classes
  *
  * @package Msls
  */
-class MslsMain {
+class Main {
 
 	const MSLS_SAVE_ACTION = 'msls_main_save';
 
@@ -42,7 +46,7 @@ class MslsMain {
 		$this->collection = $collection;
 	}
 
-	public static function create(): MslsMain {
+	public static function create(): Main {
 		return new static( msls_options(), msls_blog_collection() );
 	}
 
@@ -112,7 +116,7 @@ class MslsMain {
 	 * @return boolean
 	 */
 	public function verify_nonce(): bool {
-		return MslsRequest::has_var( MslsFields::FIELD_MSLS_NONCENAME ) && wp_verify_nonce( MslsRequest::get_var( MslsFields::FIELD_MSLS_NONCENAME ), MslsPlugin::path() );
+		return Request::has_var( Fields::FIELD_MSLS_NONCENAME ) && wp_verify_nonce( Request::get_var( Fields::FIELD_MSLS_NONCENAME ), Plugin::path() );
 	}
 
 	/**
@@ -157,7 +161,7 @@ class MslsMain {
 		}
 
 		$language = $current_blog->get_language();
-		$msla     = new MslsLanguageArray( $this->get_input_array( $object_id ) );
+		$msla     = new LanguageArray( $this->get_input_array( $object_id ) );
 		$options  = new $class_name( $object_id );
 		$temp     = $options->get_arr();
 

@@ -6,13 +6,13 @@ use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use lloc\Msls\Admin\MetaBox;
-use lloc\Msls\ContentTypes\PostType;
 use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
-use lloc\Msls\MslsFields;
-use lloc\Msls\MslsJson;
+use lloc\Msls\ContentTypes\PostType;
+use lloc\Msls\Data\Json;
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Request\Fields;
 use lloc\MslsTests\MslsUnitTestCase;
 
 final class TestMetaBox extends MslsUnitTestCase {
@@ -57,10 +57,10 @@ final class TestMetaBox extends MslsUnitTestCase {
 		$post->ID = 42;
 
 		Functions\expect( 'filter_has_var' )->times( 3 )->andReturnTrue();
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 17 );
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 0 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 17 );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, Fields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 0 );
 		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'pending', 'draft', 'future' ) );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
 		Functions\expect( 'get_posts' )->once()->andReturn( array( $post ) );
@@ -85,10 +85,10 @@ final class TestMetaBox extends MslsUnitTestCase {
 		$post->ID = 42;
 
 		Functions\expect( 'filter_has_var' )->times( 3 )->andReturnTrue();
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post' );
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 99 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post' );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, Fields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 99 );
 		Functions\expect( 'get_post_stati' )->once()->andReturn( array( 'pending', 'draft', 'future' ) );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test Post' );
 		Functions\expect( 'get_posts' )->once()->andReturn( array( $post ) );
@@ -121,7 +121,7 @@ final class TestMetaBox extends MslsUnitTestCase {
 		Functions\expect( 'wp_reset_postdata' )->once();
 		Functions\expect( 'get_posts' )->once()->andReturn( array() );
 
-		$json = \Mockery::mock( MslsJson::class );
+		$json = \Mockery::mock( Json::class );
 		$args = array();
 
 		$this->assertEquals( $json, MetaBox::get_suggested_fields( $json, $args ) );
@@ -339,7 +339,7 @@ final class TestMetaBox extends MslsUnitTestCase {
 
 	public function test_set_with_request_current_user_cannot(): void {
 		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, MslsFields::FIELD_MSLS_NONCENAME )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, Fields::FIELD_MSLS_NONCENAME )->andReturnTrue();
 		Functions\expect( 'wp_verify_nonce' )->once()->andReturnTrue();
 		Functions\expect( 'current_user_can' )->once()->andReturnFalse();
 
@@ -349,7 +349,7 @@ final class TestMetaBox extends MslsUnitTestCase {
 
 	public function test_set_with_request(): void {
 		Functions\expect( 'wp_is_post_revision' )->once()->andReturn( false );
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, MslsFields::FIELD_MSLS_NONCENAME )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_POST, Fields::FIELD_MSLS_NONCENAME )->andReturnTrue();
 		Functions\expect( 'wp_verify_nonce' )->once()->andReturnTrue();
 		Functions\expect( 'current_user_can' )->once()->andReturnTrue();
 		Functions\expect( 'get_option' )->atLeast()->once()->andReturn( array() );
@@ -364,10 +364,10 @@ final class TestMetaBox extends MslsUnitTestCase {
 	public function test_maybe_set_linked_post() {
 		$post = \Mockery::mock( 'WP_Post' );
 
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
 		Functions\expect( 'get_post' )->once()->andReturn( $post );
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'switch_to_blog' )->once();
@@ -382,10 +382,10 @@ final class TestMetaBox extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_post_with_no_post() {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
 		Functions\expect( 'get_post' )->once()->andReturn( null );
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'switch_to_blog' )->once();
@@ -407,10 +407,10 @@ final class TestMetaBox extends MslsUnitTestCase {
 
 		$test = new MetaBox( $options, $collection );
 
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
 		$mydata = new Post();
@@ -426,9 +426,9 @@ final class TestMetaBox extends MslsUnitTestCase {
 
 		$test = new MetaBox( $options, $collection );
 
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_ID )->andReturnTrue();
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID )->andReturnTrue();
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG )->andReturnTrue();
+		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
 		$mydata        = new Post();

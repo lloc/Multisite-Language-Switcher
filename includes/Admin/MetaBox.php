@@ -10,12 +10,11 @@ use lloc\Msls\Blog\Collection;
 use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\MetaBox as ContentImportMetaBox;
-use lloc\Msls\MslsFields;
-use lloc\Msls\MslsJson;
-use lloc\Msls\MslsMain;
-use lloc\Msls\MslsPlugin;
-use lloc\Msls\MslsRequest;
+use lloc\Msls\Data\Json;
 use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Plugin;
+use lloc\Msls\Request\Fields;
+use lloc\Msls\RestApi\Request;
 use WP_Post_Type;
 
 /**
@@ -23,7 +22,7 @@ use WP_Post_Type;
  *
  * @package Msls
  */
-final class MetaBox extends MslsMain {
+final class MetaBox extends Main {
 
 	public static function init(): void {
 		$options = msls_options();
@@ -43,25 +42,25 @@ final class MetaBox extends MslsMain {
 	 * the requested search-term and then die silently
 	 */
 	public static function suggest(): void {
-		$json = new MslsJson();
+		$json = new Json();
 
-		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID, INPUT_POST ) ) {
-			switch_to_blog( MslsRequest::get_var( MslsFields::FIELD_BLOG_ID, INPUT_POST ) );
+		if ( Request::has_var( Fields::FIELD_BLOG_ID, INPUT_POST ) ) {
+			switch_to_blog( Request::get_var( Fields::FIELD_BLOG_ID, INPUT_POST ) );
 
 			$args = array(
 				'post_status'    => get_post_stati( array( 'internal' => '' ) ),
 				'posts_per_page' => 10,
 			);
 
-			if ( MslsRequest::has_var( MslsFields::FIELD_POST_TYPE, INPUT_POST ) ) {
+			if ( Request::has_var( Fields::FIELD_POST_TYPE, INPUT_POST ) ) {
 				$args['post_type'] = sanitize_text_field(
-					MslsRequest::get_var( MslsFields::FIELD_POST_TYPE, INPUT_POST )
+					Request::get_var( Fields::FIELD_POST_TYPE, INPUT_POST )
 				);
 			}
 
-			if ( MslsRequest::has_var( MslsFields::FIELD_S, INPUT_POST ) ) {
+			if ( Request::has_var( Fields::FIELD_S, INPUT_POST ) ) {
 				$value_s = sanitize_text_field(
-					MslsRequest::get_var( MslsFields::FIELD_S, INPUT_POST )
+					Request::get_var( Fields::FIELD_S, INPUT_POST )
 				);
 
 				/**
@@ -87,10 +86,10 @@ final class MetaBox extends MslsMain {
 			'msls_meta_box_suggest_results',
 			$json->get(),
 			array(
-				'blog_id'   => MslsRequest::get_var( MslsFields::FIELD_BLOG_ID, INPUT_POST ),
-				'post_type' => MslsRequest::get_var( MslsFields::FIELD_POST_TYPE, INPUT_POST ),
-				's'         => MslsRequest::get_var( MslsFields::FIELD_S, INPUT_POST ),
-				'source_id' => MslsRequest::get_var( MslsFields::FIELD_SOURCE_ID, INPUT_POST ),
+				'blog_id'   => Request::get_var( Fields::FIELD_BLOG_ID, INPUT_POST ),
+				'post_type' => Request::get_var( Fields::FIELD_POST_TYPE, INPUT_POST ),
+				's'         => Request::get_var( Fields::FIELD_S, INPUT_POST ),
+				'source_id' => Request::get_var( Fields::FIELD_SOURCE_ID, INPUT_POST ),
 			)
 		);
 
@@ -99,12 +98,12 @@ final class MetaBox extends MslsMain {
 	}
 
 	/**
-	 * @param MslsJson             $json
+	 * @param Json                 $json
 	 * @param array<string, mixed> $args
 	 *
-	 * @return MslsJson
+	 * @return Json
 	 */
-	public static function get_suggested_fields( MslsJson $json, array $args ): MslsJson {
+	public static function get_suggested_fields( Json $json, array $args ): Json {
 		/**
 		 * Overrides the query-args for the 'suggest' fields in the MetaBox
 		 *
@@ -205,7 +204,7 @@ final class MetaBox extends MslsMain {
 
 			$temp = $post;
 
-			wp_nonce_field( MslsPlugin::path(), 'msls_noncename' );
+			wp_nonce_field( Plugin::path(), 'msls_noncename' );
 
 			$lis = '';
 
@@ -350,7 +349,7 @@ final class MetaBox extends MslsMain {
 			$temp  = $post;
 			$items = '';
 
-			wp_nonce_field( MslsPlugin::path(), 'msls_noncename' );
+			wp_nonce_field( Plugin::path(), 'msls_noncename' );
 
 			foreach ( $blogs as $blog ) {
 				switch_to_blog( $blog->userblog_id );
@@ -485,7 +484,7 @@ final class MetaBox extends MslsMain {
 			return;
 		}
 
-		$post_type  = MslsRequest::get_var( MslsFields::FIELD_POST_TYPE );
+		$post_type  = Request::get_var( Fields::FIELD_POST_TYPE );
 		$capability = 'page' === $post_type ? 'edit_page' : 'edit_post';
 
 		if ( ! current_user_can( $capability, $post_id ) ) {
@@ -503,17 +502,17 @@ final class MetaBox extends MslsMain {
 	 * @return Post
 	 */
 	public function maybe_set_linked_post( Post $mydata ) {
-		if ( ! MslsRequest::isset( array( MslsFields::FIELD_MSLS_ID, MslsFields::FIELD_MSLS_LANG ) ) ) {
+		if ( ! Request::isset( array( Fields::FIELD_MSLS_ID, Fields::FIELD_MSLS_LANG ) ) ) {
 			return $mydata;
 		}
 
-		$origin_lang = MslsRequest::get_var( MslsFields::FIELD_MSLS_LANG );
+		$origin_lang = Request::get_var( Fields::FIELD_MSLS_LANG );
 
 		if ( isset( $mydata->{$origin_lang} ) ) {
 			return $mydata;
 		}
 
-		$origin_post_id = MslsRequest::get_var( MslsFields::FIELD_MSLS_ID );
+		$origin_post_id = Request::get_var( Fields::FIELD_MSLS_ID );
 		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
 
 		if ( null === $origin_blog_id ) {

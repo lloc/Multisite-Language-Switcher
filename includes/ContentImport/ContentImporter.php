@@ -6,14 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use lloc\Msls\Admin\Main;
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\ContentImport\Importers\Importer;
 use lloc\Msls\ContentImport\Importers\Map;
 use lloc\Msls\ContentImport\Importers\WithRequestPostAttributes;
-use lloc\Msls\MslsMain;
-use lloc\Msls\Registry\Instance;
-use lloc\Msls\MslsRequest;
 use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Registry\Instance;
+use lloc\Msls\RestApi\Request;
 
 /**
  * Class ContentImporter
@@ -30,9 +30,9 @@ class ContentImporter extends Instance {
 	const MSLS_AFTER_IMPORT_ACTION = 'msls_content_import_after_import';
 
 	/**
-	 * @var MslsMain
+	 * @var Main
 	 */
-	protected MslsMain $main;
+	protected Main $main;
 
 	/**
 	 * @var ImportLogger|null
@@ -57,10 +57,10 @@ class ContentImporter extends Instance {
 	/**
 	 * ContentImporter constructor.
 	 *
-	 * @param ?MslsMain $main
+	 * @param ?Main $main
 	 */
-	public function __construct( ?MslsMain $main = null ) {
-		$this->main = ! is_null( $main ) ? $main : MslsMain::create();
+	public function __construct( ?Main $main = null ) {
+		$this->main = ! is_null( $main ) ? $main : Main::create();
 	}
 
 	/**
@@ -183,11 +183,11 @@ class ContentImporter extends Instance {
 	 * @return array{0: int, 1: int}|null
 	 */
 	public function parse_sources(): ?array {
-		if ( ! MslsRequest::has_var( 'msls_import' ) ) {
+		if ( ! Request::has_var( 'msls_import' ) ) {
 			return null;
 		}
 
-		$msls_import = MslsRequest::get_var( 'msls_import' );
+		$msls_import = Request::get_var( 'msls_import' );
 		$import_data = array_values( array_filter( explode( '|', trim( $msls_import ) ), 'is_numeric' ) );
 
 		if ( count( $import_data ) !== 2 ) {
@@ -213,7 +213,7 @@ class ContentImporter extends Instance {
 			return $id;
 		}
 
-		$request = MslsRequest::get_request( array( 'post' ) );
+		$request = Request::get_request( array( 'post' ) );
 		if ( ! empty( $request['post'] ) ) {
 			return (int) $request['post'];
 		}

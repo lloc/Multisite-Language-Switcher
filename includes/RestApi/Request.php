@@ -1,8 +1,10 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\RestApi;
 
-class MslsRequest {
+use lloc\Msls\Request\Fields;
+
+class Request {
 
 	/**
 	 * @param string $name
@@ -12,7 +14,7 @@ class MslsRequest {
 	 * @throws \InvalidArgumentException No field with the given name exists.
 	 */
 	public static function get_config( string $name ): array {
-		$config = MslsFields::CONFIG[ $name ] ?? null;
+		$config = Fields::CONFIG[ $name ] ?? null;
 
 		if ( null === $config ) {
 			throw new \InvalidArgumentException( 'Invalid field name' );

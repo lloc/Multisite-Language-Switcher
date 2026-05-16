@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Data;
 
 /**
  * Stores the language input from post
@@ -8,7 +8,7 @@ namespace lloc\Msls;
  * @example https://gist.githubusercontent.com/lloc/2c232cef3f910acf692f/raw/c78a78b42cb4c9e97a118523f7497f02b838a2ee/MslsLanguageArray.php
  * @package Msls
  */
-class MslsLanguageArray {
+class LanguageArray {
 
 	/**
 	 * @var array<string, int>
@@ -34,7 +34,7 @@ class MslsLanguageArray {
 	 * @param string $key
 	 * @param mixed  $value
 	 *
-	 * @return MslsLanguageArray
+	 * @return LanguageArray
 	 */
 	public function set( $key, $value ) {
 		$value = (int) $value;

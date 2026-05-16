@@ -2,7 +2,7 @@
 
 namespace lloc\Msls\ContentTypes;
 
-use lloc\Msls\MslsRequest;
+use lloc\Msls\RestApi\Request;
 
 /**
  * Content types: Post types (Pages, Posts, ...)
@@ -41,7 +41,7 @@ class PostType extends ContentTypes {
 	 * @return string
 	 */
 	public function get_request(): string {
-		$request   = MslsRequest::get_request( array( 'post_type' ) );
+		$request   = Request::get_request( array( 'post_type' ) );
 		$post_type = ! empty( $request['post_type'] ) ? esc_attr( $request['post_type'] ) : 'post';
 
 		return in_array( $post_type, $this->get(), true ) ? $post_type : '';

@@ -1,13 +1,14 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\Registry;
 
-use lloc\Msls\MslsGetSet;
+use lloc\Msls\Registry\GetSet;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestMslsGetSet extends MslsUnitTestCase {
+final class TestGetSet extends MslsUnitTestCase {
 
 	public function test_unset(): void {
-		$obj = new MslsGetSet();
+		$obj = new GetSet();
 		$this->assertTrue( $obj->is_empty() );
 
 		$obj->abc = 'Test';
@@ -18,7 +19,7 @@ final class TestMslsGetSet extends MslsUnitTestCase {
 	}
 
 	public function test_set_empty(): void {
-		$obj = new MslsGetSet();
+		$obj = new GetSet();
 		$this->assertTrue( $obj->is_empty() );
 
 		$obj->abc = 'Test';
@@ -29,7 +30,7 @@ final class TestMslsGetSet extends MslsUnitTestCase {
 	}
 
 	public function test_set(): void {
-		$obj = new MslsGetSet();
+		$obj = new GetSet();
 
 		$obj->abc = 'test';
 
@@ -38,7 +39,7 @@ final class TestMslsGetSet extends MslsUnitTestCase {
 	}
 
 	public function test_isset(): void {
-		$obj = new MslsGetSet();
+		$obj = new GetSet();
 
 		$this->assertTrue( $obj->is_empty() );
 
@@ -49,7 +50,7 @@ final class TestMslsGetSet extends MslsUnitTestCase {
 	}
 
 	public function test_has_value(): void {
-		$obj = new MslsGetSet();
+		$obj = new GetSet();
 
 		$obj->a_key = 'test';
 
@@ -57,7 +58,7 @@ final class TestMslsGetSet extends MslsUnitTestCase {
 	}
 
 	public function test_get_array(): void {
-		$obj = new MslsGetSet();
+		$obj = new GetSet();
 
 		$obj->temp = 'test';
 

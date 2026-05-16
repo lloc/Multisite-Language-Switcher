@@ -14,13 +14,12 @@ final class TestIconTaxonomy extends MslsUnitTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
+		Functions\when( 'get_query_var' )->justReturn( 'post_tag' );
+		Functions\when( 'get_taxonomies' )->justReturn( array() );
 		Functions\expect( 'add_query_arg' )->twice()->andReturn( 'https://msls.co/added-args' );
 	}
 
 	public function test_get_img(): void {
-		Functions\expect( 'get_query_var' )->once()->andReturn( 'post_tag' );
-		Functions\expect( 'get_taxonomies' )->once()->andReturn( array() );
-
 		$obj = ( new IconTaxonomy( 'post_tag' ) )->set_path()->set_language( self::LANGUAGE )->set_src(
 			self::IMAGE_SRC
 		);

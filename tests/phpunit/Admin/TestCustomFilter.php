@@ -7,8 +7,8 @@ use Brain\Monkey\Functions;
 use lloc\Msls\Admin\CustomFilter;
 use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
-use lloc\Msls\MslsFields;
 use lloc\Msls\Options\Options;
+use lloc\Msls\Request\Fields;
 use lloc\MslsTests\MslsUnitTestCase;
 
 final class TestCustomFilter extends MslsUnitTestCase {
@@ -47,7 +47,7 @@ final class TestCustomFilter extends MslsUnitTestCase {
 			),
 		);
 
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_FILTER )->andReturn( true );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_FILTER )->andReturn( true );
 		Functions\expect( 'filter_input' )->once()->andReturn( '1' );
 		Functions\expect( 'wp_cache_get' )->once()->andReturn( $result );
 
@@ -61,7 +61,7 @@ final class TestCustomFilter extends MslsUnitTestCase {
 	}
 
 	public function test_execute_filter_with_filter_but_no_blog(): void {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_FILTER )->andReturn( true );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_FILTER )->andReturn( true );
 		Functions\expect( 'filter_input' )->once()->andReturn( '2' );
 
 		$query = \Mockery::mock( '\WP_Query' );
@@ -71,11 +71,11 @@ final class TestCustomFilter extends MslsUnitTestCase {
 	}
 
 	public function test_add_filter(): void {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, MslsFields::FIELD_MSLS_FILTER )->andReturn( true );
+		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_FILTER )->andReturn( true );
 		Functions\expect( 'filter_input' )->once()->andReturn( '1' );
 		Functions\expect( 'selected' )->once()->with( '1', '1', false )->andReturn( 'selected="selected"' );
 
-		Filters\expectApplied( 'msls_input_select_name' )->once()->andReturn( MslsFields::FIELD_MSLS_FILTER );
+		Filters\expectApplied( 'msls_input_select_name' )->once()->andReturn( Fields::FIELD_MSLS_FILTER );
 
 		$this->expectOutputString( '<select id="msls_filter" name="msls_filter"><option value="" >Show all posts</option><option value="1" selected="selected">Not translated in the Deutsch-blog</option></select>' );
 
@@ -86,7 +86,7 @@ final class TestCustomFilter extends MslsUnitTestCase {
 	public function test_add_no_selected_blog(): void {
 		Functions\expect( 'selected' )->twice()->andReturn( '' );
 
-		Filters\expectApplied( 'msls_input_select_name' )->once()->andReturn( MslsFields::FIELD_MSLS_FILTER );
+		Filters\expectApplied( 'msls_input_select_name' )->once()->andReturn( Fields::FIELD_MSLS_FILTER );
 
 		$this->expectOutputString( '<select id="msls_filter" name="msls_filter"><option value="" >Show all posts</option><option value="1" >Not translated in the Deutsch-blog</option></select>' );
 

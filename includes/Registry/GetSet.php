@@ -1,8 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
-
-use lloc\Msls\Registry\Instance;
+namespace lloc\Msls\Registry;
 
 /**
  * Generic class for overloading properties
@@ -11,7 +9,7 @@ use lloc\Msls\Registry\Instance;
  *
  * @package Msls
  */
-class MslsGetSet extends Instance {
+class GetSet extends Instance {
 
 	/**
 	 * @var array<string, mixed>
@@ -68,7 +66,7 @@ class MslsGetSet extends Instance {
 	/**
 	 * Resets the properties container to an empty array.
 	 *
-	 * @return MslsGetSet
+	 * @return GetSet
 	 */
 	public function reset() {
 		$this->arr = array();

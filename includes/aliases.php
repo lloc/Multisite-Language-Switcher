@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use lloc\Msls\Admin\{
-	Admin,
+use lloc\Msls\{Admin\Main, Data\Json, Data\LanguageArray, Plugin, Registry\GetSet, Request\Fields, RestApi\Request};
+use lloc\Msls\Admin\{Admin,
 	Bar,
 	CustomColumn,
 	CustomColumnTaxonomy,
@@ -25,86 +25,30 @@ use lloc\Msls\Admin\{
 	Icon,
 	IconTaxonomy,
 	MetaBox,
-	PostListActions
-};
-
-use lloc\Msls\Blog\{
-	Blog,
-	Collection as BlogCollection
-};
-
+	PostListActions,
+	PostTag\PostTag};
+use lloc\Msls\Admin\PostTag\{Classic as PostTagClassic};
+use lloc\Msls\Admin\TranslationPicker\{Page as TranslationPickerPage, Table as TranslationPickerTable};
+use lloc\Msls\Blog\{Blog, Collection as BlogCollection};
 use lloc\Msls\Cli\Cli;
-
-use lloc\Msls\Db\SqlCacher;
-
-use lloc\Msls\PostTag\{
-	Classic as PostTagClassic,
-	PostTag
-};
-
-use lloc\Msls\Registry\{
-	Instance as RegistryInstance,
-	Registry
-};
-
-use lloc\Msls\RestApi\RestApi;
-
-use lloc\Msls\Db\Query\{
-	AuthorPostsCounterQuery,
+use lloc\Msls\ContentTypes\{ContentTypes, PostType as ContentPostType, Taxonomy};
+use lloc\Msls\Db\Query\{AuthorPostsCounterQuery,
 	BlogsInNetworkQuery,
 	CleanupOptionsQuery,
 	DatePostsCounterQuery,
 	MonthPostsCounterQuery,
 	TranslatedPostIdQuery,
-	YearPostsCounterQuery
-};
-
-use lloc\Msls\Frontend\{
-	Block,
-	ContentFilter,
-	Output,
-	ShortCode,
-	Widget
-};
-
-use lloc\Msls\Admin\TranslationPicker\{
-	Page as TranslationPickerPage,
-	Table as TranslationPickerTable
-};
-
-use lloc\Msls\Link\{
-	Link,
-	ImageOnly,
-	LinkInterface,
-	TextImage,
-	TextOnly
-};
-
+	YearPostsCounterQuery};
+use lloc\Msls\Db\SqlCacher;
+use lloc\Msls\Frontend\{Block, ContentFilter, Output, ShortCode, Widget};
+use lloc\Msls\Link\{ImageOnly, Link, LinkInterface, TextImage, TextOnly};
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\OptionsInterface;
 use lloc\Msls\Options\Post\Post;
-
-use lloc\Msls\Options\Query\{
-	Author,
-	Day,
-	Month,
-	PostType as QueryPostType,
-	Query,
-	Year
-};
-
-use lloc\Msls\Options\Tax\{
-	Category,
-	OptionsTaxInterface,
-	Tax,
-	Term
-};
-
-use lloc\Msls\ContentTypes\{
-	ContentTypes,
-	PostType as ContentPostType,
-	Taxonomy
-};
+use lloc\Msls\Options\Query\{Author, Day, Month, PostType as QueryPostType, Query, Year};
+use lloc\Msls\Options\Tax\{Category, OptionsTaxInterface, Tax, Term};
+use lloc\Msls\Registry\{Instance as RegistryInstance, Registry};
+use lloc\Msls\RestApi\RestApi;
 
 class_alias( Options::class, 'lloc\\Msls\\MslsOptions' );
 class_alias( Post::class, 'lloc\\Msls\\MslsOptionsPost' );
@@ -173,3 +117,11 @@ class_alias( DatePostsCounterQuery::class, 'lloc\\Msls\\Query\\DatePostsCounterQ
 class_alias( MonthPostsCounterQuery::class, 'lloc\\Msls\\Query\\MonthPostsCounterQuery' );
 class_alias( TranslatedPostIdQuery::class, 'lloc\\Msls\\Query\\TranslatedPostIdQuery' );
 class_alias( YearPostsCounterQuery::class, 'lloc\\Msls\\Query\\YearPostsCounterQuery' );
+
+class_alias( Fields::class, 'lloc\\Msls\\MslsFields' );
+class_alias( GetSet::class, 'lloc\\Msls\\MslsGetSet' );
+class_alias( Json::class, 'lloc\\Msls\\MslsJson' );
+class_alias( LanguageArray::class, 'lloc\\Msls\\MslsLanguageArray' );
+class_alias( Main::class, 'lloc\\Msls\\MslsMain' );
+class_alias( Plugin::class, 'lloc\\Msls\\MslsPlugin' );
+class_alias( Request::class, 'lloc\\Msls\\MslsRequest' );

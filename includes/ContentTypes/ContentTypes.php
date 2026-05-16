@@ -3,7 +3,7 @@
 namespace lloc\Msls\ContentTypes;
 
 use lloc\Msls\Registry\Instance;
-use lloc\Msls\MslsRequest;
+use lloc\Msls\RestApi\Request;
 
 /**
  * Supported content types
@@ -32,7 +32,7 @@ abstract class ContentTypes extends Instance {
 	 * @return ContentTypes
 	 */
 	public static function create() {
-		$_request = MslsRequest::get_request( array( 'taxonomy' ) );
+		$_request = Request::get_request( array( 'taxonomy' ) );
 
 		return '' !== $_request['taxonomy'] ? Taxonomy::instance() : PostType::instance();
 	}

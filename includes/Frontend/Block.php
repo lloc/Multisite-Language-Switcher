@@ -2,7 +2,7 @@
 
 namespace lloc\Msls\Frontend;
 
-use lloc\Msls\MslsPlugin;
+use lloc\Msls\Plugin;
 use lloc\Msls\Options\Options;
 
 class Block {
@@ -37,7 +37,7 @@ class Block {
 			return false;
 		}
 
-		register_block_type( MslsPlugin::plugin_dir_path( 'assets/js/msls-widget-block' ) );
+		register_block_type( Plugin::plugin_dir_path( 'assets/js/msls-widget-block' ) );
 
 		return true;
 	}

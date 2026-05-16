@@ -2,7 +2,7 @@
 
 namespace lloc\Msls\ContentTypes;
 
-use lloc\Msls\MslsRequest;
+use lloc\Msls\RestApi\Request;
 
 /**
  * Content types: Taxonomies (Tags, Categories, ...)
@@ -48,7 +48,7 @@ class Taxonomy extends ContentTypes {
 	 * @return string
 	 */
 	public function get_request(): string {
-		$request = MslsRequest::get_request( array( 'taxonomy', 'post_type' ) );
+		$request = Request::get_request( array( 'taxonomy', 'post_type' ) );
 
 		if ( ! empty( $request['taxonomy'] ) ) {
 			$this->post_type = esc_attr( $request['post_type'] ?? '' );

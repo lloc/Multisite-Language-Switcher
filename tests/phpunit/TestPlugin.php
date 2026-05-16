@@ -6,9 +6,9 @@ use Brain\Monkey\Functions;
 use lloc\Msls\Frontend\Output;
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\Options\Options;
-use lloc\Msls\MslsPlugin;
+use lloc\Msls\Plugin;
 
-final class TestMslsPlugin extends MslsUnitTestCase {
+final class TestPlugin extends MslsUnitTestCase {
 
 	function test_admin_menu_without_autocomplete(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
@@ -17,7 +17,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 
 		$options = \Mockery::mock( Options::class );
 
-		$test = new MslsPlugin( $options );
+		$test = new Plugin( $options );
 
 		$this->expectNotToPerformAssertions();
 		$test->custom_enqueue();
@@ -33,7 +33,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 
 		$options->activate_autocomplete = true;
 
-		$test = new MslsPlugin( $options );
+		$test = new Plugin( $options );
 
 		$this->expectNotToPerformAssertions();
 		$test->custom_enqueue();
@@ -49,7 +49,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 
 		$options->activate_quick_create = true;
 
-		$test = new MslsPlugin( $options );
+		$test = new Plugin( $options );
 
 		$this->expectNotToPerformAssertions();
 		$test->custom_enqueue();
@@ -62,7 +62,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 
 		$options->activate_autocomplete = true;
 
-		$test = new MslsPlugin( $options );
+		$test = new Plugin( $options );
 
 		$this->expectNotToPerformAssertions();
 		$test->custom_enqueue();
@@ -74,12 +74,12 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 	function test_message_handler(): void {
 		$this->expectOutputString( '<div id="msls-warning" class="error"><p>Test</p></div>' );
 
-		MslsPlugin::message_handler( 'Test' );
+		Plugin::message_handler( 'Test' );
 	}
 
 	public function test_dirname(): void {
 		$expected = 'multisite-language-switcher/subpath';
-		$this->assertEquals( $expected, MslsPlugin::dirname( '/subpath' ) );
+		$this->assertEquals( $expected, Plugin::dirname( '/subpath' ) );
 	}
 	/**
 	 * Verify the static uninstall-method
@@ -106,7 +106,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		Functions\expect( 'switch_to_blog' )->times( count( $blogs ) );
 		Functions\expect( 'restore_current_blog' )->times( count( $blogs ) );
 
-		$test = new MslsPlugin( $options );
+		$test = new Plugin( $options );
 
 		$test->uninstall();
 
@@ -116,7 +116,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 	public function test_cleanup_false(): void {
 		Functions\expect( 'delete_option' )->once()->andReturn( false );
 
-		MslsPlugin::cleanup();
+		Plugin::cleanup();
 
 		$this->expectNotToPerformAssertions();
 	}
@@ -129,7 +129,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		$wpdb->shouldReceive( 'prepare' )->andReturn( '' );
 		$wpdb->shouldReceive( 'query' )->andReturn( true );
 
-		MslsPlugin::cleanup();
+		Plugin::cleanup();
 
 		$this->expectNotToPerformAssertions();
 	}
@@ -142,7 +142,7 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 		);
 
 		$expected = '/var/www/html/wp-content/plugins/multisite-language-switcher/dist/msls-widget-block';
-		$this->assertEquals( $expected, MslsPlugin::plugin_dir_path( 'dist/msls-widget-block' ) );
+		$this->assertEquals( $expected, Plugin::plugin_dir_path( 'dist/msls-widget-block' ) );
 	}
 
 	public function test_print_alternate_links(): void {
@@ -161,13 +161,13 @@ final class TestMslsPlugin extends MslsUnitTestCase {
 
 		$this->expectOutputString( '' . PHP_EOL );
 
-		MslsPlugin::print_alternate_links();
+		Plugin::print_alternate_links();
 	}
 
 	public function test_activate(): void {
 		Functions\expect( 'register_uninstall_hook' )->once();
 
-		MslsPlugin::activate();
+		Plugin::activate();
 
 		$this->expectOutputString( '' );
 	}

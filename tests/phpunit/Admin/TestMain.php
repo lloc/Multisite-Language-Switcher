@@ -1,16 +1,19 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\Admin;
 
 use Brain\Monkey\Functions;
+use lloc\Msls\Admin\Main;
 use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
-use lloc\Msls\MslsMain;
 use lloc\Msls\Options\Options;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestMslsMain extends MslsUnitTestCase {
+use function Brain\Monkey\Functions;
 
-	private function MslsMainFactory(): MslsMain {
+final class TestMain extends MslsUnitTestCase {
+
+	private function MslsMainFactory(): Main {
 		$options = \Mockery::mock( Options::class );
 
 		$blog = \Mockery::mock( Blog::class );
@@ -19,7 +22,7 @@ final class TestMslsMain extends MslsUnitTestCase {
 		$collection = \Mockery::mock( Collection::class );
 		$collection->shouldReceive( 'get_current_blog' )->andReturn( $blog );
 
-		return new MslsMain( $options, $collection );
+		return new Main( $options, $collection );
 	}
 
 	public function test_get_input_array_empty(): void {

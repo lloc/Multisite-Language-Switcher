@@ -13,24 +13,26 @@ use lloc\Msls\Admin\CustomColumnTaxonomy;
 use lloc\Msls\Admin\CustomFilter;
 use lloc\Msls\Admin\MetaBox;
 use lloc\Msls\Admin\PostListActions;
+use lloc\Msls\Admin\PostTag\PostTag;
+use lloc\Msls\Admin\TranslationPicker\Page as TranslationPickerPage;
+use lloc\Msls\Db\Query\BlogsInNetworkQuery;
+use lloc\Msls\Db\Query\CleanupOptionsQuery;
+use lloc\Msls\Db\SqlCacher;
 use lloc\Msls\Frontend\Block;
 use lloc\Msls\Frontend\ContentFilter;
 use lloc\Msls\Frontend\ShortCode;
 use lloc\Msls\Frontend\Widget;
-use lloc\Msls\Db\SqlCacher;
-use lloc\Msls\Db\Query\BlogsInNetworkQuery;
-use lloc\Msls\Db\Query\CleanupOptionsQuery;
 use lloc\Msls\Options\Options;
-use lloc\Msls\PostTag\PostTag;
+use lloc\Msls\Request\Fields;
+use lloc\Msls\RestApi\Request;
 use lloc\Msls\RestApi\RestApi;
-use lloc\Msls\Admin\TranslationPicker\Page as TranslationPickerPage;
 
 /**
  * Provides functionalities for general hooks and activation/deactivation
  *
  * @package Msls
  */
-class MslsPlugin {
+class Plugin {
 
 	/**
 	 * Injected Options object
@@ -85,8 +87,8 @@ class MslsPlugin {
 				add_action( 'load-edit-tags.php', array( PostTag::class, 'init' ) );
 				add_action( 'load-term.php', array( PostTag::class, 'init' ) );
 
-				if ( MslsRequest::has_var( MslsFields::FIELD_ACTION ) ) {
-					switch ( MslsRequest::get_var( MslsFields::FIELD_ACTION ) ) {
+				if ( Request::has_var( Fields::FIELD_ACTION ) ) {
+					switch ( Request::get_var( Fields::FIELD_ACTION ) ) {
 						case 'add-tag':
 							add_action( 'admin_init', array( PostTag::class, 'init' ) );
 							break;

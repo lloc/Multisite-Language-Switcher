@@ -1,19 +1,19 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\PostTag;
+namespace lloc\Msls\Admin\PostTag;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 use lloc\Msls\Admin\Icon;
+use lloc\Msls\Admin\Main;
 use lloc\Msls\Component\Component;
-use lloc\Msls\MslsFields;
-use lloc\Msls\MslsJson;
-use lloc\Msls\MslsMain;
-use lloc\Msls\MslsRequest;
+use lloc\Msls\Data\Json;
 use lloc\Msls\Options\Tax\OptionsTaxInterface;
 use lloc\Msls\Options\Tax\Tax;
+use lloc\Msls\Request\Fields;
+use lloc\Msls\RestApi\Request;
 use WP_Term;
 
 /**
@@ -21,7 +21,7 @@ use WP_Term;
  *
  * @package Msls
  */
-class PostTag extends MslsMain {
+class PostTag extends Main {
 
 	const MSLS_EDIT_INPUT_ACTION = 'msls_post_tag_edit_input';
 	const MSLS_ADD_INPUT_ACTION  = 'msls_post_tag_add_input';
@@ -33,14 +33,14 @@ class PostTag extends MslsMain {
 	 * the requested search-term and then die silently
 	 */
 	public static function suggest(): void {
-		$json = new MslsJson();
+		$json = new Json();
 
-		if ( MslsRequest::has_var( MslsFields::FIELD_BLOG_ID ) ) {
+		if ( Request::has_var( Fields::FIELD_BLOG_ID ) ) {
 			switch_to_blog(
-				MslsRequest::get_var( MslsFields::FIELD_BLOG_ID )
+				Request::get_var( Fields::FIELD_BLOG_ID )
 			);
 
-			$post_type = MslsRequest::get( MslsFields::FIELD_POST_TYPE, '' );
+			$post_type = Request::get( Fields::FIELD_POST_TYPE, '' );
 			$args      = array(
 				'taxonomy'   => sanitize_text_field( $post_type ),
 				'orderby'    => 'name',
@@ -49,9 +49,9 @@ class PostTag extends MslsMain {
 				'hide_empty' => 0,
 			);
 
-			if ( MslsRequest::has_var( MslsFields::FIELD_S ) ) {
+			if ( Request::has_var( Fields::FIELD_S ) ) {
 				$args['search'] = sanitize_text_field(
-					MslsRequest::get_var( MslsFields::FIELD_S )
+					Request::get_var( Fields::FIELD_S )
 				);
 			}
 
@@ -96,10 +96,10 @@ class PostTag extends MslsMain {
 			'msls_post_tag_suggest_results',
 			$json->get(),
 			array(
-				'blog_id'   => MslsRequest::get_var( MslsFields::FIELD_BLOG_ID ),
-				'taxonomy'  => MslsRequest::get_var( MslsFields::FIELD_POST_TYPE ),
-				's'         => MslsRequest::get_var( MslsFields::FIELD_S ),
-				'source_id' => MslsRequest::get_var( MslsFields::FIELD_SOURCE_ID ),
+				'blog_id'   => Request::get_var( Fields::FIELD_BLOG_ID ),
+				'taxonomy'  => Request::get_var( Fields::FIELD_POST_TYPE ),
+				's'         => Request::get_var( Fields::FIELD_S ),
+				'source_id' => Request::get_var( Fields::FIELD_SOURCE_ID ),
 			)
 		);
 
@@ -266,17 +266,17 @@ class PostTag extends MslsMain {
 	 * @return OptionsTaxInterface
 	 */
 	public function maybe_set_linked_term( OptionsTaxInterface $mydata ) {
-		if ( ! MslsRequest::isset( array( MslsFields::FIELD_MSLS_ID, MslsFields::FIELD_MSLS_LANG ) ) ) {
+		if ( ! Request::isset( array( Fields::FIELD_MSLS_ID, Fields::FIELD_MSLS_LANG ) ) ) {
 			return $mydata;
 		}
 
-		$origin_lang = MslsRequest::get_var( MslsFields::FIELD_MSLS_LANG );
+		$origin_lang = Request::get_var( Fields::FIELD_MSLS_LANG );
 
 		if ( isset( $mydata->{$origin_lang} ) ) {
 			return $mydata;
 		}
 
-		$origin_term_id = MslsRequest::get_var( MslsFields::FIELD_MSLS_ID );
+		$origin_term_id = Request::get_var( Fields::FIELD_MSLS_ID );
 
 		$origin_blog_id = $this->collection->get_blog_id( $origin_lang );
 

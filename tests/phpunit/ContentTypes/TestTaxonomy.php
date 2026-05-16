@@ -4,8 +4,8 @@ namespace lloc\MslsTests\ContentTypes;
 
 use Brain\Monkey\Functions;
 use lloc\Msls\ContentTypes\Taxonomy;
-use lloc\Msls\MslsFields;
 use lloc\Msls\Options\Options;
+use lloc\Msls\Request\Fields;
 use lloc\MslsTests\MslsUnitTestCase;
 
 use function Brain\Monkey\Functions;
@@ -58,7 +58,7 @@ final class TestTaxonomy extends MslsUnitTestCase {
 
 	public function test_get_request_empty(): void {
 		Functions\expect( 'get_query_var' )->twice()->with( 'taxonomy' )->andReturn( 'category' );
-		Functions\expect( 'filter_has_var' )->twice()->with( INPUT_GET, MslsFields::FIELD_TAXONOMY )->andReturn( false );
+		Functions\expect( 'filter_has_var' )->twice()->with( INPUT_GET, Fields::FIELD_TAXONOMY )->andReturn( false );
 
 		$this->assertEquals( 'category', $this->MslsTaxonomyFactory()->get_request() );
 	}
@@ -66,8 +66,8 @@ final class TestTaxonomy extends MslsUnitTestCase {
 	public function test_get_request_not_empty(): void {
 		$taxonomy = 'a_random_taxonomy';
 
-		Functions\expect( 'filter_has_var' )->twice()->with( INPUT_GET, MslsFields::FIELD_TAXONOMY )->andReturn( true );
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_GET, MslsFields::FIELD_TAXONOMY, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( $taxonomy );
+		Functions\expect( 'filter_has_var' )->twice()->with( INPUT_GET, Fields::FIELD_TAXONOMY )->andReturn( true );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_GET, Fields::FIELD_TAXONOMY, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( $taxonomy );
 
 		$this->assertEquals( $taxonomy, $this->MslsTaxonomyFactory()->get_request() );
 	}

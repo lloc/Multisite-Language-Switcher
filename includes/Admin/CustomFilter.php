@@ -7,18 +7,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use lloc\Msls\Component\Input\Select;
-use lloc\Msls\MslsFields;
-use lloc\Msls\MslsMain;
-use lloc\Msls\MslsRequest;
-use lloc\Msls\Db\SqlCacher;
 use lloc\Msls\Db\Query\TranslatedPostIdQuery;
+use lloc\Msls\Db\SqlCacher;
+use lloc\Msls\Request\Fields;
+use lloc\Msls\RestApi\Request;
 
 /**
  * Adding custom filter to posts/pages table.
  *
  * @package Msls
  */
-final class CustomFilter extends MslsMain {
+final class CustomFilter extends Main {
 
 	/**
 	 * @codeCoverageIgnore
@@ -36,7 +35,7 @@ final class CustomFilter extends MslsMain {
 				add_filter(
 					Select::RENDER_FILTER,
 					function () {
-						return MslsFields::FIELD_MSLS_FILTER;
+						return Fields::FIELD_MSLS_FILTER;
 					}
 				);
 			}
@@ -59,10 +58,10 @@ final class CustomFilter extends MslsMain {
 				$options[ strval( $blog->userblog_id ) ] = sprintf( $format, $blog->get_description() );
 			}
 
-			$id = MslsRequest::get( MslsFields::FIELD_MSLS_FILTER, 0 );
+			$id = Request::get( Fields::FIELD_MSLS_FILTER, 0 );
 
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo ( new Select( MslsFields::FIELD_MSLS_FILTER, $options, strval( $id ) ) )->render();
+			echo ( new Select( Fields::FIELD_MSLS_FILTER, $options, strval( $id ) ) )->render();
 		}
 	}
 
@@ -74,11 +73,11 @@ final class CustomFilter extends MslsMain {
 	 * @return bool|\WP_Query
 	 */
 	public function execute_filter( \WP_Query $query ) {
-		if ( ! MslsRequest::has_var( MslsFields::FIELD_MSLS_FILTER ) ) {
+		if ( ! Request::has_var( Fields::FIELD_MSLS_FILTER ) ) {
 			return false;
 		}
 
-		$id   = MslsRequest::get_var( MslsFields::FIELD_MSLS_FILTER );
+		$id   = Request::get_var( Fields::FIELD_MSLS_FILTER );
 		$blog = $this->collection->get_object( intval( $id ) );
 		if ( ! $blog ) {
 			return false;

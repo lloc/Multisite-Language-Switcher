@@ -2,14 +2,14 @@
 
 namespace lloc\Msls\Link;
 
-use lloc\Msls\MslsGetSet;
+use lloc\Msls\Registry\GetSet;
 
 /**
  * Link type: Image and text
  *
  * @package Msls
  */
-class Link extends MslsGetSet implements LinkInterface {
+class Link extends GetSet implements LinkInterface {
 
 	/**
 	 * Output format

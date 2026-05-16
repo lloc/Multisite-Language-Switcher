@@ -1,12 +1,13 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests;
+namespace lloc\MslsTests\Data;
 
-use lloc\Msls\MslsLanguageArray;
+use lloc\Msls\Data\LanguageArray;
+use lloc\MslsTests\MslsUnitTestCase;
 
-final class TestMslsLanguageArray extends MslsUnitTestCase {
+final class TestLanguageArray extends MslsUnitTestCase {
 
-	private function MslsLanguageArrayFactory(): MslsLanguageArray {
+	private function MslsLanguageArrayFactory(): LanguageArray {
 		$arr = array(
 			'fr_FR' => 0, // not ok, value 0 is not ok as blog_id
 			'it'    => 1,
@@ -14,7 +15,7 @@ final class TestMslsLanguageArray extends MslsUnitTestCase {
 			'x'     => 3, // not ok, minlength of string is 2
 		);
 
-		return new MslsLanguageArray( $arr );
+		return new LanguageArray( $arr );
 	}
 
 	public function test_get_val(): void {

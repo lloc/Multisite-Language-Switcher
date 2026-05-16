@@ -2,10 +2,10 @@
 
 namespace lloc\Msls\Frontend;
 
+use lloc\Msls\Admin\Main;
+use lloc\Msls\Frontend\Map\HrefLang;
 use lloc\Msls\Link\Link;
 use lloc\Msls\Link\LinkInterface;
-use lloc\Msls\Frontend\Map\HrefLang;
-use lloc\Msls\MslsMain;
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\OptionsInterface;
 
@@ -14,7 +14,7 @@ use lloc\Msls\Options\OptionsInterface;
  *
  * @package Msls
  */
-class Output extends MslsMain {
+class Output extends Main {
 
 	const MSLS_ALTERNATE_LINKS_HOOK = 'msls_output_get_alternate_links';
 

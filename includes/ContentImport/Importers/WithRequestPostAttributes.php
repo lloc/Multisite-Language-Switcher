@@ -10,7 +10,7 @@
 
 namespace lloc\Msls\ContentImport\Importers;
 
-use lloc\Msls\MslsRequest;
+use lloc\Msls\RestApi\Request;
 
 /**
  * Trait WithRequestPostAttributes
@@ -28,7 +28,7 @@ trait WithRequestPostAttributes {
 	 * @return string Either the post type read from the `$_REQUEST` super-global, or the default value.
 	 */
 	protected function read_post_type_from_request( $preset = 'post' ) {
-		$request = MslsRequest::get_request( array( 'post_type' ), $preset );
+		$request = Request::get_request( array( 'post_type' ), $preset );
 
 		return $request['post_type'];
 	}

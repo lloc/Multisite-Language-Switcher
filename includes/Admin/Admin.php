@@ -12,8 +12,7 @@ use lloc\Msls\Component\Input\Label;
 use lloc\Msls\Component\Input\Select;
 use lloc\Msls\Component\Input\Text;
 use lloc\Msls\Link\Link;
-use lloc\Msls\MslsMain;
-use lloc\Msls\MslsPlugin;
+use lloc\Msls\Plugin;
 use lloc\Msls\Registry\Registry;
 use WP_Post_Type;
 
@@ -34,7 +33,7 @@ use WP_Post_Type;
  *
  * @package Msls
  */
-final class Admin extends MslsMain {
+final class Admin extends Main {
 
 	const MSLS_REGISTER_ACTION = 'msls_admin_register';
 
@@ -175,7 +174,7 @@ final class Admin extends MslsMain {
 			);
 		}
 
-		MslsPlugin::message_handler( $message, 'updated fade' );
+		Plugin::message_handler( $message, 'updated fade' );
 	}
 
 	/**

@@ -77,4 +77,11 @@ class Registry {
 	public static function set_object( string $key, $instance ): void {
 		self::instance()->set( $key, $instance );
 	}
+
+	/**
+	 * Clear all registered objects (used by tests to prevent state leakage between cases).
+	 */
+	public static function clear(): void {
+		self::$arr = array();
+	}
 }

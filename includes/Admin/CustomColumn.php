@@ -8,7 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\Component\Component;
-use lloc\Msls\MslsMain;
 use lloc\Msls\Options\Options;
 
 /**
@@ -17,7 +16,7 @@ use lloc\Msls\Options\Options;
  *
  * @package Msls
  */
-class CustomColumn extends MslsMain {
+class CustomColumn extends Main {
 
 	public static function init(): void {
 		$options    = msls_options();

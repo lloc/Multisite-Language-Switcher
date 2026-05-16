@@ -8,11 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use lloc\Msls\Admin\Icon as AdminIcon;
 use lloc\Msls\Component\Icon\IconPng;
-use lloc\Msls\MslsGetSet;
-use lloc\Msls\MslsPlugin;
 use lloc\Msls\Options\Post\Post;
 use lloc\Msls\Options\Query\Query;
 use lloc\Msls\Options\Tax\Tax;
+use lloc\Msls\Plugin;
+use lloc\Msls\Registry\GetSet;
 
 /**
  * General options class
@@ -37,7 +37,7 @@ use lloc\Msls\Options\Tax\Tax;
  * @property string $exclude_current_blog
  * @property string $sort_by_description
  */
-class Options extends MslsGetSet implements OptionsInterface {
+class Options extends GetSet implements OptionsInterface {
 
 	const MSLS_GET_POSTLINK_HOOK = 'msls_get_postlink';
 
@@ -307,7 +307,7 @@ class Options extends MslsGetSet implements OptionsInterface {
 	 * @return string
 	 */
 	public function get_url( $dir ) {
-		return esc_url( MslsPlugin::plugins_url( $dir ) );
+		return esc_url( Plugin::plugins_url( $dir ) );
 	}
 
 	/**

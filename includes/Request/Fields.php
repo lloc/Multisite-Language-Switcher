@@ -1,8 +1,8 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls;
+namespace lloc\Msls\Request;
 
-class MslsFields {
+class Fields {
 
 	const FIELD_BLOG_ID        = 'blog_id';
 	const FIELD_POST_TYPE      = 'post_type';

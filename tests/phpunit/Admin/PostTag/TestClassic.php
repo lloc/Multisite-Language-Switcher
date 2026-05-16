@@ -1,14 +1,19 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\PostTag;
+namespace lloc\MslsTests\Admin\PostTag;
 
-use Brain\Monkey\Functions;
 use Brain\Monkey\Actions;
+use Brain\Monkey\Functions;
+use lloc\Msls\Admin\PostTag\Classic;
 use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
+use lloc\Msls\ContentTypes\Taxonomy;
 use lloc\Msls\Options\Options;
-use lloc\Msls\PostTag\Classic;
+use lloc\Msls\Registry\Registry;
 use lloc\MslsTests\MslsUnitTestCase;
+
+use function Brain\Monkey\Actions;
+use function Brain\Monkey\Functions;
 
 final class TestClassic extends MslsUnitTestCase {
 
@@ -70,11 +75,13 @@ final class TestClassic extends MslsUnitTestCase {
 		Functions\expect( 'selected' )->atLeast()->once()->andReturn( '' );
 		Functions\expect( 'get_edit_term_link' )->atLeast()->once()->andReturn( 'edit_term_link' );
 
-		$taxonomy = \Mockery::mock( \WP_Taxonomy::class );
+		$taxonomy = \Mockery::mock( Taxonomy::class );
 		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post_type' );
+		$taxonomy->shouldReceive( 'get_post_type' )->andReturn( '' );
 
+		Registry::set_object( Taxonomy::class, $taxonomy );
 		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
 
 		Actions\expectDone( Classic::MSLS_EDIT_INPUT_ACTION );
@@ -133,11 +140,13 @@ final class TestClassic extends MslsUnitTestCase {
 		Functions\expect( 'selected' )->atLeast()->once()->andReturn( '' );
 		Functions\expect( 'get_edit_term_link' )->atLeast()->once()->andReturn( 'edit_term_link' );
 
-		$taxonomy = \Mockery::mock( \WP_Taxonomy::class );
+		$taxonomy = \Mockery::mock( Taxonomy::class );
 		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post_type' );
+		$taxonomy->shouldReceive( 'get_post_type' )->andReturn( '' );
 
+		Registry::set_object( Taxonomy::class, $taxonomy );
 		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
 
 		Actions\expectDone( Classic::MSLS_ADD_INPUT_ACTION );

@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\Msls\PostTag;
+namespace lloc\Msls\Admin\PostTag;
 
 use lloc\Msls\Admin\Icon;
 use lloc\Msls\Blog\Blog;

@@ -1,18 +1,23 @@
 <?php declare( strict_types=1 );
 
-namespace lloc\MslsTests\PostTag;
+namespace lloc\MslsTests\Admin\PostTag;
 
 use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
-use lloc\Msls\ContentTypes\Taxonomy;
+use lloc\Msls\Admin\PostTag\PostTag;
 use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
-use lloc\Msls\MslsFields;
-use lloc\Msls\PostTag\PostTag;
-use lloc\MslsTests\MslsUnitTestCase;
+use lloc\Msls\ContentTypes\Taxonomy;
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Tax\Tax;
+use lloc\Msls\Registry\Registry;
+use lloc\Msls\Request\Fields;
+use lloc\MslsTests\MslsUnitTestCase;
+
+use function Brain\Monkey\Actions;
+use function Brain\Monkey\Filters;
+use function Brain\Monkey\Functions;
 
 final class TestPostTag extends MslsUnitTestCase {
 
@@ -92,10 +97,10 @@ final class TestPostTag extends MslsUnitTestCase {
 		$term->name    = 'Test Term';
 
 		Functions\expect( 'filter_has_var' )->atLeast()->once()->andReturnTrue();
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post_tag' );
-		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, MslsFields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, MslsFields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 99 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_BLOG_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 2 );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_POST_TYPE, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'post_tag' );
+		Functions\expect( 'filter_input' )->twice()->with( INPUT_POST, Fields::FIELD_S, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'test' );
+		Functions\expect( 'filter_input' )->once()->with( INPUT_POST, Fields::FIELD_SOURCE_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 99 );
 		Functions\expect( 'switch_to_blog' )->once();
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'get_terms' )->once()->andReturn( array( $term ) );
@@ -126,6 +131,9 @@ final class TestPostTag extends MslsUnitTestCase {
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturn( true );
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post' );
 		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
+		$taxonomy->shouldReceive( 'get_post_type' )->andReturn( '' );
+
+		Registry::set_object( Taxonomy::class, $taxonomy );
 
 		$term       = \Mockery::mock( \WP_Term::class );
 		$term->name = 'test-term-name';
@@ -180,6 +188,9 @@ final class TestPostTag extends MslsUnitTestCase {
 		$taxonomy->shouldReceive( 'is_taxonomy' )->atLeast()->once()->andReturnTrue();
 		$taxonomy->shouldReceive( 'get_request' )->atLeast()->once()->andReturn( 'post' );
 		$taxonomy->shouldReceive( 'acl_request' )->atLeast()->once()->andReturn( 'taxonomy' );
+		$taxonomy->shouldReceive( 'get_post_type' )->andReturn( '' );
+
+		Registry::set_object( Taxonomy::class, $taxonomy );
 
 		Functions\expect( 'msls_content_types' )->atLeast()->once()->andReturn( $taxonomy );
 		Functions\expect( 'get_queried_object_id' )->atLeast()->once()->andReturn( 42 );

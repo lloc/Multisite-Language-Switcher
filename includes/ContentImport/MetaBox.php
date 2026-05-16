@@ -6,11 +6,11 @@ use lloc\Msls\Blog\Collection;
 use lloc\Msls\Component\Component;
 use lloc\Msls\Component\Wrapper;
 use lloc\Msls\ContentImport\Importers\Map;
-use lloc\Msls\MslsFields;
-use lloc\Msls\MslsPlugin;
-use lloc\Msls\Registry\Instance;
-use lloc\Msls\MslsRequest;
 use lloc\Msls\Options\Post\Post;
+use lloc\Msls\Plugin;
+use lloc\Msls\Registry\Instance;
+use lloc\Msls\Request\Fields;
+use lloc\Msls\RestApi\Request;
 
 class MetaBox extends Instance {
 
@@ -32,8 +32,8 @@ class MetaBox extends Instance {
 		$languages       = Post::instance()->get_available_languages();
 		$current         = Collection::get_blog_language( get_current_blog_id() );
 		$languages       = array_diff_key( $languages, array( $current => $current ) );
-		$input_lang      = MslsRequest::get( MslsFields::FIELD_MSLS_LANG, null );
-		$input_id        = MslsRequest::get( MslsFields::FIELD_MSLS_ID, null );
+		$input_lang      = Request::get( Fields::FIELD_MSLS_LANG, null );
+		$input_id        = Request::get( Fields::FIELD_MSLS_ID, null );
 		$has_input       = null !== $input_lang && null !== $input_id;
 		$blogs           = msls_blog_collection();
 		$available       = array_filter(
@@ -141,7 +141,7 @@ class MetaBox extends Instance {
 		<div style="display: none;" id="msls-import-dialog-<?php echo esc_attr( $slug ); ?>">
 			<h3><?php esc_html_e( 'Select what should be imported and how', 'multisite-language-switcher' ); ?></h3>
 			<form action="<?php echo esc_url( add_query_arg( array() ) ); ?>" method="post">
-				<?php wp_nonce_field( MslsPlugin::path(), 'msls_noncename' ); ?>
+				<?php wp_nonce_field( Plugin::path(), 'msls_noncename' ); ?>
 				<?php foreach ( $data as $key => $value ) : ?>
 					<input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $value ); ?>">
 				<?php endforeach; ?>

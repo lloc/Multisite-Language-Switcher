@@ -5,7 +5,7 @@ namespace lloc\Msls\Admin\TranslationPicker;
 use lloc\Msls\Admin\Icon;
 use lloc\Msls\Blog\Blog;
 use lloc\Msls\ContentTypes\PostType;
-use lloc\Msls\MslsPlugin;
+use lloc\Msls\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -263,7 +263,7 @@ class Page {
 
 		wp_enqueue_script(
 			self::SCRIPT_HANDLE,
-			MslsPlugin::plugins_url( "$folder/msls-translation-picker.js" ),
+			Plugin::plugins_url( "$folder/msls-translation-picker.js" ),
 			array( 'jquery', 'wp-api-fetch' ),
 			$ver,
 			array( 'in_footer' => true )
