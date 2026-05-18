@@ -12,7 +12,7 @@
     "uglify-js": "^3.19.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.59.1",
+    "@playwright/test": "^1.60.0",
     "@types/node": "^25.6.2",
     "@wordpress/e2e-test-utils": "^11.34.0",
     "@wordpress/scripts": "^32.1.0",
