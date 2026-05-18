@@ -230,7 +230,7 @@ class RestApi {
 	 * Routes the default capability decision through the
 	 * msls_quick_create_capability filter so integrations can override it.
 	 *
-	 * @param bool   $default        Result of the default capability check.
+	 * @param bool   $default_cap    Result of the default capability check.
 	 * @param int    $source_post_id Source post id, or 0 for list-style checks.
 	 * @param int    $source_blog_id
 	 * @param int    $target_blog_id
@@ -238,7 +238,7 @@ class RestApi {
 	 *
 	 * @return bool
 	 */
-	private static function apply_capability_filter( bool $default, int $source_post_id, int $source_blog_id, int $target_blog_id, string $context ): bool {
+	private static function apply_capability_filter( bool $default_cap, int $source_post_id, int $source_blog_id, int $target_blog_id, string $context ): bool {
 		/**
 		 * Filters the result of the Quick Create capability check.
 		 *
@@ -246,7 +246,7 @@ class RestApi {
 		 * example to permit a translator without an account on the source
 		 * blog to mirror a post into the target blog.
 		 *
-		 * @param bool   $default        Result of the default capability check.
+		 * @param bool   $default_cap    Result of the default capability check.
 		 * @param int    $source_post_id Source post ID (0 for list-style checks).
 		 * @param int    $source_blog_id Source blog ID.
 		 * @param int    $target_blog_id Target blog ID.
@@ -256,7 +256,7 @@ class RestApi {
 		 */
 		return (bool) apply_filters(
 			'msls_quick_create_capability',
-			$default,
+			$default_cap,
 			$source_post_id,
 			$source_blog_id,
 			$target_blog_id,
@@ -479,6 +479,7 @@ class RestApi {
 	 *
 	 * @return array<string, mixed>
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 	public static function prefix_source_language( array $post_data, \WP_Post $source_post, int $source_blog_id, int $target_blog_id ): array {
 		$lang_code = substr( Collection::get_blog_language( $source_blog_id ), 0, 2 );
 
@@ -590,18 +591,18 @@ class RestApi {
 		$source_lang = Collection::get_blog_language( $source_blog_id );
 		$target_lang = Collection::get_blog_language( $target_blog_id );
 
-		// Read existing links from the source post
+		// Read existing links from the source post.
 		switch_to_blog( $source_blog_id );
 		$source_options = new Post( $source_post_id );
 		$existing_links = $source_options->get_arr();
 		restore_current_blog();
 
-		// Build a complete link map: all existing links + source + target
+		// Build a complete link map: all existing links + source + target.
 		$link_map                 = $existing_links;
 		$link_map[ $source_lang ] = $source_post_id;
 		$link_map[ $target_lang ] = $new_post_id;
 
-		// Update every blog in the link map
+		// Update every blog in the link map.
 		foreach ( $link_map as $lang => $post_id ) {
 			if ( empty( $post_id ) ) {
 				continue;

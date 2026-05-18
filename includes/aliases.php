@@ -8,6 +8,8 @@
  * Third-party code that still references the old fully-qualified names
  * continues to work because each old name is registered as an alias for
  * the new one.
+ *
+ * @package Msls
  */
 
 declare(strict_types=1);

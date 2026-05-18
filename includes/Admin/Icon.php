@@ -13,22 +13,54 @@ use lloc\Msls\Component\Icon\IconLabel;
  */
 class Icon {
 
-	protected string $icon_type    = 'action';
-	protected string $language     = '';
+	/**
+	 * @var string Icon type
+	 */
+	protected string $icon_type = 'action';
+
+	/**
+	 * @var string Language representation of the icon
+	 */
+	protected string $language = '';
+
+	/**
+	 * @var string Origin language
+	 */
 	public string $origin_language = '';
-	protected string $src          = '';
-	protected string $href         = '';
-	protected int $blog_id         = 0;
-	protected string $type         = '';
-	protected string $path         = 'post-new.php';
-	protected int $id              = 0;
+
+	/**
+	 * @var string Source of the icon image
+	 */
+	protected string $src = '';
+
+	/**
+	 * @var string Href of the icon link
+	 */
+	protected string $href = '';
+
+	/**
+	 * @var int Id of the website (blog)
+	 */
+	protected int $blog_id = 0;
+
+	/**
+	 * @var string Type of the content this icon is for (post, page, taxonomy)
+	 */
+	protected string $type = '';
+
+	/**
+	 * @var string Path to the edit or new script
+	 */
+	protected string $path = 'post-new.php';
+
+	/**
+	 * @var int ID of the object this icon is for (post id, term id)
+	 */
+	protected int $id = 0;
 
 	const TYPE_FLAG  = 'flag';
 	const TYPE_LABEL = 'label';
 
-	/**
-	 * Constructor
-	 */
 	public function __construct( ?string $type = null ) {
 		$this->type = $type ?? '';
 
@@ -39,10 +71,7 @@ class Icon {
 		return $this->get_a();
 	}
 
-	/**
-	 * @return Icon|IconTaxonomy
-	 */
-	public static function create( ?string $type = null ) {
+	public static function create( ?string $type = null ): Icon {
 		$obj = msls_content_types();
 
 		if ( ! $type ) {
@@ -52,18 +81,12 @@ class Icon {
 		return $obj->is_taxonomy() ? new IconTaxonomy( $type ) : new Icon( $type );
 	}
 
-	/**
-	 * Set the icon path
-	 */
 	public function set_icon_type( string $icon_type ): Icon {
 		$this->icon_type = $icon_type;
 
 		return $this;
 	}
 
-	/**
-	 * Set the path by type
-	 */
 	public function set_path(): Icon {
 		if ( 'post' !== $this->type ) {
 			$query_vars = array( 'post_type' => $this->type );
@@ -91,34 +114,22 @@ class Icon {
 		return $this;
 	}
 
-	/**
-	 * Sets the id of the object this icon is for
-	 */
 	public function set_id( int $id ): Icon {
 		$this->id = $id;
 
 		return $this;
 	}
 
-	/**
-	 * Sets the origin language for this icon
-	 */
 	public function set_origin_language( string $origin_language ): Icon {
 		$this->origin_language = $origin_language;
 
 		return $this;
 	}
 
-	/**
-	 * Get image as html-tag
-	 */
 	public function get_img(): string {
 		return sprintf( '<img alt="%s" src="%s" />', $this->language, $this->src );
 	}
 
-	/**
-	 * Get link as html-tag
-	 */
 	public function get_a(): string {
 		if ( empty( $this->href ) ) {
 			if ( $this->should_quick_create() ) {

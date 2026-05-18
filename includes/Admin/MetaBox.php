@@ -94,7 +94,7 @@ final class MetaBox extends Main {
 		);
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_die( wp_json_encode( $results ) ?: '' );
+		wp_die( (string) wp_json_encode( $results ) );
 	}
 
 	/**

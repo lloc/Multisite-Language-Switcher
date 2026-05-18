@@ -11,6 +11,9 @@ use lloc\Msls\ContentTypes\Taxonomy;
  */
 class IconTaxonomy extends Icon {
 
+	/**
+	 * @var string Path to edit tags script
+	 */
 	protected string $path = 'edit-tags.php';
 
 	/**

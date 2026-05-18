@@ -323,7 +323,7 @@ class Collection extends Instance {
 			'count_total' => false,
 		);
 
-		if ( $number !== 1 ) { // Check total users only if not fetching a single user
+		if ( 1 !== $number ) { // Check total users only if not fetching a single user.
 			$user_count = count_users();
 			if ( $user_count['total_users'] > $number ) {
 				/* translators: %s: maximum number of users */

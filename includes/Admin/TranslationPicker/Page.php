@@ -119,6 +119,8 @@ class Page {
 	 * specific post type. Registers the screen options (per-page and the
 	 * automatic column-toggle dropdown).
 	 *
+	 * @param string $post_type Post type for which the page is being loaded, derived from the page slug.
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function on_page_load( string $post_type ): void {
@@ -212,27 +214,25 @@ class Page {
 				$rebuilt[] = $our_item;
 			}
 
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Intentional override of global $submenu array.
 			$submenu[ $parent ] = $rebuilt;
 		}
 	}
 
-	/**
-	 * Menu slug of the parent (Posts / Pages / CPT) menu for a post type.
-	 */
 	public static function parent_slug( string $post_type ): string {
 		if ( '' === $post_type ) {
 			return '';
 		}
-		if ( 'post' === $post_type ) {
-			return 'edit.php';
-		}
-		return 'edit.php?post_type=' . $post_type;
+
+		return 'post' === $post_type ? 'edit.php' : 'edit.php?post_type=' . $post_type;
 	}
 
 	/**
 	 * Unique page slug per post type. Needed because WordPress enforces
 	 * globally unique submenu slugs, so we can't reuse one slug under
 	 * multiple parents.
+	 *
+	 * @param string $post_type Post type for which to generate the page slug.
 	 */
 	public static function page_slug( string $post_type ): string {
 		return self::BASE_SLUG . '-' . $post_type;
@@ -254,6 +254,8 @@ class Page {
 
 	/**
 	 * Enqueues the picker script on this page only.
+	 *
+	 * @param int $target_blog_id The blog ID for which the picker is being rendered, used in the script's bootstrap payload.
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -455,6 +457,12 @@ class Page {
 	}
 
 	/**
+	 * Renders the list table of untranslated posts for the selected source blog.
+	 *
+	 * @param int    $source    Blog ID of the source blog.
+	 * @param string $post_type Post type for which to list untranslated posts.
+	 * @param string $search    Search term to filter the posts by title.
+	 *
 	 * @codeCoverageIgnore
 	 */
 	private static function render_list_table( int $source, string $post_type, string $search ): void {

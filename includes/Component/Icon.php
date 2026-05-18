@@ -18,9 +18,9 @@ abstract class Icon {
 	 * Icon constructor
 	 */
 	public function __construct() {
-		$filePath = $this->get_include();
+		$file_path = $this->get_include();
 
-		$this->map = ! is_null( $filePath ) && is_readable( $filePath ) ? require $filePath : array();
+		$this->map = ! is_null( $file_path ) && is_readable( $file_path ) ? require $file_path : array();
 	}
 
 	/**

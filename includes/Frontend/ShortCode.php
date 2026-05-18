@@ -18,6 +18,7 @@ class ShortCode {
 	 *
 	 * @return string
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 	public static function render_widget( $atts = array(), ?string $content = null, string $tag = '' ): string {
 		if ( msls_options()->is_excluded() ) {
 			return '';
