@@ -12,8 +12,19 @@ final class TestCollection extends MslsUnitTestCase {
 
 	const TOTAL_USERS = 3210;
 
+	/**
+	 * Captures the last user-id argument passed to the mocked
+	 * `get_blogs_of_user()`. Reset in setUp(); read by individual tests that
+	 * verify the int cast in `Collection::get_blogs_of_reference_user()`.
+	 *
+	 * @var mixed
+	 */
+	protected $captured_user_id = null;
+
 	protected function setUp(): void {
 		parent::setUp();
+
+		$this->captured_user_id = null;
 
 		Functions\when( 'count_users' )->justReturn( array( 'total_users' => self::TOTAL_USERS ) );
 
@@ -34,7 +45,12 @@ final class TestCollection extends MslsUnitTestCase {
 
 		Functions\expect( 'get_current_blog_id' )->atLeast()->once()->andReturn( 1 );
 		Functions\expect( 'get_users' )->atLeast()->once()->andReturn( array() );
-		Functions\expect( 'get_blogs_of_user' )->atLeast()->once()->andReturn( array( $a, $b, $c ) );
+		Functions\expect( 'get_blogs_of_user' )->atLeast()->once()->andReturnUsing(
+			function ( $user_id ) use ( $a, $b, $c ) {
+				$this->captured_user_id = $user_id;
+				return array( $a, $b, $c );
+			}
+		);
 
 		Functions\expect( 'get_blog_option' )->atLeast()->once()->andReturnUsing(
 			function ( $blog_id, $option ) {
@@ -93,6 +109,31 @@ final class TestCollection extends MslsUnitTestCase {
 		$obj = new Collection();
 
 		$this->assertIsArray( $obj->get_blogs_of_reference_user( $options ) );
+	}
+
+	public function test_get_blogs_of_reference_user_casts_string_reference_user_to_int(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
+
+		$options                 = \Mockery::mock( Options::class );
+		$options->reference_user = '5';
+		$options->shouldReceive( 'has_value' )->with( 'reference_user' )->andReturn( true );
+
+		$obj = new Collection();
+		$obj->get_blogs_of_reference_user( $options );
+
+		$this->assertSame( 5, $this->captured_user_id );
+	}
+
+	public function test_get_blogs_of_reference_user_empty_fallback_is_safe(): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
+
+		$options = \Mockery::mock( Options::class );
+		$options->shouldReceive( 'has_value' )->with( 'reference_user' )->andReturn( false );
+
+		$obj = new Collection();
+		$obj->get_blogs_of_reference_user( $options );
+
+		$this->assertSame( 0, $this->captured_user_id );
 	}
 
 	public function test_get_current_blog_id(): void {
