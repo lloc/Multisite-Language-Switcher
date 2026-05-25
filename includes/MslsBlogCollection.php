@@ -133,13 +133,9 @@ class MslsBlogCollection extends MslsRegistryInstance {
 	 * @return object[]|\stdClass[]
 	 */
 	public function get_blogs_of_reference_user( MslsOptions $options ) {
-		$reference_user = $options->has_value( 'reference_user' ) ?
-			$options->reference_user :
-			current( $this->get_users( 'ID', 1 ) );
-
-		if ( ! is_int( $reference_user ) ) {
-			$reference_user = 0;
-		}
+		$reference_user = $options->has_value( 'reference_user' )
+			? (int) $options->reference_user
+			: (int) current( $this->get_users( 'ID', 1 ) );
 
 		return get_blogs_of_user( $reference_user );
 	}
