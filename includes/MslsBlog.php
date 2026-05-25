@@ -26,7 +26,7 @@ class MslsBlog {
 	 *
 	 * @var string
 	 */
-	private string $language;
+	private string $language = '';
 
 	/**
 	 * Description e.g. "Deutsch", or "English", or "Italiano"
