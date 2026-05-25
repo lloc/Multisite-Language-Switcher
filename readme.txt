@@ -25,16 +25,16 @@ Please, don't forget to [rate this plugin](https://wordpress.org/support/plugin/
 * Use the WordPress admin to install the plugin from there or
 * Download the plugin and uncompress it with your preferred unzip programme and copy the entire directory in the plugin directory of your WordPress blog (/wp-content/plugins)
 * Activate the plugin in your plugin administration page (by the network administrator on all the blogs or by the blog administrator for each particular blog).
-* You need to activate the plugin once in each blog, by setting the configuration in `Settings` -> `Multisite Language Switcher`
+* After activation, configure the plugin once in each blog under `Settings` -> `Multisite Language Switcher`
 
 Now you can:
 
-* Connect your translated pages and posts in `Posts` -> `Edit` or `Page` -> `Edit`
-* Connect your translated categories and tags in `Posts` -> `Categories` or `Post` -> `Tags`
+* Connect your translated pages and posts in `Posts` -> `Edit` or `Pages` -> `Edit`
+* Connect your translated categories and tags in `Posts` -> `Categories` or `Posts` -> `Tags`
 * connect your Custom Post Types and Custom Taxonomies across languages
 * use the widget, the Gutenberg block, the shortcode [sc_msls] and/or a content_filter which displays a hint to the user if a translation is available
 * you can find also a shortcode for the widget [sc_msls_widget]
-* optionally you can place the code `<?php if ( function_exists( 'the_msls' ) ) the_msls(); ?>` directly in your theme files
+* optionally you can place the code `<?php if ( function_exists( 'msls_the_switcher' ) ) msls_the_switcher(); ?>` directly in your theme files
 
 Review the [Multisite Language Switcher Website](http://msls.co/) for more information.
 

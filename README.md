@@ -47,7 +47,7 @@ If you plan to use the GitHub repository on a server, don't forget to run `compo
 
 *  Utilize Widgets, Shortcodes, and Content Filters:
     *  Use the widget or the Gutenberg block.
-    *  Use the [sc_msls] shortcode in the classic editor.
+    *  Use the `[sc_msls]` shortcode to render the language switcher, or `[sc_msls_widget]` for the widget variant.
     *  Set the content filter to display a hint to users when a translation is available.
 
 *  Optional Theme Integration:
@@ -63,10 +63,8 @@ Review the [Multisite Language Switcher Website](http://msls.co/) for more infor
 
 Reference material for developers extending or integrating with the plugin lives in the `docs/` directory:
 
-*  [Public API Functions](docs/api.md) — the `msls_*` helper functions exposed for use in themes and other plugins.
-*  [Hooks Reference](docs/hooks.md) — every action and filter the plugin emits, grouped by subsystem.
-*  [Snippets & Examples](docs/snippets.md) — short, focused recipes for common integration tasks.
+*  [Public API Functions](docs/api.md) - the `msls_*` helper functions exposed for use in themes and other plugins.
+*  [Hooks Reference](docs/hooks.md) - every action and filter the plugin emits, grouped by subsystem.
+*  [Snippets & Examples](docs/snippets.md) - short, focused recipes for common integration tasks.
 
-## Acknowledgements & Translators
-
-Credits for flag icons, banner artwork, and the full list of translators are maintained in [docs/acknowledgements.md](docs/acknowledgements.md).
+Credits for flag icons, banner artwork, and the full list of translators are maintained in [Acknowledgements & Translators](docs/acknowledgements.md).
