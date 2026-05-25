@@ -36,15 +36,11 @@ class Plugin {
 
 	/**
 	 * Injected Options object
-	 *
-	 * @var Options
 	 */
-	protected $options;
+	protected Options $options;
 
 	/**
 	 * MslsPlugin constructor.
-	 *
-	 * @param Options $options
 	 */
 	public function __construct( Options $options ) {
 		$this->options = $options;
@@ -55,6 +51,8 @@ class Plugin {
 	 */
 	public static function init(): void {
 		$obj = new self( msls_options() );
+
+		add_action( 'init', array( $obj, 'init_i18n_support' ) );
 
 		register_activation_hook( self::file(), array( __CLASS__, 'activate' ) );
 
@@ -194,6 +192,16 @@ class Plugin {
 	 */
 	public static function path(): string {
 		return defined( 'MSLS_PLUGIN_PATH' ) ? constant( 'MSLS_PLUGIN_PATH' ) : '';
+	}
+
+	/**
+	 * Loads the translation files for the plugin from the bundled /languages/ directory.
+	 *
+	 * Required because the plugin ships its own .mo files; WordPress only auto-loads
+	 * translations served from wordpress.org's language packs.
+	 */
+	public function init_i18n_support(): void {
+		load_plugin_textdomain( 'multisite-language-switcher', false, self::dirname( '/languages/' ) );
 	}
 
 	/**

@@ -35,10 +35,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require __DIR__ . '/vendor/autoload.php';
-}
-
 /**
  * MultisiteLanguageSwitcher
  *
@@ -49,10 +45,23 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 
-	require_once __DIR__ . '/includes/aliases.php';
-	require_once __DIR__ . '/includes/deprectated.php';
-	require_once __DIR__ . '/includes/api.php';
+	if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+		require __DIR__ . '/vendor/autoload.php';
+	}
 
-	lloc\Msls\Plugin::init();
-	lloc\Msls\Cli\Cli::init();
+	add_action(
+		'plugins_loaded',
+		function () {
+			require_once __DIR__ . '/includes/aliases.php';
+			require_once __DIR__ . '/includes/deprectated.php';
+			require_once __DIR__ . '/includes/api.php';
+
+			$builder = new DI\ContainerBuilder();
+			$builder->addDefinitions( require __DIR__ . '/config.php' );
+			$builder->build();
+
+			lloc\Msls\Plugin::init();
+			lloc\Msls\Cli\Cli::init();
+		}
+	);
 }
