@@ -4,9 +4,9 @@ namespace lloc\Msls\ContentImport\LogWriters;
 
 use lloc\Msls\Component\Component;
 use lloc\Msls\ContentImport\ImportCoordinates;
-use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\Registry\Instance;
 
-class AdminNoticeLogger extends MslsRegistryInstance implements LogWriter {
+class AdminNoticeLogger extends Instance implements LogWriter {
 
 	/**
 	 * The transient where the last import log will be stored.

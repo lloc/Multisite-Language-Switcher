@@ -2,17 +2,17 @@
 
 namespace lloc\MslsTests\ContentImport;
 
+use Brain\Monkey\Actions;
+use lloc\Msls\Admin\Main;
 use lloc\Msls\ContentImport\ContentImporter;
 use lloc\Msls\ContentImport\ImportLogger;
 use lloc\Msls\ContentImport\Relations;
-use lloc\Msls\MslsMain;
 use lloc\MslsTests\MslsUnitTestCase;
-use Brain\Monkey\Actions;
 
 final class TestContentImporter extends MslsUnitTestCase {
 
 	private function ContentImporterFactory(): ContentImporter {
-		$main = \Mockery::mock( MslsMain::class );
+		$main = \Mockery::mock( Main::class );
 		$main->shouldReceive( 'verify_nonce' )->andReturnTrue();
 
 		return new ContentImporter( $main );

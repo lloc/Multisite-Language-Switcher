@@ -3,9 +3,9 @@
 namespace lloc\Msls\ContentImport\Importers;
 
 use lloc\Msls\ContentImport\ImportCoordinates;
-use lloc\Msls\MslsRegistryInstance;
+use lloc\Msls\Registry\Instance;
 
-abstract class ImportersBaseFactory extends MslsRegistryInstance implements ImportersFactory {
+abstract class ImportersBaseFactory extends Instance implements ImportersFactory {
 
 	/**
 	 * The type of this importers factory; should be overridden by child classes.

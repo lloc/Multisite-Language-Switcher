@@ -3,7 +3,7 @@
 namespace lloc\Msls\Component\Icon;
 
 use lloc\Msls\Component\Icon;
-use lloc\Msls\MslsPlugin;
+use lloc\Msls\Plugin;
 
 /**
  * Class IconSvg
@@ -18,7 +18,7 @@ final class IconSvg extends Icon {
 	 * @return string
 	 */
 	protected function get_include(): string {
-		return MslsPlugin::plugin_dir_path( self::FLAGS_FILE );
+		return Plugin::plugin_dir_path( self::FLAGS_FILE );
 	}
 
 	/**

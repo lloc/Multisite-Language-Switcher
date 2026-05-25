@@ -3,14 +3,14 @@
 namespace lloc\MslsTests\ContentImport;
 
 use lloc\Msls\ContentImport\Service;
-use lloc\Msls\MslsOptions;
+use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
 use Brain\Monkey\Functions;
 
 final class TestService extends MslsUnitTestCase {
 
 	public function test_register_not_active_false(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$options->activate_content_import = false;
 
@@ -20,7 +20,7 @@ final class TestService extends MslsUnitTestCase {
 	}
 
 	public function test_register_active_true(): void {
-		$options = \Mockery::mock( MslsOptions::class );
+		$options = \Mockery::mock( Options::class );
 
 		$options->activate_content_import = true;
 

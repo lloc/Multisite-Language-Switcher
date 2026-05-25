@@ -4,6 +4,7 @@ namespace lloc\MslsTests;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
+use lloc\Msls\Registry\Registry;
 use PHPUnit\Framework\TestCase;
 
 class MslsUnitTestCase extends TestCase {
@@ -26,6 +27,8 @@ class MslsUnitTestCase extends TestCase {
 	}
 
 	protected function tearDown(): void {
+		Registry::clear();
+
 		\Mockery::close();
 		Monkey\tearDown();
 
