@@ -1,277 +1,6 @@
 @startuml class-diagram
-  class "MslsCustomColumnTaxonomy\n<b>Handling of existing/not existing translations in the backend</b>" as MslsCustomColumnTaxonomy {
-    #add_hooks()
-    +column_default(deprecated, column_name, item_id)
-    +delete(object_id)
-  }
-  class "MslsCustomFilter\n<b>Adding custom filter to posts/pages table.</b>" as MslsCustomFilter {
-    {static} +init()
-    +add_filter()
-    +execute_filter(query)
-  }
-  class "MslsBlock" as MslsBlock {
-    #options : MslsOptions
-    +__construct(options)
-    {static} +init()
-    +register_block()
-  }
-  class "MslsOptionsQuery\n<b>MslsOptionsQuery</b>" as MslsOptionsQuery {
-    +with_front : bool
-    #sql_cache : MslsSqlCacher
-    +__construct(sql_cache)
-    {static} +get_params()
-    {static} +create(id)
-    +get_postlink(language)
-  }
-  class "MslsContentTypes\n<b>Supported content types</b>" as MslsContentTypes {
-    #request : string
-    #types : string[]
-    {static} +create()
-    +is_post_type()
-    +is_taxonomy()
-    +acl_request()
-    {static} {abstract} +get()
-    {abstract} +get_request()
-  }
-  class "MslsOptionsQueryMonth\n<b>MslsOptionsQueryMonth</b>" as MslsOptionsQueryMonth {
-    #year : int
-    #monthnum : int
-    +__construct(sql_cache)
-    {static} +get_params()
-    +has_value(language)
-    +get_current_link()
-  }
-  class "MslsTaxonomy\n<b>Content types: Taxonomies (Tags, Categories, ...)</b>" as MslsTaxonomy {
-    #post_type : string
-    +__construct()
-    {static} +get()
-    +get_request()
-    +is_taxonomy()
-    +acl_request()
-    +get_post_type()
-  }
-  class "MslsPostTagClassic\n<b>Post Tag Classic</b>" as MslsPostTagClassic {
-    +add_input(taxonomy)
-    +edit_input(tag, taxonomy)
-    +the_input(tag, title_format, item_format)
-    +print_option(blog, type, mydata, item_format)
-  }
-  class "MslsPostType\n<b>Content types: Post types (Pages, Posts, ...)</b>" as MslsPostType {
-    +__construct()
-    {static} +get()
-    +get_request()
-    +is_post_type()
-  }
-  class "MslsPostTag\n<b>Post Tag</b>" as MslsPostTag {
-    {static} +suggest()
-    {static} +init()
-    +add_input(taxonomy)
-    +edit_input(tag, taxonomy)
-    +the_input(tag, title_format, item_format)
-    +set(term_id)
-    +maybe_set_linked_term(mydata)
-    #get_select_title()
-  }
-  class "MslsLanguageArray\n<b>Stores the language input from post</b>" as MslsLanguageArray {
-    #arr : array<string, int>
-    +__construct(arr)
-    +set(key, value)
-    +get_val(key)
-    +get_arr(key)
-  }
-  class "MslsOutput\n<b>Output in the frontend</b>" as MslsOutput {
-    #tags : array<string, string>
-    {static} +init()
-    +get(display, filter, exists)
-    +get_alternate_links()
-    +__toString()
-    +get_tags()
-    +set_tags(arr)
-    +is_requirements_not_fulfilled(thing, exists, language)
-  }
-  class "MslsWidget\n<b>The standard widget of the Multisite Language Switcher</b>" as MslsWidget {
-    +__construct()
-    {static} +init()
-    +widget(args, instance)
-    +update(new_instance, old_instance)
-    +form(instance)
-  }
-  class "MslsAdmin\n<b>Administration of the options</b>" as MslsAdmin {
-    {static} +init()
-    +get_menu_slug()
-    +get_options_page_link()
-    +__call(method, args)
-    +has_problems()
-    +render()
-    +subsubsub()
-    +register()
-    +language_section()
-    +main_section()
-    +advanced_section()
-    +rewrites_section()
-    #add_settings_fields(map, section)
-    +blog_language()
-    +display()
-    +admin_display()
-    +reference_user()
-    +description()
-    +content_priority()
-    +render_rewrite(key)
-    +validate(arr)
-    +set_blog_language(arr)
-  }
-  class "MslsLinkImageOnly\n<b>Link type: Image only</b>" as MslsLinkImageOnly {
-    #format_string : string
-    {static} +get_description()
-  }
-  class "MslsMetaBox\n<b>Meta box for the edit mode of the (custom) post types</b>" as MslsMetaBox {
-    {static} +init()
-    {static} +suggest()
-    {static} +get_suggested_fields(json, args)
-    +add()
-    +render_select()
-    +render_options(type, msls_id)
-    +render_option(post_id, msls_id)
-    +render_input()
-    +set(post_id)
-    +maybe_set_linked_post(mydata)
-  }
-  class "MslsLinkTextImage\n<b>Link type: Text and image</b>" as MslsLinkTextImage {
-    #format_string : string
-    {static} +get_description()
-  }
-  class "MslsBlog\n<b>Internal representation of a blog</b>" as MslsBlog {
-    -obj : StdClass
-    -language : string
-    -description : string
-    +__construct(obj, description)
-    +__get(key)
-    +get_description()
-    +get_title(icon_type)
-    +get_language(default)
-    +get_alpha2()
-    +get_url(options)
-    #get_permalink(options)
-    {static} +_cmp(a, b)
-    {static} +language(a, b)
-    {static} +description(a, b)
-    +get_blavatar()
-  }
-  class "MslsOptionsTaxTermCategory\n<b>MslsOptionsTaxTermCategory</b>" as MslsOptionsTaxTermCategory {
-  }
-  class "MslsOptionsQueryPostType\n<b>MslsOptionsQueryPostType</b>" as MslsOptionsQueryPostType {
-    #post_type : string
-    +__construct(sql_cache)
-    {static} +get_params()
-    +has_value(language)
-    +get_current_link()
-  }
-  class "MslsOptionsPost\n<b>Post options</b>" as MslsOptionsPost {
-    #autoload : bool
-    +get_postlink(language)
-    +get_current_link()
-  }
-  class "MslsAdminIcon\n<b>Handles the icon links in the backend</b>" as MslsAdminIcon {
-    #icon_type : string
-    #language : string
-    +origin_language : string
-    #src : string
-    #href : string
-    #blog_id : int
-    #type : string
-    #path : string
-    #id : int
-    +__construct(type)
-    +__toString()
-    {static} +create(type)
-    +set_icon_type(icon_type)
-    +set_path()
-    +set_language(language)
-    +set_src(src)
-    +set_href(id)
-    +set_id(id)
-    +set_origin_language(origin_language)
-    +get_img()
-    +get_a()
-    +get_icon()
-    +get_edit_new()
-  }
-  class "MslsOptionsTax\n<b>MslsOptionsTax</b>" as MslsOptionsTax {
-    #autoload : bool
-    {static} +create(id)
-    +get_tax_query()
-    +get_postlink(language)
-    +get_current_link()
-    +get_term_link(term_id)
-  }
-  class "MslsRegistryInstance\n<b>Class MslsRegistryInstance</b>" as MslsRegistryInstance {
-    {static} +instance()
-  }
-  class "MslsOptionsQueryDay\n<b>MslsOptionsQueryDay</b>" as MslsOptionsQueryDay {
-    #year : int
-    #monthnum : int
-    #day : int
-    +__construct(sql_cache)
-    {static} +get_params()
-    +has_value(language)
-    +get_current_link()
-  }
-  class "MslsRegistry\n<b>Registry instead of singletons</b>" as MslsRegistry {
-    -arr : string[]
-    -instance : ?MslsRegistry
-    -get(key)
-    -set(key, instance)
-    {static} +instance()
-    {static} +get_object(key)
-    {static} +set_object(key, instance)
-  }
-  class "MslsCustomColumn\n<b>Handling of existing/not existing translations in the backend listings of</b>" as MslsCustomColumn {
-    {static} +init()
-    #add_hooks()
-    +th(columns)
-    +td(column_name, item_id)
-  }
-  class "MslsGetSet\n<b>Generic class for overloading properties</b>" as MslsGetSet {
-    #arr : array<string, mixed>
-    +__set(key, value)
-    +__get(key)
-    +__isset(key)
-    +__unset(key)
-    +reset()
-    +has_value(key)
-    +is_empty()
-    +get_arr()
-  }
-  class "MslsShortCode" as MslsShortCode {
-    {static} +init()
-    {static} +render_widget()
-  }
-  class "MslsSqlCacher\n<b>Wrapper to avoid direct SQL without caching</b>" as MslsSqlCacher {
-    #db : wpdb
-    #cache_key : string
-    #expire : int
-    +__construct(db, cache_key, expire)
-    {static} +create(caller, params, expire)
-    +__get(name)
-    +__call(method, args)
-  }
-  class "MslsOptionsQueryYear\n<b>OptionsQueryYear</b>" as MslsOptionsQueryYear {
-    #year : int
-    +__construct(sql_cache)
-    {static} +get_params()
-    +has_value(language)
-    +get_current_link()
-  }
-  class "MslsFields" as MslsFields {
-  }
-  class "MslsOptionsTaxTerm\n<b>MslsOptionsTaxTerm</b>" as MslsOptionsTaxTerm {
-    +with_front : bool
-    +check_base(url, options)
-    {static} #get_base_defined(tax_query)
-    {static} #get_base_option()
-  }
-  class "MslsPlugin\n<b>Provides functionalities for general hooks and activation/deactivation</b>" as MslsPlugin {
-    #options : MslsOptions
+  class "Plugin\n<b>Provides functionalities for general hooks and activation/deactivation</b>" as Plugin {
+    #options : Options
     +__construct(options)
     {static} +init()
     {static} +print_alternate_links()
@@ -287,136 +16,132 @@
     {static} +uninstall()
     {static} +cleanup()
   }
-  class "MslsContentFilter" as MslsContentFilter {
-    #options : MslsOptions
-    +__construct(options)
-    {static} +init()
-    +content_filter(content)
-    +filter_string(pref, post)
-    +format_available_languages(links)
-  }
-  class "MslsBlogCollection\n<b>Collection of blog-objects</b>" as MslsBlogCollection {
-    -current_blog_id : int
-    -current_blog_output : bool
-    -objects : MslsBlog[]
-    -objects_order : string
-    -active_plugins : string[]
-    +__construct()
-    {static} +get_configured_blog_description(blog_id, description)
-    +get_blogs_of_reference_user(options)
-    +get_blog(language)
-    +get_blog_id(language)
-    +get_current_blog_id()
-    +is_current_blog(blog)
-    +has_current_blog()
-    +get_current_blog()
-    +get_objects()
-    +get_object(blog_id)
-    +is_plugin_active(blog_id)
-    +get_plugin_active_blogs()
-    +get()
-    +get_filtered(filter)
-    +get_users(fields, number)
-    {static} +get_blog_language(blog_id, default)
-  }
-  class "MslsRequest" as MslsRequest {
-    {static} +get_config(name)
-    {static} +has_var(name, input_type)
-    {static} +get_var(name, input_type)
-    {static} +get(name, default)
-    {static} +isset(keys)
-    {static} +get_request(keys, default)
-  }
-  class "MslsOptions\n<b>General options class</b>" as MslsOptions {
-    #name : string
-    #exists : bool
-    #autoload : bool
-    #args : array<int, mixed>
-    -available_languages : array<string, string>
-    +with_front : bool
-    {static} +create(id)
-    {static} +is_main_page()
-    {static} +is_tax_page()
-    {static} +is_query_page()
-    +__construct()
-    +get_option_name()
-    +get_arg(index, default)
-    +save(arr)
-    +delete()
-    +set(arr)
-    +get_permalink(language)
-    +get_postlink(language)
-    +get_tax_query()
-    +get_current_link()
-    +is_excluded()
-    +is_content_filter()
-    +get_order()
-    +get_url(dir)
-    +get_slug(post_type)
-    +get_icon(language)
-    +get_flag_url(language)
-    +get_available_languages()
-    {static} +check_for_blog_slug(url, options)
-    +get_icon_type()
-  }
-  class "MslsAdminBar" as MslsAdminBar {
-    #icon_type : string
-    #blog_collection : MslsBlogCollection
-    +__construct(options, blog_collection)
-    {static} +init()
-    +update_admin_bar(wp_admin_bar)
-    +add_node(wp_admin_bar, node_id, title)
-    #get_title(blog, blavatar)
-  }
-  class "MslsJson\n<b>Container for an array which will used in JavaScript as object in JSON</b>" as MslsJson {
-    #arr : array<int, array<string, (string|int)>>
-    +add(value, label)
-    {static} +compare(a, b)
-    +get()
-    +encode()
-    +__toString()
-  }
-  class "MslsOptionsQueryAuthor\n<b>MslsOptionsQueryAuthor</b>" as MslsOptionsQueryAuthor {
-    #author_id : int
-    +__construct(sql_cache)
-    {static} +get_params()
-    +has_value(language)
-    +get_current_link()
-  }
-  class "MslsLink\n<b>Link type: Image and text</b>" as MslsLink {
-    #format_string : string
-    {static} +get_types()
-    {static} +get_description()
-    {static} +get_types_description()
-    {static} +create(display)
-    {static} +callback(x)
-    +__toString()
-  }
-  class "MslsMain\n<b>Abstraction for the hook classes</b>" as MslsMain {
-    #options : MslsOptions
-    #collection : MslsBlogCollection
-    +__construct(options, collection)
-    {static} +create()
-    +debugger(message)
-    +get_input_array(object_id)
-    +is_autosave(post_id)
-    +verify_nonce()
-    +delete(object_id)
-    #save(object_id, class_name)
-  }
-  class "MslsLinkTextOnly\n<b>Link type: Text only</b>" as MslsLinkTextOnly {
-    #format_string : string
-    {static} +get_description()
-  }
-  class "MslsAdminIconTaxonomy\n<b>Handles backend icons for taxonomies</b>" as MslsAdminIconTaxonomy {
-    #path : string
-    +set_href(id)
-    +set_path()
+  package Options as Options {
+    interface "OptionsInterface" as Options_OptionsInterface {
+      +has_value(key)
+      +get_current_link()
+      +get_permalink(language)
+    }
+    class "Options\n<b>General options class</b>" as Options_Options {
+      #name : string
+      #exists : bool
+      #autoload : bool
+      #args : array<int, mixed>
+      -available_languages : array<string, string>
+      +with_front : bool
+      {static} +create(id)
+      {static} +is_main_page()
+      {static} +is_tax_page()
+      {static} +is_query_page()
+      +__construct()
+      +get_option_name()
+      +get_arg(index, preset)
+      +save(arr)
+      +delete()
+      +set(arr)
+      +get_permalink(language)
+      +get_postlink(language)
+      +get_tax_query()
+      +get_current_link()
+      +is_excluded()
+      +is_content_filter()
+      +get_order()
+      +get_url(dir)
+      +get_slug(post_type)
+      +get_icon(language)
+      +get_flag_url(language)
+      +get_available_languages()
+      {static} +check_for_blog_slug(url, options)
+      +get_icon_type()
+    }
+    package Post as Options.Post {
+      class "Post\n<b>Post options</b>" as Options_Post_Post {
+        #autoload : bool
+        +get_postlink(language)
+        +get_current_link()
+      }
+    }
+    package Tax as Options.Tax {
+      class "Category\n<b>OptionsTaxTermCategory</b>" as Options_Tax_Category {
+      }
+      class "Term\n<b>OptionsTaxTerm</b>" as Options_Tax_Term {
+        +with_front : bool
+        +handle_rewrite()
+        +check_base(url, options)
+        {static} #get_base_defined(tax_query)
+        {static} +get_base_option()
+      }
+      class "Tax\n<b>OptionsTax</b>" as Options_Tax_Tax {
+        #autoload : bool
+        {static} +create(id)
+        {static} +get_content_type(id)
+        +handle_rewrite()
+        +get_tax_query()
+        +get_postlink(language)
+        +get_permalink(language)
+        +get_current_link()
+        +get_term_link(term_id)
+        {static} +get_base_option()
+      }
+      interface "OptionsTaxInterface" as Options_Tax_OptionsTaxInterface {
+        {static} +get_base_option()
+        +handle_rewrite()
+      }
+    }
+    package Query as Options.Query {
+      class "PostType\n<b>OptionsQueryPostType</b>" as Options_Query_PostType {
+        #post_type : string
+        +__construct(sql_cache)
+        {static} +get_params()
+        +has_value(language)
+        +get_current_link()
+      }
+      class "Day\n<b>OptionsQueryDay</b>" as Options_Query_Day {
+        #year : int
+        #monthnum : int
+        #day : int
+        +__construct(sql_cache)
+        {static} +get_params()
+        +has_value(language)
+        +get_current_link()
+      }
+      class "Month\n<b>OptionsQueryMonth</b>" as Options_Query_Month {
+        #year : int
+        #monthnum : int
+        +__construct(sql_cache)
+        {static} +get_params()
+        +has_value(language)
+        +get_current_link()
+      }
+      class "Year\n<b>OptionsQueryYear</b>" as Options_Query_Year {
+        #year : int
+        +__construct(sql_cache)
+        {static} +get_params()
+        +has_value(language)
+        +get_current_link()
+      }
+      class "Query\n<b>OptionsQuery</b>" as Options_Query_Query {
+        +with_front : bool
+        #sql_cache : SqlCacher
+        +__construct(sql_cache)
+        {static} +get_params()
+        {static} +create(id)
+        +get_permalink(language)
+        +get_postlink(language)
+      }
+      class "Author\n<b>OptionsQueryAuthor</b>" as Options_Query_Author {
+        #author_id : int
+        +__construct(sql_cache)
+        {static} +get_params()
+        +has_value(language)
+        +get_current_link()
+      }
+    }
   }
   package ContentImport as ContentImport {
     class "Relations\n<b>Class Relations</b>" as ContentImport_Relations {
-      +to_create : array
-      #local_options : array
+      +to_create : array<int, array<int, mixed>>
+      #local_options : array<int, array{0: OptionsInterface, 1: int}>
       #import_coordinates : ImportCoordinates
       +__construct(import_coordinates)
       +merge(relations)
@@ -434,32 +159,32 @@
       +source_post : WP_Post
       +source_lang : string
       +dest_lang : string
-      +importers : array
+      +importers : array<string, string>
       +validate()
       +get_importer_for(importer_type)
       +parse_importers_from_request()
       +set_importer_for(importer_type, slug)
     }
     class "MetaBox" as ContentImport_MetaBox {
-      #data : array
+      #data : array<string, mixed>
       +render()
       #inline_thickbox_url(data)
       +print_modal_html()
-      #inline_thickbox_html(echo, data)
+      #inline_thickbox_html(output, data)
     }
     class "Service\n<b>Class Service</b>" as ContentImport_Service {
       +register()
       +hook()
     }
     class "AttachmentPathFinder" as ContentImport_AttachmentPathFinder {
-      +filter_srcset(sources, sizeArray, imageSrc, imageMeta, attachmentId)
+      +filter_srcset(sources, size_array, image_src, image_meta, attachment_id)
       #has_import_data(attachment_id)
       +filter_attachment_url(url, attachment_id)
       #get_source_post(attachment_id, msls_imported)
     }
     class "ImportLogger" as ContentImport_ImportLogger {
-      #levels_delimiter : string
-      #data : array<string, array>
+      #levels_delimiter : non-empty-string
+      #data : array<string, string[]>
       #import_coordinates : ImportCoordinates
       +__construct(import_coordinates)
       +merge(logger)
@@ -479,9 +204,9 @@
       +get_information(key)
     }
     class "ContentImporter\n<b>Class ContentImporter</b>" as ContentImport_ContentImporter {
-      #main : MslsMain
-      #logger : ImportLogger
-      #relations : Relations
+      #main : Main
+      #logger : ImportLogger|null
+      #relations : Relations|null
       #handle : bool
       #has_created_post : int
       +__construct(main)
@@ -490,7 +215,7 @@
       +get_relations()
       +set_relations(relations)
       +handle_import(data)
-      #pre_flight_check(data)
+      #pre_flight_check()
       +parse_sources()
       #get_the_blog_post_ID(blog_id)
       #insert_blog_post(blog_id, data)
@@ -498,7 +223,7 @@
       +import_content(import_coordinates, post_fields)
       #update_inserted_blog_post_data(blog_id, post_id, data)
       #redirect_to_blog_post(dest_blog_id, post_id)
-      +filter_empty(empty)
+      +filter_empty(is_empty)
     }
     package LogWriters as ContentImport.LogWriters {
       interface "LogWriter" as ContentImport_LogWriters_LogWriter {
@@ -509,7 +234,7 @@
         #import_coordinates : ImportCoordinates
         +write(data)
         #get_section_html(section_title, entries, escape_entries)
-        +show_last_log(echo)
+        +show_last_log(output)
         +set_import_coordinates(import_coordinates)
         +get_transient()
       }
@@ -534,7 +259,7 @@
         {static} +info()
       }
       class "PostFieldsImporters" as ContentImport_Importers_PostFieldsImporters {
-        #importers_map : array<string, string>
+        #importers_map : array<string, class-string<Importer>>
         +details()
       }
       class "Map" as ContentImport_Importers_Map {
@@ -542,29 +267,29 @@
         +factories()
       }
       class "TermsImporters" as ContentImport_Importers_TermsImporters {
-        #importers_map : array<string, string>
+        #importers_map : array<string, class-string<Importer>>
         +details()
       }
       class "WithRequestPostAttributes\n<b>Trait WithRequestPostAttributes</b>" as ContentImport_Importers_WithRequestPostAttributes {
-        #read_post_type_from_request(default)
+        #read_post_type_from_request(preset)
       }
       class "PostThumbnailImporters" as ContentImport_Importers_PostThumbnailImporters {
-        #importers_map : array<string, string>
+        #importers_map : array<string, class-string<Importer>>
         +details()
       }
       class "PostMetaImporters" as ContentImport_Importers_PostMetaImporters {
-        #importers_map : array<string, string>
+        #importers_map : array<string, class-string<Importer>>
         +details()
       }
       class "ImportersBaseFactory" as ContentImport_Importers_ImportersBaseFactory {
-        #importers_map : array<string, string>
+        #importers_map : array<string, class-string<Importer>>
         +make(import_coordinates)
         +details()
         +selected()
         #importers_info()
       }
       class "AttachmentsImporters" as ContentImport_Importers_AttachmentsImporters {
-        #importers_map : array<string, string>
+        #importers_map : array<string, class-string<Importer>>
         +details()
       }
       interface "ImportersFactory" as ContentImport_Importers_ImportersFactory {
@@ -588,7 +313,7 @@
       }
       package Terms as ContentImport.Importers.Terms {
         class "ShallowDuplicating\n<b>Class ShallowDuplicating</b>" as ContentImport_Importers_Terms_ShallowDuplicating {
-          #reset_taxonomies : array
+          #reset_taxonomies : string[]
           {static} +info()
           +import(data)
           #create_local_term(term, msls_term, dest_lang)
@@ -611,12 +336,224 @@
       }
     }
   }
+  package Frontend as Frontend {
+    class "ShortCode" as Frontend_ShortCode {
+      {static} +init()
+      {static} +render_widget(atts, content, tag)
+    }
+    class "ContentFilter" as Frontend_ContentFilter {
+      #options : Options
+      +__construct(options)
+      {static} +init()
+      +content_filter(content)
+      +filter_string(pref, post)
+      +format_available_languages(links)
+    }
+    class "Block" as Frontend_Block {
+      #options : Options
+      +__construct(options)
+      {static} +init()
+      +register_block()
+    }
+    class "Output\n<b>Output in the frontend</b>" as Frontend_Output {
+      #tags : array<string, string>
+      {static} +create()
+      {static} +init()
+      +get(display, filter, exists)
+      +get_alternate_links()
+      +__toString()
+      +get_tags()
+      +set_tags(arr)
+      +is_requirements_not_fulfilled(thing, exists, language)
+    }
+    class "Widget\n<b>The standard widget of the Multisite Language Switcher</b>" as Frontend_Widget {
+      +__construct()
+      {static} +init()
+      +widget(args, instance)
+      +update(new_instance, old_instance)
+      +form(instance)
+    }
+    package Map as Frontend.Map {
+      class "HrefLang\n<b>Class HrefLang</b>" as Frontend_Map_HrefLang {
+        #map : array<string, string>
+        +__construct(blogs)
+        #get_hreflang(language)
+        +get(language)
+      }
+    }
+  }
+  package Admin as Admin {
+    class "Icon\n<b>Handles the icon links in the backend</b>" as Admin_Icon {
+      #icon_type : string
+      #language : string
+      +origin_language : string
+      #src : string
+      #href : string
+      #blog_id : int
+      #type : string
+      #path : string
+      #id : int
+      +__construct(type)
+      +__toString()
+      {static} +create(type)
+      +set_icon_type(icon_type)
+      +set_path()
+      +set_language(language)
+      +set_src(src)
+      +set_href(id)
+      +set_id(id)
+      +set_origin_language(origin_language)
+      +get_img()
+      +get_a()
+      #should_quick_create()
+      #get_quick_create_a()
+      +get_icon()
+      +get_edit_new()
+    }
+    class "PostListActions\n<b>Injects the "Add from Translation" page-title-action on edit.php.</b>" as Admin_PostListActions {
+      {static} +init()
+      {static} +has_source_blogs()
+      {static} +inject_button()
+    }
+    class "Main\n<b>Abstraction for the hook classes</b>" as Admin_Main {
+      #options : Options
+      #collection : Collection
+      +__construct(options, collection)
+      {static} +create()
+      +debugger(message)
+      +get_input_array(object_id)
+      +is_autosave(post_id)
+      +verify_nonce()
+      +delete(object_id)
+      #save(object_id, class_name)
+    }
+    class "MetaBox\n<b>Meta box for the edit mode of the (custom) post types</b>" as Admin_MetaBox {
+      {static} +init()
+      {static} +suggest()
+      {static} +get_suggested_fields(json, args)
+      +add()
+      +render_select()
+      +render_options(type, msls_id)
+      +render_option(post_id, msls_id)
+      +render_input()
+      -get_create_new_link(type, language, post_id, origin_language, linked_post_id)
+      +set(post_id)
+      +maybe_set_linked_post(mydata)
+    }
+    class "IconTaxonomy\n<b>Handles backend icons for taxonomies</b>" as Admin_IconTaxonomy {
+      #path : string
+      +set_href(id)
+      +set_path()
+    }
+    class "CustomFilter\n<b>Adding custom filter to posts/pages table.</b>" as Admin_CustomFilter {
+      {static} +init()
+      +add_filter()
+      +execute_filter(query)
+    }
+    class "CustomColumnTaxonomy\n<b>Handling of existing/not existing translations in the backend</b>" as Admin_CustomColumnTaxonomy {
+      #add_hooks()
+      +column_default(deprecated, column_name, item_id)
+      +delete(object_id)
+    }
+    class "Admin\n<b>Administration of the options</b>" as Admin_Admin {
+      {static} +init()
+      +get_menu_slug()
+      +get_options_page_link()
+      +__call(method, args)
+      +has_problems()
+      +render()
+      +subsubsub()
+      +register()
+      +language_section()
+      +main_section()
+      +advanced_section()
+      +rewrites_section()
+      #add_settings_fields(map, section)
+      +blog_language()
+      +display()
+      +admin_display()
+      +reference_user()
+      +description()
+      +content_priority()
+      +render_rewrite(key)
+      +validate(arr)
+      +set_blog_language(arr)
+    }
+    class "CustomColumn\n<b>Handling of existing/not existing translations in the backend listings of</b>" as Admin_CustomColumn {
+      {static} +init()
+      #add_hooks()
+      +th(columns)
+      +td(column_name, item_id)
+    }
+    class "Bar" as Admin_Bar {
+      #icon_type : string
+      #blog_collection : Collection
+      +__construct(options, blog_collection)
+      {static} +init()
+      +update_admin_bar(wp_admin_bar)
+      +add_node(wp_admin_bar, node_id, title)
+      #get_title(blog, blavatar)
+    }
+    package TranslationPicker as Admin.TranslationPicker {
+      class "Page\n<b>Dedicated admin page that replaces the former Thickbox modal for</b>" as Admin_TranslationPicker_Page {
+        {static} +init()
+        {static} +save_per_page_option(status, option, value)
+        {static} +register()
+        {static} +on_page_load(post_type)
+        {static} +reorder_submenu()
+        {static} +parent_slug(post_type)
+        {static} +page_slug(post_type)
+        {static} +url(post_type)
+        {static} +enqueue(target_blog_id)
+        {static} +render()
+        {static} -render_filter_form(post_type, source, search, blogs)
+        {static} -render_source_flags(post_type, source, search, blogs)
+        {static} -render_list_table(source, post_type, search)
+      }
+      class "Table\n<b>WP_List_Table renderer for untranslated source-blog posts on the</b>" as Admin_TranslationPicker_Table {
+        #source_blog_id : int
+        #post_type : string
+        #search : string
+        #taxonomies_cache : WP_Taxonomy>|null
+        +__construct(source_blog_id, post_type, search)
+        +get_columns()
+        #get_admin_column_taxonomies()
+        #get_bulk_actions()
+        +prepare_items()
+        #column_cb(item)
+        #column_title(item)
+        #column_status(item)
+        #column_date(item)
+        #column_author(item)
+        #column_default(item, column_name)
+        +no_items()
+      }
+    }
+    package PostTag as Admin.PostTag {
+      class "Classic\n<b>Post Tag Classic</b>" as Admin_PostTag_Classic {
+        +add_input(taxonomy)
+        +edit_input(tag, taxonomy)
+        +the_input(tag, title_format, item_format)
+        +print_option(blog, type, mydata, item_format)
+      }
+      class "PostTag\n<b>Post Tag</b>" as Admin_PostTag_PostTag {
+        {static} +suggest()
+        {static} +init()
+        +add_input(taxonomy)
+        +edit_input(tag, taxonomy)
+        +the_input(tag, title_format, item_format)
+        +set(term_id)
+        +maybe_set_linked_term(mydata)
+        #get_select_title()
+      }
+    }
+  }
   package Component as Component {
     class "Icon\n<b>Class Icon</b>" as Component_Icon {
       #map : string[]
       +__construct()
       #maybe(language, prefix, postfix)
-      {abstract} #get_include()
+      #get_include()
       {abstract} +get(language)
     }
     class "Component\n<b>Abstract class Input</b>" as Component_Component {
@@ -667,7 +604,7 @@
         #value : string
         #size : int
         #readonly : string
-        +__construct(key, value, size, readonly)
+        +__construct(key, value, size, read_only)
         +render()
       }
     }
@@ -681,46 +618,320 @@
         +get(language)
       }
       class "IconLabel\n<b>Class IconLabel</b>" as Component_Icon_IconLabel {
-        #get_include()
         +get(language)
       }
     }
   }
-  package Map as Map {
-    class "HrefLang\n<b>Class HrefLang</b>" as Map_HrefLang {
-      #map : array<string, string>
-      +__construct(blogs)
-      #get_hreflang(language)
-      +get(language)
+  package Cli as Cli {
+    class "Cli" as Cli_Cli {
+      {static} +init()
+      +blog(args)
     }
   }
-  package Query as Query {
-    class "YearPostsCounterQuery" as Query_YearPostsCounterQuery {
-      +__invoke(year)
+  package Blog as Blog {
+    class "Blog\n<b>Internal representation of a blog</b>" as Blog_Blog {
+      -obj : StdClass
+      -language : string
+      -description : string
+      +__construct(obj, description)
+      +__get(key)
+      +get_description()
+      +get_title(icon_type)
+      +get_language(preset)
+      +get_alpha2()
+      +get_url(options)
+      #get_permalink(options)
+      {static} +internal_cmp(a, b)
+      {static} +language(a, b)
+      {static} +description(a, b)
+      +get_blavatar()
     }
-    class "CleanupOptionsQuery\n<b>Cleans up options</b>" as Query_CleanupOptionsQuery {
-      +__invoke()
-    }
-    class "AuthorPostsCounterQuery\n<b>Gets the number of published posts by an author</b>" as Query_AuthorPostsCounterQuery {
-      +__invoke(author_id)
-    }
-    class "TranslatedPostIdQuery\n<b>Gets the posts_ids of posts that have been translated to a specific language</b>" as Query_TranslatedPostIdQuery {
-      +__invoke(language)
-    }
-    class "MonthPostsCounterQuery\n<b>Gets the number of published posts by a month</b>" as Query_MonthPostsCounterQuery {
-      +__invoke(year, monthnum)
-    }
-    class "BlogsInNetworkQuery\n<b>Gets the blog_ids of blogs in the network</b>" as Query_BlogsInNetworkQuery {
-      +__invoke()
-    }
-    class "DatePostsCounterQuery\n<b>Gets the number of published posts by a date</b>" as Query_DatePostsCounterQuery {
-      +__invoke(year, monthnum, day)
-    }
-    class "AbstractQuery\n<b>AbstractQuery</b>" as Query_AbstractQuery {
-      #sql_cache : MslsSqlCacher
-      +__construct(sql_cache)
+    class "Collection\n<b>Collection of blog-objects</b>" as Blog_Collection {
+      -current_blog_id : int
+      -current_blog_output : bool
+      -objects : Blog[]
+      -objects_order : string
+      -active_plugins : string[]
+      +__construct()
+      {static} +get_configured_blog_description(blog_id, description)
+      +get_blogs_of_reference_user(options)
+      +get_blog(language)
+      +get_blog_id(language)
+      +get_current_blog_id()
+      +is_current_blog(blog)
+      +has_current_blog()
+      +get_current_blog()
+      +get_objects()
+      +get_object(blog_id)
+      +is_plugin_active(blog_id)
+      +get_plugin_active_blogs()
+      +get()
+      +get_filtered(filter)
+      +get_users(fields, number)
+      {static} +get_blog_language(blog_id, preset)
     }
   }
+  package RestApi as RestApi {
+    class "RestApi\n<b>REST API endpoint for quick-creating translations.</b>" as RestApi_RestApi {
+      {static} +init()
+      {static} +remember_source_blog(new_post_id, source_post, source_blog_id)
+      {static} +get_last_source_blog_id()
+      {static} -get_route_args()
+      {static} -get_list_route_args()
+      +check_permission(request)
+      {static} +user_can_read_source(source_post_id, source_blog_id, target_blog_id)
+      {static} +user_can_create_target(source_post_id, source_blog_id, target_blog_id)
+      +check_list_permission(request)
+      {static} -apply_capability_filter(default_cap, source_post_id, source_blog_id, target_blog_id, context)
+      +create_translation(request)
+      +list_untranslated_posts(request)
+      #prepare_post_data(source_post)
+      {static} +prefix_source_language(post_data, source_post, source_blog_id, target_blog_id)
+      #prepare_taxonomies(source_post, source_blog_id, target_blog_id, target_lang, post_data)
+      #assign_taxonomies(post_data, new_post_id)
+      #establish_link(source_post_id, source_blog_id, new_post_id, target_blog_id)
+    }
+    class "Request" as RestApi_Request {
+      {static} +get_config(name)
+      {static} +has_var(var_name, input_type)
+      {static} +get_var(var_name, input_type)
+      {static} +get(name, preset)
+      {static} +isset(keys)
+      {static} +get_request(keys, preset)
+    }
+  }
+  package Link as Link {
+    class "ImageOnly\n<b>Link type: Image only</b>" as Link_ImageOnly {
+      #format_string : string
+      {static} +get_description()
+    }
+    class "TextImage\n<b>Link type: Text and image</b>" as Link_TextImage {
+      #format_string : string
+      {static} +get_description()
+    }
+    class "Link\n<b>Link type: Image and text</b>" as Link_Link {
+      #format_string : string
+      {static} +get_types()
+      {static} +get_description()
+      {static} +get_types_description()
+      {static} +create(display)
+      {static} +callback(x)
+      +__toString()
+    }
+    interface "LinkInterface\n<b>Interface for the link types</b>" as Link_LinkInterface {
+      +__toString()
+    }
+    class "TextOnly\n<b>Link type: Text only</b>" as Link_TextOnly {
+      #format_string : string
+      {static} +get_description()
+    }
+  }
+  package Registry as Registry {
+    class "Instance\n<b>Base class for singleton instances backed by the Registry.</b>" as Registry_Instance {
+      {static} +instance()
+    }
+    class "GetSet\n<b>Generic class for overloading properties</b>" as Registry_GetSet {
+      #arr : array<string, mixed>
+      +__set(key, value)
+      +__get(key)
+      +__isset(key)
+      +__unset(key)
+      +reset()
+      +has_value(key)
+      +is_empty()
+      +get_arr()
+    }
+    class "Registry\n<b>Registry instead of singletons</b>" as Registry_Registry {
+      -arr : string[]
+      -instance : ?Registry
+      -get(key)
+      -set(key, instance)
+      {static} +instance()
+      {static} +get_object(key)
+      {static} +set_object(key, instance)
+      {static} +clear()
+    }
+  }
+  package Db as Db {
+    class "SqlCacher\n<b>Wrapper to avoid direct SQL without caching</b>" as Db_SqlCacher {
+      #db : wpdb
+      #cache_key : string
+      #expire : int
+      +__construct(db, cache_key, expire)
+      {static} +create(caller, params, expire)
+      +__get(name)
+      +__call(method, args)
+      #invoke(method, args)
+    }
+    package Query as Db.Query {
+      class "YearPostsCounterQuery" as Db_Query_YearPostsCounterQuery {
+        +__invoke(year)
+      }
+      class "CleanupOptionsQuery\n<b>Cleans up options</b>" as Db_Query_CleanupOptionsQuery {
+        +__invoke()
+      }
+      class "AuthorPostsCounterQuery\n<b>Gets the number of published posts by an author</b>" as Db_Query_AuthorPostsCounterQuery {
+        +__invoke(author_id)
+      }
+      class "TranslatedPostIdQuery\n<b>Gets the posts_ids of posts that have been translated to a specific language</b>" as Db_Query_TranslatedPostIdQuery {
+        +__invoke(language)
+      }
+      class "MonthPostsCounterQuery\n<b>Gets the number of published posts by a month</b>" as Db_Query_MonthPostsCounterQuery {
+        +__invoke(year, monthnum)
+      }
+      class "BlogsInNetworkQuery\n<b>Gets the blog_ids of blogs in the network</b>" as Db_Query_BlogsInNetworkQuery {
+        +__invoke()
+      }
+      class "DatePostsCounterQuery\n<b>Gets the number of published posts by a date</b>" as Db_Query_DatePostsCounterQuery {
+        +__invoke(year, monthnum, day)
+      }
+      class "AbstractQuery\n<b>AbstractQuery</b>" as Db_Query_AbstractQuery {
+        #sql_cache : SqlCacher
+        +__construct(sql_cache)
+      }
+    }
+  }
+  package Request as Request {
+    class "Fields" as Request_Fields {
+    }
+  }
+  package ContentTypes as ContentTypes {
+    class "Taxonomy\n<b>Content types: Taxonomies (Tags, Categories, ...)</b>" as ContentTypes_Taxonomy {
+      #post_type : string
+      +__construct()
+      {static} +get()
+      +get_request()
+      +is_taxonomy()
+      +acl_request()
+      +get_post_type()
+    }
+    class "PostType\n<b>Content types: Post types (Pages, Posts, ...)</b>" as ContentTypes_PostType {
+      +__construct()
+      {static} +get()
+      +get_request()
+      +is_post_type()
+    }
+    class "ContentTypes\n<b>Supported content types</b>" as ContentTypes_ContentTypes {
+      #request : string
+      #types : string[]
+      {static} +create()
+      +is_post_type()
+      +is_taxonomy()
+      +acl_request()
+      {static} {abstract} +get()
+      {abstract} +get_request()
+    }
+  }
+  package Data as Data {
+    class "Json\n<b>Container for an array which will used in JavaScript as object in JSON</b>" as Data_Json {
+      #arr : array<int, array{value: int, label: string}>
+      +add(value, label)
+      {static} +compare(a, b)
+      +get()
+      +encode()
+      +__toString()
+    }
+    class "LanguageArray\n<b>Stores the language input from post</b>" as Data_LanguageArray {
+      #arr : array<string, int>
+      +__construct(arr)
+      +set(key, value)
+      +get_val(key)
+      +get_arr(key)
+    }
+  }
+  Admin_Admin ..> Admin_Icon
+  Admin_Admin ..> Component_Input_Checkbox
+  Admin_Admin ..> Component_Input_Group
+  Admin_Admin ..> Component_Input_Label
+  Admin_Admin ..> Component_Input_Select
+  Admin_Admin ..> Component_Input_Text
+  Admin_Admin ..> Link_Link
+  Admin_Admin ..> Plugin
+  Admin_Admin ..> Registry_Registry
+  Admin_Bar ..> Admin_Bar
+  Admin_Bar ..> Blog_Blog
+  Admin_Bar ..> Blog_Collection
+  Admin_Bar ..> Options_Options
+  Admin_CustomColumn ..> Admin_Icon
+  Admin_CustomColumn ..> Blog_Collection
+  Admin_CustomColumn ..> Component_Component
+  Admin_CustomColumn ..> Options_Options
+  Admin_CustomColumn <|-- Admin_CustomColumnTaxonomy
+  Admin_CustomColumnTaxonomy ..> Options_Tax_Tax
+  Admin_CustomFilter ..> Component_Input_Select
+  Admin_CustomFilter ..> Db_Query_TranslatedPostIdQuery
+  Admin_CustomFilter ..> Db_SqlCacher
+  Admin_CustomFilter ..> Request_Fields
+  Admin_CustomFilter ..> RestApi_Request
+  Admin_Icon ..> Admin_Icon
+  Admin_Icon ..> Admin_IconTaxonomy
+  Admin_Icon ..> Component_Component
+  Admin_Icon ..> Component_Icon_IconLabel
+  Admin_Icon ..> Component_Icon_IconSvg
+  Admin_Icon <|-- Admin_IconTaxonomy
+  Admin_IconTaxonomy ..> Admin_Icon
+  Admin_IconTaxonomy ..> Admin_IconTaxonomy
+  Admin_IconTaxonomy ..> ContentTypes_Taxonomy
+  Admin_Main ..> Admin_Main
+  Admin_Main ..> Blog_Blog
+  Admin_Main ..> Blog_Collection
+  Admin_Main ..> Component_Component
+  Admin_Main ..> Data_LanguageArray
+  Admin_Main ..> Options_Options
+  Admin_Main ..> Options_Post_Post
+  Admin_Main ..> Plugin
+  Admin_Main ..> Request_Fields
+  Admin_Main ..> RestApi_Request
+  Admin_Main <|-- Admin_Admin
+  Admin_Main <|-- Admin_CustomColumn
+  Admin_Main <|-- Admin_CustomFilter
+  Admin_Main <|-- Admin_MetaBox
+  Admin_Main <|-- Admin_PostTag_PostTag
+  Admin_Main <|-- Frontend_Output
+  Admin_MetaBox ..> Admin_Icon
+  Admin_MetaBox ..> Blog_Collection
+  Admin_MetaBox ..> Component_Component
+  Admin_MetaBox ..> Component_Wrapper
+  Admin_MetaBox ..> ContentImport_MetaBox
+  Admin_MetaBox ..> Data_Json
+  Admin_MetaBox ..> Options_Post_Post
+  Admin_MetaBox ..> Plugin
+  Admin_MetaBox ..> Request_Fields
+  Admin_MetaBox ..> RestApi_Request
+  Admin_PostListActions ..> Admin_TranslationPicker_Page
+  Admin_PostTag_Classic ..> Admin_Icon
+  Admin_PostTag_Classic ..> Blog_Blog
+  Admin_PostTag_Classic ..> Component_Component
+  Admin_PostTag_Classic ..> Options_Tax_OptionsTaxInterface
+  Admin_PostTag_Classic ..> Options_Tax_Tax
+  Admin_PostTag_PostTag ..> Admin_Icon
+  Admin_PostTag_PostTag ..> Admin_PostTag_Classic
+  Admin_PostTag_PostTag ..> Component_Component
+  Admin_PostTag_PostTag ..> Data_Json
+  Admin_PostTag_PostTag ..> Options_Tax_OptionsTaxInterface
+  Admin_PostTag_PostTag ..> Options_Tax_Tax
+  Admin_PostTag_PostTag ..> Request_Fields
+  Admin_PostTag_PostTag ..> RestApi_Request
+  Admin_PostTag_PostTag <|-- Admin_PostTag_Classic
+  Admin_TranslationPicker_Page ..> Admin_Icon
+  Admin_TranslationPicker_Page ..> Admin_TranslationPicker_Page
+  Admin_TranslationPicker_Page ..> Admin_TranslationPicker_Table
+  Admin_TranslationPicker_Page ..> Blog_Blog
+  Admin_TranslationPicker_Page ..> ContentTypes_PostType
+  Admin_TranslationPicker_Page ..> Plugin
+  Admin_TranslationPicker_Table ..> Admin_TranslationPicker_Page
+  Admin_TranslationPicker_Table ..> Blog_Collection
+  Admin_TranslationPicker_Table ..> Db_Query_TranslatedPostIdQuery
+  Admin_TranslationPicker_Table ..> Db_SqlCacher
+  Blog_Blog ..> Admin_Icon
+  Blog_Blog ..> Blog_Blog
+  Blog_Blog ..> Blog_Collection
+  Blog_Blog ..> Options_OptionsInterface
+  Blog_Collection "1" ..> "*" Blog_Blog
+  Blog_Collection ..> Admin_Admin
+  Blog_Collection ..> Blog_Blog
+  Blog_Collection ..> Options_Options
+  Blog_Collection ..> Plugin
   Component_Component <|-- Component_Input_Checkbox
   Component_Component <|-- Component_Input_Group
   Component_Component <|-- Component_Input_Label
@@ -731,21 +942,22 @@
   Component_Icon <|-- Component_Icon_IconLabel
   Component_Icon <|-- Component_Icon_IconPng
   Component_Icon <|-- Component_Icon_IconSvg
-  Component_Icon_IconPng ..> MslsPlugin
-  Component_Icon_IconSvg ..> MslsPlugin
+  Component_Icon_IconPng ..> Plugin
+  Component_Icon_IconSvg ..> Plugin
   Component_Input_Group "1" ..> "*" Component_Component
   Component_Input_Group ..> Component_Component
   Component_Input_Select ..> Component_Input_Group
   Component_Input_Select ..> Component_Input_Option
+  ContentImport_ContentImporter ..> Admin_Main
+  ContentImport_ContentImporter ..> Blog_Collection
   ContentImport_ContentImporter ..> ContentImport_ImportCoordinates
   ContentImport_ContentImporter ..> ContentImport_ImportLogger
+  ContentImport_ContentImporter ..> ContentImport_Importers_Importer
   ContentImport_ContentImporter ..> ContentImport_Importers_Map
   ContentImport_ContentImporter ..> ContentImport_Relations
-  ContentImport_ContentImporter ..> MslsBlogCollection
-  ContentImport_ContentImporter ..> MslsMain
-  ContentImport_ContentImporter ..> MslsOptionsPost
-  ContentImport_ContentImporter ..> MslsRequest
-  ContentImport_ImportCoordinates ..> MslsBlogCollection
+  ContentImport_ContentImporter ..> Options_Post_Post
+  ContentImport_ContentImporter ..> RestApi_Request
+  ContentImport_ImportCoordinates ..> Blog_Collection
   ContentImport_ImportLogger ..> ContentImport_ImportCoordinates
   ContentImport_ImportLogger ..> ContentImport_ImportLogger
   ContentImport_ImportLogger ..> ContentImport_LogWriters_AdminNoticeLogger
@@ -773,6 +985,7 @@
   ContentImport_Importers_ImportersFactory ..> ContentImport_ImportCoordinates
   ContentImport_Importers_ImportersFactory ..> ContentImport_Importers_Importer
   ContentImport_Importers_ImportersFactory <|-- ContentImport_Importers_ImportersBaseFactory
+  ContentImport_Importers_Map "1" ..> "*" ContentImport_Importers_ImportersBaseFactory
   ContentImport_Importers_Map ..> ContentImport_ImportCoordinates
   ContentImport_Importers_Map ..> ContentImport_Importers_AttachmentsImporters
   ContentImport_Importers_Map ..> ContentImport_Importers_PostFieldsImporters
@@ -780,206 +993,155 @@
   ContentImport_Importers_Map ..> ContentImport_Importers_PostThumbnailImporters
   ContentImport_Importers_Map ..> ContentImport_Importers_TermsImporters
   ContentImport_Importers_PostThumbnail_Linking ..> ContentImport_AttachmentPathFinder
-  ContentImport_Importers_Terms_ShallowDuplicating ..> MslsOptionsTax
-  ContentImport_Importers_Terms_ShallowDuplicating ..> MslsOptionsTaxTerm
-  ContentImport_Importers_WithRequestPostAttributes ..> MslsRequest
+  ContentImport_Importers_Terms_ShallowDuplicating ..> Options_Tax_OptionsTaxInterface
+  ContentImport_Importers_Terms_ShallowDuplicating ..> Options_Tax_Term
+  ContentImport_Importers_WithRequestPostAttributes ..> RestApi_Request
   ContentImport_LogWriters_AdminNoticeLogger ..> Component_Component
   ContentImport_LogWriters_AdminNoticeLogger ..> ContentImport_ImportCoordinates
   ContentImport_LogWriters_LogWriter <|-- ContentImport_LogWriters_AdminNoticeLogger
+  ContentImport_MetaBox ..> Blog_Collection
   ContentImport_MetaBox ..> Component_Component
   ContentImport_MetaBox ..> Component_Wrapper
   ContentImport_MetaBox ..> ContentImport_Importers_Map
-  ContentImport_MetaBox ..> MslsBlogCollection
-  ContentImport_MetaBox ..> MslsFields
-  ContentImport_MetaBox ..> MslsOptionsPost
-  ContentImport_MetaBox ..> MslsPlugin
-  ContentImport_MetaBox ..> MslsRequest
+  ContentImport_MetaBox ..> Options_Post_Post
+  ContentImport_MetaBox ..> Plugin
+  ContentImport_MetaBox ..> Request_Fields
+  ContentImport_MetaBox ..> RestApi_Request
   ContentImport_Relations ..> ContentImport_ImportCoordinates
   ContentImport_Relations ..> ContentImport_Relations
-  ContentImport_Relations ..> MslsOptions
+  ContentImport_Relations ..> Options_Options
+  ContentImport_Relations ..> Options_OptionsInterface
   ContentImport_Service ..> ContentImport_AttachmentPathFinder
   ContentImport_Service ..> ContentImport_ContentImporter
   ContentImport_Service ..> ContentImport_LogWriters_AdminNoticeLogger
-  Map_HrefLang ..> MslsBlogCollection
-  MslsAdmin ..> Component_Input_Checkbox
-  MslsAdmin ..> Component_Input_Group
-  MslsAdmin ..> Component_Input_Label
-  MslsAdmin ..> Component_Input_Select
-  MslsAdmin ..> Component_Input_Text
-  MslsAdmin ..> MslsAdminIcon
-  MslsAdmin ..> MslsLink
-  MslsAdmin ..> MslsPlugin
-  MslsAdmin ..> MslsRegistry
-  MslsAdminBar ..> MslsAdminBar
-  MslsAdminBar ..> MslsBlog
-  MslsAdminBar ..> MslsBlogCollection
-  MslsAdminBar ..> MslsOptions
-  MslsAdminIcon ..> Component_Component
-  MslsAdminIcon ..> Component_Icon_IconLabel
-  MslsAdminIcon ..> Component_Icon_IconSvg
-  MslsAdminIcon ..> MslsAdminIcon
-  MslsAdminIcon ..> MslsAdminIconTaxonomy
-  MslsAdminIcon <|-- MslsAdminIconTaxonomy
-  MslsAdminIconTaxonomy ..> MslsAdminIcon
-  MslsAdminIconTaxonomy ..> MslsAdminIconTaxonomy
-  MslsAdminIconTaxonomy ..> MslsTaxonomy
-  MslsBlock ..> MslsOptions
-  MslsBlock ..> MslsPlugin
-  MslsBlog ..> MslsAdminIcon
-  MslsBlog ..> MslsBlog
-  MslsBlog ..> MslsBlogCollection
-  MslsBlog ..> MslsOptions
-  MslsBlogCollection "1" ..> "*" MslsBlog
-  MslsBlogCollection ..> MslsBlog
-  MslsBlogCollection ..> MslsOptions
-  MslsBlogCollection ..> MslsPlugin
-  MslsContentFilter ..> MslsOptions
-  MslsContentFilter ..> MslsOutput
-  MslsContentTypes ..> MslsContentTypes
-  MslsContentTypes ..> MslsPostType
-  MslsContentTypes ..> MslsRequest
-  MslsContentTypes ..> MslsTaxonomy
-  MslsContentTypes <|-- MslsPostType
-  MslsContentTypes <|-- MslsTaxonomy
-  MslsCustomColumn ..> Component_Component
-  MslsCustomColumn ..> MslsAdminIcon
-  MslsCustomColumn ..> MslsBlogCollection
-  MslsCustomColumn ..> MslsOptions
-  MslsCustomColumn <|-- MslsCustomColumnTaxonomy
-  MslsCustomColumnTaxonomy ..> MslsOptionsTax
-  MslsCustomFilter ..> Component_Input_Select
-  MslsCustomFilter ..> MslsFields
-  MslsCustomFilter ..> MslsRequest
-  MslsCustomFilter ..> MslsSqlCacher
-  MslsCustomFilter ..> Query_TranslatedPostIdQuery
-  MslsGetSet ..> MslsGetSet
-  MslsGetSet <|-- MslsLink
-  MslsGetSet <|-- MslsOptions
-  MslsJson ..> MslsJson
-  MslsLanguageArray ..> MslsLanguageArray
-  MslsLink ..> MslsLink
-  MslsLink ..> MslsLinkImageOnly
-  MslsLink ..> MslsLinkTextImage
-  MslsLink ..> MslsLinkTextOnly
-  MslsLink <|-- MslsLinkImageOnly
-  MslsLink <|-- MslsLinkTextImage
-  MslsLink <|-- MslsLinkTextOnly
-  MslsMain ..> Component_Component
-  MslsMain ..> MslsBlogCollection
-  MslsMain ..> MslsFields
-  MslsMain ..> MslsLanguageArray
-  MslsMain ..> MslsOptions
-  MslsMain ..> MslsOptionsPost
-  MslsMain ..> MslsPlugin
-  MslsMain ..> MslsRequest
-  MslsMain <|-- MslsAdmin
-  MslsMain <|-- MslsCustomColumn
-  MslsMain <|-- MslsCustomFilter
-  MslsMain <|-- MslsMetaBox
-  MslsMain <|-- MslsOutput
-  MslsMain <|-- MslsPostTag
-  MslsMetaBox ..> Component_Component
-  MslsMetaBox ..> Component_Wrapper
-  MslsMetaBox ..> ContentImport_MetaBox
-  MslsMetaBox ..> MslsAdminIcon
-  MslsMetaBox ..> MslsFields
-  MslsMetaBox ..> MslsJson
-  MslsMetaBox ..> MslsOptionsPost
-  MslsMetaBox ..> MslsPlugin
-  MslsMetaBox ..> MslsRequest
-  MslsOptions ..> Component_Icon_IconPng
-  MslsOptions ..> MslsAdminIcon
-  MslsOptions ..> MslsOptions
-  MslsOptions ..> MslsOptionsPost
-  MslsOptions ..> MslsOptionsQuery
-  MslsOptions ..> MslsOptionsTax
-  MslsOptions ..> MslsPlugin
-  MslsOptions <|-- MslsOptionsPost
-  MslsOptions <|-- MslsOptionsQuery
-  MslsOptions <|-- MslsOptionsTax
-  MslsOptionsQuery ..> MslsOptionsQuery
-  MslsOptionsQuery ..> MslsOptionsQueryAuthor
-  MslsOptionsQuery ..> MslsOptionsQueryDay
-  MslsOptionsQuery ..> MslsOptionsQueryMonth
-  MslsOptionsQuery ..> MslsOptionsQueryPostType
-  MslsOptionsQuery ..> MslsOptionsQueryYear
-  MslsOptionsQuery ..> MslsSqlCacher
-  MslsOptionsQuery <|-- MslsOptionsQueryAuthor
-  MslsOptionsQuery <|-- MslsOptionsQueryDay
-  MslsOptionsQuery <|-- MslsOptionsQueryMonth
-  MslsOptionsQuery <|-- MslsOptionsQueryPostType
-  MslsOptionsQuery <|-- MslsOptionsQueryYear
-  MslsOptionsQueryAuthor ..> MslsSqlCacher
-  MslsOptionsQueryAuthor ..> Query_AuthorPostsCounterQuery
-  MslsOptionsQueryDay ..> MslsSqlCacher
-  MslsOptionsQueryDay ..> Query_DatePostsCounterQuery
-  MslsOptionsQueryMonth ..> MslsSqlCacher
-  MslsOptionsQueryMonth ..> Query_MonthPostsCounterQuery
-  MslsOptionsQueryPostType ..> MslsSqlCacher
-  MslsOptionsQueryYear ..> MslsSqlCacher
-  MslsOptionsQueryYear ..> Query_YearPostsCounterQuery
-  MslsOptionsTax ..> MslsOptionsTax
-  MslsOptionsTax ..> MslsOptionsTaxTerm
-  MslsOptionsTax ..> MslsOptionsTaxTermCategory
-  MslsOptionsTax <|-- MslsOptionsTaxTerm
-  MslsOptionsTaxTerm <|-- MslsOptionsTaxTermCategory
-  MslsOutput ..> Map_HrefLang
-  MslsOutput ..> MslsLink
-  MslsOutput ..> MslsOptions
-  MslsOutput ..> MslsOutput
-  MslsPlugin ..> ContentImport_Service
-  MslsPlugin ..> MslsAdmin
-  MslsPlugin ..> MslsAdminBar
-  MslsPlugin ..> MslsBlock
-  MslsPlugin ..> MslsContentFilter
-  MslsPlugin ..> MslsCustomColumn
-  MslsPlugin ..> MslsCustomColumnTaxonomy
-  MslsPlugin ..> MslsCustomFilter
-  MslsPlugin ..> MslsFields
-  MslsPlugin ..> MslsMetaBox
-  MslsPlugin ..> MslsOptions
-  MslsPlugin ..> MslsPostTag
-  MslsPlugin ..> MslsRequest
-  MslsPlugin ..> MslsShortCode
-  MslsPlugin ..> MslsSqlCacher
-  MslsPlugin ..> MslsWidget
-  MslsPlugin ..> Query_BlogsInNetworkQuery
-  MslsPlugin ..> Query_CleanupOptionsQuery
-  MslsPostTag ..> Component_Component
-  MslsPostTag ..> MslsAdminIcon
-  MslsPostTag ..> MslsFields
-  MslsPostTag ..> MslsJson
-  MslsPostTag ..> MslsOptionsTax
-  MslsPostTag ..> MslsPostTagClassic
-  MslsPostTag ..> MslsRequest
-  MslsPostTag <|-- MslsPostTagClassic
-  MslsPostTagClassic ..> Component_Component
-  MslsPostTagClassic ..> MslsAdminIcon
-  MslsPostTagClassic ..> MslsBlog
-  MslsPostTagClassic ..> MslsOptionsTax
-  MslsPostType ..> MslsRequest
-  MslsRegistry ..> MslsRegistry
-  MslsRegistryInstance ..> MslsRegistry
-  MslsRegistryInstance <|-- ContentImport_AttachmentPathFinder
-  MslsRegistryInstance <|-- ContentImport_ContentImporter
-  MslsRegistryInstance <|-- ContentImport_Importers_ImportersBaseFactory
-  MslsRegistryInstance <|-- ContentImport_Importers_Map
-  MslsRegistryInstance <|-- ContentImport_LogWriters_AdminNoticeLogger
-  MslsRegistryInstance <|-- ContentImport_MetaBox
-  MslsRegistryInstance <|-- ContentImport_Service
-  MslsRegistryInstance <|-- MslsBlogCollection
-  MslsRegistryInstance <|-- MslsContentTypes
-  MslsRegistryInstance <|-- MslsGetSet
-  MslsRequest ..> MslsFields
-  MslsShortCode ..> MslsWidget
-  MslsTaxonomy ..> MslsRequest
-  MslsWidget ..> Component_Component
-  Query_AbstractQuery ..> MslsSqlCacher
-  Query_AbstractQuery <|-- Query_AuthorPostsCounterQuery
-  Query_AbstractQuery <|-- Query_BlogsInNetworkQuery
-  Query_AbstractQuery <|-- Query_CleanupOptionsQuery
-  Query_AbstractQuery <|-- Query_DatePostsCounterQuery
-  Query_AbstractQuery <|-- Query_MonthPostsCounterQuery
-  Query_AbstractQuery <|-- Query_TranslatedPostIdQuery
-  Query_AbstractQuery <|-- Query_YearPostsCounterQuery
+  ContentTypes_ContentTypes ..> ContentTypes_ContentTypes
+  ContentTypes_ContentTypes ..> ContentTypes_PostType
+  ContentTypes_ContentTypes ..> ContentTypes_Taxonomy
+  ContentTypes_ContentTypes ..> RestApi_Request
+  ContentTypes_ContentTypes <|-- ContentTypes_PostType
+  ContentTypes_ContentTypes <|-- ContentTypes_Taxonomy
+  ContentTypes_PostType ..> RestApi_Request
+  ContentTypes_Taxonomy ..> RestApi_Request
+  Data_Json ..> Data_Json
+  Data_LanguageArray ..> Data_LanguageArray
+  Db_Query_AbstractQuery ..> Db_SqlCacher
+  Db_Query_AbstractQuery <|-- Db_Query_AuthorPostsCounterQuery
+  Db_Query_AbstractQuery <|-- Db_Query_BlogsInNetworkQuery
+  Db_Query_AbstractQuery <|-- Db_Query_CleanupOptionsQuery
+  Db_Query_AbstractQuery <|-- Db_Query_DatePostsCounterQuery
+  Db_Query_AbstractQuery <|-- Db_Query_MonthPostsCounterQuery
+  Db_Query_AbstractQuery <|-- Db_Query_TranslatedPostIdQuery
+  Db_Query_AbstractQuery <|-- Db_Query_YearPostsCounterQuery
+  Frontend_Block ..> Options_Options
+  Frontend_Block ..> Plugin
+  Frontend_ContentFilter ..> Frontend_Output
+  Frontend_ContentFilter ..> Options_Options
+  Frontend_Map_HrefLang ..> Blog_Collection
+  Frontend_Output ..> Frontend_Map_HrefLang
+  Frontend_Output ..> Frontend_Output
+  Frontend_Output ..> Link_Link
+  Frontend_Output ..> Options_Options
+  Frontend_ShortCode ..> Frontend_Widget
+  Frontend_Widget ..> Component_Component
+  Link_Link ..> Link_ImageOnly
+  Link_Link ..> Link_LinkInterface
+  Link_Link ..> Link_TextImage
+  Link_Link ..> Link_TextOnly
+  Link_Link <|-- Link_ImageOnly
+  Link_Link <|-- Link_TextImage
+  Link_Link <|-- Link_TextOnly
+  Link_LinkInterface <|-- Link_ImageOnly
+  Link_LinkInterface <|-- Link_Link
+  Link_LinkInterface <|-- Link_TextImage
+  Link_LinkInterface <|-- Link_TextOnly
+  Options_Options ..> Admin_Icon
+  Options_Options ..> Component_Icon_IconPng
+  Options_Options ..> Options_Options
+  Options_Options ..> Options_OptionsInterface
+  Options_Options ..> Options_Post_Post
+  Options_Options ..> Options_Query_Query
+  Options_Options ..> Options_Tax_Tax
+  Options_Options ..> Plugin
+  Options_Options <|-- Options_Post_Post
+  Options_Options <|-- Options_Query_Query
+  Options_Options <|-- Options_Tax_Tax
+  Options_OptionsInterface <|-- Options_Options
+  Options_Post_Post ..> Options_Options
+  Options_Query_Author ..> Db_Query_AuthorPostsCounterQuery
+  Options_Query_Author ..> Db_SqlCacher
+  Options_Query_Day ..> Db_Query_DatePostsCounterQuery
+  Options_Query_Day ..> Db_SqlCacher
+  Options_Query_Month ..> Db_Query_MonthPostsCounterQuery
+  Options_Query_Month ..> Db_SqlCacher
+  Options_Query_PostType ..> Db_SqlCacher
+  Options_Query_Query ..> Db_SqlCacher
+  Options_Query_Query ..> Options_Options
+  Options_Query_Query ..> Options_Query_Author
+  Options_Query_Query ..> Options_Query_Day
+  Options_Query_Query ..> Options_Query_Month
+  Options_Query_Query ..> Options_Query_PostType
+  Options_Query_Query ..> Options_Query_Query
+  Options_Query_Query ..> Options_Query_Year
+  Options_Query_Query <|-- Options_Query_Author
+  Options_Query_Query <|-- Options_Query_Day
+  Options_Query_Query <|-- Options_Query_Month
+  Options_Query_Query <|-- Options_Query_PostType
+  Options_Query_Query <|-- Options_Query_Year
+  Options_Query_Year ..> Db_Query_YearPostsCounterQuery
+  Options_Query_Year ..> Db_SqlCacher
+  Options_Tax_OptionsTaxInterface ..> Options_Tax_OptionsTaxInterface
+  Options_Tax_OptionsTaxInterface <|-- Options_Tax_Category
+  Options_Tax_OptionsTaxInterface <|-- Options_Tax_Tax
+  Options_Tax_OptionsTaxInterface <|-- Options_Tax_Term
+  Options_Tax_Tax ..> Options_Options
+  Options_Tax_Tax ..> Options_Tax_Category
+  Options_Tax_Tax ..> Options_Tax_OptionsTaxInterface
+  Options_Tax_Tax ..> Options_Tax_Tax
+  Options_Tax_Tax ..> Options_Tax_Term
+  Options_Tax_Tax <|-- Options_Tax_Term
+  Options_Tax_Term ..> Options_Options
+  Options_Tax_Term ..> Options_Tax_OptionsTaxInterface
+  Options_Tax_Term <|-- Options_Tax_Category
+  Plugin ..> Admin_Admin
+  Plugin ..> Admin_Bar
+  Plugin ..> Admin_CustomColumn
+  Plugin ..> Admin_CustomColumnTaxonomy
+  Plugin ..> Admin_CustomFilter
+  Plugin ..> Admin_MetaBox
+  Plugin ..> Admin_PostListActions
+  Plugin ..> Admin_PostTag_PostTag
+  Plugin ..> Admin_TranslationPicker_Page
+  Plugin ..> ContentImport_Service
+  Plugin ..> Db_Query_BlogsInNetworkQuery
+  Plugin ..> Db_Query_CleanupOptionsQuery
+  Plugin ..> Db_SqlCacher
+  Plugin ..> Frontend_Block
+  Plugin ..> Frontend_ContentFilter
+  Plugin ..> Frontend_ShortCode
+  Plugin ..> Frontend_Widget
+  Plugin ..> Options_Options
+  Plugin ..> Request_Fields
+  Plugin ..> RestApi_Request
+  Plugin ..> RestApi_RestApi
+  Registry_GetSet ..> Registry_GetSet
+  Registry_GetSet <|-- Link_Link
+  Registry_GetSet <|-- Options_Options
+  Registry_Instance ..> Registry_Registry
+  Registry_Instance <|-- Blog_Collection
+  Registry_Instance <|-- ContentImport_AttachmentPathFinder
+  Registry_Instance <|-- ContentImport_ContentImporter
+  Registry_Instance <|-- ContentImport_Importers_ImportersBaseFactory
+  Registry_Instance <|-- ContentImport_Importers_Map
+  Registry_Instance <|-- ContentImport_LogWriters_AdminNoticeLogger
+  Registry_Instance <|-- ContentImport_MetaBox
+  Registry_Instance <|-- ContentImport_Service
+  Registry_Instance <|-- ContentTypes_ContentTypes
+  Registry_Instance <|-- Registry_GetSet
+  Registry_Registry ..> Registry_Registry
+  RestApi_Request ..> Request_Fields
+  RestApi_RestApi ..> Blog_Collection
+  RestApi_RestApi ..> Db_Query_TranslatedPostIdQuery
+  RestApi_RestApi ..> Db_SqlCacher
+  RestApi_RestApi ..> Options_Post_Post
+  RestApi_RestApi ..> Options_Tax_Tax
 @enduml

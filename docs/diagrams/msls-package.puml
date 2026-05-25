@@ -1,5 +1,13 @@
 @startuml package-related-diagram
   package lloc.Msls as Msls {
+    package Options {
+      package Post {
+      }
+      package Tax {
+      }
+      package Query {
+      }
+    }
     package ContentImport {
       package LogWriters {
       }
@@ -16,39 +24,133 @@
         }
       }
     }
+    package Frontend {
+      package Map {
+      }
+    }
+    package Admin {
+      package TranslationPicker {
+      }
+      package PostTag {
+      }
+    }
     package Component {
       package Input {
       }
       package Icon {
       }
     }
-    package Map {
+    package Cli {
     }
-    package Query {
+    package Blog {
+    }
+    package RestApi {
+    }
+    package Link {
+    }
+    package Registry {
+    }
+    package Db {
+      package Query {
+      }
+    }
+    package Request {
+    }
+    package ContentTypes {
+    }
+    package Data {
     }
   }
-  Msls --> Input
-  Msls <-[#red,plain,thickness=4]-> Query
-  Msls --> Component
-  Msls <-[#red,plain,thickness=4]-> Map
-  Msls <-[#red,plain,thickness=4]-> ContentImport
-  Msls <-[#red,plain,thickness=4]-> Icon
+
+  Msls <-[#red,plain,thickness=4]-> Admin
+  Msls --> PostTag
+  Msls <-[#red,plain,thickness=4]-> TranslationPicker
+  Msls --> Query
+  Msls --> Db
+  Msls <-[#red,plain,thickness=4]-> Frontend
+  Msls <-[#red,plain,thickness=4]-> Options
+  Msls --> Request
+  Msls --> RestApi
+  Options <-[#red,plain,thickness=4]-> Admin
+  Options --> Icon
+  Options <-[#red,plain,thickness=4]-> Post
+  Options <-[#red,plain,thickness=4]-> Query
+  Options <-[#red,plain,thickness=4]-> Tax
+  Options --> Registry
+  Query --> Db
+  Query --> Query
+  ContentImport --> Options
+  ContentImport --> Tax
+  ContentImport --> Blog
   ContentImport --> Component
   ContentImport <-[#red,plain,thickness=4]-> Importers
+  ContentImport --> Post
+  ContentImport --> Msls
+  ContentImport --> Registry
+  ContentImport --> Request
+  ContentImport --> RestApi
   ContentImport <-[#red,plain,thickness=4]-> LogWriters
+  ContentImport <-[#red,plain,thickness=4]-> Admin
   LogWriters --> Component
-  LogWriters --> Msls
+  LogWriters --> Registry
   Importers <-[#red,plain,thickness=4]-> PostFields
-  Importers --> Msls
+  Importers --> Registry
   Importers <-[#red,plain,thickness=4]-> Terms
+  Importers --> RestApi
   Importers <-[#red,plain,thickness=4]-> PostThumbnail
   Importers <-[#red,plain,thickness=4]-> PostMeta
   Importers <-[#red,plain,thickness=4]-> Attachments
   PostMeta --> ContentImport
   PostThumbnail --> ContentImport
   Terms --> ContentImport
-  Terms --> Msls
+  Terms --> Tax
   PostFields --> ContentImport
+  Frontend --> Options
+  Frontend --> Admin
+  Frontend --> Map
+  Frontend --> Link
+  Frontend --> Component
+  Map --> Blog
+  Admin --> Component
+  Admin --> Icon
+  Admin <-[#red,plain,thickness=4]-> TranslationPicker
+  Admin <-[#red,plain,thickness=4]-> Blog
+  Admin --> Data
+  Admin --> Post
+  Admin --> Request
+  Admin --> RestApi
+  Admin --> ContentTypes
+  Admin --> Input
+  Admin --> Query
+  Admin --> Db
+  Admin --> Tax
+  Admin --> Link
+  Admin --> Registry
+  TranslationPicker --> Blog
+  TranslationPicker --> ContentTypes
+  TranslationPicker --> Db
+  TranslationPicker --> Query
+  PostTag --> Admin
+  PostTag --> Blog
+  PostTag --> Component
+  PostTag --> Tax
+  PostTag --> Data
+  PostTag --> Request
+  PostTag --> RestApi
   Input --> Component
   Icon --> Component
+  Icon --> Msls
+  Blog --> Options
+  Blog --> Msls
+  Blog --> Registry
+  RestApi --> Blog
+  RestApi --> Db
+  RestApi --> Query
+  RestApi --> Post
+  RestApi --> Tax
+  RestApi --> Request
+  Link --> Registry
+  Query --> Db
+  ContentTypes --> RestApi
+  ContentTypes --> Registry
 @enduml
