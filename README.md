@@ -14,7 +14,7 @@ A simple, powerful, and user-friendly plugin that adds multilingual support to y
 
 _Please note that while the master branch on GitHub is intended to be stable, it is not recommended for production use. Instead, please use the [official releases](https://github.com/lloc/Multisite-Language-Switcher/releases) for deployment._
 
-If you plan to use the GitHub repository on a server, don't forget to run `composer install --no-dev`.
+If you plan to use the GitHub repository on a server, run `composer run install-prod`. It installs the production PHP dependencies and builds the assets required at runtime (flag definitions, JavaScript bundles, CSS, and the Gutenberg block). The script requires PHP, Composer, and Node.js / npm to be available on the machine.
 
 ## Installation Instructions
 
