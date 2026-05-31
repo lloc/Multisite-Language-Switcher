@@ -138,6 +138,11 @@ class MslsOutput extends MslsMain {
 			return apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
 		}
 
+		$default = apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
+		if ( '' !== $default ) {
+			array_unshift( $arr, $default );
+		}
+
 		$arr = (array) apply_filters( self::MSLS_ALTERNATE_LINKS_ARR_HOOK, $arr );
 
 		return implode( PHP_EOL, $arr );

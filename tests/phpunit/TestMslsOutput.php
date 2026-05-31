@@ -65,6 +65,57 @@ final class TestMslsOutput extends MslsUnitTestCase {
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
+		Filters\expectApplied( 'msls_output_get_alternate_links_default' )->once();
+		Filters\expectApplied( 'msls_output_get_alternate_links_arr' )->once();
+
+		$expected =
+			'<link rel="alternate" href="https://example.de/" hreflang="x-default" />' . PHP_EOL .
+			'<link rel="alternate" href="https://example.de/" hreflang="de" />' . PHP_EOL .
+			'<link rel="alternate" href="https://example.it/" hreflang="it" />';
+
+		$test = $this->MslsOutputFactory();
+
+		$this->assertEquals( $expected, $test->get_alternate_links() );
+	}
+
+	public function test_get_alternate_links_x_default_suppressed(): void {
+		$blogs = array();
+
+		$a = \Mockery::mock( MslsBlog::class );
+		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
+		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
+		$a->shouldReceive( 'get_url' )->andReturn( 'https://example.de/' );
+		$a->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
+
+		$blogs[] = $a;
+
+		$b = \Mockery::mock( MslsBlog::class );
+		$b->shouldReceive( 'get_alpha2' )->andReturn( 'it' );
+		$b->shouldReceive( 'get_language' )->andReturn( 'it_IT' );
+		$b->shouldReceive( 'get_url' )->andReturn( 'https://example.it/' );
+		$b->shouldReceive( 'get_description' )->andReturn( 'Italiano' );
+
+		$blogs[] = $b;
+
+		$collection = \Mockery::mock( MslsBlogCollection::class );
+		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
+
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		Functions\expect( 'is_admin' )->once()->andReturn( false );
+		Functions\expect( 'is_front_page' )->once()->andReturn( false );
+		Functions\expect( 'is_search' )->once()->andReturn( false );
+		Functions\expect( 'is_404' )->once()->andReturn( false );
+		Functions\expect( 'is_category' )->once()->andReturn( false );
+		Functions\expect( 'is_tag' )->once()->andReturn( false );
+		Functions\expect( 'is_tax' )->once()->andReturn( false );
+		Functions\expect( 'is_date' )->once()->andReturn( false );
+		Functions\expect( 'is_author' )->once()->andReturn( false );
+		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
+		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
+		Functions\expect( 'get_option' )->once()->andReturn( array() );
+
+		// Returning an empty string from the filter opts out of x-default.
+		Filters\expectApplied( 'msls_output_get_alternate_links_default' )->once()->andReturn( '' );
 		Filters\expectApplied( 'msls_output_get_alternate_links_arr' )->once();
 
 		$expected =
