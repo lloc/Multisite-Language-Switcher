@@ -10,10 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Get the output for using the links to the translations in your code
  *
  * @package Msls
- * @param mixed $attr
+ * @since 3.0.0 The $attr parameter is optional and defaults to an empty array.
+ * @param mixed $attr Optional. Attributes forwarded to the switcher output. Default empty array.
  * @return string
  */
-function msls_get_switcher( $attr ): string {
+function msls_get_switcher( $attr = array() ): string {
 	$arr = is_array( $attr ) ? $attr : array();
 	$obj = apply_filters( 'msls_get_output', null );
 
