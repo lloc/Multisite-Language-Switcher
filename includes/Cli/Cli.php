@@ -37,9 +37,22 @@ final class Cli {
 		$blog           = msls_blog( $locale );
 
 		if ( is_null( $blog ) ) {
-			\WP_CLI::error( sprintf( 'No blog with locale %1$s found!', esc_attr( $locale ) ) );
+			\WP_CLI::error(
+				sprintf(
+					/* translators: %s: locale code, e.g. de_DE. */
+					esc_html__( 'No blog with locale %1$s found!', 'multisite-language-switcher' ),
+					esc_attr( $locale )
+				)
+			);
 		} else {
-			\WP_CLI::success( sprintf( 'Blog ID %1$d has locale %2$s!', $blog->userblog_id, esc_attr( $locale ) ) );
+			\WP_CLI::success(
+				sprintf(
+					/* translators: 1: blog ID, 2: locale code, e.g. de_DE. */
+					esc_html__( 'Blog ID %1$d has locale %2$s!', 'multisite-language-switcher' ),
+					$blog->userblog_id,
+					esc_attr( $locale )
+				)
+			);
 		}
 	}
 }

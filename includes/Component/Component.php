@@ -20,6 +20,7 @@ abstract class Component {
 			'data-target-blog-id' => true,
 			'data-source-post-id' => true,
 			'data-source-blog-id' => true,
+			'data-edit-title'     => true,
 		),
 		'form'   => array(
 			'action' => true,
