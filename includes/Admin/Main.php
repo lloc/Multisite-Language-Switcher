@@ -148,7 +148,7 @@ class Main {
 			 *
 			 * @since 0.9.9
 			 */
-			do_action( self::MSLS_SAVE_ACTION, $object_id, $class_name );
+			do_action( self::MSLS_SAVE_ACTION, $object_id, $class_name ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 
 			return;
 		}

@@ -66,6 +66,6 @@ class HrefLang {
 		 *
 		 * @since 0.9.9
 		 */
-		return (string) apply_filters( self::MSLS_HEAD_HREFLANG_HOOK, $language );
+		return (string) apply_filters( self::MSLS_HEAD_HREFLANG_HOOK, $language ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 	}
 }
