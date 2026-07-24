@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Composer dependencies
         run: composer install
       - name: Run Testsuite
@@ -19,13 +19,13 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout project
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Composer dependencies
         run: composer install
       - name: Run Testsuite
         run: composer phpunit:clover
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v6.0.1
+        uses: codecov/codecov-action@v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: tests/coverage.xml
