@@ -162,16 +162,19 @@ class Icon {
 		$target_blog_id = get_current_blog_id();
 
 		/* translators: %s: blog name */
-		$format = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
-		$title  = sprintf( $format, $this->language );
+		$title = sprintf( __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
+
+		/* translators: %s: blog name */
+		$edit_title = sprintf( __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
 
 		return sprintf(
-			'<button type="button" class="msls-quick-create" title="%1$s" aria-label="%1$s" data-target-blog-id="%2$d" data-source-post-id="%3$d" data-source-blog-id="%4$d">%5$s</button>&nbsp;',
+			'<button type="button" class="msls-quick-create" title="%1$s" aria-label="%1$s" data-target-blog-id="%2$d" data-source-post-id="%3$d" data-source-blog-id="%4$d" data-edit-title="%6$s">%5$s</button>&nbsp;',
 			esc_attr( $title ),
 			$target_blog_id,
 			$this->id,
 			$source_blog_id,
-			$this->get_icon()
+			$this->get_icon(),
+			esc_attr( $edit_title )
 		);
 	}
 
