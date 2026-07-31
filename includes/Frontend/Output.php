@@ -98,7 +98,7 @@ class Output extends Main {
 					 *
 					 * @since 0.9.8
 					 */
-					$arr[] = (string) apply_filters( self::MSLS_GET_HOOK, $url, $link, $is_current_blog );
+					$arr[] = (string) apply_filters( self::MSLS_GET_HOOK, $url, $link, $is_current_blog ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 				} else {
 					$arr[] = sprintf(
 						'<a href="%s" title="%s"%s>%s</a>',
@@ -127,7 +127,7 @@ class Output extends Main {
 		$default   = '';
 
 		foreach ( $blogs->get_objects() as $blog ) {
-			$url = apply_filters( self::MSLS_ALTERNATE_LINKS_HOOK, $blog->get_url( $options ), $blog );
+			$url = apply_filters( self::MSLS_ALTERNATE_LINKS_HOOK, $blog->get_url( $options ), $blog ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 			if ( empty( $url ) ) {
 				continue;
 			}
@@ -143,10 +143,10 @@ class Output extends Main {
 		}
 
 		if ( 1 === count( $arr ) ) {
-			return apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
+			return apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 		}
 
-		$arr = (array) apply_filters( self::MSLS_ALTERNATE_LINKS_ARR_HOOK, $arr );
+		$arr = (array) apply_filters( self::MSLS_ALTERNATE_LINKS_ARR_HOOK, $arr ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 
 		return implode( PHP_EOL, $arr );
 	}
@@ -159,7 +159,7 @@ class Output extends Main {
 	public function __toString() {
 		$arr = $this->get( $this->options->display, false, isset( $this->options->only_with_translation ) );
 		if ( empty( $arr ) ) {
-			return apply_filters( self::MSLS_NO_TRANSLATION_FOUND_HOOK, '' );
+			return apply_filters( self::MSLS_NO_TRANSLATION_FOUND_HOOK, '' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 		}
 
 		$tags = $this->get_tags();
@@ -190,7 +190,7 @@ class Output extends Main {
 			 *
 			 * @since 1.0
 			 */
-			$this->tags = (array) apply_filters( self::MSLS_GET_TAGS_HOOK, $this->tags );
+			$this->tags = (array) apply_filters( self::MSLS_GET_TAGS_HOOK, $this->tags ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 		}
 
 		return $this->tags;

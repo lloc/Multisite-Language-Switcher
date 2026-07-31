@@ -253,7 +253,7 @@ final class Admin extends Main {
 		 *
 		 * @since 1.0
 		 */
-		do_action( self::MSLS_REGISTER_ACTION, __CLASS__ );
+		do_action( self::MSLS_REGISTER_ACTION, __CLASS__ ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 	}
 
 	/**
@@ -357,7 +357,7 @@ final class Admin extends Main {
 		 *
 		 * @since 2.4.4
 		 */
-		do_action( self::MSLS_ACTION_PREFIX . $section, __CLASS__, $section );
+		do_action( self::MSLS_ACTION_PREFIX . $section, __CLASS__, $section ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- MSLS_ACTION_PREFIX is already prefixed with "msls_".
 
 		return count( $map );
 	}

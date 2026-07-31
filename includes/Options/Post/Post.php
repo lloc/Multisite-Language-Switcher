@@ -44,7 +44,7 @@ class Post extends Options {
 
 		$post_link = apply_filters_deprecated( 'check_url', array( $post_link, $this ), '2.7.1', Options::MSLS_GET_POSTLINK_HOOK );
 
-		return apply_filters( Options::MSLS_GET_POSTLINK_HOOK, $post_link, $this );
+		return apply_filters( Options::MSLS_GET_POSTLINK_HOOK, $post_link, $this ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 	}
 
 	/**

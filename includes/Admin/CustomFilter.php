@@ -86,6 +86,7 @@ final class CustomFilter extends Main {
 		$sql_cache = SqlCacher::create( __CLASS__, __METHOD__ );
 
 		// Load post we need to exclude (they already have a translation) from search query.
+		// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- admin-only, paginated post-list screen; the excluded-ID set is bounded by TranslatedPostIdQuery, not attacker-controlled.
 		$query->query_vars['post__not_in'] = ( new TranslatedPostIdQuery( $sql_cache ) )( $blog->get_language() );
 
 		return $query;

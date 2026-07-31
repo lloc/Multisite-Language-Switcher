@@ -296,7 +296,7 @@ class ContentImporter extends Instance {
 		 *
 		 * @param ImportCoordinates $import_coordinates
 		 */
-		do_action( self::MSLS_BEFORE_IMPORT_ACTION, $import_coordinates );
+		do_action( self::MSLS_BEFORE_IMPORT_ACTION, $import_coordinates ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 
 		/**
 		 * Filters the data before the import runs.
@@ -357,7 +357,7 @@ class ContentImporter extends Instance {
 		 *
 		 * @since TBD
 		 */
-		do_action( self::MSLS_AFTER_IMPORT_ACTION, $import_coordinates, $logger, $relations );
+		do_action( self::MSLS_AFTER_IMPORT_ACTION, $import_coordinates, $logger, $relations ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 
 		/**
 		 * Filters the data after the import ran.

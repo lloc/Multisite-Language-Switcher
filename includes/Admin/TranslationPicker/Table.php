@@ -179,6 +179,7 @@ class Table extends \WP_List_Table {
 			'post_status'    => array( 'publish', 'draft', 'pending', 'future' ),
 			'posts_per_page' => $per_page,
 			'paged'          => $current_page,
+			// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- admin-only, paginated translation-picker list; excluded-ID set comes from TranslatedPostIdQuery, not attacker-controlled.
 			'post__not_in'   => $translated_ids,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
