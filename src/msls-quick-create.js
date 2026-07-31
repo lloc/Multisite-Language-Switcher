@@ -26,9 +26,10 @@ jQuery( document ).ready(
 				).then(
 					function ( response ) {
 						var isMetabox = $button.closest( '#msls' ).length > 0;
+						var editTitle = $button.data( 'edit-title' ) || $button.attr( 'title' );
 						var $link = $( '<a>' )
 							.attr( 'href', response.edit_url )
-							.attr( 'title', $button.attr( 'title' ).replace( /Create/, 'Edit' ) )
+							.attr( 'title', editTitle )
 							.html( $button.html() );
 
 						if ( isMetabox ) {

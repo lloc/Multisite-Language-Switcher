@@ -55,7 +55,7 @@ class Widget extends \WP_Widget {
 		$content = msls_output()->__toString();
 		if ( '' === $content ) {
 			$text    = __( 'No available translations found', 'multisite-language-switcher' );
-			$content = apply_filters( self::MSLS_ALTERNATIVE_CONTENT_HOOK, $text );
+			$content = apply_filters( self::MSLS_ALTERNATIVE_CONTENT_HOOK, $text ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 		}
 
 		echo wp_kses(
