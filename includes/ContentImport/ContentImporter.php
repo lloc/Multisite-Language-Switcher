@@ -133,6 +133,10 @@ class ContentImporter extends Instance {
 			return $data;
 		}
 
+		if ( ! current_user_can( 'edit_post', $dest_post_id ) ) {
+			return $data;
+		}
+
 		$import_coordinates = new ImportCoordinates();
 
 		$import_coordinates->source_blog_id = $source_blog_id;
