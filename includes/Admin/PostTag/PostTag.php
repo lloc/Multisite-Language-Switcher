@@ -144,7 +144,7 @@ class PostTag extends Main {
 		$this->the_input( null, $title_format, $item_format );
 		echo '</div>';
 
-		do_action( self::MSLS_ADD_INPUT_ACTION, $taxonomy );
+		do_action( self::MSLS_ADD_INPUT_ACTION, $taxonomy ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 	}
 
 	/**
@@ -179,7 +179,7 @@ class PostTag extends Main {
 
 		$this->the_input( $tag, $title_format, $item_format );
 
-		do_action( self::MSLS_EDIT_INPUT_ACTION, $tag, $taxonomy );
+		do_action( self::MSLS_EDIT_INPUT_ACTION, $tag, $taxonomy ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 	}
 
 	/**

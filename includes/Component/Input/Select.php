@@ -36,7 +36,7 @@ final class Select extends Component {
 	 * @return string
 	 */
 	public function render(): string {
-		$name = apply_filters( self::RENDER_FILTER, 'msls[' . $this->key . ']' );
+		$name = apply_filters( self::RENDER_FILTER, 'msls[' . $this->key . ']' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 
 		return sprintf(
 			'<select id="%1$s" name="%2$s">%3$s</select>',

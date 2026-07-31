@@ -1,0 +1,20 @@
+{
+  "posts": {
+    "": {
+      "id": 36,
+      "slug": "msls-demo-en",
+      "link": "http://localhost:8889/msls-demo-en/"
+    },
+    "de": {
+      "id": 22,
+      "slug": "msls-demo-de",
+      "link": "http://localhost:8889/de/msls-demo-de/"
+    },
+    "it": {
+      "id": 22,
+      "slug": "msls-demo-it",
+      "link": "http://localhost:8889/it/msls-demo-it/"
+    }
+  },
+  "body": "<p>Demo body. Switcher below:</p>\n[sc_msls]"
+}

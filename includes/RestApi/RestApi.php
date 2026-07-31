@@ -406,6 +406,7 @@ class RestApi {
 			'post_type'        => $post_type,
 			'post_status'      => self::UNTRANSLATED_POST_STATUSES,
 			'numberposts'      => self::UNTRANSLATED_POSTS_LIMIT,
+			// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- capability-checked REST route, bounded by UNTRANSLATED_POSTS_LIMIT; excluded-ID set comes from TranslatedPostIdQuery, not attacker-controlled.
 			'post__not_in'     => $translated_ids,
 			'suppress_filters' => false,
 			'orderby'          => 'date',
