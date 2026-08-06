@@ -143,7 +143,7 @@ mentioned only for completeness.
 
 ## Deprecated functions
 
-The following pre-2.10.1 names live in `includes/deprectated.php`. Each one
+The following pre-2.10.1 names live in `includes/deprecated.php`. Each one
 still works but emits a `_deprecated_function()` notice and simply forwards
 to its modern `msls_*` replacement. Update calls in your code at your
 earliest convenience.

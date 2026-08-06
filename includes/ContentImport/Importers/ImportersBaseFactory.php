@@ -54,7 +54,7 @@ abstract class ImportersBaseFactory extends Instance implements ImportersFactory
 		 * @param array $map A map of importers in the shape [ <importer-slug> => <importer-class> ]
 		 * @param ImportCoordinates $import_coordinates
 		 *
-		 * @since TBD
+		 * @since 2.4.0
 		 */
 		$map = apply_filters( "msls_content_import_{$type}_importers_map", $this->importers_map, $import_coordinates );
 

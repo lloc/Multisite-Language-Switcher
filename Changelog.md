@@ -1,3 +1,20 @@
+## 3.0.0
+
+* Add Quick Create for translations: create the translated post straight from the editor metabox, or pick a source post on the new "Add from Translation" submenu (single and bulk), backed by a REST endpoint and switchable in the settings.
+* Add `msls_quick_create_capability` so integrations can override the Quick Create permission checks, plus filters for the post data, the inserted post, the response, the untranslated-posts list, and the mapped taxonomy terms.
+* Add filter hooks for the AJAX suggest results of the post and term metaboxes.
+* Restructure `lloc\Msls\` into per-concern sub-namespaces (`Admin\`, `Blog\`, `ContentImport\`, `ContentTypes\`, `Frontend\`, `Link\`, `Options\`, `Registry\`, `RestApi\`). Every former flat `Msls*` class name keeps working through the aliases in `includes/aliases.php`.
+* Move the public helper functions into `includes/api.php` and make the `$attr` argument of `msls_get_switcher()` optional.
+* Add a PHP-DI container for service construction.
+* Documentation: add a developer reference under `docs/` (public API, hooks, snippets, acknowledgements) and refresh the class and package diagrams.
+* Fix: check authorization on the destination post during content import, and correct the ContentImporter permission and post type checks.
+* Fix: do not fall back to `home_url()` for taxonomy and query archives.
+* Fix: broken links on the page for the latest posts.
+* Fix: several issues in the blog collection.
+* i18n: close gaps in the WP-CLI messages and the Quick Create button title.
+* Internal: strict typing throughout, PHPStan level 8 clean, `ABSPATH` guards, Plugin Check and PHPCS findings addressed, wp-env setup for local multisite development.
+* Maintenance: numerous dependency updates.
+
 ## 2.10.1
 * Fix: Deprecated function warning pointed to non-existent function.
 * Documentation: update README.md code snippets to reflect new function names.

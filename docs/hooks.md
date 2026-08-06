@@ -23,10 +23,14 @@ switcher renderer for the entire site or per template.
 
 ### msls_output_get
 
-Filter applied to the HTML link for every individual language item before it
-joins the output array. Use it to wrap, decorate, or replace the per-language
-anchor — for example to add a CSS class, swap in a button element, or
-append a flag image only on the current language.
+Filter that builds the markup for every individual language item before it
+joins the output array. It receives the target URL (not the finished anchor),
+the `LinkInterface` object, and whether the item points at the current blog —
+so the return value has to be the complete HTML for that item. When no
+callback is attached, MSLS renders its own default anchor instead. Use it to
+wrap, decorate, or replace the per-language link — for example to add a CSS
+class, swap in a button element, or append a flag image only on the current
+language.
 
 ### msls_output_get_tags
 
@@ -356,6 +360,15 @@ that expects another name shape.
 
 ## REST API and Quick Create
 
+### msls_quick_create_capability
+
+Filter on the result of the Quick Create capability check. Alongside the
+default decision you get the source post ID (`0` for list-style checks), the
+source and target blog IDs, and a `$context` of either `read` (checking access
+to the source post) or `create` (checking the right to insert on the target
+blog). Use it to let a translator without an account on the source blog mirror
+a post into the target blog, or to tighten the default checks.
+
 ### msls_quick_create_post_data
 
 Filter on the post data array (title, content, status, post type, …) that
@@ -444,22 +457,26 @@ applies across every import, not just the current one.
 
 ### msls_content_import_{type}_importer
 
-Dynamic filter, with `{type}` being one of `post-fields`, `post-meta`,
-`terms`, `post-thumbnail`, `attachments`, etc. Returning an `Importer`
-instance here forces the factory to use that importer for the corresponding
-content type, bypassing the slug-based selection.
+Dynamic filter, with `{type}` being the type of one of the five importer
+factories: `post-fields`, `post-meta`, `terms`, `post-thumbnail`, or
+`attachments`. Returning an `Importer` instance here forces the factory to use
+that importer for the corresponding content type, bypassing the slug-based
+selection.
 
 ### msls_content_import_{type}_importers_map
 
-Dynamic filter, with `{type}` matching one of the factories. It filters the
-map of available importer implementations (slug ⇒ class) for that content
-type. Use it to register a new importer flavor alongside the built-ins.
+Dynamic filter, with `{type}` being one of the five factory types listed
+above. It filters the map of available importer implementations
+(slug ⇒ class) for that content type. Use it to register a new importer
+flavor alongside the built-ins.
 
-### msls_content_import_{slug}_selected
+### msls_content_import_{type}_selected
 
 Dynamic filter that picks which importer slug is "selected" for a given
-factory. Use it to programmatically switch between competing importer
-implementations — for example based on the post type or destination blog.
+factory — `{type}` is again one of the five factory types. The default is the
+first entry of the factory's importers map. Use it to programmatically switch
+between competing importer implementations, for example based on the post type
+or destination blog.
 
 ### msls_content_import_log_writer
 

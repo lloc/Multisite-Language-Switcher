@@ -308,7 +308,7 @@ class ContentImporter extends Instance {
 		 * @param array $post_fields
 		 * @param ImportCoordinates $import_coordinates
 		 *
-		 * @since TBD
+		 * @since 2.4.0
 		 */
 		$post_fields = apply_filters( 'msls_content_import_data_before_import', $post_fields, $import_coordinates );
 
@@ -359,7 +359,7 @@ class ContentImporter extends Instance {
 		 * @param ImportLogger $logger
 		 * @param Relations $relations
 		 *
-		 * @since TBD
+		 * @since 2.4.0
 		 */
 		do_action( self::MSLS_AFTER_IMPORT_ACTION, $import_coordinates, $logger, $relations ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 
