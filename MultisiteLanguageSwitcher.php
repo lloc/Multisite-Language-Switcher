@@ -54,7 +54,7 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		'plugins_loaded',
 		function () {
 			require_once __DIR__ . '/includes/aliases.php';
-			require_once __DIR__ . '/includes/deprectated.php';
+			require_once __DIR__ . '/includes/deprecated.php';
 			require_once __DIR__ . '/includes/api.php';
 
 			$builder = new DI\ContainerBuilder();
