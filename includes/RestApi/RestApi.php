@@ -252,7 +252,7 @@ class RestApi {
 		 * @param int    $target_blog_id Target blog ID.
 		 * @param string $context        'read' when checking the source, 'create' when checking the target.
 		 *
-		 * @since TBD
+		 * @since 3.0.0
 		 */
 		return (bool) apply_filters(
 			'msls_quick_create_capability',
@@ -299,7 +299,7 @@ class RestApi {
 		 * @param int      $source_blog_id The source blog ID.
 		 * @param int      $target_blog_id The target blog ID.
 		 *
-		 * @since TBD
+		 * @since 3.0.0
 		 */
 		$post_data = apply_filters( 'msls_quick_create_post_data', $post_data, $source_post, $source_blog_id, $target_blog_id );
 
@@ -333,7 +333,7 @@ class RestApi {
 		 * @param int      $source_blog_id The source blog ID.
 		 * @param int      $target_blog_id The target blog ID.
 		 *
-		 * @since TBD
+		 * @since 3.0.0
 		 */
 		do_action( 'msls_quick_create_after_insert', $new_post_id, $source_post, $source_blog_id, $target_blog_id );
 
@@ -358,7 +358,7 @@ class RestApi {
 		 * @param int      $source_blog_id The source blog ID.
 		 * @param int      $target_blog_id The target blog ID.
 		 *
-		 * @since TBD
+		 * @since 3.0.0
 		 */
 		$response_data = apply_filters(
 			'msls_quick_create_response',
@@ -440,7 +440,7 @@ class RestApi {
 		 * @param int                              $target_blog_id Target blog ID.
 		 * @param string                           $post_type      Post type queried.
 		 *
-		 * @since TBD
+		 * @since 3.0.0
 		 */
 		$items = apply_filters( 'msls_untranslated_posts', $items, $source_blog_id, $target_blog_id, $post_type );
 
@@ -549,7 +549,7 @@ class RestApi {
 		 * @param int                  $source_blog_id  The source blog ID.
 		 * @param int                  $target_blog_id  The target blog ID.
 		 *
-		 * @since TBD
+		 * @since 3.0.0
 		 */
 		$post_data['_msls_tax_input'] = apply_filters(
 			'msls_quick_create_tax_input',

@@ -5,7 +5,6 @@
 .phpunit.cache
 .phpunit.result.cache
 .vscode/
-CLAUDE.md
 assets/js/msls-widget-block/
 assets/js/msls.js
 composer.lock

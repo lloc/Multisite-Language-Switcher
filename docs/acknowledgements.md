@@ -10,9 +10,9 @@ banner.
 Thanks to all translators for their great work.
 
 *  German (de_DE) - [Dennis Ploetner](http://lloc.de/) 
-*  Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/)
+*  Italian (it_IT) - [Antonella Cucinelli](http://www.freely.de/it/)
 *  Dutch (nl_NL) - [Alexandra Kleijn](http://www.buurtaal.de/) 
-*  Brazillian Portuguese (pt_BR) - [Victor](http://www.coolweb.com.br/)
+*  Brazillian Portuguese (pt_BR) - [Coolweb](http://www.coolweb.com.br/)
 *  Spanish (es_ES) - [Andreas Breitschopp](http://www.ab-weblog.com/en/) 
 *  French (fr_FR) - [Andreas Breitschopp](http://www.ab-tools.com/en/)
 *  Russian (ru_RU) - [Andrey Vystavkin](http://j4vk.com/)
@@ -36,6 +36,7 @@ Thanks to all translators for their great work.
 *  Arabic (ar) - Mohamed Elwan
 *  Norwegian (nb_NO) - Ibrahim Qraiqe
 *  Bulgarian (bg_BG) - [Vencislav Raev](http://www.catblue.net/)
+*  Mexican Spanish (es_MX) - [Fernando Mata](https://fernandomata.mx/)
 
 You can translate this plugin on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/multisite-language-switcher/), or if you prefer and have created your own language pack, or have an update of an 
 existing one, you can [send me](mailto:re@lloc.de) your gettext PO 
