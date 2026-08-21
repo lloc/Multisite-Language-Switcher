@@ -50,6 +50,33 @@ function storageStatePath(slug: Subsite['slug']): string {
   return path.join(STORAGE_STATE_DIR, `${name}.json`);
 }
 
+function readWpLang(slug: Subsite['slug']): string {
+  try {
+    return wpEnvCli(`wp option get WPLANG --url=${urlFor(slug)}`);
+  } catch {
+    // wp-cli exits non-zero when the option does not exist yet.
+    return '';
+  }
+}
+
+function ensureCoreLanguages(): void {
+  // WordPress sanitizes WPLANG against get_available_languages(): a locale
+  // without an installed translation is silently dropped — and wp-cli still
+  // reports "Success". Without the packs every blog stays en_US and MSLS sees
+  // three identical languages. See Blog/Collection::get_blog_language(), which
+  // reads WPLANG per blog (the msls option's blog_language is not consulted).
+  const locales = SUBSITES.map(({ wplang }) => wplang).filter(Boolean);
+  if (locales.length === 0) {
+    return;
+  }
+
+  try {
+    wpEnvCli(`wp language core install ${locales.join(' ')}`);
+  } catch {
+    // Nothing to add — wp-cli exits non-zero when all packs are present.
+  }
+}
+
 function ensureMultisiteTopology(): void {
   const network = wpEnvCli('wp eval "echo is_multisite() ? \'1\' : \'0\';"');
   if (network !== '1') {
@@ -57,6 +84,8 @@ function ensureMultisiteTopology(): void {
       'wp-env tests environment is not multisite. Check .wp-env.json has "multisite": true.'
     );
   }
+
+  ensureCoreLanguages();
 
   // wp site list has no --slug filter and --path is a global flag, so we list
   // all sites once and match by URL substring.
@@ -79,6 +108,14 @@ function ensureMultisiteTopology(): void {
     }
 
     wpEnvCli(`wp option update WPLANG ${wplang} --url=${urlFor(slug)}`);
+    const storedLang = readWpLang(slug);
+    if (storedLang !== wplang) {
+      throw new Error(
+        `WPLANG for "${slug}" is "${storedLang}" instead of "${wplang}". ` +
+          'WordPress discards locales that have no installed language pack — ' +
+          'check `wp language core list --status=installed`.'
+      );
+    }
     wpEnvCli(
       `wp option update permalink_structure '/%postname%/' --url=${urlFor(slug)}`
     );

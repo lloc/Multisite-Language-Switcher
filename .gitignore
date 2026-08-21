@@ -19,8 +19,5 @@ out/
 phpunit.xml.bak
 tests/coverage.xml
 tests/coverage/
-tests/playwright/artifacts/html-report/
-tests/playwright/artifacts/seed.json
-tests/playwright/artifacts/storage-states/
-tests/playwright/artifacts/test-results/
+tests/playwright/artifacts/
 vendor/
