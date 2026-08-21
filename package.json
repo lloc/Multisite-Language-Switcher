@@ -13,7 +13,7 @@
     "playwright:update-snapshots": "bash tests/playwright/scripts/run-in-docker.sh --project=local --update-snapshots"
   },
   "dependencies": {
-    "less": "^4.8.1",
+    "less": "^4.9.0",
     "less-plugin-clean-css": "^1.6.0",
     "uglify-js": "^3.19.3"
   },
