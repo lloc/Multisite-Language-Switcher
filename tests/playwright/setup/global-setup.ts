@@ -163,8 +163,10 @@ function seedTranslationLinkedPosts(): void {
 
     const slugForUrl =
       sub.slug === '' ? 'msls-demo-en' : `msls-demo-${sub.slug}`;
-    const titleEsc = SEED_POST_TITLES[sub.slug].replace(/"/g, '\\"');
-    const bodyEsc = SEED_POST_BODY.replace(/"/g, '\\"');
+    const titleEsc = SEED_POST_TITLES[sub.slug]
+      .replace(/\\/g, '\\\\')
+      .replace(/"/g, '\\"');
+    const bodyEsc = SEED_POST_BODY.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
     const idRaw = wpEnvCli(
       `wp post create --post_type=post --post_status=publish --post_title="${titleEsc}" --post_name=${slugForUrl} --post_content="${bodyEsc}" --porcelain --url=${url}`
