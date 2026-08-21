@@ -5,9 +5,12 @@
 .phpunit.cache
 .phpunit.result.cache
 .vscode/
+assets/css/msls.css
+assets/js/msls-quick-create.js
+assets/js/msls-translation-picker.js
 assets/js/msls-widget-block/
 assets/js/msls.js
-composer.lock
+build/translations.json
 composer.phar
 multisite-language-switcher.zip
 multisite-language-switcher/
@@ -16,7 +19,5 @@ out/
 phpunit.xml.bak
 tests/coverage.xml
 tests/coverage/
-tests/playwright-report/
-tests/playwright-results/
-tests/playwright/.env.local
+tests/playwright/artifacts/
 vendor/

@@ -42,7 +42,7 @@
       "@phpstan",
       "@phpunit"
     ],
-    "prepare": "wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
+    "prepare": "mkdir -p build && wget -O build/translations.json http://api.wordpress.org/translations/core/1.0/",
     "flags-png": "php bin/flags-png.php > assets/flags/flags.php",
     "flags-svg": "php bin/flags-svg.php > assets/css-flags/flags.php",
     "install-prod": [

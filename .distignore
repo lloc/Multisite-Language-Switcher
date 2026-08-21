@@ -6,6 +6,7 @@
 .phpstan.neon.dist
 .scrutinizer.yml
 .wp-env.json
+/.claude
 /.git
 /.github
 /.idea
