@@ -1,0 +1,3 @@
+<link rel="alternate" href="http://localhost:8889/" hreflang="en" />
+<link rel="alternate" href="http://localhost:8889/de/" hreflang="de" />
+<link rel="alternate" href="http://localhost:8889/it/" hreflang="it" />

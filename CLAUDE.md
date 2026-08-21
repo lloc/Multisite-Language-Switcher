@@ -32,15 +32,30 @@ npm run build-msls-block            # Build only the Gutenberg block
 
 ### E2E Tests
 ```bash
-npx playwright test                 # Run Playwright tests (against msls.co)
+npx wp-env start                    # Required first: the local suite runs against wp-env
+npm run playwright:local            # Admin + frontend specs (skips visual)
+npm run playwright:visual           # Visual specs inside the Playwright Linux image
+npm run playwright:docker           # Whole local suite inside that image
+npm run playwright:update-snapshots # Regenerate visual baselines
+npm run playwright:live             # Only specs/live, against msls.co
 npx playwright test --ui            # Run with UI
 ```
+Visual baselines are committed and only pixel-stable when generated inside the container —
+always use the `:visual` / `:update-snapshots` scripts, never a bare `npx playwright test`
+for them.
 
 ### Local Development Environment
 ```bash
 npx wp-env start                    # Start WordPress multisite via wp-env (PHP 8.3)
 npx wp-env stop
+npx wp-env reset tests              # Wipe the tests database (fresh-install check)
+npx wp-env run cli wp plugin activate multisite-language-switcher --network
 ```
+The plugin reaches the container through `mappings` in `.wp-env.json`, not through
+`plugins` — mounting it both ways created a duplicate `Multisite-Language-Switcher`
+plugin directory and made `wp-env start` fail. Consequence: wp-env does not auto-activate
+it, so activate it once per fresh **development** environment with the command above. The
+**tests** environment is network-activated by the Playwright global setup.
 
 ## Architecture
 
@@ -80,7 +95,15 @@ npx wp-env stop
 
 ## CI
 
-GitHub Actions runs PHPStan, PHPCS, PHPUnit, and Playwright on every pull request.
+GitHub Actions workflows:
+
+- `test.yml` — PHPUnit on every push (plus Codecov upload on `master`)
+- `e2e.yml` — the Playwright `local` project (admin + frontend specs) on pull requests and
+  pushes to `master`; visual specs and the `live` project are not run in CI
+- `plugin-check.yml` — WordPress.org Plugin Check on pull requests and `master`
+- `deploy.yml` — WordPress.org deploy on tags
+
+PHPStan and PHPCS are not wired into CI yet — run them locally via `composer qa`.
 
 ## Conventions
 

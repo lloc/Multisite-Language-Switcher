@@ -13,6 +13,11 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     target-branch: 'master'
+    ignore:
+      # @wordpress/e2e-test-utils-playwright peer-requires @types/node ^20.x;
+      # block major bumps that would re-create the ERESOLVE conflict.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: composer
     directory: '/'

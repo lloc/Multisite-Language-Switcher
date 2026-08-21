@@ -1,0 +1,51 @@
+name: E2E Tests
+permissions:
+  contents: read
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  playwright:
+    name: Playwright (local project)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v7
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - name: Node dependencies
+        run: npm ci
+      # The plugin requires vendor/autoload.php for PHP-DI, and the Gutenberg
+      # block is not committed — both have to exist before wp-env loads the
+      # plugin from the mapped checkout.
+      - name: Composer dependencies
+        run: composer install --no-dev --no-interaction --optimize-autoloader
+      - name: Build assets
+        run: npm run build
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start WordPress multisite
+        run: npx wp-env start
+      # Seeds the de/it subsites and the linked demo posts via global-setup,
+      # then runs the admin and frontend specs. Visual specs are excluded —
+      # their baselines are only stable inside the Playwright Linux image.
+      - name: Run Playwright
+        run: npm run playwright:local
+      - name: Upload report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: |
+            tests/playwright/artifacts/html-report
+            tests/playwright/artifacts/test-results
+          retention-days: 7

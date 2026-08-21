@@ -1,9 +1,7 @@
 {
   "phpVersion": "8.3",
   "multisite": true,
-  "plugins": [
-    "."
-  ],
+  "plugins": [],
   "env": {
     "tests": {
       "config": {
@@ -12,7 +10,6 @@
     },
     "development": {
       "plugins": [
-        ".",
         "https://downloads.wordpress.org/plugin/query-monitor.zip"
       ]
     }

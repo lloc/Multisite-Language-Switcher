@@ -4,7 +4,13 @@
     "less": "lessc assets/css/msls.less assets/css/msls.css --clean-css=\"--s1 --advanced\"",
     "build-msls-block": "wp-scripts build --webpack-src-dir=src/msls-widget-block --output-path=assets/js/msls-widget-block",
     "build": "npm run uglify && npm run less && npm run build-msls-block",
-    "playwright": "npx playwright install --with-deps && npx playwright test"
+    "playwright": "npx playwright test",
+    "playwright:install": "npx playwright install --with-deps",
+    "playwright:local": "npx playwright test --project=local --grep-invert=visual",
+    "playwright:visual": "bash tests/playwright/scripts/run-in-docker.sh --project=local visual/",
+    "playwright:live": "MSLS_LIVE_ONLY=1 npx playwright test --project=live",
+    "playwright:docker": "bash tests/playwright/scripts/run-in-docker.sh --project=local",
+    "playwright:update-snapshots": "bash tests/playwright/scripts/run-in-docker.sh --project=local --update-snapshots"
   },
   "dependencies": {
     "less": "^4.8.1",
@@ -12,9 +18,13 @@
     "uglify-js": "^3.19.3"
   },
   "devDependencies": {
+    "@emnapi/core": "^1.11.3",
+    "@emnapi/runtime": "^1.11.3",
     "@playwright/test": "^1.62.1",
-    "@types/node": "^26.1.2",
+    "@types/node": "^20.17.10",
     "@wordpress/e2e-test-utils": "^11.34.0",
+    "@wordpress/e2e-test-utils-playwright": "^1.52.0",
+    "@wordpress/env": "^11.13.0",
     "@wordpress/scripts": "^34.0.0",
     "dotenv": "^17.4.2"
   }

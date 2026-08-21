@@ -5,6 +5,7 @@
 .phpunit.cache
 .phpunit.result.cache
 .vscode/
+CLAUDE.md
 assets/js/msls-widget-block/
 assets/js/msls.js
 composer.lock
@@ -19,4 +20,9 @@ tests/coverage/
 tests/playwright-report/
 tests/playwright-results/
 tests/playwright/.env.local
+tests/playwright/artifacts/html-report/
+tests/playwright/artifacts/test-results/
+tests/playwright/artifacts/test-results.json
+tests/playwright/artifacts/seed.json
+tests/playwright/artifacts/storage-states/
 vendor/
