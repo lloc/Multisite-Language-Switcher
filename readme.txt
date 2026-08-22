@@ -6,7 +6,7 @@ Tags: multilingual, multisite, language, switcher, localization
 Requires at least: 6.1
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,9 +57,7 @@ It's up to you - of course. But yes, if you want to use the Multisite Language S
 
 = How can I automatically redirect users based on the browser language? =
 
-The Multisite Language Switcher does not redirect the users automatically. I'm not sure if the plugin should do that. You might check out this [jQuery plugin](
-https://github.com/danieledesantis/jquery-language-detection) or [this approach with a theme](https://github.com/oncleben31/Multisite-Language-Switcher-Theme)
-if you need such functionality.
+The Multisite Language Switcher does not redirect the users automatically. I'm not sure if the plugin should do that.
 
 = How can I add the Multisite Language Switcher to the nav menu of my blog? =
 
@@ -95,6 +93,11 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 
 == Changelog ==
 
+= 3.0.1 =
+
+* Fixed: 3.0.0 could not be published on WordPress.org
+* The plugin code is identical to 3.0.0.
+
 = 3.0.0 =
 
 * New: Quick Create - create the translated post straight from the editor metabox, or pick a source post on the new `Add from Translation` submenu (single and bulk). Backed by a REST endpoint and switchable in the settings.
@@ -125,6 +128,12 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 The full history is kept in the separate [Changelog](https://github.com/lloc/Multisite-Language-Switcher/blob/master/Changelog.md).
 
 == Upgrade Notice ==
+
+= 3.0.1 =
+
+Republishes 3.0.0, whose upload to WordPress.org failed. The plugin code is unchanged
+against 3.0.0 - only the release pipeline was fixed. See the 3.0.0 notice below for what
+the major release brings.
 
 = 3.0.0 =
 

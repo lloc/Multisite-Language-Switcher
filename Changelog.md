@@ -1,5 +1,8 @@
-## 3.0.0
+## 3.0.1
+* Fix: the WordPress.org deploy pushed the whole workspace instead of the built distribution.
+* No changes to the plugin itself - the shipped code is identical to 3.0.0.
 
+## 3.0.0
 * Add Quick Create for translations: create the translated post straight from the editor metabox, or pick a source post on the new "Add from Translation" submenu (single and bulk), backed by a REST endpoint and switchable in the settings.
 * Add `msls_quick_create_capability` so integrations can override the Quick Create permission checks, plus filters for the post data, the inserted post, the response, the untranslated-posts list, and the mapped taxonomy terms.
 * Add filter hooks for the AJAX suggest results of the post and term metaboxes.
@@ -22,7 +25,6 @@
 * Documentation: update README.md code snippets to reflect new function names.
 
 ## 2.10.0
-
 * Add prefixed public helper functions (msls_get_*, msls_the_switcher) with deprecation shims for legacy names to satisfy WPCS while staying backward compatible.
 * Expose action hook names as constants for safer programmatic use.
 * Accessibility: add aria-current="page" on the active language link.
