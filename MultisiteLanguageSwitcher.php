@@ -3,7 +3,7 @@
  * Multisite Language Switcher Plugin
  *
  * Plugin Name: Multisite Language Switcher
- * Version: 3.0.0
+ * Version: 3.0.1
  * Plugin URI: http://msls.co/
  * Description: A simple but powerful plugin that will help you to manage the relations of your contents in a multilingual multisite-installation.
  * Author: Dennis Ploetner
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author Dennis Ploetner <re@lloc.de>
  */
 if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
-	define( 'MSLS_PLUGIN_VERSION', '3.0.0' );
+	define( 'MSLS_PLUGIN_VERSION', '3.0.1' );
 	define( 'MSLS_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 	define( 'MSLS_PLUGIN__FILE__', __FILE__ );
 
