@@ -136,11 +136,11 @@ class Icon {
 				return $this->get_quick_create_a();
 			}
 
-			/* translators: %s: blog name */
+			/* translators: %s: language code */
 			$format = __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' );
 			$href   = $this->get_edit_new();
 		} else {
-			/* translators: %s: blog name */
+			/* translators: %s: language code */
 			$format = __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' );
 			$href   = $this->href;
 		}
@@ -161,10 +161,10 @@ class Icon {
 		$source_blog_id = $collection->get_blog_id( $this->origin_language );
 		$target_blog_id = get_current_blog_id();
 
-		/* translators: %s: blog name */
+		/* translators: %s: language code */
 		$title = sprintf( __( 'Create a new translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
 
-		/* translators: %s: blog name */
+		/* translators: %s: language code */
 		$edit_title = sprintf( __( 'Edit the translation in the %s-blog', 'multisite-language-switcher' ), $this->language );
 
 		return sprintf(

@@ -184,9 +184,17 @@ add_filter( 'msls_quick_create_post_data', function ( array $post_data, \WP_Post
 ```
 
 Remember that any custom callback runs alongside the built-in
-`Msls::prefix_source_language()` filter, which prepends the source locale to
-the new post's title. Remove it with `remove_filter()` if that behavior is
-unwanted in your workflow.
+`lloc\Msls\RestApi\RestApi::prefix_source_language()` filter, which prepends
+the source locale to the new post's title. Remove it with `remove_filter()` if
+that behavior is unwanted in your workflow:
+
+```php
+remove_filter(
+    'msls_quick_create_post_data',
+    array( \lloc\Msls\RestApi\RestApi::class, 'prefix_source_language' ),
+    10
+);
+```
 
 ## See also
 

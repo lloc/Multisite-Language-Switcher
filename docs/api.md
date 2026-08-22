@@ -1,9 +1,11 @@
 # Public API Functions
 
 Multisite Language Switcher ships with a small set of global helper functions
-that act as the plugin's public API. They live in `includes/api.php` and are
-loaded on the `plugins_loaded` action, so they're available anywhere your
-theme or another plugin runs after WordPress has bootstrapped its plugins.
+that act as the plugin's public API. They live in `includes/api.php`, which
+`MultisiteLanguageSwitcher.php` requires the moment the plugin file is
+included — before `plugins_loaded` fires. They are therefore available to
+add-ons and themes regardless of the order in which WordPress loads the
+plugins.
 
 Use these functions in templates, shortcodes, blocks, or other plugins
 whenever you need to render the switcher, resolve a translation URL, or
