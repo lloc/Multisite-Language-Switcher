@@ -26,13 +26,14 @@ function msls_get_switcher( $attr = array() ): string {
  *
  * You can call this function directly like that
  *
- *     if ( function_exists ( 'the_msls' ) )
- *         the_msls();
+ *     if ( function_exists( 'msls_the_switcher' ) ) {
+ *         msls_the_switcher();
+ *     }
  *
  * or just use it as shortcode [sc_msls]
  *
  * @package Msls
- * @uses get_the_msls
+ * @uses msls_get_switcher
  *
  * @param string[] $arr
  */

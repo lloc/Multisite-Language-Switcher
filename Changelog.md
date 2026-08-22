@@ -6,7 +6,7 @@
 * Restructure `lloc\Msls\` into per-concern sub-namespaces (`Admin\`, `Blog\`, `ContentImport\`, `ContentTypes\`, `Frontend\`, `Link\`, `Options\`, `Registry\`, `RestApi\`). Every former flat `Msls*` class name keeps working through `lloc\Msls\Compat\Aliases`, registered from `includes/aliases.php`.
 * Move the public helper functions into `includes/api.php` and make the `$attr` argument of `msls_get_switcher()` optional.
 * Add a PHP-DI container for service construction, built on first use by `lloc\Msls\Container::get()`.
-* Documentation: add a developer reference under `docs/` (public API, hooks, snippets, acknowledgements) and refresh the class and package diagrams.
+* Documentation: add a developer reference under `docs/` (public API, hooks, snippets, end-to-end testing, acknowledgements) and refresh the class and package diagrams.
 * Fix: load the backwards-compatibility aliases and the `msls_*()` functions when the plugin file is included instead of on `plugins_loaded`, and keep the settings page slug handed to `msls_admin_register` at its pre-3.0 value. Add-ons such as MslsMenu load before the plugin and check `class_exists( 'lloc\Msls\MslsOptions' )` before registering anything, which silently disabled them — no add-on settings section, and no switcher in the nav menu.
 * Fix: check authorization on the destination post during content import, and correct the ContentImporter permission and post type checks.
 * Fix: do not fall back to `home_url()` for taxonomy and query archives.
@@ -14,6 +14,7 @@
 * Fix: several issues in the blog collection.
 * i18n: close gaps in the WP-CLI messages and the Quick Create button title.
 * Internal: strict typing throughout, PHPStan level 8 clean, `ABSPATH` guards, Plugin Check and PHPCS findings addressed, wp-env setup for local multisite development.
+* Internal: add a Playwright end-to-end suite (admin, frontend and visual specs against wp-env, plus a read-only `live` smoke test) and run the local project on every pull request.
 * Maintenance: numerous dependency updates.
 
 ## 2.10.1
@@ -22,7 +23,7 @@
 
 ## 2.10.0
 
-* Add prefixed public helper functions (msls_get_*, msls_the_msls) with deprecation shims for legacy names to satisfy WPCS while staying backward compatible.
+* Add prefixed public helper functions (msls_get_*, msls_the_switcher) with deprecation shims for legacy names to satisfy WPCS while staying backward compatible.
 * Expose action hook names as constants for safer programmatic use.
 * Accessibility: add aria-current="page" on the active language link.
 * Fix: resolve path-related issue affecting asset/loader resolution.

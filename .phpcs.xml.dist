@@ -2,6 +2,13 @@
 <ruleset name="CS">
     <description>PHPCS MSLS configuration</description>
     <config name="testVersion" value="7.4-"/>
+
+    <file>MultisiteLanguageSwitcher.php</file>
+    <file>config.php</file>
+    <file>index.php</file>
+    <file>includes</file>
+    <file>src</file>
+
     <exclude-pattern>assets/*</exclude-pattern>
     <exclude-pattern>bin/*</exclude-pattern>
     <exclude-pattern>images/*</exclude-pattern>

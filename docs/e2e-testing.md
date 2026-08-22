@@ -63,16 +63,22 @@ msls.co will break the suite.
 
 ### Current status
 
-As of 2026-08-21 the suite was **5 passed, 1 failed** against msls.co. The failing test was
-`testing with .msls-menu de_DE en_GB`: `/testpage` no longer rendered an element with the
+As of 2026-08-22 the suite is **5 passed, 1 failed** against msls.co. The failing test is
+`testing with .msls-menu de_DE en_GB`: `/testpage` does not render an element with the
 `msls-menu` class, while the site's Custom CSS rule (`.msls-menu a { display: inline-block; }`)
-was still there.
+is still there.
 
-That was **not** fixture drift — it was the plugin. Since commit `3afd781` the
-backwards-compatibility aliases were loaded inside a `plugins_loaded` callback, which made
-`class_exists( 'lloc\Msls\MslsOptions' )` return `false` for the MslsMenu add-on, so
-MslsMenu registered neither its `wp_nav_menu_items` filter nor its settings section. This
-spec is the standing regression test for that bug; keep it.
+That is **not** fixture drift — it is the plugin. Between commit `3afd781` and the 3.0.0
+release the backwards-compatibility aliases were loaded inside a `plugins_loaded` callback,
+which made `class_exists( 'lloc\Msls\MslsOptions' )` return `false` for the MslsMenu add-on,
+so MslsMenu registered neither its `wp_nav_menu_items` filter nor its settings section.
+
+The cause is fixed on this branch (commit `7e80283`, PR #690): `includes/aliases.php`,
+`includes/deprecated.php` and `includes/api.php` are required at file-load time again. The
+spec keeps failing against msls.co only because the site still runs the released 2.10.1
+code. **Re-run it once 3.0.0 is deployed to msls.co — it is the release verification for
+the add-on connector fix, and it should then be 6 passed.** Keep the spec either way: it is
+the standing regression test for that bug.
 
 ### Pitfalls
 

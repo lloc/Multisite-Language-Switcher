@@ -411,8 +411,9 @@ Filter on the post data array (title, content, status, post type, …) that
 MSLS passes to `wp_insert_post()` when creating a translation on a target
 blog via the REST Quick Create endpoint. Use it to prefix titles, set a
 different post status, or inject taxonomy/meta defaults before insertion.
-The built-in `Msls::prefix_source_language()` callback is registered on
-this hook by default and can be removed with `remove_filter()`.
+The built-in `lloc\Msls\RestApi\RestApi::prefix_source_language()` callback is
+registered on this hook by default (priority 10, four arguments) and can be
+removed with `remove_filter()`.
 
 ### msls_quick_create_after_insert
 
