@@ -40,6 +40,15 @@ final class Admin extends Main {
 	const MSLS_ACTION_PREFIX = 'msls_admin_';
 
 	/**
+	 * Slug of the settings page, as handed to the Settings API and to add-ons.
+	 *
+	 * Deliberately the pre-3.0 class name and not __CLASS__: the restructuring turned the
+	 * latter into lloc\Msls\Admin\Admin, which would have silently dropped the sections
+	 * and fields of every add-on registering against the name it knows.
+	 */
+	public const MSLS_SETTINGS_PAGE = 'lloc\\Msls\\MslsAdmin';
+
+	/**
 	 * Maximum number of users in the reference user select box
 	 *
 	 * @var int
@@ -192,7 +201,7 @@ final class Admin extends Main {
 		);
 
 		settings_fields( 'msls' );
-		do_settings_sections( __CLASS__ );
+		do_settings_sections( self::MSLS_SETTINGS_PAGE );
 
 		$value = $this->options->is_empty() ? __( 'Configure', 'multisite-language-switcher' ) : __( 'Update', 'multisite-language-switcher' );
 
@@ -243,7 +252,7 @@ final class Admin extends Main {
 		}
 
 		foreach ( $sections as $id => $title ) {
-			add_settings_section( $id, $title, array( $this, $id ), __CLASS__ );
+			add_settings_section( $id, $title, array( $this, $id ), self::MSLS_SETTINGS_PAGE );
 		}
 
 		/**
@@ -253,7 +262,7 @@ final class Admin extends Main {
 		 *
 		 * @since 1.0
 		 */
-		do_action( self::MSLS_REGISTER_ACTION, __CLASS__ ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
+		do_action( self::MSLS_REGISTER_ACTION, self::MSLS_SETTINGS_PAGE ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 	}
 
 	/**
@@ -346,7 +355,7 @@ final class Admin extends Main {
 			if ( ! is_callable( $callback ) ) {
 				continue;
 			}
-			add_settings_field( $id, $title, $callback, __CLASS__, $section, array( 'label_for' => $id ) );
+			add_settings_field( $id, $title, $callback, self::MSLS_SETTINGS_PAGE, $section, array( 'label_for' => $id ) );
 		}
 
 		/**
@@ -357,7 +366,7 @@ final class Admin extends Main {
 		 *
 		 * @since 2.4.4
 		 */
-		do_action( self::MSLS_ACTION_PREFIX . $section, __CLASS__, $section ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- MSLS_ACTION_PREFIX is already prefixed with "msls_".
+		do_action( self::MSLS_ACTION_PREFIX . $section, self::MSLS_SETTINGS_PAGE, $section ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- MSLS_ACTION_PREFIX is already prefixed with "msls_".
 
 		return count( $map );
 	}

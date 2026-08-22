@@ -66,5 +66,6 @@ Reference material for developers extending or integrating with the plugin lives
 *  [Public API Functions](docs/api.md) - the `msls_*` helper functions exposed for use in themes and other plugins.
 *  [Hooks Reference](docs/hooks.md) - every action and filter the plugin emits, grouped by subsystem.
 *  [Snippets & Examples](docs/snippets.md) - short, focused recipes for common integration tasks.
+*  [End-to-End Testing](docs/e2e-testing.md) - the Playwright suite: the local `wp-env` project and the read-only `live` project that runs against a real installation.
 
 Credits for flag icons, banner artwork, and the full list of translators are maintained in [Acknowledgements & Translators](docs/acknowledgements.md).

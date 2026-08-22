@@ -3,10 +3,11 @@
 * Add Quick Create for translations: create the translated post straight from the editor metabox, or pick a source post on the new "Add from Translation" submenu (single and bulk), backed by a REST endpoint and switchable in the settings.
 * Add `msls_quick_create_capability` so integrations can override the Quick Create permission checks, plus filters for the post data, the inserted post, the response, the untranslated-posts list, and the mapped taxonomy terms.
 * Add filter hooks for the AJAX suggest results of the post and term metaboxes.
-* Restructure `lloc\Msls\` into per-concern sub-namespaces (`Admin\`, `Blog\`, `ContentImport\`, `ContentTypes\`, `Frontend\`, `Link\`, `Options\`, `Registry\`, `RestApi\`). Every former flat `Msls*` class name keeps working through the aliases in `includes/aliases.php`.
+* Restructure `lloc\Msls\` into per-concern sub-namespaces (`Admin\`, `Blog\`, `ContentImport\`, `ContentTypes\`, `Frontend\`, `Link\`, `Options\`, `Registry\`, `RestApi\`). Every former flat `Msls*` class name keeps working through `lloc\Msls\Compat\Aliases`, registered from `includes/aliases.php`.
 * Move the public helper functions into `includes/api.php` and make the `$attr` argument of `msls_get_switcher()` optional.
-* Add a PHP-DI container for service construction.
+* Add a PHP-DI container for service construction, built on first use by `lloc\Msls\Container::get()`.
 * Documentation: add a developer reference under `docs/` (public API, hooks, snippets, acknowledgements) and refresh the class and package diagrams.
+* Fix: load the backwards-compatibility aliases and the `msls_*()` functions when the plugin file is included instead of on `plugins_loaded`, and keep the settings page slug handed to `msls_admin_register` at its pre-3.0 value. Add-ons such as MslsMenu load before the plugin and check `class_exists( 'lloc\Msls\MslsOptions' )` before registering anything, which silently disabled them — no add-on settings section, and no switcher in the nav menu.
 * Fix: check authorization on the destination post during content import, and correct the ContentImporter permission and post type checks.
 * Fix: do not fall back to `home_url()` for taxonomy and query archives.
 * Fix: broken links on the page for the latest posts.

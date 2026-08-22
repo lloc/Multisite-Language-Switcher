@@ -50,17 +50,18 @@ if ( ! defined( 'MSLS_PLUGIN_VERSION' ) ) {
 		require __DIR__ . '/vendor/autoload.php';
 	}
 
+	/**
+	 * Loaded here and not on plugins_loaded: add-ons are free to run before us, and the
+	 * backwards-compatibility aliases and the msls_*() functions have to be in place from
+	 * the moment this file is included.
+	 */
+	require_once __DIR__ . '/includes/aliases.php';
+	require_once __DIR__ . '/includes/deprecated.php';
+	require_once __DIR__ . '/includes/api.php';
+
 	add_action(
 		'plugins_loaded',
 		function () {
-			require_once __DIR__ . '/includes/aliases.php';
-			require_once __DIR__ . '/includes/deprecated.php';
-			require_once __DIR__ . '/includes/api.php';
-
-			$builder = new DI\ContainerBuilder();
-			$builder->addDefinitions( require __DIR__ . '/config.php' );
-			$builder->build();
-
 			lloc\Msls\Plugin::init();
 			lloc\Msls\Cli\Cli::init();
 		}
