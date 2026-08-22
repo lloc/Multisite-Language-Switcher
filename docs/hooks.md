@@ -11,6 +11,26 @@ name and a paragraph explaining what it does and a typical use case. To learn
 the exact arguments a hook receives, grep for the hook name in `includes/` —
 the `apply_filters()` / `do_action()` call site is the source of truth.
 
+## What add-ons can rely on
+
+Everything an add-on needs is in place from the moment
+`MultisiteLanguageSwitcher.php` is included — before `plugins_loaded` fires, and
+therefore regardless of the order in which WordPress happens to load the two
+plugins:
+
+* the `msls_*()` functions of `includes/api.php` and the deprecated wrappers of
+  `includes/deprecated.php`
+* every class under `lloc\Msls\`, through Composer's PSR-4 autoloader
+* every pre-3.0 flat class name (`lloc\Msls\MslsOptions`,
+  `lloc\Msls\MslsAdmin`, `lloc\Msls\MslsLink`, `lloc\Msls\MslsOutput`, …).
+  The 3.0 restructuring moved these into sub-namespaces; `lloc\Msls\Compat\Aliases`
+  registers them as `class_alias()` entries, so `class_exists( 'lloc\Msls\MslsOptions' )`
+  keeps working and the old names are equally valid in type declarations. Write
+  new code against the namespaced names — the aliases exist for third-party
+  consumers.
+
+The hooks below, by contrast, fire during `plugins_loaded` and later.
+
 ## Frontend output and links
 
 ### msls_get_output
@@ -214,13 +234,29 @@ Action that fires after the plugin registers its built-in settings sections.
 Use it as the entry point to add your own settings section to the MSLS admin
 page via `add_settings_section()`.
 
+The callback receives the settings page slug as its only argument. **Always
+pass that argument through to `add_settings_section()` / `add_settings_field()`
+instead of hard-coding a slug** — it is the only supported way to land on the
+page MSLS actually renders:
+
+```php
+add_action(
+	'msls_admin_register',
+	function ( $page ) {
+		add_settings_section( 'my_section', 'My Settings', 'my_render', $page );
+	}
+);
+```
+
 ### msls_admin_{section}
 
 Dynamic action that fires after the plugin registers the fields belonging to a
 specific settings section. The `{section}` suffix matches the section ID, for
 example `msls_admin_main_section`, `msls_admin_language_section`,
 `msls_admin_advanced_section`, or `msls_admin_rewrites_section`. Use it to
-add custom fields to one specific section without touching the others.
+add custom fields to one specific section without touching the others. Like
+`msls_admin_register`, it hands you the page slug — as the first of its two
+arguments, the second being the section ID.
 
 ### msls_admin_caps
 

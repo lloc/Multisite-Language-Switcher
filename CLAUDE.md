@@ -37,12 +37,20 @@ npm run playwright:local            # Admin + frontend specs (skips visual)
 npm run playwright:visual           # Visual specs inside the Playwright Linux image
 npm run playwright:docker           # Whole local suite inside that image
 npm run playwright:update-snapshots # Regenerate visual baselines
-npm run playwright:live             # Only specs/live, against msls.co
+npm run playwright:live             # Only specs/live, against msls.co (no wp-env needed)
 npx playwright test --ui            # Run with UI
 ```
 Visual baselines are committed and only pixel-stable when generated inside the container —
 always use the `:visual` / `:update-snapshots` scripts, never a bare `npx playwright test`
 for them.
+
+The `live` project is a read-only smoke test against an already-running installation.
+`baseURL` comes from `MSLS_LIVE_URL` (default `https://msls.co`), so
+`MSLS_LIVE_URL=https://staging.example.com npm run playwright:live` retargets it. The
+script also sets `MSLS_LIVE_ONLY=1`, which makes `globalSetup` return before it touches
+wp-env — running `npx playwright test --project=live` without it attempts the local
+seeding and fails. The target has to serve a public `/testpage` carrying the switcher
+markup the specs assert on. See `docs/e2e-testing.md` for the full contract.
 
 ### Local Development Environment
 ```bash
@@ -70,8 +78,9 @@ it, so activate it once per fresh **development** environment with the command a
 ### Namespace & Autoloading
 - PSR-4: `lloc\Msls\` maps to `includes/`, split into per-concern sub-namespaces: `Admin\`, `Blog\`, `Cli\`, `Component\`, `ContentImport\`, `ContentTypes\`, `Data\`, `Db\`, `Frontend\`, `Link\`, `Options\`, `Registry\`, `Request\`, `RestApi\`
 - PSR-4 (dev): `lloc\MslsTests\` maps to `tests/phpunit/`
-- Plugin bootstrap: `MultisiteLanguageSwitcher.php` — defines constants, then on `plugins_loaded` requires `includes/aliases.php`, `includes/deprecated.php`, and `includes/api.php`, builds the PHP-DI container from `config.php`, and calls `lloc\Msls\Plugin::init()` plus `lloc\Msls\Cli\Cli::init()`
-- **Backwards-compatibility aliases**: `includes/aliases.php` registers the ~60 pre-3.0 flat class names (`MslsOptions`, `MslsLink`, `MslsPlugin`, …) as `class_alias()` entries for their namespaced replacements. Write new code against the namespaced names; the aliases exist only for third-party consumers
+- Plugin bootstrap: `MultisiteLanguageSwitcher.php` — defines constants, requires `vendor/autoload.php` plus `includes/aliases.php`, `includes/deprecated.php` and `includes/api.php` **at file-load time**, then calls `lloc\Msls\Plugin::init()` and `lloc\Msls\Cli\Cli::init()` on `plugins_loaded`. Do not move those requires into the hook: add-ons may load before us, and they need the aliases and the `msls_*()` functions to exist the moment the plugin file is included
+- **Backwards-compatibility aliases**: `lloc\Msls\Compat\Aliases::MAP` (`includes/Compat/Aliases.php`) maps the ~60 pre-3.0 flat class names (`MslsOptions`, `MslsLink`, `MslsPlugin`, …) to their namespaced replacements. `::register()` — invoked from the thin `includes/aliases.php` — creates them with `class_alias()` **eagerly**, plus an autoloader for the handful in `::LAZY_ONLY`. Do not make them lazy across the board: PHP resolves the class named in a parameter/return/property type with `ZEND_FETCH_CLASS_NO_AUTOLOAD`, so an alias created on demand never gets its chance and the call fatals with a `TypeError` (MslsMenu declares `get_msls_output(): lloc\Msls\MslsOutput`). `LAZY_ONLY` is limited to names that never shipped before 3.0, so nothing can be holding them. Write new code against the namespaced names; the aliases exist only for third-party consumers
+- **PHP-DI**: `lloc\Msls\Container::get()` builds the container from `config.php` on first use and caches it. `config.php` is still empty — nothing is injected through it yet
 
 ### Key Patterns
 - **Registry/Singleton**: `Registry\Instance` is the base class providing the `::instance()` static accessor (backed by `Registry\Registry`); `Registry\GetSet` extends it to add overloaded property access
@@ -85,7 +94,7 @@ it, so activate it once per fresh **development** environment with the command a
 `includes/api.php` exposes the template functions: `msls_the_switcher()`, `msls_get_switcher()`, `msls_get_permalink()`, `msls_get_flag_url()`, `msls_blog_collection()`, etc. Legacy names (`the_msls()`, `get_the_msls()`, …) live in `includes/deprecated.php` and forward to them with a `_deprecated_function()` notice.
 
 ### Developer Documentation
-`docs/` holds the reference material: `api.md` (public API functions), `hooks.md` (every action and filter), `snippets.md` (integration recipes), `acknowledgements.md` (credits and translators). Keep these in sync when adding or renaming a hook or an API function.
+`docs/` holds the reference material: `api.md` (public API functions), `hooks.md` (every action and filter), `snippets.md` (integration recipes), `e2e-testing.md` (the Playwright `local` and `live` projects), `acknowledgements.md` (credits and translators). Keep these in sync when adding or renaming a hook or an API function.
 
 ### Test Framework
 - PHPUnit 10 with Brain\Monkey for WordPress function mocking
