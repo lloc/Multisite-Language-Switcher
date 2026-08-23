@@ -167,9 +167,27 @@ to scope MSLS to a subset of network sites without changing per-blog settings.
 
 ### msls_blog_collection_description
 
-Filter on the description string used for a blog inside the collection.
+Decides the description a blog is registered with inside the collection.
 Override it to feed a custom label (for example pulled from blog meta) into
-the language switcher instead of relying on the blog name.
+the language switcher instead of relying on the configured description.
+
+Mind the argument order, which is the reverse of what the hook name suggests:
+the **filtered value is the blog ID**, and the description MSLS resolved for
+that blog arrives as the second argument. Whatever you return is used as the
+description — and returning `false` drops the blog from the collection
+entirely, which is the supported way to hide a site from every consumer at
+construction time.
+
+```php
+add_filter(
+	'msls_blog_collection_description',
+	function ( $blog_id, $description ) {
+		return 5 === (int) $blog_id ? false : $description;
+	},
+	10,
+	2
+);
+```
 
 ### msls_blog_collection_get_blog
 

@@ -153,21 +153,28 @@ taxonomies.
 ## Override the per-language link markup
 
 `msls_output_get` runs for every rendered language item just before it joins
-the output array. The example adds an `aria-current="true"` attribute when
+the output array. The example adds an `aria-current="page"` attribute when
 the item points at the current blog and otherwise leaves the markup alone:
 
 ```php
 add_filter( 'msls_output_get', function ( string $url, $link, bool $is_current_blog ): string {
-    $current_attr = $is_current_blog ? ' aria-current="true"' : '';
+    $current_attr = $is_current_blog ? ' aria-current="page"' : '';
 
     return sprintf( '<a href="%s" hreflang="%s"%s>%s</a>',
         esc_url( $url ),
-        esc_attr( $link->get_language() ),
+        esc_attr( str_replace( '_', '-', (string) $link->alt ) ),
         $current_attr,
-        esc_html( (string) $link )
+        (string) $link
     );
 }, 10, 3 );
 ```
+
+`LinkInterface` only declares `__toString()`; the values themselves live in
+the magic properties `Link` inherits from `Registry\GetSet`: `txt` is the
+blog description, `src` the flag-icon URL, and `alt` the locale. Casting the
+object to a string renders the variant the user selected — which for three
+of the four variants contains an `<img>` element, so do not run the result
+through `esc_html()`.
 
 ## Set the status of REST-created translations
 
