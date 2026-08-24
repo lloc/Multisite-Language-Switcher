@@ -303,7 +303,7 @@ class Collection extends Instance {
 	}
 
 	/**
-	 * Gets the registered users of the current blog
+	 * Gets the registered users of the current blog limited by the number of users and the fields to return.
 	 *
 	 * @param string|string[] $fields
 	 * @param int             $number
@@ -318,20 +318,6 @@ class Collection extends Instance {
 			'number'      => $number > 0 ? $number : Admin::MAX_REFERENCE_USERS,
 			'count_total' => false,
 		);
-
-		if ( 1 !== $number ) { // Check total users only if not fetching a single user.
-			$user_count = count_users();
-			if ( $user_count['total_users'] > $number ) {
-				/* translators: %s: maximum number of users */
-				$format = __(
-					'Multisite Language Switcher: The user list has been limited to %d users.',
-					'multisite-language-switcher'
-				);
-
-				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
-				trigger_error( esc_html( sprintf( $format, strval( $number ) ) ) );
-			}
-		}
 
 		$args = (array) apply_filters( 'msls_get_users', $args );
 

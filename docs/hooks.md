@@ -223,6 +223,14 @@ Filter on the arguments passed to `get_users()` when MSLS builds its
 example by role, by capability, or by custom meta — so editors only see the
 intended reference accounts.
 
+MSLS asks for one user more than it displays, because that extra row is how it
+detects a truncated list without counting every user of the blog. Filtering
+`number` here does not widen the dropdown: the result is still cut to
+`msls_max_reference_users_count` entries. Lowering it shrinks the list and
+also drops the "limited to n users" hint below it, because MSLS can then no
+longer tell whether more users exist. Use `msls_max_reference_users_count` if
+all you want is a different limit.
+
 ### msls_blog_get_permalink
 
 Filter on the permalink resolved from a `Blog` object for the current
@@ -286,14 +294,20 @@ a different role or a custom capability.
 
 Filter on the upper bound (default 100) of users listed in the "reference
 user" dropdown on the settings page. Increase the limit for networks with
-many editors, or lower it to keep the dropdown light on big sites.
+many editors, or lower it to keep the dropdown light on big sites. A value
+below `1` is ignored and falls back to the default.
+
+When the blog holds more users than the limit, MSLS notes that below the
+dropdown ("The user list has been limited to 100 users."). It does not raise
+a PHP notice, so nothing lands in the error log.
 
 ### msls_reference_users
 
 Filter on the array of reference users — keyed by user ID and valued by
-nicename — used to populate the "reference user" dropdown. Use it to
-post-process the list after the user query has run, for example to relabel
-entries or remove specific accounts.
+nicename — used to populate the "reference user" dropdown. The array has
+already been cut to `msls_max_reference_users_count` entries when it reaches
+you. Use the hook to post-process the list, for example to relabel entries or
+remove specific accounts.
 
 ### msls_admin_validate
 

@@ -411,8 +411,20 @@ final class Admin extends Main {
 	 */
 	public function reference_user(): void {
 		$max_users = (int) apply_filters( 'msls_max_reference_users_count', self::MAX_REFERENCE_USERS );
+		if ( $max_users < 1 ) {
+			$max_users = self::MAX_REFERENCE_USERS;
+		}
 
-		$users_collection = $this->collection->get_users( array( 'ID', 'user_nicename' ), $max_users );
+		/**
+		 * Ask for one user more than we show: the extra row is proof that the list is
+		 * truncated, and it costs a lot less than counting every user of the blog.
+		 */
+		$users_collection = $this->collection->get_users( array( 'ID', 'user_nicename' ), $max_users + 1 );
+
+		$is_limited = count( $users_collection ) > $max_users;
+		if ( $is_limited ) {
+			$users_collection = array_slice( $users_collection, 0, $max_users );
+		}
 
 		$reference_users = (array) apply_filters(
 			'msls_reference_users',
@@ -421,6 +433,24 @@ final class Admin extends Main {
 
         // phpcs:ignore WordPress.Security.EscapeOutput
 		echo ( new Select( 'reference_user', $reference_users, strval( $this->options->reference_user ) ) )->render();
+
+		if ( $is_limited ) {
+			printf(
+				'<p class="description">%s</p>',
+				esc_html(
+					sprintf(
+						/* translators: %d: maximum number of users in the reference user dropdown */
+						_n(
+							'The user list has been limited to %d user.',
+							'The user list has been limited to %d users.',
+							$max_users,
+							'multisite-language-switcher'
+						),
+						$max_users
+					)
+				)
+			);
+		}
 	}
 
 	/**

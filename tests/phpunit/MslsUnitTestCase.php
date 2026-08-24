@@ -16,6 +16,11 @@ class MslsUnitTestCase extends TestCase {
 		\Mockery::namedMock( 'WooCommerce', \stdClass::class );
 
 		Functions\when( '__' )->returnArg();
+		Functions\when( '_n' )->alias(
+			function ( string $single, string $plural, int $number ): string {
+				return 1 === $number ? $single : $plural;
+			}
+		);
 		Functions\when( 'esc_attr' )->returnArg();
 		Functions\when( 'esc_html' )->returnArg();
 		Functions\when( 'esc_html__' )->returnArg();
