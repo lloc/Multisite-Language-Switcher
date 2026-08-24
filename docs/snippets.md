@@ -203,6 +203,36 @@ remove_filter(
 );
 ```
 
+## Widen the reference user dropdown
+
+The "Reference user" dropdown on the settings page lists at most 100 users, in
+order of registration. On a blog with more accounts than that, MSLS notes the
+limit below the dropdown. If the account you need is not among them, raise the
+bound with `msls_max_reference_users_count`:
+
+```php
+add_filter( 'msls_max_reference_users_count', function ( int $count ): int {
+    return 500;
+} );
+```
+
+A large blog is better served by narrowing the candidates instead of listing
+more of them. `msls_get_users` filters the arguments of the underlying
+`get_users()` call, so you can restrict the query to the roles that actually
+qualify as a reference account:
+
+```php
+add_filter( 'msls_get_users', function ( array $args ): array {
+    $args['role__in'] = array( 'administrator', 'editor' );
+
+    return $args;
+} );
+```
+
+Leave `number` alone in that callback: MSLS sets it to one above the display
+limit and uses the extra row to detect a truncated list without counting every
+user of the blog.
+
 ## See also
 
 - [Public API Functions](api.md) — the full reference for every `msls_*`

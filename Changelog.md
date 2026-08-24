@@ -1,3 +1,7 @@
+## 3.0.2
+* Fix: opening the settings page on a blog with more users than the "Reference user" dropdown shows raised a PHP notice, which landed in the error log and in services such as Sentry. The limit is now reported as a hint below the dropdown, where it belongs.
+* Internal: detect the truncated user list from the query itself instead of calling `count_users()`, which drops a costly query from the settings page on blogs with many users.
+
 ## 3.0.1
 * Fix: the WordPress.org deploy pushed the whole workspace instead of the built distribution.
 * No changes to the plugin itself - the shipped code is identical to 3.0.0.

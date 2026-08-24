@@ -6,7 +6,7 @@ Tags: multilingual, multisite, language, switcher, localization
 Requires at least: 6.1
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,11 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 
 == Changelog ==
 
+= 3.0.2 =
+
+* Fixed: with more than 100 users on a blog, opening the settings page raised a PHP notice that ended up in the error log (and in services such as Sentry). The truncated user list is now reported as a hint below the "Reference user" dropdown instead.
+* Changed: MSLS no longer runs `count_users()` to detect the truncation, which removes a costly query from the settings page on blogs with many users.
+
 = 3.0.1 =
 
 * Fixed: 3.0.0 could not be published on WordPress.org
@@ -128,6 +133,12 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 The full history is kept in the separate [Changelog](https://github.com/lloc/Multisite-Language-Switcher/blob/master/Changelog.md).
 
 == Upgrade Notice ==
+
+= 3.0.2 =
+
+Bugfix release. The settings page no longer logs a PHP notice when the blog has more users
+than the "Reference user" dropdown shows; the limit is displayed below the dropdown. The
+`msls_max_reference_users_count` filter still adjusts that limit.
 
 = 3.0.1 =
 

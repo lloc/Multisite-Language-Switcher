@@ -117,12 +117,75 @@ final class TestAdmin extends MslsUnitTestCase {
 		$obj->admin_display();
 	}
 
-	public function test_reference_user_over_max(): void {
-		$users = array( 1 => 'realloc' );
-		Functions\expect( 'wp_list_pluck' )->once()->andReturn( $users );
+	public function test_reference_user(): void {
+		Functions\expect( 'wp_list_pluck' )->once()->andReturn( array( 1 => 'realloc' ) );
+
 		$obj = $this->AdminFactory();
 
-		$this->expectOutputRegex( '/^<select id="reference_user" name="msls\[reference_user\]">.*$/' );
+		ob_start();
+		$obj->reference_user();
+		$output = (string) ob_get_clean();
+
+		$this->assertStringStartsWith( '<select id="reference_user" name="msls[reference_user]">', $output );
+		$this->assertStringNotContainsString( 'class="description"', $output );
+	}
+
+	public function test_reference_user_over_max(): void {
+		$users = array();
+		for ( $i = 1; $i <= Admin::MAX_REFERENCE_USERS + 1; $i++ ) {
+			$users[] = (object) array(
+				'ID'            => $i,
+				'user_nicename' => 'user-' . $i,
+			);
+		}
+
+		Functions\expect( 'wp_list_pluck' )->once()->andReturnUsing(
+			function ( array $list ): array {
+				$this->assertCount( Admin::MAX_REFERENCE_USERS, $list );
+
+				return array_column( $list, 'user_nicename', 'ID' );
+			}
+		);
+
+		$obj = $this->AdminFactory( $users );
+
+		$this->expectOutputRegex(
+			'#^<select id="reference_user" name="msls\[reference_user\]">.*</select><p class="description">The user list has been limited to 100 users\.</p>$#s'
+		);
+		$obj->reference_user();
+	}
+
+	public function test_reference_user_over_max_singular(): void {
+		$users = array(
+			(object) array(
+				'ID'            => 1,
+				'user_nicename' => 'user-1',
+			),
+			(object) array(
+				'ID'            => 2,
+				'user_nicename' => 'user-2',
+			),
+		);
+
+		Functions\when( 'apply_filters' )->alias(
+			function ( string $hook, $value ) {
+				return 'msls_max_reference_users_count' === $hook ? 1 : $value;
+			}
+		);
+
+		Functions\expect( 'wp_list_pluck' )->once()->andReturnUsing(
+			function ( array $list ): array {
+				$this->assertCount( 1, $list );
+
+				return array_column( $list, 'user_nicename', 'ID' );
+			}
+		);
+
+		$obj = $this->AdminFactory( $users );
+
+		$this->expectOutputRegex(
+			'#^<select id="reference_user" name="msls\[reference_user\]">.*</select><p class="description">The user list has been limited to 1 user\.</p>$#s'
+		);
 		$obj->reference_user();
 	}
 

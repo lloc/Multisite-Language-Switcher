@@ -26,8 +26,6 @@ final class TestCollection extends MslsUnitTestCase {
 
 		$this->captured_user_id = null;
 
-		Functions\when( 'count_users' )->justReturn( array( 'total_users' => self::TOTAL_USERS ) );
-
 		$options = \Mockery::mock( Options::class );
 		$options->shouldReceive( 'get_order' )->andReturn( 'description' );
 		$options->shouldReceive( 'is_excluded' )->andReturn( false );
@@ -247,31 +245,11 @@ final class TestCollection extends MslsUnitTestCase {
 
 	public function test_get_users_massive(): void {
 		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
+		Functions\expect( 'count_users' )->never();
 
 		$obj = new Collection();
 
 		$this->assertIsArray( $obj->get_users( array( 'ID' ), self::TOTAL_USERS ) );
-	}
-
-	public function test_get_users_max() {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-
-		$max_users = 100;
-
-		$obj = new Collection();
-
-		set_error_handler(
-			static function ( $errno, $errstr ) {
-				restore_error_handler();
-				throw new \Exception( $errstr, $errno );
-			},
-			E_ALL
-		);
-
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( "Multisite Language Switcher: The user list has been limited to {$max_users} users." );
-
-		$obj->get_users( 'all', $max_users );
 	}
 
 	public function test_get_current_blog(): void {
