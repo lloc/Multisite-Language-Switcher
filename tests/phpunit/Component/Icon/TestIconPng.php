@@ -5,17 +5,28 @@ namespace lloc\MslsTests\Component\Icon;
 use Brain\Monkey\Functions;
 use lloc\Msls\Component\Icon\IconPng;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestIconPng extends MslsUnitTestCase {
 
-	public function test_get(): void {
+	/**
+	 * @return array<string, array{string, string}>
+	 */
+	public static function locale_provider(): array {
+		return array(
+			'cs_CZ' => array( 'cs_CZ', 'cz.png' ),
+			'eo'    => array( 'eo', 'europeanunion.png' ),
+			'ca'    => array( 'ca', 'catalonia.png' ),
+			'pinko' => array( 'pinko', 'ko.png' ),
+		);
+	}
+
+	#[DataProvider( 'locale_provider' )]
+	public function test_get( string $locale, string $expected ): void {
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 4 ) . '/' );
 
 		$obj = new IconPng();
 
-		$this->assertEquals( 'cz.png', $obj->get( 'cs_CZ' ) );
-		$this->assertEquals( 'europeanunion.png', $obj->get( 'eo' ) );
-		$this->assertEquals( 'catalonia.png', $obj->get( 'ca' ) );
-		$this->assertEquals( 'ko.png', $obj->get( 'pinko' ) );
+		$this->assertEquals( $expected, $obj->get( $locale ) );
 	}
 }

@@ -10,6 +10,7 @@ use lloc\Msls\Blog\Collection;
 use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Post\Post;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestOutput extends MslsUnitTestCase {
 
@@ -30,116 +31,119 @@ final class TestOutput extends MslsUnitTestCase {
 		$this->assertEquals( array(), $test->get( 0 ) );
 	}
 
-	public function test_get_alternate_links_two_url(): void {
-		$blogs = array();
-
-		$a = \Mockery::mock( Blog::class );
-		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
-		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
-		$a->shouldReceive( 'get_url' )->andReturn( 'https://example.de/' );
-		$a->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
-
-		$blogs[] = $a;
-
-		$b = \Mockery::mock( Blog::class );
-		$b->shouldReceive( 'get_alpha2' )->andReturn( 'it' );
-		$b->shouldReceive( 'get_language' )->andReturn( 'it_IT' );
-		$b->shouldReceive( 'get_url' )->andReturn( 'https://example.it/' );
-		$b->shouldReceive( 'get_description' )->andReturn( 'Italiano' );
-
-		$blogs[] = $b;
-
-		$collection = \Mockery::mock( Collection::class );
-		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
-
+	/**
+	 * The conditional context Output::get_alternate_links() walks before it looks at a
+	 * single blog. Identical for every case below, so the cases only carry the blogs.
+	 */
+	private function expect_query_context( Collection $collection ): void {
 		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
-		Functions\expect( 'is_admin' )->once()->andReturn( false );
-		Functions\expect( 'is_front_page' )->once()->andReturn( false );
-		Functions\expect( 'is_search' )->once()->andReturn( false );
-		Functions\expect( 'is_404' )->once()->andReturn( false );
-		Functions\expect( 'is_category' )->once()->andReturn( false );
-		Functions\expect( 'is_tag' )->once()->andReturn( false );
-		Functions\expect( 'is_tax' )->once()->andReturn( false );
-		Functions\expect( 'is_date' )->once()->andReturn( false );
-		Functions\expect( 'is_author' )->once()->andReturn( false );
-		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
+
+		$conditionals = array(
+			'is_admin',
+			'is_front_page',
+			'is_search',
+			'is_404',
+			'is_category',
+			'is_tag',
+			'is_tax',
+			'is_date',
+			'is_author',
+			'is_post_type_archive',
+		);
+
+		foreach ( $conditionals as $conditional ) {
+			Functions\expect( $conditional )->once()->andReturn( false );
+		}
+
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
-
-		Filters\expectApplied( 'msls_output_get_alternate_links_arr' )->once();
-
-		$expected =
-			'<link rel="alternate" href="https://example.de/" hreflang="de" />' . PHP_EOL .
-			'<link rel="alternate" href="https://example.it/" hreflang="it" />';
-
-		$test = $this->OutputFactory();
-
-		$this->assertEquals( $expected, $test->get_alternate_links() );
 	}
 
-	public function test_get_alternate_links_null_url(): void {
-		$blogs = array();
+	/**
+	 * The second column is the filter the case expects to be applied, null where none is.
+	 *
+	 * @return array<string, array{array<int, array<string, ?string>>, ?string, string}>
+	 */
+	public static function alternate_links_provider(): array {
+		$de = array(
+			'alpha2'      => 'de',
+			'language'    => 'de_DE',
+			'url'         => 'https://example.de/',
+			'description' => 'Deutsch',
+		);
 
-		$a = \Mockery::mock( Blog::class );
-		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
-		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
-		$a->shouldReceive( 'get_url' )->andReturnNull();
+		$it = array(
+			'alpha2'      => 'it',
+			'language'    => 'it_IT',
+			'url'         => 'https://example.it/',
+			'description' => 'Italiano',
+		);
 
-		$blogs[] = $a;
-
-		$collection = \Mockery::mock( Collection::class );
-		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
-
-		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
-		Functions\expect( 'is_admin' )->once()->andReturn( false );
-		Functions\expect( 'is_front_page' )->once()->andReturn( false );
-		Functions\expect( 'is_search' )->once()->andReturn( false );
-		Functions\expect( 'is_404' )->once()->andReturn( false );
-		Functions\expect( 'is_category' )->once()->andReturn( false );
-		Functions\expect( 'is_tag' )->once()->andReturn( false );
-		Functions\expect( 'is_tax' )->once()->andReturn( false );
-		Functions\expect( 'is_date' )->once()->andReturn( false );
-		Functions\expect( 'is_author' )->once()->andReturn( false );
-		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
-		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
-		Functions\expect( 'get_option' )->once()->andReturn( array() );
-
-		$test = $this->OutputFactory();
-
-		$this->assertEquals( '', $test->get_alternate_links() );
+		return array(
+			'two blogs with an url'           => array(
+				array( $de, $it ),
+				'msls_output_get_alternate_links_arr',
+				'<link rel="alternate" href="https://example.de/" hreflang="de" />' . PHP_EOL .
+				'<link rel="alternate" href="https://example.it/" hreflang="it" />',
+			),
+			'a single blog becomes x-default' => array(
+				array( $de ),
+				'msls_output_get_alternate_links_default',
+				'<link rel="alternate" href="https://example.de/" hreflang="x-default" />',
+			),
+			'blog without an url'             => array(
+				array(
+					array(
+						'alpha2'   => 'de',
+						'language' => 'de_DE',
+						'url'      => null,
+					),
+				),
+				null,
+				'',
+			),
+			'blog with an empty url'          => array(
+				array(
+					array(
+						'alpha2'   => 'de',
+						'language' => 'de_DE',
+						'url'      => '',
+					),
+				),
+				null,
+				'',
+			),
+		);
 	}
 
-	public function test_get_alternate_links_one_url(): void {
-		$blogs = array();
+	/**
+	 * @param array<int, array<string, ?string>> $blogs
+	 */
+	#[DataProvider( 'alternate_links_provider' )]
+	public function test_get_alternate_links( array $blogs, ?string $filter, string $expected ): void {
+		$objects = array();
 
-		$a = \Mockery::mock( Blog::class );
-		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
-		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
-		$a->shouldReceive( 'get_url' )->andReturn( 'https://example.de/' );
-		$a->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
+		foreach ( $blogs as $blog ) {
+			$mock = \Mockery::mock( Blog::class );
+			$mock->shouldReceive( 'get_alpha2' )->andReturn( $blog['alpha2'] );
+			$mock->shouldReceive( 'get_language' )->andReturn( $blog['language'] );
+			$mock->shouldReceive( 'get_url' )->andReturn( $blog['url'] );
 
-		$blogs[] = $a;
+			if ( isset( $blog['description'] ) ) {
+				$mock->shouldReceive( 'get_description' )->andReturn( $blog['description'] );
+			}
+
+			$objects[] = $mock;
+		}
 
 		$collection = \Mockery::mock( Collection::class );
-		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
+		$collection->shouldReceive( 'get_objects' )->andReturn( $objects );
 
-		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
-		Functions\expect( 'is_admin' )->once()->andReturn( false );
-		Functions\expect( 'is_front_page' )->once()->andReturn( false );
-		Functions\expect( 'is_search' )->once()->andReturn( false );
-		Functions\expect( 'is_404' )->once()->andReturn( false );
-		Functions\expect( 'is_category' )->once()->andReturn( false );
-		Functions\expect( 'is_tag' )->once()->andReturn( false );
-		Functions\expect( 'is_tax' )->once()->andReturn( false );
-		Functions\expect( 'is_date' )->once()->andReturn( false );
-		Functions\expect( 'is_author' )->once()->andReturn( false );
-		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
-		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
-		Functions\expect( 'get_option' )->once()->andReturn( array() );
+		$this->expect_query_context( $collection );
 
-		Filters\expectApplied( 'msls_output_get_alternate_links_default' )->once();
-
-		$expected = '<link rel="alternate" href="https://example.de/" hreflang="x-default" />';
+		if ( null !== $filter ) {
+			Filters\expectApplied( $filter )->once();
+		}
 
 		$test = $this->OutputFactory();
 
@@ -298,65 +302,36 @@ final class TestOutput extends MslsUnitTestCase {
 		$this->assertInstanceOf( Output::class, $test->set_tags() );
 	}
 
-	public function test_is_requirements_not_fulfilled_with_null(): void {
-		$test = $this->OutputFactory();
-
-		$this->assertFalse( $test->is_requirements_not_fulfilled( null, false, 'de_DE' ) );
-		$this->assertTrue( $test->is_requirements_not_fulfilled( null, true, 'de_DE' ) );
+	/**
+	 * @return array<string, array{?class-string, bool, bool}>
+	 */
+	public static function requirements_provider(): array {
+		return array(
+			'no data, translations optional'    => array( null, false, false ),
+			'no data, translations required'    => array( null, true, true ),
+			'options, translations optional'    => array( Options::class, false, false ),
+			'options, translations required'    => array( Options::class, true, false ),
+			'post options, optional'            => array( Post::class, false, false ),
+			'post options without translations' => array( Post::class, true, true ),
+		);
 	}
 
-	public function test_is_requirements_not_fulfilled_with_mslsoptions(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( array() );
+	/**
+	 * @param ?class-string $data_class
+	 */
+	#[DataProvider( 'requirements_provider' )]
+	public function test_is_requirements_not_fulfilled( ?string $data_class, bool $only_with_translation, bool $expected ): void {
+		$mydata = null;
 
-		$mydata = new Options();
+		if ( null !== $data_class ) {
+			Functions\expect( 'get_option' )->once()->andReturn( array() );
 
-		$test = $this->OutputFactory();
-
-		$this->assertFalse( $test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
-		$this->assertFalse( $test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
-	}
-
-	public function test_is_requirements_not_fulfilled_with_mslsoptionspost(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( array() );
-
-		$mydata = new Post();
+			$mydata = new $data_class();
+		}
 
 		$test = $this->OutputFactory();
 
-		$this->assertFalse( $test->is_requirements_not_fulfilled( $mydata, false, 'de_DE' ) );
-		$this->assertTrue( $test->is_requirements_not_fulfilled( $mydata, true, 'de_DE' ) );
-	}
-
-	public function test_get_alternate_links_empty_url(): void {
-		$blogs = array();
-
-		$a = \Mockery::mock( Blog::class );
-		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
-		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
-		$a->shouldReceive( 'get_url' )->andReturn( '' );
-
-		$blogs[] = $a;
-
-		$collection = \Mockery::mock( Collection::class );
-		$collection->shouldReceive( 'get_objects' )->andReturn( $blogs );
-
-		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
-		Functions\expect( 'is_admin' )->once()->andReturn( false );
-		Functions\expect( 'is_front_page' )->once()->andReturn( false );
-		Functions\expect( 'is_search' )->once()->andReturn( false );
-		Functions\expect( 'is_404' )->once()->andReturn( false );
-		Functions\expect( 'is_category' )->once()->andReturn( false );
-		Functions\expect( 'is_tag' )->once()->andReturn( false );
-		Functions\expect( 'is_tax' )->once()->andReturn( false );
-		Functions\expect( 'is_date' )->once()->andReturn( false );
-		Functions\expect( 'is_author' )->once()->andReturn( false );
-		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
-		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
-		Functions\expect( 'get_option' )->once()->andReturn( array() );
-
-		$test = $this->OutputFactory();
-
-		$this->assertEquals( '', $test->get_alternate_links() );
+		$this->assertSame( $expected, $test->is_requirements_not_fulfilled( $mydata, $only_with_translation, 'de_DE' ) );
 	}
 
 	public function test_get_skips_empty_url(): void {

@@ -8,6 +8,7 @@ use lloc\Msls\Frontend\Widget;
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestWidget extends MslsUnitTestCase {
 
@@ -46,17 +47,20 @@ final class TestWidget extends MslsUnitTestCase {
 		( new Widget() )->widget( array(), array( 'title' => 'Test' ) );
 	}
 
+	/**
+	 * The last column is the Mockery invocation count for wp_strip_all_tags().
+	 *
+	 * @return array<string, array{array<string, string>, array<string, string>, array<string, string>, int}>
+	 */
 	public static function update_provider(): array {
 		return array(
-			array( array(), array(), array(), 0 ),
-			array( array( 'title' => 'abc' ), array(), array( 'title' => 'abc' ), 1 ),
-			array( array( 'title' => 'xyz' ), array( 'title' => 'abc' ), array( 'title' => 'xyz' ), 1 ),
+			'no title in either instance' => array( array(), array(), array(), 0 ),
+			'title added'                 => array( array( 'title' => 'abc' ), array(), array( 'title' => 'abc' ), 1 ),
+			'title replaced'              => array( array( 'title' => 'xyz' ), array( 'title' => 'abc' ), array( 'title' => 'xyz' ), 1 ),
 		);
 	}
 
-	/**
-	 * @dataProvider update_provider
-	 */
+	#[DataProvider( 'update_provider' )]
 	public function test_update( array $new_instance, array $old_instance, array $expected, int $times ): void {
 		Functions\expect( 'wp_strip_all_tags' )->times( $times )->andReturnFirstArg();
 

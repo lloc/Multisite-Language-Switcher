@@ -9,6 +9,7 @@ use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestContentFilter extends MslsUnitTestCase {
 
@@ -23,20 +24,23 @@ final class TestContentFilter extends MslsUnitTestCase {
 		ContentFilter::init();
 	}
 
-	public static function provide_content_filter_data(): array {
+	/**
+	 * The truth table of the three conditions that keep content_filter() from adding a hint.
+	 *
+	 * @return array<string, array{bool, bool, bool}>
+	 */
+	public static function content_filter_provider(): array {
 		return array(
-			array( 'Test', 'Test', true, false, false ),
-			array( 'Test', 'Test', false, false, false ),
-			array( 'Test', 'Test', false, true, false ),
-			array( 'Test', 'Test', false, false, true ),
-			array( 'Test', 'Test', true, true, true ),
+			'front page, not singular, filter off' => array( true, false, false ),
+			'nothing enabled'                      => array( false, false, false ),
+			'singular, filter off'                 => array( false, true, false ),
+			'filter on, not singular'              => array( false, false, true ),
+			'front page, singular, filter on'      => array( true, true, true ),
 		);
 	}
 
-	/**
-	 * @dataProvider provide_content_filter_data
-	 */
-	public function test_content_filter_empty( string $content, string $expected, bool $is_front_page, bool $is_singular, bool $is_content_filter ) {
+	#[DataProvider( 'content_filter_provider' )]
+	public function test_content_filter_empty( bool $is_front_page, bool $is_singular, bool $is_content_filter ) {
 		Functions\when( 'is_front_page' )->justReturn( $is_front_page );
 		Functions\when( 'is_singular' )->justReturn( $is_singular );
 
@@ -45,7 +49,7 @@ final class TestContentFilter extends MslsUnitTestCase {
 
 		$test = new ContentFilter( $options );
 
-		$this->assertEquals( $expected, $test->content_filter( $content ) );
+		$this->assertEquals( 'Test', $test->content_filter( 'Test' ) );
 	}
 
 	public function test_content_filter_one_link(): void {

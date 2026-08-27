@@ -1,3 +1,7 @@
+## 3.0.3
+* Fix: the plugin required PHP-DI 7, which needs PHP 8.0, while MSLS itself declares PHP 7.4 as its minimum. PHP-DI is back on the 6.4 series, so an installation on PHP 7.4 can resolve the dependencies again.
+* Internal: declare `Requires PHP: 7.4` in the plugin header so WordPress blocks activation on older PHP versions, and check the production dependencies against PHP 7.4 in CI.
+
 ## 3.0.2
 * Fix: opening the settings page on a blog with more users than the "Reference user" dropdown shows raised a PHP notice, which landed in the error log and in services such as Sentry. The limit is now reported as a hint below the dropdown, where it belongs.
 * Internal: detect the truncated user list from the query itself instead of calling `count_users()`, which drops a costly query from the settings page on blogs with many users.

@@ -5,6 +5,7 @@ namespace lloc\MslsTests\ContentImport;
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\MslsTests\MslsUnitTestCase;
 use Brain\Monkey\Functions;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestImportCoordinates extends MslsUnitTestCase {
 
@@ -22,22 +23,23 @@ final class TestImportCoordinates extends MslsUnitTestCase {
 		return $test;
 	}
 
-	public static function providerValidate(): array {
+	/**
+	 * @return array<string, array{\WP_Post|null, \WP_Post|null, \WP_Post|null, string|null, string|null, bool}>
+	 */
+	public static function validate_provider(): array {
 		$post = \Mockery::mock( \WP_Post::class );
 
 		return array(
-			array( null, null, null, null, null, false ),
-			array( $post, null, null, null, null, false ),
-			array( $post, $post, null, null, null, false ),
-			array( $post, $post, $post, null, null, false ),
-			array( $post, $post, $post, 'de_DE', null, false ),
-			array( $post, $post, $post, 'de_DE', 'it_IT', true ),
+			'source post not found'         => array( null, null, null, null, null, false ),
+			'destination post not found'    => array( $post, null, null, null, null, false ),
+			'source post is not a WP_Post'  => array( $post, $post, null, null, null, false ),
+			'source language mismatch'      => array( $post, $post, $post, null, null, false ),
+			'destination language mismatch' => array( $post, $post, $post, 'de_DE', null, false ),
+			'all coordinates valid'         => array( $post, $post, $post, 'de_DE', 'it_IT', true ),
 		);
 	}
 
-	/**
-	 * @dataProvider providerValidate
-	 */
+	#[DataProvider( 'validate_provider' )]
 	public function testValidate( $post_a, $post_b, $source_post, $lang_a, $lang_b, $expected ): void {
 		Functions\expect( 'get_blog_post' )->andReturn( $post_a, $post_b );
 		Functions\expect( 'get_blog_option' )->andReturn( $lang_a, $lang_b );

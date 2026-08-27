@@ -11,8 +11,7 @@ use lloc\Msls\Options\Query\PostType;
 use lloc\Msls\Options\Query\Query;
 use lloc\Msls\Options\Query\Year;
 use lloc\MslsTests\MslsUnitTestCase;
-
-use function Brain\Monkey\Functions;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestQuery extends MslsUnitTestCase {
 
@@ -28,63 +27,57 @@ final class TestQuery extends MslsUnitTestCase {
 		$this->assertEquals( array(), Query::get_params() );
 	}
 
-	public function test_create_is_day(): void {
-		Functions\expect( 'is_day' )->once()->andReturn( true );
-		Functions\expect( 'get_query_var' )->times( 6 )->andReturnValues( array( 1969, 6, 26 ) );
-		Functions\expect( 'get_option' )->once();
+	/**
+	 * The order Query::create() asks WordPress in. Everything before the conditional that
+	 * matches has to return false, so a case only has to name where the chain hits.
+	 *
+	 * @var array<int, string>
+	 */
+	private const CREATE_CHAIN = array( 'is_day', 'is_month', 'is_year', 'is_author', 'is_post_type_archive' );
 
-		$this->assertInstanceOf( Day::class, Query::create() );
-	}
-	public function test_create_is_month(): void {
-		Functions\expect( 'is_day' )->once()->andReturn( false );
-		Functions\expect( 'is_month' )->once()->andReturn( true );
-		Functions\expect( 'get_query_var' )->times( 4 )->andReturnValues( array( 1969, 6 ) );
-		Functions\expect( 'get_option' )->once();
-
-		$this->assertInstanceOf( Month::class, Query::create() );
-	}
-
-	public function test_create_is_year(): void {
-		Functions\expect( 'is_day' )->once()->andReturn( false );
-		Functions\expect( 'is_month' )->once()->andReturn( false );
-		Functions\expect( 'is_year' )->once()->andReturn( true );
-		Functions\expect( 'get_query_var' )->times( 2 )->andReturn( 1969 );
-		Functions\expect( 'get_option' )->once();
-
-		$this->assertInstanceOf( Year::class, Query::create() );
-	}
-
-	public function test_create_is_author(): void {
-		Functions\expect( 'is_day' )->once()->andReturn( false );
-		Functions\expect( 'is_month' )->once()->andReturn( false );
-		Functions\expect( 'is_year' )->once()->andReturn( false );
-		Functions\expect( 'is_author' )->once()->andReturn( true );
-		Functions\expect( 'get_queried_object_id' )->times( 2 )->andReturn( 42 );
-		Functions\expect( 'get_option' )->once();
-
-		$this->assertInstanceOf( Author::class, Query::create() );
+	/**
+	 * The third and fourth column are the getter Query::create() reads the archive from
+	 * and how often it is called.
+	 *
+	 * @return array<string, array{?string, ?string, int, array<int, mixed>, ?class-string}>
+	 */
+	public static function create_provider(): array {
+		return array(
+			'day archive'         => array( 'is_day', 'get_query_var', 6, array( 1969, 6, 26 ), Day::class ),
+			'month archive'       => array( 'is_month', 'get_query_var', 4, array( 1969, 6 ), Month::class ),
+			'year archive'        => array( 'is_year', 'get_query_var', 2, array( 1969 ), Year::class ),
+			'author archive'      => array( 'is_author', 'get_queried_object_id', 2, array( 42 ), Author::class ),
+			'post type archive'   => array( 'is_post_type_archive', 'get_query_var', 2, array( 'book' ), PostType::class ),
+			'no archive whatever' => array( null, null, 0, array(), null ),
+		);
 	}
 
-	public function test_create_is_post_type_archive(): void {
-		Functions\expect( 'is_day' )->once()->andReturn( false );
-		Functions\expect( 'is_month' )->once()->andReturn( false );
-		Functions\expect( 'is_year' )->once()->andReturn( false );
-		Functions\expect( 'is_author' )->once()->andReturn( false );
-		Functions\expect( 'is_post_type_archive' )->once()->andReturn( true );
-		Functions\expect( 'get_query_var' )->times( 2 )->andReturn( 'book' );
-		Functions\expect( 'get_option' )->once();
+	/**
+	 * @param array<int, mixed> $values
+	 * @param ?class-string     $expected
+	 */
+	#[DataProvider( 'create_provider' )]
+	public function test_create( ?string $matching, ?string $getter, int $getter_times, array $values, ?string $expected ): void {
+		foreach ( self::CREATE_CHAIN as $conditional ) {
+			Functions\expect( $conditional )->once()->andReturn( $matching === $conditional );
 
-		$this->assertInstanceOf( PostType::class, Query::create() );
-	}
+			if ( $matching === $conditional ) {
+				break;
+			}
+		}
 
-	public function test_create_is_null(): void {
-		Functions\expect( 'is_day' )->once()->andReturn( false );
-		Functions\expect( 'is_month' )->once()->andReturn( false );
-		Functions\expect( 'is_year' )->once()->andReturn( false );
-		Functions\expect( 'is_author' )->once()->andReturn( false );
-		Functions\expect( 'is_post_type_archive' )->once()->andReturn( false );
+		if ( null !== $getter ) {
+			Functions\expect( $getter )->times( $getter_times )->andReturnValues( $values );
+			Functions\expect( 'get_option' )->once();
+		}
 
-		$this->assertNull( Query::create() );
+		if ( null === $expected ) {
+			$this->assertNull( Query::create() );
+
+			return;
+		}
+
+		$this->assertInstanceOf( $expected, Query::create() );
 	}
 
 	public function test_current_get_postlink(): void {

@@ -6,7 +6,7 @@ Tags: multilingual, multisite, language, switcher, localization
 Requires at least: 6.1
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,10 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 
 == Changelog ==
 
+= 3.0.3 =
+
+* Fixed: on PHP 7.4 the plugin's dependencies could not be installed, because one of them required PHP 8. MSLS supports PHP 7.4 again, as documented.
+
 = 3.0.2 =
 
 * Fixed: with more than 100 users on a blog, opening the settings page raised a PHP notice that ended up in the error log (and in services such as Sentry). The truncated user list is now reported as a hint below the "Reference user" dropdown instead.
@@ -133,6 +137,12 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 The full history is kept in the separate [Changelog](https://github.com/lloc/Multisite-Language-Switcher/blob/master/Changelog.md).
 
 == Upgrade Notice ==
+
+= 3.0.3 =
+
+Maintenance release for PHP 7.4 installations. One of the plugin's dependencies required
+PHP 8, which broke the installation on the PHP version MSLS documents as its minimum. No
+changes to the plugin's behaviour.
 
 = 3.0.2 =
 
