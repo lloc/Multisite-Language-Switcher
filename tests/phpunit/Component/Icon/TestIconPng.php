@@ -13,12 +13,20 @@ final class TestIconPng extends MslsUnitTestCase {
 	 * @return array<string, array{string, string}>
 	 */
 	public static function locale_provider(): array {
-		return array(
-			'cs_CZ' => array( 'cs_CZ', 'cz.png' ),
-			'eo'    => array( 'eo', 'europeanunion.png' ),
-			'ca'    => array( 'ca', 'catalonia.png' ),
-			'pinko' => array( 'pinko', 'ko.png' ),
+		$locales = array(
+			'cs_CZ' => 'cz.png',
+			'eo'    => 'europeanunion.png',
+			'ca'    => 'catalonia.png',
+			'pinko' => 'ko.png',
 		);
+
+		$data = array();
+
+		foreach ( $locales as $locale => $expected ) {
+			$data[ $locale ] = array( $locale, $expected );
+		}
+
+		return $data;
 	}
 
 	#[DataProvider( 'locale_provider' )]

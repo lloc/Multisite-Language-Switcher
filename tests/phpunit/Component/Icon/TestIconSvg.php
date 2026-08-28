@@ -13,12 +13,20 @@ final class TestIconSvg extends MslsUnitTestCase {
 	 * @return array<string, array{string, string}>
 	 */
 	public static function locale_provider(): array {
-		return array(
-			'cs_CZ' => array( 'cs_CZ', 'flag-icon-cz' ),
-			'eo'    => array( 'eo', 'flag-icon-eu' ),
-			'ca'    => array( 'ca', 'flag-icon-es-ca' ),
-			'pinko' => array( 'pinko', 'flag-icon-ko' ),
+		$locales = array(
+			'cs_CZ' => 'flag-icon-cz',
+			'eo'    => 'flag-icon-eu',
+			'ca'    => 'flag-icon-es-ca',
+			'pinko' => 'flag-icon-ko',
 		);
+
+		$data = array();
+
+		foreach ( $locales as $locale => $expected ) {
+			$data[ $locale ] = array( $locale, $expected );
+		}
+
+		return $data;
 	}
 
 	#[DataProvider( 'locale_provider' )]

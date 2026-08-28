@@ -8,16 +8,27 @@ use PHPUnit\Framework\Attributes\DataProvider;
 final class TestDeprecated extends MslsUnitTestCase {
 
 	/**
+	 * Maps every deprecated global to the arguments it is called with and the function it
+	 * has to forward to.
+	 *
 	 * @return array<string, array{string, array<int, mixed>, string}>
 	 */
 	public static function deprecated_provider(): array {
-		return array(
-			'get_the_msls'              => array( 'get_the_msls', array( null ), 'msls_get_switcher' ),
-			'the_msls'                  => array( 'the_msls', array(), 'msls_the_switcher' ),
-			'get_msls_flag_url'         => array( 'get_msls_flag_url', array( 'en' ), 'msls_get_flag_url' ),
-			'get_msls_blog_description' => array( 'get_msls_blog_description', array( 'en' ), 'msls_get_blog_description' ),
-			'get_msls_permalink'        => array( 'get_msls_permalink', array( 'en' ), 'msls_get_permalink' ),
+		$legacy_functions = array(
+			'get_the_msls'              => array( array( null ), 'msls_get_switcher' ),
+			'the_msls'                  => array( array(), 'msls_the_switcher' ),
+			'get_msls_flag_url'         => array( array( 'en' ), 'msls_get_flag_url' ),
+			'get_msls_blog_description' => array( array( 'en' ), 'msls_get_blog_description' ),
+			'get_msls_permalink'        => array( array( 'en' ), 'msls_get_permalink' ),
 		);
+
+		$data = array();
+
+		foreach ( $legacy_functions as $legacy => list( $args, $replacement ) ) {
+			$data[ $legacy ] = array( $legacy, $args, $replacement );
+		}
+
+		return $data;
 	}
 
 	/**

@@ -13,11 +13,19 @@ final class TestPage extends MslsUnitTestCase {
 	 * @return array<string, array{string, string}>
 	 */
 	public static function page_slug_provider(): array {
-		return array(
-			'post'  => array( 'post', 'msls-translation-picker-post' ),
-			'page'  => array( 'page', 'msls-translation-picker-page' ),
-			'event' => array( 'event', 'msls-translation-picker-event' ),
+		$slugs = array(
+			'post'  => 'msls-translation-picker-post',
+			'page'  => 'msls-translation-picker-page',
+			'event' => 'msls-translation-picker-event',
 		);
+
+		$data = array();
+
+		foreach ( $slugs as $post_type => $expected ) {
+			$data[ $post_type ] = array( $post_type, $expected );
+		}
+
+		return $data;
 	}
 
 	#[DataProvider( 'page_slug_provider' )]
@@ -34,7 +42,7 @@ final class TestPage extends MslsUnitTestCase {
 	public static function parent_slug_provider(): array {
 		return array(
 			'built-in post'   => array( 'post', 'edit.php' ),
-			'page'            => array( 'page', 'edit.php?post_type=page' ),
+			'built-in page'   => array( 'page', 'edit.php?post_type=page' ),
 			'custom type'     => array( 'event', 'edit.php?post_type=event' ),
 			'empty post type' => array( '', '' ),
 		);

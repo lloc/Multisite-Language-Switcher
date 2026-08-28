@@ -194,57 +194,33 @@ final class TestAdmin extends MslsUnitTestCase {
 	}
 
 	/**
-	 * Every one of these renders a single settings field and writes nothing else.
+	 * Every one of these renders a single settings field and writes nothing else, so a
+	 * case is just the Admin method and the markup it has to produce.
 	 *
 	 * @return array<string, array{string, string}>
 	 */
 	public static function settings_field_provider(): array {
-		return array(
-			'activate_autocomplete' => array(
-				'activate_autocomplete',
-				'<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" /> <label for="activate_autocomplete">Activate experimental autocomplete inputs</label>',
-			),
-			'sort_by_description'   => array(
-				'sort_by_description',
-				'<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" /> <label for="sort_by_description">Sort languages by description</label>',
-			),
-			'exclude_current_blog'  => array(
-				'exclude_current_blog',
-				'<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" /> <label for="exclude_current_blog">Exclude this blog from output</label>',
-			),
-			'only_with_translation' => array(
-				'only_with_translation',
-				'<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" /> <label for="only_with_translation">Show only links with a translation</label>',
-			),
-			'output_current_blog'   => array(
-				'output_current_blog',
-				'<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" /> <label for="output_current_blog">Display link to the current language</label>',
-			),
-			'description'           => array(
-				'description',
-				'<input type="text" class="regular-text" id="description" name="msls[description]" value="" size="40"/>',
-			),
-			'before_output'         => array(
-				'before_output',
-				'<input type="text" class="regular-text" id="before_output" name="msls[before_output]" value="" size="30"/>',
-			),
-			'after_output'          => array(
-				'after_output',
-				'<input type="text" class="regular-text" id="after_output" name="msls[after_output]" value="" size="30"/>',
-			),
-			'before_item'           => array(
-				'before_item',
-				'<input type="text" class="regular-text" id="before_item" name="msls[before_item]" value="" size="30"/>',
-			),
-			'after_item'            => array(
-				'after_item',
-				'<input type="text" class="regular-text" id="after_item" name="msls[after_item]" value="" size="30"/>',
-			),
-			'content_filter'        => array(
-				'content_filter',
-				'<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" /> <label for="content_filter">Add hint for available translations</label>',
-			),
+		$fields = array(
+			'activate_autocomplete' => '<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" /> <label for="activate_autocomplete">Activate experimental autocomplete inputs</label>',
+			'sort_by_description'   => '<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" /> <label for="sort_by_description">Sort languages by description</label>',
+			'exclude_current_blog'  => '<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" /> <label for="exclude_current_blog">Exclude this blog from output</label>',
+			'only_with_translation' => '<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" /> <label for="only_with_translation">Show only links with a translation</label>',
+			'output_current_blog'   => '<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" /> <label for="output_current_blog">Display link to the current language</label>',
+			'description'           => '<input type="text" class="regular-text" id="description" name="msls[description]" value="" size="40"/>',
+			'before_output'         => '<input type="text" class="regular-text" id="before_output" name="msls[before_output]" value="" size="30"/>',
+			'after_output'          => '<input type="text" class="regular-text" id="after_output" name="msls[after_output]" value="" size="30"/>',
+			'before_item'           => '<input type="text" class="regular-text" id="before_item" name="msls[before_item]" value="" size="30"/>',
+			'after_item'            => '<input type="text" class="regular-text" id="after_item" name="msls[after_item]" value="" size="30"/>',
+			'content_filter'        => '<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" /> <label for="content_filter">Add hint for available translations</label>',
 		);
+
+		$data = array();
+
+		foreach ( $fields as $method => $expected ) {
+			$data[ $method ] = array( $method, $expected );
+		}
+
+		return $data;
 	}
 
 	#[DataProvider( 'settings_field_provider' )]

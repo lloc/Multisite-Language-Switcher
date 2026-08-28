@@ -42,5 +42,7 @@ jobs:
           tools: composer:v2
       - name: Install production dependencies
         run: composer install --no-dev --prefer-dist --no-progress
-      - name: Lint the shipped PHP files
+      # Syntax only. php -l rejects PHP 8 grammar on 7.4, but not calls to PHP 8
+      # library functions: includes/ relies on WordPress polyfilling str_starts_with().
+      - name: Lint the shipped PHP files for PHP 7.4 syntax
         run: git ls-files '*.php' | grep -vE '^(tests|bin)/' | xargs -n1 -P4 php -l

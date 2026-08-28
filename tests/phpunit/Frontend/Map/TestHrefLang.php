@@ -41,15 +41,23 @@ final class TestHrefLang extends MslsUnitTestCase {
 	 * @return array<string, array{string, string}>
 	 */
 	public static function hreflang_provider(): array {
-		return array(
-			'de_DE'        => array( 'de_DE', 'de-DE' ),
-			'de_DE_formal' => array( 'de_DE_formal', 'de-DE' ),
-			'fr_FR'        => array( 'fr_FR', 'fr' ),
-			'es_ES'        => array( 'es_ES', 'es' ),
-			'cat'          => array( 'cat', 'cat' ),
-			'en_GB'        => array( 'en_GB', 'en-GB' ),
-			'en_US'        => array( 'en_US', 'en-US' ),
+		$locales = array(
+			'de_DE'        => 'de-DE',
+			'de_DE_formal' => 'de-DE',
+			'fr_FR'        => 'fr',
+			'es_ES'        => 'es',
+			'cat'          => 'cat',
+			'en_GB'        => 'en-GB',
+			'en_US'        => 'en-US',
 		);
+
+		$data = array();
+
+		foreach ( $locales as $locale => $expected ) {
+			$data[ $locale ] = array( $locale, $expected );
+		}
+
+		return $data;
 	}
 
 	#[DataProvider( 'hreflang_provider' )]

@@ -13,11 +13,13 @@ final class TestImportLogger extends MslsUnitTestCase {
 	 * @return array<string, array{string}>
 	 */
 	public static function get_data_provider(): array {
-		return array(
-			'info'    => array( 'info' ),
-			'error'   => array( 'error' ),
-			'success' => array( 'success' ),
-		);
+		$data = array();
+
+		foreach ( array( 'info', 'error', 'success' ) as $type ) {
+			$data[ $type ] = array( $type );
+		}
+
+		return $data;
 	}
 
 	#[DataProvider( 'get_data_provider' )]

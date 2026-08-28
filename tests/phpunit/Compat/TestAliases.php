@@ -14,9 +14,10 @@ use PHPUnit\Framework\Attributes\RunInSeparateProcess;
  * alone, at any time and in any plugin load order. MslsMenu and friends decide whether to
  * boot with a bare class_exists( lloc\Msls\MslsOptions::class ).
  *
- * Only the two tests that assert the *absence* of an alias need a pristine process: once
- * any test has autoloaded a legacy name, the alias exists for the rest of the process.
- * Everything else shares one process, which is why register_once() exists.
+ * The two tests whose verdict depends on nothing having touched the aliases yet run in a
+ * pristine process: once any test has autoloaded a legacy name, that alias exists for the
+ * rest of the process, and both of them would pass spuriously. Everything else shares one
+ * process, which is why register_once() exists.
  */
 #[PreserveGlobalState( false )]
 final class TestAliases extends MslsUnitTestCase {

@@ -182,18 +182,18 @@ final class TestIcon extends MslsUnitTestCase {
 	/**
 	 * A null language means none was set, which is what the empty expectation is about.
 	 *
-	 * @return array<string, array{?string, ?string, string}>
+	 * @return array<string, array{string, ?string, string}>
 	 */
 	public static function icon_type_provider(): array {
 		return array(
-			'flag'                    => array( 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ),
-			'label'                   => array( 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>' ),
+			'flag with a language'    => array( 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ),
+			'label with a language'   => array( 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>' ),
 			'flag without a language' => array( 'flag', null, '' ),
 		);
 	}
 
 	#[DataProvider( 'icon_type_provider' )]
-	public function test_get_icon( ?string $icon_type, ?string $language, string $expected ): void {
+	public function test_get_icon( string $icon_type, ?string $language, string $expected ): void {
 		Functions\expect( 'plugin_dir_path' )->andReturn( dirname( __DIR__, 3 ) . '/' );
 
 		$obj = new Icon( 'post' );
