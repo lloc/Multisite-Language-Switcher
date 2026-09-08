@@ -20,7 +20,7 @@
   "devDependencies": {
     "@emnapi/core": "^1.11.3",
     "@emnapi/runtime": "^1.11.3",
-    "@playwright/test": "^1.62.1",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^20.17.10",
     "@wordpress/e2e-test-utils": "^11.34.0",
     "@wordpress/e2e-test-utils-playwright": "^1.52.0",
