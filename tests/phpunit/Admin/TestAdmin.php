@@ -8,6 +8,7 @@ use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestAdmin extends MslsUnitTestCase {
 
@@ -57,17 +58,20 @@ final class TestAdmin extends MslsUnitTestCase {
 		return new Admin( $options, $collection );
 	}
 
-	public static function has_problems_data(): array {
+	/**
+	 * @return array<string, array{array<string>, bool, string}>
+	 */
+	public static function has_problems_provider(): array {
+		$warning = '/^<div id="msls-warning" class="updated fade"><p>.*$/';
+
 		return array(
-			array( array( 'de_DE', 'it_IT' ), false, '/^$/' ),
-			array( array( 'de_DE' ), false, '/^<div id="msls-warning" class="updated fade"><p>.*$/' ),
-			array( array(), true, '/^<div id="msls-warning" class="updated fade"><p>.*$/' ),
+			'two languages, options filled' => array( array( 'de_DE', 'it_IT' ), false, '/^$/' ),
+			'only one language'             => array( array( 'de_DE' ), false, $warning ),
+			'no languages, options empty'   => array( array(), true, $warning ),
 		);
 	}
 
-	/**
-	 * @dataProvider has_problems_data
-	 */
+	#[DataProvider( 'has_problems_provider' )]
 	public function test_has_problems( array $languages, bool $is_empty, string $regex ): void {
 		Functions\when( 'get_option' )->justReturn( array() );
 		Functions\when( 'get_current_blog_id' )->justReturn( 1 );
@@ -189,96 +193,44 @@ final class TestAdmin extends MslsUnitTestCase {
 		$obj->reference_user();
 	}
 
-	public function test_activate_autocomplete(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" /> <label for="activate_autocomplete">Activate experimental autocomplete inputs</label>'
+	/**
+	 * Every one of these renders a single settings field and writes nothing else, so a
+	 * case is just the Admin method and the markup it has to produce.
+	 *
+	 * @return array<string, array{string, string}>
+	 */
+	public static function settings_field_provider(): array {
+		$fields = array(
+			'activate_autocomplete' => '<input type="checkbox" id="activate_autocomplete" name="msls[activate_autocomplete]" value="1" /> <label for="activate_autocomplete">Activate experimental autocomplete inputs</label>',
+			'sort_by_description'   => '<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" /> <label for="sort_by_description">Sort languages by description</label>',
+			'exclude_current_blog'  => '<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" /> <label for="exclude_current_blog">Exclude this blog from output</label>',
+			'only_with_translation' => '<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" /> <label for="only_with_translation">Show only links with a translation</label>',
+			'output_current_blog'   => '<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" /> <label for="output_current_blog">Display link to the current language</label>',
+			'description'           => '<input type="text" class="regular-text" id="description" name="msls[description]" value="" size="40"/>',
+			'before_output'         => '<input type="text" class="regular-text" id="before_output" name="msls[before_output]" value="" size="30"/>',
+			'after_output'          => '<input type="text" class="regular-text" id="after_output" name="msls[after_output]" value="" size="30"/>',
+			'before_item'           => '<input type="text" class="regular-text" id="before_item" name="msls[before_item]" value="" size="30"/>',
+			'after_item'            => '<input type="text" class="regular-text" id="after_item" name="msls[after_item]" value="" size="30"/>',
+			'content_filter'        => '<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" /> <label for="content_filter">Add hint for available translations</label>',
 		);
-		$obj->activate_autocomplete();
+
+		$data = array();
+
+		foreach ( $fields as $method => $expected ) {
+			$data[ $method ] = array( $method, $expected );
+		}
+
+		return $data;
 	}
 
-	public function test_sort_by_description(): void {
+	#[DataProvider( 'settings_field_provider' )]
+	public function test_settings_field_renders( string $method, string $expected ): void {
 		$obj = $this->AdminFactory();
 
-		$this->expectOutputString(
-			'<input type="checkbox" id="sort_by_description" name="msls[sort_by_description]" value="1" /> <label for="sort_by_description">Sort languages by description</label>'
-		);
-		$obj->sort_by_description();
+		$this->expectOutputString( $expected );
+		$obj->{$method}();
 	}
 
-
-	public function test_exclude_current_blog(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="checkbox" id="exclude_current_blog" name="msls[exclude_current_blog]" value="1" /> <label for="exclude_current_blog">Exclude this blog from output</label>'
-		);
-		$obj->exclude_current_blog();
-	}
-
-	function test_only_with_translation(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="checkbox" id="only_with_translation" name="msls[only_with_translation]" value="1" /> <label for="only_with_translation">Show only links with a translation</label>'
-		);
-		$obj->only_with_translation();
-	}
-
-	function test_output_current_blog(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="checkbox" id="output_current_blog" name="msls[output_current_blog]" value="1" /> <label for="output_current_blog">Display link to the current language</label>'
-		);
-		$obj->output_current_blog();
-	}
-
-	function test_description(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="text" class="regular-text" id="description" name="msls[description]" value="" size="40"/>'
-		);
-		$obj->description();
-	}
-
-	function test_before_output(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="text" class="regular-text" id="before_output" name="msls[before_output]" value="" size="30"/>'
-		);
-		$obj->before_output();
-	}
-
-	function test_after_output(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="text" class="regular-text" id="after_output" name="msls[after_output]" value="" size="30"/>'
-		);
-		$obj->after_output();
-	}
-
-	function test_before_item(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="text" class="regular-text" id="before_item" name="msls[before_item]" value="" size="30"/>'
-		);
-		$obj->before_item();
-	}
-
-	function test_after_item(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="text" class="regular-text" id="after_item" name="msls[after_item]" value="" size="30"/>'
-		);
-		$obj->after_item();
-	}
 
 	function test_rewrite_tizio(): void {
 		$obj = $this->AdminFactory();
@@ -320,15 +272,6 @@ final class TestAdmin extends MslsUnitTestCase {
 			'<input type="text" class="regular-text" id="rewrite_pallino" name="msls[rewrite_pallino]" value="pallino_slug" size="30" readonly="readonly"/>'
 		);
 		$obj->rewrite_pallino( 'pallino' );
-	}
-
-	function test_content_filter(): void {
-		$obj = $this->AdminFactory();
-
-		$this->expectOutputString(
-			'<input type="checkbox" id="content_filter" name="msls[content_filter]" value="1" /> <label for="content_filter">Add hint for available translations</label>'
-		);
-		$obj->content_filter();
 	}
 
 	function test_content_priority(): void {

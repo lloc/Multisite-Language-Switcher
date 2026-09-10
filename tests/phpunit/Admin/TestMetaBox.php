@@ -14,6 +14,7 @@ use lloc\Msls\Options\Options;
 use lloc\Msls\Options\Post\Post;
 use lloc\Msls\Request\Fields;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestMetaBox extends MslsUnitTestCase {
 
@@ -159,17 +160,18 @@ final class TestMetaBox extends MslsUnitTestCase {
 		$this->assertEquals( '<option value="42" selected="selected">A random title</option>', $test->render_options( 'post', 42 ) );
 	}
 
-	public static function add_data_provider(): array {
+	/**
+	 * @return array<string, array{bool, bool}>
+	 */
+	public static function add_provider(): array {
 		return array(
-			array( array( 'post', 'page' ), true, true ),
-			array( array( 'book' ), false, false ),
+			'content import and autocomplete on'  => array( true, true ),
+			'content import and autocomplete off' => array( false, false ),
 		);
 	}
 
-	/**
-	 * @dataProvider add_data_provider
-	 */
-	public function test_add( $post_type, $content_import, $autocomplete ) {
+	#[DataProvider( 'add_provider' )]
+	public function test_add( $content_import, $autocomplete ) {
 		$options                          = \Mockery::mock( Options::class );
 		$options->activate_content_import = $content_import;
 		$options->activate_autocomplete   = $autocomplete;
@@ -257,16 +259,20 @@ final class TestMetaBox extends MslsUnitTestCase {
 		$this->MetaBoxFactory()->render_select();
 	}
 
+	/**
+	 * The numeric columns are Mockery invocation counts for the WordPress functions the
+	 * rendering calls, not domain data.
+	 *
+	 * @return array<string, array{array<string, int>, int, int, int, int, int, string}>
+	 */
 	public static function render_input_provider(): array {
 		return array(
-			array( array( 'de_DE' => 42 ), 1, 1, 0, 2, 0, '<ul><li class=""><label for="msls_title_" class="msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value="42"/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value="Test"/><a class="msls-edit-link" href="edit-post-link" target="_blank" title="Edit the translation in the de_DE-blog"><span class="dashicons dashicons-external"></span></a></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
-			array( array( 'en_US' => 17 ), 0, 3, 2, 0, 2, '<ul><li class=""><label for="msls_title_" class="msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value=""/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/><a class="msls-create-new" href="admin-url-empty" target="_blank" title="Create a new translation in the de_DE-blog"><span class="dashicons dashicons-plus"></span></a></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
+			'existing translation renders an edit link' => array( array( 'de_DE' => 42 ), 1, 1, 0, 2, 0, '<ul><li class=""><label for="msls_title_" class="msls-icon-wrapper flag"><a title="Edit the translation in the de_DE-blog" href="edit-post-link"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value="42"/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value="Test"/><a class="msls-edit-link" href="edit-post-link" target="_blank" title="Edit the translation in the de_DE-blog"><span class="dashicons dashicons-external"></span></a></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
+			'missing translation renders a create link' => array( array( 'en_US' => 17 ), 0, 3, 2, 0, 2, '<ul><li class=""><label for="msls_title_" class="msls-icon-wrapper flag"><a title="Create a new translation in the de_DE-blog" href="admin-url-empty"><span class="flag-icon flag-icon-de">de_DE</span></a>&nbsp;</label><input type="hidden" id="msls_id_" name="msls_input_de_DE" value=""/><input class="msls_title" id="msls_title_" name="msls_title_" type="text" value=""/><a class="msls-create-new" href="admin-url-empty" target="_blank" title="Create a new translation in the de_DE-blog"><span class="dashicons dashicons-plus"></span></a></li></ul><input type="hidden" name="msls_post_type" id="msls_post_type" value="page"/><input type="hidden" name="msls_action" id="msls_action" value="suggest_posts"/><input type="hidden" name="msls_source_id" id="msls_source_id" value="42"/>' ),
 		);
 	}
 
-	/**
-	 * @dataProvider render_input_provider
-	 */
+	#[DataProvider( 'render_input_provider' )]
 	public function test_render_input( $option, $the_title_times, $current_blog_id_times, $admin_url_times, $edit_post_link_times, $add_query_arg_times, $expected ) {
 		global $post;
 

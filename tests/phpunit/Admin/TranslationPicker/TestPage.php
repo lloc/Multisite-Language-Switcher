@@ -5,26 +5,52 @@ namespace lloc\MslsTests\Admin\TranslationPicker;
 use Brain\Monkey\Functions;
 use lloc\Msls\Admin\TranslationPicker\Page;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestPage extends MslsUnitTestCase {
 
-	public function test_page_slug_includes_post_type(): void {
-		$this->assertSame( 'msls-translation-picker-post', Page::page_slug( 'post' ) );
-		$this->assertSame( 'msls-translation-picker-page', Page::page_slug( 'page' ) );
-		$this->assertSame( 'msls-translation-picker-event', Page::page_slug( 'event' ) );
+	/**
+	 * @return array<string, array{string, string}>
+	 */
+	public static function page_slug_provider(): array {
+		$slugs = array(
+			'post'  => 'msls-translation-picker-post',
+			'page'  => 'msls-translation-picker-page',
+			'event' => 'msls-translation-picker-event',
+		);
+
+		$data = array();
+
+		foreach ( $slugs as $post_type => $expected ) {
+			$data[ $post_type ] = array( $post_type, $expected );
+		}
+
+		return $data;
 	}
 
-	public function test_parent_slug_for_built_in_post(): void {
-		$this->assertSame( 'edit.php', Page::parent_slug( 'post' ) );
+	#[DataProvider( 'page_slug_provider' )]
+	public function test_page_slug_includes_post_type( string $post_type, string $expected ): void {
+		$this->assertSame( $expected, Page::page_slug( $post_type ) );
 	}
 
-	public function test_parent_slug_for_other_post_types(): void {
-		$this->assertSame( 'edit.php?post_type=page', Page::parent_slug( 'page' ) );
-		$this->assertSame( 'edit.php?post_type=event', Page::parent_slug( 'event' ) );
+	/**
+	 * Only the built-in post type lives on the bare edit.php, and an empty post type has
+	 * no parent at all.
+	 *
+	 * @return array<string, array{string, string}>
+	 */
+	public static function parent_slug_provider(): array {
+		return array(
+			'built-in post'   => array( 'post', 'edit.php' ),
+			'built-in page'   => array( 'page', 'edit.php?post_type=page' ),
+			'custom type'     => array( 'event', 'edit.php?post_type=event' ),
+			'empty post type' => array( '', '' ),
+		);
 	}
 
-	public function test_parent_slug_for_empty_post_type(): void {
-		$this->assertSame( '', Page::parent_slug( '' ) );
+	#[DataProvider( 'parent_slug_provider' )]
+	public function test_parent_slug( string $post_type, string $expected ): void {
+		$this->assertSame( $expected, Page::parent_slug( $post_type ) );
 	}
 
 	public function test_url_uses_admin_url_and_query_arg(): void {
@@ -71,23 +97,22 @@ final class TestPage extends MslsUnitTestCase {
 		);
 	}
 
-	public function test_save_per_page_option_returns_int_for_picker_option(): void {
-		$this->assertSame(
-			42,
-			Page::save_per_page_option( false, 'msls_tp_per_page', '42' )
+	/**
+	 * @return array<string, array{string, string, int|false}>
+	 */
+	public static function save_per_page_option_provider(): array {
+		return array(
+			'picker option'            => array( 'msls_tp_per_page', '42', 42 ),
+			'non-positive value'       => array( 'msls_tp_per_page', '0', Page::PER_PAGE_DEFAULT ),
+			'unrelated option ignored' => array( 'unrelated_option', '5', false ),
 		);
 	}
 
-	public function test_save_per_page_option_falls_back_for_non_positive(): void {
-		$this->assertSame(
-			Page::PER_PAGE_DEFAULT,
-			Page::save_per_page_option( false, 'msls_tp_per_page', '0' )
-		);
-	}
-
-	public function test_save_per_page_option_passes_through_other_options(): void {
-		$this->assertFalse(
-			Page::save_per_page_option( false, 'unrelated_option', '5' )
-		);
+	/**
+	 * @param int|false $expected
+	 */
+	#[DataProvider( 'save_per_page_option_provider' )]
+	public function test_save_per_page_option( string $option, string $value, $expected ): void {
+		$this->assertSame( $expected, Page::save_per_page_option( false, $option, $value ) );
 	}
 }

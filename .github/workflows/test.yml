@@ -29,3 +29,20 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: tests/coverage.xml
+  php74-compat:
+    name: PHP 7.4 (production dependencies)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v7
+      - name: Setup PHP 7.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
+      - name: Install production dependencies
+        run: composer install --no-dev --prefer-dist --no-progress
+      # Syntax only. php -l rejects PHP 8 grammar on 7.4, but not calls to PHP 8
+      # library functions: includes/ relies on WordPress polyfilling str_starts_with().
+      - name: Lint the shipped PHP files for PHP 7.4 syntax
+        run: git ls-files '*.php' | grep -vE '^(tests|bin)/' | xargs -n1 -P4 php -l

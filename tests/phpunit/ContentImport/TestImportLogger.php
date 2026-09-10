@@ -5,20 +5,24 @@ namespace lloc\MslsTests\ContentImport;
 use lloc\Msls\ContentImport\ImportCoordinates;
 use lloc\Msls\ContentImport\ImportLogger;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestImportLogger extends MslsUnitTestCase {
 
-	public static function provider_get_data(): array {
-		return array(
-			array( 'info' ),
-			array( 'error' ),
-			array( 'success' ),
-		);
+	/**
+	 * @return array<string, array{string}>
+	 */
+	public static function get_data_provider(): array {
+		$data = array();
+
+		foreach ( array( 'info', 'error', 'success' ) as $type ) {
+			$data[ $type ] = array( $type );
+		}
+
+		return $data;
 	}
 
-	/**
-	 * @dataProvider provider_get_data
-	 */
+	#[DataProvider( 'get_data_provider' )]
 	public function test_get_data( $key ): void {
 		$coordinates = \Mockery::mock( ImportCoordinates::class );
 		$test        = new ImportLogger( $coordinates );

@@ -5,6 +5,7 @@ namespace lloc\MslsTests\Admin;
 use Brain\Monkey\Functions;
 use lloc\Msls\Admin\Icon;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestIcon extends MslsUnitTestCase {
 
@@ -178,17 +179,21 @@ final class TestIcon extends MslsUnitTestCase {
 		$this->assertInstanceOf( Icon::class, $obj->set_icon_type( 'flag' ) );
 	}
 
+	/**
+	 * A null language means none was set, which is what the empty expectation is about.
+	 *
+	 * @return array<string, array{string, ?string, string}>
+	 */
 	public static function icon_type_provider(): array {
 		return array(
-			array( 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ),
-			array( 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>' ),
+			'flag with a language'    => array( 'flag', 'de_DE', '<span class="flag-icon flag-icon-de">de_DE</span>' ),
+			'label with a language'   => array( 'label', 'it_IT', '<span class="language-badge it_IT"><span>it</span><span>IT</span></span>' ),
+			'flag without a language' => array( 'flag', null, '' ),
 		);
 	}
 
-	/**
-	 * @dataProvider icon_type_provider
-	 */
-	public function test_get_icon_flag( ?string $icon_type, ?string $language, string $expected ): void {
+	#[DataProvider( 'icon_type_provider' )]
+	public function test_get_icon( string $icon_type, ?string $language, string $expected ): void {
 		Functions\expect( 'plugin_dir_path' )->andReturn( dirname( __DIR__, 3 ) . '/' );
 
 		$obj = new Icon( 'post' );

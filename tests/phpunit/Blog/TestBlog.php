@@ -7,6 +7,7 @@ use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestBlog extends MslsUnitTestCase {
 
@@ -137,25 +138,22 @@ final class TestBlog extends MslsUnitTestCase {
 	}
 
 	/**
-	 * Dataprovider
-	 *
-	 * @return array[]
+	 * @return array<string, array{int, int, int}>
 	 */
-	public static function compareProvider(): array {
+	public static function compare_provider(): array {
 		return array(
-			array( 0, 0, 0 ),
-			array( 0, 1, - 1 ),
-			array( 1, 0, 1 ),
-			array( - 1, - 2, 1 ),
-			array( - 2, - 1, - 1 ),
+			'equal values'                => array( 0, 0, 0 ),
+			'a below b'                   => array( 0, 1, - 1 ),
+			'a above b'                   => array( 1, 0, 1 ),
+			'negative a above negative b' => array( - 1, - 2, 1 ),
+			'negative a below negative b' => array( - 2, - 1, - 1 ),
 		);
 	}
 
 	/**
 	 * Verify the _cmp-method
-	 *
-	 * @dataProvider compareProvider
 	 */
+	#[DataProvider( 'compare_provider' )]
 	public function test__cmp_method( int $a, int $b, int $expected ): void {
 		$this->assertEquals( $expected, Blog::internal_cmp( $a, $b ) );
 

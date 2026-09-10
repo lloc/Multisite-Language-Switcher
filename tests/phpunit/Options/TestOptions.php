@@ -7,6 +7,7 @@ use lloc\Msls\Admin\Icon as MslsAdminIcon;
 use lloc\Msls\ContentTypes\PostType;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestOptions extends MslsUnitTestCase {
 
@@ -72,10 +73,13 @@ final class TestOptions extends MslsUnitTestCase {
 		$obj->save( $arr );
 	}
 
+	/**
+	 * @return array<string, array{bool, mixed}>
+	 */
 	public static function set_provider(): array {
 		return array(
-			array( true, array() ),
-			array(
+			'empty array'  => array( true, array() ),
+			'filled array' => array(
 				true,
 				array(
 					'temp' => 'abc',
@@ -83,17 +87,15 @@ final class TestOptions extends MslsUnitTestCase {
 					'us'   => 2,
 				),
 			),
-			array( false, 'Test' ),
-			array( false, 1 ),
-			array( false, 1.1 ),
-			array( false, null ),
-			array( false, new \stdClass() ),
+			'string'       => array( false, 'Test' ),
+			'integer'      => array( false, 1 ),
+			'float'        => array( false, 1.1 ),
+			'null'         => array( false, null ),
+			'object'       => array( false, new \stdClass() ),
 		);
 	}
 
-	/**
-	 * @dataProvider set_provider
-	 */
+	#[DataProvider( 'set_provider' )]
 	function test_set( $expected, $input ): void {
 		$obj = $this->MslsOptionsFactory();
 
@@ -190,30 +192,38 @@ final class TestOptions extends MslsUnitTestCase {
 		$this->assertEquals( MslsAdminIcon::TYPE_LABEL, $obj->get_icon_type() );
 	}
 
-	public static function provide_data_for_slug_check(): array {
+	/**
+	 * The columns after $expected are $with_front, $is_subdomain_install, $using_permalinks,
+	 * $permalink_structure and $is_main_site.
+	 *
+	 * The two 'blogg' rows differ only in $is_main_site: the lookalike slug is never
+	 * stripped, so that flag cannot change the result. They are kept as a pair on purpose,
+	 * to pin down that the main site does not get the prefix re-added either.
+	 *
+	 * @return array<string, array{string|null, string, bool, bool, bool, string, bool}>
+	 */
+	public static function slug_check_provider(): array {
 		return array(
-			array( '', '', false, false, false, '', false ), // first return
-			array( null, '', false, false, false, '', false ), // first return
-			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, false, '', false ), // second return
-			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, false, true, '', false ), // second return
-			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '', false ),
-			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/%year%/%monthnum%/%postname%/', false ),
-			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/2024/05/test', true, true, true, '/blog/%year%/%monthnum%/%postname%/', false ),
-			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/%postname%/', false ),
-			array( 'https://msls.co/blog/test', 'https://msls.co/test', true, true, true, '/blog/%postname%/', false ),
-			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/%year%/%monthnum%/%postname%/', true ),
-			array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/blog/%year%/%monthnum%/%postname%/', true ),
-			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/%postname%/', true ),
-			array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/blog/%postname%/', true ),
-			array( 'https://msls.co/blogg/', 'https://msls.co/blogg/', true, true, true, '/blog/%postname%/', false ),
-			array( 'https://msls.co/blogg/', 'https://msls.co/blogg/', true, true, true, '/blog/%postname%/', true ),
-			array( 'https://msls.co/blog/', 'https://msls.co/', true, true, true, '/blog/%postname%/', false ),
+			'empty url returns early'                     => array( '', '', false, false, false, '', false ),
+			'null url returns early'                      => array( null, '', false, false, false, '', false ),
+			'subdomain install without permalinks'        => array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, false, '', false ),
+			'permalinks without subdomain install'        => array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, false, true, '', false ),
+			'no permalink structure'                      => array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '', false ),
+			'dated structure without front, sub site'     => array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/%year%/%monthnum%/%postname%/', false ),
+			'dated structure with front, sub site'        => array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/2024/05/test', true, true, true, '/blog/%year%/%monthnum%/%postname%/', false ),
+			'postname structure without front, sub site'  => array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/%postname%/', false ),
+			'postname structure with front, sub site'     => array( 'https://msls.co/blog/test', 'https://msls.co/test', true, true, true, '/blog/%postname%/', false ),
+			'dated structure without front, main site'    => array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/%year%/%monthnum%/%postname%/', true ),
+			'dated structure with front, main site'       => array( 'https://msls.co/blog/2024/05/test', 'https://msls.co/blog/2024/05/test', true, true, true, '/blog/%year%/%monthnum%/%postname%/', true ),
+			'postname structure without front, main site' => array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/%postname%/', true ),
+			'postname structure with front, main site'    => array( 'https://msls.co/blog/test', 'https://msls.co/blog/test', true, true, true, '/blog/%postname%/', true ),
+			'lookalike slug is left alone, sub site'      => array( 'https://msls.co/blogg/', 'https://msls.co/blogg/', true, true, true, '/blog/%postname%/', false ),
+			'lookalike slug is left alone, main site'     => array( 'https://msls.co/blogg/', 'https://msls.co/blogg/', true, true, true, '/blog/%postname%/', true ),
+			'bare front is stripped down to the home url' => array( 'https://msls.co/blog/', 'https://msls.co/', true, true, true, '/blog/%postname%/', false ),
 		);
 	}
 
-	/**
-	 * @dataProvider provide_data_for_slug_check
-	 */
+	#[DataProvider( 'slug_check_provider' )]
 	public function test_check_for_blog_slug( ?string $url, string $expected, bool $with_front, bool $is_subdomain_install, bool $using_permalinks, string $permalink_structure, bool $is_main_site ): void {
 		global $wp_rewrite, $current_site;
 

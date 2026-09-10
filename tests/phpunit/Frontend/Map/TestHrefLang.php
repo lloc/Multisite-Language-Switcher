@@ -8,6 +8,7 @@ use lloc\Msls\Frontend\Map\HrefLang;
 use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestHrefLang extends MslsUnitTestCase {
 
@@ -36,16 +37,34 @@ final class TestHrefLang extends MslsUnitTestCase {
 		return new HrefLang( $collection );
 	}
 
-	public function test_get(): void {
+	/**
+	 * @return array<string, array{string, string}>
+	 */
+	public static function hreflang_provider(): array {
+		$locales = array(
+			'de_DE'        => 'de-DE',
+			'de_DE_formal' => 'de-DE',
+			'fr_FR'        => 'fr',
+			'es_ES'        => 'es',
+			'cat'          => 'cat',
+			'en_GB'        => 'en-GB',
+			'en_US'        => 'en-US',
+		);
+
+		$data = array();
+
+		foreach ( $locales as $locale => $expected ) {
+			$data[ $locale ] = array( $locale, $expected );
+		}
+
+		return $data;
+	}
+
+	#[DataProvider( 'hreflang_provider' )]
+	public function test_get( string $locale, string $expected ): void {
 		$test = $this->HrefLangFactory();
 
-		$this->assertEquals( 'de-DE', $test->get( 'de_DE' ) );
-		$this->assertEquals( 'de-DE', $test->get( 'de_DE_formal' ) );
-		$this->assertEquals( 'fr', $test->get( 'fr_FR' ) );
-		$this->assertEquals( 'es', $test->get( 'es_ES' ) );
-		$this->assertEquals( 'cat', $test->get( 'cat' ) );
-		$this->assertEquals( 'en-GB', $test->get( 'en_GB' ) );
-		$this->assertEquals( 'en-US', $test->get( 'en_US' ) );
+		$this->assertEquals( $expected, $test->get( $locale ) );
 	}
 
 	public function test_get_has_filter(): void {

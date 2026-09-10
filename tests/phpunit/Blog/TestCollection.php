@@ -7,6 +7,7 @@ use lloc\Msls\Blog\Blog;
 use lloc\Msls\Blog\Collection;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestCollection extends MslsUnitTestCase {
 
@@ -84,18 +85,32 @@ final class TestCollection extends MslsUnitTestCase {
 		);
 	}
 
-	public function test_get_configured_blog_description_empty(): void {
+	/**
+	 * The second column is the fallback description, false where the call passes none.
+	 *
+	 * @return array<string, array{int, string|false, string|false}>
+	 */
+	public static function configured_blog_description_provider(): array {
+		return array(
+			'unknown blog falls back to the given description' => array( 0, 'Test', 'Test' ),
+			'german blog'                     => array( 1, false, 'Deutsch' ),
+			'italian blog'                    => array( 2, false, 'Italiano' ),
+			'french blog'                     => array( 3, false, 'Français' ),
+			'unknown blog without a fallback' => array( 4, false, false ),
+		);
+	}
+
+	/**
+	 * @param string|false $description
+	 * @param string|false $expected
+	 */
+	#[DataProvider( 'configured_blog_description_provider' )]
+	public function test_get_configured_blog_description( int $blog_id, $description, $expected ): void {
 		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
 
 		$obj = new Collection();
 
-		$this->assertEquals( 'Test', $obj->get_configured_blog_description( 0, 'Test' ) );
-
-		$this->assertEquals( 'Deutsch', $obj->get_configured_blog_description( 1 ) );
-		$this->assertEquals( 'Italiano', $obj->get_configured_blog_description( 2 ) );
-		$this->assertEquals( 'Français', $obj->get_configured_blog_description( 3 ) );
-
-		$this->assertFalse( $obj->get_configured_blog_description( 4 ) );
+		$this->assertSame( $expected, $obj->get_configured_blog_description( $blog_id, $description ) );
 	}
 
 	public function test_get_blogs_of_reference_user(): void {
@@ -199,15 +214,24 @@ final class TestCollection extends MslsUnitTestCase {
 		$this->assertTrue( $obj->is_plugin_active( 4 ) );
 	}
 
-	public function test_is_plugin_active(): void {
+	/**
+	 * @return array<string, array{int, bool}>
+	 */
+	public static function is_plugin_active_provider(): array {
+		return array(
+			'configured blog'   => array( 1, true ),
+			'second blog'       => array( 2, true ),
+			'unconfigured blog' => array( 3, false ),
+		);
+	}
+
+	#[DataProvider( 'is_plugin_active_provider' )]
+	public function test_is_plugin_active( int $blog_id, bool $expected ): void {
 		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
 
 		$obj = new Collection();
 
-		$this->assertTrue( $obj->is_plugin_active( 1 ) );
-		$this->assertTrue( $obj->is_plugin_active( 2 ) );
-
-		$this->assertFalse( $obj->is_plugin_active( 3 ) );
+		$this->assertSame( $expected, $obj->is_plugin_active( $blog_id ) );
 	}
 
 	public function test_get_plugin_active_blogs(): void {
@@ -260,26 +284,46 @@ final class TestCollection extends MslsUnitTestCase {
 		$this->assertInstanceOf( Blog::class, $obj->get_current_blog() );
 	}
 
-	public function test_get_blog_language(): void {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-
-		$obj = new Collection();
-
-		$this->assertEquals( 'de_DE', $obj->get_blog_language( 1 ) );
-		$this->assertEquals( 'it_IT', $obj->get_blog_language( 2 ) );
-		$this->assertEquals( 'fr_FR', $obj->get_blog_language( 3 ) );
-
-		$this->assertEquals( 'de_DE', $obj->get_blog_language() );
+	/**
+	 * A null blog id means the call passes no argument at all.
+	 *
+	 * @return array<string, array{?int, string}>
+	 */
+	public static function blog_language_provider(): array {
+		return array(
+			'german blog'             => array( 1, 'de_DE' ),
+			'italian blog'            => array( 2, 'it_IT' ),
+			'french blog'             => array( 3, 'fr_FR' ),
+			'current blog by default' => array( null, 'de_DE' ),
+		);
 	}
 
-	public function test_get_blog_id(): void {
+	#[DataProvider( 'blog_language_provider' )]
+	public function test_get_blog_language( ?int $blog_id, string $expected ): void {
 		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
 
 		$obj = new Collection();
 
-		$this->assertEquals( 1, $obj->get_blog_id( 'de_DE' ) );
-		$this->assertEquals( 2, $obj->get_blog_id( 'it_IT' ) );
+		$this->assertSame( $expected, $obj->get_blog_language( $blog_id ) );
+	}
 
-		$this->assertNull( $obj->get_blog_id( 'fr_FR' ) );
+	/**
+	 * @return array<string, array{string, ?int}>
+	 */
+	public static function blog_id_provider(): array {
+		return array(
+			'german'          => array( 'de_DE', 1 ),
+			'italian'         => array( 'it_IT', 2 ),
+			'not a msls blog' => array( 'fr_FR', null ),
+		);
+	}
+
+	#[DataProvider( 'blog_id_provider' )]
+	public function test_get_blog_id( string $language, ?int $expected ): void {
+		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
+
+		$obj = new Collection();
+
+		$this->assertSame( $expected, $obj->get_blog_id( $language ) );
 	}
 }
