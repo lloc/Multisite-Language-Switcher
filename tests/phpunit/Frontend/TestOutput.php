@@ -14,6 +14,12 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestOutput extends MslsUnitTestCase {
 
+	protected function setUp(): void {
+		parent::setUp();
+
+		Functions\when( 'get_query_var' )->justReturn( 0 );
+	}
+
 	private function OutputFactory(): Output {
 		$options = \Mockery::mock( Options::class );
 

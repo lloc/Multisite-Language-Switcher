@@ -55,4 +55,33 @@ class Post extends Options {
 	public function get_current_link(): string {
 		return (string) get_permalink( $this->get_arg( 0, 0 ) );
 	}
+
+	/**
+	 * Gets the number of pages this blog has for the current request
+	 *
+	 * @param string $language
+	 * @param string $context
+	 *
+	 * @return int
+	 */
+	public function get_max_pages( string $language, string $context = self::PAGINATION_ARCHIVE ): int {
+		if ( self::PAGINATION_ARCHIVE === $context ) {
+			return is_home() ? self::posts_to_pages( self::count_published( 'post' ) ) : 0;
+		}
+
+		$post = get_post( $this->get_post_id( $language ) );
+
+		return is_null( $post ) ? 0 : substr_count( $post->post_content, '<!--nextpage-->' ) + 1;
+	}
+
+	/**
+	 * Gets the post this options object builds a link for in the current blog
+	 *
+	 * @param string $language
+	 *
+	 * @return int
+	 */
+	protected function get_post_id( string $language ): int {
+		return $this->has_value( $language ) ? (int) $this->__get( $language ) : $this->get_arg( 0, 0 );
+	}
 }

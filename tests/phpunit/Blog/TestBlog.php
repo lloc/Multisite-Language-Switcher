@@ -11,6 +11,12 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestBlog extends MslsUnitTestCase {
 
+	protected function setUp(): void {
+		parent::setUp();
+
+		Functions\when( 'get_query_var' )->justReturn( 0 );
+	}
+
 	private function BlogFactory(): Blog {
 		Functions\expect( 'get_blog_option' )->once()->andReturn( 'it_IT' );
 		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 3 ) . '/' );

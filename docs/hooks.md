@@ -156,6 +156,79 @@ considers selectable in its admin UI. Useful when you want to extend the
 WordPress core language list with custom locales or hide locales that should
 never appear in the per-blog dropdown.
 
+## Pagination
+
+The switcher keeps the page of a paginated request in its links: a visitor on
+`/dania-glowne/page/3/` is sent to `/en/main-dishes/page/3/` instead of the
+first page of the archive. That applies to the pages of an archive (the `paged`
+query var) as well as to the pages of a post which is split by `<!--nextpage-->`
+(the `page` query var).
+
+A page is only added when the other blog has it. When the page is out of range
+the link points to the first page, as it did before 3.1.
+
+`Options::get_max_pages()` decides that. Each options class answers it from the
+cheapest source it has: the term count for a taxonomy archive, `wp_count_posts()`
+for a post type archive, the count `has_value()` already fetched for a date or
+author archive, and the number of `<!--nextpage-->` quicktags for a post. The
+counts are divided by the `posts_per_page` option, so a blog which narrows or
+widens an archive in `pre_get_posts` has to correct the result through
+`msls_pagination_max_pages`.
+
+The method runs while the blog it counts for is switched in, so the counts and
+the permalink settings belong to the target blog while the conditional tags still
+describe the request the visitor made. `WP_Rewrite` is the exception: it is not
+switched by `switch_to_blog()`, so the pagination base always comes from the blog
+which serves the request. Use `msls_pagination_get` when a blog of the network
+translates that base.
+
+### msls_preserve_pagination
+
+Filter on whether the page of the current request is kept at all. Return `false`
+to restore the pre-3.1 behaviour and always link to the first page.
+
+```php
+add_filter( 'msls_preserve_pagination', '__return_false' );
+```
+
+### msls_pagination_max_pages
+
+Filter on the number of pages MSLS believes the blog has for the current
+request. Receives the calculated number, the `Options` object, the language of
+the blog, and the context (`paged` for an archive, `single_paged` for a post
+split by `<!--nextpage-->`). Return a higher or lower number when your archives
+do not use the `posts_per_page` option.
+
+```php
+add_filter(
+    'msls_pagination_max_pages',
+    function ( int $max, $options, string $language, string $context ): int {
+        return 'paged' === $context && is_post_type_archive( 'recipe' )
+            ? (int) ceil( wp_count_posts( 'recipe' )->publish / 24 )
+            : $max;
+    },
+    10,
+    4
+);
+```
+
+### msls_pagination_get
+
+Filter on the finished link after the page has been added. Receives the URL, the
+page, the `Options` object, and the language of the blog. Use it when a blog of
+the network translates the pagination base.
+
+```php
+add_filter(
+    'msls_pagination_get',
+    function ( string $url, int $page, $options, string $language ): string {
+        return 'de_DE' === $language ? str_replace( '/page/', '/seite/', $url ) : $url;
+    },
+    10,
+    4
+);
+```
+
 ## Blogs and collection
 
 ### msls_blog_collection_construct

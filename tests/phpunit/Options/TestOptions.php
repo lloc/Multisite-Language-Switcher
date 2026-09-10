@@ -19,6 +19,30 @@ final class TestOptions extends MslsUnitTestCase {
 		return new Options();
 	}
 
+	/**
+	 * @return array<string, array{bool, string, int, int, int}>
+	 */
+	public static function max_pages_provider(): array {
+		return array(
+			'the paginated blog index'              => array( true, Options::PAGINATION_ARCHIVE, 25, 10, 3 ),
+			'an exact number of pages'              => array( true, Options::PAGINATION_ARCHIVE, 20, 10, 2 ),
+			'a blog without posts'                  => array( true, Options::PAGINATION_ARCHIVE, 0, 10, 0 ),
+			'a request which is not the blog index' => array( false, Options::PAGINATION_ARCHIVE, 25, 10, 0 ),
+			'a post split by nextpage'              => array( true, Options::PAGINATION_SINGLE, 25, 10, 0 ),
+		);
+	}
+
+	#[DataProvider( 'max_pages_provider' )]
+	public function test_get_max_pages( bool $is_home, string $context, int $count, int $per_page, int $expected ): void {
+		$test = $this->MslsOptionsFactory();
+
+		Functions\when( 'is_home' )->justReturn( $is_home );
+		Functions\when( 'get_option' )->justReturn( $per_page );
+		Functions\when( 'wp_count_posts' )->justReturn( (object) array( 'publish' => $count ) );
+
+		$this->assertEquals( $expected, $test->get_max_pages( 'de_DE', $context ) );
+	}
+
 	public function test_is_main_page(): void {
 		Functions\when( 'is_front_page' )->justReturn( true );
 

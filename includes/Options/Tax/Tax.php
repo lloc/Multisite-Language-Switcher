@@ -116,6 +116,31 @@ class Tax extends Options implements OptionsTaxInterface {
 	}
 
 	/**
+	 * Gets the number of pages this blog has for the current request
+	 *
+	 * @param string $language
+	 * @param string $context
+	 *
+	 * @return int
+	 */
+	public function get_max_pages( string $language, string $context = self::PAGINATION_ARCHIVE ): int {
+		if ( self::PAGINATION_ARCHIVE !== $context ) {
+			return 0;
+		}
+
+		$taxonomy = $this->get_tax_query();
+		$term_id  = $this->has_value( $language ) ? (int) $this->__get( $language ) : $this->get_arg( 0, 0 );
+
+		if ( empty( $taxonomy ) || empty( $term_id ) ) {
+			return 0;
+		}
+
+		$term = get_term( $term_id, $taxonomy );
+
+		return $term instanceof \WP_Term ? self::posts_to_pages( $term->count ) : 0;
+	}
+
+	/**
 	 * Wraps the call to get_term_link
 	 *
 	 * @param int $term_id

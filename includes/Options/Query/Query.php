@@ -93,4 +93,20 @@ class Query extends Options {
 
 		return '';
 	}
+
+	/**
+	 * Gets the number of pages this blog has for the current request
+	 *
+	 * @param string $language
+	 * @param string $context
+	 *
+	 * @return int
+	 */
+	public function get_max_pages( string $language, string $context = self::PAGINATION_ARCHIVE ): int {
+		if ( self::PAGINATION_ARCHIVE !== $context || ! $this->has_value( $language ) ) {
+			return 0;
+		}
+
+		return self::posts_to_pages( (int) $this->__get( $language ) );
+	}
 }

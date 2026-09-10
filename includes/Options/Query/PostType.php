@@ -53,4 +53,20 @@ class PostType extends Query {
 	public function get_current_link(): string {
 		return (string) get_post_type_archive_link( $this->post_type );
 	}
+
+	/**
+	 * Gets the number of pages this blog has for the current request
+	 *
+	 * @param string $language
+	 * @param string $context
+	 *
+	 * @return int
+	 */
+	public function get_max_pages( string $language, string $context = self::PAGINATION_ARCHIVE ): int {
+		if ( self::PAGINATION_ARCHIVE !== $context || ! $this->has_value( $language ) ) {
+			return 0;
+		}
+
+		return self::posts_to_pages( self::count_published( $this->post_type ) );
+	}
 }

@@ -44,6 +44,9 @@ class Options extends GetSet implements OptionsInterface {
 	public const PREFIX    = 'msls';
 	public const SEPARATOR = '';
 
+	public const PAGINATION_ARCHIVE = 'paged';
+	public const PAGINATION_SINGLE  = 'single_paged';
+
 	/**
 	 * The name of the option in the database
 	 *
@@ -254,6 +257,48 @@ class Options extends GetSet implements OptionsInterface {
 	 */
 	public function get_postlink( $language ) {
 		return '';
+	}
+
+	/**
+	 * Gets the number of pages this blog has for the current request
+	 *
+	 * @param string $language
+	 * @param string $context
+	 *
+	 * @return int
+	 */
+	public function get_max_pages( string $language, string $context = self::PAGINATION_ARCHIVE ): int {
+		if ( self::PAGINATION_ARCHIVE !== $context || ! is_home() ) {
+			return 0;
+		}
+
+		return self::posts_to_pages( self::count_published( 'post' ) );
+	}
+
+	/**
+	 * Gets the number of published posts of a post type in the current blog
+	 *
+	 * @param string $post_type
+	 *
+	 * @return int
+	 */
+	protected static function count_published( string $post_type ): int {
+		$counts = wp_count_posts( $post_type );
+
+		return (int) ( $counts->publish ?? 0 );
+	}
+
+	/**
+	 * Gets the number of pages a list of posts is split into in the current blog
+	 *
+	 * @param int $count
+	 *
+	 * @return int
+	 */
+	protected static function posts_to_pages( int $count ): int {
+		$per_page = (int) get_option( 'posts_per_page', 10 );
+
+		return $per_page > 0 ? (int) ceil( $count / $per_page ) : 0;
 	}
 
 	/**

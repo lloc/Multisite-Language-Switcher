@@ -53,4 +53,30 @@ final class TestPostType extends MslsUnitTestCase {
 
 		$this->assertEquals( 'https://msls.co/queried-posttype', $test->get_current_link() );
 	}
+
+	public function test_get_max_pages(): void {
+		$post_type = \Mockery::mock( '\WP_Post_Type' );
+		Functions\expect( 'get_post_type_object' )->once()->andReturn( $post_type );
+
+		$test = $this->OptionsQueryPostTypeFactory();
+
+		Functions\expect( 'wp_count_posts' )->once()->with( 'queried-posttype' )->andReturn( (object) array( 'publish' => 25 ) );
+		Functions\expect( 'get_option' )->once()->with( 'posts_per_page', 10 )->andReturn( 10 );
+
+		$this->assertEquals( 3, $test->get_max_pages( 'de_DE', PostType::PAGINATION_ARCHIVE ) );
+	}
+
+	public function test_get_max_pages_without_the_post_type(): void {
+		Functions\expect( 'get_post_type_object' )->once()->andReturnNull();
+
+		$test = $this->OptionsQueryPostTypeFactory();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', PostType::PAGINATION_ARCHIVE ) );
+	}
+
+	public function test_get_max_pages_of_a_post_split_by_nextpage(): void {
+		$test = $this->OptionsQueryPostTypeFactory();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', PostType::PAGINATION_SINGLE ) );
+	}
 }

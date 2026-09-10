@@ -37,6 +37,66 @@ final class TestTax extends MslsUnitTestCase {
 		$this->assertInstanceOf( Term::class, Tax::create() );
 	}
 
+	private function TaxWithTranslatedTermFactory(): Tax {
+		Functions\expect( 'get_option' )->once()->with( 'msls_term_42' )->andReturn( array( 'de_DE' => 7 ) );
+
+		return new Tax( 42 );
+	}
+
+	private function expect_tax_query( string $taxonomy ): void {
+		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
+
+		$GLOBALS['wp_query']                     = new \stdClass();
+		$GLOBALS['wp_query']->tax_query          = new \stdClass();
+		$GLOBALS['wp_query']->tax_query->queries = array( array( 'taxonomy' => $taxonomy ) );
+	}
+
+	public function test_get_max_pages_from_the_term_count(): void {
+		$test = $this->TaxWithTranslatedTermFactory();
+
+		$this->expect_tax_query( 'category' );
+
+		$term        = \Mockery::mock( '\WP_Term' );
+		$term->count = 25;
+
+		Functions\expect( 'get_term' )->once()->with( 7, 'category' )->andReturn( $term );
+		Functions\expect( 'get_option' )->once()->with( 'posts_per_page', 10 )->andReturn( 10 );
+
+		$this->assertEquals( 3, $test->get_max_pages( 'de_DE', Tax::PAGINATION_ARCHIVE ) );
+
+		unset( $GLOBALS['wp_query'] );
+	}
+
+	public function test_get_max_pages_falls_back_to_the_queried_term(): void {
+		$test = $this->TaxWithTranslatedTermFactory();
+
+		$this->expect_tax_query( 'category' );
+
+		$term        = \Mockery::mock( '\WP_Term' );
+		$term->count = 8;
+
+		Functions\expect( 'get_term' )->once()->with( 42, 'category' )->andReturn( $term );
+		Functions\expect( 'get_option' )->once()->with( 'posts_per_page', 10 )->andReturn( 10 );
+
+		$this->assertEquals( 1, $test->get_max_pages( 'es_ES', Tax::PAGINATION_ARCHIVE ) );
+
+		unset( $GLOBALS['wp_query'] );
+	}
+
+	public function test_get_max_pages_without_a_taxonomy(): void {
+		$test = $this->TaxWithTranslatedTermFactory();
+
+		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', Tax::PAGINATION_ARCHIVE ) );
+	}
+
+	public function test_get_max_pages_of_a_post_split_by_nextpage(): void {
+		$test = $this->TaxWithTranslatedTermFactory();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', Tax::PAGINATION_SINGLE ) );
+	}
+
 	public function test_get_tax_query(): void {
 		Functions\expect( 'is_woocommerce' )->once()->andReturn( false );
 
