@@ -129,7 +129,7 @@ class Tax extends Options implements OptionsTaxInterface {
 		}
 
 		$taxonomy = $this->get_tax_query();
-		$term_id  = $this->has_value( $language ) ? (int) $this->__get( $language ) : $this->get_arg( 0, 0 );
+		$term_id  = $this->get_term_id( $language );
 
 		if ( empty( $taxonomy ) || empty( $term_id ) ) {
 			return 0;
@@ -137,7 +137,53 @@ class Tax extends Options implements OptionsTaxInterface {
 
 		$term = get_term( $term_id, $taxonomy );
 
-		return $term instanceof \WP_Term ? self::posts_to_pages( $term->count ) : 0;
+		return $term instanceof \WP_Term ? self::posts_to_pages( self::count_term_posts( $term ) ) : 0;
+	}
+
+	/**
+	 * Gets the term this options object builds a link for in the current blog
+	 *
+	 * @param string $language
+	 *
+	 * @return int
+	 */
+	protected function get_term_id( string $language ): int {
+		if ( $this->has_value( $language ) ) {
+			return (int) $this->__get( $language );
+		}
+
+		return ms_is_switched() ? 0 : $this->get_arg( 0, 0 );
+	}
+
+	/**
+	 * Gets the number of published posts an archive of the term holds in the current blog
+	 *
+	 * @param \WP_Term $term
+	 *
+	 * @return int
+	 */
+	protected static function count_term_posts( \WP_Term $term ): int {
+		$children = get_term_children( $term->term_id, $term->taxonomy );
+
+		if ( is_wp_error( $children ) || empty( $children ) ) {
+			return (int) $term->count;
+		}
+
+		$taxonomy = get_taxonomy( $term->taxonomy );
+
+		return self::count_query_posts(
+			array(
+				'post_type' => $taxonomy instanceof \WP_Taxonomy ? $taxonomy->object_type : 'post',
+				'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- the count of a hierarchical term is not available anywhere else.
+					array(
+						'taxonomy'         => $term->taxonomy,
+						'field'            => 'term_id',
+						'terms'            => $term->term_id,
+						'include_children' => true,
+					),
+				),
+			)
+		);
 	}
 
 	/**

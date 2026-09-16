@@ -268,11 +268,15 @@ class Options extends GetSet implements OptionsInterface {
 	 * @return int
 	 */
 	public function get_max_pages( string $language, string $context = self::PAGINATION_ARCHIVE ): int {
-		if ( self::PAGINATION_ARCHIVE !== $context || ! is_home() ) {
-			return 0;
+		if ( self::PAGINATION_SINGLE === $context ) {
+			return is_front_page() ? self::count_content_pages( (int) get_option( 'page_on_front' ) ) : 0;
 		}
 
-		return self::posts_to_pages( self::count_published( 'post' ) );
+		if ( is_home() ) {
+			return self::posts_to_pages( self::count_published( 'post' ) );
+		}
+
+		return is_search() ? self::posts_to_pages( self::count_search_posts() ) : 0;
 	}
 
 	/**
@@ -286,6 +290,73 @@ class Options extends GetSet implements OptionsInterface {
 		$counts = wp_count_posts( $post_type );
 
 		return (int) ( $counts->publish ?? 0 );
+	}
+
+	/**
+	 * Gets the number of published posts the search of the current request finds in the current blog
+	 *
+	 * @return int
+	 */
+	protected static function count_search_posts(): int {
+		$search = (string) get_search_query( false );
+
+		return '' === $search ? 0 : self::count_query_posts( array( 's' => $search ) );
+	}
+
+	/**
+	 * Gets the number of published posts a query finds in the current blog
+	 *
+	 * @param array<string, mixed> $args
+	 *
+	 * @return int
+	 */
+	protected static function count_query_posts( array $args ): int {
+		$query = new \WP_Query(
+			array_merge(
+				array(
+					'post_status'            => 'publish',
+					'fields'                 => 'ids',
+					'posts_per_page'         => 1,
+					'ignore_sticky_posts'    => true,
+					'update_post_meta_cache' => false,
+					'update_post_term_cache' => false,
+				),
+				$args
+			)
+		);
+
+		return (int) $query->found_posts;
+	}
+
+	/**
+	 * Gets the number of pages a post is split into by <!--nextpage--> in the current blog
+	 *
+	 * @param int $post_id
+	 *
+	 * @return int
+	 */
+	protected static function count_content_pages( int $post_id ): int {
+		if ( 0 === $post_id ) {
+			return 0;
+		}
+
+		$post = get_post( $post_id );
+		if ( is_null( $post ) ) {
+			return 0;
+		}
+
+		$content = str_replace(
+			array( "\n<!--nextpage-->\n", "\n<!--nextpage-->", "<!--nextpage-->\n" ),
+			'<!--nextpage-->',
+			(string) $post->post_content
+		);
+
+		$count = substr_count( $content, '<!--nextpage-->' );
+		if ( 0 === $count ) {
+			return 1;
+		}
+
+		return str_starts_with( $content, '<!--nextpage-->' ) ? $count : $count + 1;
 	}
 
 	/**

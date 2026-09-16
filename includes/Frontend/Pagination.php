@@ -23,6 +23,34 @@ class Pagination {
 	const MSLS_GET_HOOK = 'msls_pagination_get';
 
 	/**
+	 * Query vars which route a request instead of the path of the link
+	 */
+	const QUERY_ROUTE_VARS = array(
+		'p',
+		'page_id',
+		'pagename',
+		'name',
+		'attachment_id',
+		'post_type',
+		'cat',
+		'category_name',
+		'tag',
+		'tag_id',
+		'taxonomy',
+		'term',
+		'author',
+		'author_name',
+		'year',
+		'monthnum',
+		'day',
+		'm',
+		's',
+		'feed',
+		'paged',
+		'page',
+	);
+
+	/**
 	 * Page of a paginated archive
 	 *
 	 * @var int
@@ -144,11 +172,11 @@ class Pagination {
 	 * @return string
 	 */
 	protected function add_paged( string $url, int $page ): string {
-		if ( ! $this->using_permalinks() ) {
+		if ( ! $this->using_permalinks( $url ) ) {
 			return (string) add_query_arg( 'paged', $page, $url );
 		}
 
-		return $this->add_path( $url, $this->get_pagination_base() . '/' . $page, Options::PAGINATION_ARCHIVE );
+		return $this->add_path( $url, $this->get_pagination_base() . '/' . $page );
 	}
 
 	/**
@@ -160,7 +188,7 @@ class Pagination {
 	 * @return string
 	 */
 	protected function add_page( string $url, int $page ): string {
-		if ( ! $this->using_permalinks() ) {
+		if ( ! $this->using_permalinks( $url ) ) {
 			return (string) add_query_arg( 'page', $page, $url );
 		}
 
@@ -169,7 +197,7 @@ class Pagination {
 			? $this->get_pagination_base() . '/' . $page
 			: (string) $page;
 
-		return $this->add_path( $url, $path, Options::PAGINATION_SINGLE );
+		return $this->add_path( $url, $path );
 	}
 
 	/**
@@ -177,11 +205,10 @@ class Pagination {
 	 *
 	 * @param string $url
 	 * @param string $path
-	 * @param string $context
 	 *
 	 * @return string
 	 */
-	protected function add_path( string $url, string $path, string $context ): string {
+	protected function add_path( string $url, string $path ): string {
 		$query = '';
 		$pos   = strpos( $url, '?' );
 
@@ -190,14 +217,52 @@ class Pagination {
 			$url   = substr( $url, 0, $pos );
 		}
 
-		return user_trailingslashit( trailingslashit( $url ) . $path, $context ) . $query;
+		$url = trailingslashit( $url ) . $path;
+
+		return ( $this->using_trailing_slashes() ? trailingslashit( $url ) : untrailingslashit( $url ) ) . $query;
 	}
 
 	/**
-	 * Checks the permalink structure of the blog the link belongs to
+	 * Checks if the blog the link belongs to ends its permalinks with a slash
 	 */
-	protected function using_permalinks(): bool {
-		return '' !== (string) get_option( 'permalink_structure', '' );
+	protected function using_trailing_slashes(): bool {
+		$structure = (string) get_option( 'permalink_structure', '' );
+
+		return '' !== $structure && str_ends_with( $structure, '/' );
+	}
+
+	/**
+	 * Checks if the page belongs into the path of the link
+	 *
+	 * @param string $url
+	 *
+	 * @return bool
+	 */
+	protected function using_permalinks( string $url ): bool {
+		if ( '' === (string) get_option( 'permalink_structure', '' ) ) {
+			return false;
+		}
+
+		return ! self::has_query_route( $url );
+	}
+
+	/**
+	 * Checks if the query string of the link routes the request
+	 *
+	 * @param string $url
+	 *
+	 * @return bool
+	 */
+	protected static function has_query_route( string $url ): bool {
+		$pos = strpos( $url, '?' );
+
+		if ( false === $pos ) {
+			return false;
+		}
+
+		parse_str( substr( $url, $pos + 1 ), $args );
+
+		return array() !== array_intersect( self::QUERY_ROUTE_VARS, array_keys( $args ) );
 	}
 
 	/**

@@ -193,7 +193,7 @@ class Table extends \WP_List_Table {
 		$items      = array();
 		$taxonomies = array_keys( $this->get_admin_column_taxonomies() );
 
-		foreach ( $query->posts as $post ) {
+		foreach ( $query->posts ?? array() as $post ) {
 			if ( ! $post instanceof \WP_Post ) {
 				continue;
 			}

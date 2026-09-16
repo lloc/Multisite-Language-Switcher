@@ -1,3 +1,9 @@
+## 3.1.0
+* Add pagination to the links of the switcher: a visitor on page 3 of an archive is sent to page 3 of the translated archive instead of the first page. That applies to the pages of an archive as well as to the pages of a post which is split by `<!--nextpage-->`.
+* Add `Options::get_max_pages()` to the whole options hierarchy, together with the `Options::PAGINATION_ARCHIVE` and `Options::PAGINATION_SINGLE` constants. A page is only added when the other blog has it, so a link which would be out of range still points to the first page.
+* Add `msls_preserve_pagination` to switch the feature off, `msls_pagination_max_pages` to correct the number of pages MSLS calculates, and `msls_pagination_get` to adjust the finished link. All three are documented in `docs/hooks.md`.
+* Internal: `OptionsInterface` is unchanged, so a custom implementation keeps working and simply gets no page appended.
+
 ## 3.0.3
 * Fix: the plugin required PHP-DI 7, which needs PHP 8.0, while MSLS itself declares PHP 7.4 as its minimum. PHP-DI is back on the 6.4 series, so an installation on PHP 7.4 can resolve the dependencies again.
 * Internal: declare `Requires PHP: 7.4` in the plugin header so WordPress blocks activation on older PHP versions, and check the production dependencies against PHP 7.4 in CI.

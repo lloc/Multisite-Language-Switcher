@@ -7,6 +7,7 @@ use lloc\Msls\Options\Tax\Category;
 use lloc\Msls\Options\Tax\Tax;
 use lloc\Msls\Options\Tax\Term;
 use lloc\MslsTests\MslsUnitTestCase;
+use lloc\MslsTests\WP_Query;
 
 use function Brain\Monkey\Functions;
 
@@ -51,18 +52,53 @@ final class TestTax extends MslsUnitTestCase {
 		$GLOBALS['wp_query']->tax_query->queries = array( array( 'taxonomy' => $taxonomy ) );
 	}
 
+	private function TermFactory( int $term_id, int $count ): \WP_Term {
+		$term           = \Mockery::mock( '\WP_Term' );
+		$term->term_id  = $term_id;
+		$term->taxonomy = 'category';
+		$term->count    = $count;
+
+		return $term;
+	}
+
 	public function test_get_max_pages_from_the_term_count(): void {
 		$test = $this->TaxWithTranslatedTermFactory();
 
 		$this->expect_tax_query( 'category' );
 
-		$term        = \Mockery::mock( '\WP_Term' );
-		$term->count = 25;
+		$term = $this->TermFactory( 7, 25 );
 
 		Functions\expect( 'get_term' )->once()->with( 7, 'category' )->andReturn( $term );
+		Functions\expect( 'get_term_children' )->once()->with( 7, 'category' )->andReturn( array() );
 		Functions\expect( 'get_option' )->once()->with( 'posts_per_page', 10 )->andReturn( 10 );
 
 		$this->assertEquals( 3, $test->get_max_pages( 'de_DE', Tax::PAGINATION_ARCHIVE ) );
+
+		unset( $GLOBALS['wp_query'] );
+	}
+
+	public function test_get_max_pages_counts_the_children_of_a_term(): void {
+		$test = $this->TaxWithTranslatedTermFactory();
+
+		$this->expect_tax_query( 'category' );
+
+		$term = $this->TermFactory( 7, 0 );
+
+		$taxonomy              = \Mockery::mock( '\WP_Taxonomy' );
+		$taxonomy->object_type = array( 'post' );
+
+		Functions\expect( 'get_term' )->once()->with( 7, 'category' )->andReturn( $term );
+		Functions\expect( 'get_term_children' )->once()->with( 7, 'category' )->andReturn( array( 8, 9 ) );
+		Functions\expect( 'is_wp_error' )->once()->andReturnFalse();
+		Functions\expect( 'get_taxonomy' )->once()->with( 'category' )->andReturn( $taxonomy );
+		Functions\expect( 'get_option' )->once()->with( 'posts_per_page', 10 )->andReturn( 10 );
+
+		WP_Query::$next_found_posts = 40;
+
+		$this->assertEquals( 4, $test->get_max_pages( 'de_DE', Tax::PAGINATION_ARCHIVE ) );
+
+		$this->assertEquals( array( 'post' ), WP_Query::$last_args['post_type'] );
+		$this->assertTrue( WP_Query::$last_args['tax_query'][0]['include_children'] );
 
 		unset( $GLOBALS['wp_query'] );
 	}
@@ -72,13 +108,27 @@ final class TestTax extends MslsUnitTestCase {
 
 		$this->expect_tax_query( 'category' );
 
-		$term        = \Mockery::mock( '\WP_Term' );
-		$term->count = 8;
+		$term = $this->TermFactory( 42, 8 );
 
+		Functions\expect( 'ms_is_switched' )->once()->andReturnFalse();
 		Functions\expect( 'get_term' )->once()->with( 42, 'category' )->andReturn( $term );
+		Functions\expect( 'get_term_children' )->once()->with( 42, 'category' )->andReturn( array() );
 		Functions\expect( 'get_option' )->once()->with( 'posts_per_page', 10 )->andReturn( 10 );
 
 		$this->assertEquals( 1, $test->get_max_pages( 'es_ES', Tax::PAGINATION_ARCHIVE ) );
+
+		unset( $GLOBALS['wp_query'] );
+	}
+
+	public function test_get_max_pages_without_a_translation_in_a_switched_blog(): void {
+		$test = $this->TaxWithTranslatedTermFactory();
+
+		$this->expect_tax_query( 'category' );
+
+		Functions\expect( 'ms_is_switched' )->once()->andReturnTrue();
+		Functions\expect( 'get_term' )->never();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'es_ES', Tax::PAGINATION_ARCHIVE ) );
 
 		unset( $GLOBALS['wp_query'] );
 	}

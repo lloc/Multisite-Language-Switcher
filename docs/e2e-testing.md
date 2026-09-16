@@ -1,8 +1,8 @@
 # End-to-End Testing
 
 The plugin ships a [Playwright](https://playwright.dev/) suite in `tests/playwright/`.
-`playwright.config.ts` defines two projects, and the project you pick decides both *which*
-specs run and *what they run against*:
+`playwright.config.ts` defines two projects, and the project you pick decides both which
+specs run and what they run against:
 
 | Project | Specs | Target |
 | --- | --- | --- |
@@ -16,7 +16,7 @@ The two are deliberately disjoint: `local` sets `testIgnore: ['**/specs/live/**'
 ## Local suite
 
 The local suite seeds its own multisite topology, so `wp-env` has to be running first. The
-commands are listed in [CLAUDE.md](../CLAUDE.md) under *E2E Tests* — in short,
+commands are listed in [CLAUDE.md](../CLAUDE.md) under *E2E Tests*:
 `npm run playwright:local` for the admin and frontend specs, and the `:visual` /
 `:update-snapshots` scripts for the visual specs, which are only pixel-stable inside the
 Playwright Linux container.
@@ -38,22 +38,22 @@ npm run playwright:live                                             # against ms
 MSLS_LIVE_URL=https://staging.example.com npm run playwright:live   # against another host
 ```
 
-There is no `.env` support in this repository — nothing loads env files, so `MSLS_LIVE_URL`
-has to be exported in your shell or prefixed to the command. (And note that `.gitignore`
-currently has no `.env` entry, so a file you create there would *not* be ignored.)
+There is no `.env` support in this repository: nothing loads env files, so `MSLS_LIVE_URL`
+has to be exported in your shell or prefixed to the command. (`.gitignore` currently has
+no `.env` entry either, so a file you create there would not be ignored.)
 
 ### What the target installation has to provide
 
 The assertions in `tests/playwright/specs/live/testpage.spec.ts` are specific. The target
 needs:
 
-* a publicly reachable page at `/testpage` — no login wall
+* a publicly reachable page at `/testpage`, with no login wall
 * a network offering the languages `de_DE` and `en_GB`
 * a `.widget_mslswidget` container holding the links *de_DE Deutsch* and *en_GB English*
-* an `.msls-menu` holding the links *de_DE* and *en_GB* (exact text) — **msls.co does not
-  currently provide this**, see *Current status* below
+* an `.msls-menu` holding the links *de_DE* and *en_GB* (exact text); msls.co does not
+  currently provide this, see *Current status* below
 * at least three switcher renderings inside `.entry-content` with *de_DE Deutsch* /
-  *en_GB English* — the spec iterates `nth(0)` through `nth(2)`
+  *en_GB English*; the spec iterates `nth(0)` through `nth(2)`
 * additional links inside `.entry-content` reading exactly *Deutsch* / *English*, for the
   translation-hint test
 * the `current_language` class on whichever link is currently active
@@ -63,12 +63,12 @@ msls.co will break the suite.
 
 ### Current status
 
-As of 2026-08-22 the suite is **5 passed, 1 failed** against msls.co. The failing test is
+As of 2026-08-22 the suite is 5 passed, 1 failed against msls.co. The failing test is
 `testing with .msls-menu de_DE en_GB`: `/testpage` does not render an element with the
 `msls-menu` class, while the site's Custom CSS rule (`.msls-menu a { display: inline-block; }`)
 is still there.
 
-That is **not** fixture drift — it is the plugin. Between commit `3afd781` and the 3.0.0
+The plugin is at fault here, not the fixture. Between commit `3afd781` and the 3.0.0
 release the backwards-compatibility aliases were loaded inside a `plugins_loaded` callback,
 which made `class_exists( 'lloc\Msls\MslsOptions' )` return `false` for the MslsMenu add-on,
 so MslsMenu registered neither its `wp_nav_menu_items` filter nor its settings section.
@@ -76,9 +76,9 @@ so MslsMenu registered neither its `wp_nav_menu_items` filter nor its settings s
 The cause is fixed on this branch (commit `7e80283`, PR #690): `includes/aliases.php`,
 `includes/deprecated.php` and `includes/api.php` are required at file-load time again. The
 spec keeps failing against msls.co only because the site still runs the released 2.10.1
-code. **Re-run it once 3.0.0 is deployed to msls.co — it is the release verification for
-the add-on connector fix, and it should then be 6 passed.** Keep the spec either way: it is
-the standing regression test for that bug.
+code. Re-run it once 3.0.0 is deployed to msls.co: it is the release verification for the
+add-on connector fix, and it should then be 6 passed. Keep the spec either way, since it
+is the standing regression test for that bug.
 
 ### Pitfalls
 
@@ -87,7 +87,7 @@ the standing regression test for that bug.
 live tests themselves pass either way, but the setup runs first and has side effects that
 have nothing to do with the run:
 
-* it re-seeds your local test environment — `seedTranslationLinkedPosts()` calls
+* it re-seeds your local test environment: `seedTranslationLinkedPosts()` calls
   `wp post delete --force` for every `post_type=post` entry on all three subsites before
   recreating the demo posts (`global-setup.ts:193-199`), so local posts are gone
 * it re-primes the admin storage states and rewrites
@@ -99,7 +99,7 @@ have nothing to do with the run:
 of that happens (`tests/playwright/setup/global-setup.ts:259`).
 
 **Never run the suite bare.** A plain `npm run playwright` or `npx playwright test`
-executes *both* projects — so it hits msls.co with the live specs on top of seeding your
+executes both projects, so it hits msls.co with the live specs on top of seeding your
 local environment. Use `playwright:local` while working locally.
 
 **Docker is not an option here.** `tests/playwright/scripts/run-in-docker.sh` exists for
@@ -141,7 +141,7 @@ verify a release against the real site.
   issues a writing request against production.
 * **Known issue:** the `testing translation hint` test clicks a link named *English* right
   after asserting `toHaveCount(0)` for that same name. The test currently passes, but the
-  intent is muddled — don't mistake a later fix for a regression.
+  intent is muddled, so don't mistake a later fix for a regression.
 
 ## Environment variables
 
@@ -150,6 +150,6 @@ verify a release against the real site.
 | `MSLS_LIVE_URL` | `https://msls.co` | `baseURL` of the `live` project | `playwright.config.ts:6` |
 | `MSLS_LIVE_ONLY` | unset | `1` skips all seeding and auth in `globalSetup` | `global-setup.ts:259` |
 | `WP_BASE_URL` | `http://localhost:8889` | `baseURL` of the `local` project, and the host `globalSetup` seeds | `playwright.config.ts:5`, `global-setup.ts:7`, `msls-fixtures.ts:12` |
-| `MSLS_SKIP_E2E_SEED` | unset | `1` skips seeding but keeps the local target — set by `run-in-docker.sh` | `global-setup.ts:255` |
+| `MSLS_SKIP_E2E_SEED` | unset | `1` skips seeding but keeps the local target (set by `run-in-docker.sh`) | `global-setup.ts:255` |
 | `STORAGE_STATE_DIR` | `tests/playwright/artifacts/storage-states` | where admin storage states are written and read | `global-setup.ts:10`, `msls-fixtures.ts:14` |
 | `CI` | unset | enables `forbidOnly`, `retries: 2`, `workers: 1` | `playwright.config.ts:4` |

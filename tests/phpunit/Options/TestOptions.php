@@ -7,6 +7,7 @@ use lloc\Msls\Admin\Icon as MslsAdminIcon;
 use lloc\Msls\ContentTypes\PostType;
 use lloc\Msls\Options\Options;
 use lloc\MslsTests\MslsUnitTestCase;
+use lloc\MslsTests\WP_Query;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestOptions extends MslsUnitTestCase {
@@ -20,27 +21,84 @@ final class TestOptions extends MslsUnitTestCase {
 	}
 
 	/**
-	 * @return array<string, array{bool, string, int, int, int}>
+	 * @return array<string, array{bool, int, int, int}>
 	 */
 	public static function max_pages_provider(): array {
 		return array(
-			'the paginated blog index'              => array( true, Options::PAGINATION_ARCHIVE, 25, 10, 3 ),
-			'an exact number of pages'              => array( true, Options::PAGINATION_ARCHIVE, 20, 10, 2 ),
-			'a blog without posts'                  => array( true, Options::PAGINATION_ARCHIVE, 0, 10, 0 ),
-			'a request which is not the blog index' => array( false, Options::PAGINATION_ARCHIVE, 25, 10, 0 ),
-			'a post split by nextpage'              => array( true, Options::PAGINATION_SINGLE, 25, 10, 0 ),
+			'the paginated blog index'              => array( true, 25, 10, 3 ),
+			'an exact number of pages'              => array( true, 20, 10, 2 ),
+			'a blog without posts'                  => array( true, 0, 10, 0 ),
+			'a request which is not the blog index' => array( false, 25, 10, 0 ),
 		);
 	}
 
 	#[DataProvider( 'max_pages_provider' )]
-	public function test_get_max_pages( bool $is_home, string $context, int $count, int $per_page, int $expected ): void {
+	public function test_get_max_pages( bool $is_home, int $count, int $per_page, int $expected ): void {
 		$test = $this->MslsOptionsFactory();
 
 		Functions\when( 'is_home' )->justReturn( $is_home );
+		Functions\when( 'is_search' )->justReturn( false );
 		Functions\when( 'get_option' )->justReturn( $per_page );
 		Functions\when( 'wp_count_posts' )->justReturn( (object) array( 'publish' => $count ) );
 
-		$this->assertEquals( $expected, $test->get_max_pages( 'de_DE', $context ) );
+		$this->assertEquals( $expected, $test->get_max_pages( 'de_DE', Options::PAGINATION_ARCHIVE ) );
+	}
+
+	public function test_get_max_pages_of_a_paginated_search(): void {
+		$test = $this->MslsOptionsFactory();
+
+		Functions\when( 'is_home' )->justReturn( false );
+		Functions\when( 'is_search' )->justReturn( true );
+		Functions\when( 'get_search_query' )->justReturn( 'pasta' );
+		Functions\when( 'get_option' )->justReturn( 10 );
+
+		WP_Query::$next_found_posts = 25;
+
+		$this->assertEquals( 3, $test->get_max_pages( 'de_DE', Options::PAGINATION_ARCHIVE ) );
+		$this->assertEquals( 'pasta', WP_Query::$last_args['s'] );
+	}
+
+	public function test_get_max_pages_of_a_search_without_a_term(): void {
+		$test = $this->MslsOptionsFactory();
+
+		Functions\when( 'is_home' )->justReturn( false );
+		Functions\when( 'is_search' )->justReturn( true );
+		Functions\when( 'get_search_query' )->justReturn( '' );
+		Functions\when( 'get_option' )->justReturn( 10 );
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', Options::PAGINATION_ARCHIVE ) );
+	}
+
+	public function test_get_max_pages_of_a_static_front_page(): void {
+		$test = $this->MslsOptionsFactory();
+
+		$post               = \Mockery::mock( '\WP_Post' );
+		$post->post_content = 'One<!--nextpage-->Two<!--nextpage-->Three';
+
+		Functions\when( 'is_front_page' )->justReturn( true );
+		Functions\when( 'get_option' )->justReturn( 17 );
+		Functions\expect( 'get_post' )->once()->with( 17 )->andReturn( $post );
+
+		$this->assertEquals( 3, $test->get_max_pages( 'de_DE', Options::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_of_a_blog_without_a_static_front_page(): void {
+		$test = $this->MslsOptionsFactory();
+
+		Functions\when( 'is_front_page' )->justReturn( true );
+		Functions\when( 'get_option' )->justReturn( 0 );
+		Functions\expect( 'get_post' )->never();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', Options::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_of_a_split_post_outside_the_front_page(): void {
+		$test = $this->MslsOptionsFactory();
+
+		Functions\when( 'is_front_page' )->justReturn( false );
+		Functions\expect( 'get_post' )->never();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', Options::PAGINATION_SINGLE ) );
 	}
 
 	public function test_is_main_page(): void {

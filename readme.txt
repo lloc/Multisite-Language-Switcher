@@ -6,7 +6,7 @@ Tags: multilingual, multisite, language, switcher, localization
 Requires at least: 6.1
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.3
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,12 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 
 == Changelog ==
 
+= 3.1.0 =
+
+* New: the switcher keeps the page of a paginated request. A visitor on page 3 of an archive is sent to page 3 of the translated archive instead of the first page, for the pages of an archive as well as for a post which is split by `<!--nextpage-->`.
+* New: a page is only added when the other blog has it. The new `Options::get_max_pages()` decides that, and a link which would be out of range still points to the first page.
+* New: `msls_preserve_pagination` switches the feature off, `msls_pagination_max_pages` corrects the number of pages MSLS calculates, and `msls_pagination_get` adjusts the finished link.
+
 = 3.0.3 =
 
 * Fixed: on PHP 7.4 the plugin's dependencies could not be installed, because one of them required PHP 8. MSLS supports PHP 7.4 again, as documented.
@@ -137,6 +143,13 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 The full history is kept in the separate [Changelog](https://github.com/lloc/Multisite-Language-Switcher/blob/master/Changelog.md).
 
 == Upgrade Notice ==
+
+= 3.1.0 =
+
+The switcher now keeps the page of a paginated request instead of always linking to the first
+page of the translated archive. Use `add_filter( 'msls_preserve_pagination', '__return_false' );`
+to restore the previous behaviour. Custom `OptionsInterface` implementations are not affected:
+the interface is unchanged and such an object simply gets no page appended.
 
 = 3.0.3 =
 

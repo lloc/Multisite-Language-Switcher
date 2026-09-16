@@ -28,11 +28,6 @@ final class TestPagination extends MslsUnitTestCase {
 				return rtrim( $string, '/\\' );
 			}
 		);
-		Functions\when( 'user_trailingslashit' )->alias(
-			function ( string $string ): string {
-				return rtrim( $string, '/\\' ) . '/';
-			}
-		);
 		Functions\when( 'add_query_arg' )->alias(
 			function ( string $key, $value, string $url ): string {
 				return $url . ( str_contains( $url, '?' ) ? '&' : '?' ) . $key . '=' . $value;
@@ -101,7 +96,7 @@ final class TestPagination extends MslsUnitTestCase {
 	}
 
 	public function test_get_adds_the_page_of_an_archive(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
+		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
 
 		$test = new Pagination( 3 );
 
@@ -127,7 +122,7 @@ final class TestPagination extends MslsUnitTestCase {
 	}
 
 	public function test_get_keeps_a_query_string_behind_the_page(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
+		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
 
 		$this->assertEquals(
 			'https://example.com/main-dishes/page/3/?orderby=title',
@@ -135,8 +130,35 @@ final class TestPagination extends MslsUnitTestCase {
 		);
 	}
 
-	public function test_get_adds_the_page_of_a_post(): void {
+	public function test_get_uses_the_query_string_for_an_unrewritten_post_type(): void {
 		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
+
+		$this->assertEquals(
+			'https://example.com/?post_type=book&paged=3',
+			( new Pagination( 3 ) )->get( 'https://example.com/?post_type=book', $this->optionsWithPages( 5 ), 'it_IT' )
+		);
+	}
+
+	public function test_get_uses_the_query_string_for_a_post_without_a_pretty_link(): void {
+		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
+
+		$this->assertEquals(
+			'https://example.com/?p=123&page=2',
+			( new Pagination( 0, 2 ) )->get( 'https://example.com/?p=123', $this->optionsWithPages( 4 ), 'it_IT' )
+		);
+	}
+
+	public function test_get_drops_the_trailing_slash_of_the_target_blog(): void {
+		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%' );
+
+		$this->assertEquals(
+			'https://example.com/main-dishes/page/3',
+			( new Pagination( 3 ) )->get( 'https://example.com/main-dishes/', $this->optionsWithPages( 5 ), 'it_IT' )
+		);
+	}
+
+	public function test_get_adds_the_page_of_a_post(): void {
+		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
 
 		$this->assertEquals(
 			'https://example.com/my-post/2/',
@@ -145,7 +167,7 @@ final class TestPagination extends MslsUnitTestCase {
 	}
 
 	public function test_get_uses_the_pagination_base_for_a_static_front_page(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
+		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
 
 		$this->assertEquals(
 			'https://example.com/page/2/',
@@ -154,7 +176,7 @@ final class TestPagination extends MslsUnitTestCase {
 	}
 
 	public function test_get_respects_a_corrected_number_of_pages(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
+		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
 		Filters\expectApplied( Pagination::MSLS_MAX_PAGES_HOOK )->once()->andReturn( 9 );
 
 		$this->assertEquals(
@@ -164,7 +186,7 @@ final class TestPagination extends MslsUnitTestCase {
 	}
 
 	public function test_get_can_be_filtered(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
+		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
 		Filters\expectApplied( Pagination::MSLS_GET_HOOK )->once()->andReturn( 'https://example.com/filtered/' );
 
 		$this->assertEquals(

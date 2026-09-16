@@ -29,15 +29,47 @@ final class TestPost extends MslsUnitTestCase {
 		$this->assertEquals( 3, $test->get_max_pages( 'de_DE', Post::PAGINATION_SINGLE ) );
 	}
 
-	public function test_get_max_pages_falls_back_to_the_source_post(): void {
+	public function test_get_max_pages_falls_back_to_the_queried_post(): void {
 		$post               = \Mockery::mock( '\WP_Post' );
 		$post->post_content = 'Not split at all';
 
+		Functions\expect( 'ms_is_switched' )->once()->andReturnFalse();
 		Functions\expect( 'get_post' )->once()->with( 42 )->andReturn( $post );
 
 		$test = $this->OptionsPostFactory();
 
 		$this->assertEquals( 1, $test->get_max_pages( 'es_ES', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_without_a_translation_in_a_switched_blog(): void {
+		Functions\expect( 'ms_is_switched' )->once()->andReturnTrue();
+		Functions\expect( 'get_post' )->never();
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'es_ES', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_ignores_a_leading_nextpage(): void {
+		$post               = \Mockery::mock( '\WP_Post' );
+		$post->post_content = '<!--nextpage-->One<!--nextpage-->Two';
+
+		Functions\expect( 'get_post' )->once()->with( 42 )->andReturn( $post );
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 2, $test->get_max_pages( 'de_DE', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_ignores_a_leading_nextpage_on_its_own_line(): void {
+		$post               = \Mockery::mock( '\WP_Post' );
+		$post->post_content = "\n<!--nextpage-->\nOne<!--nextpage-->Two";
+
+		Functions\expect( 'get_post' )->once()->with( 42 )->andReturn( $post );
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 2, $test->get_max_pages( 'de_DE', Post::PAGINATION_SINGLE ) );
 	}
 
 	public function test_get_max_pages_without_a_post(): void {

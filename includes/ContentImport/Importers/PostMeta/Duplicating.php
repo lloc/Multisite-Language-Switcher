@@ -34,6 +34,7 @@ class Duplicating extends BaseImporter {
 
 		switch_to_blog( $source_blog_id );
 		$source_meta = get_post_custom( $source_post_id );
+		$source_meta = is_array( $source_meta ) ? $source_meta : array();
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 

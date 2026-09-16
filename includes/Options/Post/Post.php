@@ -69,9 +69,7 @@ class Post extends Options {
 			return is_home() ? self::posts_to_pages( self::count_published( 'post' ) ) : 0;
 		}
 
-		$post = get_post( $this->get_post_id( $language ) );
-
-		return is_null( $post ) ? 0 : substr_count( $post->post_content, '<!--nextpage-->' ) + 1;
+		return self::count_content_pages( $this->get_post_id( $language ) );
 	}
 
 	/**
@@ -82,6 +80,10 @@ class Post extends Options {
 	 * @return int
 	 */
 	protected function get_post_id( string $language ): int {
-		return $this->has_value( $language ) ? (int) $this->__get( $language ) : $this->get_arg( 0, 0 );
+		if ( $this->has_value( $language ) ) {
+			return (int) $this->__get( $language );
+		}
+
+		return ms_is_switched() ? 0 : $this->get_arg( 0, 0 );
 	}
 }
