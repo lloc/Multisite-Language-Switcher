@@ -15,11 +15,49 @@ The two are deliberately disjoint: `local` sets `testIgnore: ['**/specs/live/**'
 
 ## Local suite
 
-The local suite seeds its own multisite topology, so `wp-env` has to be running first. The
-commands are listed in [CLAUDE.md](../CLAUDE.md) under *E2E Tests*:
-`npm run playwright:local` for the admin and frontend specs, and the `:visual` /
-`:update-snapshots` scripts for the visual specs, which are only pixel-stable inside the
-Playwright Linux container.
+### Running it
+
+Both projects drive Chromium, so the browser has to be downloaded once per machine. A
+checkout does not bring it along, and a run without it fails every spec with
+`browserType.launch: Executable doesn't exist at .../chrome-headless-shell`.
+
+```bash
+npx playwright install chromium   # once per machine
+npx wp-env start                  # the suite seeds and queries this installation
+
+npm run playwright:local          # admin and frontend specs
+```
+
+`npm run playwright:install` is the heavier alternative: it runs
+`npx playwright install --with-deps`, which pulls every browser plus the OS packages they
+need, and wants root on Linux. The suite only ever launches Chromium.
+
+The container scripts need none of that. `playwright:visual`, `playwright:docker` and
+`playwright:update-snapshots` run inside the Playwright Linux image, which ships its own
+browsers. They also set `MSLS_SKIP_E2E_SEED=1` and reach `wp-env` on the host, which means
+they seed nothing themselves: run `npm run playwright:local` once first, or the specs read
+a stale `artifacts/seed.json` and look for posts which are not there.
+
+### What the seeding creates
+
+`globalSetup` builds three subsites (root, `de`, `it`), gives each one `/%postname%/`
+permalinks and `posts_per_page` of 1, and then creates two translation-linked post sets
+per blog:
+
+| Set | Slugs | Content |
+| --- | --- | --- |
+| `seed.posts` | `msls-demo-{en,de,it}` | one page, `[sc_msls]` in the body |
+| `seed.paged` | `msls-paged-{en,de,it}` | root and `de` are split by `<!--nextpage-->`, `it` is not |
+
+`posts_per_page` of 1 is what makes the blog index paginated without seeding eleven posts
+per blog through wp-cli, and the asymmetric `msls-paged` set is what lets the pagination
+specs assert both a link which keeps its page and one which runs out of range on the
+target blog. Both sets are linked through the `msls_<post_id>` options, and both are
+deleted and rebuilt on every run.
+
+The visual specs are only pixel-stable inside the Playwright Linux container, so they are
+reached through the `:visual` / `:update-snapshots` scripts. `playwright:local` filters
+them out with `--grep-invert=visual`.
 
 ## Live suite
 
@@ -87,16 +125,16 @@ is the standing regression test for that bug.
 live tests themselves pass either way, but the setup runs first and has side effects that
 have nothing to do with the run:
 
-* it re-seeds your local test environment: `seedTranslationLinkedPosts()` calls
+* it re-seeds your local test environment: `deleteSeededPosts()` calls
   `wp post delete --force` for every `post_type=post` entry on all three subsites before
-  recreating the demo posts (`global-setup.ts:193-199`), so local posts are gone
+  the post sets are created again (`global-setup.ts:189-203`), so local posts are gone
 * it re-primes the admin storage states and rewrites
   `tests/playwright/artifacts/seed.json`
 * it adds roughly half a minute of `npx wp-env run tests-cli` round-trips
 * with `wp-env` stopped it fails outright, since every step shells out to that container
 
 `npm run playwright:live` sets `MSLS_LIVE_ONLY=1`, which makes the setup return before any
-of that happens (`tests/playwright/setup/global-setup.ts:259`).
+of that happens (`tests/playwright/setup/global-setup.ts:303`).
 
 **Never run the suite bare.** A plain `npm run playwright` or `npx playwright test`
 executes both projects, so it hits msls.co with the live specs on top of seeding your
@@ -148,8 +186,8 @@ verify a release against the real site.
 | Variable | Default | Effect | Read at |
 | --- | --- | --- | --- |
 | `MSLS_LIVE_URL` | `https://msls.co` | `baseURL` of the `live` project | `playwright.config.ts:6` |
-| `MSLS_LIVE_ONLY` | unset | `1` skips all seeding and auth in `globalSetup` | `global-setup.ts:259` |
+| `MSLS_LIVE_ONLY` | unset | `1` skips all seeding and auth in `globalSetup` | `global-setup.ts:303` |
 | `WP_BASE_URL` | `http://localhost:8889` | `baseURL` of the `local` project, and the host `globalSetup` seeds | `playwright.config.ts:5`, `global-setup.ts:7`, `msls-fixtures.ts:12` |
-| `MSLS_SKIP_E2E_SEED` | unset | `1` skips seeding but keeps the local target (set by `run-in-docker.sh`) | `global-setup.ts:255` |
+| `MSLS_SKIP_E2E_SEED` | unset | `1` skips seeding but keeps the local target (set by `run-in-docker.sh`) | `global-setup.ts:299` |
 | `STORAGE_STATE_DIR` | `tests/playwright/artifacts/storage-states` | where admin storage states are written and read | `global-setup.ts:10`, `msls-fixtures.ts:14` |
 | `CI` | unset | enables `forbidOnly`, `retries: 2`, `workers: 1` | `playwright.config.ts:4` |

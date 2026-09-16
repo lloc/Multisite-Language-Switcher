@@ -35,7 +35,7 @@ class ImportLogger {
 	 *
 	 * @param ImportLogger|null $logger
 	 */
-	public function merge( ImportLogger $logger = null ): void {
+	public function merge( ?ImportLogger $logger = null ): void {
 		if ( null === $logger ) {
 			return;
 		}

@@ -2,6 +2,9 @@
 * Add pagination to the links of the switcher: a visitor on page 3 of an archive is sent to page 3 of the translated archive instead of the first page. That applies to the pages of an archive as well as to the pages of a post which is split by `<!--nextpage-->`.
 * Add `Options::get_max_pages()` to the whole options hierarchy, together with the `Options::PAGINATION_ARCHIVE` and `Options::PAGINATION_SINGLE` constants. A page is only added when the other blog has it, so a link which would be out of range still points to the first page.
 * Add `msls_preserve_pagination` to switch the feature off, `msls_pagination_max_pages` to correct the number of pages MSLS calculates, and `msls_pagination_get` to adjust the finished link. All three are documented in `docs/hooks.md`.
+* Fix: PHP 8.4 raised deprecation notices on every request. They came from the bundled PHP-DI 6.4, which declares its helper functions with implicitly nullable parameters and loads them through the autoloader on every page load. The 6.4 series is unmaintained and PHP-DI 7 requires PHP 8.0, so the library has been replaced by a small container of the plugin's own.
+* Fix: three parameters of the content import were declared as implicitly nullable, which PHP 8.4 deprecates as well.
+* Internal: `Container::get()` returns a `lloc\Msls\ServiceContainer` instead of a `DI\Container`. It reads the same `config.php` and resolves closures, plain values, and class names.
 * Internal: `OptionsInterface` is unchanged, so a custom implementation keeps working and simply gets no page appended.
 
 ## 3.0.3

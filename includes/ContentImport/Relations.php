@@ -44,7 +44,7 @@ class Relations {
 	 *
 	 * @param Relations|null $relations
 	 */
-	public function merge( Relations $relations = null ): void {
+	public function merge( ?Relations $relations = null ): void {
 		if ( null === $relations ) {
 			return;
 		}
