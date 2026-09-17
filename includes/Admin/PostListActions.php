@@ -46,7 +46,20 @@ class PostListActions {
 			return;
 		}
 
+		if ( ! self::show_button( $post_type ) ) {
+			return;
+		}
+
 		add_action( 'admin_enqueue_scripts', array( self::class, 'inject_button' ) );
+	}
+
+	/**
+	 * Whether the button is shown next to the post type's "Add New".
+	 *
+	 * @param string $post_type Post type of the list screen being rendered.
+	 */
+	public static function show_button( string $post_type ): bool {
+		return (bool) apply_filters( 'msls_translation_picker_button', true, $post_type );
 	}
 
 	/**

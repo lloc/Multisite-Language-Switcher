@@ -171,6 +171,11 @@ class Page {
 			$parent = self::parent_slug( $post_type );
 			$slug   = self::page_slug( $post_type );
 
+			if ( ! self::show_menu( $post_type ) ) {
+				remove_submenu_page( $parent, $slug );
+				continue;
+			}
+
 			if ( empty( $submenu[ $parent ] ) || ! is_array( $submenu[ $parent ] ) ) {
 				continue;
 			}
@@ -217,6 +222,15 @@ class Page {
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Intentional override of global $submenu array.
 			$submenu[ $parent ] = $rebuilt;
 		}
+	}
+
+	/**
+	 * Whether the picker gets a menu entry below the post type.
+	 *
+	 * @param string $post_type Post type the entry would be registered for.
+	 */
+	public static function show_menu( string $post_type ): bool {
+		return (bool) apply_filters( 'msls_translation_picker_menu', true, $post_type );
 	}
 
 	public static function parent_slug( string $post_type ): string {

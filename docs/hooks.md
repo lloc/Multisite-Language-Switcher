@@ -510,6 +510,44 @@ elements (which default to the pattern `msls[<key>]`). Override it when you
 need to integrate MSLS form fields into a different submit/parsing pipeline
 that expects another name shape.
 
+## Admin – translation picker
+
+### msls_translation_picker_menu
+
+Filter on whether the "Add from Translation" entry is added to a post type's
+submenu, receiving the decision (`true` by default) and the post type slug.
+Return `false` to drop the entry; the picker page itself stays reachable, so
+the "Add from Translation" button on the list screen keeps working.
+
+```php
+add_filter( 'msls_translation_picker_menu', '__return_false' );
+```
+
+Restricting it to pages, for example, means returning `false` for everything
+else:
+
+```php
+add_filter(
+    'msls_translation_picker_menu',
+    function ( bool $show, string $post_type ): bool {
+        return 'page' === $post_type;
+    },
+    10,
+    2
+);
+```
+
+### msls_translation_picker_button
+
+Filter on whether the "Add from Translation" button is injected next to "Add
+New" on a post type's list screen, receiving the decision (`true` by default)
+and the post type slug. Return `false` to suppress the button. Combine it with
+`msls_translation_picker_menu` to remove both entry points at once.
+
+```php
+add_filter( 'msls_translation_picker_button', '__return_false' );
+```
+
 ## REST API and Quick Create
 
 ### msls_quick_create_capability
