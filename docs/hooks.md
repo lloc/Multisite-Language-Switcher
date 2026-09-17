@@ -3,7 +3,9 @@
 Multisite Language Switcher exposes a number of WordPress actions and filters
 that let developers customize the plugin's behavior without modifying its
 source. Almost every hook name is prefixed with `msls_`, so `grep -rn "msls_"
-includes/` finds them all.
+includes/` finds nearly all of them. The one extension point it misses is
+`wp_admin_bar_show_site_icons`, which reuses a WordPress core name and is
+documented under "Blogs and collection" below.
 
 This reference lists every extension point the plugin emits, grouped by
 subsystem. For the exact arguments a hook receives, grep for its name in
@@ -128,6 +130,13 @@ Filter on the resolved permalink for a translation. Triggered when the plugin
 asks an `Options` object (post, term, or archive query) for the URL it should
 point to in another language. Override it to rewrite translation URLs, for
 example to route through a marketing redirector or to add tracking parameters.
+
+Its predecessor `check_url` still fires immediately before it, through
+`apply_filters_deprecated()`, and has done since 2.7.1. Callbacks on the old
+name keep working and their return value is handed on to `msls_get_postlink`,
+but every invocation raises a deprecation notice. Moving them over needs no
+other change: both hooks receive the permalink and the `Options` object, in
+that order.
 
 ### msls_options_get_permalink
 
@@ -321,6 +330,25 @@ Filter on the permalink resolved from a `Blog` object for the current
 translatable context (post, term, or archive). Use it to override the
 translation URL on a per-blog basis after MSLS has decided which translated
 object to link to.
+
+### wp_admin_bar_show_site_icons
+
+The one extension point that does not carry the `msls_` prefix.
+`Blog::get_blavatar()` asks WordPress core's own toolbar filter whether it may
+render a blog's site icon, and falls back to an empty `<div class="blavatar">`
+when the answer is no. Reusing the core name is deliberate: a site that hides
+site icons in the toolbar almost certainly wants them hidden in a blog list
+too, so one filter covers both.
+
+The consequence worth knowing is that this works in the other direction as
+well. Filtering the core hook to `false` for the toolbar also empties the
+blavatars MSLS renders, and there is no separate `msls_` switch that turns
+them back on. Filter on the current screen if you only meant to change the
+toolbar.
+
+(MSLS also re-emits core's `widget_title` inside its widget. That one is the
+ordinary widget convention rather than an MSLS extension point, and core
+documents it.)
 
 ## Content types
 
