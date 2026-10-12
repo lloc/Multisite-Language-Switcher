@@ -18,13 +18,21 @@ const SUBSITES: ReadonlyArray<Subsite> = [
   { slug: 'it', title: 'Italian Site', wplang: 'it_IT' },
 ];
 
-const SEED_POST_TITLES: Record<Subsite['slug'], string> = {
-  '': 'MSLS Demo (en)',
-  de: 'MSLS Demo (de)',
-  it: 'MSLS Demo (it)',
+const SEED_POST_BODY = '<p>Demo body. Switcher below:</p>\n[sc_msls]';
+
+// Root and de are split into two pages, it stays on one, so a link which runs out
+// of range on the target blog can be asserted as well.
+const PAGED_POST_BODIES: Record<Subsite['slug'], string> = {
+  '': '<p>Page one.</p>\n[sc_msls]\n<!--nextpage-->\n<p>Page two.</p>\n[sc_msls]',
+  de: '<p>Seite eins.</p>\n[sc_msls]\n<!--nextpage-->\n<p>Seite zwei.</p>\n[sc_msls]',
+  it: '<p>Pagina una.</p>\n[sc_msls]',
 };
 
-const SEED_POST_BODY = '<p>Demo body. Switcher below:</p>\n[sc_msls]';
+// One post per page, so the blog index of every subsite is paginated without
+// seeding eleven posts per blog through wp-cli.
+const POSTS_PER_PAGE = 1;
+
+type Created = { id: number; slug: string; link: string };
 
 function wpEnvCli(command: string): string {
   // wp-env prints status lines on stdout (ℹ Starting…, ✔ Ran…). Strip those
@@ -119,11 +127,15 @@ function ensureMultisiteTopology(): void {
     wpEnvCli(
       `wp option update permalink_structure '/%postname%/' --url=${urlFor(slug)}`
     );
+    wpEnvCli(
+      `wp option update posts_per_page ${POSTS_PER_PAGE} --url=${urlFor(slug)}`
+    );
     // Rewrite rules flush — needed after permalink_structure change.
     wpEnvCli(`wp rewrite flush --hard --url=${urlFor(slug)}`);
   }
 
   wpEnvCli('wp option update permalink_structure \'/%postname%/\'');
+  wpEnvCli(`wp option update posts_per_page ${POSTS_PER_PAGE}`);
   wpEnvCli('wp rewrite flush --hard');
   wpEnvCli('wp plugin activate multisite-language-switcher --network');
 }
@@ -174,8 +186,27 @@ async function primeStorageStates(): Promise<void> {
   }
 }
 
-function seedTranslationLinkedPosts(): void {
-  type Created = { id: number; slug: string; link: string };
+function deleteSeededPosts(): void {
+  // Reruns are idempotent: every post of every subsite goes before the sets are
+  // created again. wp-env's run wraps Docker exec directly (no shell), so $(...)
+  // won't expand — list the IDs in JS, then pass them to delete as args.
+  for (const sub of SUBSITES) {
+    const url = urlFor(sub.slug);
+    const idsRaw = wpEnvCli(
+      `wp post list --post_type=post --field=ID --format=ids --url=${url}`
+    );
+    const existing = idsRaw.split(/\s+/).filter(Boolean);
+    if (existing.length > 0) {
+      wpEnvCli(`wp post delete ${existing.join(' ')} --force --url=${url}`);
+    }
+  }
+}
+
+function createPostSet(
+  slugPrefix: string,
+  titlePrefix: string,
+  bodies: Record<Subsite['slug'], string>
+): Record<Subsite['slug'], Created> {
   const created: Record<Subsite['slug'], Created> = {} as Record<
     Subsite['slug'],
     Created
@@ -186,31 +217,23 @@ function seedTranslationLinkedPosts(): void {
   // all land on the root site.
   for (const sub of SUBSITES) {
     const url = urlFor(sub.slug);
-
-    // Delete previously seeded demo posts so reruns are idempotent. wp-env's
-    // run wraps Docker exec directly (no shell), so $(...) won't expand —
-    // list IDs in JS, then call delete with them as args.
-    const idsRaw = wpEnvCli(
-      `wp post list --post_type=post --field=ID --format=ids --url=${url}`
-    );
-    const existing = idsRaw.split(/\s+/).filter(Boolean);
-    if (existing.length > 0) {
-      wpEnvCli(`wp post delete ${existing.join(' ')} --force --url=${url}`);
-    }
-
-    const slugForUrl =
-      sub.slug === '' ? 'msls-demo-en' : `msls-demo-${sub.slug}`;
-    const titleEsc = SEED_POST_TITLES[sub.slug]
+    const language = sub.slug === '' ? 'en' : sub.slug;
+    const slugForUrl = `${slugPrefix}-${language}`;
+    const titleEsc = `${titlePrefix} (${language})`
       .replace(/\\/g, '\\\\')
       .replace(/"/g, '\\"');
-    const bodyEsc = SEED_POST_BODY.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+    const bodyEsc = bodies[sub.slug]
+      .replace(/\\/g, '\\\\')
+      .replace(/"/g, '\\"');
 
     const idRaw = wpEnvCli(
       `wp post create --post_type=post --post_status=publish --post_title="${titleEsc}" --post_name=${slugForUrl} --post_content="${bodyEsc}" --porcelain --url=${url}`
     );
     const id = parseInt(idRaw, 10);
     if (!Number.isFinite(id) || id <= 0) {
-      throw new Error(`Failed to create seed post on "${sub.slug || 'root'}" (got: ${idRaw})`);
+      throw new Error(
+        `Failed to create "${slugForUrl}" on "${sub.slug || 'root'}" (got: ${idRaw})`
+      );
     }
 
     created[sub.slug] = {
@@ -220,6 +243,10 @@ function seedTranslationLinkedPosts(): void {
     };
   }
 
+  return created;
+}
+
+function linkTranslations(created: Record<Subsite['slug'], Created>): void {
   // Translation links are stored per-blog as the WP option `msls_<post_id>`
   // — a map of foreign-language codes to the post id on that subsite. See
   // includes/Options/Options.php (PREFIX 'msls', SEPARATOR '_'). REST/meta
@@ -235,18 +262,35 @@ function seedTranslationLinkedPosts(): void {
     const others: Record<string, number> = { ...linkMap };
     delete others[lang];
 
-    const postId = created[sub.slug].id;
-    const optionName = `msls_${postId}`;
+    const optionName = `msls_${created[sub.slug].id}`;
     const payload = JSON.stringify(others).replace(/'/g, "'\"'\"'");
 
     wpEnvCli(
       `wp option update '${optionName}' '${payload}' --format=json --autoload=no --url=${urlFor(sub.slug)}`
     );
   }
+}
+
+function seedTranslationLinkedPosts(): void {
+  deleteSeededPosts();
+
+  const posts = createPostSet('msls-demo', 'MSLS Demo', {
+    '': SEED_POST_BODY,
+    de: SEED_POST_BODY,
+    it: SEED_POST_BODY,
+  });
+  linkTranslations(posts);
+
+  const paged = createPostSet('msls-paged', 'MSLS Paged', PAGED_POST_BODIES);
+  linkTranslations(paged);
 
   fs.writeFileSync(
     SEED_FILE,
-    JSON.stringify({ posts: created, body: SEED_POST_BODY }, null, 2),
+    JSON.stringify(
+      { posts, paged, body: SEED_POST_BODY, pagedBodies: PAGED_POST_BODIES },
+      null,
+      2
+    ),
     'utf8'
   );
 }

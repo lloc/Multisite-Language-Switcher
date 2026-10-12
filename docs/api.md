@@ -3,7 +3,7 @@
 Multisite Language Switcher ships with a small set of global helper functions
 that act as the plugin's public API. They live in `includes/api.php`, which
 `MultisiteLanguageSwitcher.php` requires the moment the plugin file is
-included — before `plugins_loaded` fires. They are therefore available to
+included, before `plugins_loaded` fires. They are therefore available to
 add-ons and themes regardless of the order in which WordPress loads the
 plugins.
 
@@ -13,8 +13,8 @@ reach into MSLS without instantiating its internal classes directly. They
 also wrap MSLS's registry/singleton plumbing, which means calling them
 repeatedly is cheap and safe.
 
-A `function_exists()` guard is recommended before any of these calls in theme
-templates, so your theme degrades gracefully when MSLS is deactivated:
+Guard these calls with `function_exists()` in theme templates, so the theme
+still renders when MSLS is deactivated:
 
 ```php
 if ( function_exists( 'msls_the_switcher' ) ) {
@@ -45,7 +45,7 @@ your own escaping/filtering. The optional argument behaves the same as for
 
 Returns the URL of the translation of the current post (or term, or archive)
 in the language identified by the given locale. If no translation exists, the
-optional `$preset` string is returned instead — typically an empty string or
+optional `$preset` string is returned instead, typically an empty string or
 a fallback URL. Useful when you need to render your own switcher markup or
 build a single direct link to a specific language.
 
@@ -66,7 +66,7 @@ optional `$preset` is returned when no matching blog is registered.
 
 Resolves a locale to its `Blog` instance, or `null` when no blog with that
 locale is part of the MSLS collection. Use it when you need direct access to
-a single blog — for example to call `get_url()` for a custom switcher — and
+a single blog (for example to call `get_url()` for a custom switcher) and
 want to handle the missing-blog case explicitly.
 
 ## Service accessors
@@ -79,7 +79,7 @@ it when you want to iterate over the full set of languages yourself.
 
 ### msls_options
 
-Returns the global `Options` singleton — the merged plugin settings for the
+Returns the global `Options` singleton, the merged plugin settings for the
 current request. Use it to read configuration values such as the display
 mode, image URL overrides, or whether MSLS should include the current blog
 in the switcher.
@@ -94,9 +94,9 @@ or inspect the resolved switcher state before rendering.
 ### msls_content_types
 
 Returns the `ContentTypes\ContentTypes` instance, a context-aware factory
-that exposes both supported post types and taxonomies. Use it when you need
-to ask "is this current request a translatable content type?" without
-worrying about whether you're on a post or a taxonomy screen.
+that exposes both supported post types and taxonomies. Use it to check
+whether the current request is a translatable content type without branching
+on post and taxonomy screens yourself.
 
 ### msls_post_type
 
@@ -115,9 +115,8 @@ taxonomies from outside the plugin.
 ### msls_get_post
 
 Returns the `Options\Post\Post` instance for a specific post ID. The object
-exposes the post's translation map — the IDs of the equivalent posts on
-other blogs — and helpers such as `get_permalink()` for individual
-languages.
+exposes the post's translation map (the IDs of the equivalent posts on other
+blogs) and helpers such as `get_permalink()` for individual languages.
 
 ### msls_get_tax
 
@@ -140,32 +139,31 @@ you might need to query in more detail.
 
 A trivial no-op function. It exists so that callers (typically WordPress
 action registrations or fluent setups) can pass a callable that "does
-nothing" without inventing a closure. There's no end-user use case here —
-mentioned only for completeness.
+nothing" without inventing a closure. There's no end-user use case; it is
+listed here only for completeness.
 
 ## Deprecated functions
 
 The following pre-2.10.1 names live in `includes/deprecated.php`. Each one
-still works but emits a `_deprecated_function()` notice and simply forwards
-to its modern `msls_*` replacement. Update calls in your code at your
-earliest convenience.
+still works but emits a `_deprecated_function()` notice and forwards to its
+modern `msls_*` replacement.
 
 ### get_the_msls
 
-Deprecated since 2.10.1 — use `msls_get_switcher()`.
+Deprecated since 2.10.1. Use `msls_get_switcher()`.
 
 ### the_msls
 
-Deprecated since 2.10.1 — use `msls_the_switcher()`.
+Deprecated since 2.10.1. Use `msls_the_switcher()`.
 
 ### get_msls_flag_url
 
-Deprecated since 2.10.1 — use `msls_get_flag_url()`.
+Deprecated since 2.10.1. Use `msls_get_flag_url()`.
 
 ### get_msls_blog_description
 
-Deprecated since 2.10.1 — use `msls_get_blog_description()`.
+Deprecated since 2.10.1. Use `msls_get_blog_description()`.
 
 ### get_msls_permalink
 
-Deprecated since 2.10.1 — use `msls_get_permalink()`.
+Deprecated since 2.10.1. Use `msls_get_permalink()`.

@@ -32,6 +32,7 @@ npm run build-msls-block            # Build only the Gutenberg block
 
 ### E2E Tests
 ```bash
+npx playwright install chromium     # Once per machine: every project launches Chromium
 npx wp-env start                    # Required first: the local suite runs against wp-env
 npm run playwright:local            # Admin + frontend specs (skips visual)
 npm run playwright:visual           # Visual specs inside the Playwright Linux image
@@ -40,6 +41,9 @@ npm run playwright:update-snapshots # Regenerate visual baselines
 npm run playwright:live             # Only specs/live, against msls.co (no wp-env needed)
 npx playwright test --ui            # Run with UI
 ```
+Without the browser every spec fails with `browserType.launch: Executable doesn't exist`.
+The three container scripts are exempt: the Playwright Linux image ships its own browsers.
+
 Visual baselines are committed and only pixel-stable when generated inside the container —
 always use the `:visual` / `:update-snapshots` scripts, never a bare `npx playwright test`
 for them.
@@ -80,7 +84,7 @@ it, so activate it once per fresh **development** environment with the command a
 - PSR-4 (dev): `lloc\MslsTests\` maps to `tests/phpunit/`
 - Plugin bootstrap: `MultisiteLanguageSwitcher.php` — defines constants, requires `vendor/autoload.php` plus `includes/aliases.php`, `includes/deprecated.php` and `includes/api.php` **at file-load time**, then calls `lloc\Msls\Plugin::init()` and `lloc\Msls\Cli\Cli::init()` on `plugins_loaded`. Do not move those requires into the hook: add-ons may load before us, and they need the aliases and the `msls_*()` functions to exist the moment the plugin file is included
 - **Backwards-compatibility aliases**: `lloc\Msls\Compat\Aliases::MAP` (`includes/Compat/Aliases.php`) maps the ~60 pre-3.0 flat class names (`MslsOptions`, `MslsLink`, `MslsPlugin`, …) to their namespaced replacements. `::register()` — invoked from the thin `includes/aliases.php` — creates them with `class_alias()` **eagerly**, plus an autoloader for the handful in `::LAZY_ONLY`. Do not make them lazy across the board: PHP resolves the class named in a parameter/return/property type with `ZEND_FETCH_CLASS_NO_AUTOLOAD`, so an alias created on demand never gets its chance and the call fatals with a `TypeError` (MslsMenu declares `get_msls_output(): lloc\Msls\MslsOutput`). `LAZY_ONLY` is limited to names that never shipped before 3.0, so nothing can be holding them. Write new code against the namespaced names; the aliases exist only for third-party consumers
-- **PHP-DI**: `lloc\Msls\Container::get()` builds the container from `config.php` on first use and caches it. `config.php` is still empty — nothing is injected through it yet
+- **Service container**: `lloc\Msls\Container::get()` builds a `lloc\Msls\ServiceContainer` from `config.php` on first use and caches it for the request. Definitions are closures (called with the container), plain values, or nothing at all, in which case an existing class name is instantiated. `config.php` is still empty, nothing is injected through it yet. This replaced PHP-DI in 3.1.0: the 6.4 series is unmaintained and emits PHP 8.4 deprecations from its autoloaded `functions.php`, while PHP-DI 7 requires PHP 8.0 and the plugin declares PHP 7.4. Do not reintroduce a DI library while that floor stands
 
 ### Key Patterns
 - **Registry/Singleton**: `Registry\Instance` is the base class providing the `::instance()` static accessor (backed by `Registry\Registry`); `Registry\GetSet` extends it to add overloaded property access

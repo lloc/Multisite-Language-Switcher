@@ -12,6 +12,7 @@ assets/js/msls-widget-block/
 assets/js/msls.js
 build/translations.json
 composer.phar
+docs/specs/
 multisite-language-switcher.zip
 multisite-language-switcher/
 node_modules/

@@ -2,42 +2,41 @@
 
 namespace lloc\Msls;
 
-use DI\Container as DiContainer;
-use DI\ContainerBuilder;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Accessor for the PHP-DI container.
- *
- * The container is built on first use and kept for the rest of the request; requests that
- * never ask for it never pay for it.
+ * Accessor for the service container, built on first use
  *
  * @package Msls
  */
 final class Container {
 
 	/**
-	 * The container built by self::get(), kept for the rest of the request.
+	 * The container built by self::get(), kept for the rest of the request
 	 *
-	 * @var ?DiContainer
+	 * @var ?ServiceContainer
 	 */
-	private static ?DiContainer $container = null;
+	private static ?ServiceContainer $container = null;
 
 	/**
-	 * @throws \Exception If the container cannot be built.
+	 * Gets the container of the current request
+	 *
+	 * @return ServiceContainer
 	 */
-	public static function get(): DiContainer {
+	public static function get(): ServiceContainer {
 		if ( null === self::$container ) {
-			$builder = new ContainerBuilder();
-			$builder->addDefinitions( Plugin::plugin_dir_path( 'config.php' ) );
+			$definitions = require Plugin::plugin_dir_path( 'config.php' );
 
-			self::$container = $builder->build();
+			self::$container = new ServiceContainer( is_array( $definitions ) ? $definitions : array() );
 		}
 
 		return self::$container;
 	}
 
 	/**
-	 * Drops the built container, so the next call to self::get() builds a new one.
+	 * Drops the built container, so the next call to self::get() builds a new one
 	 */
 	public static function reset(): void {
 		self::$container = null;

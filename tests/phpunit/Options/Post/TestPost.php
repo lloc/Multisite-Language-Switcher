@@ -18,6 +18,87 @@ final class TestPost extends MslsUnitTestCase {
 		return new Post( 42 );
 	}
 
+	public function test_get_max_pages_counts_the_nextpage_quicktags(): void {
+		$post               = \Mockery::mock( '\WP_Post' );
+		$post->post_content = 'One<!--nextpage-->Two<!--nextpage-->Three';
+
+		Functions\expect( 'get_post' )->once()->with( 42 )->andReturn( $post );
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 3, $test->get_max_pages( 'de_DE', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_falls_back_to_the_queried_post(): void {
+		$post               = \Mockery::mock( '\WP_Post' );
+		$post->post_content = 'Not split at all';
+
+		Functions\expect( 'ms_is_switched' )->once()->andReturnFalse();
+		Functions\expect( 'get_post' )->once()->with( 42 )->andReturn( $post );
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 1, $test->get_max_pages( 'es_ES', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_without_a_translation_in_a_switched_blog(): void {
+		Functions\expect( 'ms_is_switched' )->once()->andReturnTrue();
+		Functions\expect( 'get_post' )->never();
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'es_ES', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_ignores_a_leading_nextpage(): void {
+		$post               = \Mockery::mock( '\WP_Post' );
+		$post->post_content = '<!--nextpage-->One<!--nextpage-->Two';
+
+		Functions\expect( 'get_post' )->once()->with( 42 )->andReturn( $post );
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 2, $test->get_max_pages( 'de_DE', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_ignores_a_leading_nextpage_on_its_own_line(): void {
+		$post               = \Mockery::mock( '\WP_Post' );
+		$post->post_content = "\n<!--nextpage-->\nOne<!--nextpage-->Two";
+
+		Functions\expect( 'get_post' )->once()->with( 42 )->andReturn( $post );
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 2, $test->get_max_pages( 'de_DE', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_without_a_post(): void {
+		Functions\expect( 'get_post' )->once()->andReturnNull();
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', Post::PAGINATION_SINGLE ) );
+	}
+
+	public function test_get_max_pages_of_the_posts_page(): void {
+		Functions\when( 'is_home' )->justReturn( true );
+		Functions\when( 'wp_count_posts' )->justReturn( (object) array( 'publish' => 25 ) );
+
+		$test = $this->OptionsPostFactory();
+
+		Functions\expect( 'get_option' )->once()->with( 'posts_per_page', 10 )->andReturn( 10 );
+
+		$this->assertEquals( 3, $test->get_max_pages( 'de_DE', Post::PAGINATION_ARCHIVE ) );
+	}
+
+	public function test_get_max_pages_of_a_single_post_request(): void {
+		Functions\when( 'is_home' )->justReturn( false );
+
+		$test = $this->OptionsPostFactory();
+
+		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', Post::PAGINATION_ARCHIVE ) );
+	}
+
 	public function test_get_postlink_not_has_value(): void {
 		$test = $this->OptionsPostFactory();
 

@@ -23,7 +23,10 @@ const SEED_FILE = path.join(
 export type SeedPost = { id: number; slug: string; link: string };
 export type Seed = {
   posts: Record<SubsiteSlug, SeedPost>;
+  // Root and de are split by <!--nextpage-->, it is not.
+  paged: Record<SubsiteSlug, SeedPost>;
   body: string;
+  pagedBodies: Record<SubsiteSlug, string>;
 };
 
 export function subsiteUrl(slug: SubsiteSlug): string {

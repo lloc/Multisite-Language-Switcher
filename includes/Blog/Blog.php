@@ -3,6 +3,7 @@
 namespace lloc\Msls\Blog;
 
 use lloc\Msls\Admin\Icon;
+use lloc\Msls\Frontend\Pagination;
 use lloc\Msls\Options\OptionsInterface;
 
 /**
@@ -123,7 +124,7 @@ class Blog {
 	 */
 	public function get_url( $options ) {
 		if ( msls_blog_collection()->get_current_blog_id() === $this->obj->userblog_id ) {
-			return $options->get_current_link();
+			return Pagination::create()->get( $options->get_current_link(), $options, $this->get_language() );
 		}
 
 		return $this->get_permalink( $options );
@@ -139,6 +140,7 @@ class Blog {
 
 		$is_front_page = is_front_page();
 		$is_posts_page = ! $is_front_page && is_home();
+		$pagination    = Pagination::create();
 
 		switch_to_blog( $this->obj->userblog_id );
 
@@ -149,6 +151,10 @@ class Blog {
 			if ( $page_for_posts > 0 ) {
 				$url = apply_filters( self::MSLS_GET_PERMALINK_HOOK, (string) get_permalink( $page_for_posts ), $this ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- constant value is already prefixed with "msls_".
 			}
+		}
+
+		if ( is_string( $url ) ) {
+			$url = $pagination->get( $url, $options, $this->get_language() );
 		}
 
 		restore_current_blog();

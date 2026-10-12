@@ -2,19 +2,20 @@
 
 Multisite Language Switcher exposes a number of WordPress actions and filters
 that let developers customize the plugin's behavior without modifying its
-source. Almost every hook name is prefixed with `msls_`, which makes them easy
-to find in the codebase with a quick `grep -rn "msls_" includes/`.
+source. Almost every hook name is prefixed with `msls_`, so `grep -rn "msls_"
+includes/` finds nearly all of them. The one extension point it misses is
+`wp_admin_bar_show_site_icons`, which reuses a WordPress core name and is
+documented under "Blogs and collection" below.
 
 This reference lists every extension point the plugin emits, grouped by
-subsystem. For each hook you'll find a short heading with the literal hook
-name and a paragraph explaining what it does and a typical use case. To learn
-the exact arguments a hook receives, grep for the hook name in `includes/` —
-the `apply_filters()` / `do_action()` call site is the source of truth.
+subsystem. For the exact arguments a hook receives, grep for its name in
+`includes/`: the `apply_filters()` / `do_action()` call site is the source of
+truth.
 
 ## What add-ons can rely on
 
 Everything an add-on needs is in place from the moment
-`MultisiteLanguageSwitcher.php` is included — before `plugins_loaded` fires, and
+`MultisiteLanguageSwitcher.php` is included, before `plugins_loaded` fires, and
 therefore regardless of the order in which WordPress happens to load the two
 plugins:
 
@@ -26,7 +27,7 @@ plugins:
   The 3.0 restructuring moved these into sub-namespaces; `lloc\Msls\Compat\Aliases`
   registers them as `class_alias()` entries, so `class_exists( 'lloc\Msls\MslsOptions' )`
   keeps working and the old names are equally valid in type declarations. Write
-  new code against the namespaced names — the aliases exist for third-party
+  new code against the namespaced names; the aliases exist for third-party
   consumers.
 
 The hooks below, by contrast, fire during `plugins_loaded` and later.
@@ -45,10 +46,10 @@ switcher renderer for the entire site or per template.
 
 Filter that builds the markup for every individual language item before it
 joins the output array. It receives the target URL (not the finished anchor),
-the `LinkInterface` object, and whether the item points at the current blog —
+the `LinkInterface` object, and whether the item points at the current blog,
 so the return value has to be the complete HTML for that item. When no
 callback is attached, MSLS renders its own default anchor instead. Use it to
-wrap, decorate, or replace the per-language link — for example to add a CSS
+wrap, decorate, or replace the per-language link, for example to add a CSS
 class, swap in a button element, or append a flag image only on the current
 language.
 
@@ -96,7 +97,7 @@ language. Override the hook to enforce your own locale-to-hreflang policy.
 
 Filter on the "This post is also available in …" hint that the plugin can
 inject above or below the post content. Return your own translated/branded
-template string — the existing list of language links is passed alongside so
+template string; the existing list of language links is passed alongside so
 your replacement can still reference them.
 
 ### msls_widget_title
@@ -115,11 +116,11 @@ found"; override it to localize differently or render a custom call-to-action.
 
 ### msls_link_create
 
-Filter that fires inside the `Link` factory when a switcher item is being
-materialized into one of the built-in link variants (text, image, image plus
-text, etc.). Return a different object implementing `LinkInterface` to
-substitute a fully custom link renderer — for example one that emits a button
-component or an icon-only SVG.
+Filter that fires inside the `Link` factory when a switcher item is turned
+into one of the built-in link variants (text, image, image plus text, etc.).
+Return a different object implementing `LinkInterface` to substitute a fully
+custom link renderer, for example one that emits a button component or an
+icon-only SVG.
 
 ## Permalinks and options
 
@@ -129,6 +130,13 @@ Filter on the resolved permalink for a translation. Triggered when the plugin
 asks an `Options` object (post, term, or archive query) for the URL it should
 point to in another language. Override it to rewrite translation URLs, for
 example to route through a marketing redirector or to add tracking parameters.
+
+Its predecessor `check_url` still fires immediately before it, through
+`apply_filters_deprecated()`, and has done since 2.7.1. Callbacks on the old
+name keep working and their return value is handed on to `msls_get_postlink`,
+but every invocation raises a deprecation notice. Moving them over needs no
+other change: both hooks receive the permalink and the `Options` object, in
+that order.
 
 ### msls_options_get_permalink
 
@@ -145,8 +153,8 @@ the bundled `flag-icon/` directory.
 
 ### msls_options_get_flag_icon
 
-Filter on the actual filename used for a flag icon for a given language. Use
-it when you need to swap individual icons — for example to map a custom
+Filter on the filename used for a flag icon for a given language. Use
+it when you need to swap individual icons, for example to map a custom
 locale to a non-standard flag file.
 
 ### msls_options_get_available_languages
@@ -155,6 +163,91 @@ Filter on the array of language codes and human-readable names that the plugin
 considers selectable in its admin UI. Useful when you want to extend the
 WordPress core language list with custom locales or hide locales that should
 never appear in the per-blog dropdown.
+
+## Pagination
+
+The switcher keeps the page of a paginated request in its links: a visitor on
+`/dania-glowne/page/3/` is sent to `/en/main-dishes/page/3/` instead of the
+first page of the archive. That applies to the pages of an archive (the `paged`
+query var) as well as to the pages of a post which is split by `<!--nextpage-->`
+(the `page` query var).
+
+A page is only added when the other blog has it. When the page is out of range
+the link points to the first page, as it did before 3.1. A blog without a
+translation has no page either, so its link stays the home URL it was before.
+
+`Options::get_max_pages()` decides that. Each options class answers it from the
+cheapest source it has: the term count for a taxonomy archive, `wp_count_posts()`
+for a post type archive, the count `has_value()` already fetched for a date or
+author archive, and the number of `<!--nextpage-->` quicktags for a post or a
+static front page. Two cases need a counting query instead: a hierarchical term,
+whose own count leaves out the posts of its children, and a search, which has no
+stored count at all. The counts are divided by the `posts_per_page` option, so a
+blog which narrows or widens an archive in `pre_get_posts` has to correct the
+result through `msls_pagination_max_pages`.
+
+The quicktags are counted the way `WP_Query` splits the content, so a
+`<!--nextpage-->` at the very beginning does not open a page of its own.
+
+The page becomes a path segment only when the link is a pretty permalink. A
+link which routes through its query string, such as the archive of a post type
+registered with `'rewrite' => false`, gets `paged` or `page` as a query
+argument instead.
+
+The method runs while the blog it counts for is switched in, so the counts and
+the permalink settings belong to the target blog while the conditional tags still
+describe the request the visitor made. That includes the trailing slash, which
+MSLS reads from the `permalink_structure` of the target blog rather than from
+`$wp_rewrite`. The pagination base is the exception: `switch_to_blog()` does not
+switch `WP_Rewrite`, so the base always comes from the blog which serves the
+request. Use `msls_pagination_get` when a blog of the network translates it.
+
+### msls_preserve_pagination
+
+Filter on whether the page of the current request is kept at all. Return `false`
+to restore the pre-3.1 behavior and always link to the first page.
+
+```php
+add_filter( 'msls_preserve_pagination', '__return_false' );
+```
+
+### msls_pagination_max_pages
+
+Filter on the number of pages MSLS believes the blog has for the current
+request. Receives the calculated number, the `Options` object, the language of
+the blog, and the context (`paged` for an archive, `single_paged` for a post
+split by `<!--nextpage-->`). Return a higher or lower number when your archives
+do not use the `posts_per_page` option.
+
+```php
+add_filter(
+    'msls_pagination_max_pages',
+    function ( int $max, $options, string $language, string $context ): int {
+        return 'paged' === $context && is_post_type_archive( 'recipe' )
+            ? (int) ceil( wp_count_posts( 'recipe' )->publish / 24 )
+            : $max;
+    },
+    10,
+    4
+);
+```
+
+### msls_pagination_get
+
+Filter on the finished link after the page has been added. Receives the URL, the
+page, the `Options` object, and the language of the blog. Use it when a blog of
+the network translates the pagination base.
+
+```php
+add_filter(
+    'msls_pagination_get',
+    function ( string $url, int $page, $options, string $language ): string {
+        return 'de_DE' === $language ? str_replace( '/page/', '/seite/', $url ) : $url;
+    },
+    10,
+    4
+);
+```
 
 ## Blogs and collection
 
@@ -174,7 +267,7 @@ the language switcher instead of relying on the configured description.
 Mind the argument order, which is the reverse of what the hook name suggests:
 the **filtered value is the blog ID**, and the description MSLS resolved for
 that blog arrives as the second argument. Whatever you return is used as the
-description — and returning `false` drops the blog from the collection
+description, and returning `false` drops the blog from the collection
 entirely, which is the supported way to hide a site from every consumer at
 construction time.
 
@@ -192,9 +285,9 @@ add_filter(
 ### msls_blog_collection_get_blog
 
 Filter on the `Blog` instance returned when callers look up a blog by its
-language. Returning your own object — or returning a different blog than the
-one MSLS would pick — lets you redirect language resolution, for example to
-implement a fallback chain when an exact locale match is missing.
+language. Returning your own object, or a different blog than the one MSLS
+would pick, lets you redirect language resolution, for example to implement a
+fallback chain when an exact locale match is missing.
 
 ### msls_blog_collection_get_blog_id
 
@@ -219,9 +312,9 @@ without affecting admin features that use the full collection.
 ### msls_get_users
 
 Filter on the arguments passed to `get_users()` when MSLS builds its
-"reference user" dropdown. Use it to restrict the candidate users — for
-example by role, by capability, or by custom meta — so editors only see the
-intended reference accounts.
+"reference user" dropdown. Use it to restrict the candidate users by role,
+by capability, or by custom meta, so editors only see the intended reference
+accounts.
 
 MSLS asks for one user more than it displays, because that extra row is how it
 detects a truncated list without counting every user of the blog. Filtering
@@ -237,6 +330,25 @@ Filter on the permalink resolved from a `Blog` object for the current
 translatable context (post, term, or archive). Use it to override the
 translation URL on a per-blog basis after MSLS has decided which translated
 object to link to.
+
+### wp_admin_bar_show_site_icons
+
+The one extension point that does not carry the `msls_` prefix.
+`Blog::get_blavatar()` asks WordPress core's own toolbar filter whether it may
+render a blog's site icon, and falls back to an empty `<div class="blavatar">`
+when the answer is no. Reusing the core name is deliberate: a site that hides
+site icons in the toolbar almost certainly wants them hidden in a blog list
+too, so one filter covers both.
+
+The consequence worth knowing is that this works in the other direction as
+well. Filtering the core hook to `false` for the toolbar also empties the
+blavatars MSLS renders, and there is no separate `msls_` switch that turns
+them back on. Filter on the current screen if you only meant to change the
+toolbar.
+
+(MSLS also re-emits core's `widget_title` inside its widget. That one is the
+ordinary widget convention rather than an MSLS extension point, and core
+documents it.)
 
 ## Content types
 
@@ -262,8 +374,8 @@ page via `add_settings_section()`.
 
 The callback receives the settings page slug as its only argument. **Always
 pass that argument through to `add_settings_section()` / `add_settings_field()`
-instead of hard-coding a slug** — it is the only supported way to land on the
-page MSLS actually renders:
+instead of hard-coding a slug.** That is the only supported way to land on
+the page MSLS renders:
 
 ```php
 add_action(
@@ -281,8 +393,8 @@ specific settings section. The `{section}` suffix matches the section ID, for
 example `msls_admin_main_section`, `msls_admin_language_section`,
 `msls_admin_advanced_section`, or `msls_admin_rewrites_section`. Use it to
 add custom fields to one specific section without touching the others. Like
-`msls_admin_register`, it hands you the page slug — as the first of its two
-arguments, the second being the section ID.
+`msls_admin_register`, it hands you the page slug as the first of its two
+arguments; the second is the section ID.
 
 ### msls_admin_caps
 
@@ -303,11 +415,11 @@ a PHP notice, so nothing lands in the error log.
 
 ### msls_reference_users
 
-Filter on the array of reference users — keyed by user ID and valued by
-nicename — used to populate the "reference user" dropdown. The array has
-already been cut to `msls_max_reference_users_count` entries when it reaches
-you. Use the hook to post-process the list, for example to relabel entries or
-remove specific accounts.
+Filter on the array of reference users (keyed by user ID, valued by nicename)
+used to populate the "reference user" dropdown. The array has already been cut
+to `msls_max_reference_users_count` entries when it reaches you. Use the hook
+to post-process the list, for example to relabel entries or remove specific
+accounts.
 
 ### msls_admin_validate
 
@@ -408,7 +520,7 @@ or localize that heading.
 
 Filter on the admin URL produced for the small MSLS edit/new icons shown in
 list tables next to translatable rows. Override it to redirect the icon
-target — for example to a custom translation workflow page instead of the
+target, for example to a custom translation workflow page instead of the
 standard WordPress edit screen.
 
 ### msls_main_save
@@ -425,6 +537,44 @@ Filter on the HTML `name` attribute generated for MSLS `<select>` form
 elements (which default to the pattern `msls[<key>]`). Override it when you
 need to integrate MSLS form fields into a different submit/parsing pipeline
 that expects another name shape.
+
+## Admin – translation picker
+
+### msls_translation_picker_menu
+
+Filter on whether the "Add from Translation" entry is added to a post type's
+submenu, receiving the decision (`true` by default) and the post type slug.
+Return `false` to drop the entry; the picker page itself stays reachable, so
+the "Add from Translation" button on the list screen keeps working.
+
+```php
+add_filter( 'msls_translation_picker_menu', '__return_false' );
+```
+
+Restricting it to pages, for example, means returning `false` for everything
+else:
+
+```php
+add_filter(
+    'msls_translation_picker_menu',
+    function ( bool $show, string $post_type ): bool {
+        return 'page' === $post_type;
+    },
+    10,
+    2
+);
+```
+
+### msls_translation_picker_button
+
+Filter on whether the "Add from Translation" button is injected next to "Add
+New" on a post type's list screen, receiving the decision (`true` by default)
+and the post type slug. Return `false` to suppress the button. Combine it with
+`msls_translation_picker_menu` to remove both entry points at once.
+
+```php
+add_filter( 'msls_translation_picker_button', '__return_false' );
+```
 
 ## REST API and Quick Create
 
@@ -494,14 +644,14 @@ post a notice, or trigger follow-up jobs.
 
 Filter on the array of post fields that has been prepared for import, fired
 just after the "before import" action and before any importer runs. Use it
-to rewrite fields globally — for example to localize URLs in `post_content`
+to rewrite fields globally, for example to localize URLs in `post_content`
 or set a translation-specific `post_status`.
 
 ### msls_content_import_data_after_import
 
 Filter on the array of post fields after every importer has run. The hook
 also receives the `ImportLogger` and `Relations` objects, so it is the
-right place to do a last pass over the merged result — for example to undo
+right place to do a last pass over the merged result, for example to undo
 specific changes a particular importer made.
 
 ### msls_content_import_importers
@@ -542,7 +692,7 @@ flavor alongside the built-ins.
 ### msls_content_import_{type}_selected
 
 Dynamic filter that picks which importer slug is "selected" for a given
-factory — `{type}` is again one of the five factory types. The default is the
+factory; `{type}` is again one of the five factory types. The default is the
 first entry of the factory's importers map. Use it to programmatically switch
 between competing importer implementations, for example based on the post type
 or destination blog.

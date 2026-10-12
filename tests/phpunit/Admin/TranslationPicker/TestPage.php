@@ -2,6 +2,7 @@
 
 namespace lloc\MslsTests\Admin\TranslationPicker;
 
+use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use lloc\Msls\Admin\TranslationPicker\Page;
 use lloc\MslsTests\MslsUnitTestCase;
@@ -114,5 +115,17 @@ final class TestPage extends MslsUnitTestCase {
 	#[DataProvider( 'save_per_page_option_provider' )]
 	public function test_save_per_page_option( string $option, string $value, $expected ): void {
 		$this->assertSame( $expected, Page::save_per_page_option( false, $option, $value ) );
+	}
+
+	public function test_show_menu_defaults_to_true(): void {
+		Filters\expectApplied( 'msls_translation_picker_menu' )->once()->with( true, 'post' )->andReturnFirstArg();
+
+		$this->assertTrue( Page::show_menu( 'post' ) );
+	}
+
+	public function test_show_menu_can_be_filtered_off(): void {
+		Filters\expectApplied( 'msls_translation_picker_menu' )->once()->with( true, 'page' )->andReturn( false );
+
+		$this->assertFalse( Page::show_menu( 'page' ) );
 	}
 }

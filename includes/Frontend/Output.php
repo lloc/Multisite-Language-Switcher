@@ -57,8 +57,9 @@ class Output extends Main {
 
 		$blogs = $this->collection->get_filtered( $filter );
 		if ( $blogs ) {
-			$mydata = Options::create();
-			$link   = Link::create( $display );
+			$mydata     = Options::create();
+			$link       = Link::create( $display );
+			$pagination = Pagination::create();
 
 			foreach ( $blogs as $blog ) {
 				$language = $blog->get_language();
@@ -68,7 +69,7 @@ class Output extends Main {
 
 				$is_current_blog = $this->collection->is_current_blog( $blog );
 				if ( $is_current_blog ) {
-					$url       = $mydata->get_current_link();
+					$url       = $pagination->get( $mydata->get_current_link(), $mydata, $language );
 					$link->txt = $blog->get_description();
 				} else {
 					switch_to_blog( $blog->userblog_id );
@@ -77,7 +78,7 @@ class Output extends Main {
 						restore_current_blog();
 						continue;
 					} else {
-						$url       = $mydata->get_permalink( $language );
+						$url       = $pagination->get( $mydata->get_permalink( $language ), $mydata, $language );
 						$link->txt = $blog->get_description();
 					}
 

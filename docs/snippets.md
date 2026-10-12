@@ -15,9 +15,8 @@ locations, post types, and locales.
 
 In most cases you should use the WordPress function `get_locale()` when you
 need the language of the current blog. MSLS exposes a near-equivalent through
-its blog collection — with the bonus of falling back to `en_US` when the
-value is empty — and gives you the two-letter alpha-2 code as a separate
-accessor.
+its blog collection, which falls back to `en_US` when the value is empty and
+gives you the two-letter alpha-2 code as a separate accessor.
 
 ```php
 $blog     = msls_blog_collection()->get_current_blog();
@@ -32,7 +31,7 @@ the language switcher into a navigation menu. The example below renders the
 links as flag-only items and appends them to the primary menu only.
 
 It's safer to gate on the existence of `msls_output()` than to reference the
-class directly — that way the theme degrades gracefully when MSLS is
+class directly; that way the theme degrades gracefully when MSLS is
 deactivated.
 
 ```php
@@ -67,8 +66,8 @@ $arr = $obj->get( 3 );
 
 ## Iterate the blog collection
 
-When you need to do something for every blog the plugin tracks — emit
-alternate links, build a custom menu, populate a sitemap — iterate the
+When you need to do something for every blog the plugin tracks (emit
+alternate links, build a custom menu, populate a sitemap), iterate the
 collection directly:
 
 ```php
@@ -97,8 +96,8 @@ if ( function_exists( 'msls_the_switcher' ) ) {
 }
 ```
 
-To capture the markup as a string — for example to embed it in another
-component — use `msls_get_switcher()` and forward optional tag overrides:
+To capture the markup as a string, for example to embed it in another
+component, use `msls_get_switcher()` and forward optional tag overrides:
 
 ```php
 $markup = msls_get_switcher(
@@ -138,7 +137,7 @@ add_filter( 'msls_head_hreflang', function ( $language ) {
 ## Restrict supported post types
 
 By default MSLS treats every public post type as translatable. The
-`msls_supported_post_types` filter lets you opt specific post types out — for
+`msls_supported_post_types` filter lets you opt specific post types out, for
 example a `feedback` CPT that you keep mono-lingual:
 
 ```php
@@ -172,9 +171,9 @@ add_filter( 'msls_output_get', function ( string $url, $link, bool $is_current_b
 `LinkInterface` only declares `__toString()`; the values themselves live in
 the magic properties `Link` inherits from `Registry\GetSet`: `txt` is the
 blog description, `src` the flag-icon URL, and `alt` the locale. Casting the
-object to a string renders the variant the user selected — which for three
-of the four variants contains an `<img>` element, so do not run the result
-through `esc_html()`.
+object to a string renders the variant the user selected. Three of the four
+variants contain an `<img>` element, so do not run the result through
+`esc_html()`.
 
 ## Set the status of REST-created translations
 
@@ -235,7 +234,7 @@ user of the blog.
 
 ## See also
 
-- [Public API Functions](api.md) — the full reference for every `msls_*`
+- [Public API Functions](api.md): the full reference for every `msls_*`
   helper.
-- [Hooks Reference](hooks.md) — the full list of actions and filters the
+- [Hooks Reference](hooks.md): the full list of actions and filters the
   plugin emits.

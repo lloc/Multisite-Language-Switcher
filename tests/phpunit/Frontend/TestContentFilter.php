@@ -13,6 +13,12 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 final class TestContentFilter extends MslsUnitTestCase {
 
+	protected function setUp(): void {
+		parent::setUp();
+
+		Functions\when( 'get_query_var' )->justReturn( 0 );
+	}
+
 	public function test_init(): void {
 		$options = \Mockery::mock( Options::class );
 
