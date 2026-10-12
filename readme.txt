@@ -149,10 +149,8 @@ The full history is kept in the separate [Changelog](https://github.com/lloc/Mul
 
 = 3.1.0 =
 
-The switcher now keeps the page of a paginated request instead of always linking to the first
-page of the translated archive. Use `add_filter( 'msls_preserve_pagination', '__return_false' );`
-to restore the previous behaviour. Custom `OptionsInterface` implementations are not affected:
-the interface is unchanged and such an object simply gets no page appended.
+The switcher now keeps the page of paginated archives instead of linking to page one.
+Restore the old behaviour with `add_filter( 'msls_preserve_pagination', '__return_false' );`.
 
 = 3.0.3 =
 
