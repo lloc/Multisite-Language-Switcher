@@ -6,6 +6,9 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     target-branch: 'master'
+    groups:
+      github-actions:
+        patterns: ["*"]
 
   - package-ecosystem: npm
     directory: '/'
@@ -18,6 +21,10 @@ updates:
       # block major bumps that would re-create the ERESOLVE conflict.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+    groups:
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   - package-ecosystem: composer
     directory: '/'
@@ -25,3 +32,7 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     target-branch: 'master'
+    groups:
+      composer-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
