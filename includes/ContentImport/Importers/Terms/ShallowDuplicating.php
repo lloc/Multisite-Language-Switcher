@@ -60,10 +60,10 @@ class ShallowDuplicating extends BaseImporter {
 		}
 
 		$source_terms_ids = wp_list_pluck( $source_terms, 'term_id' );
-		$msls_terms       = array_combine(
-			$source_terms_ids,
-			array_map( array( Term::class, 'create' ), $source_terms_ids )
-		);
+		$msls_terms       = array();
+		foreach ( $source_terms_ids as $source_term_id ) {
+			$msls_terms[ $source_term_id ] = Term::create( $source_term_id );
+		}
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 

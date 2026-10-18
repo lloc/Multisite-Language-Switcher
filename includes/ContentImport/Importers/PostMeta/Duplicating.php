@@ -33,7 +33,7 @@ class Duplicating extends BaseImporter {
 		$dest_post_id   = $this->import_coordinates->dest_post_id;
 
 		switch_to_blog( $source_blog_id );
-		$source_meta = get_post_custom( $source_post_id );
+		$source_meta = get_post_custom( $source_post_id ) ?: array();
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
