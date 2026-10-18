@@ -37,6 +37,7 @@ final class TestOutput extends MslsUnitTestCase {
 		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
 		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$a->shouldReceive( 'get_url' )->andReturn( 'https://example.de/' );
+		$a->shouldReceive( 'is_main_site' )->andReturn( false );
 		$a->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
 
 		$blogs[] = $a;
@@ -45,6 +46,7 @@ final class TestOutput extends MslsUnitTestCase {
 		$b->shouldReceive( 'get_alpha2' )->andReturn( 'it' );
 		$b->shouldReceive( 'get_language' )->andReturn( 'it_IT' );
 		$b->shouldReceive( 'get_url' )->andReturn( 'https://example.it/' );
+		$b->shouldReceive( 'is_main_site' )->andReturn( true );
 		$b->shouldReceive( 'get_description' )->andReturn( 'Italiano' );
 
 		$blogs[] = $b;
@@ -66,15 +68,80 @@ final class TestOutput extends MslsUnitTestCase {
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
+		Filters\expectApplied( 'msls_output_get_alternate_links_default' )->once();
 		Filters\expectApplied( 'msls_output_get_alternate_links_arr' )->once();
+
+		$expected =
+			'<link rel="alternate" href="https://example.de/" hreflang="de" />' . PHP_EOL .
+			'<link rel="alternate" href="https://example.it/" hreflang="it" />' . PHP_EOL .
+			'<link rel="alternate" href="https://example.it/" hreflang="x-default" />';
+
+		$test = $this->OutputFactory();
+
+		$this->assertEquals( $expected, $test->get_alternate_links() );
+	}
+
+	/**
+	 * Two blogs, none of them the main site of the network.
+	 *
+	 * @return array<int, Blog>
+	 */
+	private function two_blogs_without_main_site(): array {
+		$a = \Mockery::mock( Blog::class );
+		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
+		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
+		$a->shouldReceive( 'get_url' )->andReturn( 'https://example.de/' );
+		$a->shouldReceive( 'is_main_site' )->andReturn( false );
+
+		$b = \Mockery::mock( Blog::class );
+		$b->shouldReceive( 'get_alpha2' )->andReturn( 'it' );
+		$b->shouldReceive( 'get_language' )->andReturn( 'it_IT' );
+		$b->shouldReceive( 'get_url' )->andReturn( 'https://example.it/' );
+		$b->shouldReceive( 'is_main_site' )->andReturn( false );
+
+		return array( $a, $b );
+	}
+
+	/**
+	 * Expectations shared by the alternate links tests: no archive or special page.
+	 */
+	private function expect_singular_request(): void {
+		Functions\when( 'is_admin' )->justReturn( false );
+		foreach ( array( 'is_front_page', 'is_search', 'is_404', 'is_category', 'is_tag', 'is_tax', 'is_date', 'is_author', 'is_post_type_archive' ) as $conditional ) {
+			Functions\when( $conditional )->justReturn( false );
+		}
+		Functions\when( 'get_queried_object_id' )->justReturn( 42 );
+		Functions\when( 'get_option' )->justReturn( array() );
+	}
+
+	public function test_get_alternate_links_x_default_falls_back_to_the_first_url(): void {
+		$collection = \Mockery::mock( Collection::class );
+		$collection->shouldReceive( 'get_objects' )->andReturn( $this->two_blogs_without_main_site() );
+
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		$this->expect_singular_request();
+
+		$expected =
+			'<link rel="alternate" href="https://example.de/" hreflang="de" />' . PHP_EOL .
+			'<link rel="alternate" href="https://example.it/" hreflang="it" />' . PHP_EOL .
+			'<link rel="alternate" href="https://example.de/" hreflang="x-default" />';
+
+		$this->assertEquals( $expected, $this->OutputFactory()->get_alternate_links() );
+	}
+
+	public function test_get_alternate_links_x_default_can_be_removed(): void {
+		$collection = \Mockery::mock( Collection::class );
+		$collection->shouldReceive( 'get_objects' )->andReturn( $this->two_blogs_without_main_site() );
+
+		Functions\expect( 'msls_blog_collection' )->once()->andReturn( $collection );
+		$this->expect_singular_request();
+		Filters\expectApplied( 'msls_output_get_alternate_links_default' )->once()->andReturn( '' );
 
 		$expected =
 			'<link rel="alternate" href="https://example.de/" hreflang="de" />' . PHP_EOL .
 			'<link rel="alternate" href="https://example.it/" hreflang="it" />';
 
-		$test = $this->OutputFactory();
-
-		$this->assertEquals( $expected, $test->get_alternate_links() );
+		$this->assertEquals( $expected, $this->OutputFactory()->get_alternate_links() );
 	}
 
 	public function test_get_alternate_links_null_url(): void {
@@ -84,6 +151,7 @@ final class TestOutput extends MslsUnitTestCase {
 		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
 		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$a->shouldReceive( 'get_url' )->andReturnNull();
+		$a->shouldReceive( 'is_main_site' )->andReturn( false );
 
 		$blogs[] = $a;
 
@@ -116,6 +184,7 @@ final class TestOutput extends MslsUnitTestCase {
 		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
 		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$a->shouldReceive( 'get_url' )->andReturn( 'https://example.de/' );
+		$a->shouldReceive( 'is_main_site' )->andReturn( false );
 		$a->shouldReceive( 'get_description' )->andReturn( 'Deutsch' );
 
 		$blogs[] = $a;
@@ -334,6 +403,7 @@ final class TestOutput extends MslsUnitTestCase {
 		$a->shouldReceive( 'get_alpha2' )->andReturn( 'de' );
 		$a->shouldReceive( 'get_language' )->andReturn( 'de_DE' );
 		$a->shouldReceive( 'get_url' )->andReturn( '' );
+		$a->shouldReceive( 'is_main_site' )->andReturn( false );
 
 		$blogs[] = $a;
 

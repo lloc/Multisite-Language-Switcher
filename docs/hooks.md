@@ -51,9 +51,11 @@ match a canonical form your SEO setup requires.
 
 ### msls_output_get_alternate_links_default
 
-Filter on the `x-default` alternate `<link>` tag that is returned when only one
-alternate URL is available. Override this when you want to suppress, replace,
-or rewrite that default entry.
+Filter on the `x-default` alternate `<link>` tag. With several languages it
+points to the main site of the network, or to the first alternate URL when the
+main site has no translation. With only one alternate URL it is the only tag
+that gets printed. Return an empty string to suppress it, or a different tag to
+replace it.
 
 ### msls_output_get_alternate_links_arr
 

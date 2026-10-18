@@ -117,14 +117,21 @@ class Output extends Main {
 	/**
 	 * Get alternate links for the head section
 	 *
+	 * With more than one language, an x-default entry is added. It points to
+	 * the main site of the network if that site is part of the list, else to
+	 * the first entry. The `msls_output_get_alternate_links_default` filter can
+	 * change it, or return an empty string to leave it out.
+	 *
 	 * @return string
 	 */
 	public function get_alternate_links() {
 		$blogs     = msls_blog_collection();
 		$href_lang = new HrefLang( $blogs );
 		$options   = Options::create();
+		$format    = '<link rel="alternate" href="%1$s" hreflang="%2$s" />';
 		$arr       = array();
-		$default   = '';
+		$first     = '';
+		$main      = '';
 
 		foreach ( $blogs->get_objects() as $blog ) {
 			$url = apply_filters( self::MSLS_ALTERNATE_LINKS_HOOK, $blog->get_url( $options ), $blog );
@@ -132,18 +139,32 @@ class Output extends Main {
 				continue;
 			}
 
-			$hreflang = $href_lang->get( $blog->get_language() );
-			$format   = '<link rel="alternate" href="%1$s" hreflang="%2$s" />';
-
-			if ( '' === $default ) {
-				$default = sprintf( $format, esc_url( $url ), 'x-default' );
+			if ( '' === $first ) {
+				$first = $url;
 			}
 
-			$arr[] = sprintf( $format, esc_url( $url ), esc_attr( $hreflang ) );
+			if ( '' === $main && $blog->is_main_site() ) {
+				$main = $url;
+			}
+
+			$hreflang = $href_lang->get( $blog->get_language() );
+			$arr[]    = sprintf( $format, esc_url( $url ), esc_attr( $hreflang ) );
+		}
+
+		if ( array() === $arr ) {
+			return '';
 		}
 
 		if ( 1 === count( $arr ) ) {
+			$default = sprintf( $format, esc_url( $first ), 'x-default' );
+
 			return apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
+		}
+
+		$default = sprintf( $format, esc_url( '' !== $main ? $main : $first ), 'x-default' );
+		$default = (string) apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
+		if ( '' !== $default ) {
+			$arr[] = $default;
 		}
 
 		$arr = (array) apply_filters( self::MSLS_ALTERNATE_LINKS_ARR_HOOK, $arr );

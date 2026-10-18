@@ -21,6 +21,13 @@ final class TestBlog extends MslsUnitTestCase {
 		return new Blog( $blog, 'Italiano' );
 	}
 
+	public function test_is_main_site(): void {
+		Functions\expect( 'get_main_site_id' )->twice()->andReturn( 1, 2 );
+
+		$this->assertTrue( $this->BlogFactory()->is_main_site() );
+		$this->assertFalse( $this->BlogFactory()->is_main_site() );
+	}
+
 	public function test_get_userblog_id(): void {
 		$this->assertEquals( 1, $this->BlogFactory()->userblog_id );
 	}

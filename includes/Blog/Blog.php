@@ -106,6 +106,15 @@ class Blog {
 	}
 
 	/**
+	 * Whether this blog is the main site of the current network
+	 *
+	 * @return bool
+	 */
+	public function is_main_site(): bool {
+		return get_main_site_id() === (int) $this->obj->userblog_id;
+	}
+
+	/**
 	 * Gets the alpha2-part of the language-code
 	 *
 	 * @return string
