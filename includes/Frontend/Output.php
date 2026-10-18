@@ -151,20 +151,18 @@ class Output extends Main {
 			$arr[]    = sprintf( $format, esc_url( $url ), esc_attr( $hreflang ) );
 		}
 
-		if ( array() === $arr ) {
-			return '';
-		}
-
 		if ( 1 === count( $arr ) ) {
 			$default = sprintf( $format, esc_url( $first ), 'x-default' );
 
 			return apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
 		}
 
-		$default = sprintf( $format, esc_url( '' !== $main ? $main : $first ), 'x-default' );
-		$default = (string) apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
-		if ( '' !== $default ) {
-			$arr[] = $default;
+		if ( count( $arr ) > 1 ) {
+			$default = sprintf( $format, esc_url( '' !== $main ? $main : $first ), 'x-default' );
+			$default = (string) apply_filters( self::MSLS_ALTERNATE_LINKS_DEFAULT_HOOK, $default );
+			if ( '' !== $default ) {
+				$arr[] = $default;
+			}
 		}
 
 		$arr = (array) apply_filters( self::MSLS_ALTERNATE_LINKS_ARR_HOOK, $arr );

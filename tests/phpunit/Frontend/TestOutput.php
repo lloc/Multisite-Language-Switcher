@@ -172,6 +172,10 @@ final class TestOutput extends MslsUnitTestCase {
 		Functions\expect( 'get_queried_object_id' )->once()->andReturn( 42 );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
+		// The array filter still runs with an empty list, without an x-default entry.
+		Filters\expectApplied( 'msls_output_get_alternate_links_default' )->never();
+		Filters\expectApplied( 'msls_output_get_alternate_links_arr' )->once()->with( array() );
+
 		$test = $this->OutputFactory();
 
 		$this->assertEquals( '', $test->get_alternate_links() );

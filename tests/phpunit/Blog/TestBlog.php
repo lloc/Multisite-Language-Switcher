@@ -22,7 +22,7 @@ final class TestBlog extends MslsUnitTestCase {
 	}
 
 	public function test_is_main_site(): void {
-		Functions\expect( 'get_main_site_id' )->twice()->andReturn( 1, 2 );
+		Functions\expect( 'is_main_site' )->twice()->with( 1 )->andReturn( true, false );
 
 		$this->assertTrue( $this->BlogFactory()->is_main_site() );
 		$this->assertFalse( $this->BlogFactory()->is_main_site() );

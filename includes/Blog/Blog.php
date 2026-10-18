@@ -111,7 +111,7 @@ class Blog {
 	 * @return bool
 	 */
 	public function is_main_site(): bool {
-		return get_main_site_id() === (int) $this->obj->userblog_id;
+		return is_main_site( (int) $this->obj->userblog_id );
 	}
 
 	/**

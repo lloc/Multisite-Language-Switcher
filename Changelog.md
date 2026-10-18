@@ -1,6 +1,7 @@
 ## Unreleased
 * Fix: hreflang alternate links now include an `x-default` entry when several languages are available. It points to the main site of the network, or to the first alternate URL. The `msls_output_get_alternate_links_default` filter can change or remove it.
 * Add `Blog::is_main_site()`.
+* Note: `msls_output_get_alternate_links_default` now also runs when several languages are available, not only for a single alternate URL. A callback that returns a fixed tag adds that tag to every page with several languages. The array passed to `msls_output_get_alternate_links_arr` now contains the `x-default` entry as its last item.
 
 ## 2.10.1
 * Fix: Deprecated function warning pointed to non-existent function.
