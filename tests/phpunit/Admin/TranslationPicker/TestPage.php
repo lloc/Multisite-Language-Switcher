@@ -54,6 +54,11 @@ final class TestPage extends MslsUnitTestCase {
 		$this->assertSame( $expected, Page::parent_slug( $post_type ) );
 	}
 
+	public function test_new_slug(): void {
+		$this->assertSame( 'post-new.php', Page::new_slug( 'post' ) );
+		$this->assertSame( 'post-new.php?post_type=page', Page::new_slug( 'page' ) );
+	}
+
 	public function test_url_uses_admin_url_and_query_arg(): void {
 		Functions\expect( 'admin_url' )
 			->once()

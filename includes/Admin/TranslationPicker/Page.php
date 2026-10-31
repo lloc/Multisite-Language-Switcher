@@ -50,7 +50,7 @@ class Page {
 	 */
 	public static function init(): void {
 		add_action( 'admin_menu', array( self::class, 'register' ) );
-		// Late-priority reorder: put our entries right under "All Posts"
+		// Late-priority reorder: put our entries right under "Add New"
 		// regardless of what other plugins do to the submenu array.
 		add_action( 'admin_menu', array( self::class, 'reorder_submenu' ), 999 );
 
@@ -154,7 +154,7 @@ class Page {
 
 	/**
 	 * Moves each of our submenu entries to the slot directly after the
-	 * parent's first item ("All Posts" / "All Pages" / "All CPTs"). Runs
+	 * parent's "Add New" item (or "All Posts" if that is missing). Runs
 	 * on admin_menu at priority 999 so it applies after every other
 	 * plugin has finished adding entries.
 	 *
@@ -195,13 +195,18 @@ class Page {
 			$our_item = $submenu[ $parent ][ $our_key ];
 			unset( $submenu[ $parent ][ $our_key ] );
 
-			// Locate the "All Posts" entry by its slug rather than assuming
-			// it is the first item — another plugin could have prepended.
-			$all_key = null;
-			foreach ( $submenu[ $parent ] as $k => $item ) {
-				if ( isset( $item[2] ) && $parent === $item[2] ) {
-					$all_key = $k;
-					break;
+			// Anchor below core's "Add New" — the picker is another way to add
+			// a post, and wedged between "All Posts" and "Add New" it reads like
+			// broken styling. Fall back to "All Posts" when "Add New" is gone.
+			// Both are located by slug: another plugin could have prepended.
+			$anchors = array( self::new_slug( $post_type ), $parent );
+			$anchor  = null;
+			foreach ( $anchors as $anchor_slug ) {
+				foreach ( $submenu[ $parent ] as $k => $item ) {
+					if ( isset( $item[2] ) && $anchor_slug === $item[2] ) {
+						$anchor = $k;
+						break 2;
+					}
 				}
 			}
 
@@ -209,7 +214,7 @@ class Page {
 			$placed  = false;
 			foreach ( $submenu[ $parent ] as $k => $item ) {
 				$rebuilt[ $k ] = $item;
-				if ( ! $placed && ( null === $all_key || $k === $all_key ) ) {
+				if ( ! $placed && ( null === $anchor || $k === $anchor ) ) {
 					$rebuilt[] = $our_item;
 					$placed    = true;
 				}
@@ -239,6 +244,15 @@ class Page {
 		}
 
 		return 'post' === $post_type ? 'edit.php' : 'edit.php?post_type=' . $post_type;
+	}
+
+	/**
+	 * Slug of core's "Add New" submenu entry for the post type.
+	 *
+	 * @param string $post_type Post type whose "Add New" entry is wanted.
+	 */
+	public static function new_slug( string $post_type ): string {
+		return 'post' === $post_type ? 'post-new.php' : 'post-new.php?post_type=' . $post_type;
 	}
 
 	/**
