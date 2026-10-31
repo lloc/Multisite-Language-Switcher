@@ -59,17 +59,13 @@ class ShallowDuplicating extends BaseImporter {
 			return $data;
 		}
 
-		$source_terms_ids = wp_list_pluck( $source_terms, 'term_id' );
-		$msls_terms       = array_combine(
-			$source_terms_ids,
-			array_map( array( Term::class, 'create' ), $source_terms_ids )
-		);
+		$msls_terms = array_map( array( Term::class, 'create' ), wp_list_pluck( $source_terms, 'term_id' ) );
 
 		switch_to_blog( $this->import_coordinates->dest_blog_id );
 
-		foreach ( $source_terms as $term ) {
+		foreach ( $source_terms as $key => $term ) {
 			// is there a translation for the term in this blog?
-			$msls_term    = $msls_terms[ $term->term_id ];
+			$msls_term    = $msls_terms[ $key ];
 			$dest_term_id = $msls_term->{$dest_lang};
 
 			if ( null === $dest_term_id ) {

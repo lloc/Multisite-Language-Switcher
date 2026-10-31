@@ -10,7 +10,7 @@ use lloc\Msls\Plugin;
 
 final class TestPlugin extends MslsUnitTestCase {
 
-	function test_admin_menu_without_autocomplete(): void {
+	public function test_admin_menu_without_autocomplete(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
 		Functions\expect( 'wp_enqueue_style' )->twice();
 		Functions\expect( 'plugins_url' )->twice()->andReturn( 'https://msls.co/wp-content/plugins' );
@@ -23,7 +23,7 @@ final class TestPlugin extends MslsUnitTestCase {
 		$test->custom_enqueue();
 	}
 
-	function test_admin_menu_with_autocomplete(): void {
+	public function test_admin_menu_with_autocomplete(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
 		Functions\expect( 'wp_enqueue_style' )->twice();
 		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://msls.co/wp-content/plugins' );
@@ -39,7 +39,7 @@ final class TestPlugin extends MslsUnitTestCase {
 		$test->custom_enqueue();
 	}
 
-	function test_admin_menu_with_quick_create(): void {
+	public function test_admin_menu_with_quick_create(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnTrue();
 		Functions\expect( 'wp_enqueue_style' )->twice();
 		Functions\expect( 'plugins_url' )->times( 3 )->andReturn( 'https://msls.co/wp-content/plugins' );
@@ -55,7 +55,7 @@ final class TestPlugin extends MslsUnitTestCase {
 		$test->custom_enqueue();
 	}
 
-	function test_admin_menu_admin_bar_not_showing(): void {
+	public function test_admin_menu_admin_bar_not_showing(): void {
 		Functions\expect( 'is_admin_bar_showing' )->once()->andReturnFalse();
 
 		$options = \Mockery::mock( Options::class );
@@ -71,7 +71,7 @@ final class TestPlugin extends MslsUnitTestCase {
 	/**
 	 * Verify the static message_handler-method
 	 */
-	function test_message_handler(): void {
+	public function test_message_handler(): void {
 		$this->expectOutputString( '<div id="msls-warning" class="error"><p>Test</p></div>' );
 
 		Plugin::message_handler( 'Test' );
@@ -84,7 +84,7 @@ final class TestPlugin extends MslsUnitTestCase {
 	/**
 	 * Verify the static uninstall-method
 	 */
-	function test_uninstall(): void {
+	public function test_uninstall(): void {
 		Functions\expect( 'delete_option' )->times( 3 )->andReturn( false );
 		Functions\expect( 'is_multisite' )->once()->andReturn( true );
 

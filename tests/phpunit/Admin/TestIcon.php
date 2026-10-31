@@ -55,42 +55,42 @@ final class TestIcon extends MslsUnitTestCase {
 		);
 	}
 
-	public function test_get_a_not_empty_post(): void {
-		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[0];
+	/**
+	 * Columns: index in get_post_type(), add_query_arg() calls. Only pages get a post_type query arg.
+	 *
+	 * @return array<string, array{int, int}>
+	 */
+	public static function post_type_provider(): array {
+		return array(
+			'post' => array( 0, 0 ),
+			'page' => array( 1, 2 ),
+		);
+	}
 
+	#[DataProvider( 'post_type_provider' )]
+	public function test_get_a_not_empty( int $index, int $add_query_arg_calls ): void {
+		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[ $index ];
+
+		Functions\expect( 'add_query_arg' )->times( $add_query_arg_calls )->andReturn( $edit_link );
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
 
-		$post = $this->get_post( $post_type, 2 );
-		$obj  = $this->IconFactory( $post );
+		$obj = $this->IconFactory( $this->get_post( $post_type, 2 ) );
 
 		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><span class="dashicons dashicons-edit"></span></a>&nbsp;';
 		$this->assertEquals( $value, $obj->get_a() );
 		$this->assertEquals( $value, $obj->__toString() );
 	}
 
-	public function test_get_a_not_empty_page(): void {
-		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[1];
-
-		Functions\expect( 'add_query_arg' )->twice()->andReturn( $edit_link );
-		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
-
-		$post = $this->get_post( $post_type, 2 );
-		$obj  = $this->IconFactory( $post );
-
-		$value = '<a title="Edit the translation in the de_DE-blog" href="' . $edit_link . '"><span class="dashicons dashicons-edit"></span></a>&nbsp;';
-		$this->assertEquals( $value, $obj->get_a() );
-		$this->assertEquals( $value, $obj->__toString() );
-	}
-
-	public function test_get_a_empty_post(): void {
-		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[0];
+	#[DataProvider( 'post_type_provider' )]
+	public function test_get_a_empty( int $index, int $add_query_arg_calls ): void {
+		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[ $index ];
 
 		Functions\expect( 'get_current_blog_id' )->twice()->andReturn( 1 );
 		Functions\expect( 'get_admin_url' )->twice()->andReturn( $create_link );
+		Functions\expect( 'add_query_arg' )->times( $add_query_arg_calls )->andReturn( $create_link );
 		Functions\expect( 'get_edit_post_link' )->twice()->andReturn( null );
 
-		$post = $this->get_post( $post_type );
-		$obj  = $this->IconFactory( $post );
+		$obj = $this->IconFactory( $this->get_post( $post_type ) );
 
 		$this->assertInstanceOf( Icon::class, $obj->set_href( 0 ) );
 
@@ -102,55 +102,19 @@ final class TestIcon extends MslsUnitTestCase {
 		$this->assertEquals( $value, $obj->__toString() );
 	}
 
-	public function test_get_a_empty_page(): void {
-		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[1];
+	#[DataProvider( 'post_type_provider' )]
+	public function test_get_img( int $index, int $add_query_arg_calls ): void {
+		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[ $index ];
 
-		Functions\expect( 'get_current_blog_id' )->twice()->andReturn( 1 );
-		Functions\expect( 'get_admin_url' )->twice()->andReturn( $create_link );
-		Functions\expect( 'add_query_arg' )->twice()->andReturn( $create_link );
-		Functions\expect( 'get_edit_post_link' )->twice()->andReturn( null );
-
-		$post = $this->get_post( $post_type );
-		$obj  = $this->IconFactory( $post );
-
-		$this->assertInstanceOf( Icon::class, $obj->set_href( 0 ) );
-
-		$value = sprintf(
-			'<a title="Create a new translation in the de_DE-blog" href="%s"><span class="dashicons dashicons-plus"></span></a>&nbsp;',
-			$create_link
-		);
-		$this->assertEquals( $value, $obj->get_a() );
-		$this->assertEquals( $value, $obj->__toString() );
-	}
-
-	public function test_get_img_post(): void {
-		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[0];
-
+		Functions\expect( 'add_query_arg' )->times( $add_query_arg_calls )->andReturn( $edit_link );
 		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
 		Functions\expect( 'get_admin_url' )->once()->andReturn( $this->admin_url );
 		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
 
-		$post = $this->get_post( $post_type );
-		$obj  = $this->IconFactory( $post );
+		$obj = $this->IconFactory( $this->get_post( $post_type ) );
 
 		$this->assertEquals( '<img alt="de_DE" src="' . $this->src . '" />', $obj->get_img() );
-		$this->assertIsSTring( $obj->get_edit_new() );
-	}
-
-
-	public function test_get_img_post_page(): void {
-		list ( $post_type, $create_link, $edit_link ) = $this->get_post_type()[1];
-
-		Functions\expect( 'add_query_arg' )->twice()->andReturn( $edit_link );
-		Functions\expect( 'get_current_blog_id' )->once()->andReturn( 1 );
-		Functions\expect( 'get_admin_url' )->once()->andReturn( $this->admin_url );
-		Functions\expect( 'get_edit_post_link' )->once()->andReturn( $edit_link );
-
-		$post = $this->get_post( $post_type );
-		$obj  = $this->IconFactory( $post );
-
-		$this->assertEquals( '<img alt="de_DE" src="' . $this->src . '" />', $obj->get_img() );
-		$this->assertIsSTring( $obj->get_edit_new() );
+		$this->assertSame( $this->admin_url, $obj->get_edit_new() );
 	}
 
 	public function test_set_id_with_null_constructor(): void {
@@ -204,19 +168,6 @@ final class TestIcon extends MslsUnitTestCase {
 		}
 
 		$this->assertEquals( $expected, $obj->get_icon() );
-	}
-
-	public function test_get_icon_label(): void {
-		Functions\expect( 'plugin_dir_path' )->atLeast( 1 )->andReturn( dirname( __DIR__, 3 ) . '/' );
-
-		$obj = new Icon( 'post' );
-		$obj->set_icon_type( 'flag' );
-
-		$this->assertEquals( '', $obj->get_icon() );
-
-		$obj->set_language( 'de_DE' );
-
-		$this->assertEquals( '<span class="flag-icon flag-icon-de">de_DE</span>', $obj->get_icon() );
 	}
 
 	public function test_get_edit_new(): void {

@@ -8,6 +8,6 @@ use lloc\MslsTests\MslsUnitTestCase;
 final class TestTextOnly extends MslsUnitTestCase {
 
 	public function test_get_description_method(): void {
-		$this->assertIsSTring( TextOnly::get_description() );
+		$this->assertIsString( TextOnly::get_description() );
 	}
 }

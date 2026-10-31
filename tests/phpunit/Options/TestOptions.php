@@ -135,7 +135,7 @@ final class TestOptions extends MslsUnitTestCase {
 		$obj = $this->MslsOptionsFactory();
 
 		$this->assertNull( $obj->get_arg( 0 ) );
-		$this->assertIsSTring( $obj->get_arg( 0, '' ) );
+		$this->assertIsString( $obj->get_arg( 0, '' ) );
 		$this->assertIsFloat( $obj->get_arg( 0, 1.1 ) );
 		$this->assertIsArray( $obj->get_arg( 0, array() ) );
 	}
@@ -178,68 +178,49 @@ final class TestOptions extends MslsUnitTestCase {
 	}
 
 	#[DataProvider( 'set_provider' )]
-	function test_set( $expected, $input ): void {
+	public function test_set( $expected, $input ): void {
 		$obj = $this->MslsOptionsFactory();
 
 		$this->assertEquals( $expected, $obj->set( $input ) );
 	}
 
-	function test_get_permalink(): void {
-		$obj = $this->MslsOptionsFactory();
-
-		$this->assertIsSTring( $obj->get_permalink( 'de_DE' ) );
+	/**
+	 * @return array<string, array{string, array<int, string>, string|bool}>
+	 */
+	public static function getter_provider(): array {
+		return array(
+			'permalink falls back to the home url' => array( 'get_permalink', array( 'de_DE' ), 'https://lloc.de' ),
+			'postlink is empty'                    => array( 'get_postlink', array( 'de_DE' ), '' ),
+			'current link is the home url'         => array( 'get_current_link', array(), 'https://lloc.de' ),
+			'not excluded'                         => array( 'is_excluded', array(), false ),
+			'no content filter'                    => array( 'is_content_filter', array(), false ),
+			'ordered by language'                  => array( 'get_order', array(), 'language' ),
+			'url of the plugin'                    => array( 'get_url', array( '/dev/test' ), 'https://msls.co/wp-content/plugins' ),
+		);
 	}
 
-	function test_get_postlink(): void {
-		$obj = $this->MslsOptionsFactory();
-
-		$this->assertIsSTring( $obj->get_postlink( 'de_DE' ) );
-		$this->assertEquals( '', $obj->get_postlink( 'de_DE' ) );
-	}
-
-	function test_get_current_link(): void {
-		$obj = $this->MslsOptionsFactory();
-
-		$this->assertIsSTring( $obj->get_current_link() );
-	}
-
-	function test_is_excluded(): void {
-		$obj = $this->MslsOptionsFactory();
-
-		$this->assertIsBool( $obj->is_excluded() );
-	}
-
-	function test_is_content_filter(): void {
-		$obj = $this->MslsOptionsFactory();
-
-		$this->assertIsBool( $obj->is_content_filter() );
-	}
-
-	function test_get_order(): void {
-		$obj = $this->MslsOptionsFactory();
-
-		$this->assertIsSTring( $obj->get_order() );
-	}
-
-	function test_get_url(): void {
+	/**
+	 * @param array<int, string> $args
+	 * @param string|bool        $expected
+	 */
+	#[DataProvider( 'getter_provider' )]
+	public function test_getters( string $method, array $args, $expected ): void {
 		Functions\when( 'plugins_url' )->justReturn( 'https://msls.co/wp-content/plugins' );
 
-		$obj = $this->MslsOptionsFactory();
-
-		$this->assertIsSTring( $obj->get_url( '/dev/test' ) );
+		$this->assertSame( $expected, $this->MslsOptionsFactory()->$method( ...$args ) );
 	}
 
-	function test_get_flag_url(): void {
+	public function test_get_flag_url(): void {
 		Functions\when( 'is_admin' )->justReturn( true );
 		Functions\when( 'plugins_url' )->justReturn( 'https://msls.co/wp-content/plugins' );
 		Functions\when( 'plugin_dir_path' )->justReturn( dirname( __DIR__, 2 ) . '/' );
 
 		$obj = $this->MslsOptionsFactory();
 
-		$this->assertIsSTring( $obj->get_flag_url( 'de_DE' ) );
+		$this->assertIsString( $obj->get_flag_url( 'de_DE' ) );
 	}
 
-	function test_get_available_languages(): void {
+	public function test_get_available_languages(): void {
 		Functions\expect( 'get_available_languages' )->once()->andReturn( array( 'de_DE', 'it_IT' ) );
 		Functions\expect( 'format_code_lang' )->atLeast()->once()->andReturnUsing(
 			function ( $code ) {
