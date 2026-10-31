@@ -8,6 +8,6 @@ use lloc\MslsTests\MslsUnitTestCase;
 final class TestImageOnly extends MslsUnitTestCase {
 
 	public function test_get_description_method(): void {
-		$this->assertIsSTring( ImageOnly::get_description() );
+		$this->assertIsString( ImageOnly::get_description() );
 	}
 }

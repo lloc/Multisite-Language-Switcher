@@ -6,6 +6,7 @@ use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
 use lloc\Msls\Options\Post\Post;
 use lloc\MslsTests\MslsUnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 use function Brain\Monkey\Filters;
 use function Brain\Monkey\Functions;
@@ -99,29 +100,30 @@ final class TestPost extends MslsUnitTestCase {
 		$this->assertEquals( 0, $test->get_max_pages( 'de_DE', Post::PAGINATION_ARCHIVE ) );
 	}
 
-	public function test_get_postlink_not_has_value(): void {
-		$test = $this->OptionsPostFactory();
-
-		$this->assertEquals( '', $test->get_postlink( 'es_ES' ) );
+	/**
+	 * Columns: language, get_post() calls, status of the returned post (null returns no post).
+	 *
+	 * @return array<string, array{string, int, ?string}>
+	 */
+	public static function empty_postlink_provider(): array {
+		return array(
+			'no translation'  => array( 'es_ES', 0, null ),
+			'post not found'  => array( 'de_DE', 1, null ),
+			'post is a draft' => array( 'de_DE', 1, 'draft' ),
+		);
 	}
 
-	public function test_get_postlink_post_is_null(): void {
-		Functions\expect( 'get_post' )->once()->andReturnNull();
+	#[DataProvider( 'empty_postlink_provider' )]
+	public function test_get_postlink_is_empty( string $language, int $get_post_calls, ?string $post_status ): void {
+		$post = null;
+		if ( null !== $post_status ) {
+			$post              = \Mockery::mock( '\WP_Post' );
+			$post->post_status = $post_status;
+		}
 
-		$test = $this->OptionsPostFactory();
+		Functions\expect( 'get_post' )->times( $get_post_calls )->andReturn( $post );
 
-		$this->assertEquals( '', $test->get_postlink( 'de_DE' ) );
-	}
-
-	public function test_get_postlink_post_is_draft(): void {
-		$post              = \Mockery::mock( '\WP_Post' );
-		$post->post_status = 'draft';
-
-		Functions\expect( 'get_post' )->once()->andReturn( $post );
-
-		$test = $this->OptionsPostFactory();
-
-		$this->assertEquals( '', $test->get_postlink( 'de_DE' ) );
+		$this->assertEquals( '', $this->OptionsPostFactory()->get_postlink( $language ) );
 	}
 
 	public function test_get_postlink_post_is_published(): void {

@@ -38,7 +38,7 @@ final class TestSqlCacher extends MslsUnitTestCase {
 			$test->siteid
 		);
 
-		$this->assertIsSTring( $sql );
+		$this->assertIsString( $sql );
 		$this->assertIsArray( $test->get_results( $sql ) );
 	}
 }

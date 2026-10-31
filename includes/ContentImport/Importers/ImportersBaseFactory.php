@@ -111,14 +111,11 @@ abstract class ImportersBaseFactory extends Instance implements ImportersFactory
 	 * @return array<string, \stdClass>
 	 */
 	protected function importers_info(): array {
-		return array_combine(
-			array_keys( $this->importers_map ),
-			array_map(
-				function ( $importer_class ) {
-					return $importer_class::info();
-				},
-				$this->importers_map
-			)
+		return array_map(
+			function ( $importer_class ) {
+				return $importer_class::info();
+			},
+			$this->importers_map
 		);
 	}
 }

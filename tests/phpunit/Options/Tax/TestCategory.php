@@ -15,6 +15,6 @@ final class TestCategory extends MslsUnitTestCase {
 
 		$obj = new Category( 0 );
 
-		$this->assertIsSTring( $obj->get_postlink( '' ) );
+		$this->assertIsString( $obj->get_postlink( '' ) );
 	}
 }

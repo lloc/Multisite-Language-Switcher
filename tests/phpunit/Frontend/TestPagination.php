@@ -85,94 +85,32 @@ final class TestPagination extends MslsUnitTestCase {
 		$this->assertFalse( ( new Pagination( 3 ) )->is_active() );
 	}
 
-	public function test_get_returns_an_empty_url_untouched(): void {
-		$this->assertEquals( '', ( new Pagination( 3 ) )->get( '', $this->optionsWithPages( 5 ), 'it_IT' ) );
-	}
-
-	public function test_get_leaves_an_unpaginated_request_alone(): void {
-		$url = 'https://example.com/main-dishes/';
-
-		$this->assertEquals( $url, ( new Pagination( 0 ) )->get( $url, $this->optionsWithPages( 5 ), 'it_IT' ) );
-	}
-
-	public function test_get_adds_the_page_of_an_archive(): void {
-		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
-
-		$test = new Pagination( 3 );
-
-		$this->assertEquals(
-			'https://example.com/main-dishes/page/3/',
-			$test->get( 'https://example.com/main-dishes/', $this->optionsWithPages( 5 ), 'it_IT' )
+	/**
+	 * Columns: paged, page, url, max pages of the target blog, get_option() calls, permalink structure, expected url.
+	 *
+	 * @return array<string, array{int, int, string, int, int, string, string}>
+	 */
+	public static function get_provider(): array {
+		return array(
+			'returns an empty url untouched'              => array( 3, 0, '', 5, 0, '', '' ),
+			'leaves an unpaginated request alone'         => array( 0, 0, 'https://example.com/main-dishes/', 5, 0, '', 'https://example.com/main-dishes/' ),
+			'adds the page of an archive'                 => array( 3, 0, 'https://example.com/main-dishes/', 5, 2, '/%postname%/', 'https://example.com/main-dishes/page/3/' ),
+			'falls back to the first page when the blog is shorter' => array( 3, 0, 'https://example.com/main-dishes/', 2, 0, '', 'https://example.com/main-dishes/' ),
+			'uses the query string without pretty permalinks' => array( 3, 0, 'https://example.com/?cat=7', 5, 1, '', 'https://example.com/?cat=7&paged=3' ),
+			'keeps a query string behind the page'        => array( 3, 0, 'https://example.com/main-dishes/?orderby=title', 5, 2, '/%postname%/', 'https://example.com/main-dishes/page/3/?orderby=title' ),
+			'uses the query string for an unrewritten post type' => array( 3, 0, 'https://example.com/?post_type=book', 5, 1, '/%postname%/', 'https://example.com/?post_type=book&paged=3' ),
+			'uses the query string for a post without a pretty link' => array( 0, 2, 'https://example.com/?p=123', 4, 1, '/%postname%/', 'https://example.com/?p=123&page=2' ),
+			'drops the trailing slash of the target blog' => array( 3, 0, 'https://example.com/main-dishes/', 5, 2, '/%postname%', 'https://example.com/main-dishes/page/3' ),
+			'adds the page of a post'                     => array( 0, 2, 'https://example.com/my-post/', 4, 2, '/%postname%/', 'https://example.com/my-post/2/' ),
+			'uses the pagination base for a static front page' => array( 0, 2, 'https://example.com/', 4, 2, '/%postname%/', 'https://example.com/page/2/' ),
 		);
 	}
 
-	public function test_get_falls_back_to_the_first_page_when_the_blog_is_shorter(): void {
-		$url = 'https://example.com/main-dishes/';
+	#[DataProvider( 'get_provider' )]
+	public function test_get( int $paged, int $page, string $url, int $max_pages, int $get_option_calls, string $permalink_structure, string $expected ): void {
+		Functions\expect( 'get_option' )->times( $get_option_calls )->andReturn( $permalink_structure );
 
-		$this->assertEquals( $url, ( new Pagination( 3 ) )->get( $url, $this->optionsWithPages( 2 ), 'it_IT' ) );
-	}
-
-	public function test_get_uses_the_query_string_without_pretty_permalinks(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( '' );
-
-		$this->assertEquals(
-			'https://example.com/?cat=7&paged=3',
-			( new Pagination( 3 ) )->get( 'https://example.com/?cat=7', $this->optionsWithPages( 5 ), 'it_IT' )
-		);
-	}
-
-	public function test_get_keeps_a_query_string_behind_the_page(): void {
-		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
-
-		$this->assertEquals(
-			'https://example.com/main-dishes/page/3/?orderby=title',
-			( new Pagination( 3 ) )->get( 'https://example.com/main-dishes/?orderby=title', $this->optionsWithPages( 5 ), 'it_IT' )
-		);
-	}
-
-	public function test_get_uses_the_query_string_for_an_unrewritten_post_type(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
-
-		$this->assertEquals(
-			'https://example.com/?post_type=book&paged=3',
-			( new Pagination( 3 ) )->get( 'https://example.com/?post_type=book', $this->optionsWithPages( 5 ), 'it_IT' )
-		);
-	}
-
-	public function test_get_uses_the_query_string_for_a_post_without_a_pretty_link(): void {
-		Functions\expect( 'get_option' )->once()->andReturn( '/%postname%/' );
-
-		$this->assertEquals(
-			'https://example.com/?p=123&page=2',
-			( new Pagination( 0, 2 ) )->get( 'https://example.com/?p=123', $this->optionsWithPages( 4 ), 'it_IT' )
-		);
-	}
-
-	public function test_get_drops_the_trailing_slash_of_the_target_blog(): void {
-		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%' );
-
-		$this->assertEquals(
-			'https://example.com/main-dishes/page/3',
-			( new Pagination( 3 ) )->get( 'https://example.com/main-dishes/', $this->optionsWithPages( 5 ), 'it_IT' )
-		);
-	}
-
-	public function test_get_adds_the_page_of_a_post(): void {
-		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
-
-		$this->assertEquals(
-			'https://example.com/my-post/2/',
-			( new Pagination( 0, 2 ) )->get( 'https://example.com/my-post/', $this->optionsWithPages( 4 ), 'it_IT' )
-		);
-	}
-
-	public function test_get_uses_the_pagination_base_for_a_static_front_page(): void {
-		Functions\expect( 'get_option' )->twice()->andReturn( '/%postname%/' );
-
-		$this->assertEquals(
-			'https://example.com/page/2/',
-			( new Pagination( 0, 2 ) )->get( 'https://example.com/', $this->optionsWithPages( 4 ), 'it_IT' )
-		);
+		$this->assertEquals( $expected, ( new Pagination( $paged, $page ) )->get( $url, $this->optionsWithPages( $max_pages ), 'it_IT' ) );
 	}
 
 	public function test_get_respects_a_corrected_number_of_pages(): void {

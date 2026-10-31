@@ -232,7 +232,7 @@ final class TestAdmin extends MslsUnitTestCase {
 	}
 
 
-	function test_rewrite_tizio(): void {
+	public function test_rewrite_tizio(): void {
 		$obj = $this->AdminFactory();
 
 		$post_type          = \Mockery::mock( \WP_Post_Type::class );
@@ -246,7 +246,7 @@ final class TestAdmin extends MslsUnitTestCase {
 		$obj->rewrite_tizio( 'tizio' );
 	}
 
-	function test_rewrite_pinko(): void {
+	public function test_rewrite_pinko(): void {
 		$obj = $this->AdminFactory();
 
 		$post_type          = \Mockery::mock( \WP_Post_Type::class );
@@ -260,7 +260,7 @@ final class TestAdmin extends MslsUnitTestCase {
 		$obj->rewrite_pinko( 'pinko' );
 	}
 
-	function test_rewrite_pallino(): void {
+	public function test_rewrite_pallino(): void {
 		$obj = $this->AdminFactory();
 
 		$post_type          = \Mockery::mock( \WP_Post_Type::class );
@@ -274,14 +274,14 @@ final class TestAdmin extends MslsUnitTestCase {
 		$obj->rewrite_pallino( 'pallino' );
 	}
 
-	function test_content_priority(): void {
+	public function test_content_priority(): void {
 		$obj = $this->AdminFactory();
 
 		$this->expectOutputRegex( '/^<select id="content_priority" name="msls\[content_priority\]">.*$/' );
 		$obj->content_priority();
 	}
 
-	function test_validate(): void {
+	public function test_validate(): void {
 		$obj = $this->AdminFactory();
 
 		$arr = array();
@@ -299,7 +299,7 @@ final class TestAdmin extends MslsUnitTestCase {
 		);
 	}
 
-	function test_set_blog_language(): void {
+	public function test_set_blog_language(): void {
 		$obj = $this->AdminFactory();
 
 		$arr = array(
@@ -309,7 +309,7 @@ final class TestAdmin extends MslsUnitTestCase {
 		$this->assertEquals( array( 'abc' => true ), $obj->set_blog_language( $arr ) );
 	}
 
-	function test_render(): void {
+	public function test_render(): void {
 		$obj = $this->AdminFactory();
 
 		Functions\expect( 'settings_fields' )->once();
@@ -321,7 +321,7 @@ final class TestAdmin extends MslsUnitTestCase {
 		$obj->render();
 	}
 
-	function test_language_section(): void {
+	public function test_language_section(): void {
 		$obj = $this->AdminFactory();
 
 		Functions\when( 'add_settings_field' )->returnArg();
@@ -329,7 +329,7 @@ final class TestAdmin extends MslsUnitTestCase {
 		$this->assertEquals( 1, $obj->language_section() );
 	}
 
-	function test_main_section(): void {
+	public function test_main_section(): void {
 		$obj = $this->AdminFactory();
 
 		Functions\expect( 'add_settings_field' )->times( 12 )->andReturnFirstArg();
@@ -337,7 +337,7 @@ final class TestAdmin extends MslsUnitTestCase {
 		$this->assertEquals( 12, $obj->main_section() );
 	}
 
-	function test_advanced_section(): void {
+	public function test_advanced_section(): void {
 		$obj = $this->AdminFactory();
 
 		Functions\expect( 'add_settings_field' )->times( 6 )->andReturnFirstArg();
@@ -345,7 +345,7 @@ final class TestAdmin extends MslsUnitTestCase {
 		$this->assertEquals( 6, $obj->advanced_section() );
 	}
 
-	function test_rewrites_section(): void {
+	public function test_rewrites_section(): void {
 		$obj = $this->AdminFactory();
 
 		foreach ( array(

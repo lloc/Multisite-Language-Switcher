@@ -212,7 +212,7 @@ final class TestTax extends MslsUnitTestCase {
 	public function test_get_current_link(): void {
 		$test = $this->OptionsTaxFactory();
 
-		$this->assertIsString( $test->get_current_link() );
+		$this->assertSame( '', $test->get_current_link() );
 	}
 
 	public function test_get_term_link(): void {

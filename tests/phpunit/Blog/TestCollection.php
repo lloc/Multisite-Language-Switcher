@@ -149,22 +149,6 @@ final class TestCollection extends MslsUnitTestCase {
 		$this->assertSame( 0, $this->captured_user_id );
 	}
 
-	public function test_get_current_blog_id(): void {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-
-		$obj = new Collection();
-
-		$this->assertIsInt( $obj->get_current_blog_id() );
-	}
-
-	public function test_has_current_blog(): void {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-
-		$obj = new Collection();
-
-		$this->assertIsBool( $obj->has_current_blog() );
-	}
-
 	public function test_is_current_blog_true(): void {
 		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
 
@@ -185,14 +169,6 @@ final class TestCollection extends MslsUnitTestCase {
 		$blog->userblog_id = 2;
 
 		$this->assertFalse( $obj->is_current_blog( $blog ) );
-	}
-
-	public function test_get_objects(): void {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-
-		$obj = new Collection();
-
-		$this->assertIsArray( $obj->get_objects() );
 	}
 
 	public function test_get_object(): void {
@@ -234,46 +210,40 @@ final class TestCollection extends MslsUnitTestCase {
 		$this->assertSame( $expected, $obj->is_plugin_active( $blog_id ) );
 	}
 
-	public function test_get_plugin_active_blogs(): void {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-
-		$obj = new Collection();
-
-		$this->assertIsArray( $obj->get_plugin_active_blogs() );
+	/**
+	 * Blog 1 is the current one, blog 3 has the plugin deactivated.
+	 *
+	 * @return array<string, array{string, array<int, mixed>, int|bool|int[]}>
+	 */
+	public static function getter_provider(): array {
+		return array(
+			'current blog id'          => array( 'get_current_blog_id', array(), 1 ),
+			'has the current blog'     => array( 'has_current_blog', array(), true ),
+			'objects'                  => array( 'get_objects', array(), array( 1, 2 ) ),
+			'plugin active blogs'      => array( 'get_plugin_active_blogs', array(), array( 1, 2 ) ),
+			'all but the current blog' => array( 'get', array(), array( 2 ) ),
+			'filtered'                 => array( 'get_filtered', array(), array( 2 ) ),
+			'filtered explicitly'      => array( 'get_filtered', array( true ), array( 2 ) ),
+			'single user'              => array( 'get_users', array( array( 'ID' ), 1 ), array() ),
+			'massive users'            => array( 'get_users', array( array( 'ID' ), self::TOTAL_USERS ), array() ),
+		);
 	}
 
-	public function test_get(): void {
+	/**
+	 * @param array<int, mixed> $args
+	 * @param int|bool|int[]    $expected
+	 */
+	#[DataProvider( 'getter_provider' )]
+	public function test_getters( string $method, array $args, $expected ): void {
 		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
 
-		$obj = new Collection();
+		$result = ( new Collection() )->$method( ...$args );
+		if ( is_array( $result ) ) {
+			// Blog objects are compared by their id.
+			$result = array_values( array_map( fn( $blog ) => $blog->userblog_id, $result ) );
+		}
 
-		$this->assertIsArray( $obj->get() );
-	}
-
-	public function test_get_filtered(): void {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-
-		$obj = new Collection();
-
-		$this->assertIsArray( $obj->get_filtered() );
-		$this->assertIsArray( $obj->get_filtered( true ) );
-	}
-
-	public function test_get_users_single(): void {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-
-		$obj = new Collection();
-
-		$this->assertIsArray( $obj->get_users( array( 'ID' ), 1 ) );
-	}
-
-	public function test_get_users_massive(): void {
-		Functions\expect( 'get_site_option' )->once()->andReturn( array() );
-		Functions\expect( 'count_users' )->never();
-
-		$obj = new Collection();
-
-		$this->assertIsArray( $obj->get_users( array( 'ID' ), self::TOTAL_USERS ) );
+		$this->assertSame( $expected, $result );
 	}
 
 	public function test_get_current_blog(): void {

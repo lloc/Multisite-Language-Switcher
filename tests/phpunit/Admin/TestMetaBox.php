@@ -128,22 +128,22 @@ final class TestMetaBox extends MslsUnitTestCase {
 		$this->assertEquals( $json, MetaBox::get_suggested_fields( $json, $args ) );
 	}
 
-	public function test_render_option_selected(): void {
-		Functions\expect( 'selected' )->once()->andReturn( 'selected="selected"' );
-		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
-
-		$test = $this->MetaBoxFactory();
-
-		$this->assertEquals( '<option value="1" selected="selected">Test</option>', $test->render_option( 1, 1 ) );
+	/**
+	 * @return array<string, array{int, string, string}>
+	 */
+	public static function render_option_provider(): array {
+		return array(
+			'selected'     => array( 1, 'selected="selected"', '<option value="1" selected="selected">Test</option>' ),
+			'not selected' => array( 2, '', '<option value="1" >Test</option>' ),
+		);
 	}
 
-	public function test_render_option_not_selected(): void {
-		Functions\expect( 'selected' )->once()->andReturn( '' );
+	#[DataProvider( 'render_option_provider' )]
+	public function test_render_option( int $current, string $selected, string $expected ): void {
+		Functions\expect( 'selected' )->once()->andReturn( $selected );
 		Functions\expect( 'get_the_title' )->once()->andReturn( 'Test' );
 
-		$test = $this->MetaBoxFactory();
-
-		$this->assertEquals( '<option value="1" >Test</option>', $test->render_option( 1, 2 ) );
+		$this->assertEquals( $expected, $this->MetaBoxFactory()->render_option( 1, $current ) );
 	}
 
 	public function test_render_options(): void {
@@ -367,13 +367,23 @@ final class TestMetaBox extends MslsUnitTestCase {
 		$this->MetaBoxFactory()->set( 13 );
 	}
 
-	public function test_maybe_set_linked_post() {
-		$post = \Mockery::mock( 'WP_Post' );
-
+	/**
+	 * Expects a request asking to link the post 42 in de_DE. The id is only read when nothing is linked yet.
+	 */
+	private function expect_linked_post_request( bool $reads_id ): void {
 		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID )->andReturnTrue();
 		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG )->andReturnTrue();
 		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+
+		if ( $reads_id ) {
+			Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		}
+	}
+
+	public function test_maybe_set_linked_post() {
+		$post = \Mockery::mock( 'WP_Post' );
+
+		$this->expect_linked_post_request( true );
 		Functions\expect( 'get_post' )->once()->andReturn( $post );
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'switch_to_blog' )->once();
@@ -388,10 +398,7 @@ final class TestMetaBox extends MslsUnitTestCase {
 	}
 
 	public function test_maybe_set_linked_post_with_no_post() {
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID )->andReturnTrue();
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		$this->expect_linked_post_request( true );
 		Functions\expect( 'get_post' )->once()->andReturn( null );
 		Functions\expect( 'restore_current_blog' )->once();
 		Functions\expect( 'switch_to_blog' )->once();
@@ -405,7 +412,7 @@ final class TestMetaBox extends MslsUnitTestCase {
 		$this->assertNull( $mydata->de_DE );
 	}
 
-	function test_maybe_set_linked_post_with_no_blog_id() {
+	public function test_maybe_set_linked_post_with_no_blog_id() {
 		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( Collection::class );
@@ -413,10 +420,7 @@ final class TestMetaBox extends MslsUnitTestCase {
 
 		$test = new MetaBox( $options, $collection );
 
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID )->andReturnTrue();
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID, FILTER_SANITIZE_NUMBER_INT )->andReturn( 42 );
+		$this->expect_linked_post_request( true );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
 		$mydata = new Post();
@@ -425,16 +429,14 @@ final class TestMetaBox extends MslsUnitTestCase {
 		$this->assertNull( $mydata->de_DE );
 	}
 
-	function test_maybe_set_linked_post_with_mydata_already_set() {
+	public function test_maybe_set_linked_post_with_mydata_already_set() {
 		$options = \Mockery::mock( Options::class );
 
 		$collection = \Mockery::mock( Collection::class );
 
 		$test = new MetaBox( $options, $collection );
 
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_ID )->andReturnTrue();
-		Functions\expect( 'filter_has_var' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG )->andReturnTrue();
-		Functions\expect( 'filter_input' )->once()->with( INPUT_GET, Fields::FIELD_MSLS_LANG, FILTER_SANITIZE_FULL_SPECIAL_CHARS )->andReturn( 'de_DE' );
+		$this->expect_linked_post_request( false );
 		Functions\expect( 'get_option' )->once()->andReturn( array() );
 
 		$mydata        = new Post();
