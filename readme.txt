@@ -99,6 +99,7 @@ Please visit the [MSLS website](https://msls.co/) or use the [WordPress support 
 * New: a page is only added when the other blog has it. The new `Options::get_max_pages()` decides that, and a link which would be out of range still points to the first page.
 * New: `msls_preserve_pagination` switches the feature off, `msls_pagination_max_pages` corrects the number of pages MSLS calculates, and `msls_pagination_get` adjusts the finished link.
 * New: `msls_translation_picker_menu` hides the "Add from Translation" entry in the menu of a post type, `msls_translation_picker_button` hides the button next to "Add New". Both get the post type, so a network which only translates pages can keep the entry points there and drop them everywhere else.
+* Fix: the "Add from Translation" entry in the admin menu now follows "Add New" instead of sitting between "All Posts" and "Add New".
 * Fix: PHP 8.4 raised deprecation notices on every page load. They came from the bundled PHP-DI library, which the plugin no longer ships.
 * Fix: three parameters of the content import were declared in a way PHP 8.4 deprecates.
 
