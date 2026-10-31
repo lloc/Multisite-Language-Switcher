@@ -3,11 +3,12 @@
 /**
  * File is auto-generated
  *
- * 133 translations-teams for WordPress found
+ * 135 translations-teams for WordPress found
  */
 // Unhandled language: am (Amharic)
 // Unhandled language: arg (Aragonese)
 // Unhandled language: dsb (Lower Sorbian)
+// Unhandled language: fo (Faroese)
 // Unhandled language: fy (Frisian)
 // Unhandled language: hsb (Upper Sorbian)
 // Unhandled language: kn (Kannada)
@@ -29,27 +30,27 @@ return array(
 	'bo'             => 'cn.png',
 	'bs_BA'          => 'ba.png',
 	'ca'             => 'catalonia.png',
+	'ca_valencia'    => 'ia.png',
 	'ceb'            => 'ph.png',
 	'cs_CZ'          => 'cz.png',
 	'cy'             => 'wales.png',
 	'da_DK'          => 'dk.png',
 	'de_AT'          => 'at.png',
-	'de_DE'          => 'de.png',
-	'de_DE_formal'   => 'de.png',
 	'de_CH'          => 'ch.png',
+	'de_DE_formal'   => 'de.png',
+	'de_DE'          => 'de.png',
 	'de_CH_informal' => 'ch.png',
 	'dzo'            => 'bt.png',
 	'el'             => 'gr.png',
-	'en_CA'          => 'ca.png',
-	'en_NZ'          => 'nz.png',
-	'en_GB'          => 'gb.png',
-	'en_ZA'          => 'za.png',
 	'en_AU'          => 'au.png',
+	'en_NZ'          => 'nz.png',
+	'en_ZA'          => 'za.png',
+	'en_CA'          => 'ca.png',
+	'en_GB'          => 'gb.png',
 	'eo'             => 'europeanunion.png',
 	'es_AR'          => 'ar.png',
-	'es_CL'          => 'cl.png',
-	'es_ES'          => 'es.png',
 	'es_MX'          => 'mx.png',
+	'es_CL'          => 'cl.png',
 	'es_PE'          => 'pe.png',
 	'es_VE'          => 've.png',
 	'es_EC'          => 'ec.png',
@@ -57,16 +58,17 @@ return array(
 	'es_UY'          => 'uy.png',
 	'es_PR'          => 'pr.png',
 	'es_GT'          => 'gt.png',
-	'es_CR'          => 'cr.png',
+	'es_ES'          => 'es.png',
 	'es_CO'          => 'co.png',
+	'es_CR'          => 'cr.png',
 	'et'             => 'ee.png',
 	'eu'             => 'es.png',
 	'fa_IR'          => 'ir.png',
 	'fa_AF'          => 'af.png',
 	'fi'             => 'fi.png',
 	'fr_CA'          => 'ca.png',
-	'fr_BE'          => 'be.png',
 	'fr_FR'          => 'fr.png',
+	'fr_BE'          => 'be.png',
 	'fur'            => 'it.png',
 	'gd'             => 'scotland.png',
 	'gl_ES'          => 'es.png',
@@ -107,9 +109,9 @@ return array(
 	'pa_IN'          => 'in.png',
 	'pl_PL'          => 'pl.png',
 	'ps'             => 'af.png',
-	'pt_BR'          => 'br.png',
 	'pt_PT'          => 'pt.png',
 	'pt_PT_ao90'     => '90.png',
+	'pt_BR'          => 'br.png',
 	'pt_AO'          => 'ao.png',
 	'ro_RO'          => 'ro.png',
 	'ru_RU'          => 'ru.png',

@@ -3,12 +3,13 @@
 /**
  * File is auto-generated
  *
- * 133 translations-teams for WordPress found
+ * 135 translations-teams for WordPress found
  */
 // Unhandled language: am (Amharic)
 // Unhandled language: arg (Aragonese)
 // Unhandled language: ar (Arabic)
 // Unhandled language: dsb (Lower Sorbian)
+// Unhandled language: fo (Faroese)
 // Unhandled language: fy (Frisian)
 // Unhandled language: hsb (Upper Sorbian)
 // Unhandled language: kn (Kannada)
@@ -29,27 +30,27 @@ return array(
 	'bo'             => 'flag-icon-cn',
 	'bs_BA'          => 'flag-icon-ba',
 	'ca'             => 'flag-icon-es-ca',
+	'ca_valencia'    => 'flag-icon-ia',
 	'ceb'            => 'flag-icon-ph',
 	'cs_CZ'          => 'flag-icon-cz',
 	'cy'             => 'flag-icon-gb-wls',
 	'da_DK'          => 'flag-icon-dk',
 	'de_AT'          => 'flag-icon-at',
-	'de_DE'          => 'flag-icon-de',
-	'de_DE_formal'   => 'flag-icon-de',
 	'de_CH'          => 'flag-icon-ch',
+	'de_DE_formal'   => 'flag-icon-de',
+	'de_DE'          => 'flag-icon-de',
 	'de_CH_informal' => 'flag-icon-ch',
 	'dzo'            => 'flag-icon-bt',
 	'el'             => 'flag-icon-gr',
-	'en_CA'          => 'flag-icon-ca',
-	'en_NZ'          => 'flag-icon-nz',
-	'en_GB'          => 'flag-icon-gb',
-	'en_ZA'          => 'flag-icon-za',
 	'en_AU'          => 'flag-icon-au',
+	'en_NZ'          => 'flag-icon-nz',
+	'en_ZA'          => 'flag-icon-za',
+	'en_CA'          => 'flag-icon-ca',
+	'en_GB'          => 'flag-icon-gb',
 	'eo'             => 'flag-icon-eu',
 	'es_AR'          => 'flag-icon-ar',
-	'es_CL'          => 'flag-icon-cl',
-	'es_ES'          => 'flag-icon-es',
 	'es_MX'          => 'flag-icon-mx',
+	'es_CL'          => 'flag-icon-cl',
 	'es_PE'          => 'flag-icon-pe',
 	'es_VE'          => 'flag-icon-ve',
 	'es_EC'          => 'flag-icon-ec',
@@ -57,16 +58,17 @@ return array(
 	'es_UY'          => 'flag-icon-uy',
 	'es_PR'          => 'flag-icon-pr',
 	'es_GT'          => 'flag-icon-gt',
-	'es_CR'          => 'flag-icon-cr',
+	'es_ES'          => 'flag-icon-es',
 	'es_CO'          => 'flag-icon-co',
+	'es_CR'          => 'flag-icon-cr',
 	'et'             => 'flag-icon-ee',
 	'eu'             => 'flag-icon-es',
 	'fa_IR'          => 'flag-icon-ir',
 	'fa_AF'          => 'flag-icon-af',
 	'fi'             => 'flag-icon-fi',
 	'fr_CA'          => 'flag-icon-ca',
-	'fr_BE'          => 'flag-icon-be',
 	'fr_FR'          => 'flag-icon-fr',
+	'fr_BE'          => 'flag-icon-be',
 	'fur'            => 'flag-icon-it',
 	'gd'             => 'flag-icon-gb-sct',
 	'gl_ES'          => 'flag-icon-es',
@@ -107,9 +109,9 @@ return array(
 	'pa_IN'          => 'flag-icon-in',
 	'pl_PL'          => 'flag-icon-pl',
 	'ps'             => 'flag-icon-af',
-	'pt_BR'          => 'flag-icon-br',
 	'pt_PT'          => 'flag-icon-pt',
 	'pt_PT_ao90'     => 'flag-icon-90',
+	'pt_BR'          => 'flag-icon-br',
 	'pt_AO'          => 'flag-icon-ao',
 	'ro_RO'          => 'flag-icon-ro',
 	'ru_RU'          => 'flag-icon-ru',
