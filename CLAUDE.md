@@ -110,13 +110,20 @@ it, so activate it once per fresh **development** environment with the command a
 
 GitHub Actions workflows:
 
-- `test.yml` — PHPUnit on every push (plus Codecov upload on `master`)
+- `test.yml` — PHPUnit, PHPStan and PHPCS (WordPress Coding Standards and PHP 7.4 compatibility)
+  on every push (plus Codecov upload on `master`)
 - `e2e.yml` — the Playwright `local` project (admin + frontend specs) on pull requests and
   pushes to `master`; visual specs and the `live` project are not run in CI
 - `plugin-check.yml` — WordPress.org Plugin Check on pull requests and `master`
 - `deploy.yml` — WordPress.org deploy on tags
 
-PHPStan and PHPCS are not wired into CI yet — run them locally via `composer qa`.
+`plugin-check.yml` and `deploy.yml` share the composite action `.github/actions/build-plugin`:
+it runs `composer run-script build` and verifies the `multisite-language-switcher/` distribution
+(required files present, no dev files or require-dev packages shipped). Change the build there,
+not in the workflows.
+
+Run the same checks locally before pushing: `composer qa` (PHPCompatibility, PHPStan, PHPUnit)
+plus `vendor/bin/phpcs` for the WordPress Coding Standards.
 
 ## Conventions
 
