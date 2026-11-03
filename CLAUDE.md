@@ -23,6 +23,9 @@ composer phpstan                    # PHPStan at level 8
 composer phpcs                      # PHP compatibility check (7.4+)
 vendor/bin/phpcs                    # WordPress coding standards (uses .phpcs.xml.dist)
 ```
+The Claude Code Stop hook `.claude/hooks/qa.sh` runs phpcbf, then the WordPress Coding
+Standards, PHP 7.4 compatibility and PHPStan, and stops at the first failing step. It skips
+PHPUnit because the suite is too slow for a Stop hook, so run `composer qa` for that.
 
 ### Building
 ```bash
@@ -120,7 +123,21 @@ GitHub Actions workflows:
 `plugin-check.yml` and `deploy.yml` share the composite action `.github/actions/build-plugin`:
 it runs `composer run-script build` and verifies the `multisite-language-switcher/` distribution
 (required files present, no dev files or require-dev packages shipped). Change the build there,
-not in the workflows.
+not in the workflows. `composer build` leaves the distribution in `multisite-language-switcher/`
+(`bin/git-release.sh` rsyncs the repository through `.distignore`); the `composer update` that
+follows only restores require-dev packages in the working tree, never in the build directory.
+
+`deploy.yml` passes that directory to the 10up deploy action as `BUILD_DIR`. Without it the
+action rsyncs the whole workspace through `.distignore`, which cannot exclude `vendor/`, so the
+require-dev packages restored by `composer build` end up in SVN. That broke the 3.0.0 release.
+
+`e2e.yml` runs `composer install --no-dev` and `npm run build` before `wp-env start`: the
+bootstrap requires `vendor/autoload.php` and the Gutenberg block build is not committed, and
+wp-env loads the plugin straight from the mapped checkout. The Playwright global setup seeds the
+de/it subsites and the linked demo posts.
+
+The PHP 7.4 job in `test.yml` only lints syntax: `php -l` rejects PHP 8 grammar but not calls to
+PHP 8 functions, and `includes/` relies on WordPress polyfilling `str_starts_with()`.
 
 Run the same checks locally before pushing: `composer qa` (PHPCompatibility, PHPStan, PHPUnit)
 plus `vendor/bin/phpcs` for the WordPress Coding Standards.

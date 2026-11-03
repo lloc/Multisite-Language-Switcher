@@ -25,10 +25,6 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SLUG: multisite-language-switcher
-          # Deploy only the built distribution. Without this the action falls back to
-          # rsyncing the whole workspace through .distignore - which cannot exclude vendor/,
-          # so the require-dev packages restored by "composer build" ended up in the SVN
-          # transaction and broke the 3.0.0 release.
           BUILD_DIR: ${{ steps.build.outputs.build-dir }}
         with:
           generate-zip: true

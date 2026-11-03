@@ -15,10 +15,6 @@ runs:
     - name: Composer build
       shell: bash
       run: composer run-script build
-    # "composer build" leaves the ready-to-ship distribution in ./multisite-language-switcher
-    # (bin/git-release.sh rsyncs the repository through .distignore). Everything after that
-    # point - including the "composer update" that restores the require-dev packages for
-    # local development - only touches the working tree, never the build directory.
     - name: Verify the build directory
       shell: bash
       run: |
