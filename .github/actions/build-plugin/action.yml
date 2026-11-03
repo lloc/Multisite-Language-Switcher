@@ -1,0 +1,46 @@
+name: Build plugin
+description: Builds the shippable plugin directory and verifies its contents.
+outputs:
+  build-dir:
+    description: Directory holding the built distribution.
+    value: multisite-language-switcher
+runs:
+  using: composite
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v7
+      with:
+        node-version: '24'
+        cache: 'npm'
+    - name: Composer build
+      shell: bash
+      run: composer run-script build
+    # "composer build" leaves the ready-to-ship distribution in ./multisite-language-switcher
+    # (bin/git-release.sh rsyncs the repository through .distignore). Everything after that
+    # point - including the "composer update" that restores the require-dev packages for
+    # local development - only touches the working tree, never the build directory.
+    - name: Verify the build directory
+      shell: bash
+      run: |
+        BUILD_DIR=multisite-language-switcher
+        test -d "$BUILD_DIR" || { echo "::error::$BUILD_DIR was not created by composer build"; exit 1; }
+        for required in MultisiteLanguageSwitcher.php readme.txt vendor/autoload.php; do
+          test -e "$BUILD_DIR/$required" || { echo "::error::$BUILD_DIR/$required is missing"; exit 1; }
+        done
+        for forbidden in .git .github docs src tests node_modules composer.lock package.json; do
+          test ! -e "$BUILD_DIR/$forbidden" || { echo "::error::$BUILD_DIR/$forbidden must not be shipped"; exit 1; }
+        done
+        php -r '
+          $lock  = json_decode(file_get_contents("composer.lock"), true);
+          $found = [];
+          foreach ($lock["packages-dev"] as $package) {
+              if (is_dir("multisite-language-switcher/vendor/" . $package["name"])) {
+                  $found[] = $package["name"];
+              }
+          }
+          if ($found) {
+              fwrite(STDERR, "::error::require-dev packages in the build directory: " . implode(", ", $found) . PHP_EOL);
+              exit(1);
+          }
+        '
+        echo "Build directory holds $(find "$BUILD_DIR" -type f | wc -l) files, production dependencies only."
